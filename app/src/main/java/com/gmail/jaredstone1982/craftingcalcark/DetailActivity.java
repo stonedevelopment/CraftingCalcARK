@@ -1,5 +1,6 @@
 package com.gmail.jaredstone1982.craftingcalcark;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.gmail.jaredstone1982.craftingcalcark.model.Showcase;
  * // TODO: 7/8/2016 Allow for removal of engram from crafting queue
  */
 public class DetailActivity extends AppCompatActivity {
+    private static final String LOGTAG = "DETAIL";
     private Showcase showcase;
     private long id;
     private ResourceListAdapter resourceListAdapter;
@@ -77,18 +79,36 @@ public class DetailActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CloseActivity();
+                    SaveIntentData();
                 }
             });
         }
     }
 
-    public void CloseActivity() {
-//        Queue queue = new Queue(engram.getId(), engram.getImageId(), engram.getQuantity());
-//        queueDataSource.Update(queue);
-//        Intent intent = getIntent();
-        getIntent().putExtra(Helper.DETAIL_QUANTITY, showcase.getQuantity());
-        setResult(RESULT_OK, getIntent());
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Helper.Log(LOGTAG, "onStop();");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Helper.Log(LOGTAG, "onDestroy();");
+    }
+
+
+    /**
+     * Temporary method used to follow the path of Activity and pass its data back to MainActivity. FIXME
+     */
+    private void SaveIntentData() {
+        Helper.Log("INTENT", "SaveIntentData();");
+
+        Intent returnIntent = getIntent();
+        returnIntent.putExtra(Helper.DETAIL_QUANTITY, showcase.getQuantity());
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 }
