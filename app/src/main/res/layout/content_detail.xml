@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DetailActivity">
+
+    <include layout="@layout/content_engram_detail_top" />
+
+    <include layout="@layout/content_engram_detail_bottom" />
+
+    <Button
+        android:id="@+id/engram_detail_save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_and_close_details" />
+</LinearLayout>

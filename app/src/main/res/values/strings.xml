@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ARK Crafting Calculator</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_show_all">Show All</string>
+    <string name="action_show_filtered">Filtered</string>
+    <string name="action_ascending">Ascending</string>
+    <string name="action_descending">Descending</string>
+    <string name="action_reset_data">Reset Data</string>
+    <string name="title_activity_engram_details">engram_details</string>
+    <string name="save_and_close_details">Save and Close</string>
+    <string name="label_engram_details">Engram Details</string>
+</resources>
