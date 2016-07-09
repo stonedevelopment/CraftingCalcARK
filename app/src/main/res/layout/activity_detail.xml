@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.gmail.jaredstone1982.craftingcalcarkfragment.DetailActivity">
+    tools:context="com.gmail.jaredstone1982.craftingcalcark.DetailActivity">
 
     <include layout="@layout/content_detail" />
 

@@ -5,10 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
+
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String LOGTAG = "DB_HELPER";
-    private static final String DATABASE_NAME = "engrams.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final String DATABASE_NAME = "ark.db";
+    private static final int DATABASE_VERSION = 1;
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
 
@@ -76,42 +78,42 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TABLE_ENGRAM_CREATE);
-        db.execSQL(TABLE_RESOURCE_CREATE);
-        db.execSQL(TABLE_CATEGORY_CREATE);
-        Log.d(LOGTAG, "++ Tables (ENGRAM, RESOURCE, CATEGORY) have been created");
+        createAllTables(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        dropTable(db, TABLE_CATEGORY);
-        dropTable(db, TABLE_RESOURCE);
-        dropTable(db, TABLE_ENGRAM);
-        dropTable(db, TABLE_QUEUE);
-
-        Log.d(LOGTAG, "** Database has been upgraded from v" + oldVersion + " to v" + newVersion);
-        onCreate(db);
+        dropAllTables(db);
+        createAllTables(db);
+        Log.d(LOGTAG, "** Database (" + DATABASE_NAME + ") has been upgraded from v" + oldVersion + " to v" + newVersion);
     }
 
     public static void createAllTables(SQLiteDatabase database) {
+        Helper.Log(LOGTAG, "-- Creating all tables.");
         createTable(database, TABLE_ENGRAM);
         createTable(database, TABLE_RESOURCE);
         createTable(database, TABLE_CATEGORY);
         createTable(database, TABLE_QUEUE);
+        Helper.Log(LOGTAG, "-- All tables created.");
     }
 
     public static void dropAllTables(SQLiteDatabase database) {
+        Helper.Log(LOGTAG, "-- Dropping all tables.");
         dropTable(database, TABLE_QUEUE);
         dropTable(database, TABLE_CATEGORY);
         dropTable(database, TABLE_RESOURCE);
         dropTable(database, TABLE_ENGRAM);
+        Helper.Log(LOGTAG, "-- All tables dropped.");
     }
 
     public static void dropTable(SQLiteDatabase db, String table) {
         db.execSQL(DROP_TABLE_IF_EXISTS + table);
+        Helper.Log(LOGTAG, " > Dropping table: " + table);
     }
 
     private static void createTable(SQLiteDatabase db, String table) {
+        Helper.Log(LOGTAG, " > Creating table: " + table);
+
         switch (table) {
             case TABLE_CATEGORY:
                 db.execSQL(TABLE_CATEGORY_CREATE);
@@ -131,7 +133,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
             default:
                 break;
-
         }
     }
 }
