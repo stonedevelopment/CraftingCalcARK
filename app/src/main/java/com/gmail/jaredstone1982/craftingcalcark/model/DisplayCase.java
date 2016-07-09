@@ -23,10 +23,14 @@ public class DisplayCase {
         if (engrams.size() == 0) {
             engrams = dataSource.Initialize();
         }
+
+        dataSource.Close();
     }
 
     public void Reset() {
+        dataSource.Open();
         dataSource.Reset();
+        dataSource.Close();
     }
 
     public SparseArray<DisplayEngram> getEngrams() {

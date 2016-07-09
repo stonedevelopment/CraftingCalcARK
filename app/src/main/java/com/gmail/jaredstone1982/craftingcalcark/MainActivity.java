@@ -21,18 +21,13 @@ import com.gmail.jaredstone1982.craftingcalcark.model.CraftingQueue;
 import com.gmail.jaredstone1982.craftingcalcark.model.DisplayCase;
 import com.gmail.jaredstone1982.craftingcalcark.model.listeners.RecyclerTouchListener;
 
-/**
- * TODO
- *  Clicking crafting queue to increase quantity doesn't work properly
- *  Long click DisplayCase object does not pass correct quantity (reflected from the Queue database) -- somehow integrate Queue object?
- *  DetailActivity focuses on NumberPicker on Create, which opens keyboard by default, this is annoying, please fix.
- *  Clear CraftingQueue data on exit?
- */
-
 public class MainActivity extends AppCompatActivity {
+    private static final String LOGTAG = "MAINACTIVITY";
+
     private RecyclerView displayCaseEngramList;
     private RecyclerView craftingQueueEngramList;
     private RecyclerView craftingQueueResourceList;
+
     private EngramListAdapter mEngramAdapter;
     private CraftableEngramListAdapter engramListAdapter;
     private ResourceListAdapter resourceListAdapter;
@@ -41,9 +36,19 @@ public class MainActivity extends AppCompatActivity {
     private CraftingQueue craftingQueue;
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        Helper.Log(LOGTAG, "onStop();");
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        craftingQueue.Clear();
+
+        Helper.Log(LOGTAG, "onDestroy();");
+
+//        craftingQueue.Clear();
     }
 
     @Override
@@ -172,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Helper.Log("RESULT", "requestCode:" + requestCode + " resultCode:" + resultCode);
 
         if (requestCode == Helper.DETAIL_ID_CODE) {
             if (resultCode == RESULT_OK) {

@@ -4,22 +4,28 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import com.gmail.jaredstone1982.craftingcalcark.db.QueueDataSource;
+import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 
 import java.util.HashMap;
 
 /**
  * Proposed idea for concealing the crafting queue and its objects
+ *
+ * Will be organizing QueueDataSource and the other DataSource classes to inherit from a base class.
  */
 public class CraftingQueue {
     private QueueDataSource dataSource;
-    private SparseArray<CraftableEngram> engrams;
-    private HashMap<Long, Queue> queues = new HashMap<>();
+    private HashMap<Long, Queue> queues;
 
     public CraftingQueue(Context context) {
         dataSource = new QueueDataSource(context, "CRAFTING");
         dataSource.Open();
 
-        this.engrams = getEngrams();
+        this.queues = getQueues();
+    }
+
+    private HashMap<Long, Queue> getQueues() {
+        return dataSource.findAllQueues();
     }
 
     public SparseArray<CraftableEngram> getEngrams() {
@@ -73,10 +79,6 @@ public class CraftingQueue {
 
     public void Clear() {
         dataSource.DeleteTableData();
-    }
-
-    public CraftableEngram getEngram(int position) {
-        return engrams.valueAt(position);
     }
 
     public long getId(int position) {

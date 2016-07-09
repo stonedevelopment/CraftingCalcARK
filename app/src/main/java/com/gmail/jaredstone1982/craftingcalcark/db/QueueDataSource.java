@@ -105,7 +105,9 @@ public class QueueDataSource {
                 int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
 
                 CraftableEngram engram = new CraftableEngram(id, name, imageId, quantity);
-                engrams.put(engrams.size(), engram);
+                engrams.put(imageId, engram);
+
+                Helper.Log(LOGTAG, "> " + name);
             }
         }
         return engrams;
