@@ -11,17 +11,17 @@ import java.util.HashMap;
 /**
  * Proposed idea for concealing the crafting queue and its objects
  *
- * Will be organizing QueueDataSource and the other DataSource classes to inherit from a base class.
+ * TODO Will be organizing QueueDataSource and the other DataSource classes to inherit from a base class.
  */
 public class CraftingQueue {
     private QueueDataSource dataSource;
-    private HashMap<Long, Queue> queues;
+//    private HashMap<Long, Queue> queues;
 
     public CraftingQueue(Context context) {
         dataSource = new QueueDataSource(context, "CRAFTING");
         dataSource.Open();
 
-        this.queues = getQueues();
+//        this.queues = getQueues();
     }
 
     private HashMap<Long, Queue> getQueues() {
@@ -37,6 +37,7 @@ public class CraftingQueue {
     }
 
     public void increaseQuantity(long engramId, int amount) {
+        HashMap<Long, Queue> queues = getQueues();
         Queue queue = queues.get(engramId);
 
         // if queue is empty, add new queue into system
@@ -52,13 +53,14 @@ public class CraftingQueue {
     }
 
     public void setQuantity(long engramId, int quantity) {
+        HashMap<Long, Queue> queues = getQueues();
         Queue queue = queues.get(engramId);
 
         // if queue is empty and quantity is above 0, add new queue into system
         if (queue == null) {
             if (quantity > 0) {
                 queue = dataSource.Insert(engramId, quantity);
-                queues.put(engramId, queue);
+//                queues.put(engramId, queue);
             }
             return;
         }
@@ -73,7 +75,7 @@ public class CraftingQueue {
         if (queue.getQuantity() != quantity) {
             queue.setQuantity(quantity);
             dataSource.Update(queue);
-            queues.put(engramId, queue);
+//            queues.put(engramId, queue);
         }
     }
 
@@ -82,6 +84,8 @@ public class CraftingQueue {
     }
 
     public long getId(int position) {
-        return getEngrams().valueAt(position).getId();
+        SparseArray<CraftableEngram> engrams = getEngrams();
+
+        return engrams.valueAt(position).getId();
     }
 }

@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView craftingQueueEngramList;
     private RecyclerView craftingQueueResourceList;
 
+    // TODO: 7/10/2016 Rework how the ListAdapters are named to better reflect their jobs
     private EngramListAdapter mEngramAdapter;
     private CraftableEngramListAdapter engramListAdapter;
     private ResourceListAdapter resourceListAdapter;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             craftingQueueResourceList.setAdapter(resourceListAdapter);
         }
 
-        refreshDisplayForEngrams();
+        refreshDisplayForDisplayCase();
         refreshDisplayForCraftingQueue();
         createExtraViews();
     }
@@ -105,11 +106,9 @@ public class MainActivity extends AppCompatActivity {
                         if (recyclerView.equals(displayCaseEngramList)) {
                             craftingQueue.increaseQuantity(displayCase.getId(position), 1);
                         } else {
-                            Toast.makeText(context,
-                                    "Position: " + position + " - craftingQueue: total: " + craftingQueue.getEngrams().size(),
-                                    Toast.LENGTH_SHORT).show();
                             craftingQueue.increaseQuantity(craftingQueue.getId(position), 1);
                         }
+
                         refreshDisplayForCraftingQueue();
                     }
 
@@ -125,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             intent.putExtra(Helper.DETAIL_ID, craftingQueue.getId(position));
                         }
+
                         startActivityForResult(intent, Helper.DETAIL_ID_CODE);
                     }
                 });
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_resetData:
                 displayCase.Reset();
-                refreshDisplayForEngrams();
+                refreshDisplayForDisplayCase();
                 break;
 
             case R.id.action_ascending:
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_show_all:
                 displayCase.getEngrams();
-                refreshDisplayForEngrams();
+                refreshDisplayForDisplayCase();
                 break;
 
             case R.id.action_show_filtered:
@@ -178,8 +178,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Helper.Log("RESULT", "requestCode:" + requestCode + " resultCode:" + resultCode);
-
         if (requestCode == Helper.DETAIL_ID_CODE) {
             if (resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
@@ -192,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void refreshDisplayForEngrams() {
+    private void refreshDisplayForDisplayCase() {
         mEngramAdapter.setEngrams(displayCase.getEngrams());
         mEngramAdapter.Refresh();
     }

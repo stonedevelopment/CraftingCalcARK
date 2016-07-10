@@ -15,13 +15,12 @@ import com.gmail.jaredstone1982.craftingcalcark.adapters.ResourceListAdapter;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 import com.gmail.jaredstone1982.craftingcalcark.model.Showcase;
 
-/**
- * // TODO: 7/8/2016 Allow for removal of engram from crafting queue
- */
 public class DetailActivity extends AppCompatActivity {
     private static final String LOGTAG = "DETAIL";
-    private Showcase showcase;
+
     private long id;
+    private Showcase showcase;
+
     private ResourceListAdapter resourceListAdapter;
 
     @Override
@@ -79,36 +78,21 @@ public class DetailActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SaveIntentData();
+                    FinishActivityWithResult();
                 }
             });
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        Helper.Log(LOGTAG, "onStop();");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Helper.Log(LOGTAG, "onDestroy();");
-    }
-
-
     /**
-     * Temporary method used to follow the path of Activity and pass its data back to MainActivity. FIXME
+     * Saves quantity (changed or not) to Intent object and sets Result to be captured by .MainActivity
      */
-    private void SaveIntentData() {
-        Helper.Log("INTENT", "SaveIntentData();");
-
+    private void FinishActivityWithResult() {
         Intent returnIntent = getIntent();
+
         returnIntent.putExtra(Helper.DETAIL_QUANTITY, showcase.getQuantity());
         setResult(RESULT_OK, returnIntent);
+
         finish();
     }
 }
