@@ -29,12 +29,12 @@ public class QueueDataSource {
 
     public void Open() {
         database = openHelper.getWritableDatabase();
-        Log.d(LOGTAG, "Database open");
+        Helper.Log(LOGTAG, "Database open");
     }
 
     public void Close() {
         database.close();
-        Log.d(LOGTAG, "Database closed");
+        Helper.Log(LOGTAG, "Database closed");
     }
 
     public Queue Insert(long engramId, int quantity) {
@@ -42,18 +42,21 @@ public class QueueDataSource {
         values.put(DBOpenHelper.COLUMN_QUEUE_QUANTITY, quantity);
         values.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engramId);
 
-        Queue queue = new Queue();
-        queue.setId(database.insert(DBOpenHelper.TABLE_QUEUE, null, values));
-        queue.setQuantity(quantity);
-        queue.setEngramId(engramId);
-
-        return queue;
+        return new Queue(
+                database.insert(DBOpenHelper.TABLE_QUEUE, null, values),
+                engramId,
+                quantity
+        );
     }
 
     public boolean Delete(long engramId) {
         return database.delete(DBOpenHelper.TABLE_QUEUE, DBOpenHelper.COLUMN_TRACK_ENGRAM + "=" + engramId, null) > 0;
     }
 
+    /**
+     * Updates 'queue' table with new quantity. TODO: No error checking
+     * @param queue
+     */
     public void Update(Queue queue) {
         Cursor cursor = database.rawQuery(
                 "INSERT OR REPLACE INTO " + DBOpenHelper.TABLE_QUEUE +
@@ -68,8 +71,8 @@ public class QueueDataSource {
             long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_ID));
             int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
             long engramId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_ENGRAM));
-
         }
+
         cursor.close();
     }
 
@@ -83,7 +86,7 @@ public class QueueDataSource {
                 null, null
         );
 
-        Log.d(LOGTAG, "-- findAllEngrams() > Returned " + cursor.getCount() + " rows from tables: " + DBOpenHelper.TABLE_ENGRAM + ", " + DBOpenHelper.TABLE_QUEUE);
+        Helper.Log(LOGTAG, "-- findAllEngrams() > Returned " + cursor.getCount() + " rows from tables: " + DBOpenHelper.TABLE_ENGRAM + ", " + DBOpenHelper.TABLE_QUEUE);
 
         return cursorToEngrams(cursor);
     }
@@ -190,7 +193,7 @@ public class QueueDataSource {
                 null, null
         );
 
-        Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows from findSingleEngram");
+        Helper.Log(LOGTAG, "Returned " + cursor.getCount() + " rows from findSingleEngram");
 
         return cursorToSingleEngram(cursor);
     }

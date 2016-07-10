@@ -10,9 +10,7 @@ import java.util.HashMap;
 
 /**
  * Proposed idea for concealing the crafting queue and its objects
- * <p/>
  * Furthermore, CraftingQueue seems to be evolving into a database handler, be advised.
- * <p/>
  * TODO Will be organizing QueueDataSource and the other DataSource classes to inherit from a base class.
  */
 public class CraftingQueue {
@@ -37,14 +35,7 @@ public class CraftingQueue {
     }
 
     public void increaseQuantity(long engramId, int amount) {
-        // Temporary check for invalid engramId value
-        if (engramId == 0) {
-            Helper.Log(LOGTAG, "** setQuantity() > Invalid value: engramId=0. Halting operation.");
-            return;
-        }
-
         HashMap<Long, Queue> queues = getQueues();
-
         Queue queue = queues.get(engramId);
 
         // if queue is empty, add new queue into system
@@ -58,16 +49,10 @@ public class CraftingQueue {
     }
 
     public void setQuantity(long engramId, int quantity) {
-        // Temporary check for invalid engramId value
-        if (engramId == 0) {
-            Helper.Log(LOGTAG, "** setQuantity() > Invalid value: engramId=0. Halting operation.");
-            return;
-        }
-
         HashMap<Long, Queue> queues = getQueues();
         Queue queue = queues.get(engramId);
 
-        // if queue is empty and quantity is above 0, add new queue into system
+        // if queue is empty and quantity is above 0, add new queue into database
         if (queue == null) {
             if (quantity > 0) {
                 dataSource.Insert(engramId, quantity);
@@ -75,15 +60,15 @@ public class CraftingQueue {
             return;
         }
 
-        // if quantity is 0, remove queue from system
+        // if quantity is 0, remove queue from database
         if (quantity == 0) {
             dataSource.Delete(engramId);
 
-            Helper.Log(LOGTAG, " > Quantity is 0, deleting record of engramId: " + engramId);
+            Helper.Log(LOGTAG, "-- setQuantity() > Quantity is 0, deleting record of engramId: " + engramId);
             return;
         }
 
-        // if quantities are not equal, update queue object, array, and database TODO: simplify?
+        // if quantities are not equal, update existing queue to database
         if (queue.getQuantity() != quantity) {
             queue.setQuantity(quantity);
             dataSource.Update(queue);

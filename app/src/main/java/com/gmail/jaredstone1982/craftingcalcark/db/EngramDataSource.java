@@ -100,9 +100,7 @@ public class EngramDataSource {
     }
 
     /**
-     * Method that drops all tables, creates all tables, and then re-initializes data
-     *
-     * TODO: Strictly for DEBUG purposes
+     * Method that drops all tables, creates all tables, and then re-initializes data TODO: Strictly for DEBUG purposes
      */
     public void Reset() {
         DBOpenHelper.dropAllTables(database);

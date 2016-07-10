@@ -11,22 +11,15 @@ public class CraftableEngram extends Engram {
     private int quantity;
 
     public CraftableEngram(long id, String name, int imageId, int quantity) {
-        super(name, imageId);
+        super(id, name, imageId);
 
         this.quantity = quantity;
-        this.setId(id);
     }
 
     public CraftableEngram(long id, String name, int imageId) {
-        super(name, imageId);
+        super(id, name, imageId);
 
         this.quantity = 0;
-        this.setId(id);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + ", quantity=" + quantity;
     }
 
     public Integer getQuantity() {
@@ -39,5 +32,10 @@ public class CraftableEngram extends Engram {
 
     public void increaseQuantity(int amount) {
         this.quantity += amount;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", quantity=" + quantity;
     }
 }
