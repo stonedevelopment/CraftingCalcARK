@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.gmail.jaredstone1982.craftingcalcark.adapters.CraftableEngramListAdapter;
 import com.gmail.jaredstone1982.craftingcalcark.adapters.EngramListAdapter;
@@ -93,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
             craftingQueueResourceList.setAdapter(resourceListAdapter);
         }
 
-        refreshDisplayForDisplayCase();
-        refreshDisplayForCraftingQueue();
         createExtraViews();
     }
 
@@ -104,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position) {
                         if (recyclerView.equals(displayCaseEngramList)) {
-                            craftingQueue.increaseQuantity(displayCase.getId(position), 1);
+                            craftingQueue.increaseQuantity(mEngramAdapter.getEngram(position).getId(), 1);
                         } else {
-                            craftingQueue.increaseQuantity(craftingQueue.getId(position), 1);
+                            craftingQueue.increaseQuantity(engramListAdapter.getEngram(position).getId(), 1);
                         }
 
                         refreshDisplayForCraftingQueue();
@@ -120,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
                         // When finished, a call to refreshlists should add them all back
                         Intent intent = new Intent(context, DetailActivity.class);
                         if (recyclerView.equals(displayCaseEngramList)) {
-                            intent.putExtra(Helper.DETAIL_ID, displayCase.getId(position));
+                            intent.putExtra(Helper.DETAIL_ID, mEngramAdapter.getEngram(position).getId());
                         } else {
-                            intent.putExtra(Helper.DETAIL_ID, craftingQueue.getId(position));
+                            intent.putExtra(Helper.DETAIL_ID, engramListAdapter.getEngram(position).getId());
                         }
 
                         startActivityForResult(intent, Helper.DETAIL_ID_CODE);
@@ -144,9 +141,9 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
-            case R.id.action_resetData:
-                displayCase.Reset();
-                refreshDisplayForDisplayCase();
+            case R.id.action_clearQueue:
+                craftingQueue.Clear();
+                refreshDisplayForCraftingQueue(); // Refreshing an empty object?
                 break;
 
             case R.id.action_ascending:

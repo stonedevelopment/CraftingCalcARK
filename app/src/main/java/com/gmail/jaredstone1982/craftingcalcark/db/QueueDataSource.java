@@ -83,7 +83,7 @@ public class QueueDataSource {
                 null, null
         );
 
-        Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows from findAllEngrams");
+        Log.d(LOGTAG, "-- findAllEngrams() > Returned " + cursor.getCount() + " rows from tables: " + DBOpenHelper.TABLE_ENGRAM + ", " + DBOpenHelper.TABLE_QUEUE);
 
         return cursorToEngrams(cursor);
     }
@@ -99,7 +99,7 @@ public class QueueDataSource {
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                long id = cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_ID);
+                long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_ID));
                 String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_NAME));
                 int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID));
                 int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
@@ -107,7 +107,7 @@ public class QueueDataSource {
                 CraftableEngram engram = new CraftableEngram(id, name, imageId, quantity);
                 engrams.put(imageId, engram);
 
-                Helper.Log(LOGTAG, "> " + name);
+                Helper.Log(LOGTAG, "> Engram Details: " + engram.toString());
             }
         }
         return engrams;
@@ -242,7 +242,7 @@ public class QueueDataSource {
                 null, null
         );
 
-        Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows from findAllQueues");
+        Helper.Log(LOGTAG, "-- findAllQueues() > Returned " + cursor.getCount() + " rows from table: " + DBOpenHelper.TABLE_QUEUE);
 
         return cursorToQueues(cursor);
     }
@@ -257,23 +257,30 @@ public class QueueDataSource {
                 int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
 
                 Queue queue = new Queue(id, engramId, quantity);
-                queues.put(id, queue);
+
+                Helper.Log(LOGTAG, " > Queue Details: " + queue.toString());
+
+                queues.put(engramId, queue);
             }
         }
         return queues;
     }
 
-    public void ResetData() {
-        DBOpenHelper.dropTable(database, DBOpenHelper.TABLE_QUEUE);
-        InitializeData();
+    public void CreateTable() {
+        database.execSQL(DBOpenHelper.TABLE_QUEUE_CREATE);
+
+        Helper.Log(LOGTAG, "-- Created table: " + DBOpenHelper.TABLE_QUEUE);
     }
 
     public void DeleteTableData() {
         int rows = database.delete(DBOpenHelper.TABLE_QUEUE, "1", null);
-        Helper.Log(LOGTAG,"Deleted " + rows + " rows from queue.");
+
+        Helper.Log(LOGTAG,"-- Deleted " + rows + " rows from table: " + DBOpenHelper.TABLE_QUEUE);
     }
 
-    public void InitializeData() {
-        database.execSQL(DBOpenHelper.TABLE_QUEUE_CREATE);
+    public void DropTable() {
+        DBOpenHelper.dropTable(database, DBOpenHelper.TABLE_QUEUE);
+
+        Helper.Log(LOGTAG, "-- Dropped table: " + DBOpenHelper.TABLE_QUEUE);
     }
 }

@@ -43,6 +43,10 @@ public class EngramListAdapter extends RecyclerView.Adapter {
         this.engrams = engrams;
     }
 
+    public DisplayEngram getEngram(int position) {
+        return engrams.valueAt(position);
+    }
+
     public void Refresh() {
         this.notifyDataSetChanged();
     }

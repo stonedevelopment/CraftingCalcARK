@@ -46,6 +46,10 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         this.engrams = engrams;
     }
 
+    public CraftableEngram getEngram(int position) {
+        return engrams.valueAt(position);
+    }
+
     public void Refresh() {
         this.notifyDataSetChanged();
     }

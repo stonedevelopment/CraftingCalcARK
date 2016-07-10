@@ -24,6 +24,11 @@ public class CraftableEngram extends Engram {
         this.setId(id);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + ", quantity=" + quantity;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }

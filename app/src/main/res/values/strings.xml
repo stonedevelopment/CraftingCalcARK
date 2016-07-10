@@ -5,7 +5,7 @@
     <string name="action_show_filtered">Filtered</string>
     <string name="action_ascending">Ascending</string>
     <string name="action_descending">Descending</string>
-    <string name="action_reset_data">Reset Data</string>
+    <string name="action_clear_queue">Clear Queue</string>
     <string name="title_activity_engram_details">engram_details</string>
     <string name="save_and_close_details">Save and Close</string>
     <string name="label_engram_details">Engram Details</string>

@@ -10,6 +10,11 @@ import com.gmail.jaredstone1982.craftingcalcark.db.EngramDataSource;
  *
  * Thinking of this as a display cabinet
  *
+ * There is a major difference between DisplayCase and CraftingQueue, they are essentially the same,
+ *  except DisplayCase stores a static array of Engram objects whereas CraftingQueue is 100% dynamic.
+ *  This makes sense now, but later on could result in problems when filters and hierarchical folders
+ *  come into play.
+ *
  */
 public class DisplayCase {
     private SparseArray<DisplayEngram> engrams;

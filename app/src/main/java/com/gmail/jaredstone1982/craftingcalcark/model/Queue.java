@@ -1,5 +1,9 @@
 package com.gmail.jaredstone1982.craftingcalcark.model;
 
+import android.support.annotation.NonNull;
+
+import java.util.Locale;
+
 /**
  * Queue object that will hold database information for Crafting Queue
  */
@@ -15,6 +19,11 @@ public class Queue {
     }
 
     public Queue() {
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id + ", engramId=" + engramId + ", quantity=" + quantity;
     }
 
     public long getId() {
