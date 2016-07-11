@@ -46,14 +46,17 @@ public class Showcase {
     }
 
     public SparseArray<CraftableResource> getComposition() {
-        int quantity = engram.getQuantity();
         SparseArray<CraftableResource> baseComposition = engram.getComposition();
         SparseArray<CraftableResource> returnableComposition = new SparseArray<>();
 
+        int quantity = engram.getQuantity();
+
         for (int i = 0; i < baseComposition.size(); i++) {
             CraftableResource resource = baseComposition.valueAt(i);
-            CraftableResource craftableResource = new CraftableResource(resource.getId(), resource.getName(), resource.getImageId());
+
+            CraftableResource craftableResource = new CraftableResource(resource);
             craftableResource.setQuantity(resource.getQuantity() * quantity);
+
             returnableComposition.append(i, craftableResource);
         }
         return returnableComposition;

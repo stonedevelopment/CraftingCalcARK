@@ -10,13 +10,12 @@ import android.util.SparseArray;
  */
 public class DisplayEngram extends Engram {
 
-    private SparseArray<Category> categories;
+    private SparseArray<Category> categories; // TODO: Convert to HashMap<Long, Object> to better track category ROWID from database
 
     public DisplayEngram(long id, String name, Integer imageId) {
-        super(name, imageId);
+        super(id, name, imageId);
 
         categories = new SparseArray<>();
-        this.setId(id);
     }
 
     public SparseArray<Category> getCategories() {

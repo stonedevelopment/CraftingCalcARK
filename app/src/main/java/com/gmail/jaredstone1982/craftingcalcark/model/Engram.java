@@ -3,7 +3,7 @@ package com.gmail.jaredstone1982.craftingcalcark.model;
 /**
  * Description: Base Engram object
  * Usage: Store basic Engram
- * Used by: InitEngram, DisplayEngram
+ * Used by: InitEngram, DisplayEngram, CraftableEngram
  * Variables: id, imageId, name
  */
 public class Engram {

@@ -6,7 +6,7 @@ import android.util.SparseIntArray;
 /**
  * Description: InitEngram object that extends Engram with a description, composition array, and categories
  * Usage: Store instantiated data used to initialize Database
- * Used by: EngramInitializer, EngramDataSource
+ * Used by: EngramInitializer, DataSource
  * Variables: id, imageId, name, description, composition, category
  */
 public class InitEngram extends Engram {

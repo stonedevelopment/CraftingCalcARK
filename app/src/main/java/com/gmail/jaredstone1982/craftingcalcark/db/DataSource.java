@@ -5,13 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.util.SparseArray;
 
+import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 import com.gmail.jaredstone1982.craftingcalcark.model.Category;
-import com.gmail.jaredstone1982.craftingcalcark.model.CraftableResource;
 import com.gmail.jaredstone1982.craftingcalcark.model.DisplayEngram;
 import com.gmail.jaredstone1982.craftingcalcark.model.InitEngram;
+import com.gmail.jaredstone1982.craftingcalcark.model.Resource;
 import com.gmail.jaredstone1982.craftingcalcark.model.initializers.EngramInitializer;
 import com.gmail.jaredstone1982.craftingcalcark.model.initializers.ResourceInitializer;
 
@@ -23,14 +23,14 @@ import java.util.List;
  * Used by: EngramActivityFrament
  * Variables: LOGTAG, openHelper, database
  */
-public class EngramDataSource {
-    private String LOGTAG;
+public class DataSource {
+    private static final String LOGTAG = "DATASOURCE";
+
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
 
-    public EngramDataSource(Context context, String LOGTAG) {
+    public DataSource(Context context, String LOGTAG) {
         this.openHelper = new DBOpenHelper(context);
-        this.LOGTAG = LOGTAG;
     }
 
     /**
@@ -63,7 +63,7 @@ public class EngramDataSource {
             while (cursor.moveToNext()) {
                 DisplayEngram engram;
 
-                // Grab imageId from cursor, this will be used to test if an object has been added or not
+                // Grab imageId from cursor, this will be used to test if an object has been added or not FIXME why are we testing this?
                 int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID));
 
                 // Test to see if 'engram' has already been added
@@ -112,17 +112,44 @@ public class EngramDataSource {
     /**
      * Method that initializes database with InitEngram objects from EngramInitializer
      */
-    public SparseArray<DisplayEngram> Initialize() {
+    public void Initialize() {
+        Helper.Log(LOGTAG, "** Initializing database..");
+
+        Helper.Log(LOGTAG, "-- Initializing Resources..");
+        SparseArray<String> resources = ResourceInitializer.getResources();
+        for (int i = 0; i < resources.size(); i++) {
+            int imageId = resources.keyAt(i);
+            String name = resources.valueAt(i);
+            Insert(imageId, name);
+        }
+        Helper.Log(LOGTAG, "-- Resource initialization completed.");
+
+        Helper.Log(LOGTAG, "-- Initializing Engrams..");
         List<InitEngram> engrams = EngramInitializer.getEngrams();
         for (InitEngram engram : engrams) {
             Insert(engram);
         }
-
-        return findAll();
+        Helper.Log(LOGTAG, "-- Engram initialization completed.");
     }
 
     /**
-     * Inserts an InitEngram object into database, used strictly for initializing
+     * Inserts resource data into data, TODO used strictly for initializing
+     *
+     * @param imageId Image Resource ID of resource to insert
+     * @param name    Name of resource, used for displaying its contents in a list
+     */
+    private void Insert(int imageId, String name) {
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID, imageId);
+        values.put(DBOpenHelper.COLUMN_RESOURCE_NAME, name);
+
+        long id = database.insert(DBOpenHelper.TABLE_RESOURCE, null, values);
+
+        Helper.Log(LOGTAG, "-> Resource (" + name + ") inserted at row " + id);
+    }
+
+    /**
+     * Inserts an InitEngram object into database, TODO used strictly for initializing
      *
      * @param engram InitEngram object that holds all data needed for initialization
      */
@@ -131,48 +158,82 @@ public class EngramDataSource {
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_NAME, engram.getName());
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_DESCRIPTION, engram.getDescription());
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID, engram.getImageId());
+
         engram.setId(database.insert(DBOpenHelper.TABLE_ENGRAM, null, engramValues));
 
-        Log.d(LOGTAG, "Engram (" + engram.getName() + ") inserted at " + engram.getId());
+        Helper.Log(LOGTAG, "-> Engram (" + engram.getName() + ") inserted at row " + engram.getId());
 
         for (int i = 0; i < engram.getCompositionIDs().size(); i++) {
-            ContentValues resourceValues = new ContentValues();
-            CraftableResource resource = ResourceInitializer.getCraftableResource(engram.getCompositionIDs().keyAt(i)); // FIXME: 6/15/2016 Pull data from Resource Database
+            Resource resource = findSingleResource(engram.getCompositionIDs().keyAt(i));
 
-            resourceValues.put(DBOpenHelper.COLUMN_RESOURCE_NAME, resource.getName());
-            resourceValues.put(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID, resource.getImageId());
-            resourceValues.put(DBOpenHelper.COLUMN_RESOURCE_QUANTITY, engram.getCompositionIDs().valueAt(i));
-            resourceValues.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
-            resource.setId(database.insert(DBOpenHelper.TABLE_RESOURCE, null, resourceValues));
+            ContentValues compositionValues = new ContentValues();
+            compositionValues.put(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY, engram.getCompositionIDs().valueAt(i));
+            compositionValues.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
+            compositionValues.put(DBOpenHelper.COLUMN_TRACK_RESOURCE, resource.getId());
 
-            Log.d(LOGTAG, "Resource (" + resource.getName() +
+            long compositionId = database.insert(DBOpenHelper.TABLE_COMPOSITION, null, compositionValues);
+
+            Helper.Log(LOGTAG, "--> Resource (" + resource.getName() + "/" + resource.getId() +
                     " x" + engram.getCompositionIDs().valueAt(i) +
                     ") inserted into " + engram.getName() +
-                    " at " + resource.getId());
+                    " at row " + compositionId);
         }
 
         for (int i = 0; i < engram.getCategory().size(); i++) {
-            ContentValues categoryValues = new ContentValues();
             String categoryName = engram.getCategory().valueAt(i);
 
+            ContentValues categoryValues = new ContentValues();
             categoryValues.put(DBOpenHelper.COLUMN_CATEGORY_NAME, categoryName);
             categoryValues.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
 
             long categoryId = database.insert(DBOpenHelper.TABLE_CATEGORY, null, categoryValues);
 
-            Log.d(LOGTAG, "Category (" + categoryName +
+            Helper.Log(LOGTAG, "--> Category (" + categoryName +
                     ") inserted into " + engram.getName() +
-                    " at " + categoryId);
+                    " at row " + categoryId);
         }
+    }
+
+    /**
+     * Returns a Resource object, found by its imageId
+     *
+     * @param imageId int used to find requested Resource object
+     * @return Resource
+     */
+    private Resource findSingleResource(int imageId) {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_RESOURCE +
+                        " WHERE " + DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID +
+                        " = " + imageId,
+                null, null
+        );
+
+        return cursorToSingleResource(cursor);
+    }
+
+    public Resource cursorToSingleResource(Cursor cursor) {
+        Resource resource = null;
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_NAME));
+            int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID));
+
+            resource = new Resource(id, name, imageId);
+        }
+
+        return resource;
     }
 
     public void Open() {
         database = openHelper.getWritableDatabase();
-        Log.d(LOGTAG, "Database open");
+        Helper.Log(LOGTAG, "Database open");
     }
 
     public void Close() {
-        Log.d(LOGTAG, "Database closed");
+        Helper.Log(LOGTAG, "Database closed");
         database.close();
     }
 }

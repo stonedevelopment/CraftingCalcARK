@@ -15,6 +15,7 @@ import java.util.HashMap;
  */
 public class CraftingQueue {
     private static final String LOGTAG = "CRAFTING";
+
     private QueueDataSource dataSource;
 
     public CraftingQueue(Context context) {
@@ -73,12 +74,6 @@ public class CraftingQueue {
             queue.setQuantity(quantity);
             dataSource.Update(queue);
         }
-    }
-
-    public long getId(int position) {
-        SparseArray<CraftableEngram> engrams = getEngrams();
-
-        return engrams.valueAt(position).getId();
     }
 
     public void Clear() {

@@ -36,22 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private CraftingQueue craftingQueue;
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        Helper.Log(LOGTAG, "onStop();");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Helper.Log(LOGTAG, "onDestroy();");
-
-//        craftingQueue.Clear();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

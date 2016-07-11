@@ -3,14 +3,14 @@ package com.gmail.jaredstone1982.craftingcalcark.model.initializers;
 import android.util.SparseArray;
 
 import com.gmail.jaredstone1982.craftingcalcark.R;
-import com.gmail.jaredstone1982.craftingcalcark.model.CraftableResource;
-import com.gmail.jaredstone1982.craftingcalcark.model.Resource;
 
 /**
- * FIXME: This class may not be needed anymore.
+ * Initializes a list of data to be used to fill database table RESOURCE_TABLE
+ * <p>
+ * FIXME: This does not currently allow for complex resource objects (resources that are composed of resources), be advised.
  */
 public class ResourceInitializer {
-    
+
     // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;
     public static final int STONE = R.drawable.stone;
@@ -40,37 +40,37 @@ public class ResourceInitializer {
     public static final int ANGLER_GEL = R.drawable.angler_gel;
     public static final int BLACK_PEARL = R.drawable.black_pearl;
     public static final int WOOLLY_RHINO_HORN = R.drawable.woolly_rhino_horn;
-    
-    private static SparseArray<Resource> resources = new SparseArray<Resource>() {
+
+    private static SparseArray<String> resources = new SparseArray<String>() {
         {
-            append(ANGLER_GEL, new Resource(ANGLER_GEL, "Angler Gel"));
-            append(BLACK_PEARL, new Resource(BLACK_PEARL, "Black Pearl"));
-            append(CEMENTING_PASTE, new Resource(CEMENTING_PASTE, "Cementing Paste"));
-            append(CHARCOAL, new Resource(CHARCOAL, "Charoal"));
-            append(CHITIN, new Resource(CHITIN, "Chitin"));
-            append(CRYSTAL, new Resource(CRYSTAL, "Crystal"));
-            append(ELECTRONICS, new Resource(ELECTRONICS, "Electronics"));
-            append(FIBER, new Resource(FIBER, "Fiber"));
-            append(FLINT, new Resource(FLINT, "Flint"));
-            append(GASOLINE, new Resource(GASOLINE, "Gasoline"));
-            append(GUNPOWDER, new Resource(GUNPOWDER, "Gunpowder"));
-            append(HIDE, new Resource(HIDE, "Hide"));
-            append(KERATIN, new Resource(KERATIN, "Keratin"));
-            append(METAL_INGOT, new Resource(METAL_INGOT, "Metal Ingot"));
-            append(METAL_ORE, new Resource(METAL_ORE, "Metal Ore"));
-            append(OBSIDIAN, new Resource(OBSIDIAN, "Obsidian"));
-            append(OIL, new Resource(OIL, "Oil"));
-            append(ORGANIC_POLYMER, new Resource(ORGANIC_POLYMER, "Organic Polymer"));
-            append(PELT, new Resource(PELT, "Pelt"));
-            append(POLYMER, new Resource(POLYMER, "Polymer"));
-            append(RARE_FLOWER, new Resource(RARE_FLOWER, "Rare Flower"));
-            append(RARE_MUSHROOM, new Resource(RARE_MUSHROOM, "Rare Mushroom"));
-            append(SILICA_PEARLS, new Resource(SILICA_PEARLS, "Silica Pearls"));
-            append(SPARKPOWDER, new Resource(SPARKPOWDER, "Sparkpowder"));
-            append(STONE, new Resource(STONE, "Stone"));
-            append(THATCH, new Resource(THATCH, "Thatch"));
-            append(WOOD, new Resource(WOOD, "Wood"));
-            append(WOOLLY_RHINO_HORN, new Resource(WOOLLY_RHINO_HORN, "Woolly Rhino Horn"));
+            append(ANGLER_GEL, "Angler Gel");
+            append(BLACK_PEARL, "Black Pearl");
+            append(CEMENTING_PASTE, "Cementing Paste");
+            append(CHARCOAL, "Charoal");
+            append(CHITIN, "Chitin");
+            append(CRYSTAL, "Crystal");
+            append(ELECTRONICS, "Electronics");
+            append(FIBER, "Fiber");
+            append(FLINT, "Flint");
+            append(GASOLINE, "Gasoline");
+            append(GUNPOWDER, "Gunpowder");
+            append(HIDE, "Hide");
+            append(KERATIN, "Keratin");
+            append(METAL_INGOT, "Metal Ingot");
+            append(METAL_ORE, "Metal Ore");
+            append(OBSIDIAN, "Obsidian");
+            append(OIL, "Oil");
+            append(ORGANIC_POLYMER, "Organic Polymer");
+            append(PELT, "Pelt");
+            append(POLYMER, "Polymer");
+            append(RARE_FLOWER, "Rare Flower");
+            append(RARE_MUSHROOM, "Rare Mushroom");
+            append(SILICA_PEARLS, "Silica Pearls");
+            append(SPARKPOWDER, "Sparkpowder");
+            append(STONE, "Stone");
+            append(THATCH, "Thatch");
+            append(WOOD, "Wood");
+            append(WOOLLY_RHINO_HORN, "Woolly Rhino Horn");
         }
     };
 
@@ -79,22 +79,7 @@ public class ResourceInitializer {
      *
      * @return SpareArray of Resource Objects
      */
-    public static SparseArray<Resource> getResources() {
+    public static SparseArray<String> getResources() {
         return resources;
-    }
-
-    /**
-     * Retrieve the relative Resource Object of its ID
-     *
-     * @param imageId ID of requested Resource Object to retrieve
-     * @return Resource Object as found by its ID in the list
-     */
-    public static Resource getResource(int imageId) {
-        return resources.get(imageId);
-    }
-
-    public static CraftableResource getCraftableResource(int imageId) {
-        Resource resource = resources.get(imageId);
-        return new CraftableResource(resource.getName(), resource.getImageId());
     }
 }

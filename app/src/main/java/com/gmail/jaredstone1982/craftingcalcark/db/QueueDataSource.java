@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
@@ -13,28 +12,18 @@ import com.gmail.jaredstone1982.craftingcalcark.model.CraftableEngram;
 import com.gmail.jaredstone1982.craftingcalcark.model.CraftableResource;
 import com.gmail.jaredstone1982.craftingcalcark.model.DetailEngram;
 import com.gmail.jaredstone1982.craftingcalcark.model.Queue;
+import com.gmail.jaredstone1982.craftingcalcark.model.Resource;
 
 import java.util.HashMap;
 
 public class QueueDataSource {
+    private static final String LOGTAG = "QUEUEDATA";
 
-    private String LOGTAG;
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
 
-    public QueueDataSource(Context context, String tag) {
-        this.LOGTAG = tag;
+    public QueueDataSource(Context context, String LOGTAG) {
         this.openHelper = new DBOpenHelper(context);
-    }
-
-    public void Open() {
-        database = openHelper.getWritableDatabase();
-        Helper.Log(LOGTAG, "Database open");
-    }
-
-    public void Close() {
-        database.close();
-        Helper.Log(LOGTAG, "Database closed");
     }
 
     public Queue Insert(long engramId, int quantity) {
@@ -55,6 +44,7 @@ public class QueueDataSource {
 
     /**
      * Updates 'queue' table with new quantity. TODO: No error checking
+     *
      * @param queue
      */
     public void Update(Queue queue) {
@@ -118,10 +108,10 @@ public class QueueDataSource {
 
     public SparseArray<CraftableResource> findAllResources() {
         Cursor cursor = database.rawQuery(
-                "SELECT " + DBOpenHelper.TABLE_RESOURCE + ".*, " + DBOpenHelper.TABLE_QUEUE + ".* " +
-                        " FROM " + DBOpenHelper.TABLE_RESOURCE +
+                "SELECT " + DBOpenHelper.TABLE_COMPOSITION + ".*, " + DBOpenHelper.TABLE_QUEUE + ".* " +
+                        " FROM " + DBOpenHelper.TABLE_COMPOSITION +
                         " INNER JOIN " + DBOpenHelper.TABLE_QUEUE +
-                        " ON " + DBOpenHelper.TABLE_RESOURCE + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM +
+                        " ON " + DBOpenHelper.TABLE_COMPOSITION + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM +
                         " = " + DBOpenHelper.TABLE_QUEUE + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM,
                 null, null
         );
@@ -134,22 +124,21 @@ public class QueueDataSource {
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                long id = cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_ID);
-                String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_NAME));
-                int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID));
-                int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_QUANTITY));
+                long compositionId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_COMPOSITION_ID));
+                int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY));
+                long engramId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_ENGRAM));
+                long resourceId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_RESOURCE));
                 int quantityPer = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
 
-                CraftableResource resource;
-                if (resources.indexOfKey(imageId) > -1) {
-                    resource = resources.get(imageId);
+                CraftableResource resource = new CraftableResource(findSingleResource(resourceId));
+                if (resources.indexOfKey(resource.getImageId()) > -1) {
+                    resource = resources.get(resource.getImageId());
                     resource.increaseQuantity(quantity * quantityPer);
                 } else {
-                    resource = new CraftableResource(id, name, imageId);
                     resource.setQuantity(quantity * quantityPer);
                 }
 
-                resources.put(imageId, resource);
+                resources.put(resource.getImageId(), resource);
             }
         }
 
@@ -158,7 +147,7 @@ public class QueueDataSource {
 
     public SparseArray<CraftableResource> findEngramResources(Long id) {
         Cursor cursor = database.rawQuery(
-                "SELECT * FROM " + DBOpenHelper.TABLE_RESOURCE +
+                "SELECT * FROM " + DBOpenHelper.TABLE_COMPOSITION +
                         " WHERE " + DBOpenHelper.COLUMN_TRACK_ENGRAM +
                         " = " + id,
                 null, null
@@ -172,13 +161,15 @@ public class QueueDataSource {
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                long id = cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_ID);
-                String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_NAME));
-                int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID));
-                int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_QUANTITY));
+                long compositionId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_COMPOSITION_ID));
+                int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY));
+                long engramId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_ENGRAM));
+                long resourceId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_RESOURCE));
 
-                CraftableResource resource = new CraftableResource(id, name, imageId, quantity);
-                resources.put(imageId, resource);
+                CraftableResource resource = new CraftableResource(findSingleResource(resourceId), quantity);
+                resource.setQuantity(quantity);
+
+                resources.put(resource.getImageId(), resource);
             }
         }
 
@@ -213,6 +204,56 @@ public class QueueDataSource {
             engram = new DetailEngram(id, name, imageId, description, quantity, composition);
         }
         return engram;
+    }
+
+    /**
+     * Returns a Resource object, found by its imageId
+     *
+     * @param imageId int used to find requested Resource object
+     * @return Resource
+     */
+    private Resource findSingleResource(int imageId) {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_RESOURCE +
+                        " WHERE " + DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID +
+                        " = " + imageId,
+                null, null
+        );
+
+        return cursorToSingleResource(cursor);
+    }
+
+    /**
+     * Returns a Resource object, found by its imageId
+     *
+     * @param id long value used to find requested Resource object
+     * @return Resource
+     */
+    private Resource findSingleResource(long id) {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_RESOURCE +
+                        " WHERE " + DBOpenHelper.COLUMN_RESOURCE_ID +
+                        " = " + id,
+                null, null
+        );
+
+        return cursorToSingleResource(cursor);
+    }
+
+    public Resource cursorToSingleResource(Cursor cursor) {
+        Resource resource = null;
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_NAME));
+            int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID));
+
+            resource = new Resource(id, name, imageId);
+        }
+
+        return resource;
     }
 
     public int findSingleQuantity(Long id) {
@@ -278,12 +319,22 @@ public class QueueDataSource {
     public void DeleteTableData() {
         int rows = database.delete(DBOpenHelper.TABLE_QUEUE, "1", null);
 
-        Helper.Log(LOGTAG,"-- Deleted " + rows + " rows from table: " + DBOpenHelper.TABLE_QUEUE);
+        Helper.Log(LOGTAG, "-- Deleted " + rows + " rows from table: " + DBOpenHelper.TABLE_QUEUE);
     }
 
     public void DropTable() {
         DBOpenHelper.dropTable(database, DBOpenHelper.TABLE_QUEUE);
 
         Helper.Log(LOGTAG, "-- Dropped table: " + DBOpenHelper.TABLE_QUEUE);
+    }
+
+    public void Open() {
+        database = openHelper.getWritableDatabase();
+        Helper.Log(LOGTAG, "Database open");
+    }
+
+    public void Close() {
+        database.close();
+        Helper.Log(LOGTAG, "Database closed");
     }
 }

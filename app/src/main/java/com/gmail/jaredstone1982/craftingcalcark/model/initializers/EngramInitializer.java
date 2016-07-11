@@ -148,7 +148,7 @@ public class EngramInitializer {
     };
 
     /**
-     * Return a list of InitEngram Objects as generated from DB
+     * Return a list of InitEngram Objects as generated for database
      *
      * @return SparseArray of InitEngram Objects
      */
