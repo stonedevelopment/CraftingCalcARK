@@ -27,9 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView craftingQueueEngramList;
     private RecyclerView craftingQueueResourceList;
 
-    // TODO: 7/10/2016 Rework how the ListAdapters are named to better reflect their jobs
-    private EngramListAdapter mEngramAdapter;
-    private CraftableEngramListAdapter engramListAdapter;
+    private EngramListAdapter engramListAdapter;
+    private CraftableEngramListAdapter craftableEngramListAdapter;
     private ResourceListAdapter resourceListAdapter;
 
     private DisplayCase displayCase;
@@ -50,21 +49,21 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager_EngramList =
                 new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
         if (displayCaseEngramList != null) {
-            mEngramAdapter = new EngramListAdapter(displayCase.getEngrams());
+            engramListAdapter = new EngramListAdapter(displayCase.getEngrams());
 
             displayCaseEngramList.setLayoutManager(mLayoutManager_EngramList);
             displayCaseEngramList.addOnItemTouchListener(createRecyclerTouchListener(this, displayCaseEngramList));
-            displayCaseEngramList.setAdapter(mEngramAdapter);
+            displayCaseEngramList.setAdapter(engramListAdapter);
         }
 
         RecyclerView.LayoutManager mLayoutManager_CraftingQueueEngramList =
                 new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         if (craftingQueueEngramList != null) {
-            engramListAdapter = new CraftableEngramListAdapter(craftingQueue.getEngrams());
+            craftableEngramListAdapter = new CraftableEngramListAdapter(craftingQueue.getEngrams());
 
             craftingQueueEngramList.setLayoutManager(mLayoutManager_CraftingQueueEngramList);
             craftingQueueEngramList.addOnItemTouchListener(createRecyclerTouchListener(this, craftingQueueEngramList));
-            craftingQueueEngramList.setAdapter(engramListAdapter);
+            craftingQueueEngramList.setAdapter(craftableEngramListAdapter);
         }
 
         RecyclerView.LayoutManager mLayoutManager_CraftingQueueResourceList =
@@ -85,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position) {
                         if (recyclerView.equals(displayCaseEngramList)) {
-                            craftingQueue.increaseQuantity(mEngramAdapter.getEngram(position).getId(), 1);
-                        } else {
                             craftingQueue.increaseQuantity(engramListAdapter.getEngram(position).getId(), 1);
+                        } else {
+                            craftingQueue.increaseQuantity(craftableEngramListAdapter.getEngram(position).getId(), 1);
                         }
 
                         refreshDisplayForCraftingQueue();
@@ -101,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
                         // When finished, a call to refreshlists should add them all back
                         Intent intent = new Intent(context, DetailActivity.class);
                         if (recyclerView.equals(displayCaseEngramList)) {
-                            intent.putExtra(Helper.DETAIL_ID, mEngramAdapter.getEngram(position).getId());
-                        } else {
                             intent.putExtra(Helper.DETAIL_ID, engramListAdapter.getEngram(position).getId());
+                        } else {
+                            intent.putExtra(Helper.DETAIL_ID, craftableEngramListAdapter.getEngram(position).getId());
                         }
 
                         startActivityForResult(intent, Helper.DETAIL_ID_CODE);
@@ -172,15 +171,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshDisplayForDisplayCase() {
-        mEngramAdapter.setEngrams(displayCase.getEngrams());
-        mEngramAdapter.Refresh();
+        engramListAdapter.setEngrams(displayCase.getEngrams());
+        engramListAdapter.Refresh();
     }
 
     private void refreshDisplayForCraftingQueue() {
-        engramListAdapter.setEngrams(craftingQueue.getEngrams());
+        craftableEngramListAdapter.setEngrams(craftingQueue.getEngrams());
         resourceListAdapter.setResources(craftingQueue.getResources());
 
-        engramListAdapter.Refresh();
+        craftableEngramListAdapter.Refresh();
         resourceListAdapter.Refresh();
     }
 
