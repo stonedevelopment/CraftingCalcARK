@@ -1,6 +1,5 @@
 package com.gmail.jaredstone1982.craftingcalcark;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +21,7 @@ import com.gmail.jaredstone1982.craftingcalcark.model.listeners.RecyclerTouchLis
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "MAINACTIVITY";
+    private static boolean FILTERED = false;
 
     private RecyclerView displayCaseEngramList;
     private RecyclerView craftingQueueEngramList;
@@ -49,20 +49,60 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager_EngramList =
                 new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
         if (displayCaseEngramList != null) {
+            RecyclerTouchListener displayCaseTouchListener = new RecyclerTouchListener(this, displayCaseEngramList,
+                    new RecyclerTouchListener.ClickListener() {
+                        @Override
+                        public void onClick(View view, int position) {
+                            if (!FILTERED) {
+                                craftingQueue.increaseQuantity(engramListAdapter.getEngram(position).getId(), 1);
+
+                                refreshDisplayForCraftingQueue();
+                            } else {
+                                // travel through levels of folder hierarchies
+                            }
+                        }
+
+                        @Override
+                        public void onLongClick(View view, int position) {
+                            Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                            intent.putExtra(Helper.DETAIL_ID, engramListAdapter.getEngram(position).getId());
+
+                            startActivityForResult(intent, Helper.DETAIL_ID_CODE);
+                        }
+                    });
+
             engramListAdapter = new EngramListAdapter(displayCase.getEngrams());
 
             displayCaseEngramList.setLayoutManager(mLayoutManager_EngramList);
-            displayCaseEngramList.addOnItemTouchListener(createRecyclerTouchListener(this, displayCaseEngramList));
+            displayCaseEngramList.addOnItemTouchListener(displayCaseTouchListener);
             displayCaseEngramList.setAdapter(engramListAdapter);
         }
 
         RecyclerView.LayoutManager mLayoutManager_CraftingQueueEngramList =
                 new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         if (craftingQueueEngramList != null) {
+            RecyclerTouchListener craftingQueueTouchListener = new RecyclerTouchListener(this, craftingQueueEngramList,
+                    new RecyclerTouchListener.ClickListener() {
+                        @Override
+                        public void onClick(View view, int position) {
+                            craftingQueue.increaseQuantity(craftableEngramListAdapter.getEngram(position).getId(), 1);
+
+                            refreshDisplayForCraftingQueue();
+                        }
+
+                        @Override
+                        public void onLongClick(View view, int position) {
+                            Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                            intent.putExtra(Helper.DETAIL_ID, craftableEngramListAdapter.getEngram(position).getId());
+
+                            startActivityForResult(intent, Helper.DETAIL_ID_CODE);
+                        }
+                    });
+
             craftableEngramListAdapter = new CraftableEngramListAdapter(craftingQueue.getEngrams());
 
             craftingQueueEngramList.setLayoutManager(mLayoutManager_CraftingQueueEngramList);
-            craftingQueueEngramList.addOnItemTouchListener(createRecyclerTouchListener(this, craftingQueueEngramList));
+            craftingQueueEngramList.addOnItemTouchListener(craftingQueueTouchListener);
             craftingQueueEngramList.setAdapter(craftableEngramListAdapter);
         }
 
@@ -76,38 +116,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         createExtraViews();
-    }
-
-    private RecyclerTouchListener createRecyclerTouchListener(final Context context, final RecyclerView recyclerView) {
-        return new RecyclerTouchListener(this, recyclerView,
-                new RecyclerTouchListener.ClickListener() {
-                    @Override
-                    public void onClick(View view, int position) {
-                        if (recyclerView.equals(displayCaseEngramList)) {
-                            craftingQueue.increaseQuantity(engramListAdapter.getEngram(position).getId(), 1);
-                        } else {
-                            craftingQueue.increaseQuantity(craftableEngramListAdapter.getEngram(position).getId(), 1);
-                        }
-
-                        refreshDisplayForCraftingQueue();
-                    }
-
-                    @Override
-                    public void onLongClick(View view, int position) {
-                        // Call detail activity for [engram]
-                        // Adjust quantities in new activity
-                        // Save quantities to database
-                        // When finished, a call to refreshlists should add them all back
-                        Intent intent = new Intent(context, DetailActivity.class);
-                        if (recyclerView.equals(displayCaseEngramList)) {
-                            intent.putExtra(Helper.DETAIL_ID, engramListAdapter.getEngram(position).getId());
-                        } else {
-                            intent.putExtra(Helper.DETAIL_ID, craftableEngramListAdapter.getEngram(position).getId());
-                        }
-
-                        startActivityForResult(intent, Helper.DETAIL_ID_CODE);
-                    }
-                });
     }
 
     @Override

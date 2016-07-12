@@ -22,7 +22,6 @@ public class Helper {
 
     public static void Log(String tag, String tag2, String message) {
         if (DEBUG) Log.d(tag, tag2 + "> " + message);
-
     }
 
     public static String ArrayToString(SparseIntArray array) {

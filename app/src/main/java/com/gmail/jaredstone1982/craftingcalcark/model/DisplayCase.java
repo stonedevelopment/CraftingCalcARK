@@ -34,7 +34,7 @@ public class DisplayCase {
         return engrams;
     }
 
-    public void Reset() {
+    private void Reset() {
         dataSource.Reset();
     }
 }
