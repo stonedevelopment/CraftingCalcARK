@@ -3,41 +3,33 @@ package com.gmail.jaredstone1982.craftingcalcark.model;
 import android.content.Context;
 import android.util.SparseArray;
 
-import com.gmail.jaredstone1982.craftingcalcark.db.QueueDataSource;
+import com.gmail.jaredstone1982.craftingcalcark.db.DataSource;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
-
-import java.util.HashMap;
 
 /**
  * Proposed idea for concealing the crafting queue and its objects
  * Furthermore, CraftingQueue seems to be evolving into a database handler, be advised.
- * TODO Will be organizing QueueDataSource and the other DataSource classes to inherit from a base class.
  */
 public class CraftingQueue {
     private static final String LOGTAG = "CRAFTING";
 
-    private QueueDataSource dataSource;
+    private DataSource dataSource;
 
     public CraftingQueue(Context context) {
-        dataSource = new QueueDataSource(context, LOGTAG);
+        dataSource = new DataSource(context, LOGTAG);
         dataSource.Open();
     }
 
-    private HashMap<Long, Queue> getQueues() {
-        return dataSource.findAllQueues();
-    }
-
     public SparseArray<CraftableEngram> getEngrams() {
-        return dataSource.findAllEngrams();
+        return dataSource.findAllCraftableEngrams();
     }
 
     public SparseArray<CraftableResource> getResources() {
-        return dataSource.findAllResources();
+        return dataSource.findAllCraftableResources();
     }
 
     public void increaseQuantity(long engramId, int amount) {
-        HashMap<Long, Queue> queues = getQueues();
-        Queue queue = queues.get(engramId);
+        Queue queue = dataSource.findSingleQueue(engramId);
 
         // if queue is empty, add new queue into system
         // if queue exists, increase quantity by amount, update system with new object
@@ -50,8 +42,7 @@ public class CraftingQueue {
     }
 
     public void setQuantity(long engramId, int quantity) {
-        HashMap<Long, Queue> queues = getQueues();
-        Queue queue = queues.get(engramId);
+        Queue queue = dataSource.findSingleQueue(engramId);
 
         // if queue is empty and quantity is above 0, add new queue into database
         if (queue == null) {
@@ -63,9 +54,9 @@ public class CraftingQueue {
 
         // if quantity is 0, remove queue from database
         if (quantity == 0) {
-            dataSource.Delete(engramId);
-
             Helper.Log(LOGTAG, "-- setQuantity() > Quantity is 0, deleting record of engramId: " + engramId);
+
+            dataSource.Delete(engramId);
             return;
         }
 

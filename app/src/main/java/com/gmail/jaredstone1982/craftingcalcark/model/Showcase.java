@@ -3,7 +3,7 @@ package com.gmail.jaredstone1982.craftingcalcark.model;
 import android.content.Context;
 import android.util.SparseArray;
 
-import com.gmail.jaredstone1982.craftingcalcark.db.QueueDataSource;
+import com.gmail.jaredstone1982.craftingcalcark.db.DataSource;
 
 /**
  * Description: Proposed idea to display the details of a single Engram from the DisplayCase object
@@ -15,9 +15,9 @@ public class Showcase {
     private DetailEngram engram;
 
     public Showcase(Context context, Long id) {
-        QueueDataSource dataSource = new QueueDataSource(context, "SHOWCASE");
+        DataSource dataSource = new DataSource(context, "SHOWCASE");
         dataSource.Open();
-        engram = dataSource.findSingleEngram(id);
+        engram = dataSource.findSingleDetailEngram(id);
         dataSource.Close();
     }
 

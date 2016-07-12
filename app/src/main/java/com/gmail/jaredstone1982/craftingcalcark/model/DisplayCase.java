@@ -26,10 +26,10 @@ public class DisplayCase {
     public SparseArray<DisplayEngram> getEngrams() {
         SparseArray<DisplayEngram> engrams;
 
-        engrams = dataSource.findAll();
+        engrams = dataSource.findAllDisplayEngrams();
         if (engrams.size() == 0) {
             dataSource.Reset(); // FIXME: Initializing both Resources and Engrams from inside DisplayCase class? Seems not quite right.
-            engrams = dataSource.findAll();
+            engrams = dataSource.findAllDisplayEngrams();
         }
         return engrams;
     }

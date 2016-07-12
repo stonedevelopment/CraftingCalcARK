@@ -15,7 +15,11 @@ public class Helper {
     public static final int DETAIL_ID_CODE = 1000;
 
     public static void Log(String tag, String message) {
-        Log.d(tag, message);
+        Log.d(tag, message); // TODO Display if DEBUG is true
+    }
+
+    public static void Log(String tag, String tag2, String message) {
+        Log.d(tag, tag2 + "> " + message); // TODO Display if DEBUG is true
     }
 
     public static String ArrayToString(SparseIntArray array) {
