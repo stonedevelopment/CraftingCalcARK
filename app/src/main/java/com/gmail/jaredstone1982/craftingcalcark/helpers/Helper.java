@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Various methods that help debugging and the like
  */
 public class Helper {
-    private static final boolean DEBUG = false;
+    private static boolean isDebug = false;
 
     public static final String DETAIL_QUANTITY = "DETAIL_QUANTITY";
     public static final String DETAIL_ID = "DETAIL_ID";
@@ -17,11 +17,15 @@ public class Helper {
     public static final int DETAIL_ID_CODE = 1000;
 
     public static void Log(String tag, String message) {
-        if (DEBUG) Log.d(tag, message);
+        if (isDebug) Log.d(tag, message);
     }
 
     public static void Log(String tag, String tag2, String message) {
-        if (DEBUG) Log.d(tag, tag2 + "> " + message);
+        if (isDebug) Log.d(tag, tag2 + "> " + message);
+    }
+
+    public static void setDebug(boolean i) {
+        isDebug = i;
     }
 
     public static String ArrayToString(SparseIntArray array) {

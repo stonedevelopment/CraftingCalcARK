@@ -34,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.engram_detail_imageView);
         TextView nameText = (TextView) findViewById(R.id.engram_detail_nameText);
         TextView descriptionText = (TextView) findViewById(R.id.engram_detail_descriptionText);
+        TextView categoryText = (TextView) findViewById(R.id.engram_detail_categoryText);
         NumberPicker quantityNumberPicker = (NumberPicker) findViewById(R.id.engram_detail_quantityNumberPicker);
         RecyclerView resourceList = (RecyclerView) findViewById(R.id.engram_detail_resources);
         Button saveButton = (Button) findViewById(R.id.engram_detail_save_button);
@@ -47,15 +48,12 @@ public class DetailActivity extends AppCompatActivity {
         if (showcase.getQuantity() == 0) {
             showcase.setQuantity(1);
         }
-        if (imageView != null &&
-                nameText != null &&
-                descriptionText != null &&
-                quantityNumberPicker != null &&
-                saveButton != null &&
-                resourceList != null) {
+        if (imageView != null && nameText != null && descriptionText != null && categoryText != null &&
+                quantityNumberPicker != null && saveButton != null && resourceList != null) {
             imageView.setImageResource(showcase.getImageId());
             nameText.setText(showcase.getName());
             descriptionText.setText(showcase.getDescription());
+            categoryText.setText(showcase.getCategoryDescription());
 
             resourceListAdapter = new ResourceListAdapter(showcase.getComposition());
 

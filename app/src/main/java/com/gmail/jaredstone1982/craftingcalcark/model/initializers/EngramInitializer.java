@@ -1,6 +1,5 @@
 package com.gmail.jaredstone1982.craftingcalcark.model.initializers;
 
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 
 import com.gmail.jaredstone1982.craftingcalcark.R;
@@ -33,11 +32,6 @@ public class EngramInitializer {
     public static final int STONE_WALL = R.drawable.structure_stone_stone_wall;
     public static final int STONE_WINDOWFRAME = R.drawable.structure_stone_stone_windowframe;
 
-    public static final class CATEGORY {
-        public static final String STRUCTURES = "Structures";
-        public static final String STONE = "Stone";
-    }
-
     private static List<InitEngram> engrams = new ArrayList<InitEngram>() {
         {
             add(new InitEngram(
@@ -49,10 +43,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 30);
                         append(ResourceInitializer.THATCH, 20);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
                     REINFORCED_TRAPDOOR,
                     "Reinforced Trapdoor",
@@ -62,10 +53,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 14);
                         append(ResourceInitializer.THATCH, 8);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
                     REINFORCED_WINDOW,
                     "Reinforced Window",
@@ -75,10 +63,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 4);
                         append(ResourceInitializer.THATCH, 3);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
                     REINFORCED_WOODEN_DOOR,
                     "Reinforced Wooden Door",
@@ -88,10 +73,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 14);
                         append(ResourceInitializer.THATCH, 8);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
                     SLOPED_STONE_ROOF,
                     "Sloped Stone Roof",
@@ -101,10 +83,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 30);
                         append(ResourceInitializer.THATCH, 20);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
                     SLOPED_STONE_WALL_LEFT,
                     "Sloped Stone Wall Left",
@@ -114,10 +93,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 10);
                         append(ResourceInitializer.THATCH, 10);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
                     SLOPED_STONE_WALL_RIGHT,
                     "Sloped Stone Wall Right",
@@ -127,10 +103,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 10);
                         append(ResourceInitializer.THATCH, 10);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
                     STONE_CEILING,
                     "Stone Ceiling",
@@ -140,10 +113,7 @@ public class EngramInitializer {
                         append(ResourceInitializer.WOOD, 30);
                         append(ResourceInitializer.THATCH, 20);
                     }},
-                    new SparseArray<String>() {{
-                        append(0, CATEGORY.STRUCTURES);
-                        append(1, CATEGORY.STONE);
-                    }}));
+                    CategoryInitializer.STRUCTURES.STONE));
         }
     };
 

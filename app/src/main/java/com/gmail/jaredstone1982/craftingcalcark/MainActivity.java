@@ -21,11 +21,7 @@ import com.gmail.jaredstone1982.craftingcalcark.model.listeners.RecyclerTouchLis
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "MAINACTIVITY";
-    private static boolean FILTERED = false;
-
-    private RecyclerView displayCaseEngramList;
-    private RecyclerView craftingQueueEngramList;
-    private RecyclerView craftingQueueResourceList;
+    private static final boolean FILTERED = false;
 
     private EngramListAdapter engramListAdapter;
     private CraftableEngramListAdapter craftableEngramListAdapter;
@@ -39,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        displayCaseEngramList = (RecyclerView) findViewById(R.id.content_engrams);
-        craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
-        craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
+        RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_engrams);
+        RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
+        RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
 
         displayCase = new DisplayCase(this);
         craftingQueue = new CraftingQueue(this);
@@ -150,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_show_filtered:
                 // TODO: 6/15/2016 Filtered = Organized into folders
+                displayCase.debugAllCategories();
                 break;
 
             case R.id.action_settings:

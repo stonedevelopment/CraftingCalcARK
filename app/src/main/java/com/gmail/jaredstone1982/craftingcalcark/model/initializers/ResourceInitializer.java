@@ -40,13 +40,16 @@ public class ResourceInitializer {
     public static final int ANGLER_GEL = R.drawable.angler_gel;
     public static final int BLACK_PEARL = R.drawable.black_pearl;
     public static final int WOOLLY_RHINO_HORN = R.drawable.woolly_rhino_horn;
+    public static final int ABSORBENT_SUBSTRATE = R.drawable.absorbent_substrate;
+    public static final int LEECH_BLOOD = R.drawable.leech_blood;
+    public static final int SAP = R.drawable.sap;
 
     private static SparseArray<String> resources = new SparseArray<String>() {
         {
             append(ANGLER_GEL, "Angler Gel");
             append(BLACK_PEARL, "Black Pearl");
             append(CEMENTING_PASTE, "Cementing Paste");
-            append(CHARCOAL, "Charoal");
+            append(CHARCOAL, "Charcoal");
             append(CHITIN, "Chitin");
             append(CRYSTAL, "Crystal");
             append(ELECTRONICS, "Electronics");
@@ -71,6 +74,9 @@ public class ResourceInitializer {
             append(THATCH, "Thatch");
             append(WOOD, "Wood");
             append(WOOLLY_RHINO_HORN, "Woolly Rhino Horn");
+            append(ABSORBENT_SUBSTRATE, "Absorbent Substrate");
+            append(LEECH_BLOOD, "Leech Blood");
+            append(SAP, "Sap");
         }
     };
 

@@ -16,6 +16,7 @@ import com.gmail.jaredstone1982.craftingcalcark.model.DisplayEngram;
 import com.gmail.jaredstone1982.craftingcalcark.model.InitEngram;
 import com.gmail.jaredstone1982.craftingcalcark.model.Queue;
 import com.gmail.jaredstone1982.craftingcalcark.model.Resource;
+import com.gmail.jaredstone1982.craftingcalcark.model.initializers.CategoryInitializer;
 import com.gmail.jaredstone1982.craftingcalcark.model.initializers.EngramInitializer;
 import com.gmail.jaredstone1982.craftingcalcark.model.initializers.ResourceInitializer;
 
@@ -82,6 +83,17 @@ public class DataSource {
         return cursorToDisplayEngrams(cursor);
     }
 
+    public SparseArray<DisplayEngram> findAllDisplayEngrams(long categoryId) {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_ENGRAM +
+                        " WHERE " + DBOpenHelper.COLUMN_ENGRAM_CATEGORY_ID + " = " +
+                        categoryId,
+                null, null
+        );
+
+        return cursorToDisplayEngrams(cursor);
+    }
+
     public HashMap<Long, Queue> findAllQueues() {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_QUEUE,
@@ -93,10 +105,22 @@ public class DataSource {
         return cursorToQueues(cursor);
     }
 
-    public SparseArray<Category> findEngramCategories(long engramId) {
+    public SparseArray<Category> findAllCategories() {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY,
+                null, null
+        );
+
+        Helper.Log(LOGTAG, "-- findAllCategories() > Returned " + cursor.getCount() + " rows from table: " + DBOpenHelper.TABLE_CATEGORY);
+
+        return cursorToCategories(cursor);
+    }
+
+    public SparseArray<Category> findFilteredCategories(long categoryId) {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY +
-                        " WHERE " + DBOpenHelper.COLUMN_TRACK_ENGRAM + " = " + engramId,
+                        " WHERE " + DBOpenHelper.COLUMN_CATEGORY_ID + " = " +
+                        categoryId,
                 null, null
         );
 
@@ -172,6 +196,16 @@ public class DataSource {
         return cursorToSingleResource(cursor);
     }
 
+    public Category findSingleCategory(long categoryId) {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY +
+                        " WHERE " + DBOpenHelper.COLUMN_CATEGORY_ID + " = " + categoryId,
+                null, null
+        );
+
+        return cursorToSingleCategory(cursor);
+    }
+
     // -- Cursor Methods --
 
     public DetailEngram cursorToSingleDetailEngram(Cursor cursor) {
@@ -182,10 +216,12 @@ public class DataSource {
             String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_NAME));
             int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID));
             String description = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_DESCRIPTION));
+            long categoryId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_CATEGORY_ID));
             int quantity = findSingleQueue(id).getQuantity();
+
             SparseArray<CraftableResource> composition = findEngramResources(id);
 
-            return new DetailEngram(id, name, imageId, description, quantity, composition);
+            return new DetailEngram(id, name, imageId, description, categoryId, quantity, composition);
         }
 
         return null;
@@ -213,6 +249,21 @@ public class DataSource {
             int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID));
 
             return new Resource(id, name, imageId);
+        }
+
+        return null;
+    }
+
+    private Category cursorToSingleCategory(Cursor cursor) {
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_NAME));
+            int level = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_LEVEL));
+            long parent = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_PARENT));
+
+            return new Category(level, id, name, parent);
         }
 
         return null;
@@ -277,9 +328,9 @@ public class DataSource {
                 long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_ID));
                 String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_NAME));
                 int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID));
+                long categoryId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_CATEGORY_ID));
 
-                DisplayEngram engram = new DisplayEngram(id, name, imageId);
-                engram.setCategories(findEngramCategories(id));
+                DisplayEngram engram = new DisplayEngram(id, name, imageId, categoryId);
 
                 engrams.put(imageId, engram);
             }
@@ -295,11 +346,12 @@ public class DataSource {
             while (cursor.moveToNext()) {
                 long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_ID));
                 String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_NAME));
-                int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_IMAGE_ID));
+                int level = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_LEVEL));
+                long parent = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_PARENT));
 
-                Category category = new Category(id, name, imageId);
+                Category category = new Category(level, id, name, parent);
 
-                categories.put(imageId, category);
+                categories.put(categories.size(), category);
             }
         }
 
@@ -381,6 +433,18 @@ public class DataSource {
         Helper.Log(LOGTAG, "-> Resource (" + name + ") inserted at row " + id);
     }
 
+    private void Insert(Category category) {
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.COLUMN_CATEGORY_ID, category.getId());
+        values.put(DBOpenHelper.COLUMN_CATEGORY_LEVEL, category.getLevel());
+        values.put(DBOpenHelper.COLUMN_CATEGORY_NAME, category.getName());
+        values.put(DBOpenHelper.COLUMN_CATEGORY_PARENT, category.getParent());
+
+        database.insert(DBOpenHelper.TABLE_CATEGORY, null, values);
+
+        Helper.Log(LOGTAG, "-> Category (" + category.getName() + ") inserted at row " + category.getId());
+    }
+
     /**
      * Inserts an InitEngram object into database, TODO used strictly for initializing
      *
@@ -391,6 +455,7 @@ public class DataSource {
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_NAME, engram.getName());
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_DESCRIPTION, engram.getDescription());
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID, engram.getImageId());
+        engramValues.put(DBOpenHelper.COLUMN_ENGRAM_CATEGORY_ID, engram.getCategoryId());
 
         engram.setId(database.insert(DBOpenHelper.TABLE_ENGRAM, null, engramValues));
 
@@ -406,24 +471,10 @@ public class DataSource {
 
             long compositionId = database.insert(DBOpenHelper.TABLE_COMPOSITION, null, compositionValues);
 
-            Helper.Log(LOGTAG, "--> Resource (" + resource.getName() + "/" + resource.getId() +
+            Helper.Log(LOGTAG, "--> Composition Resource (" + resource.getName() + "/" + resource.getId() +
                     " x" + engram.getCompositionIDs().valueAt(i) +
                     ") inserted into " + engram.getName() +
                     " at row " + compositionId);
-        }
-
-        for (int i = 0; i < engram.getCategory().size(); i++) {
-            String categoryName = engram.getCategory().valueAt(i);
-
-            ContentValues categoryValues = new ContentValues();
-            categoryValues.put(DBOpenHelper.COLUMN_CATEGORY_NAME, categoryName);
-            categoryValues.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
-
-            long categoryId = database.insert(DBOpenHelper.TABLE_CATEGORY, null, categoryValues);
-
-            Helper.Log(LOGTAG, "--> Category (" + categoryName +
-                    ") inserted into " + engram.getName() +
-                    " at row " + categoryId);
         }
     }
 
@@ -469,6 +520,13 @@ public class DataSource {
      */
     public void Initialize() {
         Helper.Log(LOGTAG, "** Initializing database..");
+
+        Helper.Log(LOGTAG, "-- Initializing Categories..");
+        List<Category> categories = CategoryInitializer.getCategories();
+        for (Category category : categories) {
+            Insert(category);
+        }
+        Helper.Log(LOGTAG, "-- Category initialization completed.");
 
         Helper.Log(LOGTAG, "-- Initializing Resources..");
         SparseArray<String> resources = ResourceInitializer.getResources();

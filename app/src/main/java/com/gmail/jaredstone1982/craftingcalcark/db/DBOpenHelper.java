@@ -9,7 +9,7 @@ import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String LOGTAG = "DB_HELPER";
     private static final String DATABASE_NAME = "ark.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
 
@@ -23,6 +23,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ENGRAM_NAME = "engramname";
     public static final String COLUMN_ENGRAM_DESCRIPTION = "engramdesc";
     public static final String COLUMN_ENGRAM_IMAGE_ID = "engramimage";
+    public static final String COLUMN_ENGRAM_CATEGORY_ID = "engramcatagory";
 
     public static final String TABLE_COMPOSITION = "composition";
     public static final String COLUMN_COMPOSITION_ID = "compositionid";
@@ -31,7 +32,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String TABLE_CATEGORY = "category";
     public static final String COLUMN_CATEGORY_ID = "categoryid";
     public static final String COLUMN_CATEGORY_NAME = "categoryname";
-    public static final String COLUMN_CATEGORY_IMAGE_ID = "categoryimage";
+    public static final String COLUMN_CATEGORY_LEVEL = "categorylevel";
+    public static final String COLUMN_CATEGORY_PARENT = "categoryparent";
 
     public static final String TABLE_QUEUE = "queue";
     public static final String COLUMN_QUEUE_ID = "queueid";
@@ -40,19 +42,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TRACK_ENGRAM = "trackengram";
     public static final String COLUMN_TRACK_RESOURCE = "trackresource";
 
-    private static final String TABLE_RESOURCE_CREATE =
-            "CREATE TABLE " + TABLE_RESOURCE + " (" +
-                    COLUMN_RESOURCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_RESOURCE_NAME + " TEXT, " +
-                    COLUMN_RESOURCE_IMAGE_ID + " INTEGER" +
-                    ")";
-
     private static final String TABLE_ENGRAM_CREATE =
             "CREATE TABLE " + TABLE_ENGRAM + " (" +
                     COLUMN_ENGRAM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_ENGRAM_NAME + " TEXT, " +
                     COLUMN_ENGRAM_DESCRIPTION + " TEXT, " +
-                    COLUMN_ENGRAM_IMAGE_ID + " INTEGER" +
+                    COLUMN_ENGRAM_IMAGE_ID + " INTEGER, " +
+                    COLUMN_ENGRAM_CATEGORY_ID + " INTEGER" +
                     ")";
 
     private static final String TABLE_COMPOSITION_CREATE =
@@ -65,21 +61,27 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY (" + COLUMN_TRACK_ENGRAM + ") REFERENCES " + TABLE_ENGRAM + " (" + COLUMN_ENGRAM_ID + ")" +
                     ")";
 
-    private static final String TABLE_CATEGORY_CREATE =
-            "CREATE TABLE " + TABLE_CATEGORY + " (" +
-                    COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_CATEGORY_NAME + " TEXT, " +
-                    COLUMN_CATEGORY_IMAGE_ID + " INTEGER, " +
-                    COLUMN_TRACK_ENGRAM + " INTEGER, " +
-                    "FOREIGN KEY (" + COLUMN_TRACK_ENGRAM + ") REFERENCES " + TABLE_ENGRAM + " (" + COLUMN_ENGRAM_ID + ")" +
-                    ")";
-
     public static final String TABLE_QUEUE_CREATE =
             "CREATE TABLE " + TABLE_QUEUE + " (" +
                     COLUMN_QUEUE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_QUEUE_QUANTITY + " INTEGER, " +
                     COLUMN_TRACK_ENGRAM + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_TRACK_ENGRAM + ") REFERENCES " + TABLE_ENGRAM + " (" + COLUMN_ENGRAM_ID + ")" +
+                    ")";
+
+    private static final String TABLE_RESOURCE_CREATE =
+            "CREATE TABLE " + TABLE_RESOURCE + " (" +
+                    COLUMN_RESOURCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_RESOURCE_NAME + " TEXT, " +
+                    COLUMN_RESOURCE_IMAGE_ID + " INTEGER" +
+                    ")";
+
+    private static final String TABLE_CATEGORY_CREATE =
+            "CREATE TABLE " + TABLE_CATEGORY + " (" +
+                    COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_CATEGORY_NAME + " TEXT, " +
+                    COLUMN_CATEGORY_LEVEL + " INTEGER, " +
+                    COLUMN_CATEGORY_PARENT + " INTEGER" +
                     ")";
 
     public DBOpenHelper(Context context) {
@@ -101,21 +103,21 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public static void createAllTables(SQLiteDatabase database) {
         Helper.Log(LOGTAG, "-- Creating all tables.");
-        createTable(database, TABLE_RESOURCE);
         createTable(database, TABLE_ENGRAM);
         createTable(database, TABLE_COMPOSITION);
-        createTable(database, TABLE_CATEGORY);
         createTable(database, TABLE_QUEUE);
+        createTable(database, TABLE_RESOURCE);
+        createTable(database, TABLE_CATEGORY);
         Helper.Log(LOGTAG, "-- All tables created.");
     }
 
     public static void dropAllTables(SQLiteDatabase database) {
         Helper.Log(LOGTAG, "-- Dropping all tables.");
-        dropTable(database, TABLE_QUEUE);
         dropTable(database, TABLE_CATEGORY);
+        dropTable(database, TABLE_RESOURCE);
+        dropTable(database, TABLE_QUEUE);
         dropTable(database, TABLE_COMPOSITION);
         dropTable(database, TABLE_ENGRAM);
-        dropTable(database, TABLE_RESOURCE);
         Helper.Log(LOGTAG, "-- All tables dropped.");
     }
 

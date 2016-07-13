@@ -12,13 +12,14 @@ import com.gmail.jaredstone1982.craftingcalcark.db.DataSource;
  * Variables: engram
  */
 public class Showcase {
+    private static final String LOGTAG = "SHOWCASE";
     private DetailEngram engram;
+    private DataSource dataSource;
 
     public Showcase(Context context, Long id) {
-        DataSource dataSource = new DataSource(context, "SHOWCASE");
+        this.dataSource = new DataSource(context, LOGTAG);
         dataSource.Open();
         engram = dataSource.findSingleDetailEngram(id);
-        dataSource.Close();
     }
 
     public DetailEngram getEngram() {
@@ -64,5 +65,22 @@ public class Showcase {
 
     public void setQuantity(int quantity) {
         engram.setQuantity(quantity);
+    }
+
+    public String getCategoryDescription() {
+        // String builder that builds a string of hierarchical categories
+
+        Category category = dataSource.findSingleCategory(engram.getCategoryId());
+        long parent = category.getParent();
+
+        StringBuilder builder = new StringBuilder(category.getName());
+        while (parent > 0) {
+            category = dataSource.findSingleCategory(parent);
+            parent = category.getParent();
+
+            builder.insert(0, category.getName() + "/");
+        }
+
+        return builder.toString();
     }
 }

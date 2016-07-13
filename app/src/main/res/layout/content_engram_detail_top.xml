@@ -30,6 +30,14 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/engram_detail_categoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:text="Structures/Wood/Storage"
+            android:textSize="12sp" />
+
+        <TextView
             android:id="@+id/engram_detail_descriptionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
