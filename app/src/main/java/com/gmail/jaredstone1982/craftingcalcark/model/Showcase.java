@@ -18,7 +18,7 @@ public class Showcase {
 
     public Showcase(Context context, Long id) {
         this.dataSource = new DataSource(context, LOGTAG);
-        dataSource.Open();
+
         engram = dataSource.findSingleDetailEngram(id);
     }
 

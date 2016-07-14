@@ -12,96 +12,217 @@ import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
  * Usage: Communicates with DataSource directly, returns data pulled from database
  * Used by: MainActivity
  * Variables: LOGTAG, dataSource
- * <p/>
- * TODO If level > 0, insert a BACK object containing a parent level variable
- * TODO If isFiltered, pull category objects from db, then pull engrams.. but how do we display them together in one listAdapter?
- * <p/>
- * <p/>
- * Last Edit: Added level variable to track where in the displayCase it is, if isFiltered is set to true
+ * Last Edit: Added methods to receive and change Categories based upon its level
  */
 public class DisplayCase {
     private static final String LOGTAG = "DISPLAYCASE";
+    private static final long ROOT = 0;
 
     private boolean isFiltered;
     private long level;
+    private long parent;
 
-//    private SparseArray<DisplayEngram> engrams;
-//    private SparseArray<Category> categories;
+    private SparseArray<DisplayEngram> engrams;
+    private SparseArray<Category> categories;
 
     private DataSource dataSource;
 
     public DisplayCase(Context context) {
+        isFiltered = true; // TODO: Retrieve filtered flag from Settings
+
+        level = 0;
+        parent = 0;
+
         dataSource = new DataSource(context, LOGTAG);
-        dataSource.Open();
 
-//        this.engrams = findAllDisplayEngrams();
-//        this.categories = findAllCategories();
-
-        this.isFiltered = false;
-        this.level = 0;
+        engrams = getEngrams();
+        categories = getCategories();
     }
 
     public boolean isFiltered() {
         return isFiltered;
     }
 
-    public void setIsFiltered(boolean filtered) {
-        this.isFiltered = filtered;
-    }
-
     public long getLevel() {
         return level;
+    }
+
+    public long getParent() {
+        return parent;
+    }
+
+    public boolean setIsFiltered(boolean filtered) {
+        if (isFiltered() != filtered) {
+            this.isFiltered = filtered;
+
+            engrams = getEngrams();
+            categories = getCategories();
+
+            return true;
+        }
+        return false;
     }
 
     public void setLevel(long level) {
         this.level = level;
     }
 
-    public SparseArray<DisplayEngram> getEngrams() {
-        return findAllDisplayEngrams();
+    public void setParent(long parent) {
+        this.parent = parent;
     }
 
-    private SparseArray<DisplayEngram> findAllDisplayEngrams() {
+    /**
+     * -- METHODS THAT RETURN TO VIEWHOLDER --
+     */
+
+    public int getImageId(int position) {
+        if (isFiltered) {
+            if (position >= categories.size()) {
+                position -= categories.size();
+
+                DisplayEngram engram = engrams.valueAt(position);
+
+                return engram.getImageId();
+            } else {
+                Category category = categories.valueAt(position);
+
+                return category.getImageId();
+            }
+        } else {
+            DisplayEngram engram = engrams.valueAt(position);
+
+            return engram.getImageId();
+        }
+    }
+
+    public String getName(int position) {
+        if (isFiltered) {
+            if (position >= categories.size()) {
+                position -= categories.size();
+
+                DisplayEngram engram = engrams.valueAt(position);
+
+                return engram.getName();
+            } else {
+                Category category = categories.valueAt(position);
+
+                return category.getName();
+            }
+        } else {
+            DisplayEngram engram = engrams.valueAt(position);
+
+            return engram.getName();
+        }
+    }
+
+    public String getName(long categoryId) {
+        if (categoryId > ROOT) {
+            Category category = getCategory(categoryId);
+            return "Go Back to " + category.getName();
+        } else {
+            return "Go Back";
+        }
+    }
+
+    /** -- PUBLIC METHODS -- */
+
+    public boolean isEngram(int position) {
+        return position >= categories.size();
+    }
+
+    public int getCount() {
+        return engrams.size() + categories.size();
+    }
+
+    public long getEngramId(int position) {
+        if (getLevel() > 0) {
+            position--;
+        }
+        return engrams.valueAt(position).getId();
+    }
+
+    public void changeCategory(int position) {
+        if (position < categories.size()) {
+            // position within bounds
+            Category category = categories.valueAt(position);
+
+            Helper.Log(LOGTAG, "Changing category to [" + position + "] " + category.toString());
+
+            if (getLevel() == ROOT) {
+                // ROOT LEVEL
+                setLevel(category.getId());   // Grabbing ID is the best way to track its location. TODO: Get rid of level variable in category object?
+                setParent(category.getParent());
+            } else {
+                if (position == 0) {
+                    // back button or FIRST CATEGORY, revert back to parent level or root level
+                    if (category.getParent() > ROOT) {
+                        Category parentCategory = getCategory(category.getParent());
+
+                        setLevel(category.getParent());
+                        setParent(parentCategory.getParent());
+                    } else {
+                        setLevel(ROOT);
+                        setParent(ROOT);
+                    }
+                } else {
+                    // position is > 0, making this a normal category object
+                    setLevel(category.getId());   // Grabbing ID is the best way to track its location. TODO: Get rid of level variable in category object?
+                    setParent(category.getParent());
+                }
+            }
+
+            // Update lists with new data
+            engrams = getEngrams();
+            categories = getCategories();
+        } else {
+            // position out of bounds
+        }
+    }
+
+    /**
+     * -- PRIVATE UTILITY METHODS --
+     */
+
+    private Category getCategory(long categoryId) {
+        return dataSource.findSingleCategory(categoryId);
+    }
+
+    private SparseArray<DisplayEngram> getEngrams() {
         SparseArray<DisplayEngram> engrams;
 
         if (isFiltered()) {
             engrams = dataSource.findAllDisplayEngrams(getLevel());
         } else {
             engrams = dataSource.findAllDisplayEngrams();
-            if (engrams.size() == 0) {
-                Reset(); // FIXME: Initializing both Resources and Engrams from inside DisplayCase class? Seems not quite right.
-                engrams = dataSource.findAllDisplayEngrams();
-            }
         }
         return engrams;
     }
 
-    private SparseArray<Category> findAllCategories() {
+    private SparseArray<Category> getCategories() {
         SparseArray<Category> categories = new SparseArray<>();
 
-        if (level > 0) {
-            Category category = new Category(0, 0, "Back", getLevel(), R.drawable.back);
-            categories.put(categories.size(), category);
+        if (isFiltered()) {
+            categories = dataSource.findFilteredCategories(getLevel());
+
+            if (getLevel() > 0) {
+                Category category = new Category(0, getLevel(), getName(getParent()), getParent(), R.drawable.back);
+                categories.put(0, category);
+            }
+
+            debugCategories(categories);
         }
-        categories = dataSource.findFilteredCategories(getLevel());
 
         return categories;
     }
 
-    private void Reset() {
-        dataSource.Reset();
-    }
+    private void debugCategories(SparseArray<Category> categories) {
+//        SparseArray<Category> categories = dataSource.findAllCategories();
 
-    public void debugAllCategories() {
-        SparseArray<Category> categories = dataSource.findAllCategories();
-
-        Helper.setDebug(true);
-        Helper.Log(LOGTAG, "-- Displaying all categories in database..");
+        Helper.Log(LOGTAG, "-- Displaying categories from level " + getLevel() + "..");
         for (int i = 0; i < categories.size(); i++) {
             Category category = categories.valueAt(i);
-            Helper.Log(LOGTAG, "-> " + category.toString());
+            Helper.Log(LOGTAG, "-> [" + i + "/" + categories.keyAt(i) + "] " + category.toString());
         }
         Helper.Log(LOGTAG, "-- Display completed.");
-        Helper.setDebug(false);
     }
 }

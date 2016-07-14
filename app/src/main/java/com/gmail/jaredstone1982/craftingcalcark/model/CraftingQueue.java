@@ -17,7 +17,6 @@ public class CraftingQueue {
 
     public CraftingQueue(Context context) {
         dataSource = new DataSource(context, LOGTAG);
-        dataSource.Open();
     }
 
     public SparseArray<CraftableEngram> getEngrams() {

@@ -12,22 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gmail.jaredstone1982.craftingcalcark.adapters.CraftableEngramListAdapter;
-import com.gmail.jaredstone1982.craftingcalcark.adapters.EngramListAdapter;
+import com.gmail.jaredstone1982.craftingcalcark.adapters.DisplayCaseListAdapter;
 import com.gmail.jaredstone1982.craftingcalcark.adapters.ResourceListAdapter;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 import com.gmail.jaredstone1982.craftingcalcark.model.CraftingQueue;
-import com.gmail.jaredstone1982.craftingcalcark.model.DisplayCase;
 import com.gmail.jaredstone1982.craftingcalcark.model.listeners.RecyclerTouchListener;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "MAINACTIVITY";
     private static final boolean FILTERED = false;
 
-    private EngramListAdapter engramListAdapter;
+    private DisplayCaseListAdapter displayCaseListAdapter;
     private CraftableEngramListAdapter craftableEngramListAdapter;
     private ResourceListAdapter resourceListAdapter;
 
-    private DisplayCase displayCase;
     private CraftingQueue craftingQueue;
 
     @Override
@@ -35,43 +33,48 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_engrams);
+        final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_engrams);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
 
-        displayCase = new DisplayCase(this);
-        craftingQueue = new CraftingQueue(this);
+        craftingQueue = new CraftingQueue(this); // TODO: Move CraftingQueue in its ListAdapter, same as DisplayCase
 
-        RecyclerView.LayoutManager mLayoutManager_EngramList =
+        RecyclerView.LayoutManager displayCaseLayoutManager =
                 new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
         if (displayCaseEngramList != null) {
             RecyclerTouchListener displayCaseTouchListener = new RecyclerTouchListener(this, displayCaseEngramList,
                     new RecyclerTouchListener.ClickListener() {
                         @Override
                         public void onClick(View view, int position) {
-                            if (!FILTERED) {
-                                craftingQueue.increaseQuantity(engramListAdapter.getEngram(position).getId(), 1);
+                            if (displayCaseListAdapter.isEngram(position)) {
+                                craftingQueue.increaseQuantity(displayCaseListAdapter.getEngramId(position), 1);
 
                                 refreshDisplayForCraftingQueue();
                             } else {
-                                // travel through levels of folder hierarchies
+                                // this is a category
+                                displayCaseListAdapter.changeCategory(position);
                             }
                         }
 
                         @Override
                         public void onLongClick(View view, int position) {
-                            Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                            intent.putExtra(Helper.DETAIL_ID, engramListAdapter.getEngram(position).getId());
+                            if (displayCaseListAdapter.isEngram(position)) {
+                                Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                                intent.putExtra(Helper.DETAIL_ID, displayCaseListAdapter.getEngramId(position));
 
-                            startActivityForResult(intent, Helper.DETAIL_ID_CODE);
+                                startActivityForResult(intent, Helper.DETAIL_ID_CODE);
+                            } else {
+                                // this is a category TODO CategoryDetailActivity? Pulls a list of engrams dedicated to that category?
+                                displayCaseListAdapter.changeCategory(position);
+                            }
                         }
                     });
 
-            engramListAdapter = new EngramListAdapter(displayCase.getEngrams());
+            displayCaseListAdapter = new DisplayCaseListAdapter(this);
 
-            displayCaseEngramList.setLayoutManager(mLayoutManager_EngramList);
+            displayCaseEngramList.setLayoutManager(displayCaseLayoutManager);
             displayCaseEngramList.addOnItemTouchListener(displayCaseTouchListener);
-            displayCaseEngramList.setAdapter(engramListAdapter);
+            displayCaseEngramList.setAdapter(displayCaseListAdapter);
         }
 
         RecyclerView.LayoutManager mLayoutManager_CraftingQueueEngramList =
@@ -140,13 +143,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_show_all:
-                displayCase.getEngrams();
-                refreshDisplayForDisplayCase();
+                displayCaseListAdapter.setFiltered(false);
                 break;
 
             case R.id.action_show_filtered:
-                // TODO: 6/15/2016 Filtered = Organized into folders
-                displayCase.debugAllCategories();
+                displayCaseListAdapter.setFiltered(true);
                 break;
 
             case R.id.action_settings:
@@ -173,11 +174,6 @@ public class MainActivity extends AppCompatActivity {
                 refreshDisplayForCraftingQueue();
             }
         }
-    }
-
-    private void refreshDisplayForDisplayCase() {
-        engramListAdapter.setEngrams(displayCase.getEngrams());
-        engramListAdapter.Refresh();
     }
 
     private void refreshDisplayForCraftingQueue() {

@@ -3,7 +3,7 @@ package com.gmail.jaredstone1982.craftingcalcark.model;
 /**
  * Description: DisplayableEngram object that extends Engram to include a list of categories
  * Usage: Store displayable Engram data to easily display objects pulled from Database
- * Used by: EngramListAdapter
+ * Used by: DisplayCaseListAdapter
  * Variables: id, imageId, name, categories
  */
 public class DisplayEngram extends Engram {

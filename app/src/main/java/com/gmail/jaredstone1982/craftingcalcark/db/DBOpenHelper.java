@@ -25,15 +25,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ENGRAM_IMAGE_ID = "engramimage";
     public static final String COLUMN_ENGRAM_CATEGORY_ID = "engramcatagory";
 
-    public static final String TABLE_COMPOSITION = "composition";
-    public static final String COLUMN_COMPOSITION_ID = "compositionid";
-    public static final String COLUMN_COMPOSITION_QUANTITY = "compositionquantity";
-
     public static final String TABLE_CATEGORY = "category";
     public static final String COLUMN_CATEGORY_ID = "categoryid";
     public static final String COLUMN_CATEGORY_NAME = "categoryname";
     public static final String COLUMN_CATEGORY_LEVEL = "categorylevel";
     public static final String COLUMN_CATEGORY_PARENT = "categoryparent";
+
+    public static final String TABLE_COMPOSITION = "composition";
+    public static final String COLUMN_COMPOSITION_ID = "compositionid";
+    public static final String COLUMN_COMPOSITION_QUANTITY = "compositionquantity";
 
     public static final String TABLE_QUEUE = "queue";
     public static final String COLUMN_QUEUE_ID = "queueid";

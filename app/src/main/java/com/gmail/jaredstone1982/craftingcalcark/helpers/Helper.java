@@ -24,8 +24,15 @@ public class Helper {
         if (isDebug) Log.d(tag, tag2 + "> " + message);
     }
 
-    public static void setDebug(boolean i) {
-        isDebug = i;
+    /**
+     * Toggle DEBUG to set to toggleTo, if isDebug already equals toggleTo, do nothing.
+     *
+     * @param toggleTo boolean value isDebug should toggle to
+     */
+    public static void toggleDebug(boolean toggleTo) {
+        if (toggleTo != isDebug) {
+            isDebug = toggleTo;
+        }
     }
 
     public static String ArrayToString(SparseIntArray array) {

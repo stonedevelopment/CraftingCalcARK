@@ -13,18 +13,15 @@ import java.util.List;
 public class CategoryInitializer {
 
     public static class MISC {
-
         public static final long ID = 1;
     }
 
     public static class STRUCTURES {
-
         public static final long ID = 2;
         public static final long THATCH = 201;
 
         private static final class WOOD {
             public static final long ID = 202;
-
             public static final long SIGNS = 2021;
             public static final long STORAGE = 2022;
         }
@@ -36,7 +33,6 @@ public class CategoryInitializer {
         public static final long MISC = 207;
 
         private static final class FURNITURE {
-
             public static final long ID = 208;
             public static final long WOOD = 2081;
             public static final long STONE = 2082;
@@ -45,7 +41,6 @@ public class CategoryInitializer {
         public static final long FARMING = 209;
 
         private static final class PIPES {
-
             public static final long ID = 210;
             public static final long STONE = 2101;
             public static final long METAL = 2102;
@@ -72,11 +67,9 @@ public class CategoryInitializer {
     }
 
     public static class WEAPONS {
-
         public static final long ID = 3;
 
         public static class PRIMITIVE {
-
             public static final long ID = 301;
             public static final long MELEE = 3011;
             public static final long RANGED = 3012;
@@ -92,7 +85,6 @@ public class CategoryInitializer {
     }
 
     public static class ARMOR {
-
         public static final long ID = 4;
         public static final long CLOTH = 401;
         public static final long SHIELDS = 402;
@@ -107,12 +99,10 @@ public class CategoryInitializer {
     }
 
     public static class SADDLES {
-
         public static final long ID = 5;
     }
 
     public static class NAVIGATION {
-
         public static final long ID = 6;
     }
 

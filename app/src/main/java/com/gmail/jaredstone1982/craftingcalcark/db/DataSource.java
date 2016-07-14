@@ -37,9 +37,14 @@ public class DataSource {
 
     public DataSource(Context context, String LOGTAG) {
         this.openHelper = new DBOpenHelper(context);
+
+        OpenDatabase();
+        TestTablesForContent();
     }
 
-    // -- Query Methods --
+    /**
+     * -- PUBLIC DATABASE QUERY METHODS --
+     */
 
     public SparseArray<CraftableEngram> findAllCraftableEngrams() {
         Cursor cursor = database.rawQuery(
@@ -80,6 +85,10 @@ public class DataSource {
                 null, null
         );
 
+        if (cursor.getCount() == 0) {
+            Initialize();
+        }
+
         return cursorToDisplayEngrams(cursor);
     }
 
@@ -94,6 +103,19 @@ public class DataSource {
         return cursorToDisplayEngrams(cursor);
     }
 
+    public SparseArray<Category> findAllCategories() {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY,
+                null, null
+        );
+
+        if (cursor.getCount() == 0) {
+            Initialize();
+        }
+
+        return cursorToCategories(cursor);
+    }
+
     public HashMap<Long, Queue> findAllQueues() {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_QUEUE,
@@ -105,21 +127,10 @@ public class DataSource {
         return cursorToQueues(cursor);
     }
 
-    public SparseArray<Category> findAllCategories() {
-        Cursor cursor = database.rawQuery(
-                "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY,
-                null, null
-        );
-
-        Helper.Log(LOGTAG, "-- findAllCategories() > Returned " + cursor.getCount() + " rows from table: " + DBOpenHelper.TABLE_CATEGORY);
-
-        return cursorToCategories(cursor);
-    }
-
     public SparseArray<Category> findFilteredCategories(long categoryId) {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY +
-                        " WHERE " + DBOpenHelper.COLUMN_CATEGORY_ID + " = " +
+                        " WHERE " + DBOpenHelper.COLUMN_CATEGORY_PARENT + " = " +
                         categoryId,
                 null, null
         );
@@ -206,7 +217,15 @@ public class DataSource {
         return cursorToSingleCategory(cursor);
     }
 
-    // -- Cursor Methods --
+    /**
+     * -- PARSE CURSOR TO OBJECT METHODS --
+     */
+
+    private int cursorToInt(Cursor cursor) {
+        cursor.moveToFirst();
+
+        return cursor.getInt(0);
+    }
 
     public DetailEngram cursorToSingleDetailEngram(Cursor cursor) {
         if (cursor.getCount() > 0) {
@@ -351,7 +370,11 @@ public class DataSource {
 
                 Category category = new Category(level, id, name, parent);
 
-                categories.put(categories.size(), category);
+                if (level > 0) {
+                    categories.put(categories.size() + 1, category);
+                } else {
+                    categories.put(categories.size(), category);
+                }
             }
         }
 
@@ -403,7 +426,34 @@ public class DataSource {
         return resources;
     }
 
-    // -- Utility Methods --
+    /**
+     * -- PRIVATE UTILITY METHODS --
+     */
+
+    private void TestTablesForContent() {
+        if (getCount(DBOpenHelper.TABLE_ENGRAM) == 0) {
+            InitializeEngrams();
+        }
+        if (getCount(DBOpenHelper.TABLE_RESOURCE) == 0) {
+            InitializeResources();
+        }
+        if (getCount(DBOpenHelper.TABLE_CATEGORY) == 0) {
+            InitializeCategories();
+        }
+    }
+
+    private int getCount(String table) {
+        Cursor cursor = database.rawQuery(
+                "SELECT count(*) FROM " + table,
+                null, null
+        );
+
+        return cursorToInt(cursor);
+    }
+
+    /**
+     * -- QUEUE ADDING/REMOVING METHODS --
+     */
 
     public boolean Delete(long engramId) {
         return database.delete(DBOpenHelper.TABLE_QUEUE, DBOpenHelper.COLUMN_TRACK_ENGRAM + "=" + engramId, null) > 0;
@@ -416,6 +466,8 @@ public class DataSource {
 
         database.insert(DBOpenHelper.TABLE_QUEUE, null, values);
     }
+
+    /** -- DATABASE QUERY METHODS -- */
 
     /**
      * Inserts resource data into data, TODO used strictly for initializing
@@ -497,6 +549,10 @@ public class DataSource {
         cursor.close();
     }
 
+    /**
+     * -- DATABASE SYSTEM METHODS --
+     */
+
     public void CreateTable() {
         database.execSQL(DBOpenHelper.TABLE_QUEUE_CREATE);
 
@@ -515,19 +571,26 @@ public class DataSource {
         Helper.Log(LOGTAG, "-- Dropped table: " + DBOpenHelper.TABLE_QUEUE);
     }
 
-    /**
-     * Method that initializes database with InitEngram objects from EngramInitializer
-     */
-    public void Initialize() {
+    private void Initialize() {
         Helper.Log(LOGTAG, "** Initializing database..");
 
+        InitializeCategories();
+
+        InitializeResources();
+
+        InitializeEngrams();
+    }
+
+    private void InitializeCategories() {
         Helper.Log(LOGTAG, "-- Initializing Categories..");
         List<Category> categories = CategoryInitializer.getCategories();
         for (Category category : categories) {
             Insert(category);
         }
         Helper.Log(LOGTAG, "-- Category initialization completed.");
+    }
 
+    private void InitializeResources() {
         Helper.Log(LOGTAG, "-- Initializing Resources..");
         SparseArray<String> resources = ResourceInitializer.getResources();
         for (int i = 0; i < resources.size(); i++) {
@@ -536,7 +599,9 @@ public class DataSource {
             Insert(imageId, name);
         }
         Helper.Log(LOGTAG, "-- Resource initialization completed.");
+    }
 
+    private void InitializeEngrams() {
         Helper.Log(LOGTAG, "-- Initializing Engrams..");
         List<InitEngram> engrams = EngramInitializer.getEngrams();
         for (InitEngram engram : engrams) {
@@ -545,23 +610,20 @@ public class DataSource {
         Helper.Log(LOGTAG, "-- Engram initialization completed.");
     }
 
-    /**
-     * Method that drops all tables, creates all tables, and then re-initializes data TODO: Strictly for DEBUG purposes
-     */
-    public void Reset() {
+    private void Reset() {
         DBOpenHelper.dropAllTables(database);
         DBOpenHelper.createAllTables(database);
 
         Initialize();
     }
 
-    public void Open() {
+    private void OpenDatabase() {
         database = openHelper.getWritableDatabase();
 
         Helper.Log(LOGTAG, "Database open");
     }
 
-    public void Close() {
+    private void CloseDatabase() {
         database.close();
 
         Helper.Log(LOGTAG, "Database closed");
