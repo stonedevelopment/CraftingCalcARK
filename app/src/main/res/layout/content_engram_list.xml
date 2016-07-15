@@ -6,8 +6,9 @@
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/content_engrams"
+        android:id="@+id/content_displaycase"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:background="@color/displaycase_background" />
 </FrameLayout>

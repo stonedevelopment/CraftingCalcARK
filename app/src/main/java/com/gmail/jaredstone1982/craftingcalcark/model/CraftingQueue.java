@@ -16,7 +16,7 @@ public class CraftingQueue {
     private DataSource dataSource;
 
     public CraftingQueue(Context context) {
-        dataSource = new DataSource(context, LOGTAG);
+        dataSource = DataSource.getInstance(context, LOGTAG);
     }
 
     public SparseArray<CraftableEngram> getEngrams() {

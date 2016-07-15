@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DisplayCaseListAdapter displayCaseListAdapter;
     private CraftableEngramListAdapter craftableEngramListAdapter;
-    private ResourceListAdapter resourceListAdapter;
+    private ResourceListAdapter craftableResourceListAdapter;
 
     private CraftingQueue craftingQueue;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_engrams);
+        final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             displayCaseEngramList.setAdapter(displayCaseListAdapter);
         }
 
-        RecyclerView.LayoutManager mLayoutManager_CraftingQueueEngramList =
+        RecyclerView.LayoutManager craftableEngramLayoutManager =
                 new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         if (craftingQueueEngramList != null) {
             RecyclerTouchListener craftingQueueTouchListener = new RecyclerTouchListener(this, craftingQueueEngramList,
@@ -100,18 +100,18 @@ public class MainActivity extends AppCompatActivity {
 
             craftableEngramListAdapter = new CraftableEngramListAdapter(craftingQueue.getEngrams());
 
-            craftingQueueEngramList.setLayoutManager(mLayoutManager_CraftingQueueEngramList);
+            craftingQueueEngramList.setLayoutManager(craftableEngramLayoutManager);
             craftingQueueEngramList.addOnItemTouchListener(craftingQueueTouchListener);
             craftingQueueEngramList.setAdapter(craftableEngramListAdapter);
         }
 
-        RecyclerView.LayoutManager mLayoutManager_CraftingQueueResourceList =
+        RecyclerView.LayoutManager craftableResourceLayoutManager =
                 new LinearLayoutManager(this);
         if (craftingQueueResourceList != null) {
-            resourceListAdapter = new ResourceListAdapter(craftingQueue.getResources());
+            craftableResourceListAdapter = new ResourceListAdapter(craftingQueue.getResources());
 
-            craftingQueueResourceList.setLayoutManager(mLayoutManager_CraftingQueueResourceList);
-            craftingQueueResourceList.setAdapter(resourceListAdapter);
+            craftingQueueResourceList.setLayoutManager(craftableResourceLayoutManager);
+            craftingQueueResourceList.setAdapter(craftableResourceListAdapter);
         }
 
         createExtraViews();
@@ -178,10 +178,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshDisplayForCraftingQueue() {
         craftableEngramListAdapter.setEngrams(craftingQueue.getEngrams());
-        resourceListAdapter.setResources(craftingQueue.getResources());
+        craftableResourceListAdapter.setResources(craftingQueue.getResources());
 
         craftableEngramListAdapter.Refresh();
-        resourceListAdapter.Refresh();
+        craftableResourceListAdapter.Refresh();
     }
 
     private void createExtraViews() {

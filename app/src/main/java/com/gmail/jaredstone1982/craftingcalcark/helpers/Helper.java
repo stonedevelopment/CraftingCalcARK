@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Various methods that help debugging and the like
  */
 public class Helper {
-    private static boolean isDebug = false;
+    private static boolean isDebug = true;
 
     public static final String DETAIL_QUANTITY = "DETAIL_QUANTITY";
     public static final String DETAIL_ID = "DETAIL_ID";

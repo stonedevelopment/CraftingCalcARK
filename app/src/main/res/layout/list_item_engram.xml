@@ -5,28 +5,30 @@
     android:padding="2dp">
 
     <ImageView
-        android:id="@+id/list_engram_overlay_imageView"
+        android:id="@+id/list_item_engram_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:background="@color/colorBlack"
+        android:background="@color/crafting_queue_background"
         android:src="@drawable/structure_stone_reinforced_dinosaur_gate" />
 
     <TextView
-        android:id="@+id/list_engram_overlay_nameText"
+        android:id="@+id/list_item_engram_nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
-        android:layout_alignStart="@+id/list_engram_overlay_imageView" />
+        android:text="nameText"
+        android:layout_alignStart="@+id/list_item_engram_imageView" />
 
     <TextView
-        android:id="@+id/list_engram_overlay_quantityText"
+        android:id="@+id/list_item_engram_quantityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:textStyle="bold"
+        android:text="x0"
         android:textColor="@color/colorWhite" />
 
 </RelativeLayout>

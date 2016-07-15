@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:padding="2dp">
+
+    <ImageView
+        android:id="@+id/list_item_displaycase_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorBlack"
+        android:src="@drawable/structure_stone_stone_wall" />
+
+    <TextView
+        android:id="@+id/list_item_displaycase_nameText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignStart="@+id/list_item_displaycase_imageView"
+        android:text="nameText"
+        android:textSize="12sp"
+        android:gravity="bottom"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout>

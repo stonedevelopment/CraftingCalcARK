@@ -22,7 +22,7 @@ public class ResourceListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_resource, parent, false);
+                inflate(R.layout.list_item_resource, parent, false);
 
         return new ResourceViewHolder(itemView);
     }

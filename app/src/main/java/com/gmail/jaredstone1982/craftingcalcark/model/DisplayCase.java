@@ -33,7 +33,7 @@ public class DisplayCase {
         level = 0;
         parent = 0;
 
-        dataSource = new DataSource(context, LOGTAG);
+        dataSource = DataSource.getInstance(context, LOGTAG);
 
         engrams = getEngrams();
         categories = getCategories();
@@ -124,7 +124,13 @@ public class DisplayCase {
         }
     }
 
-    /** -- PUBLIC METHODS -- */
+    public Context getContext() {
+        return dataSource.getContext();
+    }
+
+    /**
+     * -- PUBLIC METHODS --
+     */
 
     public boolean isEngram(int position) {
         return position >= categories.size();
@@ -218,7 +224,7 @@ public class DisplayCase {
     private void debugCategories(SparseArray<Category> categories) {
 //        SparseArray<Category> categories = dataSource.findAllCategories();
 
-        Helper.Log(LOGTAG, "-- Displaying categories from level " + getLevel() + "..");
+        Helper.Log(LOGTAG, "-- Displaying categories at level " + getLevel() + "..");
         for (int i = 0; i < categories.size(); i++) {
             Category category = categories.valueAt(i);
             Helper.Log(LOGTAG, "-> [" + i + "/" + categories.keyAt(i) + "] " + category.toString());

@@ -17,7 +17,7 @@ public class Showcase {
     private DataSource dataSource;
 
     public Showcase(Context context, Long id) {
-        this.dataSource = new DataSource(context, LOGTAG);
+        this.dataSource = DataSource.getInstance(context, LOGTAG);
 
         engram = dataSource.findSingleDetailEngram(id);
     }

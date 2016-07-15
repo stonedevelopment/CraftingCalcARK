@@ -21,7 +21,7 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_engram_overlay, parent, false);
+                inflate(R.layout.list_item_engram, parent, false);
 
         return new EngramViewHolder(itemView);
     }

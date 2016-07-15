@@ -26,19 +26,31 @@ import java.util.List;
 /**
  * Description: Source of data pulled from Database
  * Usage: Handle actions of all Database tables excluding TABLE_QUEUE
- * Used by: EngramActivityFrament
+ * Used by: DisplayCase
  * Variables: LOGTAG, openHelper, database
  */
 public class DataSource {
     private static final String LOGTAG = "DATASOURCE";
 
+    private static DataSource sInstance;
+
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
+    private Context context;
 
-    public DataSource(Context context, String LOGTAG) {
-        this.openHelper = new DBOpenHelper(context);
+    public static synchronized DataSource getInstance(Context context, String LOGTAG) {
+        if (sInstance == null) {
+            sInstance = new DataSource(context.getApplicationContext(), LOGTAG);
+        }
+        return sInstance;
+    }
+
+    private DataSource(Context context, String LOGTAG) {
+        this.openHelper = DBOpenHelper.getInstance(context);
+        this.context = context;
 
         OpenDatabase();
+
         TestTablesForContent();
     }
 
@@ -221,12 +233,6 @@ public class DataSource {
      * -- PARSE CURSOR TO OBJECT METHODS --
      */
 
-    private int cursorToInt(Cursor cursor) {
-        cursor.moveToFirst();
-
-        return cursor.getInt(0);
-    }
-
     public DetailEngram cursorToSingleDetailEngram(Cursor cursor) {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -310,6 +316,7 @@ public class DataSource {
                 Helper.Log(LOGTAG, " > Engram Details: " + engram.toString());
             }
         }
+
         return engrams;
     }
 
@@ -397,6 +404,7 @@ public class DataSource {
                 queues.put(engramId, queue);
             }
         }
+
         return queues;
     }
 
@@ -431,14 +439,14 @@ public class DataSource {
      */
 
     private void TestTablesForContent() {
-        if (getCount(DBOpenHelper.TABLE_ENGRAM) == 0) {
-            InitializeEngrams();
-        }
         if (getCount(DBOpenHelper.TABLE_RESOURCE) == 0) {
             InitializeResources();
         }
         if (getCount(DBOpenHelper.TABLE_CATEGORY) == 0) {
             InitializeCategories();
+        }
+        if (getCount(DBOpenHelper.TABLE_ENGRAM) == 0) {
+            InitializeEngrams();
         }
     }
 
@@ -449,6 +457,12 @@ public class DataSource {
         );
 
         return cursorToInt(cursor);
+    }
+
+    private int cursorToInt(Cursor cursor) {
+        cursor.moveToFirst();
+
+        return cursor.getInt(0);
     }
 
     /**
@@ -610,22 +624,19 @@ public class DataSource {
         Helper.Log(LOGTAG, "-- Engram initialization completed.");
     }
 
-    private void Reset() {
-        DBOpenHelper.dropAllTables(database);
-        DBOpenHelper.createAllTables(database);
-
-        Initialize();
-    }
-
     private void OpenDatabase() {
         database = openHelper.getWritableDatabase();
 
-        Helper.Log(LOGTAG, "Database open");
+        Helper.Log(LOGTAG, "-- Database has opened --");
     }
 
     private void CloseDatabase() {
         database.close();
 
-        Helper.Log(LOGTAG, "Database closed");
+        Helper.Log(LOGTAG, "-- Database has closed --");
+    }
+
+    public Context getContext() {
+        return this.context;
     }
 }

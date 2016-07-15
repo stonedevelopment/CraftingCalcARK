@@ -145,10 +145,10 @@ public class CategoryInitializer {
             add(new Category(ARMOR.ID, "Armor"));
             add(new Category(SADDLES.ID, "Saddles"));
             add(new Category(NAVIGATION.ID, "Navigation"));
-            add(new Category(COMMUNICATION.ID, "Communications"));
+            add(new Category(COMMUNICATION.ID, "Communication"));
             add(new Category(OFFHAND.ID, "Off-Hand"));
-            add(new Category(COMPOSITES.ID, "Composites"));
-            add(new Category(CONSUMABLES.ID, "Consumables"));
+            add(new Category(COMPOSITES.ID, "Composite"));
+            add(new Category(CONSUMABLES.ID, "Consumable"));
             add(new Category(DYES.ID, "Dyes"));
             add(new Category(KIBBLE.ID, "Kibble"));
             add(new Category(REFINED.ID, "Refined"));

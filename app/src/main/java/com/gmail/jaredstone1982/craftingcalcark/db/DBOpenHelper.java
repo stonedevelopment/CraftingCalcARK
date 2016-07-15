@@ -7,39 +7,42 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
+    private static DBOpenHelper sInstance;
+
     private static final String LOGTAG = "DB_HELPER";
     private static final String DATABASE_NAME = "ark.db";
+
     private static final int DATABASE_VERSION = 3;
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
-
     public static final String TABLE_RESOURCE = "resource";
     public static final String COLUMN_RESOURCE_ID = "resourceid";
     public static final String COLUMN_RESOURCE_NAME = "resourcename";
-    public static final String COLUMN_RESOURCE_IMAGE_ID = "resourceimage";
 
+    public static final String COLUMN_RESOURCE_IMAGE_ID = "resourceimage";
     public static final String TABLE_ENGRAM = "engram";
     public static final String COLUMN_ENGRAM_ID = "engramid";
     public static final String COLUMN_ENGRAM_NAME = "engramname";
     public static final String COLUMN_ENGRAM_DESCRIPTION = "engramdesc";
     public static final String COLUMN_ENGRAM_IMAGE_ID = "engramimage";
-    public static final String COLUMN_ENGRAM_CATEGORY_ID = "engramcatagory";
 
+    public static final String COLUMN_ENGRAM_CATEGORY_ID = "engramcatagory";
     public static final String TABLE_CATEGORY = "category";
     public static final String COLUMN_CATEGORY_ID = "categoryid";
     public static final String COLUMN_CATEGORY_NAME = "categoryname";
     public static final String COLUMN_CATEGORY_LEVEL = "categorylevel";
-    public static final String COLUMN_CATEGORY_PARENT = "categoryparent";
 
+    public static final String COLUMN_CATEGORY_PARENT = "categoryparent";
     public static final String TABLE_COMPOSITION = "composition";
     public static final String COLUMN_COMPOSITION_ID = "compositionid";
-    public static final String COLUMN_COMPOSITION_QUANTITY = "compositionquantity";
 
+    public static final String COLUMN_COMPOSITION_QUANTITY = "compositionquantity";
     public static final String TABLE_QUEUE = "queue";
     public static final String COLUMN_QUEUE_ID = "queueid";
-    public static final String COLUMN_QUEUE_QUANTITY = "queuequantity";
 
+    public static final String COLUMN_QUEUE_QUANTITY = "queuequantity";
     public static final String COLUMN_TRACK_ENGRAM = "trackengram";
+
     public static final String COLUMN_TRACK_RESOURCE = "trackresource";
 
     private static final String TABLE_ENGRAM_CREATE =
@@ -84,7 +87,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     COLUMN_CATEGORY_PARENT + " INTEGER" +
                     ")";
 
-    public DBOpenHelper(Context context) {
+    public static synchronized DBOpenHelper getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new DBOpenHelper(context.getApplicationContext());
+        }
+
+        return sInstance;
+    }
+
+    private DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

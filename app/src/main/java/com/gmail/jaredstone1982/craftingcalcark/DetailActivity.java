@@ -57,7 +57,7 @@ public class DetailActivity extends AppCompatActivity {
 
             resourceListAdapter = new ResourceListAdapter(showcase.getComposition());
 
-            quantityNumberPicker.setMinValue(1);
+            quantityNumberPicker.setMinValue(0);
             quantityNumberPicker.setMaxValue(100);
             quantityNumberPicker.setValue(showcase.getQuantity());
             quantityNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
