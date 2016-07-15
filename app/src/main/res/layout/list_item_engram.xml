@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:background="@color/crafting_queue_background"
-        android:src="@drawable/structure_stone_reinforced_dinosaur_gate" />
+        android:src="@drawable/structures_stone_reinforced_dinosaur_gate" />
 
     <TextView
         android:id="@+id/list_item_engram_nameText"
