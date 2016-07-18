@@ -18,6 +18,9 @@ import com.gmail.jaredstone1982.craftingcalcark.model.Showcase;
 public class DetailActivity extends AppCompatActivity {
     private static final String LOGTAG = "DETAIL";
 
+    private static final int MIN = R.integer.MIN;
+    private static final int MAX = R.integer.MAX;
+
     private long id;
     private Showcase showcase;
 
@@ -45,8 +48,8 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         showcase = new Showcase(this, id);
-        if (showcase.getQuantity() == 0) {
-            showcase.setQuantity(1);
+        if (showcase.getQuantity() <= MIN) {
+            showcase.setQuantity(MIN + 1);
         }
         if (imageView != null && nameText != null && descriptionText != null && categoryText != null &&
                 quantityNumberPicker != null && saveButton != null && resourceList != null) {
@@ -57,8 +60,8 @@ public class DetailActivity extends AppCompatActivity {
 
             resourceListAdapter = new ResourceListAdapter(showcase.getComposition());
 
-            quantityNumberPicker.setMinValue(0);
-            quantityNumberPicker.setMaxValue(100);
+            quantityNumberPicker.setMinValue(MIN);
+            quantityNumberPicker.setMaxValue(MAX);
             quantityNumberPicker.setValue(showcase.getQuantity());
             quantityNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override

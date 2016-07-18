@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import com.gmail.jaredstone1982.craftingcalcark.R;
 import com.gmail.jaredstone1982.craftingcalcark.db.DataSource;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
+import com.gmail.jaredstone1982.craftingcalcark.helpers.PreferenceHelper;
 
 /**
  * Description: Proposed idea for instantiating, displaying, manipulating the main list of Engrams and Categories
@@ -28,15 +29,15 @@ public class DisplayCase {
     private DataSource dataSource;
 
     public DisplayCase(Context context) {
-        isFiltered = true; // TODO: Retrieve filtered flag from Settings
+        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
+        isFiltered = preferenceHelper.getBooleanPreference(Helper.FILTERED);
 
         level = 0;
         parent = 0;
 
         dataSource = DataSource.getInstance(context, LOGTAG);
 
-        engrams = getEngrams();
-        categories = getCategories();
+        UpdateData();
     }
 
     public boolean isFiltered() {
@@ -53,10 +54,12 @@ public class DisplayCase {
 
     public boolean setIsFiltered(boolean filtered) {
         if (isFiltered() != filtered) {
+            PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(getContext());
+            preferenceHelper.setPreference(Helper.FILTERED, filtered);
+
             this.isFiltered = filtered;
 
-            engrams = getEngrams();
-            categories = getCategories();
+            UpdateData();
 
             return true;
         }
@@ -142,7 +145,8 @@ public class DisplayCase {
 
     public long getEngramId(int position) {
         if (getLevel() > 0) {
-            position--;
+            // subtract position by amount of categories shown
+            position -= categories.size();
         }
         return engrams.valueAt(position).getId();
     }
@@ -178,8 +182,7 @@ public class DisplayCase {
             }
 
             // Update lists with new data
-            engrams = getEngrams();
-            categories = getCategories();
+            UpdateData();
         } else {
             // position out of bounds
         }
@@ -230,5 +233,10 @@ public class DisplayCase {
             Helper.Log(LOGTAG, "-> [" + i + "/" + categories.keyAt(i) + "] " + category.toString());
         }
         Helper.Log(LOGTAG, "-- Display completed.");
+    }
+
+    private void UpdateData() {
+        engrams = getEngrams();
+        categories = getCategories();
     }
 }

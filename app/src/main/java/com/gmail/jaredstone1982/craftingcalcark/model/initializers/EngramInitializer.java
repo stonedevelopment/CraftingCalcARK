@@ -12,6 +12,7 @@ import java.util.List;
  * Provides data to initialize the database with a full list of InitEngram objects
  */
 public class EngramInitializer {
+    public static final String VERSION = "0.1.0";
 
     // -- ARMOR > CHITIN --
     public static final int CHITIN_BOOTS = R.drawable.armor_chitin_chitin_boots;
@@ -92,7 +93,7 @@ public class EngramInitializer {
     public static final int NOTE = R.drawable.misc_note;
     public static final int PAINTBRUSH = R.drawable.misc_paintbrush;
     public static final int PARACHUTE = R.drawable.misc_parachute;
-    public static final int REFERTILIZER = R.drawable.misc_re_fertilizer;
+    public static final int REFERTILIZER = R.drawable.misc_refertilizer;
     public static final int SPRAY_PAINTER = R.drawable.misc_spray_painter;
     public static final int SPYGLASS = R.drawable.misc_spyglass;
     public static final int WATER_JAR = R.drawable.misc_water_jar;
@@ -238,21 +239,21 @@ public class EngramInitializer {
 
     // -- STRUCTURES > PIPES --
     // -- STRUCTURES > PIPES > METAL --
-    public static final int METAL_IRRIGATION_PIPE_INCLINED = R.drawable.pipes_metal_metal_irrigation_pipe___inclined;
-    public static final int METAL_IRRIGATION_PIPE_INTERSECTION = R.drawable.pipes_metal_metal_irrigation_pipe___intersection;
-    public static final int METAL_IRRIGATION_PIPE_STRAIGHT = R.drawable.pipes_metal_metal_irrigation_pipe___straight;
-    public static final int METAL_IRRIGATION_PIPE_INTAKE = R.drawable.pipes_metal_metal_irrigation_pipe___intake;
-    public static final int METAL_IRRIGATION_PIPE_TAP = R.drawable.pipes_metal_metal_irrigation_pipe___tap;
-    public static final int METAL_IRRIGATION_PIPE_VERTICAL = R.drawable.pipes_metal_metal_irrigation_pipe___vertical;
+    public static final int METAL_IRRIGATION_PIPE_INCLINED = R.drawable.pipes_metal_metal_irrigation_pipe_inclined;
+    public static final int METAL_IRRIGATION_PIPE_INTERSECTION = R.drawable.pipes_metal_metal_irrigation_pipe_intersection;
+    public static final int METAL_IRRIGATION_PIPE_STRAIGHT = R.drawable.pipes_metal_metal_irrigation_pipe_straight;
+    public static final int METAL_IRRIGATION_PIPE_INTAKE = R.drawable.pipes_metal_metal_irrigation_pipe_intake;
+    public static final int METAL_IRRIGATION_PIPE_TAP = R.drawable.pipes_metal_metal_irrigation_pipe_tap;
+    public static final int METAL_IRRIGATION_PIPE_VERTICAL = R.drawable.pipes_metal_metal_irrigation_pipe_vertical;
     public static final int METAL_WATER_RESERVOIR = R.drawable.pipes_metal_metal_water_reservoir;
 
     // -- STRUCTURES > PIPES > STONE --
-    public static final int STONE_IRRIGATION_PIPE_INCLINED = R.drawable.pipes_stone_stone_irrigation_pipe___inclined;
-    public static final int STONE_IRRIGATION_PIPE_INTAKE = R.drawable.pipes_stone_stone_irrigation_pipe___intake;
-    public static final int STONE_IRRIGATION_PIPE_INTERSECTION = R.drawable.pipes_stone_stone_irrigation_pipe___intersection;
-    public static final int STONE_IRRIGATION_PIPE_STRAIGHT = R.drawable.pipes_stone_stone_irrigation_pipe___straight;
-    public static final int STONE_IRRIGATION_PIPE_TAP = R.drawable.pipes_stone_stone_irrigation_pipe___tap;
-    public static final int STONE_IRRIGATION_PIPE_VERTICAL = R.drawable.pipes_stone_stone_irrigation_pipe___vertical;
+    public static final int STONE_IRRIGATION_PIPE_INCLINED = R.drawable.pipes_stone_stone_irrigation_pipe_inclined;
+    public static final int STONE_IRRIGATION_PIPE_INTAKE = R.drawable.pipes_stone_stone_irrigation_pipe_intake;
+    public static final int STONE_IRRIGATION_PIPE_INTERSECTION = R.drawable.pipes_stone_stone_irrigation_pipe_intersection;
+    public static final int STONE_IRRIGATION_PIPE_STRAIGHT = R.drawable.pipes_stone_stone_irrigation_pipe_straight;
+    public static final int STONE_IRRIGATION_PIPE_TAP = R.drawable.pipes_stone_stone_irrigation_pipe_tap;
+    public static final int STONE_IRRIGATION_PIPE_VERTICAL = R.drawable.pipes_stone_stone_irrigation_pipe_vertical;
     public static final int WATER_RESERVOIR = R.drawable.pipes_stone_water_reservoir;
 
     // -- STRUCTURES > STONE --
@@ -398,6 +399,417 @@ public class EngramInitializer {
 
     private static List<InitEngram> engrams = new ArrayList<InitEngram>() {
         {
+            // -- ARMOR > CHITIN --
+            add(new InitEngram(
+                    CHITIN_BOOTS,
+                    "Chitin Boots",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.CHITIN));
+
+            // -- ARMOR > CLOTH --
+            add(new InitEngram(
+                    CLOTH_BOOTS,
+                    "Cloth Boots",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.CLOTH));
+
+            // -- ARMOR > FUR --
+            add(new InitEngram(
+                    FUR_BOOTS,
+                    "Fur Boots",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.FUR));
+
+            // -- ARMOR > GHILLIE --
+            add(new InitEngram(
+                    GHILLIE_BOOTS,
+                    "Ghillie Boots",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.GHILLIE));
+
+            // -- ARMOR > HIDE --
+            add(new InitEngram(
+                    HIDE_BOOTS,
+                    "Hide Boots",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.HIDE));
+
+            // -- ARMOR > METAL --
+            add(new InitEngram(
+                    FLAK_BOOTS,
+                    "Flak Boots",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.METAL));
+
+            // -- ARMOR > MISC --
+            add(new InitEngram(
+                    GAS_MASK,
+                    "Gas Mask",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.MISC));
+
+            // -- ARMOR > RIOT --
+            add(new InitEngram(
+                    RIOT_BOOTS,
+                    "Riot Boots",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.RIOT));
+
+            // -- ARMOR > SCUBA --
+            add(new InitEngram(
+                    SCUBA_FLIPPERS,
+                    "SCUBA Flippers",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.SCUBA));
+
+            // -- ARMOR > SHIELDS --
+            add(new InitEngram(
+                    METAL_SHIELD,
+                    "Metal Shield",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.ARMOR.SHIELDS));
+
+            // -- COMMUNICATION --
+            add(new InitEngram(
+                    RADIO,
+                    "Radio",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.COMMUNICATION.ID));
+
+            // -- COMPOSITES --
+            add(new InitEngram(
+                    ELECTRONICS,
+                    "Electronics",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.COMPOSITES.ID));
+
+            // -- MISC --
+            add(new InitEngram(
+                    BLOOD_EXTRACTION_SYRINGE,
+                    "Blood Extraction Syringe",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.MISC.ID));
+
+            // -- NAVIGATION --
+            add(new InitEngram(
+                    COMPASS,
+                    "Compass",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.NAVIGATION.ID));
+
+            // -- OFFHAND --
+            add(new InitEngram(
+                    HANDCUFFS,
+                    "Handcuffs",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.OFFHAND.ID));
+
+            // -- STRUCTURES > BEDS --
+            add(new InitEngram(
+                    BUNK_BED,
+                    "Bunk Bed",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.BEDS));
+
+            // -- STRUCTURES > COOKING --
+            add(new InitEngram(
+                    CAMPFIRE,
+                    "Campfire",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.COOKING));
+
+            // -- STRUCTURES > CRAFTING --
+            add(new InitEngram(
+                    CHEMISTRY_BENCH,
+                    "Chemistry Bench",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.CRAFTING));
+
+            // -- STRUCTURES > DEFENSES --
+            add(new InitEngram(
+                    BEAR_TRAP,
+                    "Bear Trap",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.DEFENSES));
+
+            // -- STRUCTURES > ELECTRIC --
+            add(new InitEngram(
+                    AIR_CONDITIONER,
+                    "Air Conditioner",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.ELECTRIC));
+
+            // -- STRUCTURES > ELECTRICAL --
+            add(new InitEngram(
+                    ELECTRICAL_CABLE_INTERSECTION,
+                    "Electrical Cable - Intersection",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.ELECTRICAL.ID));
+
+            // -- STRUCTURES > ELECTRICAL > DEFENSES --
+            add(new InitEngram(
+                    AUTO_TURRET,
+                    "Auto Turret",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.ELECTRICAL.DEFENSES));
+
+            // -- STRUCTURES > ELECTRICAL > ELEVATORS --
+            add(new InitEngram(
+                    ELEVATOR_TRACK,
+                    "Elevator Track",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.ELECTRICAL.ELEVATORS));
+
+            // -- STRUCTURES > FARMING --
+            add(new InitEngram(
+                    COMPOST_BIN,
+                    "Compost Bin",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.FARMING));
+
+            // -- STRUCTURES > FURNITURE --
+            // -- STRUCTURES > FURNITURE > STONE --
+            add(new InitEngram(
+                    GRAVESTONE,
+                    "Gravestone",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.FURNITURE.STONE));
+
+            // -- STRUCTURES > FURNITURE > WOOD --
+            add(new InitEngram(
+                    WARDRUMS,
+                    "War Drums",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.FURNITURE.WOOD));
+
+            // -- STRUCTURES > FRIDGES --
+            add(new InitEngram(
+                    PRESERVING_BIN,
+                    "Preserving Bin",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.FRIDGES));
+
+            // -- STRUCTURES > GREENHOUSE --
+            add(new InitEngram(
+                    GREENHOUSE_CEILING,
+                    "Greenhouse Ceiling",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.GREENHOUSE));
+
+            // -- STRUCTURES > METAL --
+            add(new InitEngram(
+                    BALLISTA_TURRET,
+                    "Ballista Turret",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.METAL.ID));
+
+            // -- STRUCTURES > METAL > SIGNS --
+            add(new InitEngram(
+                    METAL_SIGN,
+                    "Metal Sign",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.METAL.SIGNS));
+
+            // -- STRUCTURES > METAL > STORAGE --
+            add(new InitEngram(
+                    VAULT,
+                    "Vault",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.METAL.STORAGE));
+
+            // -- STRUCTURES > MISC --
+            add(new InitEngram(
+                    MULTI_PANEL_FLAG,
+                    "Multi-Panel Flag",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.MISC));
+
+            // -- STRUCTURES > PIPES --
+            // -- STRUCTURES > PIPES > METAL --
+            add(new InitEngram(
+                    METAL_IRRIGATION_PIPE_INCLINED,
+                    "Metal Irrigation Pipe - Inclined",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.PIPES.METAL));
+
+            // -- STRUCTURES > PIPES > STONE --
+            add(new InitEngram(
+                    STONE_IRRIGATION_PIPE_INCLINED,
+                    "Stone Irrigation Pipe - Inclined",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.PIPES.STONE));
+
+            // -- STRUCTURES > STONE --
             add(new InitEngram(
                     REINFORCED_DINOSAUR_GATE,
                     "Reinforced Dinosaur Gate",
@@ -478,6 +890,163 @@ public class EngramInitializer {
                         append(ResourceInitializer.THATCH, 20);
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
+
+            // -- STRUCTURES > THATCH --
+            add(new InitEngram(
+                    THATCH_DOOR,
+                    "Thatch Door",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.THATCH));
+
+            // -- STRUCTURES > WOOD --
+            add(new InitEngram(
+                    DINOSAUR_GATE,
+                    "Dinosaur Gate",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.WOOD.ID));
+
+            // -- STRUCTURES > WOOD > SIGNS --
+            add(new InitEngram(
+                    WOODEN_SIGN,
+                    "Wooden Sign",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.WOOD.SIGNS));
+
+            // -- STRUCTURES > WOOD > STORAGE --
+            add(new InitEngram(
+                    STORAGE_BOX,
+                    "Storage Box",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.STRUCTURES.WOOD.STORAGE));
+
+            // -- WEAPONS > AMMO --
+            add(new InitEngram(
+                    ADVANCED_BULLET,
+                    "Advanced Bullet",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.AMMO));
+
+            // -- WEAPONS > ATTACHMENTS --
+            add(new InitEngram(
+                    FLASHLIGHT_ATTACHMENT,
+                    "Flashlight Attachment",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.ATTACHMENTS));
+
+            // -- WEAPONS > EXPLOSIVES --
+            add(new InitEngram(
+                    C4_REMOTE_DETONATOR,
+                    "C4 Remote Detonator",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.EXPLOSIVES));
+
+            // -- WEAPONS > FIREARMS --
+            add(new InitEngram(
+                    ASSAULT_RIFLE,
+                    "Assault Rifle",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.FIREARMS));
+
+            // -- WEAPONS > MELEE --
+            add(new InitEngram(
+                    ELECTRIC_PROD,
+                    "Electric Prod",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.MELEE));
+
+            // -- WEAPONS > PRIMITIVE --
+            // -- WEAPONS > PRIMITIVE > MELEE --
+            add(new InitEngram(
+                    METAL_SWORD,
+                    "Metal Sword",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.PRIMITIVE.MELEE));
+
+            // -- WEAPONS > PRIMITIVE > RANGED --
+            add(new InitEngram(
+                    BOLA,
+                    "Bola",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.PRIMITIVE.RANGED));
+
+            // -- WEAPONS > RANGED --
+            add(new InitEngram(
+                    CROSSBOW,
+                    "Crossbow",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.RANGED));
+
+            // -- WEAPONS > TRIPWIRES --
+            add(new InitEngram(
+                    TRIPWIRE_ALARM_TRAP,
+                    "Tripwire Alarm Trap",
+                    "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 60);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.TRIPWIRES));
         }
     };
 
@@ -488,5 +1057,9 @@ public class EngramInitializer {
      */
     public static List<InitEngram> getEngrams() {
         return engrams;
+    }
+
+    public static int getCount() {
+        return engrams.size();
     }
 }

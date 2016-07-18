@@ -50,7 +50,6 @@ public class DataSource {
         this.context = context;
 
         OpenDatabase();
-
         TestTablesForContent();
     }
 
@@ -98,7 +97,7 @@ public class DataSource {
         );
 
         if (cursor.getCount() == 0) {
-            Initialize();
+            InitializeEngrams();
         }
 
         return cursorToDisplayEngrams(cursor);
@@ -122,7 +121,7 @@ public class DataSource {
         );
 
         if (cursor.getCount() == 0) {
-            Initialize();
+            InitializeCategories();
         }
 
         return cursorToCategories(cursor);
@@ -438,16 +437,50 @@ public class DataSource {
      * -- PRIVATE UTILITY METHODS --
      */
 
+    public Context getContext() {
+        return this.context;
+    }
+
     private void TestTablesForContent() {
-        if (getCount(DBOpenHelper.TABLE_RESOURCE) == 0) {
+        Helper.Log(LOGTAG, "-- Testing tables for content..");
+
+        int tableResourceCount = getCount(DBOpenHelper.TABLE_RESOURCE);
+        int tableCategoryCount = getCount(DBOpenHelper.TABLE_CATEGORY);
+        int tableEngramCount = getCount(DBOpenHelper.TABLE_ENGRAM);
+
+        boolean wasInitialized = false;
+
+        if (tableResourceCount == 0 || tableResourceCount != ResourceInitializer.getCount()) {
             InitializeResources();
+
+            wasInitialized = true;
         }
-        if (getCount(DBOpenHelper.TABLE_CATEGORY) == 0) {
+
+        if (tableCategoryCount == 0 || tableCategoryCount != CategoryInitializer.getCount()) {
             InitializeCategories();
+
+            wasInitialized = true;
         }
-        if (getCount(DBOpenHelper.TABLE_ENGRAM) == 0) {
+
+        if (tableEngramCount == 0 || tableEngramCount != EngramInitializer.getCount()) {
             InitializeEngrams();
+
+            wasInitialized = true;
         }
+
+        if (wasInitialized) {
+            ClearQueue();
+        }
+
+        Helper.Log(LOGTAG, "-- Testing complete.");
+    }
+
+    public void ClearQueue() {
+        Helper.Log(LOGTAG, "-- Clearing Crafting Queue..");
+
+        ResetTable(DBOpenHelper.TABLE_QUEUE);
+
+        Helper.Log(LOGTAG, "-- Crafting Queue cleared.");
     }
 
     private int getCount(String table) {
@@ -480,8 +513,6 @@ public class DataSource {
 
         database.insert(DBOpenHelper.TABLE_QUEUE, null, values);
     }
-
-    /** -- DATABASE QUERY METHODS -- */
 
     /**
      * Inserts resource data into data, TODO used strictly for initializing
@@ -530,17 +561,21 @@ public class DataSource {
         for (int i = 0; i < engram.getCompositionIDs().size(); i++) {
             Resource resource = findSingleResource(engram.getCompositionIDs().keyAt(i));
 
-            ContentValues compositionValues = new ContentValues();
-            compositionValues.put(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY, engram.getCompositionIDs().valueAt(i));
-            compositionValues.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
-            compositionValues.put(DBOpenHelper.COLUMN_TRACK_RESOURCE, resource.getId());
+            if (resource != null) {
+                ContentValues compositionValues = new ContentValues();
+                compositionValues.put(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY, engram.getCompositionIDs().valueAt(i));
+                compositionValues.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
+                compositionValues.put(DBOpenHelper.COLUMN_TRACK_RESOURCE, resource.getId());
 
-            long compositionId = database.insert(DBOpenHelper.TABLE_COMPOSITION, null, compositionValues);
+                long compositionId = database.insert(DBOpenHelper.TABLE_COMPOSITION, null, compositionValues);
 
-            Helper.Log(LOGTAG, "--> Composition Resource (" + resource.getName() + "/" + resource.getId() +
-                    " x" + engram.getCompositionIDs().valueAt(i) +
-                    ") inserted into " + engram.getName() +
-                    " at row " + compositionId);
+                Helper.Log(LOGTAG, "--> Composition Resource (" + resource.getName() + "/" + resource.getId() +
+                        " x" + engram.getCompositionIDs().valueAt(i) +
+                        ") inserted into " + engram.getName() +
+                        " at row " + compositionId);
+            } else {
+                Helper.Log(LOGTAG, "--> Composition Resource is null and was not inserted.");
+            }
         }
     }
 
@@ -567,25 +602,27 @@ public class DataSource {
      * -- DATABASE SYSTEM METHODS --
      */
 
-    public void CreateTable() {
-        database.execSQL(DBOpenHelper.TABLE_QUEUE_CREATE);
+    private void DeleteTableData(String table) {    // FIXME:   Find better way of clearing table
+        int rows = database.delete(table, "1", null);
 
-        Helper.Log(LOGTAG, "-- Created table: " + DBOpenHelper.TABLE_QUEUE);
+        Helper.Log(LOGTAG, "-- Deleted " + rows + " rows from table: " + table);
     }
 
-    public void DeleteTableData() {
-        int rows = database.delete(DBOpenHelper.TABLE_QUEUE, "1", null);
-
-        Helper.Log(LOGTAG, "-- Deleted " + rows + " rows from table: " + DBOpenHelper.TABLE_QUEUE);
+    private void CreateTable(String table) {
+        DBOpenHelper.createTable(database, table);
     }
 
-    public void DropTable() {
-        DBOpenHelper.dropTable(database, DBOpenHelper.TABLE_QUEUE);
-
-        Helper.Log(LOGTAG, "-- Dropped table: " + DBOpenHelper.TABLE_QUEUE);
+    private void DropTable(String table) {
+        DBOpenHelper.dropTable(database, table);
     }
 
-    private void Initialize() {
+    private void ResetTable(String table) {
+        DeleteTableData(table);
+        DropTable(table);
+        CreateTable(table);
+    }
+
+    public void Initialize() {
         Helper.Log(LOGTAG, "** Initializing database..");
 
         InitializeCategories();
@@ -593,10 +630,15 @@ public class DataSource {
         InitializeResources();
 
         InitializeEngrams();
+
+        Helper.Log(LOGTAG, "** Initialization complete.");
     }
 
     private void InitializeCategories() {
         Helper.Log(LOGTAG, "-- Initializing Categories..");
+
+        ResetTable(DBOpenHelper.TABLE_CATEGORY);
+
         List<Category> categories = CategoryInitializer.getCategories();
         for (Category category : categories) {
             Insert(category);
@@ -606,6 +648,9 @@ public class DataSource {
 
     private void InitializeResources() {
         Helper.Log(LOGTAG, "-- Initializing Resources..");
+
+        ResetTable(DBOpenHelper.TABLE_RESOURCE);
+
         SparseArray<String> resources = ResourceInitializer.getResources();
         for (int i = 0; i < resources.size(); i++) {
             int imageId = resources.keyAt(i);
@@ -617,6 +662,9 @@ public class DataSource {
 
     private void InitializeEngrams() {
         Helper.Log(LOGTAG, "-- Initializing Engrams..");
+
+        ResetTable(DBOpenHelper.TABLE_ENGRAM);
+
         List<InitEngram> engrams = EngramInitializer.getEngrams();
         for (InitEngram engram : engrams) {
             Insert(engram);
@@ -634,9 +682,5 @@ public class DataSource {
         database.close();
 
         Helper.Log(LOGTAG, "-- Database has closed --");
-    }
-
-    public Context getContext() {
-        return this.context;
     }
 }

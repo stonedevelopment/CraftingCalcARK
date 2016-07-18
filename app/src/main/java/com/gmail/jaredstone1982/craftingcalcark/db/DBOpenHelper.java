@@ -101,43 +101,54 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Helper.Log(LOGTAG, "** Database (" + DATABASE_NAME + " v" + DATABASE_VERSION + ") not found, creating..");
+
         createAllTables(db);
+
+        Helper.Log(LOGTAG, "** Database successfully created.");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Helper.Log(LOGTAG, "** Database (" + DATABASE_NAME + " v" + oldVersion + ") version has changed, upgrading..");
+
         dropAllTables(db);
         createAllTables(db);
+
         Helper.Log(LOGTAG, "** Database successfully upgraded from v" + oldVersion + " to v" + newVersion);
     }
 
-    public static void createAllTables(SQLiteDatabase database) {
+    private static void createAllTables(SQLiteDatabase database) {
         Helper.Log(LOGTAG, "-- Creating all tables.");
+
         createTable(database, TABLE_ENGRAM);
         createTable(database, TABLE_COMPOSITION);
         createTable(database, TABLE_QUEUE);
         createTable(database, TABLE_RESOURCE);
         createTable(database, TABLE_CATEGORY);
+
         Helper.Log(LOGTAG, "-- All tables created.");
     }
 
-    public static void dropAllTables(SQLiteDatabase database) {
+    private static void dropAllTables(SQLiteDatabase database) {
         Helper.Log(LOGTAG, "-- Dropping all tables.");
+
         dropTable(database, TABLE_CATEGORY);
         dropTable(database, TABLE_RESOURCE);
         dropTable(database, TABLE_QUEUE);
         dropTable(database, TABLE_COMPOSITION);
         dropTable(database, TABLE_ENGRAM);
+
         Helper.Log(LOGTAG, "-- All tables dropped.");
     }
 
-    public static void dropTable(SQLiteDatabase db, String table) {
-        db.execSQL(DROP_TABLE_IF_EXISTS + table);
+    protected static void dropTable(SQLiteDatabase db, String table) {
         Helper.Log(LOGTAG, "-> Dropping table: " + table);
+
+        db.execSQL(DROP_TABLE_IF_EXISTS + table);
     }
 
-    private static void createTable(SQLiteDatabase db, String table) {
+    protected static void createTable(SQLiteDatabase db, String table) {
         Helper.Log(LOGTAG, "-> Creating table: " + table);
 
         switch (table) {
@@ -162,7 +173,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 break;
 
             default:
-                break;
+                Helper.Log(LOGTAG, "!!> Table " + table + " does not exist in database, aborting.");
         }
     }
 }

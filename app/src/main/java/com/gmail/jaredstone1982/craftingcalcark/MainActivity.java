@@ -20,7 +20,6 @@ import com.gmail.jaredstone1982.craftingcalcark.model.listeners.RecyclerTouchLis
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "MAINACTIVITY";
-    private static final boolean FILTERED = false;
 
     private DisplayCaseListAdapter displayCaseListAdapter;
     private CraftableEngramListAdapter craftableEngramListAdapter;
@@ -29,11 +28,16 @@ public class MainActivity extends AppCompatActivity {
     private CraftingQueue craftingQueue;
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
+        RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
 

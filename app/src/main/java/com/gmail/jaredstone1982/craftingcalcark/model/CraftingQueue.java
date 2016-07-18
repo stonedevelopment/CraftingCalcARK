@@ -3,6 +3,7 @@ package com.gmail.jaredstone1982.craftingcalcark.model;
 import android.content.Context;
 import android.util.SparseArray;
 
+import com.gmail.jaredstone1982.craftingcalcark.R;
 import com.gmail.jaredstone1982.craftingcalcark.db.DataSource;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 
@@ -12,6 +13,8 @@ import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
  */
 public class CraftingQueue {
     private static final String LOGTAG = "CRAFTING";
+
+    private static final int MAX = R.integer.MAX;
 
     private DataSource dataSource;
 
@@ -35,8 +38,10 @@ public class CraftingQueue {
         if (queue == null) {
             dataSource.Insert(engramId, amount);
         } else {
-            queue.increaseQuantity(amount);
-            dataSource.Update(queue);
+            if (queue.getQuantity() < MAX) {
+                queue.increaseQuantity(amount);
+                dataSource.Update(queue);
+            }
         }
     }
 
@@ -60,19 +65,13 @@ public class CraftingQueue {
         }
 
         // if quantities are not equal, update existing queue to database
-        if (queue.getQuantity() != quantity) {
+        if (queue.getQuantity() != quantity && queue.getQuantity() <= MAX) {
             queue.setQuantity(quantity);
             dataSource.Update(queue);
         }
     }
 
     public void Clear() {
-        Helper.Log(LOGTAG, "** Clearing Crafting Queue..");
-
-        dataSource.DeleteTableData();
-        dataSource.DropTable();
-        dataSource.CreateTable();
-
-        Helper.Log(LOGTAG, "** Crafting Queue cleared.");
+        dataSource.ClearQueue();
     }
 }

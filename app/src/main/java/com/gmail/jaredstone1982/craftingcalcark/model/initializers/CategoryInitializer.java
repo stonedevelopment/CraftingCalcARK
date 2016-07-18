@@ -11,28 +11,34 @@ import java.util.List;
  * Will be along the same lines as in-game.
  */
 public class CategoryInitializer {
+    public static final String VERSION = "0.1.0";
 
     public static class MISC {
+
         public static final long ID = 1;
     }
 
     public static class STRUCTURES {
+
         public static final long ID = 2;
         public static final long THATCH = 201;
 
-        private static final class WOOD {
+        public static class WOOD {
+
             public static final long ID = 202;
             public static final long SIGNS = 2021;
             public static final long STORAGE = 2022;
         }
 
         public static final long STONE = 203;
+
         public static final long COOKING = 204;
         public static final long BEDS = 205;
         public static final long CRAFTING = 206;
         public static final long MISC = 207;
 
-        private static final class FURNITURE {
+        public static class FURNITURE {
+
             public static final long ID = 208;
             public static final long WOOD = 2081;
             public static final long STONE = 2082;
@@ -40,7 +46,8 @@ public class CategoryInitializer {
 
         public static final long FARMING = 209;
 
-        private static final class PIPES {
+        public static class PIPES {
+
             public static final long ID = 210;
             public static final long STONE = 2101;
             public static final long METAL = 2102;
@@ -49,33 +56,40 @@ public class CategoryInitializer {
         public static final long FRIDGES = 211;
 
         public static class METAL {
+
             public static final long ID = 212;
             public static final long SIGNS = 2121;
             public static final long STORAGE = 2122;
         }
 
         public static final long DEFENSES = 213;
+
         public static final long GREENHOUSE = 214;
 
         public static class ELECTRICAL {
+
             public static final long ID = 215;
             public static final long DEFENSES = 2151;
             public static final long ELEVATORS = 2152;
         }
 
         public static final long ELECTRIC = 216;
+
     }
 
     public static class WEAPONS {
+
         public static final long ID = 3;
 
         public static class PRIMITIVE {
+
             public static final long ID = 301;
             public static final long MELEE = 3011;
             public static final long RANGED = 3012;
         }
 
         public static final long AMMO = 302;
+
         public static final long TRIPWIRES = 303;
         public static final long EXPLOSIVES = 304;
         public static final long FIREARMS = 305;
@@ -85,6 +99,7 @@ public class CategoryInitializer {
     }
 
     public static class ARMOR {
+
         public static final long ID = 4;
         public static final long CLOTH = 401;
         public static final long SHIELDS = 402;
@@ -99,40 +114,49 @@ public class CategoryInitializer {
     }
 
     public static class SADDLES {
+
         public static final long ID = 5;
     }
 
     public static class NAVIGATION {
+
         public static final long ID = 6;
     }
 
     public static class COMMUNICATION {
+
         public static final long ID = 7;
     }
 
     public static class OFFHAND {
+
         public static final long ID = 8;
     }
 
     public static class COMPOSITES {
+
         public static final long ID = 9;
     }
 
     public static class CONSUMABLES {
+
         public static final long ID = 10;
         public static final long DRUGS = 1001;
         public static final long FOOD = 1002;
     }
 
     public static class DYES {
+
         public static final long ID = 11;
     }
 
     public static class KIBBLE {
+
         public static final long ID = 12;
     }
 
     public static class REFINED {
+
         public static final long ID = 13;
     }
 
@@ -189,7 +213,7 @@ public class CategoryInitializer {
             add(new Category(1, ARMOR.CHITIN, "Chitin", ARMOR.ID));
             add(new Category(1, ARMOR.FUR, "Fur", ARMOR.ID));
             add(new Category(1, ARMOR.METAL, "Metal", ARMOR.ID));
-            add(new Category(1, ARMOR.SCUBA, "Scuba", ARMOR.ID));
+            add(new Category(1, ARMOR.SCUBA, "SCUBA", ARMOR.ID));
             add(new Category(1, ARMOR.RIOT, "Riot", ARMOR.ID));
             add(new Category(1, ARMOR.MISC, "Misc", ARMOR.ID));
 
@@ -225,5 +249,9 @@ public class CategoryInitializer {
 
     public static List<Category> getCategories() {
         return categories;
+    }
+
+    public static int getCount() {
+        return categories.size();
     }
 }

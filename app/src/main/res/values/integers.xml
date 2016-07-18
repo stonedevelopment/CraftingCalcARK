@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="MAX">100</integer>
+    <integer name="MIN">0</integer>
+    <integer name="detail_id_code">1000</integer>
+</resources>
