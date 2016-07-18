@@ -37,6 +37,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create progress activity if database needs to be upgraded or initiated.
+        // FIXME: Does not show anything after progressBar dismisses.
+//        final DataSource dataSource = DataSource.getInstance(this, LOGTAG);
+//        final List<String> tablesForContent = dataSource.TestTablesForContent();
+//        if (tablesForContent.size() > 0) {
+//            final ProgressDialog progressDialog = ProgressDialog.show(this, "Initializing data..", "Initializing data..", true);
+//            progressDialog.setCancelable(false);
+//
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    dataSource.InitializeTablesWithContent(tablesForContent);
+//                    progressDialog.dismiss();
+//                }
+//            }).start();
+//        }
+
+
         RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
@@ -178,6 +196,12 @@ public class MainActivity extends AppCompatActivity {
                 refreshDisplayForCraftingQueue();
             }
         }
+    }
+
+    private void refreshDisplay() {
+        displayCaseListAdapter.Refresh();
+        craftableEngramListAdapter.Refresh();
+        craftableResourceListAdapter.Refresh();
     }
 
     private void refreshDisplayForCraftingQueue() {

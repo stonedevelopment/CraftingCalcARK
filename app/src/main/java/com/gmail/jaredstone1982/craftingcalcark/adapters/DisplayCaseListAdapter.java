@@ -96,7 +96,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
      * -- PRIVATE UTILITY METHODS --
      */
 
-    private void Refresh() {
+    public void Refresh() {
         this.notifyDataSetChanged();
     }
 }

@@ -10,7 +10,7 @@ import com.gmail.jaredstone1982.craftingcalcark.R;
  * FIXME: This does not currently allow for complex resource objects (resources that are composed of resources), be advised.
  */
 public class ResourceInitializer {
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.1";
 
     // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;
@@ -18,6 +18,7 @@ public class ResourceInitializer {
     public static final int METAL_ORE = R.drawable.metal_ore;
     public static final int HIDE = R.drawable.hide;
     public static final int CHITIN = R.drawable.chitin;
+    public static final int CHITIN_OR_KERATIN = R.drawable.chitin_or_keratin;
     public static final int FLINT = R.drawable.flint;
     public static final int METAL_INGOT = R.drawable.metal_ingot;
     public static final int THATCH = R.drawable.thatch;

@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Stone Wall"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite" />
 
         <TextView
             android:id="@+id/engram_detail_categoryText"
@@ -35,14 +36,16 @@
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
             android:text="Structures/Wood/Storage"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="@color/colorWhite" />
 
         <TextView
             android:id="@+id/engram_detail_descriptionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="A brick-and-mortar wall that insulates the inside from the outside and seperates rooms."
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/colorWhite" />
 
     </LinearLayout>
 </LinearLayout>

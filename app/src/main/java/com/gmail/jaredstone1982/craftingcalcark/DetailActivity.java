@@ -18,8 +18,8 @@ import com.gmail.jaredstone1982.craftingcalcark.model.Showcase;
 public class DetailActivity extends AppCompatActivity {
     private static final String LOGTAG = "DETAIL";
 
-    private static final int MIN = R.integer.MIN;
-    private static final int MAX = R.integer.MAX;
+    private static final int MIN = 0;
+    private static final int MAX = 100;
 
     private long id;
     private Showcase showcase;
@@ -49,7 +49,7 @@ public class DetailActivity extends AppCompatActivity {
 
         showcase = new Showcase(this, id);
         if (showcase.getQuantity() <= MIN) {
-            showcase.setQuantity(MIN + 1);
+            showcase.setQuantity(MIN);
         }
         if (imageView != null && nameText != null && descriptionText != null && categoryText != null &&
                 quantityNumberPicker != null && saveButton != null && resourceList != null) {

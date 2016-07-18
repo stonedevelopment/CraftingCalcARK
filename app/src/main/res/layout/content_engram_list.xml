@@ -9,6 +9,5 @@
         android:id="@+id/content_displaycase"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:background="@color/displaycase_background" />
+        android:scrollbars="vertical" />
 </FrameLayout>

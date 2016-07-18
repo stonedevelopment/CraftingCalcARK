@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.SparseArray;
 
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
+import com.gmail.jaredstone1982.craftingcalcark.helpers.PreferenceHelper;
 import com.gmail.jaredstone1982.craftingcalcark.model.Category;
 import com.gmail.jaredstone1982.craftingcalcark.model.CraftableEngram;
 import com.gmail.jaredstone1982.craftingcalcark.model.CraftableResource;
@@ -20,6 +21,7 @@ import com.gmail.jaredstone1982.craftingcalcark.model.initializers.CategoryIniti
 import com.gmail.jaredstone1982.craftingcalcark.model.initializers.EngramInitializer;
 import com.gmail.jaredstone1982.craftingcalcark.model.initializers.ResourceInitializer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,7 +52,11 @@ public class DataSource {
         this.context = context;
 
         OpenDatabase();
-        TestTablesForContent();
+
+        List<String> tables = TestTablesForContent();
+        if (tables.size() > 0) {
+            InitializeTablesWithContent(tables);
+        }
     }
 
     /**
@@ -241,7 +247,14 @@ public class DataSource {
             int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID));
             String description = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_DESCRIPTION));
             long categoryId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_CATEGORY_ID));
-            int quantity = findSingleQueue(id).getQuantity();
+            int quantity;
+
+            Queue queue = findSingleQueue(id);
+            if (queue != null) {
+                quantity = queue.getQuantity();
+            } else {
+                quantity = 0;
+            }
 
             SparseArray<CraftableResource> composition = findEngramResources(id);
 
@@ -441,31 +454,48 @@ public class DataSource {
         return this.context;
     }
 
-    private void TestTablesForContent() {
-        Helper.Log(LOGTAG, "-- Testing tables for content..");
+    public List<String> TestTablesForContent() {
+        List<String> tables = new ArrayList<>();
 
         int tableResourceCount = getCount(DBOpenHelper.TABLE_RESOURCE);
         int tableCategoryCount = getCount(DBOpenHelper.TABLE_CATEGORY);
         int tableEngramCount = getCount(DBOpenHelper.TABLE_ENGRAM);
 
-        boolean wasInitialized = false;
-
         if (tableResourceCount == 0 || tableResourceCount != ResourceInitializer.getCount()) {
-            InitializeResources();
-
-            wasInitialized = true;
+            tables.add(DBOpenHelper.TABLE_RESOURCE);
         }
 
         if (tableCategoryCount == 0 || tableCategoryCount != CategoryInitializer.getCount()) {
-            InitializeCategories();
-
-            wasInitialized = true;
+            tables.add(DBOpenHelper.TABLE_CATEGORY);
         }
 
         if (tableEngramCount == 0 || tableEngramCount != EngramInitializer.getCount()) {
-            InitializeEngrams();
+            tables.add(DBOpenHelper.TABLE_ENGRAM);
+        }
 
-            wasInitialized = true;
+        return tables;
+    }
+
+    public void InitializeTablesWithContent(List<String> tables) {
+        Helper.Log(LOGTAG, "-- Initializing tables with content..");
+
+        boolean wasInitialized = false;
+
+        for (String table : tables) {
+            switch (table) {
+                case DBOpenHelper.TABLE_RESOURCE:
+                    InitializeResources();
+                    wasInitialized = true;
+                    break;
+                case DBOpenHelper.TABLE_CATEGORY:
+                    InitializeCategories();
+                    wasInitialized = true;
+                    break;
+                case DBOpenHelper.TABLE_ENGRAM:
+                    InitializeEngrams();
+                    wasInitialized = true;
+                    break;
+            }
         }
 
         if (wasInitialized) {
@@ -602,7 +632,7 @@ public class DataSource {
      * -- DATABASE SYSTEM METHODS --
      */
 
-    private void DeleteTableData(String table) {    // FIXME:   Find better way of clearing table
+    private void DeleteTableData(String table) {
         int rows = database.delete(table, "1", null);
 
         Helper.Log(LOGTAG, "-- Deleted " + rows + " rows from table: " + table);
@@ -643,6 +673,11 @@ public class DataSource {
         for (Category category : categories) {
             Insert(category);
         }
+
+        // Save version persistently, future debugging helper
+        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
+        preferenceHelper.setPreference(Helper.CATEGORY_VERSION, CategoryInitializer.VERSION);
+
         Helper.Log(LOGTAG, "-- Category initialization completed.");
     }
 
@@ -657,6 +692,11 @@ public class DataSource {
             String name = resources.valueAt(i);
             Insert(imageId, name);
         }
+
+        // Save version persistently, future debugging helper
+        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
+        preferenceHelper.setPreference(Helper.RESOURCE_VERSION, ResourceInitializer.VERSION);
+
         Helper.Log(LOGTAG, "-- Resource initialization completed.");
     }
 
@@ -669,6 +709,11 @@ public class DataSource {
         for (InitEngram engram : engrams) {
             Insert(engram);
         }
+
+        // Save version persistently, future debugging helper
+        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
+        preferenceHelper.setPreference(Helper.ENGRAM_VERSION, EngramInitializer.VERSION);
+
         Helper.Log(LOGTAG, "-- Engram initialization completed.");
     }
 
