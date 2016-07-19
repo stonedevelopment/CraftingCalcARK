@@ -69,7 +69,8 @@ public class DataSource {
                         " FROM " + DBOpenHelper.TABLE_QUEUE +
                         " INNER JOIN " + DBOpenHelper.TABLE_ENGRAM +
                         " ON " + DBOpenHelper.TABLE_QUEUE + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM +
-                        " = " + DBOpenHelper.TABLE_ENGRAM + "." + DBOpenHelper.COLUMN_ENGRAM_ID,
+                        " = " + DBOpenHelper.TABLE_ENGRAM + "." + DBOpenHelper.COLUMN_ENGRAM_ID +
+                        " ORDER BY " + DBOpenHelper.COLUMN_ENGRAM_NAME,
                 null, null
         );
 
@@ -98,12 +99,12 @@ public class DataSource {
      */
     public SparseArray<DisplayEngram> findAllDisplayEngrams() {
         Cursor cursor = database.rawQuery(
-                "SELECT * FROM " + DBOpenHelper.TABLE_ENGRAM,
+                "SELECT * FROM " + DBOpenHelper.TABLE_ENGRAM + " ORDER BY " + DBOpenHelper.COLUMN_ENGRAM_NAME,
                 null, null
         );
 
         if (cursor.getCount() == 0) {
-            InitializeEngrams();
+            // throw exception, initialize database
         }
 
         return cursorToDisplayEngrams(cursor);
@@ -148,7 +149,7 @@ public class DataSource {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY +
                         " WHERE " + DBOpenHelper.COLUMN_CATEGORY_PARENT + " = " +
-                        categoryId,
+                        categoryId + " ORDER BY " + DBOpenHelper.COLUMN_CATEGORY_NAME,
                 null, null
         );
 
@@ -323,7 +324,7 @@ public class DataSource {
                 int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
 
                 CraftableEngram engram = new CraftableEngram(id, name, imageId, quantity);
-                engrams.put(imageId, engram);
+                engrams.put(engrams.size(), engram);
 
                 Helper.Log(LOGTAG, " > Engram Details: " + engram.toString());
             }
@@ -370,7 +371,7 @@ public class DataSource {
 
                 DisplayEngram engram = new DisplayEngram(id, name, imageId, categoryId);
 
-                engrams.put(imageId, engram);
+                engrams.put(engrams.size(), engram);
             }
         }
 

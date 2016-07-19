@@ -78,6 +78,11 @@ public class DisplayCase {
      * -- METHODS THAT RETURN TO VIEWHOLDER --
      */
 
+    public boolean inQueue(long engramId) {
+        Queue queue = dataSource.findSingleQueue(engramId);
+        return queue != null;
+    }
+
     public int getImageId(int position) {
         if (isFiltered) {
             if (position >= categories.size()) {
@@ -118,6 +123,29 @@ public class DisplayCase {
         }
     }
 
+    public int getQuantity(int position) {
+        if (isFiltered) {
+            if (position >= categories.size()) {
+                position -= categories.size();
+
+                DisplayEngram engram = engrams.valueAt(position);
+                Queue queue = dataSource.findSingleQueue(engram.getId());
+                if (queue != null) {
+                    return queue.getQuantity();
+                }
+            }
+        } else {
+            DisplayEngram engram = engrams.valueAt(position);
+
+            Queue queue = dataSource.findSingleQueue(engram.getId());
+            if (queue != null) {
+                return queue.getQuantity();
+            }
+        }
+
+        return 0;
+    }
+
     public String getName(long categoryId) {
         if (categoryId > ROOT) {
             Category category = getCategory(categoryId);
@@ -144,11 +172,21 @@ public class DisplayCase {
     }
 
     public long getEngramId(int position) {
-        if (getLevel() > 0) {
-            // subtract position by amount of categories shown
-            position -= categories.size();
+        if (isFiltered) {
+            if (position >= categories.size()) {
+                position -= categories.size();
+
+                DisplayEngram engram = engrams.valueAt(position);
+
+                return engram.getId();
+            }
+        } else {
+            DisplayEngram engram = engrams.valueAt(position);
+
+            return engram.getId();
         }
-        return engrams.valueAt(position).getId();
+
+        return 0;
     }
 
     public void changeCategory(int position) {

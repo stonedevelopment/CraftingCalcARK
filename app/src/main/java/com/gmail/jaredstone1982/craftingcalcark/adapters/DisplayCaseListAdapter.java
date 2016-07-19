@@ -1,9 +1,7 @@
 package com.gmail.jaredstone1982.craftingcalcark.adapters;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import com.gmail.jaredstone1982.craftingcalcark.R;
 import com.gmail.jaredstone1982.craftingcalcark.model.DisplayCase;
 import com.gmail.jaredstone1982.craftingcalcark.viewholders.DisplayCaseViewHolder;
+
+import java.util.Locale;
 
 public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     private static final String LOGTAG = "LISTADAPTER";
@@ -32,9 +32,6 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DisplayCaseViewHolder viewHolder = (DisplayCaseViewHolder) holder;
 
-        int textSize = 12;
-        int textMax = 10;
-
         int imageId = displayCase.getImageId(position);
         String name = displayCase.getName(position);
 
@@ -42,24 +39,21 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         viewHolder.getNameText().setText(name);
 
         if (displayCase.isEngram(position)) {
-            viewHolder.getImage().setBackgroundColor(displayCase.getContext().getColor(R.color.displaycase_engram_background));
-            viewHolder.getImage().setImageTintList(displayCase.getContext().getColorStateList(R.color.displaycase_tint_half_opacity));
-            viewHolder.getImage().setImageTintMode(PorterDuff.Mode.SRC_ATOP);
-            viewHolder.getNameText().setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            int quantity = displayCase.getQuantity(position);
+
+            if (quantity > 0) {
+                viewHolder.getImage().setBackgroundColor(displayCase.getContext().getColor(R.color.crafting_queue_background));
+                viewHolder.getQuantityText().setText(String.format(Locale.US, "x%d", quantity));
+                viewHolder.getNameText().setSingleLine(true);
+            } else {
+                viewHolder.getImage().setBackgroundColor(displayCase.getContext().getColor(R.color.displaycase_engram_background));
+                viewHolder.getQuantityText().setText(null);
+                viewHolder.getNameText().setSingleLine(false);
+            }
         } else {
             viewHolder.getImage().setBackgroundColor(0);
-            viewHolder.getImage().setImageTintMode(null);
-
-            int textLength = viewHolder.getNameText().length();
-            if (textLength > textMax) {
-                int textRemainder = textLength - textMax;
-                if (textRemainder > 2) {
-                    textRemainder = 2;
-                }
-                textSize -= textRemainder;
-            }
-
-            viewHolder.getNameText().setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            viewHolder.getQuantityText().setText(null);
+            viewHolder.getNameText().setSingleLine(false);
         }
     }
 
@@ -93,7 +87,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     }
 
     /**
-     * -- PRIVATE UTILITY METHODS --
+     * -- UTILITY METHODS --
      */
 
     public void Refresh() {

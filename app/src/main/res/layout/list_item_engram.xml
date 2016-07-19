@@ -14,21 +14,27 @@
 
     <TextView
         android:id="@+id/list_item_engram_nameText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="@color/colorWhite"
+        android:layout_alignStart="@+id/list_item_engram_imageView"
+        android:fontFamily="sans-serif-smallcaps"
+        android:singleLine="true"
         android:text="nameText"
-        android:layout_alignStart="@+id/list_item_engram_imageView" />
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/list_item_engram_quantityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif"
         android:text="x0"
-        android:textColor="@color/colorWhite" />
+        android:textAlignment="center"
+        android:textColor="@color/text_color_quantity"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -10,11 +10,13 @@
 
     <NumberPicker
         android:id="@+id/engram_detail_quantityNumberPicker"
+        android:theme="@style/AppTheme.Picker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        android:solidColor="@color/colorWhite" />
+        android:solidColor="@color/text_color_quantity"
+        android:descendantFocusability="blocksDescendants" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/engram_detail_resources"

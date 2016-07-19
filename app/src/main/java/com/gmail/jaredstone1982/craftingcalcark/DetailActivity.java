@@ -49,7 +49,7 @@ public class DetailActivity extends AppCompatActivity {
 
         showcase = new Showcase(this, id);
         if (showcase.getQuantity() <= MIN) {
-            showcase.setQuantity(MIN);
+            showcase.setQuantity(MIN + 1);
         }
         if (imageView != null && nameText != null && descriptionText != null && categoryText != null &&
                 quantityNumberPicker != null && saveButton != null && resourceList != null) {

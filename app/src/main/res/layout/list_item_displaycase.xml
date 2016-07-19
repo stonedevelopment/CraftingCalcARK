@@ -9,19 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
+        android:background="@color/displaycase_background_transparent"
         android:src="@drawable/structures_stone_stone_wall" />
 
     <TextView
         android:id="@+id/list_item_displaycase_nameText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignStart="@+id/list_item_displaycase_imageView"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="nameText"
-        android:textSize="12sp"
-        android:gravity="bottom"
-        android:textAlignment="center"
-        android:textAllCaps="true"
         android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/list_item_displaycase_quantityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif"
+        android:text="x0"
+        android:textAlignment="center"
+        android:textColor="@color/text_color_quantity"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

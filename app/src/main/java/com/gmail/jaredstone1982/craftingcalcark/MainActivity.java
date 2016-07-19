@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 
-        RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
+        final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
 
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                             if (displayCaseListAdapter.isEngram(position)) {
                                 craftingQueue.increaseQuantity(displayCaseListAdapter.getEngramId(position), 1);
 
+                                displayCaseListAdapter.Refresh();
                                 refreshDisplayForCraftingQueue();
                             } else {
                                 // this is a category
@@ -193,15 +194,11 @@ public class MainActivity extends AppCompatActivity {
                 int quantity = extras.getInt(Helper.DETAIL_QUANTITY);
 
                 craftingQueue.setQuantity(id, quantity);
+
+                displayCaseListAdapter.Refresh();
                 refreshDisplayForCraftingQueue();
             }
         }
-    }
-
-    private void refreshDisplay() {
-        displayCaseListAdapter.Refresh();
-        craftableEngramListAdapter.Refresh();
-        craftableResourceListAdapter.Refresh();
     }
 
     private void refreshDisplayForCraftingQueue() {
