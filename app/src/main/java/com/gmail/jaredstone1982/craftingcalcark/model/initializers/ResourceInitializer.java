@@ -10,7 +10,7 @@ import com.gmail.jaredstone1982.craftingcalcark.R;
  * FIXME: This does not currently allow for complex resource objects (resources that are composed of resources), be advised.
  */
 public class ResourceInitializer {
-    public static final String VERSION = "0.1.1";
+    public static final String VERSION = "0.1.2";
 
     // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;
@@ -45,6 +45,10 @@ public class ResourceInitializer {
     public static final int ABSORBENT_SUBSTRATE = R.drawable.absorbent_substrate;
     public static final int LEECH_BLOOD = R.drawable.leech_blood;
     public static final int SAP = R.drawable.sap;
+    public static final int FERTILIZER = R.drawable.fertilizer;
+    public static final int STONE_ARROW = R.drawable.weapons_ammo_stone_arrow;
+    public static final int NARCOTIC = R.drawable.consumables_drugs_narcotic;
+    public static final int SIMPLE_RIFLE_AMMO = R.drawable.weapons_ammo_simple_rifle_ammo;
 
     private static SparseArray<String> resources = new SparseArray<String>() {
         {
@@ -79,6 +83,10 @@ public class ResourceInitializer {
             append(ABSORBENT_SUBSTRATE, "Absorbent Substrate");
             append(LEECH_BLOOD, "Leech Blood");
             append(SAP, "Sap");
+            append(FERTILIZER, "Fertilizer");
+            append(STONE_ARROW, "Stone Arrow");
+            append(NARCOTIC, "Narcotic");
+            append(SIMPLE_RIFLE_AMMO, "Simple Rifle Ammo");
         }
     };
 

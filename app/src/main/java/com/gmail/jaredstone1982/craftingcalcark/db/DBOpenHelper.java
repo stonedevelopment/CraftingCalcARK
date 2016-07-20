@@ -12,7 +12,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String LOGTAG = "DB_HELPER";
     private static final String DATABASE_NAME = "ark.db";
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
     public static final String TABLE_RESOURCE = "resource";
