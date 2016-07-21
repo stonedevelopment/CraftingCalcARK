@@ -67,7 +67,6 @@ public class DetailActivity extends AppCompatActivity {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                     showcase.setQuantity(newVal);
-                    // TODO: 7/8/2016 The use of Resources and Composition can be confusing, they are essentially the same thing.
                     resourceListAdapter.setResources(showcase.getComposition());
                     resourceListAdapter.Refresh();
                 }

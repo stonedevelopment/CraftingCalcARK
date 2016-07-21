@@ -12,7 +12,7 @@ import java.util.List;
  * Provides data to initialize the database with a full list of InitEngram objects
  */
 public class EngramInitializer {
-    public static final String VERSION = "0.1.2";
+    public static final String VERSION = "0.1.3";
 
     // -- ARMOR > CHITIN --
     public static final int CHITIN_BOOTS = R.drawable.armor_chitin_chitin_boots;
@@ -85,6 +85,56 @@ public class EngramInitializer {
     public static final int ELECTRONICS = R.drawable.composites_electronics;
     public static final int POLYMER = R.drawable.composites_polymer;
 
+    // -- CONSUMABLES --
+    // -- CONSUMABLES > DRUGS --
+    public static final int BUG_REPELLANT = R.drawable.consumables_drugs_bug_repellant;
+    public static final int LESSER_ANTIDOTE = R.drawable.consumables_drugs_lesser_antidote;
+    public static final int NARCOTIC = R.drawable.consumables_drugs_narcotic;
+    public static final int STIMULANT = R.drawable.consumables_drugs_stimulant;
+
+    // -- CONSUMABLES > FOOD --
+    public static final int BATTLE_TARTARE = R.drawable.consumables_food_battle_tartare;
+    public static final int BEER_JAR = R.drawable.consumables_food_beer_jar;
+    public static final int BINGLEBERRY_SOUP = R.drawable.consumables_food_bingleberry_soup;
+    public static final int BROTH_OF_ENLIGHTENMENT = R.drawable.consumables_food_broth_of_enlightenment;
+    public static final int CALIEN_SOUP = R.drawable.consumables_food_calien_soup;
+    public static final int ENDURO_STEW = R.drawable.consumables_food_enduro_stew;
+    public static final int ENERGY_BREW = R.drawable.consumables_food_energy_brew;
+    public static final int FOCAL_CHILI = R.drawable.consumables_food_focal_chili;
+    public static final int FRIA_CURRY = R.drawable.consumables_food_fria_curry;
+    public static final int LAZARUS_CHOWDER = R.drawable.consumables_food_lazarus_chowder;
+    public static final int MEDICAL_BREW = R.drawable.consumables_food_medical_brew;
+    public static final int MINDWIPE_TONIC = R.drawable.consumables_food_mindwipe_tonic;
+    public static final int SHADOW_STEAK_SAUCE = R.drawable.consumables_food_shadow_steak_saute;
+    public static final int SWEET_VEGGIE_CAKE = R.drawable.consumables_food_sweet_veggie_cake;
+
+    // -- DYES --
+    public static final int BLACK_COLORING = R.drawable.dyes_black_coloring;
+    public static final int BLUE_COLORING = R.drawable.dyes_blue_coloring;
+    public static final int BRICK_COLORING = R.drawable.dyes_brick_coloring;
+    public static final int BROWN_COLORING = R.drawable.dyes_brown_coloring;
+    public static final int CANTALOUPE_COLORING = R.drawable.dyes_cantaloupe_coloring;
+    public static final int CYAN_COLORING = R.drawable.dyes_cyan_coloring;
+    public static final int FOREST_COLORING = R.drawable.dyes_forest_coloring;
+    public static final int GREEN_COLORING = R.drawable.dyes_green_coloring;
+    public static final int MAGENTA_COLORING = R.drawable.dyes_magenta_coloring;
+    public static final int MUD_COLORING = R.drawable.dyes_mud_coloring;
+    public static final int NAVY_COLORING = R.drawable.dyes_navy_coloring;
+    public static final int OLIVE_COLORING = R.drawable.dyes_olive_coloring;
+    public static final int ORANGE_COLORING = R.drawable.dyes_orange_coloring;
+    public static final int PARCHMENT_COLORING = R.drawable.dyes_parchment_coloring;
+    public static final int PINK_COLORING = R.drawable.dyes_pink_coloring;
+    public static final int PURPLE_COLORING = R.drawable.dyes_purple_coloring;
+    public static final int RED_COLORING = R.drawable.dyes_red_coloring;
+    public static final int ROYALTY_COLORING = R.drawable.dyes_royalty_coloring;
+    public static final int SILVER_COLORING = R.drawable.dyes_silver_coloring;
+    public static final int SKY_COLORING = R.drawable.dyes_sky_coloring;
+    public static final int SLATE_COLORING = R.drawable.dyes_slate_coloring;
+    public static final int TAN_COLORING = R.drawable.dyes_tan_coloring;
+    public static final int TANGERINE_COLORING = R.drawable.dyes_tangerine_coloring;
+    public static final int WHITE_COLORING = R.drawable.dyes_white_coloring;
+    public static final int YELLOW_COLORING = R.drawable.dyes_yellow_coloring;
+
     // -- MISC --
     public static final int BLOOD_EXTRACTION_SYRINGE = R.drawable.misc_blood_extraction_syringe;
     public static final int CANTEEN = R.drawable.misc_canteen;
@@ -108,6 +158,64 @@ public class EngramInitializer {
 
     // -- OFFHAND --
     public static final int HANDCUFFS = R.drawable.offhand_handcuffs;
+
+    // -- REFINED --
+    public static final int ABSORBENT_SUBSTRATE = R.drawable.refined_absorbent_substrate;
+    public static final int BEER_LIQUID = R.drawable.refined_beer_liquid;
+    public static final int CEMENTING_PASTE = R.drawable.refined_cementing_paste;
+    public static final int CHARCOAL = R.drawable.refined_charcoal;
+    public static final int FERTILIZER = R.drawable.refined_fertilizer;
+    public static final int GASOLINE = R.drawable.refined_gasoline;
+    public static final int GUNPOWDER = R.drawable.refined_gunpowder;
+    public static final int METAL_INGOT = R.drawable.refined_metal_ingot;
+    public static final int SPARKPOWDER = R.drawable.refined_sparkpowder;
+
+    // -- SADDLES --
+    public static final int ANKYLO = R.drawable.saddles_ankylo;
+    public static final int ARANEO = R.drawable.saddles_araneo;
+    public static final int ARGENTAVIS = R.drawable.saddles_argentavis;
+    public static final int ARTHROPLUERA = R.drawable.saddles_arthropluera;
+    public static final int BEELZEBUFO = R.drawable.saddles_beelzebufo;
+    public static final int BRONTO = R.drawable.saddles_bronto;
+    public static final int BRONTO_PLATFORM = R.drawable.saddles_bronto_platform;
+    public static final int CARBONEMYS = R.drawable.saddles_carbonemys;
+    public static final int CARNO = R.drawable.saddles_carno;
+    public static final int CASTOROIDES = R.drawable.saddles_castoroides;
+    public static final int DIPLODOCUS = R.drawable.saddles_diplodocus;
+    public static final int DIREBEAR = R.drawable.saddles_direbear;
+    public static final int DOEDICURUS = R.drawable.saddles_doedicurus;
+    public static final int DUNKLEOSTEUS = R.drawable.saddles_dunkleosteus;
+    public static final int GALLIMIMUS = R.drawable.saddles_gallimimus;
+    public static final int GIGANOTOSAURUS = R.drawable.saddles_giganotosaurus;
+    public static final int ICHTHYOSAURUS = R.drawable.saddles_ichthyosaurus;
+    public static final int MAMMOTH = R.drawable.saddles_mammoth;
+    public static final int MANTA = R.drawable.saddles_manta;
+    public static final int MEGALOCEROS = R.drawable.saddles_megaloceros;
+    public static final int MEGALODON = R.drawable.saddles_megalodon;
+    public static final int MOSASAURUS = R.drawable.saddles_mosasaurus;
+    public static final int MOSASAURUS_PLATFORM = R.drawable.saddles_mosasaurus_platform;
+    public static final int PACHY = R.drawable.saddles_pachy;
+    public static final int PARACER = R.drawable.saddles_paracer;
+    public static final int PARACER_PLATFORM = R.drawable.saddles_paracer_platform;
+    public static final int PARASAUR = R.drawable.saddles_parasaur;
+    public static final int PHIOMIA = R.drawable.saddles_phiomia;
+    public static final int PLESIOSAUR = R.drawable.saddles_plesiosaur;
+    public static final int PLESIOSAUR_PLATFORM = R.drawable.saddles_plesiosaur_platform;
+    public static final int PROCOPTODON = R.drawable.saddles_procoptodon;
+    public static final int PTERANODON = R.drawable.saddles_pteranodon;
+    public static final int PULMONOSCORPIUS = R.drawable.saddles_pulmonoscorpius;
+    public static final int QUETZAL = R.drawable.saddles_quetzal;
+    public static final int QUETZAL_PLATFORM = R.drawable.saddles_quetzal_platform;
+    public static final int RAPTOR = R.drawable.saddles_raptor;
+    public static final int REX = R.drawable.saddles_rex;
+    public static final int SABERTOOTH = R.drawable.saddles_sabertooth;
+    public static final int SARCO = R.drawable.saddles_sarco;
+    public static final int SPINO = R.drawable.saddles_spino;
+    public static final int STEGO = R.drawable.saddles_stego;
+    public static final int TERROR_BIRD = R.drawable.saddles_terror_bird;
+    public static final int TITANOSAUR_PLATFORM = R.drawable.saddles_titanosaur_platform;
+    public static final int TRIKE = R.drawable.saddles_trike;
+    public static final int WOOLLY_RHINO = R.drawable.saddles_woolly_rhino;
 
     // -- STRUCTURES > BEDS --
     public static final int BUNK_BED = R.drawable.structures_beds_bunk_bed;
@@ -398,8 +506,8 @@ public class EngramInitializer {
     public static final int TRIPWIRE_NARCOTIC_TRAP = R.drawable.weapons_tripwires_tripwire_narcotic_trap;
 
     // -- FUTURE ITEMS --
-    public static final int FISHING_ROD = R.drawable.folder;
-    public static final int TEK_GRENADE = R.drawable.weapons_explosive_tek_grenade;
+//    public static final int FISHING_ROD = R.drawable.;
+//    public static final int TEK_GRENADE = R.drawable.weapons_explosive_tek_grenade;
 
     private static List<InitEngram> engrams = new ArrayList<InitEngram>() {
         {
@@ -902,6 +1010,468 @@ public class EngramInitializer {
                     }},
                     CategoryInitializer.COMPOSITES.ID));
 
+            // -- CONSUMABLES --
+            // -- CONSUMABLES > DRUGS --
+            add(new InitEngram(
+                    BUG_REPELLANT,
+                    "Bug Repellant",
+                    "This gnarly paste makes you nearly invisible to bugs. Just don't attack them, and they'll ignore you! Effect lasts 10 minutes.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.PELT, 6);
+                        append(ResourceInitializer.NARCOTIC, 2);
+                        append(ResourceInitializer.CITRONAL, 4);
+                        append(ResourceInitializer.ROCKARROT, 4);
+                    }},
+                    CategoryInitializer.CONSUMABLES.DRUGS));
+            add(new InitEngram(
+                    LESSER_ANTIDOTE,
+                    "Lesser Antidote",
+                    "Cures Lesser Afflictions!",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.RARE_FLOWER, 10);
+                        append(ResourceInitializer.RARE_MUSHROOM, 10);
+                        append(ResourceInitializer.LEECH_BLOOD, 5);
+                        append(ResourceInitializer.NARCOTIC, 1);
+                    }},
+                    CategoryInitializer.CONSUMABLES.DRUGS));
+            add(new InitEngram(
+                    NARCOTIC,
+                    "Narcotic",
+                    "Increases your health, but puts you to sleep.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.NARCOBERRY, 5);
+                        append(ResourceInitializer.SPOILED_MEAT, 1);
+                    }},
+                    CategoryInitializer.CONSUMABLES.DRUGS));
+            add(new InitEngram(
+                    STIMULANT,
+                    "Stimulant",
+                    "Keeps you awake, but dehydrates you.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STIMBERRY, 5);
+                        append(ResourceInitializer.SPARKPOWDER, 2);
+                    }},
+                    CategoryInitializer.CONSUMABLES.DRUGS));
+
+            // -- CONSUMABLES > FOOD --
+            add(new InitEngram(
+                    BATTLE_TARTARE,
+                    "Battle Tartare",
+                    "Only eat this dish when you intend to go into a brawl. It causes pain and stress to your body, but grants you almost supernatural strength, speed, and resilience. Warning: This concoction can be habit forming.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.RAW_PRIME_MEAT, 3);
+                        append(ResourceInitializer.MEJOBERRY, 20);
+                        append(ResourceInitializer.STIMULANT, 8);
+                        append(ResourceInitializer.RARE_FLOWER, 2);
+                        append(ResourceInitializer.CITRONAL, 1);
+                        append(ResourceInitializer.LONGRASS, 1);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    BEER_JAR,
+                    "Beer Jar",
+                    "Mmmmm.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.BEER_LIQUID, 1);
+                        append(WATER_JAR, 1);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    BINGLEBERRY_SOUP,
+                    "Bingleberry Soup",
+                    "Eat it to gain mega nourishment, long-term fortification. (NOT YET CRAFTABLE)",
+                    new SparseIntArray() {{
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    BROTH_OF_ENLIGHTENMENT,
+                    "Broth of Enlightment",
+                    "A single sip of this incredible broth will expand your mind and broaden your horizons, granting greatly increased experience gain for a brief time.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.MEJOBERRY, 10);
+                        append(ResourceInitializer.ROCKARROT, 2);
+                        append(ResourceInitializer.LONGRASS, 2);
+                        append(ResourceInitializer.SAVOROOT, 2);
+                        append(ResourceInitializer.CITRONAL, 2);
+                        append(ResourceInitializer.WOOLLY_RHINO_HORN, 5);
+                        append(ResourceInitializer.BLACK_PEARL, 1);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    CALIEN_SOUP,
+                    "Calien Soup",
+                    "This simple vegetarian dish refreshes you body like an oasis. Helps keep you stay hydrated and feel cool.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.CITRONAL, 5);
+                        append(ResourceInitializer.TINTOBERRY, 20);
+                        append(ResourceInitializer.AMARBERRY, 20);
+                        append(ResourceInitializer.MEJOBERRY, 10);
+                        append(ResourceInitializer.STIMULANT, 2);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    ENDURO_STEW,
+                    "Enduro Stew",
+                    "This hearty dish is like a workout in the form of a meal. You will find yourself hitting harder and running longer after eating this.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.COOKED_MEAT_OR_FISH_MEAT, 9);
+                        append(ResourceInitializer.ROCKARROT, 5);
+                        append(ResourceInitializer.SAVOROOT, 5);
+                        append(ResourceInitializer.MEJOBERRY, 10);
+                        append(ResourceInitializer.STIMULANT, 2);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    ENERGY_BREW,
+                    "Energy Brew",
+                    "his brew doesn't have any nutritional value, but fills your stamina.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AZULBERRY, 20);
+                        append(ResourceInitializer.STIMULANT, 2);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    FOCAL_CHILI,
+                    "Focal Chili",
+                    "This filling dish is full of nutritional energy. Consume it to gain increased crafting speed, and gain increased movement speed. Effect lasts 15 minutes.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.COOKED_MEAT, 9);
+                        append(ResourceInitializer.CITRONAL, 5);
+                        append(ResourceInitializer.AMARBERRY, 20);
+                        append(ResourceInitializer.AZULBERRY, 20);
+                        append(ResourceInitializer.TINTOBERRY, 20);
+                        append(ResourceInitializer.MEJOBERRY, 10);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    FRIA_CURRY,
+                    "Fria Curry",
+                    "his spicy vegetarian dish fills the body with a comfortable warmth. It controls your appetite while helping you ignore cold.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.LONGRASS, 5);
+                        append(ResourceInitializer.ROCKARROT, 5);
+                        append(ResourceInitializer.AZULBERRY, 20);
+                        append(ResourceInitializer.MEJOBERRY, 10);
+                        append(ResourceInitializer.NARCOTIC, 2);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    LAZARUS_CHOWDER,
+                    "Lazarus Chowder",
+                    "This creamy dish improves the body's natural constitution. You will recover from injury more quickly after eating this, and your body will need less oxygen.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.COOKED_MEAT, 9);
+                        append(ResourceInitializer.SAVOROOT, 5);
+                        append(ResourceInitializer.LONGRASS, 5);
+                        append(ResourceInitializer.MEJOBERRY, 10);
+                        append(ResourceInitializer.NARCOTIC, 2);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    MEDICAL_BREW,
+                    "Medical Brew",
+                    "This brew doesn't have any nutritional value, but it promotes healing.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.TINTOBERRY, 20);
+                        append(ResourceInitializer.NARCOTIC, 2);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    MINDWIPE_TONIC,
+                    "Mindwipe Tonic",
+                    "When consumed, this tonic causes neural overload. Synapses fire off too quickly resulting in damage to the memory centers of the brain related to construction. Warning: this concoction may cause temporary memory loss, and resetting of Engrams.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.COOKED_PRIME_MEAT, 24);
+                        append(ResourceInitializer.MEJOBERRY, 200);
+                        append(ResourceInitializer.NARCOTIC, 72);
+                        append(ResourceInitializer.STIMULANT, 72);
+                        append(ResourceInitializer.RARE_MUSHROOM, 20);
+                        append(ResourceInitializer.RARE_FLOWER, 20);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    SHADOW_STEAK_SAUCE,
+                    "Shadow Steak Sauce",
+                    "Only eat this dish in the dark. It causes the light receptors in your eyes to become hyperactive, improves your hand-eye coordination, and allows your body to ignore extreme temperatures. Warning: this concoction can be habit-forming.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.COOKED_PRIME_MEAT, 3);
+                        append(ResourceInitializer.MEJOBERRY, 20);
+                        append(ResourceInitializer.NARCOTIC, 8);
+                        append(ResourceInitializer.RARE_MUSHROOM, 2);
+                        append(ResourceInitializer.SAVOROOT, 1);
+                        append(ResourceInitializer.ROCKARROT, 1);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+            add(new InitEngram(
+                    SWEET_VEGGIE_CAKE,
+                    "Sweet Veggie Cake",
+                    "A sappy-sweet vegetable cake which Herbivores find delicious. Sadly, humans and carnivores tend to find its taste repugnant.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.SAP, 7);
+                        append(ResourceInitializer.ROCKARROT, 2);
+                        append(ResourceInitializer.LONGRASS, 2);
+                        append(ResourceInitializer.SAVOROOT, 2);
+                        append(ResourceInitializer.STIMULANT, 4);
+                        append(ResourceInitializer.FIBER, 25);
+                    }},
+                    CategoryInitializer.CONSUMABLES.FOOD));
+
+            // -- DYES --
+            add(new InitEngram(
+                    BLACK_COLORING,
+                    "Black",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.NARCOBERRY, 15);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    BLUE_COLORING,
+                    "Blue",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AZULBERRY, 15);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    BRICK_COLORING,
+                    "Brick",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.TINTOBERRY, 12);
+                        append(ResourceInitializer.NARCOBERRY, 6);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    BROWN_COLORING,
+                    "Brown",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 6);
+                        append(ResourceInitializer.AZULBERRY, 3);
+                        append(ResourceInitializer.TINTOBERRY, 9);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    CANTALOUPE_COLORING,
+                    "Cantaloupe",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 7);
+                        append(ResourceInitializer.TINTOBERRY, 7);
+                        append(ResourceInitializer.STIMBERRY, 4);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    CYAN_COLORING,
+                    "Cyan",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 6);
+                        append(ResourceInitializer.AZULBERRY, 12);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    FOREST_COLORING,
+                    "Forest",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 7);
+                        append(ResourceInitializer.AZULBERRY, 7);
+                        append(ResourceInitializer.NARCOBERRY, 4);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    GREEN_COLORING,
+                    "Green",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 9);
+                        append(ResourceInitializer.AZULBERRY, 9);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    MAGENTA_COLORING,
+                    "Magenta",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AZULBERRY, 9);
+                        append(ResourceInitializer.TINTOBERRY, 9);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    MUD_COLORING,
+                    "Mud",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 4);
+                        append(ResourceInitializer.AZULBERRY, 1);
+                        append(ResourceInitializer.TINTOBERRY, 7);
+                        append(ResourceInitializer.NARCOBERRY, 6);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    NAVY_COLORING,
+                    "Navy",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AZULBERRY, 12);
+                        append(ResourceInitializer.NARCOBERRY, 6);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    OLIVE_COLORING,
+                    "Olive",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 12);
+                        append(ResourceInitializer.NARCOBERRY, 6);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    ORANGE_COLORING,
+                    "Orange",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 9);
+                        append(ResourceInitializer.TINTOBERRY, 9);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    PARCHMENT_COLORING,
+                    "Parchment",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 12);
+                        append(ResourceInitializer.STIMBERRY, 6);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    PINK_COLORING,
+                    "Pink",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.TINTOBERRY, 12);
+                        append(ResourceInitializer.STIMBERRY, 6);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    PURPLE_COLORING,
+                    "Purple",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AZULBERRY, 9);
+                        append(ResourceInitializer.TINTOBERRY, 9);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    RED_COLORING,
+                    "Red",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.TINTOBERRY, 15);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    ROYALTY_COLORING,
+                    "Royalty",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AZULBERRY, 7);
+                        append(ResourceInitializer.TINTOBERRY, 7);
+                        append(ResourceInitializer.NARCOBERRY, 4);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    SILVER_COLORING,
+                    "Silver",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.NARCOBERRY, 6);
+                        append(ResourceInitializer.STIMBERRY, 12);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    SKY_COLORING,
+                    "Sky",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AZULBERRY, 12);
+                        append(ResourceInitializer.STIMBERRY, 6);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    SLATE_COLORING,
+                    "Slate",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.NARCOBERRY, 12);
+                        append(ResourceInitializer.STIMBERRY, 6);
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    TAN_COLORING,
+                    "Tan",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 4);
+                        append(ResourceInitializer.AZULBERRY, 1);
+                        append(ResourceInitializer.TINTOBERRY, 7);
+                        append(ResourceInitializer.STIMBERRY, 6);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    TANGERINE_COLORING,
+                    "Tangerine",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 7);
+                        append(ResourceInitializer.TINTOBERRY, 7);
+                        append(ResourceInitializer.NARCOBERRY, 4);
+                        append(ResourceInitializer.GUNPOWDER, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    WHITE_COLORING,
+                    "White",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STIMBERRY, 15);
+                        append(ResourceInitializer.CHARCOAL, 2);
+                    }},
+                    CategoryInitializer.DYES.ID));
+            add(new InitEngram(
+                    YELLOW_COLORING,
+                    "Yellow",
+                    "",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.AMARBERRY, 15);
+                        append(ResourceInitializer.CHARCOAL, 1);
+                    }},
+                    CategoryInitializer.DYES.ID));
+
             // -- MISC --
             add(new InitEngram(
                     BLOOD_EXTRACTION_SYRINGE,
@@ -1098,6 +1668,573 @@ public class EngramInitializer {
                         append(ResourceInitializer.OBSIDIAN, 5);
                     }},
                     CategoryInitializer.OFFHAND.ID));
+
+            // -- REFINED --
+            add(new InitEngram(
+                    ABSORBENT_SUBSTRATE,
+                    "Absorbent Substrate",
+                    "This sticky compound excels at absorbing other chemicals.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.BLACK_PEARL, 8);
+                        append(ResourceInitializer.SAP, 8);
+                        append(ResourceInitializer.OIL, 8);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    BEER_LIQUID,
+                    "Beer Liquid",
+                    "Put it in a glass jar to drink it!",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.THATCH, 40);
+                        append(ResourceInitializer.BERRIES, 50);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    CEMENTING_PASTE,
+                    "Cementing Paste",
+                    "Paste created at Mortar and Pestle.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.CHITIN_OR_KERATIN, 4);
+                        append(ResourceInitializer.STONE, 8);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    CHARCOAL,
+                    "Charcoal",
+                    "Created by burning wood.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.WOOD, 1);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    FERTILIZER,
+                    "Fertilizer",
+                    "A fertilizer high in nitrogen. Use this to help your crops grow.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.THATCH, 50);
+                        append(ResourceInitializer.FECES, 3);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    GASOLINE,
+                    "Gasoline",
+                    "An advanced fuel. Can only be used in machines designed to consume it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 5);
+                        append(ResourceInitializer.OIL, 3);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    GUNPOWDER,
+                    "Gunpowder",
+                    "A powerful propellant. Necessary for any firearm or explosive.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append(ResourceInitializer.CHARCOAL, 1);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    METAL_INGOT,
+                    "Metal Ingot",
+                    "Created by refining metal ore in a forge.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.METAL_ORE, 2);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+            add(new InitEngram(
+                    SPARKPOWDER,
+                    "Sparkpowder",
+                    "Created by grinding flint with stone in a Mortar and Pestle.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.FLINT, 2);
+                        append(ResourceInitializer.STONE, 1);
+                    }},
+                    CategoryInitializer.REFINED.ID));
+
+            // -- SADDLES --
+            add(new InitEngram(
+                    ANKYLO,
+                    "Ankylo Saddle",
+                    "Equip an Ankylo with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 260);
+                        append(ResourceInitializer.FIBER, 140);
+                        append(ResourceInitializer.METAL_INGOT, 10);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    ARANEO,
+                    "Araneo Saddle",
+                    "Equip an Araneo with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 260);
+                        append(ResourceInitializer.FIBER, 140);
+                        append(ResourceInitializer.CHITIN_OR_KERATIN, 100);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    ARGENTAVIS,
+                    "Argentavis Saddle",
+                    "Equip an Argentavis with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 350);
+                        append(ResourceInitializer.FIBER, 185);
+                        append(ResourceInitializer.CHITIN_OR_KERATIN, 150);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    ARTHROPLUERA,
+                    "Arthropluera Saddle",
+                    "Equip an Arthropluera with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 80);
+                        append(ResourceInitializer.FIBER, 50);
+                        append(ResourceInitializer.WOOD, 20);
+                        append(ResourceInitializer.METAL_INGOT, 30);
+                        append(ResourceInitializer.FLINT, 8);
+                        append(ResourceInitializer.CEMENTING_PASTE, 15);
+                        append(ResourceInitializer.OBSIDIAN, 35);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    BEELZEBUFO,
+                    "Beelzebufo Saddle",
+                    "Equip a Beelzebufo with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 170);
+                        append(ResourceInitializer.FIBER, 95);
+                        append(ResourceInitializer.WOOD, 30);
+                        append(ResourceInitializer.CEMENTING_PASTE, 5);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    BRONTO,
+                    "Bronto Saddle",
+                    "Equip a Bronto with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 350);
+                        append(ResourceInitializer.FIBER, 185);
+                        append(ResourceInitializer.METAL_INGOT, 40);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    BRONTO_PLATFORM,
+                    "Bronto Platform Saddle",
+                    "Equip a Bronto with this to ride it. You can build structures on the large platform to make a mobile base.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 550);
+                        append(ResourceInitializer.FIBER, 325);
+                        append(ResourceInitializer.METAL_INGOT, 90);
+                        append(ResourceInitializer.SILICA_PEARLS, 125);
+                        append(ResourceInitializer.CEMENTING_PASTE, 45);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    CARBONEMYS,
+                    "Carbonemys Saddle",
+                    "Equip a Carboenemys with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 170);
+                        append(ResourceInitializer.FIBER, 95);
+                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    CARNO,
+                    "Carno Saddle",
+                    "Equip a Carnotaurus with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 320);
+                        append(ResourceInitializer.FIBER, 170);
+                        append(ResourceInitializer.METAL_INGOT, 30);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    CASTOROIDES,
+                    "Castoroides Saddle",
+                    "Equip a Giant Beaver with this to ride it. Can be used as a mobile Smithy! Sounds pretty good eh?",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 290);
+                        append(ResourceInitializer.FIBER, 200);
+                        append(ResourceInitializer.METAL_INGOT, 100);
+                        append(ResourceInitializer.THATCH, 180);
+                        append(ResourceInitializer.CEMENTING_PASTE, 140);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    DIPLODOCUS,
+                    "Diplodocus Saddle",
+                    "A saddle for your Diplodocus. It has ten seats! Bring lots of friends!",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 820);
+                        append(ResourceInitializer.FIBER, 600);
+                        append(ResourceInitializer.WOOD, 250);
+                        append(ResourceInitializer.METAL_INGOT, 200);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    DIREBEAR,
+                    "Dire Bear Saddle",
+                    "Equip a Dire Bear with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 300);
+                        append(ResourceInitializer.FIBER, 130);
+                        append(ResourceInitializer.CEMENTING_PASTE, 100);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    DOEDICURUS,
+                    "Doedicurus Saddle",
+                    "Equip a Doedicurus with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 200);
+                        append(ResourceInitializer.FIBER, 110);
+                        append(ResourceInitializer.STONE, 15);
+                        append(ResourceInitializer.METAL_INGOT, 5);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    DUNKLEOSTEUS,
+                    "Dunkleosteus",
+                    "Equip a Dunkleosteus with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 300);
+                        append(ResourceInitializer.FIBER, 180);
+                        append(ResourceInitializer.CEMENTING_PASTE, 120);
+                        append(ResourceInitializer.METAL_INGOT, 80);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    GALLIMIMUS,
+                    "Gallimimus Saddle",
+                    "A saddle for your Gallimimus. It has three seats! Bring your friends!",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 240);
+                        append(ResourceInitializer.FIBER, 160);
+                        append(ResourceInitializer.WOOD, 120);
+                        append(ResourceInitializer.METAL_INGOT, 25);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    GIGANOTOSAURUS,
+                    "Giganotosaurus Saddle",
+                    "Equip a Giganotosaurus with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 680);
+                        append(ResourceInitializer.FIBER, 350);
+                        append(ResourceInitializer.METAL_INGOT, 120);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    ICHTHYOSAURUS,
+                    "Ichthyosaurus Saddle",
+                    "Equip an Ichthyosaurus with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 55);
+                        append(ResourceInitializer.FIBER, 50);
+                        append(ResourceInitializer.WOOD, 20);
+                        append(ResourceInitializer.METAL_ORE, 10);
+                        append(ResourceInitializer.FLINT, 8);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    MAMMOTH,
+                    "Mammoth Saddle",
+                    "Equip a Mammoth with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 260);
+                        append(ResourceInitializer.FIBER, 140);
+                        append(ResourceInitializer.METAL_INGOT, 10);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    MANTA,
+                    "Manta Saddle",
+                    "Equip a Manta with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 100);
+                        append(ResourceInitializer.FIBER, 70);
+                        append(ResourceInitializer.WOOD, 25);
+                        append(ResourceInitializer.METAL_INGOT, 35);
+                        append(ResourceInitializer.FLINT, 12);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    MEGALOCEROS,
+                    "Megaloceros Saddle",
+                    "Equip a Megaloceros with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 200);
+                        append(ResourceInitializer.FIBER, 110);
+                        append(ResourceInitializer.METAL_INGOT, 5);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    MEGALODON,
+                    "Megalodon Saddle",
+                    "Equip a Megalodon with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 290);
+                        append(ResourceInitializer.FIBER, 155);
+                        append(ResourceInitializer.CEMENTING_PASTE, 30);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    MOSASAURUS,
+                    "Mosasaurus Saddle",
+                    "Equip a Mosasaurus with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 800);
+                        append(ResourceInitializer.FIBER, 600);
+                        append(ResourceInitializer.CEMENTING_PASTE, 140);
+                        append(ResourceInitializer.SILICA_PEARLS, 100);
+                        append(ResourceInitializer.METAL_INGOT, 400);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    MOSASAURUS_PLATFORM,
+                    "Mosasaurus Platform Saddle",
+                    "Equip a Mosasaurus with this to ride it. You can build structures on the large platform to make a mobile base.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 960);
+                        append(ResourceInitializer.FIBER, 720);
+                        append(ResourceInitializer.METAL_INGOT, 1200);
+                        append(ResourceInitializer.SILICA_PEARLS, 320);
+                        append(ResourceInitializer.CEMENTING_PASTE, 180);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PACHY,
+                    "Pachy Saddle",
+                    "Equip a Pachy with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 110);
+                        append(ResourceInitializer.FIBER, 65);
+                        append(ResourceInitializer.WOOD, 20);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PARACER,
+                    "Paracer Saddle",
+                    "Equip a Paraceratherium with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 200);
+                        append(ResourceInitializer.FIBER, 110);
+                        append(ResourceInitializer.METAL_INGOT, 10);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PARACER_PLATFORM,
+                    "Paracer Platform Saddle",
+                    "Equip a Paraceratherium with this to ride it. You can build structures on the large platform to make a mobile base.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 320);
+                        append(ResourceInitializer.FIBER, 200);
+                        append(ResourceInitializer.METAL_INGOT, 70);
+                        append(ResourceInitializer.SILICA_PEARLS, 45);
+                        append(ResourceInitializer.CEMENTING_PASTE, 25);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PARASAUR,
+                    "Parasaur Saddle",
+                    "Equip a Parasaur with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 80);
+                        append(ResourceInitializer.FIBER, 50);
+                        append(ResourceInitializer.WOOD, 15);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PHIOMIA,
+                    "Phiomia Saddle",
+                    "Equip a Phiomia with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 20);
+                        append(ResourceInitializer.FIBER, 15);
+                        append(ResourceInitializer.WOOD, 5);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PLESIOSAUR,
+                    "Plesiosaur Saddle",
+                    "Equip a Plesiosaur with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 400);
+                        append(ResourceInitializer.FIBER, 250);
+                        append(ResourceInitializer.CEMENTING_PASTE, 65);
+                        append(ResourceInitializer.SILICA_PEARLS, 40);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PLESIOSAUR_PLATFORM,
+                    "Plesiosaur Platform Saddle",
+                    "Equip a Plesiosaur with this to ride it. You can build structures on the large platform to make a mobile base.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 680);
+                        append(ResourceInitializer.FIBER, 405);
+                        append(ResourceInitializer.METAL_INGOT, 112);
+                        append(ResourceInitializer.SILICA_PEARLS, 155);
+                        append(ResourceInitializer.CEMENTING_PASTE, 55);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PROCOPTODON,
+                    "Procoptodon Saddle",
+                    "Equip a Procoptodon with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 550);
+                        append(ResourceInitializer.PELT, 150);
+                        append(ResourceInitializer.FIBER, 200);
+                        append(ResourceInitializer.METAL_INGOT, 70);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PTERANODON,
+                    "Pteranodon Saddle",
+                    "Equip a Pteranodon with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 230);
+                        append(ResourceInitializer.FIBER, 125);
+                        append(ResourceInitializer.CHITIN_OR_KERATIN, 75);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PULMONOSCORPIUS,
+                    "Pulmonoscorpius Saddle",
+                    "Equip a Pulmonoscorpius with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 170);
+                        append(ResourceInitializer.FIBER, 95);
+                        append(ResourceInitializer.WOOD, 3);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    QUETZAL,
+                    "Quetzal Saddle",
+                    "Equip a Quetzal with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 750);
+                        append(ResourceInitializer.FIBER, 500);
+                        append(ResourceInitializer.CEMENTING_PASTE, 100);
+                        append(ResourceInitializer.SILICA_PEARLS, 85);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    QUETZAL_PLATFORM,
+                    "Quetzal Platform Saddle",
+                    "Equip a Quetzal with this to ride it. You can build structures on the large platform to make a mobile base.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 620);
+                        append(ResourceInitializer.FIBER, 400);
+                        append(ResourceInitializer.METAL_INGOT, 180);
+                        append(ResourceInitializer.SILICA_PEARLS, 220);
+                        append(ResourceInitializer.CEMENTING_PASTE, 120);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    RAPTOR,
+                    "Raptor Saddle",
+                    "Equip a Raptor with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 110);
+                        append(ResourceInitializer.FIBER, 65);
+                        append(ResourceInitializer.WOOD, 20);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    REX,
+                    "Rex Saddle",
+                    "Equip a T-Rex with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 380);
+                        append(ResourceInitializer.FIBER, 200);
+                        append(ResourceInitializer.METAL_INGOT, 50);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    SABERTOOTH,
+                    "Sabertooth Saddle",
+                    "Equip a Sabertooth with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 290);
+                        append(ResourceInitializer.FIBER, 155);
+                        append(ResourceInitializer.METAL_INGOT, 20);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    SARCO,
+                    "Sarco Saddle",
+                    "Equip a Sarco with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 230);
+                        append(ResourceInitializer.FIBER, 75);
+                        append(ResourceInitializer.CEMENTING_PASTE, 20);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    SPINO,
+                    "Spino Saddle",
+                    "Equip a Spino with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 380);
+                        append(ResourceInitializer.FIBER, 200);
+                        append(ResourceInitializer.CEMENTING_PASTE, 45);
+                        append(ResourceInitializer.SILICA_PEARLS, 25);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    STEGO,
+                    "Stego Saddle",
+                    "Equip a Stego with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 200);
+                        append(ResourceInitializer.FIBER, 110);
+                        append(ResourceInitializer.WOOD, 35);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    TERROR_BIRD,
+                    "Terror Bird",
+                    "Equip a Terror Bird with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 110);
+                        append(ResourceInitializer.FIBER, 65);
+                        append(ResourceInitializer.WOOD, 20);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    TITANOSAUR_PLATFORM,
+                    "Titanosaur Platform Saddle",
+                    "Equip a Titanosaur with this to ride it. You can build structures on the large platform to make a mobile base.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 4000);
+                        append(ResourceInitializer.FIBER, 2000);
+                        append(ResourceInitializer.METAL_INGOT, 4000);
+                        append(ResourceInitializer.CEMENTING_PASTE, 1600);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    TRIKE,
+                    "Trike Saddle",
+                    "Equip a Triceratops with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 140);
+                        append(ResourceInitializer.FIBER, 80);
+                        append(ResourceInitializer.WOOD, 25);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    WOOLLY_RHINO,
+                    "Woolly Rhino Saddle",
+                    "Equip a Woolly Rhino with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 250);
+                        append(ResourceInitializer.FIBER, 130);
+                        append(ResourceInitializer.CEMENTING_PASTE, 100);
+                        append(ResourceInitializer.METAL_INGOT, 60);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
 
             // -- STRUCTURES > BEDS --
             add(new InitEngram(
