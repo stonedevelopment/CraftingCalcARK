@@ -13,7 +13,7 @@ import com.gmail.jaredstone1982.craftingcalcark.viewholders.EngramViewHolder;
 import java.util.Locale;
 
 public class CraftableEngramListAdapter extends RecyclerView.Adapter {
-    private SparseArray<CraftableEngram> engrams;
+    private SparseArray<CraftableEngram> engrams = null;
 
     public CraftableEngramListAdapter(SparseArray<CraftableEngram> engrams) {
         this.engrams = engrams;
@@ -39,7 +39,10 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return engrams.size();
+        if (engrams != null) {
+            return engrams.size();
+        }
+        return 0;
     }
 
     public void setEngrams(SparseArray<CraftableEngram> engrams) {

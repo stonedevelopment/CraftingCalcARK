@@ -23,8 +23,8 @@ public class DisplayCase {
     private long level;
     private long parent;
 
-    private SparseArray<DisplayEngram> engrams;
-    private SparseArray<Category> categories;
+    private SparseArray<DisplayEngram> engrams = null;
+    private SparseArray<Category> categories = null;
 
     private DataSource dataSource;
 
@@ -80,6 +80,7 @@ public class DisplayCase {
 
     public boolean inQueue(long engramId) {
         Queue queue = dataSource.findSingleQueue(engramId);
+
         return queue != null;
     }
 
@@ -168,7 +169,10 @@ public class DisplayCase {
     }
 
     public int getCount() {
-        return engrams.size() + categories.size();
+        if (engrams != null && categories != null) {
+            return engrams.size() + categories.size();
+        }
+        return 0;
     }
 
     public long getEngramId(int position) {
@@ -263,18 +267,22 @@ public class DisplayCase {
     }
 
     private void debugCategories(SparseArray<Category> categories) {
-//        SparseArray<Category> categories = dataSource.findAllCategories();
-
         Helper.Log(LOGTAG, "-- Displaying categories at level " + getLevel() + "..");
+
         for (int i = 0; i < categories.size(); i++) {
             Category category = categories.valueAt(i);
             Helper.Log(LOGTAG, "-> [" + i + "/" + categories.keyAt(i) + "] " + category.toString());
         }
+
         Helper.Log(LOGTAG, "-- Display completed.");
     }
 
     private void UpdateData() {
         engrams = getEngrams();
         categories = getCategories();
+    }
+
+    private void ResetConnection() {
+        dataSource.ResetConnection();
     }
 }

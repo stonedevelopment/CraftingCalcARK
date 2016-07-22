@@ -13,7 +13,7 @@ import com.gmail.jaredstone1982.craftingcalcark.viewholders.ResourceViewHolder;
 import java.util.Locale;
 
 public class ResourceListAdapter extends RecyclerView.Adapter {
-    private SparseArray<CraftableResource> resources;
+    private SparseArray<CraftableResource> resources = null;
 
     public ResourceListAdapter(SparseArray<CraftableResource> resources) {
         this.resources = resources;
@@ -40,7 +40,10 @@ public class ResourceListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return resources.size();
+        if (resources != null) {
+            return resources.size();
+        }
+        return 0;
     }
 
     public void setResources(SparseArray<CraftableResource> resources) {

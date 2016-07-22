@@ -113,7 +113,7 @@ public class ResourceInitializer {
         append(MEJOBERRY, "Mejoberry");
         append(NARCOBERRY, "Narcoberry");
         append(STIMBERRY, "Stimberry");
-        append(TINTOBERRY, "Timtoberry");
+        append(TINTOBERRY, "Tintoberry");
         append(CITRONAL, "Citronal");
         append(LONGRASS, "Longrass");
         append(ROCKARROT, "Rockarrot");

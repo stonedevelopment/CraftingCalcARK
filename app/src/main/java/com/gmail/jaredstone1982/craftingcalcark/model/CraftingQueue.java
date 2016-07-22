@@ -3,7 +3,6 @@ package com.gmail.jaredstone1982.craftingcalcark.model;
 import android.content.Context;
 import android.util.SparseArray;
 
-import com.gmail.jaredstone1982.craftingcalcark.R;
 import com.gmail.jaredstone1982.craftingcalcark.db.DataSource;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 
@@ -14,7 +13,7 @@ import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 public class CraftingQueue {
     private static final String LOGTAG = "CRAFTING";
 
-    private static final int MAX = R.integer.MAX;
+    private static final int MAX = 100;
 
     private DataSource dataSource;
 
@@ -73,5 +72,9 @@ public class CraftingQueue {
 
     public void Clear() {
         dataSource.ClearQueue();
+    }
+
+    private void ResetConnection() {
+        dataSource.ResetConnection();
     }
 }

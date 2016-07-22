@@ -24,6 +24,7 @@ import com.gmail.jaredstone1982.craftingcalcark.model.initializers.ResourceIniti
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Description: Source of data pulled from Database
@@ -51,12 +52,12 @@ public class DataSource {
         this.openHelper = DBOpenHelper.getInstance(context);
         this.context = context;
 
-        OpenDatabase();
-
         List<String> tables = TestTablesForContent();
         if (tables.size() > 0) {
             InitializeTablesWithContent(tables);
         }
+
+        OpenDatabase();
     }
 
     /**
@@ -114,7 +115,7 @@ public class DataSource {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_ENGRAM +
                         " WHERE " + DBOpenHelper.COLUMN_ENGRAM_CATEGORY_ID + " = " +
-                        categoryId,
+                        categoryId + " ORDER BY " + DBOpenHelper.COLUMN_ENGRAM_NAME,
                 null, null
         );
 
@@ -126,10 +127,6 @@ public class DataSource {
                 "SELECT * FROM " + DBOpenHelper.TABLE_CATEGORY,
                 null, null
         );
-
-        if (cursor.getCount() == 0) {
-            InitializeCategories();
-        }
 
         return cursorToCategories(cursor);
     }
@@ -174,8 +171,6 @@ public class DataSource {
                         " = " + engramId,
                 null, null
         );
-
-        Helper.Log(LOGTAG, "Returned " + cursor.getCount() + " rows from findSingleDetailEngram");
 
         return cursorToSingleDetailEngram(cursor);
     }
@@ -240,9 +235,7 @@ public class DataSource {
      */
 
     public DetailEngram cursorToSingleDetailEngram(Cursor cursor) {
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-
+        if (cursor.moveToFirst()) {
             long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_ID));
             String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_NAME));
             int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID));
@@ -259,52 +252,61 @@ public class DataSource {
 
             SparseArray<CraftableResource> composition = findEngramResources(id);
 
+            cursor.close();
             return new DetailEngram(id, name, imageId, description, categoryId, quantity, composition);
-        }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToSingleDetailEngram returns false. -!!");
 
-        return null;
+            cursor.close();
+            return null;
+        }
     }
 
     public Queue cursorToSingleQueue(Cursor cursor) {
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_ID));
             int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
             long engramId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_ENGRAM));
 
+            cursor.close();
             return new Queue(id, engramId, quantity);
+        } else {
+            cursor.close();
+            return null;
         }
-
-        return null;
     }
 
     public Resource cursorToSingleResource(Cursor cursor) {
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-
+        if (cursor.moveToFirst()) {
             long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_ID));
             String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_NAME));
             int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID));
 
+            cursor.close();
             return new Resource(id, name, imageId);
-        }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToSingleResource returns false. -!!");
 
-        return null;
+            cursor.close();
+            return null;
+        }
     }
 
     private Category cursorToSingleCategory(Cursor cursor) {
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-
+        if (cursor.moveToFirst()) {
             long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_ID));
             String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_NAME));
             int level = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_LEVEL));
             long parent = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_CATEGORY_PARENT));
 
+            cursor.close();
             return new Category(level, id, name, parent);
-        }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToSingleCategory returns false. -!!");
 
-        return null;
+            cursor.close();
+            return null;
+        }
     }
 
     /**
@@ -328,8 +330,11 @@ public class DataSource {
 
                 Helper.Log(LOGTAG, " > Engram Details: " + engram.toString());
             }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToCraftableEngrams returns false. -!!");
         }
 
+        cursor.close();
         return engrams;
     }
 
@@ -348,8 +353,11 @@ public class DataSource {
 
                 resources.put(resource.getImageId(), resource);
             }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToCraftableResources returns false. -!!");
         }
 
+        cursor.close();
         return resources;
     }
 
@@ -373,8 +381,11 @@ public class DataSource {
 
                 engrams.put(engrams.size(), engram);
             }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToDisplayEngrams returns false. -!!");
         }
 
+        cursor.close();
         return engrams;
     }
 
@@ -396,8 +407,11 @@ public class DataSource {
                     categories.put(categories.size(), category);
                 }
             }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToCategories returns false. -!!");
         }
 
+        cursor.close();
         return categories;
     }
 
@@ -411,13 +425,13 @@ public class DataSource {
                 int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
 
                 Queue queue = new Queue(id, engramId, quantity);
-
-                Helper.Log(LOGTAG, " > Queue Details: " + queue.toString());
-
                 queues.put(engramId, queue);
             }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToQueues returns false. -!!");
         }
 
+        cursor.close();
         return queues;
     }
 
@@ -442,8 +456,11 @@ public class DataSource {
 
                 resources.put(resource.getImageId(), resource);
             }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToResources returns false. -!!");
         }
 
+        cursor.close();
         return resources;
     }
 
@@ -455,30 +472,68 @@ public class DataSource {
         return this.context;
     }
 
+    private String getVersion(String table) {
+        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
+
+        switch (table) {
+            case DBOpenHelper.TABLE_RESOURCE:
+                return preferenceHelper.getStringPreference(Helper.RESOURCE_VERSION);
+            case DBOpenHelper.TABLE_CATEGORY:
+                return preferenceHelper.getStringPreference(Helper.CATEGORY_VERSION);
+            case DBOpenHelper.TABLE_ENGRAM:
+                return preferenceHelper.getStringPreference(Helper.ENGRAM_VERSION);
+            default:
+                return null;
+        }
+    }
+
     public List<String> TestTablesForContent() {
+        Helper.Log(LOGTAG, "** Testing tables for content..");
+
         List<String> tables = new ArrayList<>();
 
+        OpenDatabase();
+
         int tableResourceCount = getCount(DBOpenHelper.TABLE_RESOURCE);
+        String tableResourceVersion = getVersion(DBOpenHelper.TABLE_RESOURCE);
         int tableCategoryCount = getCount(DBOpenHelper.TABLE_CATEGORY);
+        String tableCategoryVersion = getVersion(DBOpenHelper.TABLE_CATEGORY);
         int tableEngramCount = getCount(DBOpenHelper.TABLE_ENGRAM);
+        String tableEngramVersion = getVersion(DBOpenHelper.TABLE_ENGRAM);
 
-        if (tableResourceCount == 0 || tableResourceCount != ResourceInitializer.getCount()) {
+        Helper.Log(LOGTAG, "-> Testing Resource table..");
+        if ((tableResourceCount == 0) || (tableResourceCount != ResourceInitializer.getCount()) || (!Objects.equals(tableResourceVersion, ResourceInitializer.VERSION))) {
             tables.add(DBOpenHelper.TABLE_RESOURCE);
+            Helper.Log(LOGTAG, "--> Resource table needs upgrade. " +
+                    "[tableCount:" + tableResourceCount + "/initializerCount:" + ResourceInitializer.getCount() + "] " +
+                    "[tableVersion:" + tableResourceVersion + "/initializerVersion:" + ResourceInitializer.VERSION + "]");
         }
 
-        if (tableCategoryCount == 0 || tableCategoryCount != CategoryInitializer.getCount()) {
+        Helper.Log(LOGTAG, "-> Testing Category table..");
+        if ((tableCategoryCount == 0) || (tableCategoryCount != CategoryInitializer.getCount()) || (!Objects.equals(tableCategoryVersion, CategoryInitializer.VERSION))) {
             tables.add(DBOpenHelper.TABLE_CATEGORY);
+            Helper.Log(LOGTAG, "--> Category table needs upgrade. " +
+                    "[tableCount:" + tableCategoryCount + "/initializerCount:" + CategoryInitializer.getCount() + "] " +
+                    "[tableVersion:" + tableCategoryVersion + "/initializerVersion:" + CategoryInitializer.VERSION + "]");
         }
 
-        if (tableEngramCount == 0 || tableEngramCount != EngramInitializer.getCount()) {
+        Helper.Log(LOGTAG, "-> Testing Engram table..");
+        if ((tableEngramCount == 0) || (tableEngramCount != EngramInitializer.getCount()) || (!Objects.equals(tableEngramVersion, EngramInitializer.VERSION))) {
             tables.add(DBOpenHelper.TABLE_ENGRAM);
+            Helper.Log(LOGTAG, "--> Engram table needs upgrade. " +
+                    "[tableCount:" + tableEngramCount + "/initializerCount:" + EngramInitializer.getCount() + "] " +
+                    "[tableVersion:" + tableEngramVersion + "/initializerVersion:" + EngramInitializer.VERSION + "]");
         }
+
+        CloseDatabase();
+
+        Helper.Log(LOGTAG, "** Testing complete.");
 
         return tables;
     }
 
     public void InitializeTablesWithContent(List<String> tables) {
-        Helper.Log(LOGTAG, "-- Initializing tables with content..");
+        Helper.Log(LOGTAG, "** Initializing tables with content..");
 
         boolean wasInitialized = false;
 
@@ -503,15 +558,15 @@ public class DataSource {
             ClearQueue();
         }
 
-        Helper.Log(LOGTAG, "-- Testing complete.");
+        Helper.Log(LOGTAG, "** Initializing complete.");
     }
 
     public void ClearQueue() {
-        Helper.Log(LOGTAG, "-- Clearing Crafting Queue..");
+        Helper.Log(LOGTAG, "-> Clearing Crafting Queue..");
 
         ResetTable(DBOpenHelper.TABLE_QUEUE);
 
-        Helper.Log(LOGTAG, "-- Crafting Queue cleared.");
+        Helper.Log(LOGTAG, "-> Crafting Queue cleared.");
     }
 
     private int getCount(String table) {
@@ -520,13 +575,12 @@ public class DataSource {
                 null, null
         );
 
-        return cursorToInt(cursor);
-    }
-
-    private int cursorToInt(Cursor cursor) {
         cursor.moveToFirst();
 
-        return cursor.getInt(0);
+        int count = cursor.getInt(0);
+
+        cursor.close();
+        return count;
     }
 
     /**
@@ -624,6 +678,10 @@ public class DataSource {
             long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_ID));
             int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
             long engramId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_ENGRAM));
+
+            Helper.Log(LOGTAG, "-> Queue inserted/replaced successfully. [" + queue.toString() + "]");
+        } else {
+            Helper.Log(LOGTAG, "!!- Queue updated failed. [" + queue.toString() + "] -!!");
         }
 
         cursor.close();
@@ -648,42 +706,38 @@ public class DataSource {
     }
 
     private void ResetTable(String table) {
+        OpenDatabase();
+
         DeleteTableData(table);
         DropTable(table);
         CreateTable(table);
-    }
 
-    public void Initialize() {
-        Helper.Log(LOGTAG, "** Initializing database..");
-
-        InitializeCategories();
-
-        InitializeResources();
-
-        InitializeEngrams();
-
-        Helper.Log(LOGTAG, "** Initialization complete.");
+        CloseDatabase();
     }
 
     private void InitializeCategories() {
-        Helper.Log(LOGTAG, "-- Initializing Categories..");
+        Helper.Log(LOGTAG, "** Initializing Categories..");
 
         ResetTable(DBOpenHelper.TABLE_CATEGORY);
 
         List<Category> categories = CategoryInitializer.getCategories();
         for (Category category : categories) {
+            OpenDatabase();
+
             Insert(category);
+
+            CloseDatabase();
         }
 
         // Save version persistently, future debugging helper
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
         preferenceHelper.setPreference(Helper.CATEGORY_VERSION, CategoryInitializer.VERSION);
 
-        Helper.Log(LOGTAG, "-- Category initialization completed.");
+        Helper.Log(LOGTAG, "** Category initialization completed.");
     }
 
     private void InitializeResources() {
-        Helper.Log(LOGTAG, "-- Initializing Resources..");
+        Helper.Log(LOGTAG, "** Initializing Resources..");
 
         ResetTable(DBOpenHelper.TABLE_RESOURCE);
 
@@ -691,31 +745,40 @@ public class DataSource {
         for (int i = 0; i < resources.size(); i++) {
             int imageId = resources.keyAt(i);
             String name = resources.valueAt(i);
+
+            OpenDatabase();
+
             Insert(imageId, name);
+
+            CloseDatabase();
         }
 
         // Save version persistently, future debugging helper
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
         preferenceHelper.setPreference(Helper.RESOURCE_VERSION, ResourceInitializer.VERSION);
 
-        Helper.Log(LOGTAG, "-- Resource initialization completed.");
+        Helper.Log(LOGTAG, "** Resource initialization completed.");
     }
 
     private void InitializeEngrams() {
-        Helper.Log(LOGTAG, "-- Initializing Engrams..");
+        Helper.Log(LOGTAG, "** Initializing Engrams..");
 
         ResetTable(DBOpenHelper.TABLE_ENGRAM);
 
         List<InitEngram> engrams = EngramInitializer.getEngrams();
         for (InitEngram engram : engrams) {
+            OpenDatabase();
+
             Insert(engram);
+
+            CloseDatabase();
         }
 
         // Save version persistently, future debugging helper
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
         preferenceHelper.setPreference(Helper.ENGRAM_VERSION, EngramInitializer.VERSION);
 
-        Helper.Log(LOGTAG, "-- Engram initialization completed.");
+        Helper.Log(LOGTAG, "** Engram initialization completed.");
     }
 
     private void OpenDatabase() {
@@ -728,5 +791,12 @@ public class DataSource {
         database.close();
 
         Helper.Log(LOGTAG, "-- Database has closed --");
+    }
+
+    public void ResetConnection() {
+        CloseDatabase();
+        OpenDatabase();
+
+        Helper.Log(LOGTAG, "-- Database connection reset --");
     }
 }

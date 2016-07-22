@@ -156,13 +156,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_clearQueue:
                 craftingQueue.Clear();
+                displayCaseListAdapter.Refresh();
                 refreshDisplayForCraftingQueue(); // Refreshing an empty object?
-                break;
-
-            case R.id.action_ascending:
-                break;
-
-            case R.id.action_descending:
                 break;
 
             case R.id.action_show_all:
