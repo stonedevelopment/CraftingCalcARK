@@ -32,15 +32,7 @@ public class ResourceViewHolder extends RecyclerView.ViewHolder {
         return nameText;
     }
 
-    public void setNameText(TextView nameText) {
-        this.nameText = nameText;
-    }
-
     public TextView getQuantityText() {
         return quantityText;
-    }
-
-    public void setQuantityText(TextView quantityText) {
-        this.quantityText = quantityText;
     }
 }

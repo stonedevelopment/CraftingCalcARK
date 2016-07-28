@@ -5,7 +5,7 @@ package com.gmail.jaredstone1982.craftingcalcark.model;
  * Usage: Store retrievable Resource data
  * Used by: DataSource, ResourceListAdapter, Showcase
  * Variables: id, name, imageId
- *
+ * <p/>
  * Last Edit: Removed constructors with just name and imageId, now a true base Resource object
  */
 public class Resource {
@@ -21,7 +21,7 @@ public class Resource {
     /**
      * Full constructor method for Resource, takes image id and a string literal
      *
-     * @param id    ROWID given by database
+     * @param id      ROWID given by database
      * @param imageId Drawable resource image id
      * @param name    Contains string literal of Resource's name
      */

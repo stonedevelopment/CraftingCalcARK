@@ -66,7 +66,7 @@ public class DataSource {
 
     public SparseArray<CraftableEngram> findAllCraftableEngrams() {
         Cursor cursor = database.rawQuery(
-                "SELECT " + DBOpenHelper.TABLE_ENGRAM + ".*, " + DBOpenHelper.TABLE_QUEUE + ".*" +
+                "SELECT *" +
                         " FROM " + DBOpenHelper.TABLE_QUEUE +
                         " INNER JOIN " + DBOpenHelper.TABLE_ENGRAM +
                         " ON " + DBOpenHelper.TABLE_QUEUE + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM +
@@ -82,7 +82,7 @@ public class DataSource {
 
     public SparseArray<CraftableResource> findAllCraftableResources() {
         Cursor cursor = database.rawQuery(
-                "SELECT " + DBOpenHelper.TABLE_COMPOSITION + ".*, " + DBOpenHelper.TABLE_QUEUE + ".* " +
+                "SELECT *" +
                         " FROM " + DBOpenHelper.TABLE_COMPOSITION +
                         " INNER JOIN " + DBOpenHelper.TABLE_QUEUE +
                         " ON " + DBOpenHelper.TABLE_COMPOSITION + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM +
@@ -555,7 +555,11 @@ public class DataSource {
         }
 
         if (wasInitialized) {
+            OpenDatabase();
+
             ClearQueue();
+
+            CloseDatabase();
         }
 
         Helper.Log(LOGTAG, "** Initializing complete.");
@@ -564,7 +568,12 @@ public class DataSource {
     public void ClearQueue() {
         Helper.Log(LOGTAG, "-> Clearing Crafting Queue..");
 
-        ResetTable(DBOpenHelper.TABLE_QUEUE);
+        String table = DBOpenHelper.TABLE_QUEUE;
+
+        // FIXME
+        DeleteTableData(table);
+        DropTable(table);
+        CreateTable(table);
 
         Helper.Log(LOGTAG, "-> Crafting Queue cleared.");
     }
@@ -587,8 +596,8 @@ public class DataSource {
      * -- QUEUE ADDING/REMOVING METHODS --
      */
 
-    public boolean Delete(long engramId) {
-        return database.delete(DBOpenHelper.TABLE_QUEUE, DBOpenHelper.COLUMN_TRACK_ENGRAM + "=" + engramId, null) > 0;
+    public boolean Delete(Queue queue) {
+        return database.delete(DBOpenHelper.TABLE_QUEUE, DBOpenHelper.COLUMN_TRACK_ENGRAM + "=" + queue.getEngramId(), null) > 0;
     }
 
     public void Insert(long engramId, int quantity) {
@@ -643,7 +652,7 @@ public class DataSource {
 
         Helper.Log(LOGTAG, "-> Engram (" + engram.getName() + ") inserted at row " + engram.getId());
 
-        for (int i = 0; i < engram.getCompositionIDs().size(); i++) {
+        for (int i = 0, size = engram.getCompositionIDs().size(); i < size; i++) {
             Resource resource = findSingleResource(engram.getCompositionIDs().keyAt(i));
 
             if (resource != null) {
@@ -674,7 +683,7 @@ public class DataSource {
                 null, null
         );
 
-        if (cursor.getCount() > 0) {
+        if (cursor.moveToFirst()) {
             long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_ID));
             int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
             long engramId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_ENGRAM));

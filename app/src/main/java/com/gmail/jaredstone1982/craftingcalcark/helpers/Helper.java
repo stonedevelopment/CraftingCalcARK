@@ -9,18 +9,22 @@ import java.util.HashMap;
  * Various methods that help debugging and the like
  */
 public class Helper {
-    private static boolean isDebug = true;
+    private static boolean isDebug = false;
 
     public static final int DETAIL_ID_CODE = 1000;
 
     public static final String DETAIL_ID = "DETAIL_ID";
     public static final String DETAIL_QUANTITY = "DETAIL_QUANTITY";
+    public static final String DETAIL_REMOVE = "DETAIL_REMOVE";
+    public static final String DETAIL_RESULT_CODE = "DETAIL_RESULT_CODE";
+    public static final String DETAIL_SAVE = "DETAIL_SAVE";
 
     public static final String ENGRAM_VERSION = "ENGRAM_VERSION";
     public static final String CATEGORY_VERSION = "CATEGORY_VERSION";
     public static final String RESOURCE_VERSION = "RESOURCE_VERSION";
 
     public static final String FILTERED = "FILTERED";
+    public static final String CHANGELOG = "CHANGELOG";
 
     public static void Log(String tag, String message) {
         if (isDebug) Log.d(tag, message);

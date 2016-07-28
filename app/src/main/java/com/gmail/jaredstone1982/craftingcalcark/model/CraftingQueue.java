@@ -29,6 +29,14 @@ public class CraftingQueue {
         return dataSource.findAllCraftableResources();
     }
 
+    public void Remove(long engramId) {
+        Queue queue = dataSource.findSingleQueue(engramId);
+
+        if (queue != null) {
+            dataSource.Delete(queue);
+        }
+    }
+
     public void increaseQuantity(long engramId, int amount) {
         Queue queue = dataSource.findSingleQueue(engramId);
 
@@ -40,6 +48,23 @@ public class CraftingQueue {
             if (queue.getQuantity() < MAX) {
                 queue.increaseQuantity(amount);
                 dataSource.Update(queue);
+            }
+        }
+    }
+
+    public void decreaseQuantity(long engramId, int amount) {
+        Queue queue = dataSource.findSingleQueue(engramId);
+
+        // if queue is empty, add new queue into system
+        // if queue exists, increase quantity by amount, update system with new object
+        if (queue != null) {
+            if (amount > 0) {
+                queue.decreaseQuantity(amount);
+                if (queue.getQuantity() > 0) {
+                    dataSource.Update(queue);
+                } else {
+                    dataSource.Delete(queue);
+                }
             }
         }
     }
@@ -59,7 +84,7 @@ public class CraftingQueue {
         if (quantity == 0) {
             Helper.Log(LOGTAG, "-- setQuantity() > Quantity is 0, deleting record of engramId: " + engramId);
 
-            dataSource.Delete(engramId);
+            dataSource.Delete(queue);
             return;
         }
 

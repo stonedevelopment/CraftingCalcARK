@@ -4,11 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#000000</color>
     <color name="text_color_quantity">#0dfdf2</color>
     <color name="displaycase_background_transparent">#000dfdf2</color>
     <color name="displaycase_background">#00004b</color>
     <color name="displaycase_engram_background">#740000</color>
-    <color name="displaycase_tint_half_opacity">#32740000</color>
     <color name="crafting_queue_background">#969696</color>
 </resources>

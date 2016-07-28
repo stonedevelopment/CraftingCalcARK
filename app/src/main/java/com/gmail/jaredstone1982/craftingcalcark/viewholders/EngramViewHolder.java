@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.gmail.jaredstone1982.craftingcalcark.R;
 
-// TODO: 7/13/2016 Convert all Engram named objects to DisplayCase or CraftingQueue
 public class EngramViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView image;
@@ -20,6 +19,7 @@ public class EngramViewHolder extends RecyclerView.ViewHolder {
         this.image = (ImageView) itemView.findViewById(R.id.list_item_engram_imageView);
         this.nameText = (TextView) itemView.findViewById(R.id.list_item_engram_nameText);
         this.quantityText = (TextView) itemView.findViewById(R.id.list_item_engram_quantityText);
+//        this.imageButton = (ImageButton) itemView.findViewById(R.id.list_item_engram_remove_imageButton);
     }
 
     public ImageView getImage() {

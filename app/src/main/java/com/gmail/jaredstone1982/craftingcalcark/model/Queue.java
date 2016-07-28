@@ -14,9 +14,6 @@ public class Queue {
         this.quantity = quantity;
     }
 
-    public Queue() {
-    }
-
     public long getId() {
         return id;
     }
@@ -43,6 +40,10 @@ public class Queue {
 
     public void increaseQuantity(int amount) {
         this.quantity += amount;
+    }
+
+    public void decreaseQuantity(int amount) {
+        this.quantity -= amount;
     }
 
     @Override

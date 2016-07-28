@@ -11,7 +11,7 @@ import java.util.List;
  * Will be along the same lines as in-game.
  */
 public class CategoryInitializer {
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.1";
 
     public static class MISC {
 
@@ -172,7 +172,7 @@ public class CategoryInitializer {
             add(new Category(COMMUNICATION.ID, "Communication"));
             add(new Category(OFFHAND.ID, "Off-Hand"));
             add(new Category(COMPOSITES.ID, "Composite"));
-            add(new Category(CONSUMABLES.ID, "Consumable"));
+            add(new Category(CONSUMABLES.ID, "Consumables"));
             add(new Category(DYES.ID, "Dyes"));
             add(new Category(KIBBLE.ID, "Kibble"));
             add(new Category(REFINED.ID, "Refined"));

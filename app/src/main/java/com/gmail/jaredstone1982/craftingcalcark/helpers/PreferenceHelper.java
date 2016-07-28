@@ -40,9 +40,16 @@ public class PreferenceHelper {
     }
 
     public boolean getBooleanPreference(String key) {
+        boolean value;
+
         switch (key) {
             case Helper.FILTERED:
-                boolean value = preferences.getBoolean(key, true);
+                value = preferences.getBoolean(key, true);
+
+                setPreference(key, value);
+                return value;
+            case Helper.CHANGELOG:
+                value = preferences.getBoolean(key, false);
 
                 setPreference(key, value);
                 return value;

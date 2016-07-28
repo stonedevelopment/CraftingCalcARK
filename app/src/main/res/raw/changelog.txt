@@ -1,0 +1,53 @@
+
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    {
+        color:#C0F0C0;
+        font-size:1.2em;
+        font-weight:bold;
+        margin-top:1em;
+        margin-bottom:0.5em;
+        text-align:center }
+      div.subtitle {
+        color:#C0F0C0;
+        font-size:0.8em;
+        margin-bottom:1em;
+        text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+    $ Always Show
+      % How to use this app
+      _ Increasing quantity
+      * Single click any Engram thumbnail to increase quantity by 1.
+      * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, then adjust the dial to quantity and press Save button.
+      _ Decreasing quantity
+      * Long click an Engram thumbnail in the Crafting Queue (below) to decrease quantity by 1.
+      * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, then either adjust the dial down or simply click Remove button.
+    $ 0.1.0
+      % Version 0.1.0a
+      _ 07/29/2016
+      * First alpha release of this app!
+      * Includes all engrams up to PC version 244.74
+      ! Known issues
+      * Stuttering image list when "Show All" is chosen
+    $ Thanks
+      % Special thanks
+      * <a href="http://petoria.de/android-change-log/">Android Change Log</a> for such an easy to manage change log script.
+      * <a href="http://ark.gamepedia.com">ARK Gamepedia Wiki</a> for all physical content and excellent source of ARK information: creative license below.
+    $ Creative Commons License
+      % Creative Commons License
+      ! All content provided is available under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a>, unless otherwise noted.
+      * Content provided by <a href="http://ark.gamepedia.com">ARK Gamepedia Wiki</a>.
+    $ Bugs
+      % Found a bug?
+      ! Please send all bug reports to my twitter account or email.
+      * Twitter: <a href="http://www.twitter.com/masterxofxnone">@MasterxOfxNone</a>
+      * Email: <a href="mailto:jaredstone1982@gmail.com">jaredstone1982@gmail.com</a>
+    $ END_OF_CHANGE_LOG
+  </body>
+</html>

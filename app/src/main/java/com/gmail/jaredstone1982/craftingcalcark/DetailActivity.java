@@ -41,6 +41,7 @@ public class DetailActivity extends AppCompatActivity {
         NumberPicker quantityNumberPicker = (NumberPicker) findViewById(R.id.engram_detail_quantityNumberPicker);
         RecyclerView resourceList = (RecyclerView) findViewById(R.id.engram_detail_resources);
         Button saveButton = (Button) findViewById(R.id.engram_detail_save_button);
+        Button removeButton = (Button) findViewById(R.id.engram_detail_remove_button);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -52,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
             showcase.setQuantity(MIN + 1);
         }
         if (imageView != null && nameText != null && descriptionText != null && categoryText != null &&
-                quantityNumberPicker != null && saveButton != null && resourceList != null) {
+                quantityNumberPicker != null && saveButton != null && removeButton != null && resourceList != null) {
             imageView.setImageResource(showcase.getImageId());
             nameText.setText(showcase.getName());
             descriptionText.setText(showcase.getDescription());
@@ -75,22 +76,39 @@ public class DetailActivity extends AppCompatActivity {
             resourceList.setLayoutManager(layoutManager_ResourceList);
             resourceList.setAdapter(resourceListAdapter);
 
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FinishActivityWithResult(Helper.DETAIL_REMOVE, true);
+                }
+            });
+
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FinishActivityWithResult();
+                    FinishActivityWithResult(Helper.DETAIL_SAVE, showcase.getQuantity());
                 }
             });
         }
     }
 
-    /**
-     * Saves quantity (changed or not) to Intent object and sets Result to be captured by .MainActivity
-     */
-    private void FinishActivityWithResult() {
+    private void FinishActivityWithResult(String resultCode, boolean result) {
         Intent returnIntent = getIntent();
 
-        returnIntent.putExtra(Helper.DETAIL_QUANTITY, showcase.getQuantity());
+        returnIntent.putExtra(Helper.DETAIL_RESULT_CODE, resultCode);
+        returnIntent.putExtra(resultCode, result);
+
+        setResult(RESULT_OK, returnIntent);
+
+        finish();
+    }
+
+    private void FinishActivityWithResult(String resultCode, int result) {
+        Intent returnIntent = getIntent();
+
+        returnIntent.putExtra(Helper.DETAIL_RESULT_CODE, resultCode);
+        returnIntent.putExtra(Helper.DETAIL_QUANTITY, result);
+
         setResult(RESULT_OK, returnIntent);
 
         finish();

@@ -8,7 +8,8 @@
         android:id="@+id/list_item_engram_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:background="@color/crafting_queue_background"
         android:src="@drawable/structures_stone_reinforced_dinosaur_gate" />
 
@@ -36,5 +37,14 @@
         android:textColor="@color/text_color_quantity"
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <!--<ImageButton-->
+    <!--android:id="@+id/list_item_engram_remove_imageButton"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:src="@android:drawable/ic_delete"-->
+    <!--android:clickable="true"-->
+    <!--android:layout_above="@+id/list_item_engram_quantityText"-->
+    <!--android:layout_toEndOf="@+id/list_item_engram_quantityText" />-->
 
 </RelativeLayout>

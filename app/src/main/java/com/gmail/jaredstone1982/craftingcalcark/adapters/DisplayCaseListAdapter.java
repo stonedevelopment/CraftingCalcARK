@@ -39,7 +39,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         viewHolder.getNameText().setText(name);
 
         if (displayCase.isEngram(position)) {
-            int quantity = displayCase.getQuantity(position);
+            int quantity = displayCase.getQuantity(position);   // FIXME: tasks database to get quantity instead of saving it to object
 
             if (quantity > 0) {
                 viewHolder.getImage().setBackgroundColor(displayCase.getContext().getColor(R.color.crafting_queue_background));

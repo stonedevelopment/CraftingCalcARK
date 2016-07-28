@@ -12,7 +12,7 @@ import java.util.List;
  * Provides data to initialize the database with a full list of InitEngram objects
  */
 public class EngramInitializer {
-    public static final String VERSION = "0.1.3";
+    public static final String VERSION = "0.1.4";
 
     // -- ARMOR > CHITIN --
     public static final int CHITIN_BOOTS = R.drawable.armor_chitin_chitin_boots;
@@ -505,7 +505,7 @@ public class EngramInitializer {
     public static final int TRIPWIRE_ALARM_TRAP = R.drawable.weapons_tripwires_tripwire_alarm_trap;
     public static final int TRIPWIRE_NARCOTIC_TRAP = R.drawable.weapons_tripwires_tripwire_narcotic_trap;
 
-    // -- FUTURE ITEMS --
+//    -- FUTURE ITEMS --
 //    public static final int FISHING_ROD = R.drawable.;
 //    public static final int TEK_GRENADE = R.drawable.weapons_explosive_tek_grenade;
 

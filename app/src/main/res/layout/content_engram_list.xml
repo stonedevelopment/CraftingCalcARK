@@ -4,9 +4,7 @@
     android:layout_height="wrap_content"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main"
-    android:paddingTop="2dp"
-    android:paddingStart="4dp"
-    android:paddingEnd="0dp">
+    android:padding="5dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/content_displaycase"

@@ -28,32 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private CraftingQueue craftingQueue;
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Create progress activity if database needs to be upgraded or initiated.
-        // FIXME: Does not show anything after progressBar dismisses.
-//        final DataSource dataSource = DataSource.getInstance(this, LOGTAG);
-//        final List<String> tablesForContent = dataSource.TestTablesForContent();
-//        if (tablesForContent.size() > 0) {
-//            final ProgressDialog progressDialog = ProgressDialog.show(this, "Initializing data..", "Initializing data..", true);
-//            progressDialog.setCancelable(false);
-//
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    dataSource.InitializeTablesWithContent(tablesForContent);
-//                    progressDialog.dismiss();
-//                }
-//            }).start();
-//        }
-
 
         final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
@@ -71,10 +48,8 @@ public class MainActivity extends AppCompatActivity {
                             if (displayCaseListAdapter.isEngram(position)) {
                                 craftingQueue.increaseQuantity(displayCaseListAdapter.getEngramId(position), 1);
 
-                                displayCaseListAdapter.Refresh();
-                                refreshDisplayForCraftingQueue();
+                                Refresh();
                             } else {
-                                // this is a category
                                 displayCaseListAdapter.changeCategory(position);
                             }
                         }
@@ -87,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 startActivityForResult(intent, Helper.DETAIL_ID_CODE);
                             } else {
-                                // this is a category TODO CategoryDetailActivity? Pulls a list of engrams dedicated to that category?
                                 displayCaseListAdapter.changeCategory(position);
                             }
                         }
@@ -109,15 +83,14 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
                             craftingQueue.increaseQuantity(craftableEngramListAdapter.getEngram(position).getId(), 1);
 
-                            refreshDisplayForCraftingQueue();
+                            Refresh();
                         }
 
                         @Override
                         public void onLongClick(View view, int position) {
-                            Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                            intent.putExtra(Helper.DETAIL_ID, craftableEngramListAdapter.getEngram(position).getId());
+                            craftingQueue.decreaseQuantity(craftableEngramListAdapter.getEngram(position).getId(), 1);
 
-                            startActivityForResult(intent, Helper.DETAIL_ID_CODE);
+                            Refresh();
                         }
                     });
 
@@ -142,22 +115,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
         switch (item.getItemId()) {
             case R.id.action_clearQueue:
                 craftingQueue.Clear();
-                displayCaseListAdapter.Refresh();
-                refreshDisplayForCraftingQueue(); // Refreshing an empty object?
+
+                Refresh();
                 break;
 
             case R.id.action_show_all:
@@ -168,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
                 displayCaseListAdapter.setFiltered(true);
                 break;
 
-            case R.id.action_settings:
-                return true;
+            case R.id.action_show_changelog:
+                ChangeLog changeLog = new ChangeLog(this);
+                changeLog.getFullLogDialog().show();
+                break;
 
             default:
                 break;
@@ -186,27 +157,45 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
                 long id = extras.getLong(Helper.DETAIL_ID);
-                int quantity = extras.getInt(Helper.DETAIL_QUANTITY);
+                String result = extras.getString(Helper.DETAIL_RESULT_CODE);
 
-                craftingQueue.setQuantity(id, quantity);
+                assert result != null;
+                switch (result) {
+                    case Helper.DETAIL_REMOVE:
+                        boolean doRemove = extras.getBoolean(Helper.DETAIL_REMOVE);
+                        if (doRemove) {
+                            craftingQueue.Remove(id);
+                        }
+                        break;
+                    case Helper.DETAIL_SAVE:
+                        int quantity = extras.getInt(Helper.DETAIL_QUANTITY);
 
-                displayCaseListAdapter.Refresh();
-                refreshDisplayForCraftingQueue();
+                        if (quantity > 0) {
+                            craftingQueue.setQuantity(id, quantity);
+                        }
+                        break;
+                }
+
+                Refresh();
             }
         }
     }
 
-    private void refreshDisplayForCraftingQueue() {
+    private void Refresh() {
         craftableEngramListAdapter.setEngrams(craftingQueue.getEngrams());
         craftableResourceListAdapter.setResources(craftingQueue.getResources());
 
         craftableEngramListAdapter.Refresh();
         craftableResourceListAdapter.Refresh();
+
+        displayCaseListAdapter.Refresh();
     }
 
     private void createExtraViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        showChangeLog();
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        if (fab != null) {
@@ -218,5 +207,13 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            });
 //        }
+    }
+
+    private void showChangeLog() {
+        ChangeLog changeLog = new ChangeLog(this);
+
+        if (changeLog.firstRun()) {
+            changeLog.getLogDialog().show();
+        }
     }
 }

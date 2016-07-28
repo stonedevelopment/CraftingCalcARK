@@ -10,7 +10,7 @@ import com.gmail.jaredstone1982.craftingcalcark.R;
  * FIXME: This does not currently allow for complex resource objects (resources that are composed of resources), be advised.
  */
 public class ResourceInitializer {
-    public static final String VERSION = "0.1.3";
+    public static final String VERSION = "0.1.4";
 
     // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;

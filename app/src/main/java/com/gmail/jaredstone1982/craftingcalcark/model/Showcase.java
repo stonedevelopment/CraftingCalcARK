@@ -13,6 +13,7 @@ import com.gmail.jaredstone1982.craftingcalcark.db.DataSource;
  */
 public class Showcase {
     private static final String LOGTAG = "SHOWCASE";
+
     private DetailEngram engram;
     private DataSource dataSource;
 
@@ -68,8 +69,6 @@ public class Showcase {
     }
 
     public String getCategoryDescription() {
-        // String builder that builds a string of hierarchical categories
-
         Category category = dataSource.findSingleCategory(engram.getCategoryId());
         long parent = category.getParent();
 
