@@ -18,6 +18,18 @@ import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 import com.gmail.jaredstone1982.craftingcalcark.model.CraftingQueue;
 import com.gmail.jaredstone1982.craftingcalcark.model.listeners.RecyclerTouchListener;
 
+/**
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone, Stone Development
+ * Title: ARK:Crafting Calculator
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "MAINACTIVITY";
 
@@ -94,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-            craftableEngramListAdapter = new CraftableEngramListAdapter(craftingQueue.getEngrams());
+            craftableEngramListAdapter = new CraftableEngramListAdapter(this, craftingQueue.getEngrams());
 
             craftingQueueEngramList.setLayoutManager(craftableEngramLayoutManager);
             craftingQueueEngramList.addOnItemTouchListener(craftingQueueTouchListener);
@@ -104,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager craftableResourceLayoutManager =
                 new LinearLayoutManager(this);
         if (craftingQueueResourceList != null) {
-            craftableResourceListAdapter = new ResourceListAdapter(craftingQueue.getResources());
+            craftableResourceListAdapter = new ResourceListAdapter(this, craftingQueue.getResources());
 
             craftingQueueResourceList.setLayoutManager(craftableResourceLayoutManager);
             craftingQueueResourceList.setAdapter(craftableResourceListAdapter);
@@ -130,16 +142,29 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_show_all:
-                displayCaseListAdapter.setFiltered(false);
+                if (item.isChecked()) { //  Turning off Show All, filtering results.
+                    item.setTitle(R.string.action_show_all);
+                    item.setChecked(false);
+                    displayCaseListAdapter.setFiltered(true);
+                } else {
+                    item.setTitle(R.string.action_show_filtered);
+                    item.setChecked(true);
+                    displayCaseListAdapter.setFiltered(false);
+                }
                 break;
 
-            case R.id.action_show_filtered:
-                displayCaseListAdapter.setFiltered(true);
-                break;
+//            case R.id.action_show_filtered:
+//                displayCaseListAdapter.setFiltered(true);
+//                break;
 
             case R.id.action_show_changelog:
                 ChangeLog changeLog = new ChangeLog(this);
                 changeLog.getFullLogDialog().show();
+                break;
+
+            case R.id.action_show_helpdialog:
+                HelpDialog helpDialog = new HelpDialog(this);
+                helpDialog.getDialog().show();
                 break;
 
             default:

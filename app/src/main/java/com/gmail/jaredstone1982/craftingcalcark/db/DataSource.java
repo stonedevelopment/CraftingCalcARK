@@ -27,10 +27,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Description: Source of data pulled from Database
- * Usage: Handle actions of all Database tables excluding TABLE_QUEUE
- * Used by: DisplayCase
- * Variables: LOGTAG, openHelper, database
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone, Stone Development
+ * Title: ARK:Crafting Calculator
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class DataSource {
     private static final String LOGTAG = "DATASOURCE";

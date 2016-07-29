@@ -6,6 +6,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 
+/**
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone, Stone Development
+ * Title: ARK:Crafting Calculator
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ */
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static DBOpenHelper sInstance;
 

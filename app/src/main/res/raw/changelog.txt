@@ -20,34 +20,29 @@
     </style>
   </head>
   <body>
-    $ Always Show
-      % How to use this app
-      _ Increasing quantity
-      * Single click any Engram thumbnail to increase quantity by 1.
-      * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, then adjust the dial to quantity and press Save button.
-      _ Decreasing quantity
-      * Long click an Engram thumbnail in the Crafting Queue (below) to decrease quantity by 1.
-      * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, then either adjust the dial down or simply click Remove button.
     $ 0.1.0
       % Version 0.1.0a
       _ 07/29/2016
       * First alpha release of this app!
       * Includes all engrams up to PC version 244.74
       ! Known issues
-      * Stuttering image list when "Show All" is chosen
-    $ Thanks
-      % Special thanks
-      * <a href="http://petoria.de/android-change-log/">Android Change Log</a> for such an easy to manage change log script.
-      * <a href="http://ark.gamepedia.com">ARK Gamepedia Wiki</a> for all physical content and excellent source of ARK information: creative license below.
-    $ Creative Commons License
-      % Creative Commons License
-      ! All content provided is available under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a>, unless otherwise noted.
-      * Content provided by <a href="http://ark.gamepedia.com">ARK Gamepedia Wiki</a>.
-    $ Bugs
+      * Stuttering image list when "Show All" is chosen. It still works, but is an annoyance.
+      * Sometimes, when adding Engrams in a row, the first 2 Engrams go dark (like they weren't added), but once you click again, they come back. It still does what it's supposed to do, behind the scenes, but the displays are off a bit.
+      * Resource IDs change when 'res' folder is modified, this requires a full database initialization.
+      * Not very pretty on a large display tablet, this will be addressed in future releases.
+    $ BUGS
       % Found a bug?
       ! Please send all bug reports to my twitter account or email.
       * Twitter: <a href="http://www.twitter.com/masterxofxnone">@MasterxOfxNone</a>
       * Email: <a href="mailto:jaredstone1982@gmail.com">jaredstone1982@gmail.com</a>
+    $ THANKS
+      % Special thanks
+      * <a href="http://petoria.de/android-change-log/">Android Change Log</a> for such an easy way to manage change logs.
+      * <a href="http://ark.gamepedia.com">ARK Gamepedia Wiki</a> for all physical content and being an excellent source of ARK information.
+    $ CREATIVE LICENSE
+      % Creative Commons License
+      ! This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+      * Image resource content provided by <a href="http://ark.gamepedia.com">ARK Gamepedia Wiki</a>, no changes were made.
     $ END_OF_CHANGE_LOG
   </body>
 </html>

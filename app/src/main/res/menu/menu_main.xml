@@ -2,24 +2,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
+
+
     <item
         android:id="@+id/action_show_all"
+        android:checkable="true"
+        android:checked="false"
         android:orderInCategory="100"
         android:title="@string/action_show_all"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_show_filtered"
-        android:orderInCategory="100"
-        android:title="@string/action_show_filtered"
-        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_clearQueue"
         android:orderInCategory="100"
         android:title="@string/action_clear_queue"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_show_changelog"
-        android:orderInCategory="200"
-        android:title="@string/changelog_full_title"
-        app:showAsAction="never" />
+
+    <group android:id="@+id/group_help_changelog">
+        <item
+            android:id="@+id/action_show_helpdialog"
+            android:orderInCategory="200"
+            android:title="@string/helpdialog_full_title"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_show_changelog"
+            android:orderInCategory="200"
+            android:title="@string/changelog_full_title"
+            app:showAsAction="never" />
+
+    </group>
 </menu>

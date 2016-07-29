@@ -1,7 +1,9 @@
 package com.gmail.jaredstone1982.craftingcalcark;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,18 @@ import com.gmail.jaredstone1982.craftingcalcark.adapters.ResourceListAdapter;
 import com.gmail.jaredstone1982.craftingcalcark.helpers.Helper;
 import com.gmail.jaredstone1982.craftingcalcark.model.Showcase;
 
+/**
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone, Stone Development
+ * Title: ARK:Crafting Calculator
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ */
 public class DetailActivity extends AppCompatActivity {
     private static final String LOGTAG = "DETAIL";
 
@@ -30,6 +44,11 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.in_game_background, null)));
 
         RecyclerView.LayoutManager layoutManager_ResourceList =
                 new LinearLayoutManager(this);
@@ -48,48 +67,60 @@ public class DetailActivity extends AppCompatActivity {
             id = extras.getLong(Helper.DETAIL_ID);
         }
 
+        assert removeButton != null;
+        assert saveButton != null;
+        assert imageView != null;
+        assert nameText != null;
+        assert descriptionText != null;
+        assert categoryText != null;
+        assert quantityNumberPicker != null;
+        assert resourceList != null;
+
         showcase = new Showcase(this, id);
         if (showcase.getQuantity() <= MIN) {
             showcase.setQuantity(MIN + 1);
+
+            removeButton.setEnabled(false);
+            saveButton.setText("Add to Queue");
+        } else {
+            saveButton.setText("Update Queue");
         }
-        if (imageView != null && nameText != null && descriptionText != null && categoryText != null &&
-                quantityNumberPicker != null && saveButton != null && removeButton != null && resourceList != null) {
-            imageView.setImageResource(showcase.getImageId());
-            nameText.setText(showcase.getName());
-            descriptionText.setText(showcase.getDescription());
-            categoryText.setText(showcase.getCategoryDescription());
 
-            resourceListAdapter = new ResourceListAdapter(showcase.getComposition());
+        imageView.setImageResource(showcase.getImageId());
+        nameText.setText(showcase.getName());
+        descriptionText.setText(showcase.getDescription());
+        categoryText.setText(showcase.getCategoryDescription());
 
-            quantityNumberPicker.setMinValue(MIN);
-            quantityNumberPicker.setMaxValue(MAX);
-            quantityNumberPicker.setValue(showcase.getQuantity());
-            quantityNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    showcase.setQuantity(newVal);
-                    resourceListAdapter.setResources(showcase.getComposition());
-                    resourceListAdapter.Refresh();
-                }
-            });
+        resourceListAdapter = new ResourceListAdapter(this, showcase.getComposition());
 
-            resourceList.setLayoutManager(layoutManager_ResourceList);
-            resourceList.setAdapter(resourceListAdapter);
+        quantityNumberPicker.setMinValue(MIN);
+        quantityNumberPicker.setMaxValue(MAX);
+        quantityNumberPicker.setValue(showcase.getQuantity());
+        quantityNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                showcase.setQuantity(newVal);
+                resourceListAdapter.setResources(showcase.getComposition());
+                resourceListAdapter.Refresh();
+            }
+        });
 
-            removeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FinishActivityWithResult(Helper.DETAIL_REMOVE, true);
-                }
-            });
+        resourceList.setLayoutManager(layoutManager_ResourceList);
+        resourceList.setAdapter(resourceListAdapter);
 
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FinishActivityWithResult(Helper.DETAIL_SAVE, showcase.getQuantity());
-                }
-            });
-        }
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FinishActivityWithResult(Helper.DETAIL_REMOVE, true);
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FinishActivityWithResult(Helper.DETAIL_SAVE, showcase.getQuantity());
+            }
+        });
     }
 
     private void FinishActivityWithResult(String resultCode, boolean result) {

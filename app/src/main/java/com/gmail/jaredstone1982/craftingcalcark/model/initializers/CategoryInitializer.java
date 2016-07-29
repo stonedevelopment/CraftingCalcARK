@@ -6,9 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Proposed idea for having a hierarchy of categories to which the user can filter results
- * <p/>
- * Will be along the same lines as in-game.
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone, Stone Development
+ * Title: ARK:Crafting Calculator
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class CategoryInitializer {
     public static final String VERSION = "0.1.1";

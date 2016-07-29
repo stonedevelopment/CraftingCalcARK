@@ -5,12 +5,19 @@ import android.util.SparseArray;
 import com.gmail.jaredstone1982.craftingcalcark.R;
 
 /**
- * Initializes a list of data to be used to fill database table RESOURCE_TABLE
- * <p>
- * FIXME: This does not currently allow for complex resource objects (resources that are composed of resources), be advised.
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone, Stone Development
+ * Title: ARK:Crafting Calculator
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class ResourceInitializer {
-    public static final String VERSION = "0.1.4";
+    public static final String VERSION = "0.1.5";
 
     // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;
@@ -130,11 +137,6 @@ public class ResourceInitializer {
         append(FECES, "Feces (Any Size)");
     }};
 
-    /**
-     * Retrieve a list of Resource Objects as generated for DB
-     *
-     * @return SpareArray of Resource Objects
-     */
     public static SparseArray<String> getResources() {
         return resources;
     }

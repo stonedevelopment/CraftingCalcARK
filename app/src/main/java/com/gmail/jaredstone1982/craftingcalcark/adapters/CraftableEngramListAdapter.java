@@ -1,5 +1,8 @@
 package com.gmail.jaredstone1982.craftingcalcark.adapters;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -13,10 +16,14 @@ import com.gmail.jaredstone1982.craftingcalcark.viewholders.EngramViewHolder;
 import java.util.Locale;
 
 public class CraftableEngramListAdapter extends RecyclerView.Adapter {
+    private Context context;
     private SparseArray<CraftableEngram> engrams;
+    private Resources resources;
 
-    public CraftableEngramListAdapter(SparseArray<CraftableEngram> engrams) {
+    public CraftableEngramListAdapter(Context context, SparseArray<CraftableEngram> engrams) {
         this.engrams = engrams;
+        this.context = context.getApplicationContext();
+        this.resources = context.getResources();
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,7 +39,10 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
 
         final CraftableEngram engram = engrams.valueAt(position);
 
-        viewHolder.getImage().setImageResource(engram.getImageId());
+        int imageId = engram.getImageId();
+        Drawable drawable = resources.getDrawable(imageId, null);
+
+        viewHolder.getImage().setImageDrawable(drawable);
         viewHolder.getNameText().setText(engram.getName());
         viewHolder.getQuantityText().setText(String.format(Locale.US, "x%1$d", engram.getQuantity()));
     }

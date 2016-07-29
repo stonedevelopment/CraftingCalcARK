@@ -1,0 +1,32 @@
+
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    {
+        color:#C0F0C0;
+        font-size:1.2em;
+        font-weight:bold;
+        margin-top:1em;
+        margin-bottom:0.5em;
+        text-align:center }
+      div.subtitle {
+        color:#C0F0C0;
+        font-size:0.8em;
+        margin-bottom:1em;
+        text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+    $ START_OF_HELP_FILE
+      % Increasing Quantities
+      * Single click any Engram thumbnail to increase quantity by 1.
+      * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, then adjust the dial to quantity and press Save button.
+      % Decreasing Quantities
+      * Long click an Engram thumbnail in the Crafting Queue (below) to decrease quantity by 1.
+      * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, then either adjust the dial down or simply click Remove button.
+    $ END_OF_HELP_FILE
+  </body>
+</html>

@@ -2,17 +2,20 @@
     <string name="app_name">ARK:Crafting Calculator</string>
 
     <string name="action_show_all">Show All</string>
-    <string name="action_show_filtered">Filtered</string>
-    <string name="action_clear_queue">Clear Queue</string>
+    <string name="action_show_filtered">Show Filtered</string>
+    <string name="action_clear_queue">Clear Crafting Queue</string>
 
     <string name="save_and_close_details">Save and Close</string>
     <string name="label_engram_details">Engram Details</string>
 
-    <string name="details_button_text_remove">Remove</string>
+    <string name="details_button_text_remove">Remove From Queue</string>
 
-    <string name="changelog_full_title">Help/Changelog</string>
+    <string name="helpdialog_full_title">How to Use This App</string>
+    <string name="helpdialog_ok_button">Close Help</string>
+
+    <string name="changelog_full_title">Changelog</string>
     <string name="changelog_title">What\'s New</string>
     <string name="changelog_ok_button">OK</string>
-    <string name="changelog_show_full">more…</string>
+    <string name="changelog_show_full">More…</string>
     <string name="background_color">black</string>
 </resources>

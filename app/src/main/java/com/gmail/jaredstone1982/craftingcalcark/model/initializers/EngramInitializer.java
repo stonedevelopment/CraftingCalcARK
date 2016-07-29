@@ -9,10 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides data to initialize the database with a full list of InitEngram objects
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone, Stone Development
+ * Title: ARK:Crafting Calculator
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class EngramInitializer {
-    public static final String VERSION = "0.1.4";
+    public static final String VERSION = "0.1.5";
 
     // -- ARMOR > CHITIN --
     public static final int CHITIN_BOOTS = R.drawable.armor_chitin_chitin_boots;
