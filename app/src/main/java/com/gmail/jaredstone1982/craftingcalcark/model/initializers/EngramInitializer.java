@@ -21,7 +21,7 @@ import java.util.List;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class EngramInitializer {
-    public static final String VERSION = "0.1.5";
+    public static final String VERSION = "0.1.6";
 
     // -- ARMOR > CHITIN --
     public static final int CHITIN_BOOTS = R.drawable.armor_chitin_chitin_boots;
@@ -4518,12 +4518,10 @@ public class EngramInitializer {
         }
     };
 
-    /**
-     * Return a list of InitEngram Objects as generated for database
-     *
-     * @return SparseArray of InitEngram Objects
-     */
     public static List<InitEngram> getEngrams() {
+        List<InitEngram> kibbleEngrams = KibbleInitializer.getEngrams();
+
+        engrams.addAll(kibbleEngrams);
         return engrams;
     }
 

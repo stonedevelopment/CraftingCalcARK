@@ -153,10 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
 
-//            case R.id.action_show_filtered:
-//                displayCaseListAdapter.setFiltered(true);
-//                break;
-
             case R.id.action_show_changelog:
                 ChangeLog changeLog = new ChangeLog(this);
                 changeLog.getFullLogDialog().show();

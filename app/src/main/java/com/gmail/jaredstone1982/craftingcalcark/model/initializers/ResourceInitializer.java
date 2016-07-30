@@ -17,7 +17,7 @@ import com.gmail.jaredstone1982.craftingcalcark.R;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class ResourceInitializer {
-    public static final String VERSION = "0.1.5";
+    public static final String VERSION = "0.1.6";
 
     // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;
@@ -78,6 +78,40 @@ public class ResourceInitializer {
     public static final int FECES = R.drawable.feces;
     public static final int BERRIES = R.drawable.berries;
 
+    public static final int PRIME_MEAT_JERKY = R.drawable.prime_meat_jerky;
+    public static final int COOKED_MEAT_JERKY = R.drawable.cooked_meat_jerky;
+    public static final int COOKED_PRIME_MEAT_OR_PRIME_JERKY = R.drawable.cooked_prime_meat_or_prime_jerky;
+    public static final int COOKED_MEAT_OR_JERKY = R.drawable.cooked_meat_or_jerky;
+
+    public static final int ANKYLO_EGG = R.drawable.ankylo_egg;
+    public static final int ARANEO_EGG = R.drawable.araneo_egg;
+    public static final int ARGENTAVIS_EGG = R.drawable.argentavis_egg;
+    public static final int BRONTO_EGG = R.drawable.bronto_egg;
+    public static final int CARNO_EGG = R.drawable.carno_egg;
+    public static final int COMPY_EGG = R.drawable.compy_egg;
+    public static final int DILO_EGG = R.drawable.dilo_egg;
+    public static final int DIMETRODON_EGG = R.drawable.dimetrodon_egg;
+    public static final int DIMORPH_EGG = R.drawable.dimorph_egg;
+    public static final int DIPLO_EGG = R.drawable.diplo_egg;
+    public static final int DODO_EGG = R.drawable.dodo_egg;
+    public static final int GALLIMIMUS_EGG = R.drawable.gallimimus_egg;
+    public static final int KAIRUKU_EGG = R.drawable.kairuku_egg;
+    public static final int LYSTRO_EGG = R.drawable.lystro_egg;
+    public static final int PACHY_EGG = R.drawable.pachycephalosaurus_egg;
+    public static final int PARASAUR_EGG = R.drawable.parasaur_egg;
+    public static final int PTERANODON_EGG = R.drawable.pteranodon_egg;
+    public static final int PULMONOSCORPIUS_EGG = R.drawable.pulmonoscorpius_egg;
+    public static final int QUETZAL_EGG = R.drawable.quetzal_egg;
+    public static final int RAPTOR_EGG = R.drawable.raptor_egg;
+    public static final int REX_EGG = R.drawable.rex_egg;
+    public static final int SARCO_EGG = R.drawable.sarco_egg;
+    public static final int SPINO_EGG = R.drawable.spino_egg;
+    public static final int STEGO_EGG = R.drawable.stego_egg;
+    public static final int TERROR_BIRD_EGG = R.drawable.terror_bird_egg;
+    public static final int TITANOBOA_EGG = R.drawable.titanoboa_egg;
+    public static final int TRIKE_EGG = R.drawable.trike_egg;
+    public static final int CARBONEMYS_EGG = R.drawable.carbonemys_egg;
+
     private static SparseArray<String> resources = new SparseArray<String>() {{
         append(ANGLER_GEL, "Angler Gel");
         append(BLACK_PEARL, "Black Pearl");
@@ -135,6 +169,38 @@ public class ResourceInitializer {
         append(BEER_LIQUID, "Beer Liquid");
         append(BERRIES, "Berries (Any Kind)");
         append(FECES, "Feces (Any Size)");
+        append(PRIME_MEAT_JERKY, "Prime Meat Jerky");
+        append(COOKED_MEAT_JERKY, "Cooked Meat Jerky");
+        append(COOKED_PRIME_MEAT_OR_PRIME_JERKY, "Cooked Prime Meat or Prime Meat Jerky");
+        append(COOKED_MEAT_OR_JERKY, "Cooked Meat or Cooked Meat Jerky");
+        append(ANKYLO_EGG, "Ankylo Egg");
+        append(ARANEO_EGG, "Araneo Egg");
+        append(ARGENTAVIS_EGG, "Argentavis Egg");
+        append(BRONTO_EGG, "Bronto Egg");
+        append(CARNO_EGG, "Carno Egg");
+        append(COMPY_EGG, "Compy Egg");
+        append(DILO_EGG, "Dilo Egg");
+        append(DIMETRODON_EGG, "Dimetrodon Egg");
+        append(DIMORPH_EGG, "Dimorphodon Egg");
+        append(DIPLO_EGG, "Diplodocus Egg");
+        append(DODO_EGG, "Dodo Egg");
+        append(GALLIMIMUS_EGG, "Gallimimus Egg");
+        append(KAIRUKU_EGG, "Kairuku Egg");
+        append(LYSTRO_EGG, "Lystrosaur Egg");
+        append(PACHY_EGG, "Pachy Egg");
+        append(PARASAUR_EGG, "Parasaur Egg");
+        append(PTERANODON_EGG, "Pteranodon Egg");
+        append(PULMONOSCORPIUS_EGG, "Pulmonoscorpius Egg");
+        append(QUETZAL_EGG, "Quetzal Egg");
+        append(RAPTOR_EGG, "Raptor Egg");
+        append(REX_EGG, "Rex Egg");
+        append(SARCO_EGG, "Sarco Egg");
+        append(SPINO_EGG, "Spino Egg");
+        append(STEGO_EGG, "Stego Egg");
+        append(TERROR_BIRD_EGG, "Terror Bird Egg");
+        append(TITANOBOA_EGG, "Titanoboa Egg");
+        append(TRIKE_EGG, "Trike Egg");
+        append(CARBONEMYS_EGG, "Carbonemys Egg");
     }};
 
     public static SparseArray<String> getResources() {
