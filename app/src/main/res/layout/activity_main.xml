@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/in_game_background"
     android:fitsSystemWindows="true"
-    tools:context="com.gmail.jaredstone1982.craftingcalcark.MainActivity">
+    tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/in_game_background"
     android:fitsSystemWindows="true"
-    tools:context="com.gmail.jaredstone1982.craftingcalcark.DetailActivity">
+    tools:context=".DetailActivity">
 
     <include layout="@layout/content_detail" />
 

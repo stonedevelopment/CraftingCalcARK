@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ARK:Crafting Calculator</string>
+    <string name="app_name">ARK:Resource Calculator</string>
 
     <string name="action_show_all">Show All</string>
     <string name="action_show_filtered">Show Filtered</string>
