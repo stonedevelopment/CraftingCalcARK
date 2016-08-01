@@ -11,8 +11,8 @@ import ark.resource.calculator.model.InitEngram;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -21,7 +21,7 @@ import ark.resource.calculator.model.InitEngram;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class EngramInitializer {
-    public static final String VERSION = "0.1.6";
+    public static final String VERSION = "245.1";
 
     // -- ARMOR > CHITIN --
     public static final int CHITIN_BOOTS = R.drawable.armor_chitin_chitin_boots;
@@ -225,6 +225,7 @@ public class EngramInitializer {
     public static final int TITANOSAUR_PLATFORM = R.drawable.saddles_titanosaur_platform;
     public static final int TRIKE = R.drawable.saddles_trike;
     public static final int WOOLLY_RHINO = R.drawable.saddles_woolly_rhino;
+    public static final int PELAGORNIS = R.drawable.saddles_pteranodon;
 
     // -- WEAPONS > AMMO --
     public static final int ADVANCED_BULLET = R.drawable.weapons_ammo_advanced_bullet;
@@ -293,14 +294,11 @@ public class EngramInitializer {
 
     // -- WEAPONS > RANGED --
     public static final int CROSSBOW = R.drawable.weapons_ranged_crossbow;
+    public static final int FISHING_ROD = R.drawable.weapons_ranged_fishing_rod;
 
     // -- WEAPONS > TRIPWIRE --
     public static final int TRIPWIRE_ALARM_TRAP = R.drawable.weapons_tripwires_tripwire_alarm_trap;
     public static final int TRIPWIRE_NARCOTIC_TRAP = R.drawable.weapons_tripwires_tripwire_narcotic_trap;
-
-//    -- FUTURE ITEMS --
-//    public static final int FISHING_ROD = R.drawable.;
-//    public static final int TEK_GRENADE = R.drawable.weapons_explosive_tek_grenade;
 
     private static List<InitEngram> engrams = new ArrayList<InitEngram>() {
         {
@@ -2028,6 +2026,16 @@ public class EngramInitializer {
                         append(ResourceInitializer.METAL_INGOT, 60);
                     }},
                     CategoryInitializer.SADDLES.ID));
+            add(new InitEngram(
+                    PELAGORNIS,
+                    "Pelagornis Saddle",
+                    "Equip a Pelagornis with this to ride it.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.HIDE, 230);
+                        append(ResourceInitializer.FIBER, 125);
+                        append(ResourceInitializer.CHITIN_OR_KERATIN, 100);
+                    }},
+                    CategoryInitializer.SADDLES.ID));
 
             // -- WEAPONS > AMMO --
             add(new InitEngram(
@@ -2575,6 +2583,16 @@ public class EngramInitializer {
                         append(ResourceInitializer.FIBER, 35);
                     }},
                     CategoryInitializer.WEAPONS.RANGED));
+            add(new InitEngram(
+                    FISHING_ROD,
+                    "Fishing Rod",
+                    "Apply various bait to this, and then use when sitting on a chair or bench to catch some fish!",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.WOOD, 12);
+                        append(ResourceInitializer.FIBER, 50);
+                        append(ResourceInitializer.THATCH, 20);
+                    }},
+                    CategoryInitializer.WEAPONS.RANGED));
 
             // -- WEAPONS > TRIPWIRES --
             add(new InitEngram(
@@ -2613,6 +2631,11 @@ public class EngramInitializer {
     }
 
     public static int getCount() {
-        return engrams.size();
+        int size = engrams.size();
+
+        size += StructureInitializer.getCount();
+        size += KibbleInitializer.getCount();
+
+        return size;
     }
 }

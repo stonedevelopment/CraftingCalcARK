@@ -7,8 +7,8 @@ import android.preference.PreferenceManager;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -57,11 +57,6 @@ public class PreferenceHelper {
         switch (key) {
             case Helper.FILTERED:
                 value = preferences.getBoolean(key, true);
-
-                setPreference(key, value);
-                return value;
-            case Helper.CHANGELOG:
-                value = preferences.getBoolean(key, false);
 
                 setPreference(key, value);
                 return value;

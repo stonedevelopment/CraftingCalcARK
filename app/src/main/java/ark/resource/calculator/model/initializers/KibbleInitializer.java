@@ -11,8 +11,8 @@ import ark.resource.calculator.model.InitEngram;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -367,5 +367,9 @@ public class KibbleInitializer {
 
     public static List<InitEngram> getEngrams() {
         return engrams;
+    }
+
+    public static int getCount() {
+        return engrams.size();
     }
 }

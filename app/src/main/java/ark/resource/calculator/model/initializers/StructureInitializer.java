@@ -11,8 +11,8 @@ import ark.resource.calculator.model.InitEngram;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -132,6 +132,7 @@ public class StructureInitializer {
     public static final int SLOPED_METAL_WALL_LEFT = R.drawable.structures_metal_sloped_metal_wall_left;
     public static final int SLOPED_METAL_WALL_RIGHT = R.drawable.structures_metal_sloped_metal_wall_right;
     public static final int WALL_TORCH = R.drawable.structures_metal_wall_torch;
+    public static final int METAL_SPIRAL_STAIRCASE = R.drawable.blank;
 
     // -- STRUCTURES > METAL > SIGNS --
     public static final int METAL_BILLBOARD = R.drawable.metal_signs_metal_billboard;
@@ -190,6 +191,7 @@ public class StructureInitializer {
     public static final int STONE_RAILING = R.drawable.structures_stone_stone_railing;
     public static final int STONE_WALL = R.drawable.structures_stone_stone_wall;
     public static final int STONE_WINDOWFRAME = R.drawable.structures_stone_stone_windowframe;
+    public static final int STONE_SPIRAL_STAIRCASE = R.drawable.blank;
 
     // -- STRUCTURES > THATCH --
     public static final int SLOPED_THATCH_ROOF = R.drawable.structures_thatch_sloped_thatch_roof;
@@ -227,6 +229,7 @@ public class StructureInitializer {
     public static final int WOODEN_WALL = R.drawable.structures_wood_wooden_wall;
     public static final int WOODEN_WINDOW = R.drawable.structures_wood_wooden_window;
     public static final int WOODEN_WINDOWFRAME = R.drawable.structures_wood_wooden_windowframe;
+    public static final int WOODEN_SPIRAL_STAIRCASE = R.drawable.blank;
 
     // -- STRUCTURES > WOOD > SIGNS --
     public static final int WOODEN_BILLBOARD = R.drawable.wood_signs_wooden_billboard;
@@ -1096,6 +1099,15 @@ public class StructureInitializer {
                         append(ResourceInitializer.CEMENTING_PASTE, 1);
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
+            add(new InitEngram(
+                    METAL_SPIRAL_STAIRCASE,
+                    "Metal Staircase",
+                    "A metal spiral staircase, useful in constructing multi-level buildings.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.METAL_INGOT, 125);
+                        append(ResourceInitializer.CEMENTING_PASTE, 35);
+                    }},
+                    CategoryInitializer.STRUCTURES.METAL.ID));
 
             // -- STRUCTURES > METAL > SIGNS --
             add(new InitEngram(
@@ -1539,6 +1551,16 @@ public class StructureInitializer {
                         append(ResourceInitializer.THATCH, 12);
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
+            add(new InitEngram(
+                    STONE_SPIRAL_STAIRCASE,
+                    "Stone Staircase",
+                    "A stone spiral staircase, useful in constructing multi-level buildings.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.STONE, 200);
+                        append(ResourceInitializer.WOOD, 100);
+                        append(ResourceInitializer.THATCH, 75);
+                    }},
+                    CategoryInitializer.STRUCTURES.STONE));
 
             // -- STRUCTURES > THATCH --
             add(new InitEngram(
@@ -1875,6 +1897,16 @@ public class StructureInitializer {
                         append(ResourceInitializer.FIBER, 6);
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
+            add(new InitEngram(
+                    WOODEN_SPIRAL_STAIRCASE,
+                    "Wooden Staircase",
+                    "A wooden spiral staircase, useful in constructing multi-level buildings.",
+                    new SparseIntArray() {{
+                        append(ResourceInitializer.WOOD, 200);
+                        append(ResourceInitializer.THATCH, 50);
+                        append(ResourceInitializer.FIBER, 35);
+                    }},
+                    CategoryInitializer.STRUCTURES.WOOD.ID));
 
             // -- STRUCTURES > WOOD > SIGNS --
             add(new InitEngram(
@@ -1955,5 +1987,9 @@ public class StructureInitializer {
 
     public static List<InitEngram> getEngrams() {
         return engrams;
+    }
+
+    public static int getCount() {
+        return engrams.size();
     }
 }

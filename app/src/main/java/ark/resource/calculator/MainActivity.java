@@ -1,7 +1,9 @@
 package ark.resource.calculator;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,15 +16,19 @@ import android.view.View;
 import ark.resource.calculator.adapters.CraftableEngramListAdapter;
 import ark.resource.calculator.adapters.DisplayCaseListAdapter;
 import ark.resource.calculator.adapters.ResourceListAdapter;
+import ark.resource.calculator.db.DBOpenHelper;
 import ark.resource.calculator.helpers.Helper;
 import ark.resource.calculator.model.CraftingQueue;
+import ark.resource.calculator.model.initializers.CategoryInitializer;
+import ark.resource.calculator.model.initializers.EngramInitializer;
+import ark.resource.calculator.model.initializers.ResourceInitializer;
 import ark.resource.calculator.model.listeners.RecyclerTouchListener;
 
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -161,6 +167,25 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_show_helpdialog:
                 HelpDialog helpDialog = new HelpDialog(this);
                 helpDialog.getDialog().show();
+                break;
+
+            case R.id.action_view_debug_info:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setTitle(getResources().getString(R.string.view_debug_info))
+                        .setIcon(R.drawable.wood_signs_wooden_sign)
+                        .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setMessage(
+                                "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n\n" +
+                                        "Database Version: " + DBOpenHelper.getDatabaseVersion() + "\n\n" +
+                                        "Engram Version: " + EngramInitializer.VERSION + "\n" +
+                                        "Resource Version: " + ResourceInitializer.VERSION + "\n" +
+                                        "Category Version: " + CategoryInitializer.VERSION)
+                        .show();
                 break;
 
             default:

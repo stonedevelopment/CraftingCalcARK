@@ -9,8 +9,8 @@ import ark.resource.calculator.helpers.Helper;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -187,5 +187,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             default:
                 Helper.Log(LOGTAG, "!!> Table " + table + " does not exist in database, aborting.");
         }
+    }
+
+    public static int getDatabaseVersion() {
+        return DATABASE_VERSION;
     }
 }

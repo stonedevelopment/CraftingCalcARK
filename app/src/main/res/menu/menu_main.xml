@@ -29,6 +29,11 @@
             android:orderInCategory="200"
             android:title="@string/changelog_full_title"
             app:showAsAction="never" />
-
     </group>
+
+    <item
+        android:id="@+id/action_view_debug_info"
+        android:orderInCategory="300"
+        android:title="@string/view_debug_info"
+        app:showAsAction="never" />
 </menu>

@@ -7,8 +7,8 @@ import ark.resource.calculator.R;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -17,7 +17,7 @@ import ark.resource.calculator.R;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class ResourceInitializer {
-    public static final String VERSION = "0.1.6";
+    public static final String VERSION = "245.0";
 
     // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;

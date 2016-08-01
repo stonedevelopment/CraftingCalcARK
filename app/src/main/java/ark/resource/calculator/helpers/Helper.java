@@ -8,8 +8,8 @@ import java.util.HashMap;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -18,7 +18,7 @@ import java.util.HashMap;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class Helper {
-    private static boolean isDebug = false;
+    private static boolean isDebug = true;
 
     public static final int DETAIL_ID_CODE = 1000;
 

@@ -8,8 +8,8 @@ import ark.resource.calculator.model.Category;
 /**
  * Copyright (C) 2016, Jared Stone
  * -
- * Author: Jared Stone, Stone Development
- * Title: ARK:Crafting Calculator
+ * Author: Jared Stone
+ * Title: ARK:Resource Calculator
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
@@ -18,7 +18,7 @@ import ark.resource.calculator.model.Category;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class CategoryInitializer {
-    public static final String VERSION = "0.1.1";
+    public static final String VERSION = "245.0";
 
     public static class MISC {
 
