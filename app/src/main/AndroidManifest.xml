@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ark.resource.calculator">
+    package="arc.resource.calculator">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name="arc.resource.calculator.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
@@ -19,12 +19,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:name="arc.resource.calculator.MainActivity"
+            android:label="@string/app_name_full"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".DetailActivity"
+            android:name="arc.resource.calculator.DetailActivity"
             android:label="@string/label_engram_details"
             android:screenOrientation="portrait" />
     </application>

@@ -2,15 +2,21 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
+        config {
+            keyAlias 'ARK_CC_KEY'
+            keyPassword 'Gyu34dss'
+            storeFile file('C:/Users/jared/Android/keystores/ark_cc_keystore.jks')
+            storePassword 'Gyu34dss'
+        }
     }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
-        applicationId 'ark.resource.calculator'
+        applicationId 'arc.resource.calculator'
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
-        versionName '0.1.1a'
+        versionName '0.1.2a'
     }
     buildTypes {
         release {
