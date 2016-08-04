@@ -1,7 +1,7 @@
 package arc.resource.calculator.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.CraftableResource;
+import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.viewholders.ResourceViewHolder;
 
 /**
@@ -24,13 +24,13 @@ import arc.resource.calculator.viewholders.ResourceViewHolder;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class ResourceListAdapter extends RecyclerView.Adapter {
+public class CraftableResourceListAdapter extends RecyclerView.Adapter {
     private static final String LOGTAG = "ResourceList";
 
-    private SparseArray<CraftableResource> resourceList;
+    private CraftingQueue craftingQueue;
 
-    public ResourceListAdapter(SparseArray<CraftableResource> resources) {
-        this.resourceList = resources;
+    public CraftableResourceListAdapter(Context context) {
+        this.craftingQueue = CraftingQueue.getInstance(context);
     }
 
     @Override
@@ -45,22 +45,18 @@ public class ResourceListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ResourceViewHolder viewHolder = (ResourceViewHolder) holder;
 
-        CraftableResource resource = resourceList.valueAt(position);
-
-        int imageId = resource.getImageId();
+        int imageId = craftingQueue.getResourceImageId(position);
+        String name = craftingQueue.getResourceName(position);
+        int quantity = craftingQueue.getResourceQuantity(position);
 
         viewHolder.getImageView().setImageResource(imageId);
-        viewHolder.getNameText().setText(resource.getName());
-        viewHolder.getQuantityText().setText(String.format(Locale.US, "%1$d", resource.getQuantity()));
+        viewHolder.getNameText().setText(name);
+        viewHolder.getQuantityText().setText(String.format(Locale.US, "%1$d", quantity));
     }
 
     @Override
     public int getItemCount() {
-        return resourceList.size();
-    }
-
-    public void setResources(SparseArray<CraftableResource> resources) {
-        this.resourceList = resources;
+        return craftingQueue.getResourceItemCount();
     }
 
     public void Refresh() {

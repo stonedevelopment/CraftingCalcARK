@@ -19,6 +19,11 @@
     </style>
   </head>
   <body>
+    $ 0.1.4
+      % Version 0.1.4a
+      _ 08/04/2016
+      * Reworked increasing quantities to help make the display respond quicker. It's still not as fast as I'd like, but it's tolerable.
+
     $ 0.1.3
       % Version 0.1.3a
       _ 08/03/2016

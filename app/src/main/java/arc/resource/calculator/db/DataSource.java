@@ -355,7 +355,6 @@ public class DataSource {
                 long resourceId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_RESOURCE));
 
                 CraftableResource resource = new CraftableResource(findSingleResource(resourceId), quantity);
-                resource.setQuantity(quantity);
 
                 resources.put(resource.getImageId(), resource);
             }
@@ -443,6 +442,7 @@ public class DataSource {
 
     private SparseArray<CraftableResource> cursorToResources(Cursor cursor) {
         SparseArray<CraftableResource> resources = new SparseArray<>();
+        HashMap<Long, CraftableResource> resourceMap = new HashMap<>();
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -452,14 +452,16 @@ public class DataSource {
                 long resourceId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_RESOURCE));
                 int quantityPer = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
 
-                CraftableResource resource = new CraftableResource(findSingleResource(resourceId));
-                if (resources.indexOfKey(resource.getImageId()) > -1) {
-                    resource = resources.get(resource.getImageId());
-                    resource.increaseQuantity(quantity * quantityPer);
+                CraftableResource resource = resourceMap.get(resourceId);
+
+                // If Resource does not exist in list, create new one, otherwise increase its quantity.
+                if (resource == null) {
+                    resource = new CraftableResource(findSingleResource(resourceId), quantity * quantityPer);
                 } else {
-                    resource.setQuantity(quantity * quantityPer);
+                    resource.increaseQuantity(quantity * quantityPer);
                 }
 
+                resourceMap.put(resourceId, resource);
                 resources.put(resource.getImageId(), resource);
             }
         } else {
@@ -603,7 +605,15 @@ public class DataSource {
      */
 
     public boolean Delete(Queue queue) {
-        return database.delete(DBOpenHelper.TABLE_QUEUE, DBOpenHelper.COLUMN_TRACK_ENGRAM + "=" + queue.getEngramId(), null) > 0;
+        return queue != null && database.delete(DBOpenHelper.TABLE_QUEUE, DBOpenHelper.COLUMN_TRACK_ENGRAM + "=" + queue.getEngramId(), null) > 0;
+    }
+
+    public void Insert(Queue queue) {
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.COLUMN_QUEUE_QUANTITY, queue.getQuantity());
+        values.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, queue.getEngramId());
+
+        database.insert(DBOpenHelper.TABLE_QUEUE, null, values);
     }
 
     public void Insert(long engramId, int quantity) {

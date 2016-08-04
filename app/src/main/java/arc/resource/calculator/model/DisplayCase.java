@@ -185,14 +185,10 @@ public class DisplayCase {
             if (position >= categories.size()) {
                 position -= categories.size();
 
-                DisplayEngram engram = engrams.valueAt(position);
-
-                return engram.getId();
+                return engrams.valueAt(position).getId();
             }
         } else {
-            DisplayEngram engram = engrams.valueAt(position);
-
-            return engram.getId();
+            return engrams.valueAt(position).getId();
         }
 
         return 0;
@@ -285,9 +281,5 @@ public class DisplayCase {
     private void UpdateData() {
         engrams = getEngrams();
         categories = getCategories();
-    }
-
-    private void ResetConnection() {
-        dataSource.ResetConnection();
     }
 }

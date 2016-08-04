@@ -49,10 +49,18 @@ public class Queue {
 
     public void increaseQuantity(int amount) {
         this.quantity += amount;
+
+        if (this.quantity > CraftingQueue.MAX) {
+            this.quantity = CraftingQueue.MAX;
+        }
     }
 
     public void decreaseQuantity(int amount) {
-        this.quantity -= amount;
+        if (amount <= quantity) {
+            this.quantity -= amount;
+        } else {
+            this.quantity = 0;
+        }
     }
 
     @Override

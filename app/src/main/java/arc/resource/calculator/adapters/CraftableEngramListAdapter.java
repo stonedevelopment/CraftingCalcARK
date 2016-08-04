@@ -1,7 +1,7 @@
 package arc.resource.calculator.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.helpers.DisplayHelper;
-import arc.resource.calculator.model.CraftableEngram;
+import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.viewholders.EngramViewHolder;
 
 /**
@@ -29,12 +29,12 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
     private static final String LOGTAG = "CraftableList";
 
     private DisplayHelper displayHelper;
-    private SparseArray<CraftableEngram> engrams;
 
-    public CraftableEngramListAdapter(SparseArray<CraftableEngram> engrams) {
-        this.engrams = engrams;
+    private CraftingQueue craftingQueue;
 
+    public CraftableEngramListAdapter(Context context) {
         this.displayHelper = DisplayHelper.getInstance();
+        this.craftingQueue = CraftingQueue.getInstance(context);
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,29 +48,21 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         EngramViewHolder viewHolder = (EngramViewHolder) holder;
 
-        final CraftableEngram engram = engrams.valueAt(position);
-
         viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
         viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 
-        int imageId = engram.getImageId();
+        int imageId = craftingQueue.getEngramImageId(position);
+        String name = craftingQueue.getEngramName(position);
+        int quantity = craftingQueue.getEngramQuantity(position);
 
         viewHolder.getImage().setImageResource(imageId);
-        viewHolder.getNameText().setText(engram.getName());
-        viewHolder.getQuantityText().setText(String.format(Locale.US, "x%1$d", engram.getQuantity()));
+        viewHolder.getNameText().setText(name);
+        viewHolder.getQuantityText().setText(String.format(Locale.US, "x%1$d", quantity));
     }
 
     @Override
     public int getItemCount() {
-        return engrams.size();
-    }
-
-    public void setEngrams(SparseArray<CraftableEngram> engrams) {
-        this.engrams = engrams;
-    }
-
-    public CraftableEngram getEngram(int position) {
-        return engrams.valueAt(position);
+        return craftingQueue.getEngramItemCount();
     }
 
     public void Refresh() {

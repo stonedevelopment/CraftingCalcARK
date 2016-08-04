@@ -16,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
+import arc.resource.calculator.adapters.CraftableResourceListAdapter;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
-import arc.resource.calculator.adapters.ResourceListAdapter;
 import arc.resource.calculator.db.DBOpenHelper;
 import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DisplayCaseListAdapter displayCaseListAdapter;
     private CraftableEngramListAdapter craftableEngramListAdapter;
-    private ResourceListAdapter craftableResourceListAdapter;
+    private CraftableResourceListAdapter craftableResourceListAdapter;
 
     private CraftingQueue craftingQueue;
 
@@ -58,14 +58,12 @@ public class MainActivity extends AppCompatActivity {
         display.getMetrics(displayMetrics);
 
         DisplayHelper.createInstance(this, displayMetrics);
-//
-//        int columns = (int) (width / dimensions);
 
         final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
 
-        craftingQueue = new CraftingQueue(this); // TODO: Move CraftingQueue in its ListAdapter, same as DisplayCase
+        craftingQueue = CraftingQueue.getInstance(this); // TODO: Move CraftingQueue in its ListAdapter, same as DisplayCase
 
         RecyclerView.LayoutManager displayCaseLayoutManager =
                 new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
@@ -114,20 +112,20 @@ public class MainActivity extends AppCompatActivity {
                     new RecyclerTouchListener.ClickListener() {
                         @Override
                         public void onClick(View view, int position) {
-                            craftingQueue.increaseQuantity(craftableEngramListAdapter.getEngram(position).getId(), 1);
+                            craftingQueue.increaseQuantity(position, 1);
 
                             Refresh();
                         }
 
                         @Override
                         public void onLongClick(View view, int position) {
-                            craftingQueue.decreaseQuantity(craftableEngramListAdapter.getEngram(position).getId(), 1);
+                            craftingQueue.decreaseQuantity(position, 1);
 
                             Refresh();
                         }
                     });
 
-            craftableEngramListAdapter = new CraftableEngramListAdapter(craftingQueue.getEngrams());
+            craftableEngramListAdapter = new CraftableEngramListAdapter(this);
 
             craftingQueueEngramList.setLayoutManager(craftableEngramLayoutManager);
             craftingQueueEngramList.addOnItemTouchListener(craftingQueueTouchListener);
@@ -137,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager craftableResourceLayoutManager =
                 new LinearLayoutManager(this);
         if (craftingQueueResourceList != null) {
-            craftableResourceListAdapter = new ResourceListAdapter(craftingQueue.getResources());
+            craftableResourceListAdapter = new CraftableResourceListAdapter(this);
 
             craftingQueueResourceList.setLayoutManager(craftableResourceLayoutManager);
             craftingQueueResourceList.setAdapter(craftableResourceListAdapter);
@@ -243,12 +241,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Refresh() {
-        craftableEngramListAdapter.setEngrams(craftingQueue.getEngrams());
-        craftableResourceListAdapter.setResources(craftingQueue.getResources());
-
         craftableEngramListAdapter.Refresh();
         craftableResourceListAdapter.Refresh();
-
         displayCaseListAdapter.Refresh();
     }
 

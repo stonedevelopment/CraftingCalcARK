@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import arc.resource.calculator.adapters.ResourceListAdapter;
+import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.Showcase;
 
@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
     private long id;
     private Showcase showcase;
 
-    private ResourceListAdapter resourceListAdapter;
+    private ShowcaseResourceListAdapter resourceListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +91,7 @@ public class DetailActivity extends AppCompatActivity {
         descriptionText.setText(showcase.getDescription());
         categoryText.setText(showcase.getCategoryDescription());
 
-        resourceListAdapter = new ResourceListAdapter(showcase.getComposition());
+        resourceListAdapter = new ShowcaseResourceListAdapter(showcase.getComposition());
 
         quantityNumberPicker.setMinValue(MIN);
         quantityNumberPicker.setMaxValue(MAX);

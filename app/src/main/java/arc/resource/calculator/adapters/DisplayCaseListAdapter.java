@@ -36,7 +36,6 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     public DisplayCaseListAdapter(Context context) {
 //        this.context = context.getApplicationContext();
         this.displayHelper = DisplayHelper.getInstance();
-
         this.displayCase = new DisplayCase(context);
     }
 
@@ -50,12 +49,11 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DisplayCaseViewHolder viewHolder = (DisplayCaseViewHolder) holder;
+        viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
+        viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 
         int imageId = displayCase.getImageId(position);
         String name = displayCase.getName(position);
-
-        viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
-        viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 
         viewHolder.getImage().setImageResource(imageId);
         viewHolder.getNameText().setText(name);

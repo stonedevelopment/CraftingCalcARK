@@ -37,7 +37,7 @@ public class DisplayHelper {
         float dpWidth = width / density;
         float dimensions = (dpWidth / 5) - (dpPadding);
 
-        Helper.Log(LOGTAG, "density:" + density + " dpWidth:" + dpWidth + " dimensions:" + dimensions);
+//      Helper.Log(LOGTAG, "density:" + density + " dpWidth:" + dpWidth + " dimensions:" + dimensions);
         return dimensions;
     }
 
