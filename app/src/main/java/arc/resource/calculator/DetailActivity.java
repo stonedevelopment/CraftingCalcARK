@@ -91,7 +91,7 @@ public class DetailActivity extends AppCompatActivity {
         descriptionText.setText(showcase.getDescription());
         categoryText.setText(showcase.getCategoryDescription());
 
-        resourceListAdapter = new ResourceListAdapter(this, showcase.getComposition());
+        resourceListAdapter = new ResourceListAdapter(showcase.getComposition());
 
         quantityNumberPicker.setMinValue(MIN);
         quantityNumberPicker.setMaxValue(MAX);

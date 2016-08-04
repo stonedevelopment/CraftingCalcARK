@@ -1,8 +1,5 @@
 package arc.resource.calculator.adapters;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -12,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.model.CraftableEngram;
 import arc.resource.calculator.viewholders.EngramViewHolder;
 
@@ -28,14 +26,15 @@ import arc.resource.calculator.viewholders.EngramViewHolder;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class CraftableEngramListAdapter extends RecyclerView.Adapter {
-    private Context context;
-    private SparseArray<CraftableEngram> engrams;
-    private Resources resources;
+    private static final String LOGTAG = "CraftableList";
 
-    public CraftableEngramListAdapter(Context context, SparseArray<CraftableEngram> engrams) {
+    private DisplayHelper displayHelper;
+    private SparseArray<CraftableEngram> engrams;
+
+    public CraftableEngramListAdapter(SparseArray<CraftableEngram> engrams) {
         this.engrams = engrams;
-        this.context = context.getApplicationContext();
-        this.resources = context.getResources();
+
+        this.displayHelper = DisplayHelper.getInstance();
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,10 +50,12 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
 
         final CraftableEngram engram = engrams.valueAt(position);
 
-        int imageId = engram.getImageId();
-        Drawable drawable = resources.getDrawable(imageId, null);
+        viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
+        viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 
-        viewHolder.getImage().setImageDrawable(drawable);
+        int imageId = engram.getImageId();
+
+        viewHolder.getImage().setImageResource(imageId);
         viewHolder.getNameText().setText(engram.getName());
         viewHolder.getQuantityText().setText(String.format(Locale.US, "x%1$d", engram.getQuantity()));
     }

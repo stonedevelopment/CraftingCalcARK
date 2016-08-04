@@ -9,6 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.adapters.ResourceListAdapter;
 import arc.resource.calculator.db.DBOpenHelper;
+import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.initializers.CategoryInitializer;
@@ -50,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        display.getMetrics(displayMetrics);
+
+        DisplayHelper.createInstance(this, displayMetrics);
+//
+//        int columns = (int) (width / dimensions);
+
         final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
@@ -58,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager displayCaseLayoutManager =
                 new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
+
         if (displayCaseEngramList != null) {
             RecyclerTouchListener displayCaseTouchListener = new RecyclerTouchListener(this, displayCaseEngramList,
                     new RecyclerTouchListener.ClickListener() {
@@ -87,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
             displayCaseListAdapter = new DisplayCaseListAdapter(this);
 
+            // Adjust the height of the Display Case to fit 3 rows of content in view.
+            displayCaseEngramList.getLayoutParams().height = (int) (DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3);
+
             displayCaseEngramList.setLayoutManager(displayCaseLayoutManager);
             displayCaseEngramList.addOnItemTouchListener(displayCaseTouchListener);
             displayCaseEngramList.setAdapter(displayCaseListAdapter);
@@ -112,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-            craftableEngramListAdapter = new CraftableEngramListAdapter(this, craftingQueue.getEngrams());
+            craftableEngramListAdapter = new CraftableEngramListAdapter(craftingQueue.getEngrams());
 
             craftingQueueEngramList.setLayoutManager(craftableEngramLayoutManager);
             craftingQueueEngramList.addOnItemTouchListener(craftingQueueTouchListener);
@@ -122,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager craftableResourceLayoutManager =
                 new LinearLayoutManager(this);
         if (craftingQueueResourceList != null) {
-            craftableResourceListAdapter = new ResourceListAdapter(this, craftingQueue.getResources());
+            craftableResourceListAdapter = new ResourceListAdapter(craftingQueue.getResources());
 
             craftingQueueResourceList.setLayoutManager(craftableResourceLayoutManager);
             craftingQueueResourceList.setAdapter(craftableResourceListAdapter);

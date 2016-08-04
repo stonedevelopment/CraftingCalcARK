@@ -20,24 +20,24 @@ import arc.resource.calculator.R;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class ResourceViewHolder extends RecyclerView.ViewHolder {
-    private ImageView image;
+    private ImageView imageView;
     private TextView nameText;
     private TextView quantityText;
 
     public ResourceViewHolder(View itemView) {
         super(itemView);
 
-        this.image = (ImageView) itemView.findViewById(R.id.resource_list_imageView);
+        this.imageView = (ImageView) itemView.findViewById(R.id.resource_list_imageView);
         this.nameText = (TextView) itemView.findViewById(R.id.resource_list_nameText);
         this.quantityText = (TextView) itemView.findViewById(R.id.resource_list_quantityText);
     }
 
-    public ImageView getImage() {
-        return image;
+    public ImageView getImageView() {
+        return imageView;
     }
 
-    public void setImage(ImageView image) {
-        this.image = image;
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     public TextView getNameText() {

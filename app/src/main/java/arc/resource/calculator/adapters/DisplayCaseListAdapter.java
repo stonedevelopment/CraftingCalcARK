@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.model.DisplayCase;
 import arc.resource.calculator.viewholders.DisplayCaseViewHolder;
 
@@ -27,10 +28,16 @@ import arc.resource.calculator.viewholders.DisplayCaseViewHolder;
 public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     private static final String LOGTAG = "LISTADAPTER";
 
+    //    private Context context;
+    private DisplayHelper displayHelper;
+
     private DisplayCase displayCase;
 
     public DisplayCaseListAdapter(Context context) {
-        displayCase = new DisplayCase(context);
+//        this.context = context.getApplicationContext();
+        this.displayHelper = DisplayHelper.getInstance();
+
+        this.displayCase = new DisplayCase(context);
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,6 +53,9 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
 
         int imageId = displayCase.getImageId(position);
         String name = displayCase.getName(position);
+
+        viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
+        viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 
         viewHolder.getImage().setImageResource(imageId);
         viewHolder.getNameText().setText(name);

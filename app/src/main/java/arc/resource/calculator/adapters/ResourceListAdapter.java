@@ -1,8 +1,5 @@
 package arc.resource.calculator.adapters;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -28,15 +25,12 @@ import arc.resource.calculator.viewholders.ResourceViewHolder;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class ResourceListAdapter extends RecyclerView.Adapter {
-    private Context context;
+    private static final String LOGTAG = "ResourceList";
+
     private SparseArray<CraftableResource> resourceList;
-    private Resources resources;
 
-
-    public ResourceListAdapter(Context context, SparseArray<CraftableResource> resources) {
+    public ResourceListAdapter(SparseArray<CraftableResource> resources) {
         this.resourceList = resources;
-        this.context = context.getApplicationContext();
-        this.resources = context.getResources();
     }
 
     @Override
@@ -54,9 +48,8 @@ public class ResourceListAdapter extends RecyclerView.Adapter {
         CraftableResource resource = resourceList.valueAt(position);
 
         int imageId = resource.getImageId();
-        Drawable drawable = resources.getDrawable(imageId, null);
 
-        viewHolder.getImage().setImageDrawable(drawable);
+        viewHolder.getImageView().setImageResource(imageId);
         viewHolder.getNameText().setText(resource.getName());
         viewHolder.getQuantityText().setText(String.format(Locale.US, "%1$d", resource.getQuantity()));
     }
