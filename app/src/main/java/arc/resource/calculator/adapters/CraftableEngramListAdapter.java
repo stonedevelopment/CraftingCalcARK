@@ -68,4 +68,28 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
     public void Refresh() {
         this.notifyDataSetChanged();
     }
+
+    public void increaseQuantity(int position, int amount) {
+        craftingQueue.increaseQuantity(position, amount);
+    }
+
+    public void increaseQuantity(long engramId, int amount) {
+        craftingQueue.increaseQuantity(engramId, amount);
+    }
+
+    public void decreaseQuantity(int position, int amount) {
+        craftingQueue.decreaseQuantity(position, amount);
+    }
+
+    public void ClearQueue() {
+        craftingQueue.Clear();
+    }
+
+    public void Remove(long engramId) {
+        craftingQueue.Remove(engramId);
+    }
+
+    public void setQuantity(long engramId, int quantity) {
+        craftingQueue.setQuantity(engramId, quantity);
+    }
 }

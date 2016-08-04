@@ -21,7 +21,6 @@ import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.db.DBOpenHelper;
 import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.initializers.CategoryInitializer;
 import arc.resource.calculator.model.initializers.EngramInitializer;
 import arc.resource.calculator.model.initializers.ResourceInitializer;
@@ -46,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private CraftableEngramListAdapter craftableEngramListAdapter;
     private CraftableResourceListAdapter craftableResourceListAdapter;
 
-    private CraftingQueue craftingQueue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +57,8 @@ public class MainActivity extends AppCompatActivity {
         DisplayHelper.createInstance(this, displayMetrics);
 
         final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
-        RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
+        final RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
-
-        craftingQueue = CraftingQueue.getInstance(this); // TODO: Move CraftingQueue in its ListAdapter, same as DisplayCase
 
         RecyclerView.LayoutManager displayCaseLayoutManager =
                 new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
@@ -74,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view, int position) {
                             if (displayCaseListAdapter.isEngram(position)) {
-                                craftingQueue.increaseQuantity(displayCaseListAdapter.getEngramId(position), 1);
+                                craftableEngramListAdapter.increaseQuantity(displayCaseListAdapter.getEngramId(position), 1);
 
                                 Refresh();
                             } else {
@@ -112,14 +107,14 @@ public class MainActivity extends AppCompatActivity {
                     new RecyclerTouchListener.ClickListener() {
                         @Override
                         public void onClick(View view, int position) {
-                            craftingQueue.increaseQuantity(position, 1);
+                            craftableEngramListAdapter.increaseQuantity(position, 1);
 
                             Refresh();
                         }
 
                         @Override
                         public void onLongClick(View view, int position) {
-                            craftingQueue.decreaseQuantity(position, 1);
+                            craftableEngramListAdapter.decreaseQuantity(position, 1);
 
                             Refresh();
                         }
@@ -155,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_clearQueue:
-                craftingQueue.Clear();
+                craftableEngramListAdapter.ClearQueue();
 
                 Refresh();
                 break;
@@ -170,6 +165,8 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(true);
                     displayCaseListAdapter.setFiltered(false);
                 }
+
+                Refresh();
                 break;
 
             case R.id.action_show_changelog:
@@ -223,14 +220,14 @@ public class MainActivity extends AppCompatActivity {
                     case Helper.DETAIL_REMOVE:
                         boolean doRemove = extras.getBoolean(Helper.DETAIL_REMOVE);
                         if (doRemove) {
-                            craftingQueue.Remove(id);
+                            craftableEngramListAdapter.Remove(id);
                         }
                         break;
                     case Helper.DETAIL_SAVE:
                         int quantity = extras.getInt(Helper.DETAIL_QUANTITY);
 
                         if (quantity > 0) {
-                            craftingQueue.setQuantity(id, quantity);
+                            craftableEngramListAdapter.setQuantity(id, quantity);
                         }
                         break;
                 }

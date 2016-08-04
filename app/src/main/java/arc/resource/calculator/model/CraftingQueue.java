@@ -117,7 +117,7 @@ public class CraftingQueue {
             if (amount > 0) {
                 queue.decreaseQuantity(amount);
                 if (queue.getQuantity() > 0) {
-                    dataSource.Update(queue);
+                    Update(queue);
                 } else {
                     Remove(queue);
                 }
@@ -172,10 +172,14 @@ public class CraftingQueue {
 
     public void Insert(long engramId, int quantity) {
         dataSource.Insert(engramId, quantity);
+
+        UpdateData();
     }
 
     public void Clear() {
         dataSource.ClearQueue();
+
+        UpdateData();
     }
 
     /**
