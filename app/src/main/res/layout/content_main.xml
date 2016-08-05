@@ -1,21 +1,33 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity">
 
-    <include
-        layout="@layout/content_engram_list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/content_displaycase"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:scrollbars="vertical" />
 
-    <include
-        layout="@layout/content_crafting_queue"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/content_crafting_queue_engrams"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content_displaycase"
+        android:padding="5dp" />
 
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/content_crafting_queue_resources"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/content_crafting_queue_engrams"
+        android:padding="5dp"
+        android:scrollbars="vertical" />
+
+</RelativeLayout>
 

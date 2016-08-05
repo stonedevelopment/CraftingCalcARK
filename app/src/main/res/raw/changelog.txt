@@ -19,6 +19,11 @@
     </style>
   </head>
   <body>
+    $ 0.1.6a
+      % Version 0.1.6a
+      _ 08/05/2016
+      * Added landscape mode support. Detail activity is still a little... *eh*, but it'll do for now.
+
     $ 0.1.5a
       % Version 0.1.5a
       _ 08/04/2016

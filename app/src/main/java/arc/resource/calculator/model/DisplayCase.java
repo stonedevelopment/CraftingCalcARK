@@ -86,12 +86,6 @@ public class DisplayCase {
      * -- METHODS THAT RETURN TO VIEWHOLDER --
      */
 
-    public boolean inQueue(long engramId) {
-        Queue queue = dataSource.findSingleQueue(engramId);
-
-        return queue != null;
-    }
-
     public int getImageId(int position) {
         if (isFiltered) {
             if (position >= categories.size()) {
@@ -132,6 +126,15 @@ public class DisplayCase {
         }
     }
 
+    public String getName(long categoryId) {
+        if (categoryId > ROOT) {
+            Category category = getCategory(categoryId);
+            return "Go Back to " + category.getName();
+        } else {
+            return "Go Back";
+        }
+    }
+
     public int getQuantity(int position) {
         if (isFiltered) {
             if (position < categories.size()) {
@@ -148,15 +151,6 @@ public class DisplayCase {
         }
 
         return 0;
-    }
-
-    public String getName(long categoryId) {
-        if (categoryId > ROOT) {
-            Category category = getCategory(categoryId);
-            return "Go Back to " + category.getName();
-        } else {
-            return "Go Back";
-        }
     }
 
     public Context getContext() {
@@ -229,23 +223,16 @@ public class DisplayCase {
         }
     }
 
+    public void UpdateQueues() {
+        queues = getQueues();
+    }
+
     /**
      * -- PRIVATE UTILITY METHODS --
      */
 
     private Category getCategory(long categoryId) {
         return dataSource.findSingleCategory(categoryId);
-    }
-
-    private SparseArray<DisplayEngram> getEngrams() {
-        SparseArray<DisplayEngram> engrams;
-
-        if (isFiltered()) {
-            engrams = dataSource.findAllDisplayEngrams(getLevel());
-        } else {
-            engrams = dataSource.findAllDisplayEngrams();
-        }
-        return engrams;
     }
 
     private SparseArray<Category> getCategories() {
@@ -263,6 +250,17 @@ public class DisplayCase {
         }
 
         return categories;
+    }
+
+    private SparseArray<DisplayEngram> getEngrams() {
+        SparseArray<DisplayEngram> engrams;
+
+        if (isFiltered()) {
+            engrams = dataSource.findAllDisplayEngrams(getLevel());
+        } else {
+            engrams = dataSource.findAllDisplayEngrams();
+        }
+        return engrams;
     }
 
     private HashMap<Long, Queue> getQueues() {

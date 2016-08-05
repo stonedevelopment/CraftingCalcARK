@@ -100,6 +100,9 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         Refresh();
     }
 
+    public boolean isFiltered() {
+        return displayCase.isFiltered();
+    }
     public void setFiltered(boolean isFiltered) {
         displayCase.setIsFiltered(isFiltered);
     }
@@ -109,6 +112,8 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
      */
 
     public void Refresh() {
+        displayCase.UpdateQueues();
+
         this.notifyDataSetChanged();
     }
 }

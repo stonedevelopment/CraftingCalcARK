@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/engram_detail_container_top"
-    android:orientation="horizontal"
     android:padding="10dp"
     tools:showIn="@layout/activity_detail">
 
@@ -17,7 +15,7 @@
         android:layout_alignTop="@+id/engram_detail_resources"
         android:layout_marginRight="5dp"
         android:descendantFocusability="blocksDescendants"
-        android:solidColor="@color/text_color_quantity"
+        android:solidColor="@color/crafting_queue_background"
         android:theme="@style/AppTheme.Picker" />
 
     <android.support.v7.widget.RecyclerView

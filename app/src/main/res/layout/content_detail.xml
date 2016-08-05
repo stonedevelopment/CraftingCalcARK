@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DetailActivity">
+    tools:context=".DetailActivity"
+    android:background="@color/in_game_background">
 
     <include
         android:id="@+id/engram_detail_container_top"

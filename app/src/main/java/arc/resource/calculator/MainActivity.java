@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.View;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
@@ -54,14 +55,11 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         display.getMetrics(displayMetrics);
 
-        DisplayHelper.createInstance(this, displayMetrics);
+        DisplayHelper.createInstance(this, display);
 
         final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         final RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
         RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
-
-        RecyclerView.LayoutManager displayCaseLayoutManager =
-                new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
 
         if (displayCaseEngramList != null) {
             RecyclerTouchListener displayCaseTouchListener = new RecyclerTouchListener(this, displayCaseEngramList,
@@ -70,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
                             if (displayCaseListAdapter.isEngram(position)) {
                                 craftableEngramListAdapter.increaseQuantity(displayCaseListAdapter.getEngramId(position), 1);
-
-                                Refresh();
+                                RefreshViews();
                             } else {
                                 displayCaseListAdapter.changeCategory(position);
                             }
@@ -91,9 +88,26 @@ public class MainActivity extends AppCompatActivity {
                     });
 
             displayCaseListAdapter = new DisplayCaseListAdapter(this);
+            RecyclerView.LayoutManager displayCaseLayoutManager;
 
-            // Adjust the height of the Display Case to fit 3 rows of content in view.
-            displayCaseEngramList.getLayoutParams().height = (int) (DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3);
+            switch (display.getRotation()) {
+                case Surface.ROTATION_0:
+                case Surface.ROTATION_180:
+                    // Adjust the height of the Display Case to fit 3 rows of content in portrait view.
+                    displayCaseEngramList.getLayoutParams().height = (int) (DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3);
+
+                    displayCaseLayoutManager = new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
+                    break;
+
+                case Surface.ROTATION_270:
+                case Surface.ROTATION_90:
+                default:
+                    // Adjust the height of the Display Case to fit 3 rows of content in portrait view.
+                    displayCaseEngramList.getLayoutParams().height = (int) (DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3);
+
+                    displayCaseLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+                    break;
+            }
 
             displayCaseEngramList.setLayoutManager(displayCaseLayoutManager);
             displayCaseEngramList.addOnItemTouchListener(displayCaseTouchListener);
@@ -108,15 +122,13 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view, int position) {
                             craftableEngramListAdapter.increaseQuantity(position, 1);
-
-                            Refresh();
+                            RefreshViews();
                         }
 
                         @Override
                         public void onLongClick(View view, int position) {
                             craftableEngramListAdapter.decreaseQuantity(position, 1);
-
-                            Refresh();
+                            RefreshViews();
                         }
                     });
 
@@ -143,6 +155,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        MenuItem item = menu.findItem(R.id.action_show_all);
+
+        if (displayCaseListAdapter.isFiltered()) { //  Turning off Show All, filtering results.
+            item.setTitle(R.string.action_show_all);
+            item.setChecked(false);
+        } else {
+            item.setTitle(R.string.action_show_filtered);
+            item.setChecked(true);
+        }
+
         return true;
     }
 
@@ -151,8 +173,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_clearQueue:
                 craftableEngramListAdapter.ClearQueue();
-
-                Refresh();
+                RefreshViews();
                 break;
 
             case R.id.action_show_all:
@@ -166,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     displayCaseListAdapter.setFiltered(false);
                 }
 
-                Refresh();
+                RefreshViews();
                 break;
 
             case R.id.action_show_changelog:
@@ -232,12 +253,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                Refresh();
+                RefreshViews();
             }
         }
     }
 
-    private void Refresh() {
+    private void RefreshViews() {
         craftableEngramListAdapter.Refresh();
         craftableResourceListAdapter.Refresh();
         displayCaseListAdapter.Refresh();
