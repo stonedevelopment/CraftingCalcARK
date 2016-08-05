@@ -53,8 +53,6 @@
 
       ! Known issues
       * Stuttering image list when "Show All" is chosen. It still works, but is an annoyance.
-      * Sometimes, when adding Engrams in a row, the first 2 Engrams go dark (like they weren't added), but once you click again, they come back. It still does what it's supposed to do, behind the scenes, but the displays are off a bit.
-      * Resource IDs change when 'res' folder is modified, this requires a full database initialization.
 
       % Found a bug?
       ! Please send all bug reports to either my twitter account or email.

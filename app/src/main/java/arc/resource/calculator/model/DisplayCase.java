@@ -3,6 +3,8 @@ package arc.resource.calculator.model;
 import android.content.Context;
 import android.util.SparseArray;
 
+import java.util.HashMap;
+
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DataSource;
 import arc.resource.calculator.helpers.Helper;
@@ -30,6 +32,7 @@ public class DisplayCase {
 
     private SparseArray<DisplayEngram> engrams = null;
     private SparseArray<Category> categories = null;
+    private HashMap<Long, Queue> queues = null;
 
     private DataSource dataSource;
 
@@ -131,22 +134,17 @@ public class DisplayCase {
 
     public int getQuantity(int position) {
         if (isFiltered) {
-            if (position >= categories.size()) {
-                position -= categories.size();
-
-                DisplayEngram engram = engrams.valueAt(position);
-                Queue queue = dataSource.findSingleQueue(engram.getId());
-                if (queue != null) {
-                    return queue.getQuantity();
-                }
+            if (position < categories.size()) {
+                return 0;
             }
-        } else {
-            DisplayEngram engram = engrams.valueAt(position);
 
-            Queue queue = dataSource.findSingleQueue(engram.getId());
-            if (queue != null) {
-                return queue.getQuantity();
-            }
+            position -= categories.size();
+        }
+
+        Queue queue = queues.get(engrams.valueAt(position).getId());
+
+        if (queue != null) {
+            return queue.getQuantity();
         }
 
         return 0;
@@ -267,6 +265,10 @@ public class DisplayCase {
         return categories;
     }
 
+    private HashMap<Long, Queue> getQueues() {
+        return dataSource.findAllQueues();
+    }
+
     private void debugCategories(SparseArray<Category> categories) {
         Helper.Log(LOGTAG, "-- Displaying categories at level " + getLevel() + "..");
 
@@ -281,5 +283,6 @@ public class DisplayCase {
     private void UpdateData() {
         engrams = getEngrams();
         categories = getCategories();
+        queues = getQueues();
     }
 }
