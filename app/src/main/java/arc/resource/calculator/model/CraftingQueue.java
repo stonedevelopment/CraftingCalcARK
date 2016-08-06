@@ -86,7 +86,11 @@ public class CraftingQueue {
      */
 
     public void increaseQuantity(int position, int amount) {
-        increaseQuantity(engrams.valueAt(position).getId(), amount);
+        try {
+            increaseQuantity(engrams.valueAt(position).getId(), amount);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Position got out of control somehow, no need to stop app.
+        }
     }
 
     public void increaseQuantity(long engramId, int amount) {

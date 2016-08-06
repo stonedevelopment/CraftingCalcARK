@@ -42,6 +42,8 @@ import arc.resource.calculator.model.listeners.RecyclerTouchListener;
 public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "MAINACTIVITY";
 
+    // TODO: After landscape/portrait change, folder depth isn't saved, reverts back to root folder
+
     private DisplayCaseListAdapter displayCaseListAdapter;
     private CraftableEngramListAdapter craftableEngramListAdapter;
     private CraftableResourceListAdapter craftableResourceListAdapter;
@@ -249,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
 
                         if (quantity > 0) {
                             craftableEngramListAdapter.setQuantity(id, quantity);
+                        } else {
+                            craftableEngramListAdapter.Remove(id);
                         }
                         break;
                 }

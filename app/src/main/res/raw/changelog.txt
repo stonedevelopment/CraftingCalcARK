@@ -19,7 +19,12 @@
     </style>
   </head>
   <body>
-    $ 0.1.6a
+    $ 0.1.7a
+      % Version 0.1.7a
+      _ 08/06/2016
+      * Added support for Android OS versions down to KitKat.
+
+   $ 0.1.6a
       % Version 0.1.6a
       _ 08/05/2016
       * Added landscape mode support. Detail activity is still a little... *eh*, but it'll do for now.

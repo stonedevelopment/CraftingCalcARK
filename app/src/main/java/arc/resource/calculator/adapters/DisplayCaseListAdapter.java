@@ -1,6 +1,7 @@
 package arc.resource.calculator.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +34,10 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
 
     private DisplayCase displayCase;
 
+    private Context context;
+
     public DisplayCaseListAdapter(Context context) {
-//        this.context = context.getApplicationContext();
+        this.context = context.getApplicationContext();
         this.displayHelper = DisplayHelper.getInstance();
         this.displayCase = new DisplayCase(context);
     }
@@ -62,11 +65,11 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
             int quantity = displayCase.getQuantity(position);
 
             if (quantity > 0) {
-                viewHolder.getImage().setBackgroundColor(displayCase.getContext().getColor(R.color.crafting_queue_background));
+                viewHolder.getImage().setBackgroundColor(ContextCompat.getColor(context, R.color.crafting_queue_background));
                 viewHolder.getQuantityText().setText(String.format(Locale.US, "x%d", quantity));
                 viewHolder.getNameText().setSingleLine(true);
             } else {
-                viewHolder.getImage().setBackgroundColor(displayCase.getContext().getColor(R.color.displaycase_engram_background));
+                viewHolder.getImage().setBackgroundColor(ContextCompat.getColor(context, R.color.displaycase_engram_background));
                 viewHolder.getQuantityText().setText(null);
                 viewHolder.getNameText().setSingleLine(false);
             }
