@@ -17,6 +17,7 @@ package arc.resource.calculator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.content.ContextCompat;
 import android.view.ContextThemeWrapper;
 import android.webkit.WebView;
 
@@ -37,7 +38,7 @@ public class HelpDialog {
     protected AlertDialog getDialog() {
         WebView wv = new WebView(this.context);
 
-        wv.setBackgroundColor(context.getColor(R.color.in_game_background));
+        wv.setBackgroundColor(ContextCompat.getColor(this.context, R.color.in_game_background));
         wv.loadDataWithBaseURL(null, this.getLog(), "text/html", "UTF-8", null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this.context, android.R.style.Theme_Dialog));

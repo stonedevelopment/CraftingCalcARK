@@ -19,6 +19,11 @@
     </style>
   </head>
   <body>
+    $ 0.1.8a
+      % Version 0.1.8a
+      _ 08/06/2016
+      * Fixed a bug found by Google's Pre-Launch Report where HelpDialog needed to pull the compatible context for older versions.
+
     $ 0.1.7a
       % Version 0.1.7a
       _ 08/06/2016
