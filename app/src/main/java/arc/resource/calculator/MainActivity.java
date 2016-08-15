@@ -22,6 +22,7 @@ import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.db.DBOpenHelper;
 import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
+import arc.resource.calculator.helpers.PreferenceHelper;
 import arc.resource.calculator.model.initializers.CategoryInitializer;
 import arc.resource.calculator.model.initializers.EngramInitializer;
 import arc.resource.calculator.model.initializers.ResourceInitializer;
@@ -42,7 +43,7 @@ import arc.resource.calculator.model.listeners.RecyclerTouchListener;
 public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "MAINACTIVITY";
 
-    // TODO: After landscape/portrait change, folder depth isn't saved, reverts back to root folder
+    // TODO: When Crafting Queue is empty, allow DisplayCase to take over full screen.
 
     private DisplayCaseListAdapter displayCaseListAdapter;
     private CraftableEngramListAdapter craftableEngramListAdapter;
@@ -151,6 +152,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         createExtraViews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        PreferenceHelper.getInstance(this).setPreference(Helper.APP_LEVEL, displayCaseListAdapter.getLevel());
+        PreferenceHelper.getInstance(this).setPreference(Helper.APP_PARENT, displayCaseListAdapter.getParent());
     }
 
     @Override

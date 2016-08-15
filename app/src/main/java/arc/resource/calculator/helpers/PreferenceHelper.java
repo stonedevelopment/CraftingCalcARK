@@ -38,31 +38,15 @@ public class PreferenceHelper {
     }
 
     public String getStringPreference(String key) {
-        switch (key) {
-            case Helper.ENGRAM_VERSION:
-            case Helper.CATEGORY_VERSION:
-            case Helper.RESOURCE_VERSION:
-                String value = preferences.getString(key, null);
-
-                setPreference(key, preferences.getString(key, value));
-                return value;
-            default:
-                return null;
-        }
+        return preferences.getString(key, null);
     }
 
     public boolean getBooleanPreference(String key) {
-        boolean value;
+        return preferences.getBoolean(key, true);
+    }
 
-        switch (key) {
-            case Helper.FILTERED:
-                value = preferences.getBoolean(key, true);
-
-                setPreference(key, value);
-                return value;
-            default:
-                return false;
-        }
+    public long getLongPreference(String key) {
+        return preferences.getLong(key, 0);
     }
 
     public void setPreference(String key, int value) {
@@ -83,6 +67,13 @@ public class PreferenceHelper {
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public void setPreference(String key, long value) {
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putLong(key, value);
         editor.apply();
     }
 }

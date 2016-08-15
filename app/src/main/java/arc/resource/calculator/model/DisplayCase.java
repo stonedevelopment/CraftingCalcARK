@@ -40,8 +40,8 @@ public class DisplayCase {
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
         isFiltered = preferenceHelper.getBooleanPreference(Helper.FILTERED);
 
-        level = 0;
-        parent = 0;
+        level = preferenceHelper.getLongPreference(Helper.APP_LEVEL);
+        parent = preferenceHelper.getLongPreference(Helper.APP_PARENT);
 
         dataSource = DataSource.getInstance(context, LOGTAG);
 

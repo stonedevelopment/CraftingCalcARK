@@ -97,6 +97,14 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         return displayCase.isEngram(position);
     }
 
+    public long getLevel() {
+        return displayCase.getLevel();
+    }
+
+    public long getParent() {
+        return displayCase.getParent();
+    }
+
     public void changeCategory(int position) {
         displayCase.changeCategory(position);
 
@@ -106,6 +114,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     public boolean isFiltered() {
         return displayCase.isFiltered();
     }
+
     public void setFiltered(boolean isFiltered) {
         displayCase.setIsFiltered(isFiltered);
     }

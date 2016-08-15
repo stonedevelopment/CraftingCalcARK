@@ -25,9 +25,12 @@ public class Helper {
     public static final String DETAIL_RESULT_CODE = "DETAIL_RESULT_CODE";
     public static final String DETAIL_SAVE = "DETAIL_SAVE";
 
+    // Preference key constants
     public static final String ENGRAM_VERSION = "ENGRAM_VERSION";
     public static final String CATEGORY_VERSION = "CATEGORY_VERSION";
     public static final String RESOURCE_VERSION = "RESOURCE_VERSION";
+    public static final String APP_LEVEL = "APP_LEVEL";
+    public static final String APP_PARENT = "APP_PARENT";
 
     public static final String FILTERED = "FILTERED";
     public static final String CHANGELOG = "CHANGELOG";
