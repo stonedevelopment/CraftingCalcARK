@@ -19,6 +19,12 @@
     </style>
   </head>
   <body>
+    $ 0.1.9a
+      % Version 0.1.9a
+      _ 08/15/2016
+      * Fixed an annoyance where changes in orientation reverted the current category level back to its root level.
+      * Coming soon: Android Wear compatibilities! Imagine your resource list attached to your wrist!
+
     $ 0.1.8a
       % Version 0.1.8a
       _ 08/06/2016
