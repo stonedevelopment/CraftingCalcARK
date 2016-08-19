@@ -2,15 +2,18 @@
     <string name="app_name">A:RC</string>
     <string name="app_name_full">ARK:Resource Calculator</string>
 
-    <string name="action_show_all">Show All</string>
-    <string name="action_show_filtered">Show Filtered</string>
+    <string name="action_show_all">[All] Filtered</string>
+    <string name="action_show_filtered">All [Filtered]</string>
+    <string name="action_breakdown_resources_refined">[Refined] Raw</string>
+    <string name="action_breakdown_resources_raw">Refined [Raw]</string>
+
     <string name="action_clear_queue">Clear Crafting Queue</string>
-    <string name="action_breakdown_resources">Breakdown Resources</string>
+    <string name="action_about">About</string>
+    <string name="action_about_arc">About A:RC</string>
 
-    <string name="save_and_close_details">Save and Close</string>
-    <string name="label_engram_details">Engram Details</string>
-
-    <string name="details_button_text_remove">Remove From Queue</string>
+    <string name="detail_activity_title">Engram Details</string>
+    <string name="detail_activity_button_text_save_and_close">Save and Close</string>
+    <string name="detail_activity_button_text_remove_from_queue">Remove From Queue</string>
 
     <string name="helpdialog_full_title">How to Use This App</string>
     <string name="helpdialog_ok_button">Close Help</string>
@@ -20,5 +23,4 @@
     <string name="changelog_ok_button">OK</string>
     <string name="changelog_show_full">More…</string>
     <string name="background_color">black</string>
-    <string name="view_debug_info">View Infos</string>
 </resources>

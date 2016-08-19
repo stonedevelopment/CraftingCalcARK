@@ -176,20 +176,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem item = menu.findItem(R.id.action_show_all);
-
-        if (displayCaseListAdapter.isFiltered()) { //  Turning off Show All, filtering results.
-            item.setTitle(R.string.action_show_all);
-            item.setChecked(false);
-        } else {
-            item.setTitle(R.string.action_show_filtered);
-            item.setChecked(true);
+        if (!displayCaseListAdapter.isFiltered()) {
+            menu.findItem(R.id.action_show_all).setTitle(R.string.action_show_filtered);
         }
 
-        item = menu.findItem(R.id.action_breakdownResources);
-
         if (craftableResourceListAdapter.getBreakdownResources()) {
-            item.setChecked(true);
+            menu.findItem(R.id.action_breakdownResources).setTitle(R.string.action_breakdown_resources_raw);
         }
 
         return true;
@@ -205,20 +197,23 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_breakdownResources:
                 craftableResourceListAdapter.setBreakdownResources(!craftableResourceListAdapter.getBreakdownResources());
-                item.setChecked(craftableResourceListAdapter.getBreakdownResources());
+
+                if (craftableResourceListAdapter.getBreakdownResources()) {
+                    item.setTitle(R.string.action_breakdown_resources_raw);
+                } else {
+                    item.setTitle(R.string.action_breakdown_resources_refined);
+                }
 
                 RefreshViews();
                 break;
 
             case R.id.action_show_all:
-                if (item.isChecked()) { //  Turning off Show All, filtering results.
+                displayCaseListAdapter.setFiltered(!displayCaseListAdapter.isFiltered());
+
+                if (displayCaseListAdapter.isFiltered()) {
                     item.setTitle(R.string.action_show_all);
-                    item.setChecked(false);
-                    displayCaseListAdapter.setFiltered(true);
                 } else {
                     item.setTitle(R.string.action_show_filtered);
-                    item.setChecked(true);
-                    displayCaseListAdapter.setFiltered(false);
                 }
 
                 RefreshViews();
@@ -234,10 +229,10 @@ public class MainActivity extends AppCompatActivity {
                 helpDialog.getDialog().show();
                 break;
 
-            case R.id.action_view_debug_info:
+            case R.id.action_about:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-                builder.setTitle(getResources().getString(R.string.view_debug_info))
+                builder.setTitle(getResources().getString(R.string.action_about) + " " + getResources().getString(R.string.app_name_full))
                         .setIcon(R.drawable.wood_signs_wooden_sign)
                         .setNegativeButton("Close", new DialogInterface.OnClickListener() {
                             @Override
@@ -245,11 +240,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .setMessage(
-                                "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n\n" +
-                                        "Database Version: " + DBOpenHelper.getDatabaseVersion() + "\n\n" +
-                                        "Engram Version: " + EngramInitializer.VERSION + "\n" +
-                                        "Resource Version: " + ResourceInitializer.VERSION + "\n" +
-                                        "Category Version: " + CategoryInitializer.VERSION)
+                                "Developed by: Shane Stone/Stone Development\n" +
+                                        "Email: jaredstone1982@gmail.com/stonedevs@gmail.com\n" +
+                                        "Twitter: @MasterxOfxNone/@StoneDevs\n" +
+                                        "Steam/Xbox Live: MasterxOfxNone\n\n" +
+                                        getAppVersions())
                         .show();
                 break;
 
@@ -324,5 +319,13 @@ public class MainActivity extends AppCompatActivity {
         if (changeLog.firstRun()) {
             changeLog.getLogDialog().show();
         }
+    }
+
+    private String getAppVersions() {
+        return "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
+                "Database Version: " + DBOpenHelper.getDatabaseVersion() + "\n" +
+                "Engram Version: " + EngramInitializer.VERSION + " (" + EngramInitializer.getCount() + " Engrams)\n" +
+                "Resource Version: " + ResourceInitializer.VERSION + " (" + ResourceInitializer.getCount() + " Resources)\n" +
+                "Category Version: " + CategoryInitializer.VERSION + " (" + CategoryInitializer.getCount() + " Categories)";
     }
 }

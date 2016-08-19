@@ -19,11 +19,11 @@
         </activity>
         <activity
             android:name="arc.resource.calculator.MainActivity"
-            android:label="@string/app_name_full"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="arc.resource.calculator.DetailActivity"
-            android:label="@string/label_engram_details" />
+            android:label="@string/detail_activity_title" />
     </application>
 
 </manifest>

@@ -19,6 +19,13 @@
     </style>
   </head>
   <body>
+    $ 0.2.0a
+      % Version 0.2.0a
+      _ 08/18/2016
+      * Added 'Raw/Refined' setting, toggling this will breakdown the Resources that are also Engrams.
+      * Android Wear app might have to be a separate deal, compiler won't allow a minimum SDK of KitKat to compile and since I have users with that OS, I'll have to figure something else out later.
+      ! I hope you've enjoyed this app so far, adding a few more features then will be pushing this to production! Anything you think is missing or any bugs you're finding, please let me know! You can find contact info in the About dialog.
+
     $ 0.1.9a
       % Version 0.1.9a
       _ 08/15/2016
