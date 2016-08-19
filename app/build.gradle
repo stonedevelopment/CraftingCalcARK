@@ -15,8 +15,8 @@ android {
         applicationId 'arc.resource.calculator'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 20
-        versionName '0.2.0a'
+        versionCode 21
+        versionName '0.2.1a'
     }
     buildTypes {
         release {
