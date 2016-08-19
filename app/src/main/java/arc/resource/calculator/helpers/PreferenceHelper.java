@@ -41,8 +41,8 @@ public class PreferenceHelper {
         return preferences.getString(key, null);
     }
 
-    public boolean getBooleanPreference(String key) {
-        return preferences.getBoolean(key, true);
+    public boolean getBooleanPreference(String key, boolean def) {
+        return preferences.getBoolean(key, def);
     }
 
     public long getLongPreference(String key) {

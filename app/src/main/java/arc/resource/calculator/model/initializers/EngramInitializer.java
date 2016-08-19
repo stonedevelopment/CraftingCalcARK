@@ -21,7 +21,7 @@ import arc.resource.calculator.model.InitEngram;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class EngramInitializer {
-    public static final String VERSION = "245.1";
+    public static final String VERSION = "245.2";
 
     // -- ARMOR > CHITIN --
     public static final int CHITIN_BOOTS = R.drawable.armor_chitin_chitin_boots;
@@ -167,17 +167,6 @@ public class EngramInitializer {
 
     // -- OFFHAND --
     public static final int HANDCUFFS = R.drawable.offhand_handcuffs;
-
-    // -- REFINED --
-    public static final int ABSORBENT_SUBSTRATE = R.drawable.refined_absorbent_substrate;
-    public static final int BEER_LIQUID = R.drawable.refined_beer_liquid;
-    public static final int CEMENTING_PASTE = R.drawable.refined_cementing_paste;
-    public static final int CHARCOAL = R.drawable.refined_charcoal;
-    public static final int FERTILIZER = R.drawable.refined_fertilizer;
-    public static final int GASOLINE = R.drawable.refined_gasoline;
-    public static final int GUNPOWDER = R.drawable.refined_gunpowder;
-    public static final int METAL_INGOT = R.drawable.refined_metal_ingot;
-    public static final int SPARKPOWDER = R.drawable.refined_sparkpowder;
 
     // -- SADDLES --
     public static final int ANKYLO = R.drawable.saddles_ankylo;
@@ -1460,88 +1449,6 @@ public class EngramInitializer {
                     }},
                     CategoryInitializer.OFFHAND.ID));
 
-            // -- REFINED --
-            add(new InitEngram(
-                    ABSORBENT_SUBSTRATE,
-                    "Absorbent Substrate",
-                    "This sticky compound excels at absorbing other chemicals.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.BLACK_PEARL, 8);
-                        append(ResourceInitializer.SAP, 8);
-                        append(ResourceInitializer.OIL, 8);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    BEER_LIQUID,
-                    "Beer Liquid",
-                    "Put it in a glass jar to drink it!",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 40);
-                        append(ResourceInitializer.BERRIES, 50);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    CEMENTING_PASTE,
-                    "Cementing Paste",
-                    "Paste created at Mortar and Pestle.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 4);
-                        append(ResourceInitializer.STONE, 8);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    CHARCOAL,
-                    "Charcoal",
-                    "Created by burning wood.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 1);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    FERTILIZER,
-                    "Fertilizer",
-                    "A fertilizer high in nitrogen. Use this to help your crops grow.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 50);
-                        append(ResourceInitializer.FECES, 3);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    GASOLINE,
-                    "Gasoline",
-                    "An advanced fuel. Can only be used in machines designed to consume it.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.OIL, 3);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    GUNPOWDER,
-                    "Gunpowder",
-                    "A powerful propellant. Necessary for any firearm or explosive.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.SPARKPOWDER, 1);
-                        append(ResourceInitializer.CHARCOAL, 1);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    METAL_INGOT,
-                    "Metal Ingot",
-                    "Created by refining metal ore in a forge.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_ORE, 2);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-            add(new InitEngram(
-                    SPARKPOWDER,
-                    "Sparkpowder",
-                    "Created by grinding flint with stone in a Mortar and Pestle.",
-                    new SparseIntArray() {{
-                        append(ResourceInitializer.FLINT, 2);
-                        append(ResourceInitializer.STONE, 1);
-                    }},
-                    CategoryInitializer.REFINED.ID));
-
             // -- SADDLES --
             add(new InitEngram(
                     ANKYLO,
@@ -2626,6 +2533,7 @@ public class EngramInitializer {
     public static List<InitEngram> getEngrams() {
         engrams.addAll(StructureInitializer.getEngrams());
         engrams.addAll(KibbleInitializer.getEngrams());
+        engrams.addAll(RefinedInitializer.getEngrams());
 
         return engrams;
     }
@@ -2635,6 +2543,7 @@ public class EngramInitializer {
 
         size += StructureInitializer.getCount();
         size += KibbleInitializer.getCount();
+        size += RefinedInitializer.getCount();
 
         return size;
     }

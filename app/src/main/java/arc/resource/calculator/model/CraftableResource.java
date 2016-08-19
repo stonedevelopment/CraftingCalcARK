@@ -38,5 +38,10 @@ public class CraftableResource extends Resource {
     public void increaseQuantity(int amount) {
         this.quantity += amount;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", quantity=" + getQuantity();
+    }
 }
 

@@ -28,6 +28,12 @@ public class CraftableEngram extends Engram {
         this.quantity = 0;
     }
 
+    public CraftableEngram(Engram engram, int quantity) {
+        super(engram.getId(), engram.getName(), engram.getImageId());
+
+        this.quantity = quantity;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }

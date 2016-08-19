@@ -38,7 +38,7 @@ public class DisplayCase {
 
     public DisplayCase(Context context) {
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
-        isFiltered = preferenceHelper.getBooleanPreference(Helper.FILTERED);
+        isFiltered = preferenceHelper.getBooleanPreference(Helper.FILTERED, true);
 
         level = preferenceHelper.getLongPreference(Helper.APP_LEVEL);
         parent = preferenceHelper.getLongPreference(Helper.APP_PARENT);
@@ -195,7 +195,7 @@ public class DisplayCase {
 
             if (getLevel() == ROOT) {
                 // ROOT LEVEL
-                setLevel(category.getId());   // Grabbing ID is the best way to track its location. TODO: Get rid of level variable in category object?
+                setLevel(category.getId());   // Grabbing ID is the best way to track its location.
                 setParent(category.getParent());
             } else {
                 if (position == 0) {
@@ -211,7 +211,7 @@ public class DisplayCase {
                     }
                 } else {
                     // position is > 0, making this a normal category object
-                    setLevel(category.getId());   // Grabbing ID is the best way to track its location. TODO: Get rid of level variable in category object?
+                    setLevel(category.getId());   // Grabbing ID is the best way to track its location.
                     setParent(category.getParent());
                 }
             }

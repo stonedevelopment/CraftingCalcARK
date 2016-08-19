@@ -17,9 +17,8 @@ import arc.resource.calculator.R;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class ResourceInitializer {
-    public static final String VERSION = "245.0";
+    public static final String VERSION = "245.1";
 
-    // List of Constant values that contain Image Resource IDs
     public static final int WOOD = R.drawable.wood;
     public static final int STONE = R.drawable.stone;
     public static final int METAL_ORE = R.drawable.metal_ore;
@@ -27,20 +26,12 @@ public class ResourceInitializer {
     public static final int CHITIN = R.drawable.chitin;
     public static final int CHITIN_OR_KERATIN = R.drawable.chitin_or_keratin;
     public static final int FLINT = R.drawable.flint;
-    public static final int METAL_INGOT = R.drawable.refined_metal_ingot;
     public static final int THATCH = R.drawable.thatch;
     public static final int FIBER = R.drawable.fiber;
-    public static final int CHARCOAL = R.drawable.refined_charcoal;
     public static final int CRYSTAL = R.drawable.crystal;
-    public static final int SPARKPOWDER = R.drawable.refined_sparkpowder;
-    public static final int GUNPOWDER = R.drawable.refined_gunpowder;
     public static final int OBSIDIAN = R.drawable.obsidian;
-    public static final int CEMENTING_PASTE = R.drawable.refined_cementing_paste;
     public static final int OIL = R.drawable.oil;
     public static final int SILICA_PEARLS = R.drawable.silica_pearls;
-    public static final int GASOLINE = R.drawable.refined_gasoline;
-    public static final int ELECTRONICS = R.drawable.electronics;
-    public static final int POLYMER = R.drawable.polymer;
     public static final int KERATIN = R.drawable.keratin;
     public static final int RARE_FLOWER = R.drawable.rare_flower;
     public static final int RARE_MUSHROOM = R.drawable.rare_mushroom;
@@ -49,14 +40,8 @@ public class ResourceInitializer {
     public static final int ANGLER_GEL = R.drawable.angler_gel;
     public static final int BLACK_PEARL = R.drawable.black_pearl;
     public static final int WOOLLY_RHINO_HORN = R.drawable.woolly_rhino_horn;
-    public static final int ABSORBENT_SUBSTRATE = R.drawable.refined_absorbent_substrate;
     public static final int LEECH_BLOOD = R.drawable.leech_blood;
     public static final int SAP = R.drawable.sap;
-    public static final int FERTILIZER = R.drawable.refined_fertilizer;
-    public static final int STONE_ARROW = R.drawable.weapons_ammo_stone_arrow;
-    public static final int NARCOTIC = R.drawable.consumables_drugs_narcotic;
-    public static final int STIMULANT = R.drawable.consumables_drugs_stimulant;
-    public static final int SIMPLE_RIFLE_AMMO = R.drawable.weapons_ammo_simple_rifle_ammo;
     public static final int AMARBERRY = R.drawable.amarberry;
     public static final int AZULBERRY = R.drawable.azulberry;
     public static final int MEJOBERRY = R.drawable.mejoberry;
@@ -74,15 +59,32 @@ public class ResourceInitializer {
     public static final int COOKED_MEAT = R.drawable.cooked_meat;
     public static final int COOKED_FISH_MEAT = R.drawable.cooked_fish_meat;
     public static final int COOKED_PRIME_MEAT = R.drawable.cooked_prime_meat;
-    public static final int BEER_LIQUID = R.drawable.refined_beer_liquid;
     public static final int FECES = R.drawable.feces;
     public static final int BERRIES = R.drawable.berries;
-
     public static final int PRIME_MEAT_JERKY = R.drawable.prime_meat_jerky;
     public static final int COOKED_MEAT_JERKY = R.drawable.cooked_meat_jerky;
     public static final int COOKED_PRIME_MEAT_OR_PRIME_JERKY = R.drawable.cooked_prime_meat_or_prime_jerky;
     public static final int COOKED_MEAT_OR_JERKY = R.drawable.cooked_meat_or_jerky;
 
+    // -- REFINED
+    public static final int ABSORBENT_SUBSTRATE = RefinedInitializer.ABSORBENT_SUBSTRATE;
+    public static final int BEER_LIQUID = RefinedInitializer.BEER_LIQUID;
+    public static final int CEMENTING_PASTE = RefinedInitializer.CEMENTING_PASTE;
+    public static final int CHARCOAL = RefinedInitializer.CHARCOAL;
+    public static final int FERTILIZER = RefinedInitializer.FERTILIZER;
+    public static final int GASOLINE = RefinedInitializer.GASOLINE;
+    public static final int GUNPOWDER = RefinedInitializer.GUNPOWDER;
+    public static final int METAL_INGOT = RefinedInitializer.METAL_INGOT;
+    public static final int SPARKPOWDER = RefinedInitializer.SPARKPOWDER;
+
+    public static final int ELECTRONICS = EngramInitializer.ELECTRONICS;
+    public static final int POLYMER = EngramInitializer.POLYMER;
+    public static final int STONE_ARROW = EngramInitializer.STONE_ARROW;
+    public static final int NARCOTIC = EngramInitializer.NARCOTIC;
+    public static final int STIMULANT = EngramInitializer.STIMULANT;
+    public static final int SIMPLE_RIFLE_AMMO = EngramInitializer.SIMPLE_RIFLE_AMMO;
+
+    // -- DINO EGGS
     public static final int ANKYLO_EGG = R.drawable.ankylo_egg;
     public static final int ARANEO_EGG = R.drawable.araneo_egg;
     public static final int ARGENTAVIS_EGG = R.drawable.argentavis_egg;

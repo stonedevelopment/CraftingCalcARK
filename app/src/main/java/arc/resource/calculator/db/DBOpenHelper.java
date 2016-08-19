@@ -24,7 +24,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String LOGTAG = "DB_HELPER";
     private static final String DATABASE_NAME = "ark.db";
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
 
@@ -32,6 +32,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_RESOURCE_ID = "resourceid";
     public static final String COLUMN_RESOURCE_NAME = "resourcename";
     public static final String COLUMN_RESOURCE_IMAGE_ID = "resourceimage";
+
+    public static final String TABLE_COMPLEX_RESOURCE = "complexresource";
+    public static final String COLUMN_COMPLEX_RESOURCE_ID = "complexresourceid";
 
     public static final String TABLE_ENGRAM = "engram";
     public static final String COLUMN_ENGRAM_ID = "engramid";
@@ -91,6 +94,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     COLUMN_RESOURCE_IMAGE_ID + " INTEGER" +
                     ")";
 
+    private static final String TABLE_COMPLEX_RESOURCE_CREATE =
+            "CREATE TABLE " + TABLE_COMPLEX_RESOURCE + " (" +
+                    COLUMN_COMPLEX_RESOURCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_TRACK_RESOURCE + " INTEGER, " +
+                    COLUMN_TRACK_ENGRAM + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_TRACK_RESOURCE + ") REFERENCES " + TABLE_RESOURCE + " (" + COLUMN_RESOURCE_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_TRACK_ENGRAM + ") REFERENCES " + TABLE_ENGRAM + " (" + COLUMN_ENGRAM_ID + ")" +
+                    ")";
+
     private static final String TABLE_CATEGORY_CREATE =
             "CREATE TABLE " + TABLE_CATEGORY + " (" +
                     COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY, " +
@@ -137,6 +149,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         createTable(database, TABLE_COMPOSITION);
         createTable(database, TABLE_QUEUE);
         createTable(database, TABLE_RESOURCE);
+        createTable(database, TABLE_COMPLEX_RESOURCE);
         createTable(database, TABLE_CATEGORY);
 
         Helper.Log(LOGTAG, "-- All tables created.");
@@ -146,6 +159,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         Helper.Log(LOGTAG, "-- Dropping all tables.");
 
         dropTable(database, TABLE_CATEGORY);
+        dropTable(database, TABLE_COMPLEX_RESOURCE);
         dropTable(database, TABLE_RESOURCE);
         dropTable(database, TABLE_QUEUE);
         dropTable(database, TABLE_COMPOSITION);
@@ -166,6 +180,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         switch (table) {
             case TABLE_RESOURCE:
                 db.execSQL(TABLE_RESOURCE_CREATE);
+                break;
+
+            case TABLE_COMPLEX_RESOURCE:
+                db.execSQL(TABLE_COMPLEX_RESOURCE_CREATE);
                 break;
 
             case TABLE_ENGRAM:

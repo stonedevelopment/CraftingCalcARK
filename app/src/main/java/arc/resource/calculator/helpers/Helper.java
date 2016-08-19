@@ -1,6 +1,9 @@
 package arc.resource.calculator.helpers;
 
 import android.util.Log;
+import android.util.SparseArray;
+
+import arc.resource.calculator.model.CraftableResource;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -29,6 +32,7 @@ public class Helper {
     public static final String ENGRAM_VERSION = "ENGRAM_VERSION";
     public static final String CATEGORY_VERSION = "CATEGORY_VERSION";
     public static final String RESOURCE_VERSION = "RESOURCE_VERSION";
+    public static final String COMPLEX_RESOURCE_VERSION = "COMPLEX_RESOURCE_VERSION";
     public static final String APP_LEVEL = "APP_LEVEL";
     public static final String APP_PARENT = "APP_PARENT";
 
@@ -41,5 +45,12 @@ public class Helper {
 
     public static void Log(String tag, String tag2, String message) {
         if (isDebug) Log.d(tag, tag2 + "> " + message);
+    }
+
+    public static SparseArray<CraftableResource> CombineSparseArrays(SparseArray<CraftableResource> array1, SparseArray<CraftableResource> array2) {
+        for (int i = 0; i < array2.size(); i++) {
+            array1.put(array2.keyAt(i), array2.valueAt(i));
+        }
+        return array1;
     }
 }

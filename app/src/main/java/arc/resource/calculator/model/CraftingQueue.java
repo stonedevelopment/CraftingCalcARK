@@ -3,7 +3,12 @@ package arc.resource.calculator.model;
 import android.content.Context;
 import android.util.SparseArray;
 
+import java.util.HashMap;
+
 import arc.resource.calculator.db.DataSource;
+import arc.resource.calculator.helpers.Helper;
+import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.model.initializers.ComplexResourceInitializer;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -20,16 +25,23 @@ import arc.resource.calculator.db.DataSource;
 public class CraftingQueue {
     private static final String LOGTAG = "CRAFTING";
     public static final int MAX = 100;
+    public static final String STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES = "CRAFTING_QUEUE_HASCOMPLEXRESOURCES";
 
     private static CraftingQueue sInstance;
+
+    private boolean hasComplexResources;
 
     private SparseArray<CraftableResource> resources = null;
     private SparseArray<CraftableEngram> engrams = null;
 
     private DataSource dataSource;
 
+    private Context context;
+
     private CraftingQueue(Context context) {
-        dataSource = DataSource.getInstance(context, LOGTAG);
+        this.context = context;
+        this.dataSource = DataSource.getInstance(context, LOGTAG);
+        this.hasComplexResources = PreferenceHelper.getInstance(context).getBooleanPreference(STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES, false);
 
         UpdateData();
     }
@@ -41,9 +53,29 @@ public class CraftingQueue {
         return sInstance;
     }
 
-    /**
-     * -- PUBLIC ENGRAM METHODS --
-     */
+    // -- PUBLIC GETTER METHODS --
+
+    public boolean hasComplexResources() {
+        return hasComplexResources;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    // -- PUBLIC SETTER METHODS --
+
+    public void setHasComplexResources(boolean b) {
+        if (hasComplexResources != b) {
+            hasComplexResources = b;
+
+            PreferenceHelper.getInstance(getContext()).setPreference(STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES, b);
+
+            UpdateData();
+        }
+    }
+
+    // -- PUBLIC ENGRAM METHODS --
 
     public int getEngramItemCount() {
         return engrams.size();
@@ -61,9 +93,7 @@ public class CraftingQueue {
         return engrams.valueAt(position).getQuantity();
     }
 
-    /**
-     * -- PUBLIC RESOURCE METHODS --
-     */
+    // -- PUBLIC RESOURCE METHODS --
 
     public int getResourceItemCount() {
         return resources.size();
@@ -81,9 +111,7 @@ public class CraftingQueue {
         return resources.valueAt(position).getQuantity();
     }
 
-    /**
-     * -- PUBLIC QUANTITY METHODS --
-     */
+    // -- PUBLIC QUANTITY METHODS --
 
     public void increaseQuantity(int position, int amount) {
         try {
@@ -154,28 +182,26 @@ public class CraftingQueue {
         }
     }
 
-    /**
-     * -- PUBLIC DATABASE QUERY METHODS --
-     */
+    // -- PUBLIC DATABASE QUERY METHODS --
 
     public void Remove(long engramId) {
         Remove(dataSource.findSingleQueue(engramId));
     }
 
     public void Remove(Queue queue) {
-        dataSource.Delete(queue);
+        dataSource.DeleteFromQueue(queue);
 
         UpdateData();
     }
 
     public void Update(Queue queue) {
-        dataSource.Update(queue);
+        dataSource.UpdateQueue(queue);
 
         UpdateData();
     }
 
     public void Insert(long engramId, int quantity) {
-        dataSource.Insert(engramId, quantity);
+        dataSource.InsertToQueueWithEngramId(engramId, quantity);
 
         UpdateData();
     }
@@ -186,20 +212,76 @@ public class CraftingQueue {
         UpdateData();
     }
 
-    /**
-     * -- PRIVATE UTILITY METHODS --
-     */
+    // -- PRIVATE UTILITY METHODS --
+
+    private void setEngrams() {
+        this.engrams = dataSource.findAllCraftableEngrams();
+    }
 
     private SparseArray<CraftableEngram> getEngrams() {
-        return dataSource.findAllCraftableEngrams();
+        return engrams;
     }
 
     private SparseArray<CraftableResource> getResources() {
-        return dataSource.findAllCraftableResources();
+        if (!hasComplexResources()) return dataSource.findAllCraftableResourcesFromQueue();
+
+        SparseArray<CraftableResource> resources = new SparseArray<>();
+        HashMap<Long, CraftableResource> resourceMap = new HashMap<>();
+
+        SparseArray<CraftableEngram> engrams = getEngrams();
+        HashMap<Long, CraftableEngram> engramMap = new HashMap<>();
+
+        for (int i = 0; i < engrams.size(); i++) {
+            engramMap.put(engrams.valueAt(i).getId(), engrams.valueAt(i));
+        }
+
+        for (int i = 0; i < engrams.size(); i++) {
+            CraftableEngram engram = engrams.valueAt(i);
+
+            Helper.Log(LOGTAG, "-- Checking engram: " + engram.toString());
+
+            SparseArray<CraftableResource> composition = dataSource.findEngramResources(engram.getId());
+            for (int j = 0; j < composition.size(); j++) {
+                int imageId = composition.keyAt(j);
+                CraftableResource resource = composition.valueAt(j);
+
+                Helper.Log(LOGTAG, " > Checking resource: " + resource.toString());
+
+                if (ComplexResourceInitializer.getResources().get(imageId) == null) {
+                    resource.setQuantity(resource.getQuantity() * engram.getQuantity());
+
+                    if (resourceMap.containsKey(resource.getId())) {
+                        resources.get(imageId).increaseQuantity(resource.getQuantity());
+                    } else {
+                        resources.put(imageId, resource);
+                        resourceMap.put(resource.getId(), resource);
+                    }
+                } else {
+                    Engram engramFromResources = dataSource.findSingleEngramByImageId(imageId);
+                    int combinedQuantity = resource.getQuantity() * engram.getQuantity();
+
+                    Helper.Log(LOGTAG, " >>>> resource:" + resource.toString());
+                    Helper.Log(LOGTAG, " >>>> engramFromResources:" + engramFromResources.toString());
+                    Helper.Log(LOGTAG, " >>>> engram:" + engram.toString());
+
+                    if (engramMap.containsKey(engramFromResources.getId())) {
+                        CraftableEngram newEngram = engramMap.get(engramFromResources.getId());
+                        newEngram.increaseQuantity(combinedQuantity);
+                    } else {
+                        CraftableEngram newEngram = new CraftableEngram(engramFromResources, combinedQuantity);
+
+                        engrams.put(engrams.size(), newEngram);
+                        engramMap.put(newEngram.getId(), newEngram);
+                    }
+                }
+            }
+        }
+
+        return resources;
     }
 
     private void UpdateData() {
-        engrams = getEngrams();
+        setEngrams();
         resources = getResources();
     }
 }

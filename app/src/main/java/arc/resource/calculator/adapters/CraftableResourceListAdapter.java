@@ -59,6 +59,16 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
         return craftingQueue.getResourceItemCount();
     }
 
+    public void setBreakdownResources(boolean b) {
+        if (craftingQueue.hasComplexResources() != b) {
+            craftingQueue.setHasComplexResources(b);
+        }
+    }
+
+    public boolean getBreakdownResources() {
+        return craftingQueue.hasComplexResources();
+    }
+
     public void Refresh() {
         this.notifyDataSetChanged();
     }

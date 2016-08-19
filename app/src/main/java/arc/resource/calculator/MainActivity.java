@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         final RecyclerView displayCaseEngramList = (RecyclerView) findViewById(R.id.content_displaycase);
         final RecyclerView craftingQueueEngramList = (RecyclerView) findViewById(R.id.content_crafting_queue_engrams);
-        RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
+        final RecyclerView craftingQueueResourceList = (RecyclerView) findViewById(R.id.content_crafting_queue_resources);
 
         if (displayCaseEngramList != null) {
             RecyclerTouchListener displayCaseTouchListener = new RecyclerTouchListener(this, displayCaseEngramList,
@@ -96,31 +96,27 @@ public class MainActivity extends AppCompatActivity {
             switch (display.getRotation()) {
                 case Surface.ROTATION_0:
                 case Surface.ROTATION_180:
-                    // Adjust the height of the Display Case to fit 3 rows of content in portrait view.
-                    displayCaseEngramList.getLayoutParams().height = (int) (DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3);
-
                     displayCaseLayoutManager = new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
                     break;
 
                 case Surface.ROTATION_270:
                 case Surface.ROTATION_90:
                 default:
-                    // Adjust the height of the Display Case to fit 3 rows of content in portrait view.
-                    displayCaseEngramList.getLayoutParams().height = (int) (DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3);
-
                     displayCaseLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
                     break;
             }
 
-            displayCaseEngramList.setLayoutManager(displayCaseLayoutManager);
+            // Adjust the height of the Display Case to fit 3 rows of content in portrait view.
+            displayCaseEngramList.getLayoutParams().height = (int) (DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3);
             displayCaseEngramList.addOnItemTouchListener(displayCaseTouchListener);
+            displayCaseEngramList.setLayoutManager(displayCaseLayoutManager);
             displayCaseEngramList.setAdapter(displayCaseListAdapter);
         }
 
         RecyclerView.LayoutManager craftableEngramLayoutManager =
                 new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         if (craftingQueueEngramList != null) {
-            RecyclerTouchListener craftingQueueTouchListener = new RecyclerTouchListener(this, craftingQueueEngramList,
+            RecyclerTouchListener craftingQueueEngramTouchListener = new RecyclerTouchListener(this, craftingQueueEngramList,
                     new RecyclerTouchListener.ClickListener() {
                         @Override
                         public void onClick(View view, int position) {
@@ -138,16 +134,30 @@ public class MainActivity extends AppCompatActivity {
             craftableEngramListAdapter = new CraftableEngramListAdapter(this);
 
             craftingQueueEngramList.setLayoutManager(craftableEngramLayoutManager);
-            craftingQueueEngramList.addOnItemTouchListener(craftingQueueTouchListener);
+            craftingQueueEngramList.addOnItemTouchListener(craftingQueueEngramTouchListener);
             craftingQueueEngramList.setAdapter(craftableEngramListAdapter);
         }
 
         RecyclerView.LayoutManager craftableResourceLayoutManager =
                 new LinearLayoutManager(this);
         if (craftingQueueResourceList != null) {
+            RecyclerTouchListener craftingQueueResourceTouchListener = new RecyclerTouchListener(this, craftingQueueResourceList,
+                    new RecyclerTouchListener.ClickListener() {
+                        @Override
+                        public void onClick(View view, int position) {
+                            // Check database for matching resource id
+                            // If found, add to queue (with matching quantities), if already not in queue
+                        }
+
+                        @Override
+                        public void onLongClick(View view, int position) {
+                        }
+                    });
+
             craftableResourceListAdapter = new CraftableResourceListAdapter(this);
 
             craftingQueueResourceList.setLayoutManager(craftableResourceLayoutManager);
+//            craftingQueueResourceList.addOnItemTouchListener(craftingQueueResourceTouchListener);
             craftingQueueResourceList.setAdapter(craftableResourceListAdapter);
         }
 
@@ -176,6 +186,12 @@ public class MainActivity extends AppCompatActivity {
             item.setChecked(true);
         }
 
+        item = menu.findItem(R.id.action_breakdownResources);
+
+        if (craftableResourceListAdapter.getBreakdownResources()) {
+            item.setChecked(true);
+        }
+
         return true;
     }
 
@@ -184,6 +200,13 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_clearQueue:
                 craftableEngramListAdapter.ClearQueue();
+                RefreshViews();
+                break;
+
+            case R.id.action_breakdownResources:
+                craftableResourceListAdapter.setBreakdownResources(!craftableResourceListAdapter.getBreakdownResources());
+                item.setChecked(craftableResourceListAdapter.getBreakdownResources());
+
                 RefreshViews();
                 break;
 

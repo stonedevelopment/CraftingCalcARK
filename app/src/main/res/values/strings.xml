@@ -5,6 +5,7 @@
     <string name="action_show_all">Show All</string>
     <string name="action_show_filtered">Show Filtered</string>
     <string name="action_clear_queue">Clear Crafting Queue</string>
+    <string name="action_breakdown_resources">Breakdown Resources</string>
 
     <string name="save_and_close_details">Save and Close</string>
     <string name="label_engram_details">Engram Details</string>

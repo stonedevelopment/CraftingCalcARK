@@ -13,6 +13,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_breakdownResources"
+        android:checkable="true"
+        android:orderInCategory="100"
+        android:title="@string/action_breakdown_resources"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_clearQueue"
         android:orderInCategory="100"
         android:title="@string/action_clear_queue"

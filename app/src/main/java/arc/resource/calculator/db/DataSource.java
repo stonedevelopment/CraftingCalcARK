@@ -19,10 +19,12 @@ import arc.resource.calculator.model.CraftableEngram;
 import arc.resource.calculator.model.CraftableResource;
 import arc.resource.calculator.model.DetailEngram;
 import arc.resource.calculator.model.DisplayEngram;
+import arc.resource.calculator.model.Engram;
 import arc.resource.calculator.model.InitEngram;
 import arc.resource.calculator.model.Queue;
 import arc.resource.calculator.model.Resource;
 import arc.resource.calculator.model.initializers.CategoryInitializer;
+import arc.resource.calculator.model.initializers.ComplexResourceInitializer;
 import arc.resource.calculator.model.initializers.EngramInitializer;
 import arc.resource.calculator.model.initializers.ResourceInitializer;
 
@@ -66,9 +68,7 @@ public class DataSource {
         OpenDatabase();
     }
 
-    /**
-     * -- PUBLIC DATABASE QUERY METHODS --
-     */
+    // -- PUBLIC DATABASE QUERY METHODS --
 
     public SparseArray<CraftableEngram> findAllCraftableEngrams() {
         Cursor cursor = database.rawQuery(
@@ -86,10 +86,9 @@ public class DataSource {
         return cursorToCraftableEngrams(cursor);
     }
 
-    public SparseArray<CraftableResource> findAllCraftableResources() {
+    public SparseArray<CraftableResource> findAllCraftableResourcesFromQueue() {
         Cursor cursor = database.rawQuery(
-                "SELECT *" +
-                        " FROM " + DBOpenHelper.TABLE_COMPOSITION +
+                "SELECT * FROM " + DBOpenHelper.TABLE_COMPOSITION +
                         " INNER JOIN " + DBOpenHelper.TABLE_QUEUE +
                         " ON " + DBOpenHelper.TABLE_COMPOSITION + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM +
                         " = " + DBOpenHelper.TABLE_QUEUE + "." + DBOpenHelper.COLUMN_TRACK_ENGRAM,
@@ -99,11 +98,6 @@ public class DataSource {
         return cursorToResources(cursor);
     }
 
-    /**
-     * Pulls entire Engram table, alongside Category table, to fill ListView with proper objects
-     *
-     * @return Array of Engram objects suitable for a displayable, sortable view
-     */
     public SparseArray<DisplayEngram> findAllDisplayEngrams() {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_ENGRAM + " ORDER BY " + DBOpenHelper.COLUMN_ENGRAM_NAME,
@@ -170,6 +164,17 @@ public class DataSource {
         return cursorToCraftableResources(cursor);
     }
 
+    public Engram findSingleEngramByImageId(int imageId) {
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + DBOpenHelper.TABLE_ENGRAM +
+                        " WHERE " + DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID +
+                        " = " + imageId,
+                null, null
+        );
+
+        return cursorToSingleEngram(cursor);
+    }
+
     public DetailEngram findSingleDetailEngram(long engramId) {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_ENGRAM +
@@ -192,34 +197,22 @@ public class DataSource {
         return cursorToSingleQueue(cursor);
     }
 
-    /**
-     * Returns a Resource object, found by its imageId
-     *
-     * @param imageId int used to find requested Resource object
-     * @return Resource
-     */
-    private Resource findSingleResource(int imageId) {
+    private Resource findSingleResource(long resourceId) {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_RESOURCE +
-                        " WHERE " + DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID +
-                        " = " + imageId,
+                        " WHERE " + DBOpenHelper.COLUMN_RESOURCE_ID +
+                        " = " + resourceId,
                 null, null
         );
 
         return cursorToSingleResource(cursor);
     }
 
-    /**
-     * Returns a Resource object, found by its imageId
-     *
-     * @param resourceId long value used to find requested Resource object
-     * @return Resource
-     */
-    private Resource findSingleResource(long resourceId) {
+    private Resource findSingleResourceByImageId(int imageId) {
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + DBOpenHelper.TABLE_RESOURCE +
-                        " WHERE " + DBOpenHelper.COLUMN_RESOURCE_ID +
-                        " = " + resourceId,
+                        " WHERE " + DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID +
+                        " = " + imageId,
                 null, null
         );
 
@@ -236,9 +229,23 @@ public class DataSource {
         return cursorToSingleCategory(cursor);
     }
 
-    /**
-     * -- PARSE CURSOR TO OBJECT METHODS --
-     */
+    // -- CURSOR TO OBJECT METHODS --
+
+    public Engram cursorToSingleEngram(Cursor cursor) {
+        if (cursor.moveToFirst()) {
+            long id = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_NAME));
+            int imageId = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_ENGRAM_IMAGE_ID));
+
+            cursor.close();
+            return new Engram(id, name, imageId);
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToSingleEngram returns false. -!!");
+
+            cursor.close();
+            return null;
+        }
+    }
 
     public DetailEngram cursorToSingleDetailEngram(Cursor cursor) {
         if (cursor.moveToFirst()) {
@@ -315,12 +322,6 @@ public class DataSource {
         }
     }
 
-    /**
-     * Instantiates an array of CraftableEngrams to include their relevant quantities
-     *
-     * @param cursor Holds cursor data pulled from Database
-     * @return SparseArray of CraftableEngram objects
-     */
     public SparseArray<CraftableEngram> cursorToCraftableEngrams(Cursor cursor) {
         SparseArray<CraftableEngram> engrams = new SparseArray<>();
 
@@ -366,12 +367,6 @@ public class DataSource {
         return resources;
     }
 
-    /**
-     * Parse data pulled from cursor
-     *
-     * @param cursor Holds data pulled from Database Query
-     * @return Array of DisplayEngram objects
-     */
     public SparseArray<DisplayEngram> cursorToDisplayEngrams(Cursor cursor) {
         SparseArray<DisplayEngram> engrams = new SparseArray<>();
 
@@ -472,9 +467,39 @@ public class DataSource {
         return resources;
     }
 
-    /**
-     * -- PRIVATE UTILITY METHODS --
-     */
+    private SparseArray<CraftableResource> cursorToComplexResources(Cursor cursor) {
+        SparseArray<CraftableResource> resources = new SparseArray<>();
+        HashMap<Long, CraftableResource> resourceMap = new HashMap<>();
+
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                long compositionId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_COMPOSITION_ID));
+                int quantity = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY));
+                long engramId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_ENGRAM));
+                long resourceId = cursor.getLong(cursor.getColumnIndex(DBOpenHelper.COLUMN_TRACK_RESOURCE));
+                int quantityPer = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.COLUMN_QUEUE_QUANTITY));
+
+                CraftableResource resource = resourceMap.get(resourceId);
+
+                // If Resource does not exist in list, create new one, otherwise increase its quantity.
+                if (resource == null) {
+                    resource = new CraftableResource(findSingleResource(resourceId), quantity * quantityPer);
+                } else {
+                    resource.increaseQuantity(quantity * quantityPer);
+                }
+
+                resourceMap.put(resourceId, resource);
+                resources.put(resource.getImageId(), resource);
+            }
+        } else {
+            Helper.Log(LOGTAG, "!!- cursorToResources returns false. -!!");
+        }
+
+        cursor.close();
+        return resources;
+    }
+
+    // -- PRIVATE UTILITY METHODS --
 
     public Context getContext() {
         return this.context;
@@ -486,6 +511,8 @@ public class DataSource {
         switch (table) {
             case DBOpenHelper.TABLE_RESOURCE:
                 return preferenceHelper.getStringPreference(Helper.RESOURCE_VERSION);
+            case DBOpenHelper.TABLE_COMPLEX_RESOURCE:
+                return preferenceHelper.getStringPreference(Helper.COMPLEX_RESOURCE_VERSION);
             case DBOpenHelper.TABLE_CATEGORY:
                 return preferenceHelper.getStringPreference(Helper.CATEGORY_VERSION);
             case DBOpenHelper.TABLE_ENGRAM:
@@ -504,8 +531,13 @@ public class DataSource {
 
         int tableResourceCount = getCount(DBOpenHelper.TABLE_RESOURCE);
         String tableResourceVersion = getVersion(DBOpenHelper.TABLE_RESOURCE);
+
+        int tableComplexResourceCount = getCount(DBOpenHelper.TABLE_COMPLEX_RESOURCE);
+        String tableComplexResourceVersion = getVersion(DBOpenHelper.TABLE_COMPLEX_RESOURCE);
+
         int tableCategoryCount = getCount(DBOpenHelper.TABLE_CATEGORY);
         String tableCategoryVersion = getVersion(DBOpenHelper.TABLE_CATEGORY);
+
         int tableEngramCount = getCount(DBOpenHelper.TABLE_ENGRAM);
         String tableEngramVersion = getVersion(DBOpenHelper.TABLE_ENGRAM);
 
@@ -517,6 +549,14 @@ public class DataSource {
                     "[tableVersion:" + tableResourceVersion + "/initializerVersion:" + ResourceInitializer.VERSION + "]");
         }
 
+        Helper.Log(LOGTAG, "-> Testing Engram table..");
+        if ((tableEngramCount == 0) || (tableEngramCount != EngramInitializer.getCount()) || (!Objects.equals(tableEngramVersion, EngramInitializer.VERSION))) {
+            tables.add(DBOpenHelper.TABLE_ENGRAM);
+            Helper.Log(LOGTAG, "--> Engram table needs upgrade. " +
+                    "[tableCount:" + tableEngramCount + "/initializerCount:" + EngramInitializer.getCount() + "] " +
+                    "[tableVersion:" + tableEngramVersion + "/initializerVersion:" + EngramInitializer.VERSION + "]");
+        }
+
         Helper.Log(LOGTAG, "-> Testing Category table..");
         if ((tableCategoryCount == 0) || (tableCategoryCount != CategoryInitializer.getCount()) || (!Objects.equals(tableCategoryVersion, CategoryInitializer.VERSION))) {
             tables.add(DBOpenHelper.TABLE_CATEGORY);
@@ -525,12 +565,12 @@ public class DataSource {
                     "[tableVersion:" + tableCategoryVersion + "/initializerVersion:" + CategoryInitializer.VERSION + "]");
         }
 
-        Helper.Log(LOGTAG, "-> Testing Engram table..");
-        if ((tableEngramCount == 0) || (tableEngramCount != EngramInitializer.getCount()) || (!Objects.equals(tableEngramVersion, EngramInitializer.VERSION))) {
-            tables.add(DBOpenHelper.TABLE_ENGRAM);
-            Helper.Log(LOGTAG, "--> Engram table needs upgrade. " +
-                    "[tableCount:" + tableEngramCount + "/initializerCount:" + EngramInitializer.getCount() + "] " +
-                    "[tableVersion:" + tableEngramVersion + "/initializerVersion:" + EngramInitializer.VERSION + "]");
+        Helper.Log(LOGTAG, "-> Testing Complex Resource table..");
+        if ((tableComplexResourceCount == 0) || (tableComplexResourceCount != ComplexResourceInitializer.getCount()) || (!Objects.equals(tableComplexResourceVersion, ComplexResourceInitializer.VERSION))) {
+            tables.add(DBOpenHelper.TABLE_COMPLEX_RESOURCE);
+            Helper.Log(LOGTAG, "--> Complex Resource table needs upgrade. " +
+                    "[tableCount:" + tableComplexResourceCount + "/initializerCount:" + ComplexResourceInitializer.getCount() + "] " +
+                    "[tableVersion:" + tableComplexResourceVersion + "/initializerVersion:" + ComplexResourceInitializer.VERSION + "]");
         }
 
         CloseDatabase();
@@ -549,6 +589,10 @@ public class DataSource {
             switch (table) {
                 case DBOpenHelper.TABLE_RESOURCE:
                     InitializeResources();
+                    wasInitialized = true;
+                    break;
+                case DBOpenHelper.TABLE_COMPLEX_RESOURCE:
+                    InitializeComplexResources();
                     wasInitialized = true;
                     break;
                 case DBOpenHelper.TABLE_CATEGORY:
@@ -576,12 +620,11 @@ public class DataSource {
     public void ClearQueue() {
         Helper.Log(LOGTAG, "-> Clearing Crafting Queue..");
 
-        String table = DBOpenHelper.TABLE_QUEUE;
+        String tableQueue = DBOpenHelper.TABLE_QUEUE;
 
-        // FIXME
-        DeleteTableData(table);
-        DropTable(table);
-        CreateTable(table);
+        DeleteTableData(tableQueue);
+        DropTable(tableQueue);
+        CreateTable(tableQueue);
 
         Helper.Log(LOGTAG, "-> Crafting Queue cleared.");
     }
@@ -600,15 +643,13 @@ public class DataSource {
         return count;
     }
 
-    /**
-     * -- QUEUE ADDING/REMOVING METHODS --
-     */
+    // -- CONTROL METHODS --
 
-    public boolean Delete(Queue queue) {
+    public boolean DeleteFromQueue(Queue queue) {
         return queue != null && database.delete(DBOpenHelper.TABLE_QUEUE, DBOpenHelper.COLUMN_TRACK_ENGRAM + "=" + queue.getEngramId(), null) > 0;
     }
 
-    public void Insert(Queue queue) {
+    public void InsertToQueue(Queue queue) {
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.COLUMN_QUEUE_QUANTITY, queue.getQuantity());
         values.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, queue.getEngramId());
@@ -616,7 +657,7 @@ public class DataSource {
         database.insert(DBOpenHelper.TABLE_QUEUE, null, values);
     }
 
-    public void Insert(long engramId, int quantity) {
+    public void InsertToQueueWithEngramId(long engramId, int quantity) {
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.COLUMN_QUEUE_QUANTITY, quantity);
         values.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engramId);
@@ -624,13 +665,7 @@ public class DataSource {
         database.insert(DBOpenHelper.TABLE_QUEUE, null, values);
     }
 
-    /**
-     * Inserts resource data into data, TODO used strictly for initializing
-     *
-     * @param imageId Image Resource ID of resource to insert
-     * @param name    Name of resource, used for displaying its contents in a list
-     */
-    private void Insert(int imageId, String name) {
+    private void InsertResource(int imageId, String name) {
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.COLUMN_RESOURCE_IMAGE_ID, imageId);
         values.put(DBOpenHelper.COLUMN_RESOURCE_NAME, name);
@@ -640,7 +675,17 @@ public class DataSource {
         Helper.Log(LOGTAG, "-> Resource (" + name + ") inserted at row " + id);
     }
 
-    private void Insert(Category category) {
+    private void InsertComplexResource(Resource resource, long engramId) {
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.COLUMN_TRACK_RESOURCE, resource.getId());
+        values.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engramId);
+
+        long id = database.insert(DBOpenHelper.TABLE_COMPLEX_RESOURCE, null, values);
+
+        Helper.Log(LOGTAG, "-> Complex Resource (" + resource.getName() + ") inserted at row " + id);
+    }
+
+    private void InsertCategory(Category category) {
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.COLUMN_CATEGORY_ID, category.getId());
         values.put(DBOpenHelper.COLUMN_CATEGORY_LEVEL, category.getLevel());
@@ -652,12 +697,7 @@ public class DataSource {
         Helper.Log(LOGTAG, "-> Category (" + category.getName() + ") inserted at row " + category.getId());
     }
 
-    /**
-     * Inserts an InitEngram object into database, TODO used strictly for initializing
-     *
-     * @param engram InitEngram object that holds all data needed for initialization
-     */
-    private void Insert(InitEngram engram) {
+    private void InsertEngramByInitEngram(InitEngram engram) {
         ContentValues engramValues = new ContentValues();
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_NAME, engram.getName());
         engramValues.put(DBOpenHelper.COLUMN_ENGRAM_DESCRIPTION, engram.getDescription());
@@ -668,16 +708,23 @@ public class DataSource {
 
         Helper.Log(LOGTAG, "-> Engram (" + engram.getName() + ") inserted at row " + engram.getId());
 
+        InsertCompositionByInitEngram(engram);
+    }
+
+    private void InsertCompositionByInitEngram(InitEngram engram) {
         for (int i = 0, size = engram.getCompositionIDs().size(); i < size; i++) {
-            Resource resource = findSingleResource(engram.getCompositionIDs().keyAt(i));
+            int imageId = engram.getCompositionIDs().keyAt(i);
+            int quantity = engram.getCompositionIDs().valueAt(i);
+
+            Resource resource = findSingleResourceByImageId(imageId);
 
             if (resource != null) {
-                ContentValues compositionValues = new ContentValues();
-                compositionValues.put(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY, engram.getCompositionIDs().valueAt(i));
-                compositionValues.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
-                compositionValues.put(DBOpenHelper.COLUMN_TRACK_RESOURCE, resource.getId());
+                ContentValues values = new ContentValues();
+                values.put(DBOpenHelper.COLUMN_COMPOSITION_QUANTITY, quantity);
+                values.put(DBOpenHelper.COLUMN_TRACK_ENGRAM, engram.getId());
+                values.put(DBOpenHelper.COLUMN_TRACK_RESOURCE, resource.getId());
 
-                long compositionId = database.insert(DBOpenHelper.TABLE_COMPOSITION, null, compositionValues);
+                long compositionId = database.insert(DBOpenHelper.TABLE_COMPOSITION, null, values);
 
                 Helper.Log(LOGTAG, "--> Composition Resource (" + resource.getName() + "/" + resource.getId() +
                         " x" + engram.getCompositionIDs().valueAt(i) +
@@ -689,7 +736,7 @@ public class DataSource {
         }
     }
 
-    public void Update(Queue queue) {
+    public void UpdateQueue(Queue queue) {
         Cursor cursor = database.rawQuery(
                 "INSERT OR REPLACE INTO " + DBOpenHelper.TABLE_QUEUE +
                         " (" + DBOpenHelper.COLUMN_QUEUE_ID +
@@ -712,9 +759,7 @@ public class DataSource {
         cursor.close();
     }
 
-    /**
-     * -- DATABASE SYSTEM METHODS --
-     */
+    // -- DATABASE SYSTEM METHODS --
 
     private void DeleteTableData(String table) {
         int rows = database.delete(table, "1", null);
@@ -749,14 +794,13 @@ public class DataSource {
         for (Category category : categories) {
             OpenDatabase();
 
-            Insert(category);
+            InsertCategory(category);
 
             CloseDatabase();
         }
 
         // Save version persistently, future debugging helper
-        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
-        preferenceHelper.setPreference(Helper.CATEGORY_VERSION, CategoryInitializer.VERSION);
+        PreferenceHelper.getInstance(context).setPreference(Helper.CATEGORY_VERSION, CategoryInitializer.VERSION);
 
         Helper.Log(LOGTAG, "** Category initialization completed.");
     }
@@ -773,16 +817,50 @@ public class DataSource {
 
             OpenDatabase();
 
-            Insert(imageId, name);
+            InsertResource(imageId, name);
 
             CloseDatabase();
         }
 
         // Save version persistently, future debugging helper
-        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
-        preferenceHelper.setPreference(Helper.RESOURCE_VERSION, ResourceInitializer.VERSION);
+        PreferenceHelper.getInstance(context).setPreference(Helper.RESOURCE_VERSION, ResourceInitializer.VERSION);
 
         Helper.Log(LOGTAG, "** Resource initialization completed.");
+    }
+
+    private void InitializeComplexResources() {
+        Helper.Log(LOGTAG, "** Initializing Complex Resources..");
+
+        ResetTable(DBOpenHelper.TABLE_COMPLEX_RESOURCE);
+
+        SparseArray<String> resources = ComplexResourceInitializer.getResources();
+        for (int i = 0; i < resources.size(); i++) {
+            int imageId = resources.keyAt(i);
+            String name = resources.valueAt(i);
+
+            OpenDatabase();
+
+            Resource resource = findSingleResourceByImageId(imageId);
+            Engram engram = findSingleEngramByImageId(imageId);
+
+            if (engram != null && resource != null) {
+                InsertComplexResource(resource, engram.getId());
+            } else {
+                if (engram == null) {
+                    Helper.Log(LOGTAG, "InitializeComplexResources() engram is null, imageId:" + resource.getImageId() + " name:" + resource.getName());
+                }
+                if (resource == null) {
+                    Helper.Log(LOGTAG, "InitializeComplexResources() resource is null, imageId:" + engram.getImageId() + " name:" + engram.getName());
+                }
+            }
+
+            CloseDatabase();
+        }
+
+        // Save version persistently, future debugging helper
+        PreferenceHelper.getInstance(getContext()).setPreference(Helper.COMPLEX_RESOURCE_VERSION, ComplexResourceInitializer.VERSION);
+
+        Helper.Log(LOGTAG, "** Complex Resource initialization completed.");
     }
 
     private void InitializeEngrams() {
@@ -794,14 +872,13 @@ public class DataSource {
         for (InitEngram engram : engrams) {
             OpenDatabase();
 
-            Insert(engram);
+            InsertEngramByInitEngram(engram);
 
             CloseDatabase();
         }
 
         // Save version persistently, future debugging helper
-        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
-        preferenceHelper.setPreference(Helper.ENGRAM_VERSION, EngramInitializer.VERSION);
+        PreferenceHelper.getInstance(context).setPreference(Helper.ENGRAM_VERSION, EngramInitializer.VERSION);
 
         Helper.Log(LOGTAG, "** Engram initialization completed.");
     }

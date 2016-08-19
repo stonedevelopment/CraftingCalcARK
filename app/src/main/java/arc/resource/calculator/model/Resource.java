@@ -50,5 +50,10 @@ public class Resource {
     public void setId(long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "id=" + id + ", name=" + name + ", imageId=" + imageId;
+    }
 }
 
