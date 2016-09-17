@@ -22,12 +22,12 @@ public class CategoryInitializer {
 
     public static class MISC {
 
-        public static final long ID = 1;
+        public static final long ID = 100;
     }
 
     public static class STRUCTURES {
 
-        public static final long ID = 2;
+        public static final long ID = 200;
         public static final long THATCH = 201;
 
         public static class WOOD {
@@ -86,7 +86,7 @@ public class CategoryInitializer {
 
     public static class WEAPONS {
 
-        public static final long ID = 3;
+        public static final long ID = 300;
 
         public static class PRIMITIVE {
 
@@ -107,7 +107,7 @@ public class CategoryInitializer {
 
     public static class ARMOR {
 
-        public static final long ID = 4;
+        public static final long ID = 400;
         public static final long CLOTH = 401;
         public static final long SHIELDS = 402;
         public static final long HIDE = 403;
@@ -122,49 +122,49 @@ public class CategoryInitializer {
 
     public static class SADDLES {
 
-        public static final long ID = 5;
+        public static final long ID = 500;
     }
 
     public static class NAVIGATION {
 
-        public static final long ID = 6;
+        public static final long ID = 600;
     }
 
     public static class COMMUNICATION {
 
-        public static final long ID = 7;
+        public static final long ID = 700;
     }
 
     public static class OFFHAND {
 
-        public static final long ID = 8;
+        public static final long ID = 800;
     }
 
     public static class COMPOSITES {
 
-        public static final long ID = 9;
+        public static final long ID = 900;
     }
 
     public static class CONSUMABLES {
 
-        public static final long ID = 10;
+        public static final long ID = 1000;
         public static final long DRUGS = 1001;
         public static final long FOOD = 1002;
     }
 
     public static class DYES {
 
-        public static final long ID = 11;
+        public static final long ID = 1100;
     }
 
     public static class KIBBLE {
 
-        public static final long ID = 12;
+        public static final long ID = 1200;
     }
 
     public static class REFINED {
 
-        public static final long ID = 13;
+        public static final long ID = 1300;
     }
 
     private static List<Category> categories = new ArrayList<Category>() {
@@ -185,72 +185,72 @@ public class CategoryInitializer {
             add(new Category(REFINED.ID, "Refined"));
 
             // -- LEVEL 1 > STRUCTURES
-            add(new Category(1, STRUCTURES.THATCH, "Thatch", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.WOOD.ID, "Wood", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.STONE, "Stone", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.COOKING, "Cooking", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.BEDS, "Beds", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.CRAFTING, "Crafting", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.MISC, "Misc", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.FURNITURE.ID, "Furniture", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.FARMING, "Farming", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.PIPES.ID, "Pipes", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.FRIDGES, "Fridges", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.METAL.ID, "Metal", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.DEFENSES, "Defenses", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.GREENHOUSE, "Greenhouse", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.ELECTRICAL.ID, "Electrical", STRUCTURES.ID));
-            add(new Category(1, STRUCTURES.ELECTRIC, "Electric", STRUCTURES.ID));
+            add( new Category( STRUCTURES.THATCH, "Thatch", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.WOOD.ID, "Wood", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.STONE, "Stone", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.COOKING, "Cooking", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.BEDS, "Beds", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.CRAFTING, "Crafting", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.MISC, "Misc", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.FURNITURE.ID, "Furniture", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.FARMING, "Farming", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.PIPES.ID, "Pipes", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.FRIDGES, "Fridges", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.METAL.ID, "Metal", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.DEFENSES, "Defenses", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.GREENHOUSE, "Greenhouse", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.ELECTRICAL.ID, "Electrical", STRUCTURES.ID ) );
+            add( new Category( STRUCTURES.ELECTRIC, "Electric", STRUCTURES.ID ) );
 
             // -- LEVEL 1 > WEAPONS
-            add(new Category(1, WEAPONS.PRIMITIVE.ID, "Primitive", WEAPONS.ID));
-            add(new Category(1, WEAPONS.AMMO, "Ammo", WEAPONS.ID));
-            add(new Category(1, WEAPONS.TRIPWIRES, "Tripwires", WEAPONS.ID));
-            add(new Category(1, WEAPONS.EXPLOSIVES, "Explosives", WEAPONS.ID));
-            add(new Category(1, WEAPONS.ATTACHMENTS, "Attachments", WEAPONS.ID));
-            add(new Category(1, WEAPONS.FIREARMS, "Firearms", WEAPONS.ID));
-            add(new Category(1, WEAPONS.MELEE, "Melee", WEAPONS.ID));
-            add(new Category(1, WEAPONS.RANGED, "Ranged", WEAPONS.ID));
+            add( new Category( WEAPONS.PRIMITIVE.ID, "Primitive", WEAPONS.ID ) );
+            add( new Category( WEAPONS.AMMO, "Ammo", WEAPONS.ID ) );
+            add( new Category( WEAPONS.TRIPWIRES, "Tripwires", WEAPONS.ID ) );
+            add( new Category( WEAPONS.EXPLOSIVES, "Explosives", WEAPONS.ID ) );
+            add( new Category( WEAPONS.ATTACHMENTS, "Attachments", WEAPONS.ID ) );
+            add( new Category( WEAPONS.FIREARMS, "Firearms", WEAPONS.ID ) );
+            add( new Category( WEAPONS.MELEE, "Melee", WEAPONS.ID ) );
+            add( new Category( WEAPONS.RANGED, "Ranged", WEAPONS.ID ) );
 
             // -- LEVEL 1 > ARMOR
-            add(new Category(1, ARMOR.CLOTH, "Cloth", ARMOR.ID));
-            add(new Category(1, ARMOR.SHIELDS, "Shields", ARMOR.ID));
-            add(new Category(1, ARMOR.HIDE, "Hide", ARMOR.ID));
-            add(new Category(1, ARMOR.GHILLIE, "Ghillie", ARMOR.ID));
-            add(new Category(1, ARMOR.CHITIN, "Chitin", ARMOR.ID));
-            add(new Category(1, ARMOR.FUR, "Fur", ARMOR.ID));
-            add(new Category(1, ARMOR.METAL, "Metal", ARMOR.ID));
-            add(new Category(1, ARMOR.SCUBA, "SCUBA", ARMOR.ID));
-            add(new Category(1, ARMOR.RIOT, "Riot", ARMOR.ID));
-            add(new Category(1, ARMOR.MISC, "Misc", ARMOR.ID));
+            add( new Category( ARMOR.CLOTH, "Cloth", ARMOR.ID ) );
+            add( new Category( ARMOR.SHIELDS, "Shields", ARMOR.ID ) );
+            add( new Category( ARMOR.HIDE, "Hide", ARMOR.ID ) );
+            add( new Category( ARMOR.GHILLIE, "Ghillie", ARMOR.ID ) );
+            add( new Category( ARMOR.CHITIN, "Chitin", ARMOR.ID ) );
+            add( new Category( ARMOR.FUR, "Fur", ARMOR.ID ) );
+            add( new Category( ARMOR.METAL, "Metal", ARMOR.ID ) );
+            add( new Category( ARMOR.SCUBA, "SCUBA", ARMOR.ID ) );
+            add( new Category( ARMOR.RIOT, "Riot", ARMOR.ID ) );
+            add( new Category( ARMOR.MISC, "Misc", ARMOR.ID ) );
 
             // -- LEVEL 1 > CONSUMABLES
-            add(new Category(1, CONSUMABLES.DRUGS, "Drugs", CONSUMABLES.ID));
-            add(new Category(1, CONSUMABLES.FOOD, "Food", CONSUMABLES.ID));
+            add( new Category( CONSUMABLES.DRUGS, "Drugs", CONSUMABLES.ID ) );
+            add( new Category( CONSUMABLES.FOOD, "Food", CONSUMABLES.ID ) );
 
             // -- LEVEL 2 > STRUCTURES > WOOD
-            add(new Category(2, STRUCTURES.WOOD.SIGNS, "Signs", STRUCTURES.WOOD.ID));
-            add(new Category(2, STRUCTURES.WOOD.STORAGE, "Storage", STRUCTURES.WOOD.ID));
+            add( new Category( STRUCTURES.WOOD.SIGNS, "Signs", STRUCTURES.WOOD.ID ) );
+            add( new Category( STRUCTURES.WOOD.STORAGE, "Storage", STRUCTURES.WOOD.ID ) );
 
             // -- LEVEL 2 > STRUCTURES > FURNITURE
-            add(new Category(2, STRUCTURES.FURNITURE.WOOD, "Wood", STRUCTURES.FURNITURE.ID));
-            add(new Category(2, STRUCTURES.FURNITURE.STONE, "Stone", STRUCTURES.FURNITURE.ID));
+            add( new Category( STRUCTURES.FURNITURE.WOOD, "Wood", STRUCTURES.FURNITURE.ID ) );
+            add( new Category( STRUCTURES.FURNITURE.STONE, "Stone", STRUCTURES.FURNITURE.ID ) );
 
             // -- LEVEL 2 > STRUCTURES > PIPES
-            add(new Category(2, STRUCTURES.PIPES.STONE, "Stone", STRUCTURES.PIPES.ID));
-            add(new Category(2, STRUCTURES.PIPES.METAL, "Metal", STRUCTURES.PIPES.ID));
+            add( new Category( STRUCTURES.PIPES.STONE, "Stone", STRUCTURES.PIPES.ID ) );
+            add( new Category( STRUCTURES.PIPES.METAL, "Metal", STRUCTURES.PIPES.ID ) );
 
             // -- LEVEL 2 > STRUCTURES > METAL
-            add(new Category(2, STRUCTURES.METAL.SIGNS, "Signs", STRUCTURES.METAL.ID));
-            add(new Category(2, STRUCTURES.METAL.STORAGE, "Storage", STRUCTURES.METAL.ID));
+            add( new Category( STRUCTURES.METAL.SIGNS, "Signs", STRUCTURES.METAL.ID ) );
+            add( new Category( STRUCTURES.METAL.STORAGE, "Storage", STRUCTURES.METAL.ID ) );
 
             // -- LEVEL 2 > STRUCTURES > ELECTRICAL
-            add(new Category(2, STRUCTURES.ELECTRICAL.DEFENSES, "Defenses", STRUCTURES.ELECTRICAL.ID));
-            add(new Category(2, STRUCTURES.ELECTRICAL.ELEVATORS, "Elevators", STRUCTURES.ELECTRICAL.ID));
+            add( new Category( STRUCTURES.ELECTRICAL.DEFENSES, "Defenses", STRUCTURES.ELECTRICAL.ID ) );
+            add( new Category( STRUCTURES.ELECTRICAL.ELEVATORS, "Elevators", STRUCTURES.ELECTRICAL.ID ) );
 
             // -- LEVEL 2 > WEAPONS > PRIMITIVE
-            add(new Category(2, WEAPONS.PRIMITIVE.MELEE, "Melee", WEAPONS.PRIMITIVE.ID));
-            add(new Category(2, WEAPONS.PRIMITIVE.RANGED, "Ranged", WEAPONS.PRIMITIVE.ID));
+            add( new Category( WEAPONS.PRIMITIVE.MELEE, "Melee", WEAPONS.PRIMITIVE.ID ) );
+            add( new Category( WEAPONS.PRIMITIVE.RANGED, "Ranged", WEAPONS.PRIMITIVE.ID ) );
         }
     };
 

@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.helpers.DisplayHelper;
+import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.viewholders.EngramViewHolder;
 
@@ -51,13 +52,17 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
         viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 
-        int imageId = craftingQueue.getEngramImageId(position);
-        String name = craftingQueue.getEngramName(position);
-        int quantity = craftingQueue.getEngramQuantity(position);
+        try {
+            int imageId = craftingQueue.getEngramImageId( position );
+            String name = craftingQueue.getEngramName( position );
+            int quantity = craftingQueue.getEngramQuantity( position );
 
-        viewHolder.getImage().setImageResource(imageId);
-        viewHolder.getNameText().setText(name);
-        viewHolder.getQuantityText().setText(String.format(Locale.US, "x%1$d", quantity));
+            viewHolder.getImage().setImageResource( imageId );
+            viewHolder.getNameText().setText( name );
+            viewHolder.getQuantityText().setText( String.format( Locale.US, "x%1$d", quantity ) );
+        } catch ( ArrayIndexOutOfBoundsException e ) {
+            Helper.Log( LOGTAG, e.getMessage() );
+        }
     }
 
     @Override

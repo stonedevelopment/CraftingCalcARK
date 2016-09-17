@@ -66,7 +66,7 @@ public class ResourceInitializer {
     public static final int COOKED_PRIME_MEAT_OR_PRIME_JERKY = R.drawable.cooked_prime_meat_or_prime_jerky;
     public static final int COOKED_MEAT_OR_JERKY = R.drawable.cooked_meat_or_jerky;
 
-    // -- REFINED
+    // -- COMPLEX
     public static final int ABSORBENT_SUBSTRATE = RefinedInitializer.ABSORBENT_SUBSTRATE;
     public static final int BEER_LIQUID = RefinedInitializer.BEER_LIQUID;
     public static final int CEMENTING_PASTE = RefinedInitializer.CEMENTING_PASTE;

@@ -52,6 +52,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DisplayCaseViewHolder viewHolder = (DisplayCaseViewHolder) holder;
+
         viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
         viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 

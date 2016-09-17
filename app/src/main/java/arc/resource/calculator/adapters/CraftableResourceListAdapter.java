@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.viewholders.ResourceViewHolder;
 
@@ -45,13 +46,17 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ResourceViewHolder viewHolder = (ResourceViewHolder) holder;
 
-        int imageId = craftingQueue.getResourceImageId(position);
-        String name = craftingQueue.getResourceName(position);
-        int quantity = craftingQueue.getResourceQuantity(position);
+        try {
+            int imageId = craftingQueue.getResourceImageId( position );
+            String name = craftingQueue.getResourceName( position );
+            int quantity = craftingQueue.getResourceQuantity( position );
 
-        viewHolder.getImageView().setImageResource(imageId);
-        viewHolder.getNameText().setText(name);
-        viewHolder.getQuantityText().setText(String.format(Locale.US, "%1$d", quantity));
+            viewHolder.getImageView().setImageResource( imageId );
+            viewHolder.getNameText().setText( name );
+            viewHolder.getQuantityText().setText( String.format( Locale.US, "%1$d", quantity ) );
+        } catch ( ArrayIndexOutOfBoundsException e ) {
+            Helper.Log( LOGTAG, e.getMessage() );
+        }
     }
 
     @Override

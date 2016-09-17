@@ -1534,7 +1534,7 @@ public class StructureInitializer {
             add(new InitEngram(
                     STONE_WALL,
                     "Stone Wall",
-                    "A brick-and-mortar wall that insulates the inside from the outside and separates rooms.\n",
+                    "A brick-and-mortar wall that insulates the inside from the outside and separates rooms.",
                     new SparseIntArray() {{
                         append(ResourceInitializer.STONE, 40);
                         append(ResourceInitializer.WOOD, 20);

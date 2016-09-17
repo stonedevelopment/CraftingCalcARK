@@ -24,9 +24,9 @@ public class Showcase {
     private DataSource dataSource;
 
     public Showcase(Context context, Long id) {
-        this.dataSource = DataSource.getInstance(context, LOGTAG);
-
-        engram = dataSource.findSingleDetailEngram(id);
+//        this.dataSource = DataSource.getInstance(context, LOGTAG);
+//
+//        engram = dataSource.findSingleDetailEngram(id);
     }
 
     public DetailEngram getEngram() {
@@ -75,17 +75,18 @@ public class Showcase {
     }
 
     public String getCategoryDescription() {
-        Category category = dataSource.findSingleCategory(engram.getCategoryId());
-        long parent = category.getParent();
-
-        StringBuilder builder = new StringBuilder(category.getName());
-        while (parent > 0) {
-            category = dataSource.findSingleCategory(parent);
-            parent = category.getParent();
-
-            builder.insert(0, category.getName() + "/");
-        }
-
-        return builder.toString();
+//        Category category = dataSource.findSingleCategory(engram.getCategoryId());
+//        long parent = category.getParent();
+//
+//        StringBuilder builder = new StringBuilder(category.getName());
+//        while (parent > 0) {
+//            category = dataSource.findSingleCategory(parent);
+//            parent = category.getParent();
+//
+//            builder.insert(0, category.getName() + "/");
+//        }
+//
+//        return builder.toString();
+        return null;
     }
 }

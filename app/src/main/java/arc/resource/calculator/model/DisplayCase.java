@@ -5,7 +5,6 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.db.DataSource;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
@@ -36,14 +35,14 @@ public class DisplayCase {
 
     private DataSource dataSource;
 
-    public DisplayCase(Context context) {
-        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(context);
-        isFiltered = preferenceHelper.getBooleanPreference(Helper.FILTERED, true);
+    public DisplayCase( Context context ) {
+        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance( context );
+        isFiltered = preferenceHelper.getBooleanPreference( Helper.FILTERED, true );
 
-        level = preferenceHelper.getLongPreference(Helper.APP_LEVEL);
-        parent = preferenceHelper.getLongPreference(Helper.APP_PARENT);
+        level = preferenceHelper.getLongPreference( Helper.APP_LEVEL );
+        parent = preferenceHelper.getLongPreference( Helper.APP_PARENT );
 
-        dataSource = DataSource.getInstance(context, LOGTAG);
+//        dataSource = DataSource.getInstance(context, LOGTAG);
 
         UpdateData();
     }
@@ -60,10 +59,10 @@ public class DisplayCase {
         return parent;
     }
 
-    public boolean setIsFiltered(boolean filtered) {
-        if (isFiltered() != filtered) {
-            PreferenceHelper preferenceHelper = PreferenceHelper.getInstance(getContext());
-            preferenceHelper.setPreference(Helper.FILTERED, filtered);
+    public boolean setIsFiltered( boolean filtered ) {
+        if ( isFiltered() != filtered ) {
+            PreferenceHelper preferenceHelper = PreferenceHelper.getInstance( getContext() );
+            preferenceHelper.setPreference( Helper.FILTERED, filtered );
 
             this.isFiltered = filtered;
 
@@ -74,11 +73,11 @@ public class DisplayCase {
         return false;
     }
 
-    public void setLevel(long level) {
+    public void setLevel( long level ) {
         this.level = level;
     }
 
-    public void setParent(long parent) {
+    public void setParent( long parent ) {
         this.parent = parent;
     }
 
@@ -86,67 +85,67 @@ public class DisplayCase {
      * -- METHODS THAT RETURN TO VIEWHOLDER --
      */
 
-    public int getImageId(int position) {
-        if (isFiltered) {
-            if (position >= categories.size()) {
+    public int getImageId( int position ) {
+        if ( isFiltered ) {
+            if ( position >= categories.size() ) {
                 position -= categories.size();
 
-                DisplayEngram engram = engrams.valueAt(position);
+                DisplayEngram engram = engrams.valueAt( position );
 
                 return engram.getImageId();
             } else {
-                Category category = categories.valueAt(position);
+                Category category = categories.valueAt( position );
 
                 return category.getImageId();
             }
         } else {
-            DisplayEngram engram = engrams.valueAt(position);
+            DisplayEngram engram = engrams.valueAt( position );
 
             return engram.getImageId();
         }
     }
 
-    public String getName(int position) {
-        if (isFiltered) {
-            if (position >= categories.size()) {
+    public String getName( int position ) {
+        if ( isFiltered ) {
+            if ( position >= categories.size() ) {
                 position -= categories.size();
 
-                DisplayEngram engram = engrams.valueAt(position);
+                DisplayEngram engram = engrams.valueAt( position );
 
                 return engram.getName();
             } else {
-                Category category = categories.valueAt(position);
+                Category category = categories.valueAt( position );
 
                 return category.getName();
             }
         } else {
-            DisplayEngram engram = engrams.valueAt(position);
+            DisplayEngram engram = engrams.valueAt( position );
 
             return engram.getName();
         }
     }
 
-    public String getName(long categoryId) {
-        if (categoryId > ROOT) {
-            Category category = getCategory(categoryId);
+    public String getName( long categoryId ) {
+        if ( categoryId > ROOT ) {
+            Category category = getCategory( categoryId );
             return "Go Back to " + category.getName();
         } else {
             return "Go Back";
         }
     }
 
-    public int getQuantity(int position) {
-        if (isFiltered) {
-            if (position < categories.size()) {
+    public int getQuantity( int position ) {
+        if ( isFiltered ) {
+            if ( position < categories.size() ) {
                 return 0;
             }
 
             position -= categories.size();
         }
 
-        Queue queue = queues.get(engrams.valueAt(position).getId());
+        Queue queue = queues.get( engrams.valueAt( position ).getId() );
 
-        if (queue != null) {
+        if ( queue != null ) {
             return queue.getQuantity();
         }
 
@@ -154,65 +153,66 @@ public class DisplayCase {
     }
 
     public Context getContext() {
-        return dataSource.getContext();
+//        return dataSource.getContext();
+        return null;
     }
 
     /**
      * -- PUBLIC METHODS --
      */
 
-    public boolean isEngram(int position) {
+    public boolean isEngram( int position ) {
         return position >= categories.size();
     }
 
     public int getCount() {
-        if (engrams != null && categories != null) {
+        if ( engrams != null && categories != null ) {
             return engrams.size() + categories.size();
         }
         return 0;
     }
 
-    public long getEngramId(int position) {
-        if (isFiltered) {
-            if (position >= categories.size()) {
+    public long getEngramId( int position ) {
+        if ( isFiltered ) {
+            if ( position >= categories.size() ) {
                 position -= categories.size();
 
-                return engrams.valueAt(position).getId();
+                return engrams.valueAt( position ).getId();
             }
         } else {
-            return engrams.valueAt(position).getId();
+            return engrams.valueAt( position ).getId();
         }
 
         return 0;
     }
 
-    public void changeCategory(int position) {
-        if (position < categories.size()) {
+    public void changeCategory( int position ) {
+        if ( position < categories.size() ) {
             // position within bounds
-            Category category = categories.valueAt(position);
+            Category category = categories.valueAt( position );
 
-            Helper.Log(LOGTAG, "Changing category to [" + position + "] " + category.toString());
+            Helper.Log( LOGTAG, "Changing category to [" + position + "] " + category.toString() );
 
-            if (getLevel() == ROOT) {
+            if ( getLevel() == ROOT ) {
                 // ROOT LEVEL
-                setLevel(category.getId());   // Grabbing ID is the best way to track its location.
-                setParent(category.getParent());
+                setLevel( category.getId() );   // Grabbing ID is the best way to track its location.
+                setParent( category.getParent() );
             } else {
-                if (position == 0) {
+                if ( position == 0 ) {
                     // back button or FIRST CATEGORY, revert back to parent level or root level
-                    if (category.getParent() > ROOT) {
-                        Category parentCategory = getCategory(category.getParent());
+                    if ( category.getParent() > ROOT ) {
+                        Category parentCategory = getCategory( category.getParent() );
 
-                        setLevel(category.getParent());
-                        setParent(parentCategory.getParent());
+                        setLevel( category.getParent() );
+                        setParent( parentCategory.getParent() );
                     } else {
-                        setLevel(ROOT);
-                        setParent(ROOT);
+                        setLevel( ROOT );
+                        setParent( ROOT );
                     }
                 } else {
                     // position is > 0, making this a normal category object
-                    setLevel(category.getId());   // Grabbing ID is the best way to track its location.
-                    setParent(category.getParent());
+                    setLevel( category.getId() );   // Grabbing ID is the best way to track its location.
+                    setParent( category.getParent() );
                 }
             }
 
@@ -231,51 +231,53 @@ public class DisplayCase {
      * -- PRIVATE UTILITY METHODS --
      */
 
-    private Category getCategory(long categoryId) {
-        return dataSource.findSingleCategory(categoryId);
+    private Category getCategory( long categoryId ) {
+//        return dataSource.findSingleCategory(categoryId);
+        return null;
     }
 
     private SparseArray<Category> getCategories() {
         SparseArray<Category> categories = new SparseArray<>();
 
-        if (isFiltered()) {
-            categories = dataSource.findFilteredCategories(getLevel());
-
-            if (getLevel() > 0) {
-                Category category = new Category(0, getLevel(), getName(getParent()), getParent(), R.drawable.back);
-                categories.put(0, category);
-            }
-
-            debugCategories(categories);
-        }
+//        if (isFiltered()) {
+//            categories = dataSource.findFilteredCategories(getLevel());
+//
+//            if (getLevel() > 0) {
+//                Category category = new Category(0, getLevel(), getName(getParent()), getParent(), R.drawable.back);
+//                categories.put(0, category);
+//            }
+//
+//            debugCategories(categories);
+//        }
 
         return categories;
     }
 
     private SparseArray<DisplayEngram> getEngrams() {
-        SparseArray<DisplayEngram> engrams;
-
-        if (isFiltered()) {
-            engrams = dataSource.findAllDisplayEngrams(getLevel());
-        } else {
-            engrams = dataSource.findAllDisplayEngrams();
-        }
+//        SparseArray<DisplayEngram> engrams;
+//
+//        if (isFiltered()) {
+//            engrams = dataSource.findAllDisplayEngrams(getLevel());
+//        } else {
+//            engrams = dataSource.findAllDisplayEngrams();
+//        }
         return engrams;
     }
 
     private HashMap<Long, Queue> getQueues() {
-        return dataSource.findAllQueues();
+//        return dataSource.findAllQueues();
+        return null;
     }
 
-    private void debugCategories(SparseArray<Category> categories) {
-        Helper.Log(LOGTAG, "-- Displaying categories at level " + getLevel() + "..");
+    private void debugCategories( SparseArray<Category> categories ) {
+        Helper.Log( LOGTAG, "-- Displaying categories at level " + getLevel() + ".." );
 
-        for (int i = 0; i < categories.size(); i++) {
-            Category category = categories.valueAt(i);
-            Helper.Log(LOGTAG, "-> [" + i + "/" + categories.keyAt(i) + "] " + category.toString());
+        for ( int i = 0; i < categories.size(); i++ ) {
+            Category category = categories.valueAt( i );
+            Helper.Log( LOGTAG, "-> [" + i + "/" + categories.keyAt( i ) + "] " + category.toString() );
         }
 
-        Helper.Log(LOGTAG, "-- Display completed.");
+        Helper.Log( LOGTAG, "-- Display completed." );
     }
 
     private void UpdateData() {
