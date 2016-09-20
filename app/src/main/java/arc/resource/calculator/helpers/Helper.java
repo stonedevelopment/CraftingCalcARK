@@ -3,7 +3,7 @@ package arc.resource.calculator.helpers;
 import android.util.Log;
 import android.util.SparseArray;
 
-import arc.resource.calculator.model.CraftableResource;
+import arc.resource.calculator.model.resource.QueueResource;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -47,7 +47,7 @@ public class Helper {
         if (isDebug) Log.d(tag, tag2 + "> " + message);
     }
 
-    public static SparseArray<CraftableResource> CombineSparseArrays(SparseArray<CraftableResource> array1, SparseArray<CraftableResource> array2) {
+    public static SparseArray<QueueResource> CombineSparseArrays( SparseArray<QueueResource> array1, SparseArray<QueueResource> array2 ) {
         for (int i = 0; i < array2.size(); i++) {
             array1.put(array2.keyAt(i), array2.valueAt(i));
         }

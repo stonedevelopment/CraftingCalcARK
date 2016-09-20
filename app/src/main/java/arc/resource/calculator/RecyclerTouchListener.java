@@ -1,4 +1,4 @@
-package arc.resource.calculator.model.listeners;
+package arc.resource.calculator;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

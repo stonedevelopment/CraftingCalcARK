@@ -87,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
             saveButton.setText("Update Queue");
         }
 
-        imageView.setImageResource(showcase.getImageId());
+//        imageView.setImageResource(showcase.getImageId());
         nameText.setText(showcase.getName());
         descriptionText.setText(showcase.getDescription());
         categoryText.setText(showcase.getCategoryDescription());

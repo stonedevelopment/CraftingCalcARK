@@ -1,4 +1,4 @@
-package arc.resource.calculator.model.initializers;
+package arc.resource.calculator.data.initializers;
 
 import android.util.SparseIntArray;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.InitEngram;
+import arc.resource.calculator.model.engram.InitEngram;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -41,9 +41,9 @@ public class RefinedInitializer {
                     "Absorbent Substrate",
                     "This sticky compound excels at absorbing other chemicals.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.BLACK_PEARL, 8);
-                        append(ResourceInitializer.SAP, 8);
-                        append(ResourceInitializer.OIL, 8);
+                        append( ResourceInitializer.BLACK_PEARL, 8 );
+                        append( ResourceInitializer.SAP, 8 );
+                        append( ResourceInitializer.OIL, 8 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -51,8 +51,8 @@ public class RefinedInitializer {
                     "Beer Liquid",
                     "Put it in a glass jar to drink it!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 40);
-                        append(ResourceInitializer.BERRIES, 50);
+                        append( ResourceInitializer.THATCH, 40 );
+                        append( ResourceInitializer.BERRIES, 50 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -60,8 +60,8 @@ public class RefinedInitializer {
                     "Cementing Paste",
                     "Paste created at Mortar and Pestle.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 4);
-                        append(ResourceInitializer.STONE, 8);
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 4 );
+                        append( ResourceInitializer.STONE, 8 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -69,7 +69,7 @@ public class RefinedInitializer {
                     "Charcoal",
                     "Created by burning wood.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 1);
+                        append( ResourceInitializer.WOOD, 1 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -77,8 +77,8 @@ public class RefinedInitializer {
                     "Fertilizer",
                     "A fertilizer high in nitrogen. Use this to help your crops grow.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 50);
-                        append(ResourceInitializer.FECES, 3);
+                        append( ResourceInitializer.THATCH, 50 );
+                        append( ResourceInitializer.FECES, 3 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -86,8 +86,8 @@ public class RefinedInitializer {
                     "Gasoline",
                     "An advanced fuel. Can only be used in machines designed to consume it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.OIL, 3);
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.OIL, 3 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -95,8 +95,8 @@ public class RefinedInitializer {
                     "Gunpowder",
                     "A powerful propellant. Necessary for any firearm or explosive.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.SPARKPOWDER, 1);
-                        append(ResourceInitializer.CHARCOAL, 1);
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
+                        append( ResourceInitializer.CHARCOAL, 1 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -104,7 +104,7 @@ public class RefinedInitializer {
                     "Metal Ingot",
                     "Created by refining metal ore in a forge.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_ORE, 2);
+                        append( ResourceInitializer.METAL_ORE, 2 );
                     }},
                     CategoryInitializer.REFINED.ID));
             add(new InitEngram(
@@ -112,8 +112,8 @@ public class RefinedInitializer {
                     "Sparkpowder",
                     "Created by grinding flint with stone in a Mortar and Pestle.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FLINT, 2);
-                        append(ResourceInitializer.STONE, 1);
+                        append( ResourceInitializer.FLINT, 2 );
+                        append( ResourceInitializer.STONE, 1 );
                     }},
                     CategoryInitializer.REFINED.ID));
         }

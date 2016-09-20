@@ -13,8 +13,13 @@ package arc.resource.calculator.model;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class Queue {
+    // Primary Key created by Database used to track its Row
     private long id;
+
+    // Foreign Key that references an Engram's Primary Key created by Database to track its row location
     private long engramId;
+
+    // Quantity adjusted per User
     private int quantity;
 
     public Queue(long id, long engramId, int quantity) {
@@ -27,40 +32,12 @@ public class Queue {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getEngramId() {
         return engramId;
     }
 
-    public void setEngramId(long engramId) {
-        this.engramId = engramId;
-    }
-
     public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void increaseQuantity(int amount) {
-        this.quantity += amount;
-
-        if (this.quantity > CraftingQueue.MAX) {
-            this.quantity = CraftingQueue.MAX;
-        }
-    }
-
-    public void decreaseQuantity(int amount) {
-        if (amount <= quantity) {
-            this.quantity -= amount;
-        } else {
-            this.quantity = 0;
-        }
     }
 
     @Override

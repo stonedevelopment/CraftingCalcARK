@@ -5,9 +5,9 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-import arc.resource.calculator.db.DataSource;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.model.engram.DisplayEngram;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -22,7 +22,7 @@ import arc.resource.calculator.helpers.PreferenceHelper;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class DisplayCase {
-    private static final String LOGTAG = "DISPLAYCASE";
+    private static final String TAG = DisplayCase.class.getSimpleName();
     private static final long ROOT = 0;
 
     private boolean isFiltered;
@@ -33,16 +33,13 @@ public class DisplayCase {
     private SparseArray<Category> categories = null;
     private HashMap<Long, Queue> queues = null;
 
-    private DataSource dataSource;
-
     public DisplayCase( Context context ) {
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance( context );
         isFiltered = preferenceHelper.getBooleanPreference( Helper.FILTERED, true );
 
+        // Retrieve saved level and parent from previous use
         level = preferenceHelper.getLongPreference( Helper.APP_LEVEL );
         parent = preferenceHelper.getLongPreference( Helper.APP_PARENT );
-
-//        dataSource = DataSource.getInstance(context, LOGTAG);
 
         UpdateData();
     }
@@ -92,17 +89,18 @@ public class DisplayCase {
 
                 DisplayEngram engram = engrams.valueAt( position );
 
-                return engram.getImageId();
+//                return engram.getImageId();
             } else {
                 Category category = categories.valueAt( position );
 
-                return category.getImageId();
+//                return category.getImageId();
             }
         } else {
             DisplayEngram engram = engrams.valueAt( position );
 
-            return engram.getImageId();
+//            return engram.getImageId();
         }
+        return 0;
     }
 
     public String getName( int position ) {
@@ -191,7 +189,7 @@ public class DisplayCase {
             // position within bounds
             Category category = categories.valueAt( position );
 
-            Helper.Log( LOGTAG, "Changing category to [" + position + "] " + category.toString() );
+            Helper.Log( TAG, "Changing category to [" + position + "] " + category.toString() );
 
             if ( getLevel() == ROOT ) {
                 // ROOT LEVEL
@@ -270,14 +268,14 @@ public class DisplayCase {
     }
 
     private void debugCategories( SparseArray<Category> categories ) {
-        Helper.Log( LOGTAG, "-- Displaying categories at level " + getLevel() + ".." );
+        Helper.Log( TAG, "-- Displaying categories at level " + getLevel() + ".." );
 
         for ( int i = 0; i < categories.size(); i++ ) {
             Category category = categories.valueAt( i );
-            Helper.Log( LOGTAG, "-> [" + i + "/" + categories.keyAt( i ) + "] " + category.toString() );
+            Helper.Log( TAG, "-> [" + i + "/" + categories.keyAt( i ) + "] " + category.toString() );
         }
 
-        Helper.Log( LOGTAG, "-- Display completed." );
+        Helper.Log( TAG, "-- Display completed." );
     }
 
     private void UpdateData() {

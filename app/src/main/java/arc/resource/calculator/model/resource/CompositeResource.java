@@ -1,5 +1,3 @@
-package arc.resource.calculator.model;
-
 /**
  * Copyright (C) 2016, Jared Stone
  * -
@@ -12,31 +10,23 @@ package arc.resource.calculator.model;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class CraftableResource extends Resource {
+package arc.resource.calculator.model.resource;
+
+/**
+ * Resource object that contains the quantity used to compose an Engram.Composition
+ */
+public class CompositeResource extends Resource {
+    // Quantity taken on a per Engram basis, used in conjunction with QueueResource to compute an actual quantity later.
     private int quantity;
 
-    public CraftableResource(Resource resource, int quantity) {
-        super(resource.getId(), resource.getName(), resource.getImageId());
+    public CompositeResource( long id, String name, String drawable, int quantity ) {
+        super( id, name, drawable );
 
         this.quantity = quantity;
-    }
-
-    public CraftableResource(Resource resource) {
-        super(resource.getId(), resource.getName(), resource.getImageId());
-
-        this.quantity = 0;
     }
 
     public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void increaseQuantity(int amount) {
-        this.quantity += amount;
     }
 
     @Override

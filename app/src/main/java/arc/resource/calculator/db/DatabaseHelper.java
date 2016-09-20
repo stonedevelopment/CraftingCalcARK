@@ -1,3 +1,15 @@
+/**
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone
+ * Title: A:RC, a resource calculator for ARK:Survival Evolved
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ */
 package arc.resource.calculator.db;
 
 import android.content.Context;
@@ -12,18 +24,6 @@ import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.helpers.Helper;
 
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_CATEGORY_TABLE = "CREATE TABLE " + CategoryEntry.TABLE_NAME + " (" +
                 CategoryEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
                 CategoryEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                CategoryEntry.COLUMN_PARENT + " INTEGER NOT NULL" +
+                CategoryEntry.COLUMN_PARENT_KEY + " INTEGER NOT NULL" +
                 ")";
 
         final String SQL_CREATE_COMPLEX_RESOURCE_TABLE = "CREATE TABLE " + ComplexResourceEntry.TABLE_NAME + " (" +

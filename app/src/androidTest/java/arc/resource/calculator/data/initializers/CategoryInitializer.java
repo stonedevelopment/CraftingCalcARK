@@ -1,4 +1,4 @@
-package arc.resource.calculator.model.initializers;
+package arc.resource.calculator.data.initializers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,19 +170,19 @@ public class CategoryInitializer {
     private static List<Category> categories = new ArrayList<Category>() {
         {
             // -- LEVEL 0
-            add(new Category(MISC.ID, "Misc"));
-            add(new Category(STRUCTURES.ID, "Structures"));
-            add(new Category(WEAPONS.ID, "Weapons"));
-            add(new Category(ARMOR.ID, "Armor"));
-            add(new Category(SADDLES.ID, "Saddles"));
-            add(new Category(NAVIGATION.ID, "Navigation"));
-            add(new Category(COMMUNICATION.ID, "Communication"));
-            add(new Category(OFFHAND.ID, "Off-Hand"));
-            add(new Category(COMPOSITES.ID, "Composite"));
-            add(new Category(CONSUMABLES.ID, "Consumables"));
-            add(new Category(DYES.ID, "Dyes"));
-            add(new Category(KIBBLE.ID, "Kibble"));
-            add(new Category(REFINED.ID, "Refined"));
+            add(new Category( MISC.ID, "Misc"));
+            add(new Category( STRUCTURES.ID, "Structures"));
+            add(new Category( WEAPONS.ID, "Weapons"));
+            add(new Category( ARMOR.ID, "Armor"));
+            add(new Category( SADDLES.ID, "Saddles"));
+            add(new Category( NAVIGATION.ID, "Navigation"));
+            add(new Category( COMMUNICATION.ID, "Communication"));
+            add(new Category( OFFHAND.ID, "Off-Hand"));
+            add(new Category( COMPOSITES.ID, "Composite"));
+            add(new Category( CONSUMABLES.ID, "Consumables"));
+            add(new Category( DYES.ID, "Dyes"));
+            add(new Category( KIBBLE.ID, "Kibble"));
+            add(new Category( REFINED.ID, "Refined"));
 
             // -- LEVEL 1 > STRUCTURES
             add( new Category( STRUCTURES.THATCH, "Thatch", STRUCTURES.ID ) );

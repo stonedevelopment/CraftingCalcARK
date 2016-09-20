@@ -1,4 +1,4 @@
-package arc.resource.calculator.model.initializers;
+package arc.resource.calculator.data.initializers;
 
 import android.util.SparseIntArray;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.InitEngram;
+import arc.resource.calculator.model.engram.InitEngram;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -297,9 +297,9 @@ public class EngramInitializer {
                     "Chitin Helmet",
                     "Provides moderate physical protection, but can get a little warm.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CHITIN, 15);
-                        append(ResourceInitializer.HIDE, 7);
-                        append(ResourceInitializer.FIBER, 3);
+                        append( ResourceInitializer.CHITIN, 15 );
+                        append( ResourceInitializer.HIDE, 7 );
+                        append( ResourceInitializer.FIBER, 3 );
                     }},
                     CategoryInitializer.ARMOR.CHITIN));
             add(new InitEngram(
@@ -307,9 +307,9 @@ public class EngramInitializer {
                     "Chitin Chestpiece",
                     "Provides moderate physical protection, but can get a little warm.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CHITIN, 20);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.CHITIN, 20 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.CHITIN));
             add(new InitEngram(
@@ -317,9 +317,9 @@ public class EngramInitializer {
                     "Chitin Leggings",
                     "Provides moderate physical protection, but can get a little warm.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CHITIN, 25);
-                        append(ResourceInitializer.HIDE, 12);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.CHITIN, 25 );
+                        append( ResourceInitializer.HIDE, 12 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.ARMOR.CHITIN));
             add(new InitEngram(
@@ -327,9 +327,9 @@ public class EngramInitializer {
                     "Chitin Boots",
                     "Provides moderate physical protection, but can get a little warm.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CHITIN, 12);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.FIBER, 6);
+                        append( ResourceInitializer.CHITIN, 12 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.FIBER, 6 );
                     }},
                     CategoryInitializer.ARMOR.CHITIN));
             add(new InitEngram(
@@ -337,9 +337,9 @@ public class EngramInitializer {
                     "Chitin Gauntlets",
                     "Provides moderate physical protection, but can get a little warm.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CHITIN, 10);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.FIBER, 2);
+                        append( ResourceInitializer.CHITIN, 10 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.FIBER, 2 );
                     }},
                     CategoryInitializer.ARMOR.CHITIN));
 
@@ -349,7 +349,7 @@ public class EngramInitializer {
                     "Cloth Hat",
                     "Provides some protection from the heat and cold, but only minimal protection from injuries.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.ARMOR.CLOTH));
             add(new InitEngram(
@@ -357,7 +357,7 @@ public class EngramInitializer {
                     "Cloth Shirt",
                     "Provides some protection from the heat and cold, but only minimal protection from injuries.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 40);
+                        append( ResourceInitializer.FIBER, 40 );
                     }},
                     CategoryInitializer.ARMOR.CLOTH));
             add(new InitEngram(
@@ -365,7 +365,7 @@ public class EngramInitializer {
                     "Cloth Pants",
                     "Provides some protection from the heat and cold, but only minimal protection from injuries.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 50);
+                        append( ResourceInitializer.FIBER, 50 );
                     }},
                     CategoryInitializer.ARMOR.CLOTH));
             add(new InitEngram(
@@ -373,8 +373,8 @@ public class EngramInitializer {
                     "Cloth Boots",
                     "Hide-soled shoes provide some protection from the heat and cold, but only minimal protection from injuries.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 25);
-                        append(ResourceInitializer.HIDE, 6);
+                        append( ResourceInitializer.FIBER, 25 );
+                        append( ResourceInitializer.HIDE, 6 );
                     }},
                     CategoryInitializer.ARMOR.CLOTH));
             add(new InitEngram(
@@ -382,8 +382,8 @@ public class EngramInitializer {
                     "Cloth Gloves",
                     "Hide-padded gloves provide some protection from the heat and cold, but only minimal protection from injuries.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 20);
-                        append(ResourceInitializer.HIDE, 4);
+                        append( ResourceInitializer.FIBER, 20 );
+                        append( ResourceInitializer.HIDE, 4 );
                     }},
                     CategoryInitializer.ARMOR.CLOTH));
 
@@ -393,10 +393,10 @@ public class EngramInitializer {
                     "Fur Cap",
                     "Provides significant physical protection. Also keeps your temperature up, so long as it stays dry.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.PELT, 56);
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.HIDE, 7);
-                        append(ResourceInitializer.FIBER, 3);
+                        append( ResourceInitializer.PELT, 56 );
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.HIDE, 7 );
+                        append( ResourceInitializer.FIBER, 3 );
                     }},
                     CategoryInitializer.ARMOR.FUR));
             add(new InitEngram(
@@ -404,10 +404,10 @@ public class EngramInitializer {
                     "Fur Chestpiece",
                     "Provides significant physical protection. Also keeps your temperature up, so long as it stays dry.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.PELT, 80);
-                        append(ResourceInitializer.METAL_INGOT, 13);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.PELT, 80 );
+                        append( ResourceInitializer.METAL_INGOT, 13 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.FUR));
             add(new InitEngram(
@@ -415,10 +415,10 @@ public class EngramInitializer {
                     "Fur Leggings",
                     "Provides significant physical protection. Also keeps your temperature up, so long as it stays dry.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.PELT, 96);
-                        append(ResourceInitializer.METAL_INGOT, 12);
-                        append(ResourceInitializer.HIDE, 12);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.PELT, 96 );
+                        append( ResourceInitializer.METAL_INGOT, 12 );
+                        append( ResourceInitializer.HIDE, 12 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.ARMOR.FUR));
             add(new InitEngram(
@@ -426,10 +426,10 @@ public class EngramInitializer {
                     "Fur Boots",
                     "Provides significant physical protection. Also keeps your temperature up, so long as it stays dry.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.PELT, 48);
-                        append(ResourceInitializer.METAL_INGOT, 8);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.PELT, 48 );
+                        append( ResourceInitializer.METAL_INGOT, 8 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.FUR));
             add(new InitEngram(
@@ -437,10 +437,10 @@ public class EngramInitializer {
                     "Fur Gauntlets",
                     "Provides significant physical protection. Also keeps your temperature up, so long as it stays dry.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.PELT, 40);
-                        append(ResourceInitializer.METAL_INGOT, 6);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.FIBER, 2);
+                        append( ResourceInitializer.PELT, 40 );
+                        append( ResourceInitializer.METAL_INGOT, 6 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.FIBER, 2 );
                     }},
                     CategoryInitializer.ARMOR.FUR));
 
@@ -450,9 +450,9 @@ public class EngramInitializer {
                     "Ghillie Mask",
                     "Strands of Organic Polymer cause this to disperse heat and keep you cool. Camouflage keeps you more hidden from enemy creatures. Provides moderate physical protection, but less than Chitin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.ORGANIC_POLYMER, 5);
-                        append(ResourceInitializer.HIDE, 7);
-                        append(ResourceInitializer.FIBER, 3);
+                        append( ResourceInitializer.ORGANIC_POLYMER, 5 );
+                        append( ResourceInitializer.HIDE, 7 );
+                        append( ResourceInitializer.FIBER, 3 );
                     }},
                     CategoryInitializer.ARMOR.GHILLIE));
             add(new InitEngram(
@@ -460,9 +460,9 @@ public class EngramInitializer {
                     "Ghillie Chestpiece",
                     "Strands of Organic Polymer cause this to disperse heat and keep you cool. Camouflage keeps you more hidden from enemy creatures. Provides moderate physical protection, but less than Chitin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.ORGANIC_POLYMER, 6);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.ORGANIC_POLYMER, 6 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.GHILLIE));
             add(new InitEngram(
@@ -470,9 +470,9 @@ public class EngramInitializer {
                     "Ghillie Leggings",
                     "Strands of Organic Polymer cause this to disperse heat and keep you cool. Camouflage keeps you more hidden from enemy creatures. Provides moderate physical protection, but less than Chitin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.ORGANIC_POLYMER, 8);
-                        append(ResourceInitializer.HIDE, 12);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.ORGANIC_POLYMER, 8 );
+                        append( ResourceInitializer.HIDE, 12 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.ARMOR.GHILLIE));
             add(new InitEngram(
@@ -480,9 +480,9 @@ public class EngramInitializer {
                     "Ghillie Boots",
                     "Strands of Organic Polymer cause this to disperse heat and keep you cool. Camouflage keeps you more hidden from enemy creatures. Provides moderate physical protection, but less than Chitin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.ORGANIC_POLYMER, 4);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.ORGANIC_POLYMER, 4 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.GHILLIE));
             add(new InitEngram(
@@ -490,9 +490,9 @@ public class EngramInitializer {
                     "Ghillie Gauntlets",
                     "Strands of Organic Polymer cause this to disperse heat and keep you cool. Camouflage keeps you more hidden from enemy creatures. Provides moderate physical protection, but less than Chitin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.ORGANIC_POLYMER, 3);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.FIBER, 2);
+                        append( ResourceInitializer.ORGANIC_POLYMER, 3 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.FIBER, 2 );
                     }},
                     CategoryInitializer.ARMOR.GHILLIE));
 
@@ -502,8 +502,8 @@ public class EngramInitializer {
                     "Hide Hat",
                     "Keeps you warm while providing some physical protection.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 15);
-                        append(ResourceInitializer.FIBER, 6);
+                        append( ResourceInitializer.HIDE, 15 );
+                        append( ResourceInitializer.FIBER, 6 );
                     }},
                     CategoryInitializer.ARMOR.HIDE));
             add(new InitEngram(
@@ -511,8 +511,8 @@ public class EngramInitializer {
                     "Hide Shirt",
                     "Keeps you warm while providing some physical protection.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 20);
-                        append(ResourceInitializer.FIBER, 8);
+                        append( ResourceInitializer.HIDE, 20 );
+                        append( ResourceInitializer.FIBER, 8 );
                     }},
                     CategoryInitializer.ARMOR.HIDE));
             add(new InitEngram(
@@ -520,8 +520,8 @@ public class EngramInitializer {
                     "Hide Shirt",
                     "Keeps you warm while providing some physical protection.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 25);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.HIDE, 25 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.ARMOR.HIDE));
             add(new InitEngram(
@@ -529,8 +529,8 @@ public class EngramInitializer {
                     "Hide Boots",
                     "Keeps you warm while providing some physical protection.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 12);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.HIDE, 12 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.ARMOR.HIDE));
             add(new InitEngram(
@@ -538,8 +538,8 @@ public class EngramInitializer {
                     "Hide Gloves",
                     "Keeps you warm while providing some physical protection.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.HIDE));
 
@@ -549,9 +549,9 @@ public class EngramInitializer {
                     "Flak Helmet",
                     "Provides heavy physical protection, but makes the elements harder to endure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.HIDE, 7);
-                        append(ResourceInitializer.FIBER, 3);
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.HIDE, 7 );
+                        append( ResourceInitializer.FIBER, 3 );
                     }},
                     CategoryInitializer.ARMOR.METAL));
             add(new InitEngram(
@@ -559,9 +559,9 @@ public class EngramInitializer {
                     "Flak Chestpiece",
                     "Provides heavy physical protection, but makes the elements harder to endure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 13);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.METAL_INGOT, 13 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.METAL));
             add(new InitEngram(
@@ -569,9 +569,9 @@ public class EngramInitializer {
                     "Flak Leggings",
                     "Provides heavy physical protection, but makes the elements harder to endure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 16);
-                        append(ResourceInitializer.HIDE, 12);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.METAL_INGOT, 16 );
+                        append( ResourceInitializer.HIDE, 12 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.ARMOR.METAL));
             add(new InitEngram(
@@ -579,9 +579,9 @@ public class EngramInitializer {
                     "Flak Boots",
                     "Provides heavy physical protection, but makes the elements harder to endure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 8);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.METAL_INGOT, 8 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.METAL));
             add(new InitEngram(
@@ -589,9 +589,9 @@ public class EngramInitializer {
                     "Flak Gauntlets",
                     "Provides heavy physical protection, but makes the elements harder to endure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 6);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.FIBER, 2);
+                        append( ResourceInitializer.METAL_INGOT, 6 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.FIBER, 2 );
                     }},
                     CategoryInitializer.ARMOR.METAL));
             add(new InitEngram(
@@ -599,12 +599,12 @@ public class EngramInitializer {
                     "Heavy Miner's Helmet",
                     "Provides heavy physical protection, but makes the elements harder to endure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.ELECTRONICS, 30);
-                        append(ResourceInitializer.METAL_INGOT, 20);
-                        append(ResourceInitializer.POLYMER, 14);
-                        append(ResourceInitializer.CRYSTAL, 30);
-                        append(ResourceInitializer.HIDE, 15);
-                        append(ResourceInitializer.FIBER, 8);
+                        append( ResourceInitializer.ELECTRONICS, 30 );
+                        append( ResourceInitializer.METAL_INGOT, 20 );
+                        append( ResourceInitializer.POLYMER, 14 );
+                        append( ResourceInitializer.CRYSTAL, 30 );
+                        append( ResourceInitializer.HIDE, 15 );
+                        append( ResourceInitializer.FIBER, 8 );
                     }},
                     CategoryInitializer.ARMOR.METAL));
 
@@ -614,9 +614,9 @@ public class EngramInitializer {
                     "Gas Mask",
                     "Protects the wearer against various airborne poisons.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 220);
-                        append(ResourceInitializer.CRYSTAL, 85);
-                        append(ResourceInitializer.ABSORBENT_SUBSTRATE, 10);
+                        append( ResourceInitializer.POLYMER, 220 );
+                        append( ResourceInitializer.CRYSTAL, 85 );
+                        append( ResourceInitializer.ABSORBENT_SUBSTRATE, 10 );
                     }},
                     CategoryInitializer.ARMOR.MISC));
 
@@ -626,11 +626,11 @@ public class EngramInitializer {
                     "Riot Helmet",
                     "Provides heavy physical protection and reduced physical torpor, but provides almost no protection from the elements.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 50);
-                        append(ResourceInitializer.SILICA_PEARLS, 25);
-                        append(ResourceInitializer.HIDE, 7);
-                        append(ResourceInitializer.FIBER, 3);
-                        append(ResourceInitializer.CRYSTAL, 35);
+                        append( ResourceInitializer.POLYMER, 50 );
+                        append( ResourceInitializer.SILICA_PEARLS, 25 );
+                        append( ResourceInitializer.HIDE, 7 );
+                        append( ResourceInitializer.FIBER, 3 );
+                        append( ResourceInitializer.CRYSTAL, 35 );
                     }},
                     CategoryInitializer.ARMOR.RIOT));
             add(new InitEngram(
@@ -638,10 +638,10 @@ public class EngramInitializer {
                     "Riot Chestpiece",
                     "Provides heavy physical protection and reduced physical torpor, but provides almost no protection from the elements.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 70);
-                        append(ResourceInitializer.SILICA_PEARLS, 40);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.POLYMER, 70 );
+                        append( ResourceInitializer.SILICA_PEARLS, 40 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.RIOT));
             add(new InitEngram(
@@ -649,10 +649,10 @@ public class EngramInitializer {
                     "Riot Leggings",
                     "Provides heavy physical protection and reduced physical torpor, but provides almost no protection from the elements.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 70);
-                        append(ResourceInitializer.SILICA_PEARLS, 40);
-                        append(ResourceInitializer.HIDE, 12);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.POLYMER, 70 );
+                        append( ResourceInitializer.SILICA_PEARLS, 40 );
+                        append( ResourceInitializer.HIDE, 12 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.ARMOR.RIOT));
             add(new InitEngram(
@@ -660,10 +660,10 @@ public class EngramInitializer {
                     "Riot Boots",
                     "Provides heavy physical protection and reduced physical torpor, but provides almost no protection from the elements.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 30);
-                        append(ResourceInitializer.SILICA_PEARLS, 18);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.POLYMER, 30 );
+                        append( ResourceInitializer.SILICA_PEARLS, 18 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.ARMOR.RIOT));
             add(new InitEngram(
@@ -671,10 +671,10 @@ public class EngramInitializer {
                     "Riot Gauntlets",
                     "Provides heavy physical protection and reduced physical torpor, but provides almost no protection from the elements.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 25);
-                        append(ResourceInitializer.SILICA_PEARLS, 15);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.FIBER, 2);
+                        append( ResourceInitializer.POLYMER, 25 );
+                        append( ResourceInitializer.SILICA_PEARLS, 15 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.FIBER, 2 );
                     }},
                     CategoryInitializer.ARMOR.RIOT));
 
@@ -684,10 +684,10 @@ public class EngramInitializer {
                     "SCUBA Mask",
                     "Connects to a SCUBA Tank, allowing the wearer to breathe underwater for as long as the tank has oxygen.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 15);
-                        append(ResourceInitializer.FIBER, 6);
-                        append(ResourceInitializer.CRYSTAL, 10);
-                        append(ResourceInitializer.SILICA_PEARLS, 3);
+                        append( ResourceInitializer.HIDE, 15 );
+                        append( ResourceInitializer.FIBER, 6 );
+                        append( ResourceInitializer.CRYSTAL, 10 );
+                        append( ResourceInitializer.SILICA_PEARLS, 3 );
                     }},
                     CategoryInitializer.ARMOR.SCUBA));
             add(new InitEngram(
@@ -695,10 +695,10 @@ public class EngramInitializer {
                     "SCUBA Tank",
                     "A tank that's filled with Oxygen. Used to temporarily breathe underwater.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 20);
-                        append(ResourceInitializer.FIBER, 8);
-                        append(ResourceInitializer.METAL_INGOT, 14);
-                        append(ResourceInitializer.POLYMER, 3);
+                        append( ResourceInitializer.HIDE, 20 );
+                        append( ResourceInitializer.FIBER, 8 );
+                        append( ResourceInitializer.METAL_INGOT, 14 );
+                        append( ResourceInitializer.POLYMER, 3 );
                     }},
                     CategoryInitializer.ARMOR.SCUBA));
             add(new InitEngram(
@@ -706,10 +706,10 @@ public class EngramInitializer {
                     "SCUBA Leggings",
                     "Provides little defense, but tremendous hypothermal insulation, specifically when underwater.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 40);
-                        append(ResourceInitializer.FIBER, 4);
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.POLYMER, 40);
+                        append( ResourceInitializer.HIDE, 40 );
+                        append( ResourceInitializer.FIBER, 4 );
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.POLYMER, 40 );
                     }},
                     CategoryInitializer.ARMOR.SCUBA));
             add(new InitEngram(
@@ -717,11 +717,11 @@ public class EngramInitializer {
                     "SCUBA Flippers",
                     "These flippers are firm, but flexible. Wearing them increases swim speed, but decreases walking speed.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 12);
-                        append(ResourceInitializer.FIBER, 5);
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 12);
-                        append(ResourceInitializer.CEMENTING_PASTE, 6);
-                        append(ResourceInitializer.SILICA_PEARLS, 4);
+                        append( ResourceInitializer.HIDE, 12 );
+                        append( ResourceInitializer.FIBER, 5 );
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 12 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 6 );
+                        append( ResourceInitializer.SILICA_PEARLS, 4 );
                     }},
                     CategoryInitializer.ARMOR.SCUBA));
 
@@ -731,9 +731,9 @@ public class EngramInitializer {
                     "Metal Shield",
                     "A metal shield on a layer of leather. Absorbs damage from the front when activated.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 80);
-                        append(ResourceInitializer.CEMENTING_PASTE, 20);
-                        append(ResourceInitializer.HIDE, 15);
+                        append( ResourceInitializer.METAL_INGOT, 80 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 20 );
+                        append( ResourceInitializer.HIDE, 15 );
                     }},
                     CategoryInitializer.ARMOR.SHIELDS));
             add(new InitEngram(
@@ -741,9 +741,9 @@ public class EngramInitializer {
                     "Wooden Shield",
                     "A wooden shield on a layer of leather. Absorbs damage from the front when activated.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 40);
-                        append(ResourceInitializer.FIBER, 15);
-                        append(ResourceInitializer.HIDE, 12);
+                        append( ResourceInitializer.WOOD, 40 );
+                        append( ResourceInitializer.FIBER, 15 );
+                        append( ResourceInitializer.HIDE, 12 );
                     }},
                     CategoryInitializer.ARMOR.SHIELDS));
             add(new InitEngram(
@@ -751,10 +751,10 @@ public class EngramInitializer {
                     "Metal Shield",
                     "A metal-framed shield reinforced with polymer and crystal. Absorbs damage from the front when activated.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 120);
-                        append(ResourceInitializer.CRYSTAL, 200);
-                        append(ResourceInitializer.SILICA_PEARLS, 120);
-                        append(ResourceInitializer.METAL_INGOT, 40);
+                        append( ResourceInitializer.POLYMER, 120 );
+                        append( ResourceInitializer.CRYSTAL, 200 );
+                        append( ResourceInitializer.SILICA_PEARLS, 120 );
+                        append( ResourceInitializer.METAL_INGOT, 40 );
                     }},
                     CategoryInitializer.ARMOR.SHIELDS));
 
@@ -764,9 +764,9 @@ public class EngramInitializer {
                     "Radio",
                     "Use this to communicate securely over great distances.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 40);
-                        append(ResourceInitializer.CRYSTAL, 40);
-                        append(ResourceInitializer.SPARKPOWDER, 40);
+                        append( ResourceInitializer.METAL_INGOT, 40 );
+                        append( ResourceInitializer.CRYSTAL, 40 );
+                        append( ResourceInitializer.SPARKPOWDER, 40 );
                     }},
                     CategoryInitializer.COMMUNICATION.ID));
 
@@ -776,8 +776,8 @@ public class EngramInitializer {
                     "Electronics",
                     "This multipurpose computer chip can be used to create electronic devices.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.SILICA_PEARLS, 3);
-                        append(ResourceInitializer.METAL_INGOT, 1);
+                        append( ResourceInitializer.SILICA_PEARLS, 3 );
+                        append( ResourceInitializer.METAL_INGOT, 1 );
                     }},
                     CategoryInitializer.COMPOSITES.ID));
             add(new InitEngram(
@@ -785,8 +785,8 @@ public class EngramInitializer {
                     "Polymer",
                     "These incredibly strong, lightweight plates can be shaped and then heat treated into casings for anything.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.OBSIDIAN, 2);
-                        append(ResourceInitializer.CEMENTING_PASTE, 2);
+                        append( ResourceInitializer.OBSIDIAN, 2 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 2 );
                     }},
                     CategoryInitializer.COMPOSITES.ID));
 
@@ -797,10 +797,10 @@ public class EngramInitializer {
                     "Bug Repellant",
                     "This gnarly paste makes you nearly invisible to bugs. Just don't attack them, and they'll ignore you! Effect lasts 10 minutes.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.PELT, 6);
-                        append(ResourceInitializer.NARCOTIC, 2);
-                        append(ResourceInitializer.CITRONAL, 4);
-                        append(ResourceInitializer.ROCKARROT, 4);
+                        append( ResourceInitializer.PELT, 6 );
+                        append( ResourceInitializer.NARCOTIC, 2 );
+                        append( ResourceInitializer.CITRONAL, 4 );
+                        append( ResourceInitializer.ROCKARROT, 4 );
                     }},
                     CategoryInitializer.CONSUMABLES.DRUGS));
             add(new InitEngram(
@@ -808,10 +808,10 @@ public class EngramInitializer {
                     "Lesser Antidote",
                     "Cures Lesser Afflictions!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.RARE_FLOWER, 10);
-                        append(ResourceInitializer.RARE_MUSHROOM, 10);
-                        append(ResourceInitializer.LEECH_BLOOD, 5);
-                        append(ResourceInitializer.NARCOTIC, 1);
+                        append( ResourceInitializer.RARE_FLOWER, 10 );
+                        append( ResourceInitializer.RARE_MUSHROOM, 10 );
+                        append( ResourceInitializer.LEECH_BLOOD, 5 );
+                        append( ResourceInitializer.NARCOTIC, 1 );
                     }},
                     CategoryInitializer.CONSUMABLES.DRUGS));
             add(new InitEngram(
@@ -819,8 +819,8 @@ public class EngramInitializer {
                     "Narcotic",
                     "Increases your health, but puts you to sleep.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.NARCOBERRY, 5);
-                        append(ResourceInitializer.SPOILED_MEAT, 1);
+                        append( ResourceInitializer.NARCOBERRY, 5 );
+                        append( ResourceInitializer.SPOILED_MEAT, 1 );
                     }},
                     CategoryInitializer.CONSUMABLES.DRUGS));
             add(new InitEngram(
@@ -828,8 +828,8 @@ public class EngramInitializer {
                     "Stimulant",
                     "Keeps you awake, but dehydrates you.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STIMBERRY, 5);
-                        append(ResourceInitializer.SPARKPOWDER, 2);
+                        append( ResourceInitializer.STIMBERRY, 5 );
+                        append( ResourceInitializer.SPARKPOWDER, 2 );
                     }},
                     CategoryInitializer.CONSUMABLES.DRUGS));
 
@@ -839,12 +839,12 @@ public class EngramInitializer {
                     "Battle Tartare",
                     "Only eat this dish when you intend to go into a brawl. It causes pain and stress to your body, but grants you almost supernatural strength, speed, and resilience. Warning: This concoction can be habit forming.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.RAW_PRIME_MEAT, 3);
-                        append(ResourceInitializer.MEJOBERRY, 20);
-                        append(ResourceInitializer.STIMULANT, 8);
-                        append(ResourceInitializer.RARE_FLOWER, 2);
-                        append(ResourceInitializer.CITRONAL, 1);
-                        append(ResourceInitializer.LONGRASS, 1);
+                        append( ResourceInitializer.RAW_PRIME_MEAT, 3 );
+                        append( ResourceInitializer.MEJOBERRY, 20 );
+                        append( ResourceInitializer.STIMULANT, 8 );
+                        append( ResourceInitializer.RARE_FLOWER, 2 );
+                        append( ResourceInitializer.CITRONAL, 1 );
+                        append( ResourceInitializer.LONGRASS, 1 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -852,7 +852,7 @@ public class EngramInitializer {
                     "Beer Jar",
                     "Mmmmm.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.BEER_LIQUID, 1);
+                        append( ResourceInitializer.BEER_LIQUID, 1 );
                         append(WATER_JAR, 1);
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
@@ -868,13 +868,13 @@ public class EngramInitializer {
                     "Broth of Enlightment",
                     "A single sip of this incredible broth will expand your mind and broaden your horizons, granting greatly increased experience gain for a brief time.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.MEJOBERRY, 10);
-                        append(ResourceInitializer.ROCKARROT, 2);
-                        append(ResourceInitializer.LONGRASS, 2);
-                        append(ResourceInitializer.SAVOROOT, 2);
-                        append(ResourceInitializer.CITRONAL, 2);
-                        append(ResourceInitializer.WOOLLY_RHINO_HORN, 5);
-                        append(ResourceInitializer.BLACK_PEARL, 1);
+                        append( ResourceInitializer.MEJOBERRY, 10 );
+                        append( ResourceInitializer.ROCKARROT, 2 );
+                        append( ResourceInitializer.LONGRASS, 2 );
+                        append( ResourceInitializer.SAVOROOT, 2 );
+                        append( ResourceInitializer.CITRONAL, 2 );
+                        append( ResourceInitializer.WOOLLY_RHINO_HORN, 5 );
+                        append( ResourceInitializer.BLACK_PEARL, 1 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -882,11 +882,11 @@ public class EngramInitializer {
                     "Calien Soup",
                     "This simple vegetarian dish refreshes you body like an oasis. Helps keep you stay hydrated and feel cool.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CITRONAL, 5);
-                        append(ResourceInitializer.TINTOBERRY, 20);
-                        append(ResourceInitializer.AMARBERRY, 20);
-                        append(ResourceInitializer.MEJOBERRY, 10);
-                        append(ResourceInitializer.STIMULANT, 2);
+                        append( ResourceInitializer.CITRONAL, 5 );
+                        append( ResourceInitializer.TINTOBERRY, 20 );
+                        append( ResourceInitializer.AMARBERRY, 20 );
+                        append( ResourceInitializer.MEJOBERRY, 10 );
+                        append( ResourceInitializer.STIMULANT, 2 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -894,11 +894,11 @@ public class EngramInitializer {
                     "Enduro Stew",
                     "This hearty dish is like a workout in the form of a meal. You will find yourself hitting harder and running longer after eating this.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.COOKED_MEAT_OR_FISH_MEAT, 9);
-                        append(ResourceInitializer.ROCKARROT, 5);
-                        append(ResourceInitializer.SAVOROOT, 5);
-                        append(ResourceInitializer.MEJOBERRY, 10);
-                        append(ResourceInitializer.STIMULANT, 2);
+                        append( ResourceInitializer.COOKED_MEAT_OR_FISH_MEAT, 9 );
+                        append( ResourceInitializer.ROCKARROT, 5 );
+                        append( ResourceInitializer.SAVOROOT, 5 );
+                        append( ResourceInitializer.MEJOBERRY, 10 );
+                        append( ResourceInitializer.STIMULANT, 2 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -906,8 +906,8 @@ public class EngramInitializer {
                     "Energy Brew",
                     "his brew doesn't have any nutritional value, but fills your stamina.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AZULBERRY, 20);
-                        append(ResourceInitializer.STIMULANT, 2);
+                        append( ResourceInitializer.AZULBERRY, 20 );
+                        append( ResourceInitializer.STIMULANT, 2 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -915,12 +915,12 @@ public class EngramInitializer {
                     "Focal Chili",
                     "This filling dish is full of nutritional energy. Consume it to gain increased crafting speed, and gain increased movement speed. Effect lasts 15 minutes.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.COOKED_MEAT, 9);
-                        append(ResourceInitializer.CITRONAL, 5);
-                        append(ResourceInitializer.AMARBERRY, 20);
-                        append(ResourceInitializer.AZULBERRY, 20);
-                        append(ResourceInitializer.TINTOBERRY, 20);
-                        append(ResourceInitializer.MEJOBERRY, 10);
+                        append( ResourceInitializer.COOKED_MEAT, 9 );
+                        append( ResourceInitializer.CITRONAL, 5 );
+                        append( ResourceInitializer.AMARBERRY, 20 );
+                        append( ResourceInitializer.AZULBERRY, 20 );
+                        append( ResourceInitializer.TINTOBERRY, 20 );
+                        append( ResourceInitializer.MEJOBERRY, 10 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -928,11 +928,11 @@ public class EngramInitializer {
                     "Fria Curry",
                     "his spicy vegetarian dish fills the body with a comfortable warmth. It controls your appetite while helping you ignore cold.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.LONGRASS, 5);
-                        append(ResourceInitializer.ROCKARROT, 5);
-                        append(ResourceInitializer.AZULBERRY, 20);
-                        append(ResourceInitializer.MEJOBERRY, 10);
-                        append(ResourceInitializer.NARCOTIC, 2);
+                        append( ResourceInitializer.LONGRASS, 5 );
+                        append( ResourceInitializer.ROCKARROT, 5 );
+                        append( ResourceInitializer.AZULBERRY, 20 );
+                        append( ResourceInitializer.MEJOBERRY, 10 );
+                        append( ResourceInitializer.NARCOTIC, 2 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -940,11 +940,11 @@ public class EngramInitializer {
                     "Lazarus Chowder",
                     "This creamy dish improves the body's natural constitution. You will recover from injury more quickly after eating this, and your body will need less oxygen.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.COOKED_MEAT, 9);
-                        append(ResourceInitializer.SAVOROOT, 5);
-                        append(ResourceInitializer.LONGRASS, 5);
-                        append(ResourceInitializer.MEJOBERRY, 10);
-                        append(ResourceInitializer.NARCOTIC, 2);
+                        append( ResourceInitializer.COOKED_MEAT, 9 );
+                        append( ResourceInitializer.SAVOROOT, 5 );
+                        append( ResourceInitializer.LONGRASS, 5 );
+                        append( ResourceInitializer.MEJOBERRY, 10 );
+                        append( ResourceInitializer.NARCOTIC, 2 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -952,8 +952,8 @@ public class EngramInitializer {
                     "Medical Brew",
                     "This brew doesn't have any nutritional value, but it promotes healing.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.TINTOBERRY, 20);
-                        append(ResourceInitializer.NARCOTIC, 2);
+                        append( ResourceInitializer.TINTOBERRY, 20 );
+                        append( ResourceInitializer.NARCOTIC, 2 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -961,12 +961,12 @@ public class EngramInitializer {
                     "Mindwipe Tonic",
                     "When consumed, this tonic causes neural overload. Synapses fire off too quickly resulting in damage to the memory centers of the brain related to construction. Warning: this concoction may cause temporary memory loss, and resetting of Engrams.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.COOKED_PRIME_MEAT, 24);
-                        append(ResourceInitializer.MEJOBERRY, 200);
-                        append(ResourceInitializer.NARCOTIC, 72);
-                        append(ResourceInitializer.STIMULANT, 72);
-                        append(ResourceInitializer.RARE_MUSHROOM, 20);
-                        append(ResourceInitializer.RARE_FLOWER, 20);
+                        append( ResourceInitializer.COOKED_PRIME_MEAT, 24 );
+                        append( ResourceInitializer.MEJOBERRY, 200 );
+                        append( ResourceInitializer.NARCOTIC, 72 );
+                        append( ResourceInitializer.STIMULANT, 72 );
+                        append( ResourceInitializer.RARE_MUSHROOM, 20 );
+                        append( ResourceInitializer.RARE_FLOWER, 20 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -974,12 +974,12 @@ public class EngramInitializer {
                     "Shadow Steak Sauce",
                     "Only eat this dish in the dark. It causes the light receptors in your eyes to become hyperactive, improves your hand-eye coordination, and allows your body to ignore extreme temperatures. Warning: this concoction can be habit-forming.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.COOKED_PRIME_MEAT, 3);
-                        append(ResourceInitializer.MEJOBERRY, 20);
-                        append(ResourceInitializer.NARCOTIC, 8);
-                        append(ResourceInitializer.RARE_MUSHROOM, 2);
-                        append(ResourceInitializer.SAVOROOT, 1);
-                        append(ResourceInitializer.ROCKARROT, 1);
+                        append( ResourceInitializer.COOKED_PRIME_MEAT, 3 );
+                        append( ResourceInitializer.MEJOBERRY, 20 );
+                        append( ResourceInitializer.NARCOTIC, 8 );
+                        append( ResourceInitializer.RARE_MUSHROOM, 2 );
+                        append( ResourceInitializer.SAVOROOT, 1 );
+                        append( ResourceInitializer.ROCKARROT, 1 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
             add(new InitEngram(
@@ -987,12 +987,12 @@ public class EngramInitializer {
                     "Sweet Veggie Cake",
                     "A sappy-sweet vegetable cake which Herbivores find delicious. Sadly, humans and carnivores tend to find its taste repugnant.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.SAP, 7);
-                        append(ResourceInitializer.ROCKARROT, 2);
-                        append(ResourceInitializer.LONGRASS, 2);
-                        append(ResourceInitializer.SAVOROOT, 2);
-                        append(ResourceInitializer.STIMULANT, 4);
-                        append(ResourceInitializer.FIBER, 25);
+                        append( ResourceInitializer.SAP, 7 );
+                        append( ResourceInitializer.ROCKARROT, 2 );
+                        append( ResourceInitializer.LONGRASS, 2 );
+                        append( ResourceInitializer.SAVOROOT, 2 );
+                        append( ResourceInitializer.STIMULANT, 4 );
+                        append( ResourceInitializer.FIBER, 25 );
                     }},
                     CategoryInitializer.CONSUMABLES.FOOD));
 
@@ -1002,8 +1002,8 @@ public class EngramInitializer {
                     "Black",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.NARCOBERRY, 15);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.NARCOBERRY, 15 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1011,8 +1011,8 @@ public class EngramInitializer {
                     "Blue",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AZULBERRY, 15);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.AZULBERRY, 15 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1020,9 +1020,9 @@ public class EngramInitializer {
                     "Brick",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.TINTOBERRY, 12);
-                        append(ResourceInitializer.NARCOBERRY, 6);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.TINTOBERRY, 12 );
+                        append( ResourceInitializer.NARCOBERRY, 6 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1030,10 +1030,10 @@ public class EngramInitializer {
                     "Brown",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 6);
-                        append(ResourceInitializer.AZULBERRY, 3);
-                        append(ResourceInitializer.TINTOBERRY, 9);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.AMARBERRY, 6 );
+                        append( ResourceInitializer.AZULBERRY, 3 );
+                        append( ResourceInitializer.TINTOBERRY, 9 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1041,10 +1041,10 @@ public class EngramInitializer {
                     "Cantaloupe",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 7);
-                        append(ResourceInitializer.TINTOBERRY, 7);
-                        append(ResourceInitializer.STIMBERRY, 4);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 7 );
+                        append( ResourceInitializer.TINTOBERRY, 7 );
+                        append( ResourceInitializer.STIMBERRY, 4 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1052,9 +1052,9 @@ public class EngramInitializer {
                     "Cyan",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 6);
-                        append(ResourceInitializer.AZULBERRY, 12);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 6 );
+                        append( ResourceInitializer.AZULBERRY, 12 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1062,10 +1062,10 @@ public class EngramInitializer {
                     "Forest",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 7);
-                        append(ResourceInitializer.AZULBERRY, 7);
-                        append(ResourceInitializer.NARCOBERRY, 4);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 7 );
+                        append( ResourceInitializer.AZULBERRY, 7 );
+                        append( ResourceInitializer.NARCOBERRY, 4 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1073,9 +1073,9 @@ public class EngramInitializer {
                     "Green",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 9);
-                        append(ResourceInitializer.AZULBERRY, 9);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.AMARBERRY, 9 );
+                        append( ResourceInitializer.AZULBERRY, 9 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1083,9 +1083,9 @@ public class EngramInitializer {
                     "Magenta",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AZULBERRY, 9);
-                        append(ResourceInitializer.TINTOBERRY, 9);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.AZULBERRY, 9 );
+                        append( ResourceInitializer.TINTOBERRY, 9 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1093,11 +1093,11 @@ public class EngramInitializer {
                     "Mud",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 4);
-                        append(ResourceInitializer.AZULBERRY, 1);
-                        append(ResourceInitializer.TINTOBERRY, 7);
-                        append(ResourceInitializer.NARCOBERRY, 6);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 4 );
+                        append( ResourceInitializer.AZULBERRY, 1 );
+                        append( ResourceInitializer.TINTOBERRY, 7 );
+                        append( ResourceInitializer.NARCOBERRY, 6 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1105,9 +1105,9 @@ public class EngramInitializer {
                     "Navy",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AZULBERRY, 12);
-                        append(ResourceInitializer.NARCOBERRY, 6);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.AZULBERRY, 12 );
+                        append( ResourceInitializer.NARCOBERRY, 6 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1115,9 +1115,9 @@ public class EngramInitializer {
                     "Olive",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 12);
-                        append(ResourceInitializer.NARCOBERRY, 6);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 12 );
+                        append( ResourceInitializer.NARCOBERRY, 6 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1125,9 +1125,9 @@ public class EngramInitializer {
                     "Orange",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 9);
-                        append(ResourceInitializer.TINTOBERRY, 9);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.AMARBERRY, 9 );
+                        append( ResourceInitializer.TINTOBERRY, 9 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1135,9 +1135,9 @@ public class EngramInitializer {
                     "Parchment",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 12);
-                        append(ResourceInitializer.STIMBERRY, 6);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 12 );
+                        append( ResourceInitializer.STIMBERRY, 6 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1145,9 +1145,9 @@ public class EngramInitializer {
                     "Pink",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.TINTOBERRY, 12);
-                        append(ResourceInitializer.STIMBERRY, 6);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.TINTOBERRY, 12 );
+                        append( ResourceInitializer.STIMBERRY, 6 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1155,9 +1155,9 @@ public class EngramInitializer {
                     "Purple",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AZULBERRY, 9);
-                        append(ResourceInitializer.TINTOBERRY, 9);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.AZULBERRY, 9 );
+                        append( ResourceInitializer.TINTOBERRY, 9 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1165,8 +1165,8 @@ public class EngramInitializer {
                     "Red",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.TINTOBERRY, 15);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.TINTOBERRY, 15 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1174,10 +1174,10 @@ public class EngramInitializer {
                     "Royalty",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AZULBERRY, 7);
-                        append(ResourceInitializer.TINTOBERRY, 7);
-                        append(ResourceInitializer.NARCOBERRY, 4);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.AZULBERRY, 7 );
+                        append( ResourceInitializer.TINTOBERRY, 7 );
+                        append( ResourceInitializer.NARCOBERRY, 4 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1185,9 +1185,9 @@ public class EngramInitializer {
                     "Silver",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.NARCOBERRY, 6);
-                        append(ResourceInitializer.STIMBERRY, 12);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.NARCOBERRY, 6 );
+                        append( ResourceInitializer.STIMBERRY, 12 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1195,9 +1195,9 @@ public class EngramInitializer {
                     "Sky",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AZULBERRY, 12);
-                        append(ResourceInitializer.STIMBERRY, 6);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.AZULBERRY, 12 );
+                        append( ResourceInitializer.STIMBERRY, 6 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1205,9 +1205,9 @@ public class EngramInitializer {
                     "Slate",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.NARCOBERRY, 12);
-                        append(ResourceInitializer.STIMBERRY, 6);
-                        append(ResourceInitializer.SPARKPOWDER, 1);
+                        append( ResourceInitializer.NARCOBERRY, 12 );
+                        append( ResourceInitializer.STIMBERRY, 6 );
+                        append( ResourceInitializer.SPARKPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1215,11 +1215,11 @@ public class EngramInitializer {
                     "Tan",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 4);
-                        append(ResourceInitializer.AZULBERRY, 1);
-                        append(ResourceInitializer.TINTOBERRY, 7);
-                        append(ResourceInitializer.STIMBERRY, 6);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 4 );
+                        append( ResourceInitializer.AZULBERRY, 1 );
+                        append( ResourceInitializer.TINTOBERRY, 7 );
+                        append( ResourceInitializer.STIMBERRY, 6 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1227,10 +1227,10 @@ public class EngramInitializer {
                     "Tangerine",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 7);
-                        append(ResourceInitializer.TINTOBERRY, 7);
-                        append(ResourceInitializer.NARCOBERRY, 4);
-                        append(ResourceInitializer.GUNPOWDER, 1);
+                        append( ResourceInitializer.AMARBERRY, 7 );
+                        append( ResourceInitializer.TINTOBERRY, 7 );
+                        append( ResourceInitializer.NARCOBERRY, 4 );
+                        append( ResourceInitializer.GUNPOWDER, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1238,8 +1238,8 @@ public class EngramInitializer {
                     "White",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STIMBERRY, 15);
-                        append(ResourceInitializer.CHARCOAL, 2);
+                        append( ResourceInitializer.STIMBERRY, 15 );
+                        append( ResourceInitializer.CHARCOAL, 2 );
                     }},
                     CategoryInitializer.DYES.ID));
             add(new InitEngram(
@@ -1247,8 +1247,8 @@ public class EngramInitializer {
                     "Yellow",
                     "",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.AMARBERRY, 15);
-                        append(ResourceInitializer.CHARCOAL, 1);
+                        append( ResourceInitializer.AMARBERRY, 15 );
+                        append( ResourceInitializer.CHARCOAL, 1 );
                     }},
                     CategoryInitializer.DYES.ID));
 
@@ -1258,8 +1258,8 @@ public class EngramInitializer {
                     "Blood Extraction Syringe",
                     "Use this on a human to extract their blood for transfusion.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 1);
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 1 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1267,10 +1267,10 @@ public class EngramInitializer {
                     "Canteen",
                     "Safely carries a sizable amount of water, and is reasonably lightweight.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 10);
-                        append(ResourceInitializer.HIDE, 2);
-                        append(ResourceInitializer.CEMENTING_PASTE, 4);
-                        append(ResourceInitializer.METAL_INGOT, 1);
+                        append( ResourceInitializer.POLYMER, 10 );
+                        append( ResourceInitializer.HIDE, 2 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 4 );
+                        append( ResourceInitializer.METAL_INGOT, 1 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1278,10 +1278,10 @@ public class EngramInitializer {
                     "Flare Gun",
                     "A single-use flare launcher. Fires a bright ball of Sparkpowder to temporarily light an area.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.FIBER, 2);
-                        append(ResourceInitializer.SPARKPOWDER, 10);
-                        append(ResourceInitializer.GUNPOWDER, 2);
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.FIBER, 2 );
+                        append( ResourceInitializer.SPARKPOWDER, 10 );
+                        append( ResourceInitializer.GUNPOWDER, 2 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1289,12 +1289,12 @@ public class EngramInitializer {
                     "Magnifying Glass",
                     "This instrument, while primitive, is effective as short-range analysis of both flora and fauna.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 15);
-                        append(ResourceInitializer.HIDE, 20);
-                        append(ResourceInitializer.FIBER, 20);
-                        append(ResourceInitializer.CRYSTAL, 30);
-                        append(ResourceInitializer.OBSIDIAN, 15);
-                        append(ResourceInitializer.METAL_INGOT, 8);
+                        append( ResourceInitializer.WOOD, 15 );
+                        append( ResourceInitializer.HIDE, 20 );
+                        append( ResourceInitializer.FIBER, 20 );
+                        append( ResourceInitializer.CRYSTAL, 30 );
+                        append( ResourceInitializer.OBSIDIAN, 15 );
+                        append( ResourceInitializer.METAL_INGOT, 8 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1302,8 +1302,8 @@ public class EngramInitializer {
                     "Note",
                     "Write your own text on a note! Or put it in a Cooking Pot to make a Custom Recipe!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 3);
-                        append(ResourceInitializer.FIBER, 1);
+                        append( ResourceInitializer.THATCH, 3 );
+                        append( ResourceInitializer.FIBER, 1 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1311,9 +1311,9 @@ public class EngramInitializer {
                     "Paintbrush",
                     "Apply a dye to this, then swing it at structures to paint them.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 1);
-                        append(ResourceInitializer.HIDE, 3);
-                        append(ResourceInitializer.THATCH, 10);
+                        append( ResourceInitializer.WOOD, 1 );
+                        append( ResourceInitializer.HIDE, 3 );
+                        append( ResourceInitializer.THATCH, 10 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1321,9 +1321,9 @@ public class EngramInitializer {
                     "Parachute",
                     "Use this while falling to slow your fall. Jump while parachuting to deactivate it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 40);
-                        append(ResourceInitializer.FIBER, 20);
-                        append(ResourceInitializer.HIDE, 10);
+                        append( ResourceInitializer.THATCH, 40 );
+                        append( ResourceInitializer.FIBER, 20 );
+                        append( ResourceInitializer.HIDE, 10 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1331,11 +1331,11 @@ public class EngramInitializer {
                     "Re-Fertilizer",
                     "Spread these seeds of concentrated nutrients around and what was once harvested may yet regrow, even nearby a structure!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.RARE_MUSHROOM, 1);
-                        append(ResourceInitializer.RARE_FLOWER, 1);
-                        append(ResourceInitializer.SPARKPOWDER, 4);
-                        append(ResourceInitializer.FERTILIZER, 1);
-                        append(ResourceInitializer.OIL, 3);
+                        append( ResourceInitializer.RARE_MUSHROOM, 1 );
+                        append( ResourceInitializer.RARE_FLOWER, 1 );
+                        append( ResourceInitializer.SPARKPOWDER, 4 );
+                        append( ResourceInitializer.FERTILIZER, 1 );
+                        append( ResourceInitializer.OIL, 3 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1343,12 +1343,12 @@ public class EngramInitializer {
                     "Spray Painter",
                     "Apply a dye to this, then shoot it at structures to paint them. Hold Alt Fire + Hotkey Number to set painting region.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 50);
-                        append(ResourceInitializer.POLYMER, 35);
-                        append(ResourceInitializer.CRYSTAL, 40);
-                        append(ResourceInitializer.CEMENTING_PASTE, 60);
-                        append(ResourceInitializer.OIL, 20);
-                        append(ResourceInitializer.HIDE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 50 );
+                        append( ResourceInitializer.POLYMER, 35 );
+                        append( ResourceInitializer.CRYSTAL, 40 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 60 );
+                        append( ResourceInitializer.OIL, 20 );
+                        append( ResourceInitializer.HIDE, 10 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1356,10 +1356,10 @@ public class EngramInitializer {
                     "Spyglass",
                     "This instrument, while primitive, is quite effective at long-range reconnaissance.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 5);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 10);
-                        append(ResourceInitializer.CRYSTAL, 2);
+                        append( ResourceInitializer.WOOD, 5 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 10 );
+                        append( ResourceInitializer.CRYSTAL, 2 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1367,9 +1367,9 @@ public class EngramInitializer {
                     "Water Jar",
                     "Safely carries a lot of water, but is also a bit heavy.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.CEMENTING_PASTE, 7);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.CRYSTAL, 2);
+                        append( ResourceInitializer.CEMENTING_PASTE, 7 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.CRYSTAL, 2 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1377,8 +1377,8 @@ public class EngramInitializer {
                     "Waterskin",
                     "Good to keep you hydrated, but slowly leaks water.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 4);
-                        append(ResourceInitializer.FIBER, 12);
+                        append( ResourceInitializer.HIDE, 4 );
+                        append( ResourceInitializer.FIBER, 12 );
                     }},
                     CategoryInitializer.MISC.ID));
             add(new InitEngram(
@@ -1386,9 +1386,9 @@ public class EngramInitializer {
                     "Wooden Raft",
                     "A floating wooden platform that you can pilot across the water. Can support the weight of structures and be built on.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 250);
-                        append(ResourceInitializer.FIBER, 125);
-                        append(ResourceInitializer.HIDE, 75);
+                        append( ResourceInitializer.WOOD, 250 );
+                        append( ResourceInitializer.FIBER, 125 );
+                        append( ResourceInitializer.HIDE, 75 );
                     }},
                     CategoryInitializer.MISC.ID));
 
@@ -1398,9 +1398,9 @@ public class EngramInitializer {
                     "Compass",
                     "Use this to find which direction you are traveling.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_ORE, 5);
-                        append(ResourceInitializer.FLINT, 5);
-                        append(ResourceInitializer.FIBER, 30);
+                        append( ResourceInitializer.METAL_ORE, 5 );
+                        append( ResourceInitializer.FLINT, 5 );
+                        append( ResourceInitializer.FIBER, 30 );
                     }},
                     CategoryInitializer.NAVIGATION.ID));
             add(new InitEngram(
@@ -1408,8 +1408,8 @@ public class EngramInitializer {
                     "GPS",
                     "Detects strange energy from the three Obelisks to triangulate your exact location on the island.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 5);
-                        append(ResourceInitializer.ELECTRONICS, 20);
+                        append( ResourceInitializer.POLYMER, 5 );
+                        append( ResourceInitializer.ELECTRONICS, 20 );
                     }},
                     CategoryInitializer.NAVIGATION.ID));
             add(new InitEngram(
@@ -1417,11 +1417,11 @@ public class EngramInitializer {
                     "Transponder Node",
                     "Can be attached to living Creatures to track their location.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 3);
-                        append(ResourceInitializer.CEMENTING_PASTE, 12);
-                        append(ResourceInitializer.ELECTRONICS, 14);
-                        append(ResourceInitializer.POLYMER, 10);
-                        append(ResourceInitializer.CRYSTAL, 12);
+                        append( ResourceInitializer.METAL_INGOT, 3 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 12 );
+                        append( ResourceInitializer.ELECTRONICS, 14 );
+                        append( ResourceInitializer.POLYMER, 10 );
+                        append( ResourceInitializer.CRYSTAL, 12 );
                     }},
                     CategoryInitializer.NAVIGATION.ID));
             add(new InitEngram(
@@ -1429,11 +1429,11 @@ public class EngramInitializer {
                     "Transponder Tracker",
                     "Uses strange energy from the three Obelisks to triangulate all Transponder Nodes on the specified frequency.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 20);
-                        append(ResourceInitializer.CEMENTING_PASTE, 30);
-                        append(ResourceInitializer.ELECTRONICS, 80);
-                        append(ResourceInitializer.POLYMER, 50);
-                        append(ResourceInitializer.CRYSTAL, 25);
+                        append( ResourceInitializer.METAL_INGOT, 20 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 30 );
+                        append( ResourceInitializer.ELECTRONICS, 80 );
+                        append( ResourceInitializer.POLYMER, 50 );
+                        append( ResourceInitializer.CRYSTAL, 25 );
                     }},
                     CategoryInitializer.NAVIGATION.ID));
 
@@ -1443,9 +1443,9 @@ public class EngramInitializer {
                     "Handcuffs",
                     "Equip this onto an unconscious player, and they'll be restrained when they wake up!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 50);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
-                        append(ResourceInitializer.OBSIDIAN, 5);
+                        append( ResourceInitializer.METAL_INGOT, 50 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
+                        append( ResourceInitializer.OBSIDIAN, 5 );
                     }},
                     CategoryInitializer.OFFHAND.ID));
 
@@ -1455,9 +1455,9 @@ public class EngramInitializer {
                     "Ankylo Saddle",
                     "Equip an Ankylo with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 260);
-                        append(ResourceInitializer.FIBER, 140);
-                        append(ResourceInitializer.METAL_INGOT, 10);
+                        append( ResourceInitializer.HIDE, 260 );
+                        append( ResourceInitializer.FIBER, 140 );
+                        append( ResourceInitializer.METAL_INGOT, 10 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1465,9 +1465,9 @@ public class EngramInitializer {
                     "Araneo Saddle",
                     "Equip an Araneo with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 260);
-                        append(ResourceInitializer.FIBER, 140);
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 100);
+                        append( ResourceInitializer.HIDE, 260 );
+                        append( ResourceInitializer.FIBER, 140 );
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 100 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1475,9 +1475,9 @@ public class EngramInitializer {
                     "Argentavis Saddle",
                     "Equip an Argentavis with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 350);
-                        append(ResourceInitializer.FIBER, 185);
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 150);
+                        append( ResourceInitializer.HIDE, 350 );
+                        append( ResourceInitializer.FIBER, 185 );
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 150 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1485,13 +1485,13 @@ public class EngramInitializer {
                     "Arthropluera Saddle",
                     "Equip an Arthropluera with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 80);
-                        append(ResourceInitializer.FIBER, 50);
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.METAL_INGOT, 30);
-                        append(ResourceInitializer.FLINT, 8);
-                        append(ResourceInitializer.CEMENTING_PASTE, 15);
-                        append(ResourceInitializer.OBSIDIAN, 35);
+                        append( ResourceInitializer.HIDE, 80 );
+                        append( ResourceInitializer.FIBER, 50 );
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.METAL_INGOT, 30 );
+                        append( ResourceInitializer.FLINT, 8 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 15 );
+                        append( ResourceInitializer.OBSIDIAN, 35 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1499,10 +1499,10 @@ public class EngramInitializer {
                     "Beelzebufo Saddle",
                     "Equip a Beelzebufo with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 170);
-                        append(ResourceInitializer.FIBER, 95);
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.CEMENTING_PASTE, 5);
+                        append( ResourceInitializer.HIDE, 170 );
+                        append( ResourceInitializer.FIBER, 95 );
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 5 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1510,9 +1510,9 @@ public class EngramInitializer {
                     "Bronto Saddle",
                     "Equip a Bronto with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 350);
-                        append(ResourceInitializer.FIBER, 185);
-                        append(ResourceInitializer.METAL_INGOT, 40);
+                        append( ResourceInitializer.HIDE, 350 );
+                        append( ResourceInitializer.FIBER, 185 );
+                        append( ResourceInitializer.METAL_INGOT, 40 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1520,11 +1520,11 @@ public class EngramInitializer {
                     "Bronto Platform Saddle",
                     "Equip a Bronto with this to ride it. You can build structures on the large platform to make a mobile base.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 550);
-                        append(ResourceInitializer.FIBER, 325);
-                        append(ResourceInitializer.METAL_INGOT, 90);
-                        append(ResourceInitializer.SILICA_PEARLS, 125);
-                        append(ResourceInitializer.CEMENTING_PASTE, 45);
+                        append( ResourceInitializer.HIDE, 550 );
+                        append( ResourceInitializer.FIBER, 325 );
+                        append( ResourceInitializer.METAL_INGOT, 90 );
+                        append( ResourceInitializer.SILICA_PEARLS, 125 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 45 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1532,9 +1532,9 @@ public class EngramInitializer {
                     "Carbonemys Saddle",
                     "Equip a Carboenemys with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 170);
-                        append(ResourceInitializer.FIBER, 95);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.HIDE, 170 );
+                        append( ResourceInitializer.FIBER, 95 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1542,9 +1542,9 @@ public class EngramInitializer {
                     "Carno Saddle",
                     "Equip a Carnotaurus with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 320);
-                        append(ResourceInitializer.FIBER, 170);
-                        append(ResourceInitializer.METAL_INGOT, 30);
+                        append( ResourceInitializer.HIDE, 320 );
+                        append( ResourceInitializer.FIBER, 170 );
+                        append( ResourceInitializer.METAL_INGOT, 30 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1552,11 +1552,11 @@ public class EngramInitializer {
                     "Castoroides Saddle",
                     "Equip a Giant Beaver with this to ride it. Can be used as a mobile Smithy! Sounds pretty good eh?",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 290);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.METAL_INGOT, 100);
-                        append(ResourceInitializer.THATCH, 180);
-                        append(ResourceInitializer.CEMENTING_PASTE, 140);
+                        append( ResourceInitializer.HIDE, 290 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.METAL_INGOT, 100 );
+                        append( ResourceInitializer.THATCH, 180 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 140 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1564,10 +1564,10 @@ public class EngramInitializer {
                     "Diplodocus Saddle",
                     "A saddle for your Diplodocus. It has ten seats! Bring lots of friends!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 820);
-                        append(ResourceInitializer.FIBER, 600);
-                        append(ResourceInitializer.WOOD, 250);
-                        append(ResourceInitializer.METAL_INGOT, 200);
+                        append( ResourceInitializer.HIDE, 820 );
+                        append( ResourceInitializer.FIBER, 600 );
+                        append( ResourceInitializer.WOOD, 250 );
+                        append( ResourceInitializer.METAL_INGOT, 200 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1575,9 +1575,9 @@ public class EngramInitializer {
                     "Dire Bear Saddle",
                     "Equip a Dire Bear with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 300);
-                        append(ResourceInitializer.FIBER, 130);
-                        append(ResourceInitializer.CEMENTING_PASTE, 100);
+                        append( ResourceInitializer.HIDE, 300 );
+                        append( ResourceInitializer.FIBER, 130 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 100 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1585,10 +1585,10 @@ public class EngramInitializer {
                     "Doedicurus Saddle",
                     "Equip a Doedicurus with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 200);
-                        append(ResourceInitializer.FIBER, 110);
-                        append(ResourceInitializer.STONE, 15);
-                        append(ResourceInitializer.METAL_INGOT, 5);
+                        append( ResourceInitializer.HIDE, 200 );
+                        append( ResourceInitializer.FIBER, 110 );
+                        append( ResourceInitializer.STONE, 15 );
+                        append( ResourceInitializer.METAL_INGOT, 5 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1596,10 +1596,10 @@ public class EngramInitializer {
                     "Dunkleosteus",
                     "Equip a Dunkleosteus with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 300);
-                        append(ResourceInitializer.FIBER, 180);
-                        append(ResourceInitializer.CEMENTING_PASTE, 120);
-                        append(ResourceInitializer.METAL_INGOT, 80);
+                        append( ResourceInitializer.HIDE, 300 );
+                        append( ResourceInitializer.FIBER, 180 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 120 );
+                        append( ResourceInitializer.METAL_INGOT, 80 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1607,10 +1607,10 @@ public class EngramInitializer {
                     "Gallimimus Saddle",
                     "A saddle for your Gallimimus. It has three seats! Bring your friends!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 240);
-                        append(ResourceInitializer.FIBER, 160);
-                        append(ResourceInitializer.WOOD, 120);
-                        append(ResourceInitializer.METAL_INGOT, 25);
+                        append( ResourceInitializer.HIDE, 240 );
+                        append( ResourceInitializer.FIBER, 160 );
+                        append( ResourceInitializer.WOOD, 120 );
+                        append( ResourceInitializer.METAL_INGOT, 25 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1618,9 +1618,9 @@ public class EngramInitializer {
                     "Giganotosaurus Saddle",
                     "Equip a Giganotosaurus with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 680);
-                        append(ResourceInitializer.FIBER, 350);
-                        append(ResourceInitializer.METAL_INGOT, 120);
+                        append( ResourceInitializer.HIDE, 680 );
+                        append( ResourceInitializer.FIBER, 350 );
+                        append( ResourceInitializer.METAL_INGOT, 120 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1628,11 +1628,11 @@ public class EngramInitializer {
                     "Ichthyosaurus Saddle",
                     "Equip an Ichthyosaurus with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 55);
-                        append(ResourceInitializer.FIBER, 50);
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.METAL_ORE, 10);
-                        append(ResourceInitializer.FLINT, 8);
+                        append( ResourceInitializer.HIDE, 55 );
+                        append( ResourceInitializer.FIBER, 50 );
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.METAL_ORE, 10 );
+                        append( ResourceInitializer.FLINT, 8 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1640,9 +1640,9 @@ public class EngramInitializer {
                     "Mammoth Saddle",
                     "Equip a Mammoth with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 260);
-                        append(ResourceInitializer.FIBER, 140);
-                        append(ResourceInitializer.METAL_INGOT, 10);
+                        append( ResourceInitializer.HIDE, 260 );
+                        append( ResourceInitializer.FIBER, 140 );
+                        append( ResourceInitializer.METAL_INGOT, 10 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1650,11 +1650,11 @@ public class EngramInitializer {
                     "Manta Saddle",
                     "Equip a Manta with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 100);
-                        append(ResourceInitializer.FIBER, 70);
-                        append(ResourceInitializer.WOOD, 25);
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.FLINT, 12);
+                        append( ResourceInitializer.HIDE, 100 );
+                        append( ResourceInitializer.FIBER, 70 );
+                        append( ResourceInitializer.WOOD, 25 );
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.FLINT, 12 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1662,9 +1662,9 @@ public class EngramInitializer {
                     "Megaloceros Saddle",
                     "Equip a Megaloceros with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 200);
-                        append(ResourceInitializer.FIBER, 110);
-                        append(ResourceInitializer.METAL_INGOT, 5);
+                        append( ResourceInitializer.HIDE, 200 );
+                        append( ResourceInitializer.FIBER, 110 );
+                        append( ResourceInitializer.METAL_INGOT, 5 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1672,9 +1672,9 @@ public class EngramInitializer {
                     "Megalodon Saddle",
                     "Equip a Megalodon with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 290);
-                        append(ResourceInitializer.FIBER, 155);
-                        append(ResourceInitializer.CEMENTING_PASTE, 30);
+                        append( ResourceInitializer.HIDE, 290 );
+                        append( ResourceInitializer.FIBER, 155 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 30 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1682,11 +1682,11 @@ public class EngramInitializer {
                     "Mosasaurus Saddle",
                     "Equip a Mosasaurus with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 800);
-                        append(ResourceInitializer.FIBER, 600);
-                        append(ResourceInitializer.CEMENTING_PASTE, 140);
-                        append(ResourceInitializer.SILICA_PEARLS, 100);
-                        append(ResourceInitializer.METAL_INGOT, 400);
+                        append( ResourceInitializer.HIDE, 800 );
+                        append( ResourceInitializer.FIBER, 600 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 140 );
+                        append( ResourceInitializer.SILICA_PEARLS, 100 );
+                        append( ResourceInitializer.METAL_INGOT, 400 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1694,11 +1694,11 @@ public class EngramInitializer {
                     "Mosasaurus Platform Saddle",
                     "Equip a Mosasaurus with this to ride it. You can build structures on the large platform to make a mobile base.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 960);
-                        append(ResourceInitializer.FIBER, 720);
-                        append(ResourceInitializer.METAL_INGOT, 1200);
-                        append(ResourceInitializer.SILICA_PEARLS, 320);
-                        append(ResourceInitializer.CEMENTING_PASTE, 180);
+                        append( ResourceInitializer.HIDE, 960 );
+                        append( ResourceInitializer.FIBER, 720 );
+                        append( ResourceInitializer.METAL_INGOT, 1200 );
+                        append( ResourceInitializer.SILICA_PEARLS, 320 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 180 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1706,9 +1706,9 @@ public class EngramInitializer {
                     "Pachy Saddle",
                     "Equip a Pachy with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 110);
-                        append(ResourceInitializer.FIBER, 65);
-                        append(ResourceInitializer.WOOD, 20);
+                        append( ResourceInitializer.HIDE, 110 );
+                        append( ResourceInitializer.FIBER, 65 );
+                        append( ResourceInitializer.WOOD, 20 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1716,9 +1716,9 @@ public class EngramInitializer {
                     "Paracer Saddle",
                     "Equip a Paraceratherium with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 200);
-                        append(ResourceInitializer.FIBER, 110);
-                        append(ResourceInitializer.METAL_INGOT, 10);
+                        append( ResourceInitializer.HIDE, 200 );
+                        append( ResourceInitializer.FIBER, 110 );
+                        append( ResourceInitializer.METAL_INGOT, 10 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1726,11 +1726,11 @@ public class EngramInitializer {
                     "Paracer Platform Saddle",
                     "Equip a Paraceratherium with this to ride it. You can build structures on the large platform to make a mobile base.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 320);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.METAL_INGOT, 70);
-                        append(ResourceInitializer.SILICA_PEARLS, 45);
-                        append(ResourceInitializer.CEMENTING_PASTE, 25);
+                        append( ResourceInitializer.HIDE, 320 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.METAL_INGOT, 70 );
+                        append( ResourceInitializer.SILICA_PEARLS, 45 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 25 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1738,9 +1738,9 @@ public class EngramInitializer {
                     "Parasaur Saddle",
                     "Equip a Parasaur with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 80);
-                        append(ResourceInitializer.FIBER, 50);
-                        append(ResourceInitializer.WOOD, 15);
+                        append( ResourceInitializer.HIDE, 80 );
+                        append( ResourceInitializer.FIBER, 50 );
+                        append( ResourceInitializer.WOOD, 15 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1748,9 +1748,9 @@ public class EngramInitializer {
                     "Phiomia Saddle",
                     "Equip a Phiomia with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 20);
-                        append(ResourceInitializer.FIBER, 15);
-                        append(ResourceInitializer.WOOD, 5);
+                        append( ResourceInitializer.HIDE, 20 );
+                        append( ResourceInitializer.FIBER, 15 );
+                        append( ResourceInitializer.WOOD, 5 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1758,10 +1758,10 @@ public class EngramInitializer {
                     "Plesiosaur Saddle",
                     "Equip a Plesiosaur with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 400);
-                        append(ResourceInitializer.FIBER, 250);
-                        append(ResourceInitializer.CEMENTING_PASTE, 65);
-                        append(ResourceInitializer.SILICA_PEARLS, 40);
+                        append( ResourceInitializer.HIDE, 400 );
+                        append( ResourceInitializer.FIBER, 250 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 65 );
+                        append( ResourceInitializer.SILICA_PEARLS, 40 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1769,11 +1769,11 @@ public class EngramInitializer {
                     "Plesiosaur Platform Saddle",
                     "Equip a Plesiosaur with this to ride it. You can build structures on the large platform to make a mobile base.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 680);
-                        append(ResourceInitializer.FIBER, 405);
-                        append(ResourceInitializer.METAL_INGOT, 112);
-                        append(ResourceInitializer.SILICA_PEARLS, 155);
-                        append(ResourceInitializer.CEMENTING_PASTE, 55);
+                        append( ResourceInitializer.HIDE, 680 );
+                        append( ResourceInitializer.FIBER, 405 );
+                        append( ResourceInitializer.METAL_INGOT, 112 );
+                        append( ResourceInitializer.SILICA_PEARLS, 155 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 55 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1781,10 +1781,10 @@ public class EngramInitializer {
                     "Procoptodon Saddle",
                     "Equip a Procoptodon with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 550);
-                        append(ResourceInitializer.PELT, 150);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.METAL_INGOT, 70);
+                        append( ResourceInitializer.HIDE, 550 );
+                        append( ResourceInitializer.PELT, 150 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.METAL_INGOT, 70 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1792,9 +1792,9 @@ public class EngramInitializer {
                     "Pteranodon Saddle",
                     "Equip a Pteranodon with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 230);
-                        append(ResourceInitializer.FIBER, 125);
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 75);
+                        append( ResourceInitializer.HIDE, 230 );
+                        append( ResourceInitializer.FIBER, 125 );
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 75 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1802,9 +1802,9 @@ public class EngramInitializer {
                     "Pulmonoscorpius Saddle",
                     "Equip a Pulmonoscorpius with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 170);
-                        append(ResourceInitializer.FIBER, 95);
-                        append(ResourceInitializer.WOOD, 3);
+                        append( ResourceInitializer.HIDE, 170 );
+                        append( ResourceInitializer.FIBER, 95 );
+                        append( ResourceInitializer.WOOD, 3 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1812,10 +1812,10 @@ public class EngramInitializer {
                     "Quetzal Saddle",
                     "Equip a Quetzal with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 750);
-                        append(ResourceInitializer.FIBER, 500);
-                        append(ResourceInitializer.CEMENTING_PASTE, 100);
-                        append(ResourceInitializer.SILICA_PEARLS, 85);
+                        append( ResourceInitializer.HIDE, 750 );
+                        append( ResourceInitializer.FIBER, 500 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 100 );
+                        append( ResourceInitializer.SILICA_PEARLS, 85 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1823,11 +1823,11 @@ public class EngramInitializer {
                     "Quetzal Platform Saddle",
                     "Equip a Quetzal with this to ride it. You can build structures on the large platform to make a mobile base.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 620);
-                        append(ResourceInitializer.FIBER, 400);
-                        append(ResourceInitializer.METAL_INGOT, 180);
-                        append(ResourceInitializer.SILICA_PEARLS, 220);
-                        append(ResourceInitializer.CEMENTING_PASTE, 120);
+                        append( ResourceInitializer.HIDE, 620 );
+                        append( ResourceInitializer.FIBER, 400 );
+                        append( ResourceInitializer.METAL_INGOT, 180 );
+                        append( ResourceInitializer.SILICA_PEARLS, 220 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 120 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1835,9 +1835,9 @@ public class EngramInitializer {
                     "Raptor Saddle",
                     "Equip a Raptor with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 110);
-                        append(ResourceInitializer.FIBER, 65);
-                        append(ResourceInitializer.WOOD, 20);
+                        append( ResourceInitializer.HIDE, 110 );
+                        append( ResourceInitializer.FIBER, 65 );
+                        append( ResourceInitializer.WOOD, 20 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1845,9 +1845,9 @@ public class EngramInitializer {
                     "Rex Saddle",
                     "Equip a T-Rex with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 380);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.METAL_INGOT, 50);
+                        append( ResourceInitializer.HIDE, 380 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.METAL_INGOT, 50 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1855,9 +1855,9 @@ public class EngramInitializer {
                     "Sabertooth Saddle",
                     "Equip a Sabertooth with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 290);
-                        append(ResourceInitializer.FIBER, 155);
-                        append(ResourceInitializer.METAL_INGOT, 20);
+                        append( ResourceInitializer.HIDE, 290 );
+                        append( ResourceInitializer.FIBER, 155 );
+                        append( ResourceInitializer.METAL_INGOT, 20 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1865,9 +1865,9 @@ public class EngramInitializer {
                     "Sarco Saddle",
                     "Equip a Sarco with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 230);
-                        append(ResourceInitializer.FIBER, 75);
-                        append(ResourceInitializer.CEMENTING_PASTE, 20);
+                        append( ResourceInitializer.HIDE, 230 );
+                        append( ResourceInitializer.FIBER, 75 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 20 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1875,10 +1875,10 @@ public class EngramInitializer {
                     "Spino Saddle",
                     "Equip a Spino with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 380);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.CEMENTING_PASTE, 45);
-                        append(ResourceInitializer.SILICA_PEARLS, 25);
+                        append( ResourceInitializer.HIDE, 380 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 45 );
+                        append( ResourceInitializer.SILICA_PEARLS, 25 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1886,9 +1886,9 @@ public class EngramInitializer {
                     "Stego Saddle",
                     "Equip a Stego with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 200);
-                        append(ResourceInitializer.FIBER, 110);
-                        append(ResourceInitializer.WOOD, 35);
+                        append( ResourceInitializer.HIDE, 200 );
+                        append( ResourceInitializer.FIBER, 110 );
+                        append( ResourceInitializer.WOOD, 35 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1896,9 +1896,9 @@ public class EngramInitializer {
                     "Terror Bird",
                     "Equip a Terror Bird with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 110);
-                        append(ResourceInitializer.FIBER, 65);
-                        append(ResourceInitializer.WOOD, 20);
+                        append( ResourceInitializer.HIDE, 110 );
+                        append( ResourceInitializer.FIBER, 65 );
+                        append( ResourceInitializer.WOOD, 20 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1906,10 +1906,10 @@ public class EngramInitializer {
                     "Titanosaur Platform Saddle",
                     "Equip a Titanosaur with this to ride it. You can build structures on the large platform to make a mobile base.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 4000);
-                        append(ResourceInitializer.FIBER, 2000);
-                        append(ResourceInitializer.METAL_INGOT, 4000);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1600);
+                        append( ResourceInitializer.HIDE, 4000 );
+                        append( ResourceInitializer.FIBER, 2000 );
+                        append( ResourceInitializer.METAL_INGOT, 4000 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1600 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1917,9 +1917,9 @@ public class EngramInitializer {
                     "Trike Saddle",
                     "Equip a Triceratops with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 140);
-                        append(ResourceInitializer.FIBER, 80);
-                        append(ResourceInitializer.WOOD, 25);
+                        append( ResourceInitializer.HIDE, 140 );
+                        append( ResourceInitializer.FIBER, 80 );
+                        append( ResourceInitializer.WOOD, 25 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1927,10 +1927,10 @@ public class EngramInitializer {
                     "Woolly Rhino Saddle",
                     "Equip a Woolly Rhino with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 250);
-                        append(ResourceInitializer.FIBER, 130);
-                        append(ResourceInitializer.CEMENTING_PASTE, 100);
-                        append(ResourceInitializer.METAL_INGOT, 60);
+                        append( ResourceInitializer.HIDE, 250 );
+                        append( ResourceInitializer.FIBER, 130 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 100 );
+                        append( ResourceInitializer.METAL_INGOT, 60 );
                     }},
                     CategoryInitializer.SADDLES.ID));
             add(new InitEngram(
@@ -1938,9 +1938,9 @@ public class EngramInitializer {
                     "Pelagornis Saddle",
                     "Equip a Pelagornis with this to ride it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 230);
-                        append(ResourceInitializer.FIBER, 125);
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 100);
+                        append( ResourceInitializer.HIDE, 230 );
+                        append( ResourceInitializer.FIBER, 125 );
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 100 );
                     }},
                     CategoryInitializer.SADDLES.ID));
 
@@ -1950,8 +1950,8 @@ public class EngramInitializer {
                     "Advanced Bullet",
                     "A small-caliber modern bullet, primarily used with fabricated handguns.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.GUNPOWDER, 3);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.GUNPOWDER, 3 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -1959,8 +1959,8 @@ public class EngramInitializer {
                     "Advanced Rifle Bullet",
                     "Primarily used with fabricated rifles.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.GUNPOWDER, 9);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.GUNPOWDER, 9 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -1968,8 +1968,8 @@ public class EngramInitializer {
                     "Advanced Sniper Bullet",
                     "A high-caliber modern bullet, primarily used with fabricated sniper rifles",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.GUNPOWDER, 12);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.GUNPOWDER, 12 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -1977,12 +1977,12 @@ public class EngramInitializer {
                     "Ballista Bolt",
                     "A massive Bolt with a cast iron arrow head. Can only be used in a Ballista Turret. If it doesn't break, you can recover your ammo.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 14);
-                        append(ResourceInitializer.WOOD, 14);
-                        append(ResourceInitializer.THATCH, 20);
-                        append(ResourceInitializer.FLINT, 5);
-                        append(ResourceInitializer.FIBER, 20);
-                        append(ResourceInitializer.CEMENTING_PASTE, 2);
+                        append( ResourceInitializer.METAL_INGOT, 14 );
+                        append( ResourceInitializer.WOOD, 14 );
+                        append( ResourceInitializer.THATCH, 20 );
+                        append( ResourceInitializer.FLINT, 5 );
+                        append( ResourceInitializer.FIBER, 20 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 2 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -1990,8 +1990,8 @@ public class EngramInitializer {
                     "Boulder",
                     "Massive rock with metal spikes. Can only be used in a Catapult Turret.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 30);
-                        append(ResourceInitializer.METAL_INGOT, 3);
+                        append( ResourceInitializer.STONE, 30 );
+                        append( ResourceInitializer.METAL_INGOT, 3 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -1999,8 +1999,8 @@ public class EngramInitializer {
                     "C4 Charge",
                     "This advanced explosive can annihilate structures.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.GUNPOWDER, 3);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.GUNPOWDER, 3 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2008,8 +2008,8 @@ public class EngramInitializer {
                     "Cannon Ball",
                     "A gigantic ball of heavy metal, capable of demolishing very strong structures.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.GUNPOWDER, 3);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.GUNPOWDER, 3 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2017,9 +2017,9 @@ public class EngramInitializer {
                     "Chain Bola",
                     "A gigantic bola made of metal chain, capable of ensnaring larger creatures. Usable within a Ballista turret.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 65);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
-                        append(ResourceInitializer.OBSIDIAN, 2);
+                        append( ResourceInitializer.METAL_INGOT, 65 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
+                        append( ResourceInitializer.OBSIDIAN, 2 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2027,11 +2027,11 @@ public class EngramInitializer {
                     "Grappling Hook",
                     "Apply on the Crossbow to grapple onto the environment & other creatures. Primary Fire to \"Reel-In\", Secondary Fire to \"Reel-Out\", Crouch to Detach, Jump + Reel-In to Vault-Jump!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE_ARROW, 3);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1);
-                        append(ResourceInitializer.METAL_INGOT, 9);
-                        append(ResourceInitializer.THATCH, 2);
-                        append(ResourceInitializer.FIBER, 35);
+                        append( ResourceInitializer.STONE_ARROW, 3 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1 );
+                        append( ResourceInitializer.METAL_INGOT, 9 );
+                        append( ResourceInitializer.THATCH, 2 );
+                        append( ResourceInitializer.FIBER, 35 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2039,11 +2039,11 @@ public class EngramInitializer {
                     "Metal Arrow",
                     "An armor-and-hide piercing metal arrow.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 3);
-                        append(ResourceInitializer.FIBER, 3);
-                        append(ResourceInitializer.METAL_INGOT, 3);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1);
-                        append(ResourceInitializer.POLYMER, 1);
+                        append( ResourceInitializer.THATCH, 3 );
+                        append( ResourceInitializer.FIBER, 3 );
+                        append( ResourceInitializer.METAL_INGOT, 3 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1 );
+                        append( ResourceInitializer.POLYMER, 1 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2051,11 +2051,11 @@ public class EngramInitializer {
                     "Rocket Propelled Grenade",
                     "A small but powerful explosive, primarily used with rocket launchers.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.GUNPOWDER, 40);
-                        append(ResourceInitializer.CRYSTAL, 10);
-                        append(ResourceInitializer.CEMENTING_PASTE, 20);
-                        append(ResourceInitializer.POLYMER, 10);
-                        append(ResourceInitializer.METAL_INGOT, 12);
+                        append( ResourceInitializer.GUNPOWDER, 40 );
+                        append( ResourceInitializer.CRYSTAL, 10 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 20 );
+                        append( ResourceInitializer.POLYMER, 10 );
+                        append( ResourceInitializer.METAL_INGOT, 12 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2063,8 +2063,8 @@ public class EngramInitializer {
                     "Simple Bullet",
                     "Primarily used with forged handguns.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.GUNPOWDER, 6);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.GUNPOWDER, 6 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2072,8 +2072,8 @@ public class EngramInitializer {
                     "Simple Rifle Ammo",
                     "An odd bullet and casing, used with forged rifles.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.GUNPOWDER, 12);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.GUNPOWDER, 12 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2081,8 +2081,8 @@ public class EngramInitializer {
                     "Simple Shotgun Ammo",
                     "A few simple bullets in a hide casing, used with forged shotguns.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.GUNPOWDER, 3);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.GUNPOWDER, 3 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2090,9 +2090,9 @@ public class EngramInitializer {
                     "Stone Arrow",
                     "An arrow for the bow.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 2);
-                        append(ResourceInitializer.FIBER, 2);
-                        append(ResourceInitializer.FLINT, 1);
+                        append( ResourceInitializer.THATCH, 2 );
+                        append( ResourceInitializer.FIBER, 2 );
+                        append( ResourceInitializer.FLINT, 1 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2100,8 +2100,8 @@ public class EngramInitializer {
                     "Tranquilizer Arrow",
                     "Less deadly than other arrows, but rapidly increases the victim's torpidity.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE_ARROW, 1);
-                        append(ResourceInitializer.NARCOTIC, 1);
+                        append( ResourceInitializer.STONE_ARROW, 1 );
+                        append( ResourceInitializer.NARCOTIC, 1 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
             add(new InitEngram(
@@ -2109,9 +2109,9 @@ public class EngramInitializer {
                     "Tranquilizer Dart",
                     "A potent dart full of tranquilizing poison. For use in a Longneck Rifle. Can not be used with attachments.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.NARCOTIC, 3);
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.SIMPLE_RIFLE_AMMO, 1);
+                        append( ResourceInitializer.NARCOTIC, 3 );
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.SIMPLE_RIFLE_AMMO, 1 );
                     }},
                     CategoryInitializer.WEAPONS.AMMO));
 
@@ -2121,9 +2121,9 @@ public class EngramInitializer {
                     "Flashlight Attachment",
                     "This flashlight sheds light out in a wide area, but makes you easier to see too. Attach this to a supporting weapon to shine light from a weapon.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 40);
-                        append(ResourceInitializer.CRYSTAL, 40);
-                        append(ResourceInitializer.ELECTRONICS, 10);
+                        append( ResourceInitializer.METAL_INGOT, 40 );
+                        append( ResourceInitializer.CRYSTAL, 40 );
+                        append( ResourceInitializer.ELECTRONICS, 10 );
                     }},
                     CategoryInitializer.WEAPONS.ATTACHMENTS));
             add(new InitEngram(
@@ -2131,9 +2131,9 @@ public class EngramInitializer {
                     "Holo-Scope Attachment",
                     "This advanced scope can tell friends from strangers. Attach this to a supporting weapon to gain more accurate aiming.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 40);
-                        append(ResourceInitializer.CRYSTAL, 40);
-                        append(ResourceInitializer.ELECTRONICS, 30);
+                        append( ResourceInitializer.METAL_INGOT, 40 );
+                        append( ResourceInitializer.CRYSTAL, 40 );
+                        append( ResourceInitializer.ELECTRONICS, 30 );
                     }},
                     CategoryInitializer.WEAPONS.ATTACHMENTS));
             add(new InitEngram(
@@ -2141,9 +2141,9 @@ public class EngramInitializer {
                     "Laser Attachment",
                     "This advanced aiming device places a red dot where the weapon is pointed. Attach this to a supporting weapon to add a laser sight.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 50);
-                        append(ResourceInitializer.CRYSTAL, 60);
-                        append(ResourceInitializer.ELECTRONICS, 40);
+                        append( ResourceInitializer.METAL_INGOT, 50 );
+                        append( ResourceInitializer.CRYSTAL, 60 );
+                        append( ResourceInitializer.ELECTRONICS, 40 );
                     }},
                     CategoryInitializer.WEAPONS.ATTACHMENTS));
             add(new InitEngram(
@@ -2151,9 +2151,9 @@ public class EngramInitializer {
                     "Scope Attachment",
                     "The carefully shaped crystal lenses in this scope grant the user a telescopic aim when firing. Attach this to a supporting weapon to gain more accurate aiming.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 40);
-                        append(ResourceInitializer.CRYSTAL, 20);
-                        append(ResourceInitializer.STONE, 5);
+                        append( ResourceInitializer.METAL_INGOT, 40 );
+                        append( ResourceInitializer.CRYSTAL, 20 );
+                        append( ResourceInitializer.STONE, 5 );
                     }},
                     CategoryInitializer.WEAPONS.ATTACHMENTS));
             add(new InitEngram(
@@ -2161,10 +2161,10 @@ public class EngramInitializer {
                     "Silencer Attachment",
                     "The lubricated materials in this silencer slow the gases released from a gunshot, muffling the sounds. Attach this to a supporting weapon for reduced noise when firing.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 50);
-                        append(ResourceInitializer.OIL, 5);
-                        append(ResourceInitializer.CHITIN_OR_KERATIN, 20);
-                        append(ResourceInitializer.HIDE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 50 );
+                        append( ResourceInitializer.OIL, 5 );
+                        append( ResourceInitializer.CHITIN_OR_KERATIN, 20 );
+                        append( ResourceInitializer.HIDE, 10 );
                     }},
                     CategoryInitializer.WEAPONS.ATTACHMENTS));
 
@@ -2174,11 +2174,11 @@ public class EngramInitializer {
                     "C4 Remote Detonator",
                     "This device uses radio waves to detonate all primed C4 packages on the same frequency.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 20);
-                        append(ResourceInitializer.ELECTRONICS, 50);
-                        append(ResourceInitializer.CRYSTAL, 10);
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.CEMENTING_PASTE, 15);
+                        append( ResourceInitializer.POLYMER, 20 );
+                        append( ResourceInitializer.ELECTRONICS, 50 );
+                        append( ResourceInitializer.CRYSTAL, 10 );
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 15 );
                     }},
                     CategoryInitializer.WEAPONS.EXPLOSIVES));
             add(new InitEngram(
@@ -2186,12 +2186,12 @@ public class EngramInitializer {
                     "Grenade",
                     "Pulling the pin starts a 5 second timer to an explosion. Make sure you've thrown it by then.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 15);
-                        append(ResourceInitializer.STONE, 20);
-                        append(ResourceInitializer.GUNPOWDER, 30);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.OIL, 4);
+                        append( ResourceInitializer.FIBER, 15 );
+                        append( ResourceInitializer.STONE, 20 );
+                        append( ResourceInitializer.GUNPOWDER, 30 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.OIL, 4 );
                     }},
                     CategoryInitializer.WEAPONS.EXPLOSIVES));
             add(new InitEngram(
@@ -2199,12 +2199,12 @@ public class EngramInitializer {
                     "Improvised Explosive Device",
                     "Place two of these near each other to create an explosive trap.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.GUNPOWDER, 50);
-                        append(ResourceInitializer.CRYSTAL, 10);
-                        append(ResourceInitializer.FIBER, 35);
-                        append(ResourceInitializer.HIDE, 5);
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.WOOD, 1);
+                        append( ResourceInitializer.GUNPOWDER, 50 );
+                        append( ResourceInitializer.CRYSTAL, 10 );
+                        append( ResourceInitializer.FIBER, 35 );
+                        append( ResourceInitializer.HIDE, 5 );
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.WOOD, 1 );
                     }},
                     CategoryInitializer.WEAPONS.EXPLOSIVES));
             add(new InitEngram(
@@ -2212,14 +2212,14 @@ public class EngramInitializer {
                     "Poison Grenade",
                     "Releases narcotic smoke to knock out anything in the area - only affects humans. Pulling the pin starts a 2.5 second timer to the gas release.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.NARCOTIC, 10);
-                        append(ResourceInitializer.CHARCOAL, 14);
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.SPARKPOWDER, 18);
-                        append(ResourceInitializer.GUNPOWDER, 12);
-                        append(ResourceInitializer.CRYSTAL, 5);
-                        append(ResourceInitializer.FIBER, 20);
-                        append(ResourceInitializer.FLINT, 5);
+                        append( ResourceInitializer.NARCOTIC, 10 );
+                        append( ResourceInitializer.CHARCOAL, 14 );
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.SPARKPOWDER, 18 );
+                        append( ResourceInitializer.GUNPOWDER, 12 );
+                        append( ResourceInitializer.CRYSTAL, 5 );
+                        append( ResourceInitializer.FIBER, 20 );
+                        append( ResourceInitializer.FLINT, 5 );
                     }},
                     CategoryInitializer.WEAPONS.EXPLOSIVES));
             add(new InitEngram(
@@ -2227,14 +2227,14 @@ public class EngramInitializer {
                     "Smoke Grenade",
                     "Releases a lot of smoke to obscure your plans. Pulling the pin starts a 5 second timer to an explosion.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.CHARCOAL, 10);
-                        append(ResourceInitializer.WOOD, 2);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.FLINT, 3);
-                        append(ResourceInitializer.FIBER, 15);
-                        append(ResourceInitializer.THATCH, 5);
-                        append(ResourceInitializer.SPARKPOWDER, 5);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.CHARCOAL, 10 );
+                        append( ResourceInitializer.WOOD, 2 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.FLINT, 3 );
+                        append( ResourceInitializer.FIBER, 15 );
+                        append( ResourceInitializer.THATCH, 5 );
+                        append( ResourceInitializer.SPARKPOWDER, 5 );
                     }},
                     CategoryInitializer.WEAPONS.EXPLOSIVES));
 
@@ -2244,9 +2244,9 @@ public class EngramInitializer {
                     "Assault Rifle",
                     "The fastest way to fill a target with holes.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 60);
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 50);
+                        append( ResourceInitializer.POLYMER, 60 );
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 50 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
             add(new InitEngram(
@@ -2254,9 +2254,9 @@ public class EngramInitializer {
                     "Fabricated Pistol",
                     "This advanced pistol gains a high rate of fire and a large magazine size by sacrificing stopping power.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 35);
-                        append(ResourceInitializer.METAL_INGOT, 20);
-                        append(ResourceInitializer.CEMENTING_PASTE, 30);
+                        append( ResourceInitializer.POLYMER, 35 );
+                        append( ResourceInitializer.METAL_INGOT, 20 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 30 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
             add(new InitEngram(
@@ -2264,9 +2264,9 @@ public class EngramInitializer {
                     "Fabricated Sniper Rifle",
                     "This semi-automatic rifle has less punch than a Longneck Rifle, but can be fired much more rapidly.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 115);
-                        append(ResourceInitializer.METAL_INGOT, 80);
-                        append(ResourceInitializer.CEMENTING_PASTE, 110);
+                        append( ResourceInitializer.POLYMER, 115 );
+                        append( ResourceInitializer.METAL_INGOT, 80 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 110 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
             add(new InitEngram(
@@ -2274,9 +2274,9 @@ public class EngramInitializer {
                     "Longneck Rifle",
                     "This simple single-shot rifle is highly accurate, but has a long reload time.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 95);
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.HIDE, 25);
+                        append( ResourceInitializer.METAL_INGOT, 95 );
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.HIDE, 25 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
             add(new InitEngram(
@@ -2284,9 +2284,9 @@ public class EngramInitializer {
                     "Pump-Action Shotgun",
                     "Powerful up close, but less reliable with range. Can fire six rounds before reloading.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 30);
-                        append(ResourceInitializer.POLYMER, 55);
-                        append(ResourceInitializer.CEMENTING_PASTE, 45);
+                        append( ResourceInitializer.METAL_INGOT, 30 );
+                        append( ResourceInitializer.POLYMER, 55 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 45 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
             add(new InitEngram(
@@ -2294,9 +2294,9 @@ public class EngramInitializer {
                     "Rocket Launcher",
                     "Mankind's ultimate portable killing device.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 80);
-                        append(ResourceInitializer.METAL_INGOT, 50);
-                        append(ResourceInitializer.CEMENTING_PASTE, 60);
+                        append( ResourceInitializer.POLYMER, 80 );
+                        append( ResourceInitializer.METAL_INGOT, 50 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 60 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
             add(new InitEngram(
@@ -2304,9 +2304,9 @@ public class EngramInitializer {
                     "Shotgun",
                     "Very powerful up close, but less reliable with range.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 80);
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.HIDE, 25);
+                        append( ResourceInitializer.METAL_INGOT, 80 );
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.HIDE, 25 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
             add(new InitEngram(
@@ -2314,9 +2314,9 @@ public class EngramInitializer {
                     "Simple Pistol",
                     "This simple revolver trades accuracy for flexibility.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 60);
-                        append(ResourceInitializer.WOOD, 5);
-                        append(ResourceInitializer.HIDE, 15);
+                        append( ResourceInitializer.METAL_INGOT, 60 );
+                        append( ResourceInitializer.WOOD, 5 );
+                        append( ResourceInitializer.HIDE, 15 );
                     }},
                     CategoryInitializer.WEAPONS.FIREARMS));
 
@@ -2326,12 +2326,12 @@ public class EngramInitializer {
                     "Electric Prod",
                     "Powerful stunning weapon, but can only be used for a single strike before recharge is needed.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 120);
-                        append(ResourceInitializer.METAL_INGOT, 130);
-                        append(ResourceInitializer.ELECTRONICS, 120);
-                        append(ResourceInitializer.CEMENTING_PASTE, 70);
-                        append(ResourceInitializer.CRYSTAL, 120);
-                        append(ResourceInitializer.ANGLER_GEL, 15);
+                        append( ResourceInitializer.POLYMER, 120 );
+                        append( ResourceInitializer.METAL_INGOT, 130 );
+                        append( ResourceInitializer.ELECTRONICS, 120 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 70 );
+                        append( ResourceInitializer.CRYSTAL, 120 );
+                        append( ResourceInitializer.ANGLER_GEL, 15 );
                     }},
                     CategoryInitializer.WEAPONS.MELEE));
             add(new InitEngram(
@@ -2339,9 +2339,9 @@ public class EngramInitializer {
                     "Metal Hatchet",
                     "A sharp metal hatchet for harvesting wood from trees, stone from rocks, and skin from bodies.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 8);
-                        append(ResourceInitializer.WOOD, 1);
-                        append(ResourceInitializer.HIDE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 8 );
+                        append( ResourceInitializer.WOOD, 1 );
+                        append( ResourceInitializer.HIDE, 10 );
                     }},
                     CategoryInitializer.WEAPONS.MELEE));
             add(new InitEngram(
@@ -2349,9 +2349,9 @@ public class EngramInitializer {
                     "Metal Pick",
                     "A sharp metal pick for harvesting metal from mountain rocks, flint from rocks, and meat from bodies.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.WOOD, 1);
-                        append(ResourceInitializer.HIDE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.WOOD, 1 );
+                        append( ResourceInitializer.HIDE, 10 );
                     }},
                     CategoryInitializer.WEAPONS.MELEE));
             add(new InitEngram(
@@ -2359,9 +2359,9 @@ public class EngramInitializer {
                     "Metal Sickle",
                     "A curved tool ideal for harvesting fiber from seed plants. Also useful for delicately shearing off slices of Prime Fish!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 18);
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.HIDE, 16);
+                        append( ResourceInitializer.METAL_INGOT, 18 );
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.HIDE, 16 );
                     }},
                     CategoryInitializer.WEAPONS.MELEE));
             add(new InitEngram(
@@ -2369,9 +2369,9 @@ public class EngramInitializer {
                     "Pike",
                     "A powerful weapon tipped with metal. Unlike the spear, it cannot be thrown.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.HIDE, 20);
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.HIDE, 20 );
                     }},
                     CategoryInitializer.WEAPONS.MELEE));
 
@@ -2382,9 +2382,9 @@ public class EngramInitializer {
                     "Metal Sword",
                     "The undisputed ruler of short-range combat. Needs a hotter flame to be forged.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 50);
-                        append(ResourceInitializer.WOOD, 1);
-                        append(ResourceInitializer.HIDE, 15);
+                        append( ResourceInitializer.METAL_INGOT, 50 );
+                        append( ResourceInitializer.WOOD, 1 );
+                        append( ResourceInitializer.HIDE, 15 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.MELEE));
             add(new InitEngram(
@@ -2392,9 +2392,9 @@ public class EngramInitializer {
                     "Spear",
                     "An easily made melee weapon that can also be thrown. Has a chance to break when used.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FLINT, 2);
-                        append(ResourceInitializer.WOOD, 8);
-                        append(ResourceInitializer.FIBER, 12);
+                        append( ResourceInitializer.FLINT, 2 );
+                        append( ResourceInitializer.WOOD, 8 );
+                        append( ResourceInitializer.FIBER, 12 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.MELEE));
             add(new InitEngram(
@@ -2402,9 +2402,9 @@ public class EngramInitializer {
                     "Stone Hatchet",
                     "A sharp flint hatchet for harvesting wood from trees, stone from rocks, and skin from bodies.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.FLINT, 1);
-                        append(ResourceInitializer.WOOD, 1);
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.FLINT, 1 );
+                        append( ResourceInitializer.WOOD, 1 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.MELEE));
             add(new InitEngram(
@@ -2412,9 +2412,9 @@ public class EngramInitializer {
                     "Stone Pick",
                     "A large stone pick for harvesting primarily flint from rocks, thatch from trees, and raw meat from bodies.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 1);
-                        append(ResourceInitializer.WOOD, 1);
-                        append(ResourceInitializer.THATCH, 10);
+                        append( ResourceInitializer.STONE, 1 );
+                        append( ResourceInitializer.WOOD, 1 );
+                        append( ResourceInitializer.THATCH, 10 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.MELEE));
             add(new InitEngram(
@@ -2422,9 +2422,9 @@ public class EngramInitializer {
                     "Torch",
                     "Provides light, and some warmth. Doubles as a melee weapon in a pinch.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FLINT, 1);
-                        append(ResourceInitializer.WOOD, 1);
-                        append(ResourceInitializer.STONE, 1);
+                        append( ResourceInitializer.FLINT, 1 );
+                        append( ResourceInitializer.WOOD, 1 );
+                        append( ResourceInitializer.STONE, 1 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.MELEE));
             add(new InitEngram(
@@ -2432,8 +2432,8 @@ public class EngramInitializer {
                     "Wooden Club",
                     "A easily made melee weapon that is excellent for knocking out targets. Only effective at short range.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.FIBER, 15);
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.FIBER, 15 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.MELEE));
 
@@ -2443,10 +2443,10 @@ public class EngramInitializer {
                     "Bola",
                     "Wind it up and throw!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.STONE, 3);
-                        append(ResourceInitializer.FIBER, 15);
-                        append(ResourceInitializer.HIDE, 3);
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.STONE, 3 );
+                        append( ResourceInitializer.FIBER, 15 );
+                        append( ResourceInitializer.HIDE, 3 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.RANGED));
             add(new InitEngram(
@@ -2454,8 +2454,8 @@ public class EngramInitializer {
                     "Bow",
                     "Masters of the bow often became great conquerors. Requires arrows to fire.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 15);
-                        append(ResourceInitializer.FIBER, 50);
+                        append( ResourceInitializer.STONE, 15 );
+                        append( ResourceInitializer.FIBER, 50 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.RANGED));
             add(new InitEngram(
@@ -2463,9 +2463,9 @@ public class EngramInitializer {
                     "Compound Bow",
                     "A high-tech bow made of durable alloy, can launch arrows at high velocity. Requires arrows to fire.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 95);
-                        append(ResourceInitializer.METAL_INGOT, 85);
-                        append(ResourceInitializer.CEMENTING_PASTE, 75);
+                        append( ResourceInitializer.POLYMER, 95 );
+                        append( ResourceInitializer.METAL_INGOT, 85 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 75 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.RANGED));
             add(new InitEngram(
@@ -2473,9 +2473,9 @@ public class EngramInitializer {
                     "Slingshot",
                     "A simple ranged weapon that deals damage from afar. Better for knocking out a target than killing it outright. Requires stone to fire.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 1);
-                        append(ResourceInitializer.WOOD, 5);
-                        append(ResourceInitializer.FIBER, 20);
+                        append( ResourceInitializer.HIDE, 1 );
+                        append( ResourceInitializer.WOOD, 5 );
+                        append( ResourceInitializer.FIBER, 20 );
                     }},
                     CategoryInitializer.WEAPONS.PRIMITIVE.RANGED));
 
@@ -2485,9 +2485,9 @@ public class EngramInitializer {
                     "Crossbow",
                     "Has significantly more power than the Bow, but cannot fire rapidly. Can fire underwater.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 7);
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.FIBER, 35);
+                        append( ResourceInitializer.METAL_INGOT, 7 );
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.FIBER, 35 );
                     }},
                     CategoryInitializer.WEAPONS.RANGED));
             add(new InitEngram(
@@ -2495,9 +2495,9 @@ public class EngramInitializer {
                     "Fishing Rod",
                     "Apply various bait to this, and then use when sitting on a chair or bench to catch some fish!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 12);
-                        append(ResourceInitializer.FIBER, 50);
-                        append(ResourceInitializer.THATCH, 20);
+                        append( ResourceInitializer.WOOD, 12 );
+                        append( ResourceInitializer.FIBER, 50 );
+                        append( ResourceInitializer.THATCH, 20 );
                     }},
                     CategoryInitializer.WEAPONS.RANGED));
 
@@ -2507,11 +2507,11 @@ public class EngramInitializer {
                     "Tripwire Alarm Trap",
                     "Place two of these near each other to create a trap.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_ORE, 3);
-                        append(ResourceInitializer.WOOD, 5);
-                        append(ResourceInitializer.FIBER, 30);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.OIL, 2);
+                        append( ResourceInitializer.METAL_ORE, 3 );
+                        append( ResourceInitializer.WOOD, 5 );
+                        append( ResourceInitializer.FIBER, 30 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.OIL, 2 );
                     }},
                     CategoryInitializer.WEAPONS.TRIPWIRES));
             add(new InitEngram(
@@ -2519,21 +2519,21 @@ public class EngramInitializer {
                     "Tripwire Narcotic Trap",
                     "Place two of these near each other to create a poisonous trap.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.NARCOTIC, 15);
-                        append(ResourceInitializer.CEMENTING_PASTE, 3);
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.FIBER, 35);
-                        append(ResourceInitializer.HIDE, 6);
-                        append(ResourceInitializer.CRYSTAL, 1);
+                        append( ResourceInitializer.NARCOTIC, 15 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 3 );
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.FIBER, 35 );
+                        append( ResourceInitializer.HIDE, 6 );
+                        append( ResourceInitializer.CRYSTAL, 1 );
                     }},
                     CategoryInitializer.WEAPONS.TRIPWIRES));
         }
     };
 
     public static List<InitEngram> getEngrams() {
-        engrams.addAll(StructureInitializer.getEngrams());
-        engrams.addAll(KibbleInitializer.getEngrams());
-        engrams.addAll(RefinedInitializer.getEngrams());
+        engrams.addAll( StructureInitializer.getEngrams() );
+        engrams.addAll( KibbleInitializer.getEngrams() );
+        engrams.addAll( RefinedInitializer.getEngrams() );
 
         return engrams;
     }

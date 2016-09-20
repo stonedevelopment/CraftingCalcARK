@@ -2,25 +2,6 @@ package arc.resource.calculator;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-
-import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.model.Category;
-import arc.resource.calculator.model.InitEngram;
-import arc.resource.calculator.model.initializers.CategoryInitializer;
-import arc.resource.calculator.model.initializers.ComplexResourceInitializer;
-import arc.resource.calculator.model.initializers.EngramInitializer;
-import arc.resource.calculator.model.initializers.ResourceInitializer;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -48,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
 
 //        Display display = getWindowManager().getDefaultDisplay();
 //        DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -156,12 +137,6 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 //        createExtraViews();
-        try {
-            beginConversion();
-        } catch ( JSONException | IOException e ) {
-            e.printStackTrace();
-        }
-
     }
 
 //    @Override
@@ -346,134 +321,4 @@ public class MainActivity extends AppCompatActivity {
 //                "Resource Version: " + ResourceInitializer.VERSION + " (" + ResourceInitializer.getCount() + " Resources)\n" +
 //                "Category Version: " + CategoryInitializer.VERSION + " (" + CategoryInitializer.getCount() + " Categories)";
 //    }
-
-    /**
-     * This will ultimately allow us to get rid of all initializers and read/update a json file when
-     * initializing database. \nn/.
-     * <p/>
-     * Category, Resource, Engram->Composition, ComplexResource
-     */
-
-    public void beginConversion() throws JSONException, IOException {
-        JSONObject jsonToWriteToFile = new JSONObject();
-
-        jsonToWriteToFile.put( "category", convertCategories() );
-        jsonToWriteToFile.put( "resource", convertResources() );
-        jsonToWriteToFile.put( "engram", convertEngrams() );
-        jsonToWriteToFile.put( "complex_resource", convertComplexResources() );
-
-//        Helper.Log( TAG, jsonToWriteToFile.toString() );
-//
-//        EditText textView = ( EditText ) findViewById( R.id.textView );
-//        textView.setText( jsonToWriteToFile.toString() );
-
-        File path = getExternalFilesDir( null );
-        File file = new File( path, "jsonExport.txt" );
-
-        try ( FileOutputStream fileOutputStream = new FileOutputStream( file ) ) {
-            fileOutputStream.write( jsonToWriteToFile.toString().getBytes() );
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
-
-        Helper.Log( TAG, "Filename: " + file.getPath() + " " + file.getName() );
-    }
-
-    private JSONArray convertCategories() throws JSONException {
-        List<Category> categoryList = CategoryInitializer.getCategories();
-
-        JSONArray jsonArray = new JSONArray();
-
-        for ( Category category : categoryList ) {
-            JSONObject jsonCategoryObject = new JSONObject();
-            jsonCategoryObject.put( "id", category.getId() );
-            jsonCategoryObject.put( "name", category.getName() );
-            jsonCategoryObject.put( "parent_id", category.getParent() );
-
-            jsonArray.put( jsonCategoryObject );
-        }
-
-        return jsonArray;
-    }
-
-    private JSONArray convertResources() throws JSONException {
-        SparseArray<String> resourceList = ResourceInitializer.getResources();
-
-        JSONArray jsonArray = new JSONArray();
-
-        for ( int i = 0; i < resourceList.size(); i++ ) {
-            JSONObject jsonObject = new JSONObject();
-
-            String name = resourceList.valueAt( i );
-            int drawable = resourceList.keyAt( i );
-
-            jsonObject.put( "name", name );
-            jsonObject.put( "drawable", drawable );
-
-            jsonArray.put( jsonObject );
-        }
-
-        Helper.Log( TAG, jsonArray.toString() );
-
-        return jsonArray;
-    }
-
-    private JSONArray convertEngrams() throws JSONException {
-        List<InitEngram> engramList = EngramInitializer.getEngrams();
-
-        JSONArray jsonArray = new JSONArray();
-
-        for ( InitEngram engram : engramList ) {
-            JSONObject jsonEngramObject = new JSONObject();
-
-            jsonEngramObject.put( "name", engram.getName() );
-            jsonEngramObject.put( "description", engram.getDescription() );
-            jsonEngramObject.put( "drawable", engram.getImageId() );
-            jsonEngramObject.put( "category_id", engram.getCategoryId() );
-
-            JSONArray jsonCompositionArray = new JSONArray();
-            SparseIntArray composition = engram.getCompositionIDs();
-            for ( int i = 0; i < composition.size(); i++ ) {
-                JSONObject jsonCompositionObject = new JSONObject();
-
-                int quantity = composition.valueAt( i );
-                int drawable = composition.keyAt( i );
-
-                jsonCompositionObject.put( "quantity", quantity );
-                jsonCompositionObject.put( "drawable", drawable );
-
-                jsonCompositionArray.put( jsonCompositionObject );
-            }
-
-            jsonEngramObject.put( "composition", jsonCompositionArray );
-
-            jsonArray.put( jsonEngramObject );
-        }
-
-        Helper.Log( TAG, jsonArray.toString() );
-
-        return jsonArray;
-    }
-
-    private JSONArray convertComplexResources() throws JSONException {
-        SparseArray<String> complexResourceList = ComplexResourceInitializer.getResources();
-
-        JSONArray jsonArray = new JSONArray();
-
-        for ( int i = 0; i < complexResourceList.size(); i++ ) {
-            JSONObject jsonObject = new JSONObject();
-
-            String name = complexResourceList.valueAt( i );
-            int drawable = complexResourceList.keyAt( i );
-
-            jsonObject.put( "name", name );
-            jsonObject.put( "drawable", drawable );
-
-            jsonArray.put( jsonObject );
-        }
-
-        Helper.Log( TAG, jsonArray.toString() );
-
-        return jsonArray;
-    }
 }

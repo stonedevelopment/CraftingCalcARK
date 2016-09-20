@@ -1,4 +1,4 @@
-package arc.resource.calculator.model.initializers;
+package arc.resource.calculator.data.initializers;
 
 import android.util.SparseIntArray;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.InitEngram;
+import arc.resource.calculator.model.engram.InitEngram;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -251,11 +251,11 @@ public class StructureInitializer {
                     "Bunk Bed",
                     "This modern bunk-style bed has two mattresses, and a high thread count. Acts as a respawn point for you and your tribe with half cooldown time.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 80);
-                        append(ResourceInitializer.PELT, 200);
-                        append(ResourceInitializer.METAL_INGOT, 320);
-                        append(ResourceInitializer.FIBER, 280);
-                        append(ResourceInitializer.HIDE, 120);
+                        append( ResourceInitializer.POLYMER, 80 );
+                        append( ResourceInitializer.PELT, 200 );
+                        append( ResourceInitializer.METAL_INGOT, 320 );
+                        append( ResourceInitializer.FIBER, 280 );
+                        append( ResourceInitializer.HIDE, 120 );
                     }},
                     CategoryInitializer.STRUCTURES.BEDS));
             add(new InitEngram(
@@ -263,8 +263,8 @@ public class StructureInitializer {
                     "Hide Sleeping Bag",
                     "This hide sleeping bag acts as a single-use respawn point, only usable by you.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.HIDE, 25);
-                        append(ResourceInitializer.FIBER, 15);
+                        append( ResourceInitializer.HIDE, 25 );
+                        append( ResourceInitializer.FIBER, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.BEDS));
             add(new InitEngram(
@@ -272,10 +272,10 @@ public class StructureInitializer {
                     "Simple Bed",
                     "Thatch may not make the most comfortable mattress, but this bed acts as a respawn point for you and your Tribe.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 15);
-                        append(ResourceInitializer.THATCH, 80);
-                        append(ResourceInitializer.FIBER, 30);
-                        append(ResourceInitializer.HIDE, 40);
+                        append( ResourceInitializer.WOOD, 15 );
+                        append( ResourceInitializer.THATCH, 80 );
+                        append( ResourceInitializer.FIBER, 30 );
+                        append( ResourceInitializer.HIDE, 40 );
                     }},
                     CategoryInitializer.STRUCTURES.BEDS));
 
@@ -285,9 +285,9 @@ public class StructureInitializer {
                     "Beer Barrel",
                     "Ferments tasty brew from Thatch, Water, and Berries",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 500);
-                        append(ResourceInitializer.METAL_INGOT, 80);
-                        append(ResourceInitializer.CEMENTING_PASTE, 100);
+                        append( ResourceInitializer.WOOD, 500 );
+                        append( ResourceInitializer.METAL_INGOT, 80 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 100 );
                     }},
                     CategoryInitializer.STRUCTURES.COOKING));
             add(new InitEngram(
@@ -295,10 +295,10 @@ public class StructureInitializer {
                     "Campfire",
                     "Perfect for cooking meat, staying warm, and providing light.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 12);
-                        append(ResourceInitializer.FLINT, 1);
-                        append(ResourceInitializer.STONE, 16);
-                        append(ResourceInitializer.WOOD, 2);
+                        append( ResourceInitializer.THATCH, 12 );
+                        append( ResourceInitializer.FLINT, 1 );
+                        append( ResourceInitializer.STONE, 16 );
+                        append( ResourceInitializer.WOOD, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.COOKING));
             add(new InitEngram(
@@ -306,10 +306,10 @@ public class StructureInitializer {
                     "Cooking Pot",
                     "Must contain basic fuel to light the fire. Put various ingredients with water in this to make soups, stews, and dyes.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 75);
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.FLINT, 5);
+                        append( ResourceInitializer.STONE, 75 );
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.FLINT, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.COOKING));
             add(new InitEngram(
@@ -317,10 +317,10 @@ public class StructureInitializer {
                     "Industrial Cooker",
                     "Burns Gasoline to cook large quantities of food quickly. Put various ingredients in this to make soups, stews, and dyes.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 300);
-                        append(ResourceInitializer.METAL_INGOT, 1800);
-                        append(ResourceInitializer.CEMENTING_PASTE, 450);
-                        append(ResourceInitializer.OIL, 300);
+                        append( ResourceInitializer.POLYMER, 300 );
+                        append( ResourceInitializer.METAL_INGOT, 1800 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 450 );
+                        append( ResourceInitializer.OIL, 300 );
                     }},
                     CategoryInitializer.STRUCTURES.COOKING));
             add(new InitEngram(
@@ -328,10 +328,10 @@ public class StructureInitializer {
                     "Industrial Grill",
                     "Perfect for cooking meat in bulk, staying warm, and providing light. Powered by Gasoline.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 200);
-                        append(ResourceInitializer.CEMENTING_PASTE, 40);
-                        append(ResourceInitializer.OIL, 40);
-                        append(ResourceInitializer.CRYSTAL, 30);
+                        append( ResourceInitializer.METAL_INGOT, 200 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 40 );
+                        append( ResourceInitializer.OIL, 40 );
+                        append( ResourceInitializer.CRYSTAL, 30 );
                     }},
                     CategoryInitializer.STRUCTURES.COOKING));
 
@@ -341,12 +341,12 @@ public class StructureInitializer {
                     "Chemistry Bench",
                     "Place materials in this to transmute chemical substances with extreme efficiency!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 250);
-                        append(ResourceInitializer.CEMENTING_PASTE, 250);
-                        append(ResourceInitializer.SPARKPOWDER, 100);
-                        append(ResourceInitializer.CRYSTAL, 250);
-                        append(ResourceInitializer.POLYMER, 250);
-                        append(ResourceInitializer.ELECTRONICS, 250);
+                        append( ResourceInitializer.METAL_INGOT, 250 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 250 );
+                        append( ResourceInitializer.SPARKPOWDER, 100 );
+                        append( ResourceInitializer.CRYSTAL, 250 );
+                        append( ResourceInitializer.POLYMER, 250 );
+                        append( ResourceInitializer.ELECTRONICS, 250 );
                     }},
                     CategoryInitializer.STRUCTURES.CRAFTING));
             add(new InitEngram(
@@ -354,11 +354,11 @@ public class StructureInitializer {
                     "Fabricator",
                     "Place materials along with blueprints in this to create certain high-end machined items.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 20);
-                        append(ResourceInitializer.SPARKPOWDER, 50);
-                        append(ResourceInitializer.CRYSTAL, 15);
-                        append(ResourceInitializer.OIL, 10);
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 20 );
+                        append( ResourceInitializer.SPARKPOWDER, 50 );
+                        append( ResourceInitializer.CRYSTAL, 15 );
+                        append( ResourceInitializer.OIL, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.CRAFTING));
             add(new InitEngram(
@@ -366,11 +366,11 @@ public class StructureInitializer {
                     "Industrial Forge",
                     "Refines resources in bulk. Powered by gasoline.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2500);
-                        append(ResourceInitializer.CRYSTAL, 250);
-                        append(ResourceInitializer.CEMENTING_PASTE, 600);
-                        append(ResourceInitializer.OIL, 400);
-                        append(ResourceInitializer.POLYMER, 400);
+                        append( ResourceInitializer.METAL_INGOT, 2500 );
+                        append( ResourceInitializer.CRYSTAL, 250 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 600 );
+                        append( ResourceInitializer.OIL, 400 );
+                        append( ResourceInitializer.POLYMER, 400 );
                     }},
                     CategoryInitializer.STRUCTURES.CRAFTING));
             add(new InitEngram(
@@ -378,8 +378,8 @@ public class StructureInitializer {
                     "Mortar and Pestle",
                     "This simple stone contraption can be used to grind resources into new substances.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 65);
-                        append(ResourceInitializer.HIDE, 15);
+                        append( ResourceInitializer.STONE, 65 );
+                        append( ResourceInitializer.HIDE, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.CRAFTING));
             add(new InitEngram(
@@ -387,11 +387,11 @@ public class StructureInitializer {
                     "Refining Forge",
                     "Requires wood, thatch, or sparkpowder to activate. Put unrefined resources in this to refine them.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 125);
-                        append(ResourceInitializer.FLINT, 5);
-                        append(ResourceInitializer.HIDE, 65);
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.FIBER, 40);
+                        append( ResourceInitializer.STONE, 125 );
+                        append( ResourceInitializer.FLINT, 5 );
+                        append( ResourceInitializer.HIDE, 65 );
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.FIBER, 40 );
                     }},
                     CategoryInitializer.STRUCTURES.CRAFTING));
             add(new InitEngram(
@@ -399,10 +399,10 @@ public class StructureInitializer {
                     "Smithy",
                     "Place materials along with blueprints in this to create certain advanced forged items.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.STONE, 50);
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.HIDE, 20);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.STONE, 50 );
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.HIDE, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.CRAFTING));
             add(new InitEngram(
@@ -410,11 +410,11 @@ public class StructureInitializer {
                     "Industrial Grinder",
                     "Grind up crafted items and certain resources!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 3200);
-                        append(ResourceInitializer.CRYSTAL, 2000);
-                        append(ResourceInitializer.CEMENTING_PASTE, 800);
-                        append(ResourceInitializer.OIL, 600);
-                        append(ResourceInitializer.POLYMER, 600);
+                        append( ResourceInitializer.METAL_INGOT, 3200 );
+                        append( ResourceInitializer.CRYSTAL, 2000 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 800 );
+                        append( ResourceInitializer.OIL, 600 );
+                        append( ResourceInitializer.POLYMER, 600 );
                     }},
                     CategoryInitializer.STRUCTURES.CRAFTING));
 
@@ -424,9 +424,9 @@ public class StructureInitializer {
                     "Bear Trap",
                     "Immobilizes humans and small creatures.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 5);
-                        append(ResourceInitializer.METAL_INGOT, 3);
-                        append(ResourceInitializer.HIDE, 6);
+                        append( ResourceInitializer.FIBER, 5 );
+                        append( ResourceInitializer.METAL_INGOT, 3 );
+                        append( ResourceInitializer.HIDE, 6 );
                     }},
                     CategoryInitializer.STRUCTURES.DEFENSES));
             add(new InitEngram(
@@ -434,13 +434,13 @@ public class StructureInitializer {
                     "Homing Underwater Mine",
                     "Place this underwater to create an explosive trap that floats, homes, explodes when touched.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 45);
-                        append(ResourceInitializer.METAL_INGOT, 30);
-                        append(ResourceInitializer.CEMENTING_PASTE, 20);
-                        append(ResourceInitializer.OIL, 15);
-                        append(ResourceInitializer.GUNPOWDER, 100);
-                        append(ResourceInitializer.CRYSTAL, 30);
-                        append(ResourceInitializer.ELECTRONICS, 150);
+                        append( ResourceInitializer.POLYMER, 45 );
+                        append( ResourceInitializer.METAL_INGOT, 30 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 20 );
+                        append( ResourceInitializer.OIL, 15 );
+                        append( ResourceInitializer.GUNPOWDER, 100 );
+                        append( ResourceInitializer.CRYSTAL, 30 );
+                        append( ResourceInitializer.ELECTRONICS, 150 );
                     }},
                     CategoryInitializer.STRUCTURES.DEFENSES));
             add(new InitEngram(
@@ -448,9 +448,9 @@ public class StructureInitializer {
                     "Large Bear Trap",
                     "Immobilizes large creatures only.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 10);
-                        append(ResourceInitializer.METAL_INGOT, 6);
-                        append(ResourceInitializer.HIDE, 15);
+                        append( ResourceInitializer.FIBER, 10 );
+                        append( ResourceInitializer.METAL_INGOT, 6 );
+                        append( ResourceInitializer.HIDE, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.DEFENSES));
 
@@ -460,10 +460,10 @@ public class StructureInitializer {
                     "Air Conditioner",
                     "Requires electricity to run. Provides insulation from both the heat and the cold to an area.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 80);
-                        append(ResourceInitializer.ELECTRONICS, 15);
-                        append(ResourceInitializer.POLYMER, 5);
-                        append(ResourceInitializer.CRYSTAL, 15);
+                        append( ResourceInitializer.METAL_INGOT, 80 );
+                        append( ResourceInitializer.ELECTRONICS, 15 );
+                        append( ResourceInitializer.POLYMER, 5 );
+                        append( ResourceInitializer.CRYSTAL, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRIC));
             add(new InitEngram(
@@ -471,9 +471,9 @@ public class StructureInitializer {
                     "Lamppost",
                     "Requires electricity to activate. Lights an area without adding much heat.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.CRYSTAL, 10);
-                        append(ResourceInitializer.ELECTRONICS, 2);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.CRYSTAL, 10 );
+                        append( ResourceInitializer.ELECTRONICS, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRIC));
             add(new InitEngram(
@@ -481,9 +481,9 @@ public class StructureInitializer {
                     "Omnidirectional Lamppost",
                     "Requires electricity to activate. Lights an area without adding much heat.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.CRYSTAL, 10);
-                        append(ResourceInitializer.ELECTRONICS, 2);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.CRYSTAL, 10 );
+                        append( ResourceInitializer.ELECTRONICS, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRIC));
             add(new InitEngram(
@@ -491,10 +491,10 @@ public class StructureInitializer {
                     "Refrigerator",
                     "Requires electricity to run. Keeps perishables from spoiling for a long time.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 120);
-                        append(ResourceInitializer.POLYMER, 15);
-                        append(ResourceInitializer.CRYSTAL, 25);
-                        append(ResourceInitializer.ELECTRONICS, 10);
+                        append( ResourceInitializer.METAL_INGOT, 120 );
+                        append( ResourceInitializer.POLYMER, 15 );
+                        append( ResourceInitializer.CRYSTAL, 25 );
+                        append( ResourceInitializer.ELECTRONICS, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRIC));
             add(new InitEngram(
@@ -502,9 +502,9 @@ public class StructureInitializer {
                     "Remote Keypad",
                     "Allows remote access to multiple doors and/or lights.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1);
-                        append(ResourceInitializer.ELECTRONICS, 25);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1 );
+                        append( ResourceInitializer.ELECTRONICS, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRIC));
 
@@ -514,7 +514,7 @@ public class StructureInitializer {
                     "Electrical Cable - Intersection",
                     "A plus-shaped intersection for a power grid, used for splitting one power cable into three.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ID));
             add(new InitEngram(
@@ -522,8 +522,8 @@ public class StructureInitializer {
                     "Electrical Generator",
                     "A large machine that converts gasoline into electricity.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 25);
-                        append(ResourceInitializer.ELECTRONICS, 10);
+                        append( ResourceInitializer.METAL_INGOT, 25 );
+                        append( ResourceInitializer.ELECTRONICS, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ID));
             add(new InitEngram(
@@ -531,9 +531,9 @@ public class StructureInitializer {
                     "Electrical Outlet",
                     "An outlet for an electrical grid. When connected to a generator via cables, this provides power to all nearby devices that use electricity.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.WOOD, 15);
-                        append(ResourceInitializer.ELECTRONICS, 3);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.WOOD, 15 );
+                        append( ResourceInitializer.ELECTRONICS, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ID));
             add(new InitEngram(
@@ -541,7 +541,7 @@ public class StructureInitializer {
                     "Electrical Cable - Inclined",
                     "An inclined cable for transmitting electricity up and down hills.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ID));
             add(new InitEngram(
@@ -549,7 +549,7 @@ public class StructureInitializer {
                     "Electrical Cable - Straight",
                     "A straight cable, used for transmitting electricity across land.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ID));
             add(new InitEngram(
@@ -557,7 +557,7 @@ public class StructureInitializer {
                     "Electrical Cable - Vertical",
                     " vertical cable for transmitting electricity up and down cliffs.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ID));
 
@@ -567,10 +567,10 @@ public class StructureInitializer {
                     "Auto Turret",
                     "Requires electricity to run. Consumes bullets while firing. Can be configured to automatically attack hostiles within range.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.ELECTRONICS, 70);
-                        append(ResourceInitializer.METAL_INGOT, 140);
-                        append(ResourceInitializer.CEMENTING_PASTE, 50);
-                        append(ResourceInitializer.POLYMER, 20);
+                        append( ResourceInitializer.ELECTRONICS, 70 );
+                        append( ResourceInitializer.METAL_INGOT, 140 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 50 );
+                        append( ResourceInitializer.POLYMER, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.DEFENSES));
 
@@ -580,10 +580,10 @@ public class StructureInitializer {
                     "Elevator Track",
                     "Attach an Elevator Platform to these to complete an elevator!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 140);
-                        append(ResourceInitializer.POLYMER, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 25);
-                        append(ResourceInitializer.ELECTRONICS, 20);
+                        append( ResourceInitializer.METAL_INGOT, 140 );
+                        append( ResourceInitializer.POLYMER, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 25 );
+                        append( ResourceInitializer.ELECTRONICS, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ELEVATORS));
             add(new InitEngram(
@@ -591,9 +591,9 @@ public class StructureInitializer {
                     "Small Elevator Platform",
                     "Attach to an Elevator Track to carry a small amount of weight.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 200);
-                        append(ResourceInitializer.POLYMER, 50);
-                        append(ResourceInitializer.CEMENTING_PASTE, 40);
+                        append( ResourceInitializer.METAL_INGOT, 200 );
+                        append( ResourceInitializer.POLYMER, 50 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 40 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ELEVATORS));
             add(new InitEngram(
@@ -601,9 +601,9 @@ public class StructureInitializer {
                     "Medium Elevator Platform",
                     "Attach to an Elevator Track to carry a medium amount of weight.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 400);
-                        append(ResourceInitializer.POLYMER, 100);
-                        append(ResourceInitializer.CEMENTING_PASTE, 80);
+                        append( ResourceInitializer.METAL_INGOT, 400 );
+                        append( ResourceInitializer.POLYMER, 100 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 80 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ELEVATORS));
             add(new InitEngram(
@@ -611,9 +611,9 @@ public class StructureInitializer {
                     "Large Elevator Platform",
                     "Attach to an Elevator Track to carry a large amount of weight.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 800);
-                        append(ResourceInitializer.POLYMER, 200);
-                        append(ResourceInitializer.CEMENTING_PASTE, 160);
+                        append( ResourceInitializer.METAL_INGOT, 800 );
+                        append( ResourceInitializer.POLYMER, 200 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 160 );
                     }},
                     CategoryInitializer.STRUCTURES.ELECTRICAL.ELEVATORS));
 
@@ -623,9 +623,9 @@ public class StructureInitializer {
                     "Compost Bin",
                     "A large bin for converting thatch and dung into high-quality fertilizer.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 50);
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.FIBER, 12);
+                        append( ResourceInitializer.WOOD, 50 );
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.FIBER, 12 );
                     }},
                     CategoryInitializer.STRUCTURES.FARMING));
             add(new InitEngram(
@@ -633,10 +633,10 @@ public class StructureInitializer {
                     "Small Crop Plot",
                     "A small garden plot, with a fence to keep out vermin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.FIBER, 15);
-                        append(ResourceInitializer.STONE, 25);
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.FIBER, 15 );
+                        append( ResourceInitializer.STONE, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.FARMING));
             add(new InitEngram(
@@ -644,10 +644,10 @@ public class StructureInitializer {
                     "Medium Crop Plot",
                     "A medium garden plot, with a fence to keep out vermin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 40);
-                        append(ResourceInitializer.THATCH, 20);
-                        append(ResourceInitializer.FIBER, 30);
-                        append(ResourceInitializer.STONE, 50);
+                        append( ResourceInitializer.WOOD, 40 );
+                        append( ResourceInitializer.THATCH, 20 );
+                        append( ResourceInitializer.FIBER, 30 );
+                        append( ResourceInitializer.STONE, 50 );
                     }},
                     CategoryInitializer.STRUCTURES.FARMING));
             add(new InitEngram(
@@ -655,10 +655,10 @@ public class StructureInitializer {
                     "Large Crop Plot",
                     "A large garden plot, with a fence to keep out vermin.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 80);
-                        append(ResourceInitializer.THATCH, 40);
-                        append(ResourceInitializer.FIBER, 60);
-                        append(ResourceInitializer.STONE, 100);
+                        append( ResourceInitializer.WOOD, 80 );
+                        append( ResourceInitializer.THATCH, 40 );
+                        append( ResourceInitializer.FIBER, 60 );
+                        append( ResourceInitializer.STONE, 100 );
                     }},
                     CategoryInitializer.STRUCTURES.FARMING));
 
@@ -669,8 +669,8 @@ public class StructureInitializer {
                     "Gravestone",
                     "A simple unadorned stone headstone to mark a grave or commemorate a loved one.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 70);
-                        append(ResourceInitializer.CEMENTING_PASTE, 8);
+                        append( ResourceInitializer.STONE, 70 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 8 );
                     }},
                     CategoryInitializer.STRUCTURES.FURNITURE.STONE));
 
@@ -680,10 +680,10 @@ public class StructureInitializer {
                     "War Drums",
                     "A set of tribal wardrums, to let everyone around hear the power of your tribe.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 380);
-                        append(ResourceInitializer.HIDE, 220);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.THATCH, 200);
+                        append( ResourceInitializer.WOOD, 380 );
+                        append( ResourceInitializer.HIDE, 220 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.THATCH, 200 );
                     }},
                     CategoryInitializer.STRUCTURES.FURNITURE.WOOD));
             add(new InitEngram(
@@ -691,9 +691,9 @@ public class StructureInitializer {
                     "Wooden Bench",
                     "A simple wooden bench for solo sitting.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 12);
-                        append(ResourceInitializer.THATCH, 55);
-                        append(ResourceInitializer.FIBER, 45);
+                        append( ResourceInitializer.WOOD, 12 );
+                        append( ResourceInitializer.THATCH, 55 );
+                        append( ResourceInitializer.FIBER, 45 );
                     }},
                     CategoryInitializer.STRUCTURES.FURNITURE.WOOD));
             add(new InitEngram(
@@ -701,9 +701,9 @@ public class StructureInitializer {
                     "Wooden Chair",
                     "A simple wooden chair for solo sitting.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.THATCH, 18);
-                        append(ResourceInitializer.FIBER, 14);
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.THATCH, 18 );
+                        append( ResourceInitializer.FIBER, 14 );
                     }},
                     CategoryInitializer.STRUCTURES.FURNITURE.WOOD));
             add(new InitEngram(
@@ -711,8 +711,8 @@ public class StructureInitializer {
                     "Wooden Table",
                     "A simple wooden table with a variety of uses.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 100);
-                        append(ResourceInitializer.METAL_ORE, 12);
+                        append( ResourceInitializer.WOOD, 100 );
+                        append( ResourceInitializer.METAL_ORE, 12 );
                     }},
                     CategoryInitializer.STRUCTURES.FURNITURE.WOOD));
 
@@ -722,10 +722,10 @@ public class StructureInitializer {
                     "Preserving Bin",
                     "Burns simple fuel at low temperatures to dehydrate food and kill bacteria. Keeps perishables from spoiling for a small time.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 30);
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.FIBER, 20);
+                        append( ResourceInitializer.STONE, 30 );
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.FIBER, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.FRIDGES));
 
@@ -735,9 +735,9 @@ public class StructureInitializer {
                     "Greenhouse Ceiling",
                     "A metal-framed, glass ceiling that provides insulation, and doubles as a floor for higher levels. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.CRYSTAL, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.CRYSTAL, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
             add(new InitEngram(
@@ -745,9 +745,9 @@ public class StructureInitializer {
                     "Greenhouse Wall",
                     "A metal-framed, glass wall that insulates the inside from the outside and separates rooms. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 7);
-                        append(ResourceInitializer.CRYSTAL, 25);
-                        append(ResourceInitializer.CEMENTING_PASTE, 7);
+                        append( ResourceInitializer.METAL_INGOT, 7 );
+                        append( ResourceInitializer.CRYSTAL, 25 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
             add(new InitEngram(
@@ -755,9 +755,9 @@ public class StructureInitializer {
                     "Sloped Greenhouse Wall Left",
                     "A metal-frame, glass sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 4);
-                        append(ResourceInitializer.CRYSTAL, 15);
-                        append(ResourceInitializer.CEMENTING_PASTE, 4);
+                        append( ResourceInitializer.METAL_INGOT, 4 );
+                        append( ResourceInitializer.CRYSTAL, 15 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
             add(new InitEngram(
@@ -765,9 +765,9 @@ public class StructureInitializer {
                     "Sloped Greenhouse Wall Right",
                     "A metal-frame, glass sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 4);
-                        append(ResourceInitializer.CRYSTAL, 15);
-                        append(ResourceInitializer.CEMENTING_PASTE, 4);
+                        append( ResourceInitializer.METAL_INGOT, 4 );
+                        append( ResourceInitializer.CRYSTAL, 15 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
             add(new InitEngram(
@@ -775,9 +775,9 @@ public class StructureInitializer {
                     "Greenhouse Doorframe",
                     "A metal-frame, glass wall that provides entrance to a structure. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.CRYSTAL, 20);
-                        append(ResourceInitializer.CEMENTING_PASTE, 5);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.CRYSTAL, 20 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
             add(new InitEngram(
@@ -785,9 +785,9 @@ public class StructureInitializer {
                     "Greenhouse Door",
                     "A metal-frame, glass door that provides entrance to structures. Can be locked for security. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 3);
-                        append(ResourceInitializer.CRYSTAL, 10);
-                        append(ResourceInitializer.CEMENTING_PASTE, 4);
+                        append( ResourceInitializer.METAL_INGOT, 3 );
+                        append( ResourceInitializer.CRYSTAL, 10 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
             add(new InitEngram(
@@ -795,9 +795,9 @@ public class StructureInitializer {
                     "Greenhouse Window",
                     "Metal-framed, glass plates on hinges that cover windows to provide protection from projectiles and spying. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.CRYSTAL, 3);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1);
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.CRYSTAL, 3 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
             add(new InitEngram(
@@ -805,9 +805,9 @@ public class StructureInitializer {
                     "Sloped Greenhouse Roof",
                     "An inclined metal-frame, glass roof. Slightly different angle than the ramp. Excellent for growing crops indoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.CRYSTAL, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.CRYSTAL, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.GREENHOUSE));
 
@@ -817,12 +817,12 @@ public class StructureInitializer {
                     "Ballista Turret",
                     "Survivors can mount this and fire devastating ballista arrows, useful for bringing down large dinos and structures!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 500);
-                        append(ResourceInitializer.METAL_INGOT, 300);
-                        append(ResourceInitializer.STONE, 250);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.THATCH, 100);
-                        append(ResourceInitializer.HIDE, 100);
+                        append( ResourceInitializer.WOOD, 500 );
+                        append( ResourceInitializer.METAL_INGOT, 300 );
+                        append( ResourceInitializer.STONE, 250 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.THATCH, 100 );
+                        append( ResourceInitializer.HIDE, 100 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -830,11 +830,11 @@ public class StructureInitializer {
                     "Catapult Turret",
                     "Mount this to throw destructive Boulders at your enemies, particularly effective against Structures.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 400);
-                        append(ResourceInitializer.METAL_INGOT, 300);
-                        append(ResourceInitializer.STONE, 390);
-                        append(ResourceInitializer.THATCH, 100);
-                        append(ResourceInitializer.HIDE, 100);
+                        append( ResourceInitializer.WOOD, 400 );
+                        append( ResourceInitializer.METAL_INGOT, 300 );
+                        append( ResourceInitializer.STONE, 390 );
+                        append( ResourceInitializer.THATCH, 100 );
+                        append( ResourceInitializer.HIDE, 100 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -842,10 +842,10 @@ public class StructureInitializer {
                     "Minigun Turret",
                     "Mount this to fire a hail of Advanced Rifle Bullets at your enemies. Powered by the rider.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 150);
-                        append(ResourceInitializer.METAL_INGOT, 500);
-                        append(ResourceInitializer.CEMENTING_PASTE, 125);
-                        append(ResourceInitializer.HIDE, 100);
+                        append( ResourceInitializer.POLYMER, 150 );
+                        append( ResourceInitializer.METAL_INGOT, 500 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 125 );
+                        append( ResourceInitializer.HIDE, 100 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -853,10 +853,10 @@ public class StructureInitializer {
                     "Rocket Turret",
                     "Mount this to fire Rockets at your enemies. Powered by the rider.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.POLYMER, 400);
-                        append(ResourceInitializer.METAL_INGOT, 1100);
-                        append(ResourceInitializer.CEMENTING_PASTE, 300);
-                        append(ResourceInitializer.ELECTRONICS, 500);
+                        append( ResourceInitializer.POLYMER, 400 );
+                        append( ResourceInitializer.METAL_INGOT, 1100 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 300 );
+                        append( ResourceInitializer.ELECTRONICS, 500 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -864,11 +864,11 @@ public class StructureInitializer {
                     "Primitive Cannon",
                     "A powerful, heavy weapon of war, capable of demolishing heavily reinforced structures.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 950);
-                        append(ResourceInitializer.FIBER, 200);
-                        append(ResourceInitializer.HIDE, 150);
-                        append(ResourceInitializer.THATCH, 120);
-                        append(ResourceInitializer.CEMENTING_PASTE, 300);
+                        append( ResourceInitializer.METAL_INGOT, 950 );
+                        append( ResourceInitializer.FIBER, 200 );
+                        append( ResourceInitializer.HIDE, 150 );
+                        append( ResourceInitializer.THATCH, 120 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 300 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -876,8 +876,8 @@ public class StructureInitializer {
                     "Behemoth Gate",
                     "A large metal-plated concrete gate that can be used with a Behemoth Gateway to allow even the largest of creatures in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1500);
-                        append(ResourceInitializer.CEMENTING_PASTE, 350);
+                        append( ResourceInitializer.METAL_INGOT, 1500 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 350 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -885,9 +885,9 @@ public class StructureInitializer {
                     "Behemoth Gateway",
                     "A large metal-plated concrete gateway, reinforced with obsidian polymer, that can be used with a Behemoth Gate to allow even the largest of creatures in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1500);
-                        append(ResourceInitializer.CEMENTING_PASTE, 350);
-                        append(ResourceInitializer.POLYMER, 100);
+                        append( ResourceInitializer.METAL_INGOT, 1500 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 350 );
+                        append( ResourceInitializer.POLYMER, 100 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -895,7 +895,7 @@ public class StructureInitializer {
                     "Metal Catwalk",
                     "A thin walkway for bridging areas together. Made from metal plates.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 15);
+                        append( ResourceInitializer.METAL_INGOT, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -903,8 +903,8 @@ public class StructureInitializer {
                     "Metal Ceiling",
                     "A stable metal-plated concrete ceiling that provides insulation, and doubles as a floor for higher levels.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -912,8 +912,8 @@ public class StructureInitializer {
                     "Metal Dinosaur Gate",
                     "A large metal gate that can be used with a Gateway to keep most dinosaurs in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -921,8 +921,8 @@ public class StructureInitializer {
                     "Metal Dinosaur Gateway",
                     "A large metal gateway that can be used with a gate to keep most dinosaurs in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 85);
-                        append(ResourceInitializer.CEMENTING_PASTE, 25);
+                        append( ResourceInitializer.METAL_INGOT, 85 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -930,8 +930,8 @@ public class StructureInitializer {
                     "Metal Door",
                     "A stable metal-plated concrete door that provides entrance to structures. Can be locked for security.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -939,8 +939,8 @@ public class StructureInitializer {
                     "Metal Doorframe",
                     "A metal-plated concrete wall that provides entrance to a structure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 20);
-                        append(ResourceInitializer.CEMENTING_PASTE, 6);
+                        append( ResourceInitializer.METAL_INGOT, 20 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 6 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -948,8 +948,8 @@ public class StructureInitializer {
                     "Metal Fence Foundation",
                     "This very strong, narrow foundation is used to build walls around an area.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.CEMENTING_PASTE, 2);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -957,8 +957,8 @@ public class StructureInitializer {
                     "Metal Foundation",
                     "A foundation is required to build structures in an area. This one is made from sturdy metal-plated concrete.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 50);
-                        append(ResourceInitializer.CEMENTING_PASTE, 15);
+                        append( ResourceInitializer.METAL_INGOT, 50 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -966,8 +966,8 @@ public class StructureInitializer {
                     "Metal Hatchframe",
                     "This metal-plated concrete ceiling has a hole in it for trapdoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 30);
-                        append(ResourceInitializer.CEMENTING_PASTE, 8);
+                        append( ResourceInitializer.METAL_INGOT, 30 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 8 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -975,7 +975,7 @@ public class StructureInitializer {
                     "Metal Ladder",
                     "A simple metal ladder used to climb up or down tall structures. Can also be used to extend existing ladders.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 7);
+                        append( ResourceInitializer.METAL_INGOT, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -983,8 +983,8 @@ public class StructureInitializer {
                     "Metal Pillar",
                     "This metal-plated concrete pillar adds structural integrity to the area it is built under. Can also act as stilts for building on inclines.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 25);
-                        append(ResourceInitializer.CEMENTING_PASTE, 7);
+                        append( ResourceInitializer.METAL_INGOT, 25 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -992,8 +992,8 @@ public class StructureInitializer {
                     "Metal Railing",
                     "A metal-plated concrete railing that acts a a simple barrier to prevent people from falling.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 12);
-                        append(ResourceInitializer.CEMENTING_PASTE, 3);
+                        append( ResourceInitializer.METAL_INGOT, 12 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1001,8 +1001,8 @@ public class StructureInitializer {
                     "Metal Ramp",
                     "An inclined metal-plated concrete floor for travelling up or down levels. Can also be used to make an angled roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1010,8 +1010,8 @@ public class StructureInitializer {
                     "Metal Spike Wall",
                     "These incredibly sharp metal spikes are dangerous to any that touch them. Large creatures take more damage.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 12);
-                        append(ResourceInitializer.CEMENTING_PASTE, 3);
+                        append( ResourceInitializer.METAL_INGOT, 12 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1019,8 +1019,8 @@ public class StructureInitializer {
                     "Metal Trapdoor",
                     "This metal-plated concrete slab can be used to secure hatches.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.CEMENTING_PASTE, 4);
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1028,9 +1028,9 @@ public class StructureInitializer {
                     "Metal Tree Platform",
                     "Attaches to a large tree, enabling you to build on it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 1800);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1400);
-                        append(ResourceInitializer.FIBER, 600);
+                        append( ResourceInitializer.METAL_INGOT, 1800 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1400 );
+                        append( ResourceInitializer.FIBER, 600 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1038,8 +1038,8 @@ public class StructureInitializer {
                     "Metal Wall",
                     "A metal-plated concrete wall that insulates the inside from the outside and separates rooms.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 25);
-                        append(ResourceInitializer.CEMENTING_PASTE, 7);
+                        append( ResourceInitializer.METAL_INGOT, 25 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1047,7 +1047,7 @@ public class StructureInitializer {
                     "Metal Window",
                     "Metal plates on hinges that cover windows to provide protection from projectiles and spying.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 7);
+                        append( ResourceInitializer.METAL_INGOT, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1055,8 +1055,8 @@ public class StructureInitializer {
                     "Metal Windowframe",
                     "A metal-plated concrete wall, with a hole for a window.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 20);
-                        append(ResourceInitializer.CEMENTING_PASTE, 6);
+                        append( ResourceInitializer.METAL_INGOT, 20 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 6 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1064,8 +1064,8 @@ public class StructureInitializer {
                     "Sloped Metal Roof",
                     "An inclined metal roof. Slightly different angle than the ramp.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 35);
-                        append(ResourceInitializer.CEMENTING_PASTE, 10);
+                        append( ResourceInitializer.METAL_INGOT, 35 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1073,8 +1073,8 @@ public class StructureInitializer {
                     "Sloped Metal Wall Left",
                     "A sturdy metal sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 15);
-                        append(ResourceInitializer.CEMENTING_PASTE, 5);
+                        append( ResourceInitializer.METAL_INGOT, 15 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1082,8 +1082,8 @@ public class StructureInitializer {
                     "Sloped Metal Wall Right",
                     "A sturdy metal sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 15);
-                        append(ResourceInitializer.CEMENTING_PASTE, 5);
+                        append( ResourceInitializer.METAL_INGOT, 15 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1091,12 +1091,12 @@ public class StructureInitializer {
                     "Wall Torch",
                     "A torch on a metal connector that lights and warms the immediate area. Must be placed on a wall.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 4);
-                        append(ResourceInitializer.FLINT, 1);
-                        append(ResourceInitializer.STONE, 1);
-                        append(ResourceInitializer.WOOD, 2);
-                        append(ResourceInitializer.METAL_INGOT, 1);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1);
+                        append( ResourceInitializer.THATCH, 4 );
+                        append( ResourceInitializer.FLINT, 1 );
+                        append( ResourceInitializer.STONE, 1 );
+                        append( ResourceInitializer.WOOD, 2 );
+                        append( ResourceInitializer.METAL_INGOT, 1 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
             add(new InitEngram(
@@ -1104,8 +1104,8 @@ public class StructureInitializer {
                     "Metal Staircase",
                     "A metal spiral staircase, useful in constructing multi-level buildings.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 125);
-                        append(ResourceInitializer.CEMENTING_PASTE, 35);
+                        append( ResourceInitializer.METAL_INGOT, 125 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 35 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.ID));
 
@@ -1115,8 +1115,8 @@ public class StructureInitializer {
                     "Metal Billboard",
                     "A large metal billboard for landmark navigation or relaying messages.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.CEMENTING_PASTE, 3);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.SIGNS));
             add(new InitEngram(
@@ -1124,8 +1124,8 @@ public class StructureInitializer {
                     "Metal Sign",
                     "A small metal sign for landmark navigation or relaying messages.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.CEMENTING_PASTE, 3);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.SIGNS));
             add(new InitEngram(
@@ -1133,8 +1133,8 @@ public class StructureInitializer {
                     "Metal Wall Sign",
                     "A simple metal wall sign for basic messages, requires attaching to a wall.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 5);
-                        append(ResourceInitializer.CEMENTING_PASTE, 3);
+                        append( ResourceInitializer.METAL_INGOT, 5 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.SIGNS));
 
@@ -1144,10 +1144,10 @@ public class StructureInitializer {
                     "Vault",
                     "A large metal vault to securely store goods in.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 300);
-                        append(ResourceInitializer.CEMENTING_PASTE, 60);
-                        append(ResourceInitializer.OIL, 30);
-                        append(ResourceInitializer.POLYMER, 60);
+                        append( ResourceInitializer.METAL_INGOT, 300 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 60 );
+                        append( ResourceInitializer.OIL, 30 );
+                        append( ResourceInitializer.POLYMER, 60 );
                     }},
                     CategoryInitializer.STRUCTURES.METAL.STORAGE));
 
@@ -1157,9 +1157,9 @@ public class StructureInitializer {
                     "Painting Canvas",
                     "A canvas sheet stretched over a wooden frame. Perfect for painting on.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 4);
-                        append(ResourceInitializer.WOOD, 2);
-                        append(ResourceInitializer.HIDE, 1);
+                        append( ResourceInitializer.FIBER, 4 );
+                        append( ResourceInitializer.WOOD, 2 );
+                        append( ResourceInitializer.HIDE, 1 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
             add(new InitEngram(
@@ -1167,10 +1167,10 @@ public class StructureInitializer {
                     "Single-Panel Flag",
                     "Mark your tribe's territory and show off its colors by placing this and painting it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.FIBER, 100);
-                        append(ResourceInitializer.HIDE, 20);
-                        append(ResourceInitializer.THATCH, 30);
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.FIBER, 100 );
+                        append( ResourceInitializer.HIDE, 20 );
+                        append( ResourceInitializer.THATCH, 30 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
             add(new InitEngram(
@@ -1178,10 +1178,10 @@ public class StructureInitializer {
                     "Multi-Panel Flag",
                     "Mark your tribes territory and show off its colours by placing this and dying it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.FIBER, 100);
-                        append(ResourceInitializer.HIDE, 20);
-                        append(ResourceInitializer.THATCH, 30);
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.FIBER, 100 );
+                        append( ResourceInitializer.HIDE, 20 );
+                        append( ResourceInitializer.THATCH, 30 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
             add(new InitEngram(
@@ -1189,10 +1189,10 @@ public class StructureInitializer {
                     "Training Dummy",
                     "Attack this training dummy to test your DPS!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 80);
-                        append(ResourceInitializer.FIBER, 500);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.THATCH, 500);
+                        append( ResourceInitializer.WOOD, 80 );
+                        append( ResourceInitializer.FIBER, 500 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.THATCH, 500 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
             add(new InitEngram(
@@ -1200,8 +1200,8 @@ public class StructureInitializer {
                     "Tree Sap Tap",
                     "Attach this to a large tree to tap its sap over time.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 100);
-                        append(ResourceInitializer.CEMENTING_PASTE, 40);
+                        append( ResourceInitializer.METAL_INGOT, 100 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 40 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
             add(new InitEngram(
@@ -1209,7 +1209,7 @@ public class StructureInitializer {
                     "Trophy Base",
                     "Provides the base upon which you can place a Trophy!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.OBSIDIAN, 80);
+                        append( ResourceInitializer.OBSIDIAN, 80 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
             add(new InitEngram(
@@ -1217,8 +1217,8 @@ public class StructureInitializer {
                     "Trophy Wall-Mount",
                     "Provides the wall-mount upon which you can place a trophy!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 200);
-                        append(ResourceInitializer.CEMENTING_PASTE, 80);
+                        append( ResourceInitializer.WOOD, 200 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 80 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
             add(new InitEngram(
@@ -1226,9 +1226,9 @@ public class StructureInitializer {
                     "War Map",
                     "A map of the Island upon which you can draw your plans.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.FIBER, 4);
-                        append(ResourceInitializer.WOOD, 2);
-                        append(ResourceInitializer.HIDE, 1);
+                        append( ResourceInitializer.FIBER, 4 );
+                        append( ResourceInitializer.WOOD, 2 );
+                        append( ResourceInitializer.HIDE, 1 );
                     }},
                     CategoryInitializer.STRUCTURES.MISC));
 
@@ -1239,8 +1239,8 @@ public class StructureInitializer {
                     "Metal Irrigation Pipe - Inclined",
                     "An inclined metal pipe for an irrigation network, used for transporting water up and down hills.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 4);
-                        append(ResourceInitializer.CEMENTING_PASTE, 2);
+                        append( ResourceInitializer.METAL_INGOT, 4 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.METAL));
             add(new InitEngram(
@@ -1248,9 +1248,9 @@ public class StructureInitializer {
                     "Metal Irrigation Pipe - Intake",
                     "The metal intake for an irrigation network that transports water over land.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 15);
-                        append(ResourceInitializer.CEMENTING_PASTE, 5);
-                        append(ResourceInitializer.WOOD, 10);
+                        append( ResourceInitializer.METAL_INGOT, 15 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 5 );
+                        append( ResourceInitializer.WOOD, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.METAL));
             add(new InitEngram(
@@ -1258,8 +1258,8 @@ public class StructureInitializer {
                     "Metal Irrigation Pipe - Intersection",
                     "A plus-shaped metal intersection for an irrigation network, used for splitting one water source into three.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 6);
-                        append(ResourceInitializer.CEMENTING_PASTE, 3);
+                        append( ResourceInitializer.METAL_INGOT, 6 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.METAL));
             add(new InitEngram(
@@ -1267,8 +1267,8 @@ public class StructureInitializer {
                     "Metal Irrigation Pipe - Straight",
                     "A straight metal pipe for an irrigation network, used for transporting water across land.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.METAL));
             add(new InitEngram(
@@ -1276,9 +1276,9 @@ public class StructureInitializer {
                     "Metal Irrigation Pipe - Tap",
                     "This metal tap allows access to the water in an irrigation network. Can refill containers, irrigate crop plots, or provide a refreshing drink.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 10);
-                        append(ResourceInitializer.CEMENTING_PASTE, 4);
-                        append(ResourceInitializer.WOOD, 15);
+                        append( ResourceInitializer.METAL_INGOT, 10 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 4 );
+                        append( ResourceInitializer.WOOD, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.METAL));
             add(new InitEngram(
@@ -1286,8 +1286,8 @@ public class StructureInitializer {
                     "Metal Irrigation Pipe - Vertical",
                     "A vertical metal pipe for an irrigation network, used for transporting water up and down cliffs.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 2);
-                        append(ResourceInitializer.CEMENTING_PASTE, 1);
+                        append( ResourceInitializer.METAL_INGOT, 2 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 1 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.METAL));
             add(new InitEngram(
@@ -1295,8 +1295,8 @@ public class StructureInitializer {
                     "Metal Water Reservoir",
                     "Attach this to pipes to store rain, irrigation, or manually deposited water for later use. Will automatically irrigate nearby crops if attached to a tap. Stores a large amount of water!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.METAL_INGOT, 75);
-                        append(ResourceInitializer.CEMENTING_PASTE, 25);
+                        append( ResourceInitializer.METAL_INGOT, 75 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.METAL));
 
@@ -1306,7 +1306,7 @@ public class StructureInitializer {
                     "Stone Irrigation Pipe - Inclined",
                     "An inclined stone pipe for an irrigation network, used for transporting water up and down hills.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 10);
+                        append( ResourceInitializer.STONE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.STONE));
             add(new InitEngram(
@@ -1314,7 +1314,7 @@ public class StructureInitializer {
                     "Stone Irrigation Pipe - Intake",
                     "The stone intake for an irrigation network that transports water over land.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 25);
+                        append( ResourceInitializer.STONE, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.STONE));
             add(new InitEngram(
@@ -1322,7 +1322,7 @@ public class StructureInitializer {
                     "Stone Irrigation Pipe - Intersection",
                     "A plus-shaped stone intersection for an irrigation network, used for splitting one water source into three.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 15);
+                        append( ResourceInitializer.STONE, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.STONE));
             add(new InitEngram(
@@ -1330,7 +1330,7 @@ public class StructureInitializer {
                     "Stone Irrigation Pipe - Straight",
                     "A straight stone pipe for an irrigation network, used for transporting water across land.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 10);
+                        append( ResourceInitializer.STONE, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.STONE));
             add(new InitEngram(
@@ -1338,8 +1338,8 @@ public class StructureInitializer {
                     "Stone Irrigation Pipe - Tap",
                     "This stone tap allows access to the water in an irrigation network. Can refill containers, irrigate crop plots, or provide a refreshing drink.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 10);
-                        append(ResourceInitializer.WOOD, 15);
+                        append( ResourceInitializer.STONE, 10 );
+                        append( ResourceInitializer.WOOD, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.STONE));
             add(new InitEngram(
@@ -1347,7 +1347,7 @@ public class StructureInitializer {
                     "Stone Irrigation Pipe - Vertical",
                     "A vertical stone pipe for an irrigation network, used for transporting water up and down cliffs.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 5);
+                        append( ResourceInitializer.STONE, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.STONE));
             add(new InitEngram(
@@ -1355,8 +1355,8 @@ public class StructureInitializer {
                     "Water Reservoir",
                     "A standing storage device for holding water. Automatically fills up during rain, can be filled up with the use of a water skin/jar.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 30);
-                        append(ResourceInitializer.CEMENTING_PASTE, 5);
+                        append( ResourceInitializer.STONE, 30 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.PIPES.STONE));
 
@@ -1366,9 +1366,9 @@ public class StructureInitializer {
                     "Behemoth Reinforced Dinosaur Gate",
                     "A large, reinforced wooden gate that can be used with a Behemoth Gateway to keep dinosaurs in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 450);
-                        append(ResourceInitializer.WOOD, 450);
-                        append(ResourceInitializer.THATCH, 450);
+                        append( ResourceInitializer.STONE, 450 );
+                        append( ResourceInitializer.WOOD, 450 );
+                        append( ResourceInitializer.THATCH, 450 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1376,9 +1376,9 @@ public class StructureInitializer {
                     "Behemoth Stone Dinosaur Gateway",
                     "A massive brick-and-mortar gateway that can be used for penning up huge dinosaurs.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 450);
-                        append(ResourceInitializer.WOOD, 450);
-                        append(ResourceInitializer.THATCH, 450);
+                        append( ResourceInitializer.STONE, 450 );
+                        append( ResourceInitializer.WOOD, 450 );
+                        append( ResourceInitializer.THATCH, 450 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1386,9 +1386,9 @@ public class StructureInitializer {
                     "Reinforced Dinosaur Gate",
                     "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 60);
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.THATCH, 20);
+                        append( ResourceInitializer.STONE, 60 );
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.THATCH, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1396,9 +1396,9 @@ public class StructureInitializer {
                     "Reinforced Trapdoor",
                     "This small reinforced door can be used to secure hatches.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 20);
-                        append(ResourceInitializer.WOOD, 14);
-                        append(ResourceInitializer.THATCH, 8);
+                        append( ResourceInitializer.STONE, 20 );
+                        append( ResourceInitializer.WOOD, 14 );
+                        append( ResourceInitializer.THATCH, 8 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1406,9 +1406,9 @@ public class StructureInitializer {
                     "Reinforced Window",
                     "Reinforced window covering to provide protection from projectiles and spying.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 8);
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.THATCH, 3);
+                        append( ResourceInitializer.STONE, 8 );
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.THATCH, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1416,9 +1416,9 @@ public class StructureInitializer {
                     "Reinforced Wooden Door",
                     "A reinforced wooden door that provides entrance to structures. Can be locked for security.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 20);
-                        append(ResourceInitializer.WOOD, 14);
-                        append(ResourceInitializer.THATCH, 8);
+                        append( ResourceInitializer.STONE, 20 );
+                        append( ResourceInitializer.WOOD, 14 );
+                        append( ResourceInitializer.THATCH, 8 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1426,9 +1426,9 @@ public class StructureInitializer {
                     "Sloped Stone Roof",
                     "An inclined stone roof. Slightly different angle than the ramp.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 60);
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.THATCH, 20);
+                        append( ResourceInitializer.STONE, 60 );
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.THATCH, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1436,9 +1436,9 @@ public class StructureInitializer {
                     "Sloped Stone Wall Left",
                     "A sturdy stone sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 20);
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.THATCH, 10);
+                        append( ResourceInitializer.STONE, 20 );
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.THATCH, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1446,9 +1446,9 @@ public class StructureInitializer {
                     "Sloped Stone Wall Right",
                     "A sturdy stone sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 20);
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.THATCH, 10);
+                        append( ResourceInitializer.STONE, 20 );
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.THATCH, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1456,9 +1456,9 @@ public class StructureInitializer {
                     "Stone Ceiling",
                     "A stable brick-and-mortar ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 60);
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.THATCH, 20);
+                        append( ResourceInitializer.STONE, 60 );
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.THATCH, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1466,9 +1466,9 @@ public class StructureInitializer {
                     "Stone Dinosaur Gateway",
                     "A large brick-and-mortar gateway that can be used with a Gate to keep most dinosaurs in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 140);
-                        append(ResourceInitializer.WOOD, 70);
-                        append(ResourceInitializer.THATCH, 50);
+                        append( ResourceInitializer.STONE, 140 );
+                        append( ResourceInitializer.WOOD, 70 );
+                        append( ResourceInitializer.THATCH, 50 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1476,9 +1476,9 @@ public class StructureInitializer {
                     "Stone Doorframe",
                     "A stone wall that provides entrance to a structure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 30);
-                        append(ResourceInitializer.WOOD, 16);
-                        append(ResourceInitializer.THATCH, 12);
+                        append( ResourceInitializer.STONE, 30 );
+                        append( ResourceInitializer.WOOD, 16 );
+                        append( ResourceInitializer.THATCH, 12 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1486,9 +1486,9 @@ public class StructureInitializer {
                     "Stone Fence Foundation",
                     "This strong, narrow foundation is used to build walls around an area.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 15);
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.THATCH, 10);
+                        append( ResourceInitializer.STONE, 15 );
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.THATCH, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1496,9 +1496,9 @@ public class StructureInitializer {
                     "Stone Foundation",
                     "A foundation is required to build structures in an area. This one is made from brick-and-mortar.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 80);
-                        append(ResourceInitializer.WOOD, 40);
-                        append(ResourceInitializer.THATCH, 30);
+                        append( ResourceInitializer.STONE, 80 );
+                        append( ResourceInitializer.WOOD, 40 );
+                        append( ResourceInitializer.THATCH, 30 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1506,9 +1506,9 @@ public class StructureInitializer {
                     "Stone Hatchframe",
                     "This brick-and-mortar ceiling has a hole in it for trapdoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 50);
-                        append(ResourceInitializer.WOOD, 25);
-                        append(ResourceInitializer.THATCH, 15);
+                        append( ResourceInitializer.STONE, 50 );
+                        append( ResourceInitializer.WOOD, 25 );
+                        append( ResourceInitializer.THATCH, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1516,9 +1516,9 @@ public class StructureInitializer {
                     "Stone Pillar",
                     "Adds structural integrity to the area it is built on. Can also act as stilts for buildings on inclines.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 30);
-                        append(ResourceInitializer.WOOD, 15);
-                        append(ResourceInitializer.THATCH, 10);
+                        append( ResourceInitializer.STONE, 30 );
+                        append( ResourceInitializer.WOOD, 15 );
+                        append( ResourceInitializer.THATCH, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1526,9 +1526,9 @@ public class StructureInitializer {
                     "Stone Railing",
                     "A brick-and-mortar railing that acts as a simple barrier to prevent people from falling.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 60);
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.THATCH, 20);
+                        append( ResourceInitializer.STONE, 60 );
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.THATCH, 20 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1536,9 +1536,9 @@ public class StructureInitializer {
                     "Stone Wall",
                     "A brick-and-mortar wall that insulates the inside from the outside and separates rooms.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 40);
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 15);
+                        append( ResourceInitializer.STONE, 40 );
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1546,9 +1546,9 @@ public class StructureInitializer {
                     "Stone Windowframe",
                     "A brick-and-mortar wall with a hole for a window.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 35);
-                        append(ResourceInitializer.WOOD, 18);
-                        append(ResourceInitializer.THATCH, 12);
+                        append( ResourceInitializer.STONE, 35 );
+                        append( ResourceInitializer.WOOD, 18 );
+                        append( ResourceInitializer.THATCH, 12 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
             add(new InitEngram(
@@ -1556,9 +1556,9 @@ public class StructureInitializer {
                     "Stone Staircase",
                     "A stone spiral staircase, useful in constructing multi-level buildings.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.STONE, 200);
-                        append(ResourceInitializer.WOOD, 100);
-                        append(ResourceInitializer.THATCH, 75);
+                        append( ResourceInitializer.STONE, 200 );
+                        append( ResourceInitializer.WOOD, 100 );
+                        append( ResourceInitializer.THATCH, 75 );
                     }},
                     CategoryInitializer.STRUCTURES.STONE));
 
@@ -1568,9 +1568,9 @@ public class StructureInitializer {
                     "Sloped Thatch Roof",
                     "An inclined Thatch roof. Slightly different angle than the ramp.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
             add(new InitEngram(
@@ -1578,9 +1578,9 @@ public class StructureInitializer {
                     "Sloped Thatch Wall Left",
                     "A simple Thatch sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with a roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.WOOD, 2);
-                        append(ResourceInitializer.FIBER, 7);
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.WOOD, 2 );
+                        append( ResourceInitializer.FIBER, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
             add(new InitEngram(
@@ -1588,9 +1588,9 @@ public class StructureInitializer {
                     "Sloped Thatch Wall Right",
                     "A simple Thatch sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with a roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.WOOD, 2);
-                        append(ResourceInitializer.FIBER, 7);
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.WOOD, 2 );
+                        append( ResourceInitializer.FIBER, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
             add(new InitEngram(
@@ -1598,8 +1598,8 @@ public class StructureInitializer {
                     "Thatch Door",
                     "Enough sticks bundled together works as a simple door. Can be locked for security, but not very strong.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 7);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.THATCH, 7 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
             add(new InitEngram(
@@ -1607,9 +1607,9 @@ public class StructureInitializer {
                     "Thatch Doorframe",
                     "This thatch wall has an entrance in it, but requires more wood to stay stable.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 8);
-                        append(ResourceInitializer.WOOD, 6);
-                        append(ResourceInitializer.FIBER, 6);
+                        append( ResourceInitializer.THATCH, 8 );
+                        append( ResourceInitializer.WOOD, 6 );
+                        append( ResourceInitializer.FIBER, 6 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
             add(new InitEngram(
@@ -1617,9 +1617,9 @@ public class StructureInitializer {
                     "Thatch Foundation",
                     "A foundation is required to build structures. This one is a wooden frame with some smooth bundles of sticks that act as a floor.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 20);
-                        append(ResourceInitializer.WOOD, 6);
-                        append(ResourceInitializer.FIBER, 15);
+                        append( ResourceInitializer.THATCH, 20 );
+                        append( ResourceInitializer.WOOD, 6 );
+                        append( ResourceInitializer.FIBER, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
             add(new InitEngram(
@@ -1627,9 +1627,9 @@ public class StructureInitializer {
                     "Thatch Roof",
                     "A thatched roof to protect you from the elements. Not stable enough to build on.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
             add(new InitEngram(
@@ -1637,9 +1637,9 @@ public class StructureInitializer {
                     "Thatch Wall",
                     "A simple wall made of bundled sticks, and stabilized by a wooden frame. Fairly fragile, but better than nothing.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.FIBER, 2);
-                        append(ResourceInitializer.FIBER, 7);
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.FIBER, 2 );
+                        append( ResourceInitializer.FIBER, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.THATCH));
 
@@ -1649,9 +1649,9 @@ public class StructureInitializer {
                     "Dinosaur Gate",
                     "A large wooden gate that can be used with a gateway to keep dinosaurs in or out. Cannot be destroyed by any dinosaur.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 60);
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.WOOD, 60 );
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1659,10 +1659,10 @@ public class StructureInitializer {
                     "Dinosaur Gateway",
                     "A large wood and stone gateway that can be used with a gate to keep most dinosaurs in or out.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 140);
-                        append(ResourceInitializer.STONE, 40);
-                        append(ResourceInitializer.THATCH, 35);
-                        append(ResourceInitializer.FIBER, 25);
+                        append( ResourceInitializer.WOOD, 140 );
+                        append( ResourceInitializer.STONE, 40 );
+                        append( ResourceInitializer.THATCH, 35 );
+                        append( ResourceInitializer.FIBER, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1670,9 +1670,9 @@ public class StructureInitializer {
                     "Rope Ladder",
                     "A simple rope ladder used to climb up or down tall structures. Can also be used to extend existing ladders.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 15);
-                        append(ResourceInitializer.THATCH, 140);
-                        append(ResourceInitializer.FIBER, 180);
+                        append( ResourceInitializer.WOOD, 15 );
+                        append( ResourceInitializer.THATCH, 140 );
+                        append( ResourceInitializer.FIBER, 180 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1680,9 +1680,9 @@ public class StructureInitializer {
                     "Sloped Wood Wall Left",
                     "A sturdy Wooden sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 5);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 5 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1690,9 +1690,9 @@ public class StructureInitializer {
                     "Sloped Wood Wall Right",
                     "A sturdy Wooden sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 5);
-                        append(ResourceInitializer.FIBER, 5);
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 5 );
+                        append( ResourceInitializer.FIBER, 5 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1700,9 +1700,9 @@ public class StructureInitializer {
                     "Sloped Wooden Roof",
                     "An inclined wooden roof. Slightly different angle than the ramp.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 60);
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.WOOD, 60 );
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1710,10 +1710,10 @@ public class StructureInitializer {
                     "Standing Torch",
                     "A torch on a small piece of wood that lights and warms the immediate area.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.THATCH, 8);
-                        append(ResourceInitializer.FLINT, 1);
-                        append(ResourceInitializer.STONE, 1);
-                        append(ResourceInitializer.WOOD, 3);
+                        append( ResourceInitializer.THATCH, 8 );
+                        append( ResourceInitializer.FLINT, 1 );
+                        append( ResourceInitializer.STONE, 1 );
+                        append( ResourceInitializer.WOOD, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1721,9 +1721,9 @@ public class StructureInitializer {
                     "Wooden Cage",
                     "A portable cage in which to imprison victims.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 110);
-                        append(ResourceInitializer.THATCH, 30);
-                        append(ResourceInitializer.FIBER, 25);
+                        append( ResourceInitializer.WOOD, 110 );
+                        append( ResourceInitializer.THATCH, 30 );
+                        append( ResourceInitializer.FIBER, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1731,9 +1731,9 @@ public class StructureInitializer {
                     "Wooden Catwalk",
                     "A thin walkway for bridging areas together. Made from sturdy wood.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 7);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 7 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1741,9 +1741,9 @@ public class StructureInitializer {
                     "Wooden Ceiling",
                     "A stable wooden ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 60);
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.WOOD, 60 );
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1751,9 +1751,9 @@ public class StructureInitializer {
                     "Wooden Door",
                     "A stable wooden door that provides entrance to structures. Can be locked for security.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 7);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 7 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1761,9 +1761,9 @@ public class StructureInitializer {
                     "Wooden Doorframe",
                     "A wooden wall that provides entrance to a structure.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 30);
-                        append(ResourceInitializer.THATCH, 8);
-                        append(ResourceInitializer.FIBER, 6);
+                        append( ResourceInitializer.WOOD, 30 );
+                        append( ResourceInitializer.THATCH, 8 );
+                        append( ResourceInitializer.FIBER, 6 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1771,9 +1771,9 @@ public class StructureInitializer {
                     "Wooden Fence Foundation",
                     "This very cheap, narrow foundation is used to build fences around an area.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 10);
-                        append(ResourceInitializer.THATCH, 3);
-                        append(ResourceInitializer.FIBER, 2);
+                        append( ResourceInitializer.WOOD, 10 );
+                        append( ResourceInitializer.THATCH, 3 );
+                        append( ResourceInitializer.FIBER, 2 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1781,9 +1781,9 @@ public class StructureInitializer {
                     "Wooden Foundation",
                     "A foundation is required to build structures. This one is made from sturdy wood.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 80);
-                        append(ResourceInitializer.THATCH, 20);
-                        append(ResourceInitializer.FIBER, 15);
+                        append( ResourceInitializer.WOOD, 80 );
+                        append( ResourceInitializer.THATCH, 20 );
+                        append( ResourceInitializer.FIBER, 15 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1791,9 +1791,9 @@ public class StructureInitializer {
                     "Wooden Hatchframe",
                     "A wooden ceiling with a hole in it for trapdoors.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 50);
-                        append(ResourceInitializer.THATCH, 12);
-                        append(ResourceInitializer.FIBER, 8);
+                        append( ResourceInitializer.WOOD, 50 );
+                        append( ResourceInitializer.THATCH, 12 );
+                        append( ResourceInitializer.FIBER, 8 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1801,9 +1801,9 @@ public class StructureInitializer {
                     "Wooden Ladder",
                     "A simple wooden ladder used to climb up or down tall structures. Can also be used to extend existing ladders.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 4);
-                        append(ResourceInitializer.THATCH, 7);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.WOOD, 4 );
+                        append( ResourceInitializer.THATCH, 7 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1811,9 +1811,9 @@ public class StructureInitializer {
                     "Wooden Pillar",
                     "Adds structural integrity to the area it is built on. Can also act as stilts for buildings on inclines.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 40);
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.FIBER, 7);
+                        append( ResourceInitializer.WOOD, 40 );
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.FIBER, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1821,9 +1821,9 @@ public class StructureInitializer {
                     "Wooden Railing",
                     "A sturdy wooden railing that acts a a simple barrier to prevent people from falling.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 5);
-                        append(ResourceInitializer.FIBER, 3);
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 5 );
+                        append( ResourceInitializer.FIBER, 3 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1831,9 +1831,9 @@ public class StructureInitializer {
                     "Wooden Ramp",
                     "An inclined wooden floor for travelling up or down. Can also be used to make an angled roof.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 60);
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.WOOD, 60 );
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1841,9 +1841,9 @@ public class StructureInitializer {
                     "Wooden Spike Wall",
                     "These incredibly sharp wooden stakes are dangerous to any that touch them. Larger creatures take more damage.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 40);
-                        append(ResourceInitializer.HIDE, 10);
-                        append(ResourceInitializer.FIBER, 30);
+                        append( ResourceInitializer.WOOD, 40 );
+                        append( ResourceInitializer.HIDE, 10 );
+                        append( ResourceInitializer.FIBER, 30 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1851,9 +1851,9 @@ public class StructureInitializer {
                     "Wooden Trapdoor",
                     "This small wooden door can be used to secure hatches.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 20);
-                        append(ResourceInitializer.THATCH, 7);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.WOOD, 20 );
+                        append( ResourceInitializer.THATCH, 7 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1861,10 +1861,10 @@ public class StructureInitializer {
                     "Wooden Tree Platform",
                     "Attaches to a large tree, enabling you to build on it.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 1600);
-                        append(ResourceInitializer.METAL_INGOT, 200);
-                        append(ResourceInitializer.CEMENTING_PASTE, 600);
-                        append(ResourceInitializer.FIBER, 600);
+                        append( ResourceInitializer.WOOD, 1600 );
+                        append( ResourceInitializer.METAL_INGOT, 200 );
+                        append( ResourceInitializer.CEMENTING_PASTE, 600 );
+                        append( ResourceInitializer.FIBER, 600 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1872,9 +1872,9 @@ public class StructureInitializer {
                     "Wooden Wall",
                     "A sturdy wooden wall that insulates the inside from the outside, separates rooms, and provides structural integrity.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 40);
-                        append(ResourceInitializer.THATCH, 10);
-                        append(ResourceInitializer.FIBER, 7);
+                        append( ResourceInitializer.WOOD, 40 );
+                        append( ResourceInitializer.THATCH, 10 );
+                        append( ResourceInitializer.FIBER, 7 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1882,9 +1882,9 @@ public class StructureInitializer {
                     "Wooden Window",
                     "Wooden beams on hinges that cover windows to provide protection from projectiles and spying.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 8);
-                        append(ResourceInitializer.THATCH, 2);
-                        append(ResourceInitializer.FIBER, 1);
+                        append( ResourceInitializer.WOOD, 8 );
+                        append( ResourceInitializer.THATCH, 2 );
+                        append( ResourceInitializer.FIBER, 1 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1892,9 +1892,9 @@ public class StructureInitializer {
                     "Wooden Windowframe",
                     "A wooden wall with a hole for a window.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 36);
-                        append(ResourceInitializer.THATCH, 9);
-                        append(ResourceInitializer.FIBER, 6);
+                        append( ResourceInitializer.WOOD, 36 );
+                        append( ResourceInitializer.THATCH, 9 );
+                        append( ResourceInitializer.FIBER, 6 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
             add(new InitEngram(
@@ -1902,9 +1902,9 @@ public class StructureInitializer {
                     "Wooden Staircase",
                     "A wooden spiral staircase, useful in constructing multi-level buildings.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 200);
-                        append(ResourceInitializer.THATCH, 50);
-                        append(ResourceInitializer.FIBER, 35);
+                        append( ResourceInitializer.WOOD, 200 );
+                        append( ResourceInitializer.THATCH, 50 );
+                        append( ResourceInitializer.FIBER, 35 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.ID));
 
@@ -1914,9 +1914,9 @@ public class StructureInitializer {
                     "Wooden Billboard",
                     "A large wooden billboard for landmark navigation or relaying messages.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 60);
-                        append(ResourceInitializer.THATCH, 15);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.WOOD, 60 );
+                        append( ResourceInitializer.THATCH, 15 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.SIGNS));
             add(new InitEngram(
@@ -1924,9 +1924,9 @@ public class StructureInitializer {
                     "Wooden Sign",
                     "A simple wooden sign for landmark navigation or relaying messages.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 5);
-                        append(ResourceInitializer.THATCH, 3);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.WOOD, 5 );
+                        append( ResourceInitializer.THATCH, 3 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.SIGNS));
             add(new InitEngram(
@@ -1934,9 +1934,9 @@ public class StructureInitializer {
                     "Wooden Wall Sign",
                     "A simple wooden wall sign for basic messages, requires attaching to a wall.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 5);
-                        append(ResourceInitializer.THATCH, 3);
-                        append(ResourceInitializer.FIBER, 4);
+                        append( ResourceInitializer.WOOD, 5 );
+                        append( ResourceInitializer.THATCH, 3 );
+                        append( ResourceInitializer.FIBER, 4 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.SIGNS));
 
@@ -1946,9 +1946,9 @@ public class StructureInitializer {
                     "Bookshelf",
                     "A large bookshelf to store Blueprints, Notes, and other small trinkets in.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 100);
-                        append(ResourceInitializer.THATCH, 45);
-                        append(ResourceInitializer.FIBER, 35);
+                        append( ResourceInitializer.WOOD, 100 );
+                        append( ResourceInitializer.THATCH, 45 );
+                        append( ResourceInitializer.FIBER, 35 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.STORAGE));
             add(new InitEngram(
@@ -1956,10 +1956,10 @@ public class StructureInitializer {
                     "Feeding Trough",
                     "Put food for your nearby pets in this, and they'll automatically eat it when hungry!",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 120);
-                        append(ResourceInitializer.THATCH, 60);
-                        append(ResourceInitializer.FIBER, 40);
-                        append(ResourceInitializer.METAL_ORE, 8);
+                        append( ResourceInitializer.WOOD, 120 );
+                        append( ResourceInitializer.THATCH, 60 );
+                        append( ResourceInitializer.FIBER, 40 );
+                        append( ResourceInitializer.METAL_ORE, 8 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.STORAGE));
             add(new InitEngram(
@@ -1967,9 +1967,9 @@ public class StructureInitializer {
                     "Large Storage Box",
                     "A large box to store goods in.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 50);
-                        append(ResourceInitializer.THATCH, 35);
-                        append(ResourceInitializer.FIBER, 25);
+                        append( ResourceInitializer.WOOD, 50 );
+                        append( ResourceInitializer.THATCH, 35 );
+                        append( ResourceInitializer.FIBER, 25 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.STORAGE));
             add(new InitEngram(
@@ -1977,9 +1977,9 @@ public class StructureInitializer {
                     "Storage Box",
                     "A small box to store goods in.",
                     new SparseIntArray() {{
-                        append(ResourceInitializer.WOOD, 25);
-                        append(ResourceInitializer.THATCH, 20);
-                        append(ResourceInitializer.FIBER, 10);
+                        append( ResourceInitializer.WOOD, 25 );
+                        append( ResourceInitializer.THATCH, 20 );
+                        append( ResourceInitializer.FIBER, 10 );
                     }},
                     CategoryInitializer.STRUCTURES.WOOD.STORAGE));
         }

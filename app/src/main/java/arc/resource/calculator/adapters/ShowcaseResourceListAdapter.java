@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.CraftableResource;
+import arc.resource.calculator.model.resource.QueueResource;
 import arc.resource.calculator.viewholders.ResourceViewHolder;
 
 /**
@@ -27,9 +27,9 @@ import arc.resource.calculator.viewholders.ResourceViewHolder;
 public class ShowcaseResourceListAdapter extends RecyclerView.Adapter {
     private static final String LOGTAG = "ResourceList";
 
-    private SparseArray<CraftableResource> resources = null;
+    private SparseArray<QueueResource> resources = null;
 
-    public ShowcaseResourceListAdapter(SparseArray<CraftableResource> resources) {
+    public ShowcaseResourceListAdapter( SparseArray<QueueResource> resources ) {
         this.resources = resources;
     }
 
@@ -45,11 +45,11 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ResourceViewHolder viewHolder = (ResourceViewHolder) holder;
 
-        int imageId = resources.valueAt(position).getImageId();
+//        int imageId = resources.valueAt(position).getDrawable();
         String name = resources.valueAt(position).getName();
         int quantity = resources.valueAt(position).getQuantity();
 
-        viewHolder.getImageView().setImageResource(imageId);
+//        viewHolder.getImageView().setImageResource(imageId);
         viewHolder.getNameText().setText(name);
         viewHolder.getQuantityText().setText(String.format(Locale.US, "%1$d", quantity));
     }
@@ -59,7 +59,7 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter {
         return resources.size();
     }
 
-    public void setResources(SparseArray<CraftableResource> resources) {
+    public void setResources( SparseArray<QueueResource> resources ) {
         this.resources = resources;
     }
 

@@ -33,14 +33,12 @@ public class TestUtilities extends AndroidTestCase {
     }
 
     static class TestEngram {
-        long mId = 1;
         String mName = "Stone Wall";
         String mDescription = "A brick-and-mortar wall that insulates the inside from the outside and separates rooms.";
         int mDrawable = R.drawable.structures_stone_stone_wall;
     }
 
     static class TestResource {
-        long mId = 1;
         String mName = "Stone";
         int mDrawable = R.drawable.stone;
     }
@@ -112,7 +110,7 @@ public class TestUtilities extends AndroidTestCase {
 
         testValues.put( CategoryEntry._ID, testCategory.mId );
         testValues.put( CategoryEntry.COLUMN_NAME, testCategory.mName );
-        testValues.put( CategoryEntry.COLUMN_PARENT, testCategory.mParent );
+        testValues.put( CategoryEntry.COLUMN_PARENT_KEY, testCategory.mParent );
 
         return testValues;
     }

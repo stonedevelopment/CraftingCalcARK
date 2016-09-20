@@ -1,3 +1,15 @@
+/**
+ * Copyright (C) 2016, Jared Stone
+ * -
+ * Author: Jared Stone
+ * Title: A:RC, a resource calculator for ARK:Survival Evolved
+ * -
+ * Web: https://github.com/jaredstone1982/CraftingCalcARK
+ * Email: jaredstone1982@gmail.com
+ * Twitter: @MasterxOfxNone
+ * -
+ * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ */
 package arc.resource.calculator.db;
 
 import android.content.ContentResolver;
@@ -24,6 +36,7 @@ public class DatabaseContract {
     public static final String PATH_CATEGORY = "category";
     public static final String PATH_CATEGORY_PARENT = "parent";
     public static final String PATH_QUEUE = "queue";
+    public static final String PATH_DRAWABLE = "drawable";
 
     // Inner class that defines the table contents of the engram table
     public static final class EngramEntry implements BaseColumns {
@@ -50,6 +63,7 @@ public class DatabaseContract {
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
         public static final String SQL_QUERY_WITH_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE + " = ?";
 
         // Returns /engram/_id
         public static Uri buildUriWithId( long id ) {
@@ -62,8 +76,18 @@ public class DatabaseContract {
                     .appendPath( Long.toString( category_id ) ).build();
         }
 
+        // Returns /engram/<drawable>
+        public static Uri buildUriWithDrawable( String drawable ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_DRAWABLE )
+                    .appendPath( drawable ).build();
+        }
+
         public static long getCategoryIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getPathSegments().get( 2 ) );
+        }
+
+        public static String getDrawableFromUri( Uri uri ) {
+            return uri.getPathSegments().get( 2 );
         }
     }
 
@@ -87,10 +111,21 @@ public class DatabaseContract {
 
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
+        public static final String SQL_QUERY_WITH_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE + " = ?";
 
         // Returns /resource/_id
         public static Uri buildUriWithId( long id ) {
             return ContentUris.withAppendedId( CONTENT_URI, id );
+        }
+
+        // Returns /resource/drawable
+        public static Uri buildUriWithDrawable( String drawable ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_DRAWABLE )
+                    .appendPath( drawable ).build();
+        }
+
+        public static String getDrawableFromUri( Uri uri ) {
+            return uri.getPathSegments().get( 2 );
         }
     }
 
@@ -121,10 +156,14 @@ public class DatabaseContract {
         public static final String SQL_QUERY_WITH_RESOURCE_TABLE = TABLE_NAME + " INNER JOIN " + ResourceEntry.TABLE_NAME +
                 " ON " + TABLE_NAME + "." + COLUMN_RESOURCE_KEY + " = " + ResourceEntry.TABLE_NAME + "." + ResourceEntry._ID;
 
-        // Returns /complex_resource/_id
-        public static Uri buildUriWithId( long id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, id );
-        }
+        public static final String SQL_QUERY_WITH_DRAWABLE_SELECTION =
+                EngramEntry.TABLE_NAME + "." + EngramEntry.COLUMN_DRAWABLE + " = " + ResourceEntry.TABLE_NAME + "." + ResourceEntry.COLUMN_DRAWABLE;
+        public static final String SQL_QUERY_WITH_DRAWABLE_TABLE =
+                EngramEntry.TABLE_NAME + " INNER JOIN " + ResourceEntry.TABLE_NAME;
+        public static final String[] SQL_QUERY_WITH_DRAWABLE_PROJECTION = new String[]{
+                EngramEntry.TABLE_NAME + "." + EngramEntry._ID + " AS " + COLUMN_ENGRAM_KEY,
+                ResourceEntry.TABLE_NAME + "." + ResourceEntry._ID + " AS " + COLUMN_RESOURCE_KEY
+        };
 
         // Returns /complex_resource/engram/engram_id
         public static Uri buildUriWithEngramId( long engram_id ) {
@@ -146,6 +185,12 @@ public class DatabaseContract {
         // Returns /complex_resource/resource/
         public static Uri buildUriWithResourceTable() {
             return CONTENT_URI.buildUpon().appendPath( PATH_RESOURCE ).build();
+        }
+
+        // Returns /complex_resource/resource/
+        public static Uri buildUriWithDrawable() {
+            return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM )
+                    .appendPath( PATH_RESOURCE ).build();
         }
 
         public static long getEngramIdFromUri( Uri uri ) {
@@ -173,11 +218,11 @@ public class DatabaseContract {
         public static final String COLUMN_NAME = "name";
 
         // Parent level, tied to category_id of another Category
-        public static final String COLUMN_PARENT = "parent";
+        public static final String COLUMN_PARENT_KEY = "parent_id";
 
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
-        public static final String SQL_QUERY_WITH_PARENT_ID = TABLE_NAME + "." + COLUMN_PARENT + " = ?";
+        public static final String SQL_QUERY_WITH_PARENT_ID = TABLE_NAME + "." + COLUMN_PARENT_KEY + " = ?";
 
         // Returns /category/_id
         public static Uri buildUriWithId( long id ) {
@@ -210,15 +255,15 @@ public class DatabaseContract {
         // Foreign key from Resource table
         public static final String COLUMN_RESOURCE_KEY = "resource_id";
 
+        // Initialization helpers
+        public static final String COLUMN_DRAWABLE = "drawable";
+        public static final String COLUMN_ENGRAM_DRAWABLE = "engram_drawable";
+        public static final String COLUMN_RESOURCE_DRAWABLE = "resource_drawable";
+
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
         public static final String SQL_QUERY_WITH_ENGRAM_KEY = TABLE_NAME + "." + COLUMN_ENGRAM_KEY + " = ?";
         public static final String SQL_QUERY_WITH_RESOURCE_KEY = TABLE_NAME + "." + COLUMN_RESOURCE_KEY + " = ?";
-
-        // Returns /composition/_id
-        public static Uri buildUriWithId( long id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, id );
-        }
 
         // Returns /composition/engram/engram_id
         public static Uri buildUriWithEngramId( long engram_id ) {
@@ -284,6 +329,10 @@ public class DatabaseContract {
         public static long getEngramIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getPathSegments().get( 2 ) );
         }
+    }
+
+    public static Uri buildUriWithId( Uri uri, long id ) {
+        return ContentUris.withAppendedId( uri, id );
     }
 
     public static long getIdFromUri( Uri uri ) {

@@ -5,6 +5,8 @@ import android.util.SparseArray;
 
 import arc.resource.calculator.db.DataSource;
 import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.model.resource.QueueResource;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -27,8 +29,8 @@ public class CraftingQueue {
 
     private boolean hasComplexResources;
 
-    private SparseArray<CraftableResource> resources = null;
-    private SparseArray<CraftableEngram> engrams = null;
+    private SparseArray<QueueResource> resources = null;
+    private SparseArray<QueueEngram> engrams = null;
 
     private DataSource dataSource;
 
@@ -78,7 +80,8 @@ public class CraftingQueue {
     }
 
     public int getEngramImageId(int position) {
-        return engrams.valueAt(position).getImageId();
+//        return engrams.valueAt(position).getImageId();
+        return 0;
     }
 
     public String getEngramName(int position) {
@@ -96,7 +99,8 @@ public class CraftingQueue {
     }
 
     public int getResourceImageId(int position) {
-        return resources.valueAt(position).getImageId();
+//        return resources.valueAt(position).getDrawable();
+        return 0;
     }
 
     public String getResourceName(int position) {
@@ -212,32 +216,32 @@ public class CraftingQueue {
 //        this.engrams = dataSource.findAllCraftableEngrams();
     }
 
-    private SparseArray<CraftableEngram> getEngrams() {
+    private SparseArray<QueueEngram> getEngrams() {
         return engrams;
     }
 
-    private SparseArray<CraftableResource> getResources() {
+    private SparseArray<QueueResource> getResources() {
 //        if (!hasComplexResources()) return dataSource.findAllCraftableResourcesFromQueue();
 //
-//        SparseArray<CraftableResource> resources = new SparseArray<>();
-//        HashMap<Long, CraftableResource> resourceMap = new HashMap<>();
+//        SparseArray<QueueResource> resources = new SparseArray<>();
+//        HashMap<Long, QueueResource> resourceMap = new HashMap<>();
 //
-//        SparseArray<CraftableEngram> engrams = getEngrams();
-//        HashMap<Long, CraftableEngram> engramMap = new HashMap<>();
+//        SparseArray<QueueEngram> engrams = getEngrams();
+//        HashMap<Long, QueueEngram> engramMap = new HashMap<>();
 //
 //        for (int i = 0; i < engrams.size(); i++) {
 //            engramMap.put(engrams.valueAt(i).getId(), engrams.valueAt(i));
 //        }
 //
 //        for (int i = 0; i < engrams.size(); i++) {
-//            CraftableEngram engram = engrams.valueAt(i);
+//            QueueEngram engram = engrams.valueAt(i);
 //
 //            Helper.Log(LOGTAG, "-- Checking engram: " + engram.toString());
 //
-//            SparseArray<CraftableResource> composition = dataSource.findEngramResources(engram.getId());
+//            SparseArray<QueueResource> composition = dataSource.findEngramResources(engram.getId());
 //            for (int j = 0; j < composition.size(); j++) {
 //                int imageId = composition.keyAt(j);
-//                CraftableResource resource = composition.valueAt(j);
+//                QueueResource resource = composition.valueAt(j);
 //
 //                Helper.Log(LOGTAG, " > Checking resource: " + resource.toString());
 //
@@ -259,10 +263,10 @@ public class CraftingQueue {
 //                    Helper.Log(LOGTAG, " >>>> engram:" + engram.toString());
 //
 //                    if (engramMap.containsKey(engramFromResources.getId())) {
-//                        CraftableEngram newEngram = engramMap.get(engramFromResources.getId());
+//                        QueueEngram newEngram = engramMap.get(engramFromResources.getId());
 //                        newEngram.increaseQuantity(combinedQuantity);
 //                    } else {
-//                        CraftableEngram newEngram = new CraftableEngram(engramFromResources, combinedQuantity);
+//                        QueueEngram newEngram = new QueueEngram(engramFromResources, combinedQuantity);
 //
 //                        engrams.put(engrams.size(), newEngram);
 //                        engramMap.put(newEngram.getId(), newEngram);

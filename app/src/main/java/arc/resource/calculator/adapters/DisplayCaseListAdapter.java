@@ -27,9 +27,8 @@ import arc.resource.calculator.viewholders.DisplayCaseViewHolder;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class DisplayCaseListAdapter extends RecyclerView.Adapter {
-    private static final String LOGTAG = "LISTADAPTER";
+    private static final String TAG = DisplayCaseListAdapter.class.getSimpleName();
 
-    //    private Context context;
     private DisplayHelper displayHelper;
 
     private DisplayCase displayCase;

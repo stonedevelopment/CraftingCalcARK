@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import arc.resource.calculator.db.DataSource;
+import arc.resource.calculator.model.engram.DetailEngram;
+import arc.resource.calculator.model.resource.CompositeResource;
+import arc.resource.calculator.model.resource.QueueResource;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -23,10 +26,8 @@ public class Showcase {
     private DetailEngram engram;
     private DataSource dataSource;
 
-    public Showcase(Context context, Long id) {
-//        this.dataSource = DataSource.getInstance(context, LOGTAG);
-//
-//        engram = dataSource.findSingleDetailEngram(id);
+    public Showcase( Context context, long engramId ) {
+
     }
 
     public DetailEngram getEngram() {
@@ -41,8 +42,8 @@ public class Showcase {
         return engram.getName();
     }
 
-    public int getImageId() {
-        return engram.getImageId();
+    public String getDrawable() {
+        return engram.getDrawable();
     }
 
     public String getDescription() {
@@ -50,28 +51,28 @@ public class Showcase {
     }
 
     public int getQuantity() {
-        return engram.getQuantity();
+//        return engram.getQuantity();
+        return 0;
     }
 
-    public SparseArray<CraftableResource> getComposition() {
-        SparseArray<CraftableResource> baseComposition = engram.getComposition();
-        SparseArray<CraftableResource> returnableComposition = new SparseArray<>();
+    public SparseArray<QueueResource> getComposition() {
+        SparseArray<QueueResource> returnableComposition = new SparseArray<>();
 
-        int quantity = engram.getQuantity();
+        SparseArray<CompositeResource> baseComposition = engram.getComposition();
+
+//        int quantity = engram.getQuantity();
 
         for (int i = 0; i < baseComposition.size(); i++) {
-            CraftableResource resource = baseComposition.valueAt(i);
+            CompositeResource resource = baseComposition.valueAt( i );
+//            resource.setQuantity( quantity );
 
-            CraftableResource craftableResource = new CraftableResource(resource);
-            craftableResource.setQuantity(resource.getQuantity() * quantity);
-
-            returnableComposition.append(i, craftableResource);
+//            returnableComposition.append(i, resource );
         }
         return returnableComposition;
     }
 
     public void setQuantity(int quantity) {
-        engram.setQuantity(quantity);
+//        engram.setQuantity(quantity);
     }
 
     public String getCategoryDescription() {

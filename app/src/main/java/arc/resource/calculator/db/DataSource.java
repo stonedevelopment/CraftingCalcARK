@@ -42,7 +42,7 @@ public class DataSource {
 //
 //    // -- PUBLIC DATABASE QUERY METHODS --
 //
-//    public SparseArray<CraftableEngram> findAllCraftableEngrams() {
+//    public SparseArray<QueueEngram> findAllCraftableEngrams() {
 //        Cursor cursor = database.rawQuery(
 //                "SELECT *" +
 //                        " FROM " + DatabaseHelper.TABLE_QUEUE +
@@ -58,7 +58,7 @@ public class DataSource {
 //        return cursorToCraftableEngrams(cursor);
 //    }
 //
-//    public SparseArray<CraftableResource> findAllCraftableResourcesFromQueue() {
+//    public SparseArray<QueueResource> findAllCraftableResourcesFromQueue() {
 //        Cursor cursor = database.rawQuery(
 //                "SELECT * FROM " + DatabaseHelper.TABLE_COMPOSITION +
 //                        " INNER JOIN " + DatabaseHelper.TABLE_QUEUE +
@@ -125,7 +125,7 @@ public class DataSource {
 //        return cursorToCategories(cursor);
 //    }
 //
-//    public SparseArray<CraftableResource> findEngramResources(long engramId) {
+//    public SparseArray<QueueResource> findEngramResources(long engramId) {
 //        Cursor cursor = database.rawQuery(
 //                "SELECT * FROM " + DatabaseHelper.TABLE_COMPOSITION +
 //                        " WHERE " + DatabaseHelper.COLUMN_TRACK_ENGRAM +
@@ -235,7 +235,7 @@ public class DataSource {
 //                quantity = 0;
 //            }
 //
-//            SparseArray<CraftableResource> composition = findEngramResources(id);
+//            SparseArray<QueueResource> composition = findEngramResources(id);
 //
 //            cursor.close();
 //            return new DetailEngram(id, name, imageId, description, categoryId, quantity, composition);
@@ -294,8 +294,8 @@ public class DataSource {
 //        }
 //    }
 //
-//    public SparseArray<CraftableEngram> cursorToCraftableEngrams(Cursor cursor) {
-//        SparseArray<CraftableEngram> engrams = new SparseArray<>();
+//    public SparseArray<QueueEngram> cursorToCraftableEngrams(Cursor cursor) {
+//        SparseArray<QueueEngram> engrams = new SparseArray<>();
 //
 //        if (cursor.getCount() > 0) {
 //            while (cursor.moveToNext()) {
@@ -304,7 +304,7 @@ public class DataSource {
 //                int imageId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ENGRAM_IMAGE_ID));
 //                int quantity = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_QUEUE_QUANTITY));
 //
-//                CraftableEngram engram = new CraftableEngram(id, name, imageId, quantity);
+//                QueueEngram engram = new QueueEngram(id, name, imageId, quantity);
 //                engrams.put(engrams.size(), engram);
 //
 //                Helper.Log(LOGTAG, " > Engram Details: " + engram.toString());
@@ -317,8 +317,8 @@ public class DataSource {
 //        return engrams;
 //    }
 //
-//    private SparseArray<CraftableResource> cursorToCraftableResources(Cursor cursor) {
-//        SparseArray<CraftableResource> resources = new SparseArray<>();
+//    private SparseArray<QueueResource> cursorToCraftableResources(Cursor cursor) {
+//        SparseArray<QueueResource> resources = new SparseArray<>();
 //
 //        if (cursor.getCount() > 0) {
 //            while (cursor.moveToNext()) {
@@ -327,9 +327,9 @@ public class DataSource {
 //                long engramId = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COLUMN_TRACK_ENGRAM));
 //                long resourceId = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COLUMN_TRACK_RESOURCE));
 //
-//                CraftableResource resource = new CraftableResource(findSingleResource(resourceId), quantity);
+//                QueueResource resource = new QueueResource(findSingleResource(resourceId), quantity);
 //
-//                resources.put(resource.getImageId(), resource);
+//                resources.put(resource.getDrawable(), resource);
 //            }
 //        } else {
 //            Helper.Log(LOGTAG, "!!- cursorToCraftableResources returns false. -!!");
@@ -407,9 +407,9 @@ public class DataSource {
 //        return queues;
 //    }
 //
-//    private SparseArray<CraftableResource> cursorToResources(Cursor cursor) {
-//        SparseArray<CraftableResource> resources = new SparseArray<>();
-//        HashMap<Long, CraftableResource> resourceMap = new HashMap<>();
+//    private SparseArray<QueueResource> cursorToResources(Cursor cursor) {
+//        SparseArray<QueueResource> resources = new SparseArray<>();
+//        HashMap<Long, QueueResource> resourceMap = new HashMap<>();
 //
 //        if (cursor.getCount() > 0) {
 //            while (cursor.moveToNext()) {
@@ -419,17 +419,17 @@ public class DataSource {
 //                long resourceId = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COLUMN_TRACK_RESOURCE));
 //                int quantityPer = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_QUEUE_QUANTITY));
 //
-//                CraftableResource resource = resourceMap.get(resourceId);
+//                QueueResource resource = resourceMap.get(resourceId);
 //
 //                // If Resource does not exist in list, create new one, otherwise increase its quantity.
 //                if (resource == null) {
-//                    resource = new CraftableResource(findSingleResource(resourceId), quantity * quantityPer);
+//                    resource = new QueueResource(findSingleResource(resourceId), quantity * quantityPer);
 //                } else {
 //                    resource.increaseQuantity(quantity * quantityPer);
 //                }
 //
 //                resourceMap.put(resourceId, resource);
-//                resources.put(resource.getImageId(), resource);
+//                resources.put(resource.getDrawable(), resource);
 //            }
 //        } else {
 //            Helper.Log(LOGTAG, "!!- cursorToResources returns false. -!!");
@@ -439,9 +439,9 @@ public class DataSource {
 //        return resources;
 //    }
 //
-//    private SparseArray<CraftableResource> cursorToComplexResources(Cursor cursor) {
-//        SparseArray<CraftableResource> resources = new SparseArray<>();
-//        HashMap<Long, CraftableResource> resourceMap = new HashMap<>();
+//    private SparseArray<QueueResource> cursorToComplexResources(Cursor cursor) {
+//        SparseArray<QueueResource> resources = new SparseArray<>();
+//        HashMap<Long, QueueResource> resourceMap = new HashMap<>();
 //
 //        if (cursor.getCount() > 0) {
 //            while (cursor.moveToNext()) {
@@ -451,17 +451,17 @@ public class DataSource {
 //                long resourceId = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COLUMN_TRACK_RESOURCE));
 //                int quantityPer = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_QUEUE_QUANTITY));
 //
-//                CraftableResource resource = resourceMap.get(resourceId);
+//                QueueResource resource = resourceMap.get(resourceId);
 //
 //                // If Resource does not exist in list, create new one, otherwise increase its quantity.
 //                if (resource == null) {
-//                    resource = new CraftableResource(findSingleResource(resourceId), quantity * quantityPer);
+//                    resource = new QueueResource(findSingleResource(resourceId), quantity * quantityPer);
 //                } else {
 //                    resource.increaseQuantity(quantity * quantityPer);
 //                }
 //
 //                resourceMap.put(resourceId, resource);
-//                resources.put(resource.getImageId(), resource);
+//                resources.put(resource.getDrawable(), resource);
 //            }
 //        } else {
 //            Helper.Log(LOGTAG, "!!- cursorToResources returns false. -!!");
@@ -673,7 +673,7 @@ public class DataSource {
 //        ContentValues engramValues = new ContentValues();
 //        engramValues.put(DatabaseHelper.COLUMN_ENGRAM_NAME, engram.getName());
 //        engramValues.put(DatabaseHelper.COLUMN_ENGRAM_DESCRIPTION, engram.getDescription());
-//        engramValues.put(DatabaseHelper.COLUMN_ENGRAM_IMAGE_ID, engram.getImageId());
+//        engramValues.put(DatabaseHelper.COLUMN_ENGRAM_IMAGE_ID, engram.getDrawable());
 //        engramValues.put(DatabaseHelper.COLUMN_ENGRAM_CATEGORY_ID, engram.getCategoryId());
 //
 //        engram.setId(database.insert(DatabaseHelper.TABLE_ENGRAM, null, engramValues));
@@ -821,10 +821,10 @@ public class DataSource {
 //                InsertComplexResource(resource, engram.getId());
 //            } else {
 //                if (engram == null) {
-//                    Helper.Log(LOGTAG, "InitializeComplexResources() engram is null, imageId:" + resource.getImageId() + " name:" + resource.getName());
+//                    Helper.Log(LOGTAG, "InitializeComplexResources() engram is null, imageId:" + resource.getDrawable() + " name:" + resource.getName());
 //                }
 //                if (resource == null) {
-//                    Helper.Log(LOGTAG, "InitializeComplexResources() resource is null, imageId:" + engram.getImageId() + " name:" + engram.getName());
+//                    Helper.Log(LOGTAG, "InitializeComplexResources() resource is null, imageId:" + engram.getDrawable() + " name:" + engram.getName());
 //                }
 //            }
 //

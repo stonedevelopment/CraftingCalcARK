@@ -1,5 +1,3 @@
-package arc.resource.calculator.model;
-
 /**
  * Copyright (C) 2016, Jared Stone
  * -
@@ -12,12 +10,16 @@ package arc.resource.calculator.model;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class DisplayEngram extends Engram {
+package arc.resource.calculator.model.engram;
 
+/**
+ * Engram object that holds the id of the category (level) it lays in
+ */
+public class DisplayEngram extends Engram {
     private long categoryId;
 
-    public DisplayEngram(long id, String name, Integer imageId, long categoryId) {
-        super(id, name, imageId);
+    public DisplayEngram( long id, String name, String drawable, long categoryId ) {
+        super( id, name, drawable );
 
         this.categoryId = categoryId;
     }
