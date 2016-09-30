@@ -10,4 +10,6 @@
     <color name="displaycase_engram_background">#740000</color>
     <color name="crafting_queue_background">#969696</color>
     <color name="in_game_background">#002e35</color>
+    <color name="in_game_background_dark">#002a2e</color>
+    <color name="in_game_background_light">#007580</color>
 </resources>

@@ -82,6 +82,7 @@ public class DatabaseContract {
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
         public static final String SQL_QUERY_WITH_CATEGORY_KEY = SQL_COLUMN_CATEGORY_KEY + " = ?";
         public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
+        public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
         // Returns /engram/_id
         public static Uri buildUriWithId( long id ) {
@@ -135,6 +136,7 @@ public class DatabaseContract {
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
         public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
+        public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
         // Returns /resource/_id
         public static Uri buildUriWithId( long id ) {
@@ -243,9 +245,15 @@ public class DatabaseContract {
         // Parent level, tied to category_id of another Category
         public static final String COLUMN_PARENT_KEY = "parent_id";
 
+        // SQL column helpers
+        public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
+        public static final String SQL_COLUMN_PARENT_KEY = TABLE_NAME + "." + COLUMN_PARENT_KEY;
+        public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
+
         // Query helpers
-        public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
-        public static final String SQL_QUERY_WITH_PARENT_ID = TABLE_NAME + "." + COLUMN_PARENT_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
+        public static final String SQL_QUERY_WITH_PARENT_ID = SQL_COLUMN_PARENT_KEY + " = ?";
+        public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
         // Returns /category/_id
         public static Uri buildUriWithId( long id ) {
@@ -370,6 +378,7 @@ public class DatabaseContract {
                 EngramEntry.SQL_COLUMN_DRAWABLE,
                 SQL_COLUMN_QUANTITY
         };
+        public static final String SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME = EngramEntry.SQL_COLUMN_NAME + " ASC";
 
         // Returns /queue/_id
         public static Uri buildUriWithId( long id ) {

@@ -194,6 +194,7 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case ENGRAM:
+                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = EngramEntry.TABLE_NAME;
                 break;
 
@@ -202,6 +203,7 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case RESOURCE:
+                sortOrder = ResourceEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = ResourceEntry.TABLE_NAME;
                 break;
 
@@ -214,6 +216,7 @@ public class DatabaseProvider extends ContentProvider {
             case CATEGORY_WITH_PARENT_ID:
                 selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID;
                 selectionArgs = new String[]{ Long.toString( CategoryEntry.getParentIdFromUri( uri ) ) };
+                sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = CategoryEntry.TABLE_NAME;
                 break;
 
@@ -262,6 +265,7 @@ public class DatabaseProvider extends ContentProvider {
             case ENGRAM_WITH_CATEGORY_ID:
                 _id = EngramEntry.getCategoryIdFromUri( uri );
                 selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY;
+                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = EngramEntry.TABLE_NAME;
                 break;
 
@@ -272,7 +276,6 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case QUEUE_WITH_ENGRAM_ID:
-
                 _id = QueueEntry.getEngramIdFromUri( uri );
                 selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_KEY;
                 tableName = QueueEntry.TABLE_NAME;
@@ -303,6 +306,7 @@ public class DatabaseProvider extends ContentProvider {
             case QUEUE_WITH_ENGRAM_TABLE:
                 projection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_PROJECTION;
                 selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION;
+                sortOrder = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME;
                 tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
                 break;
 
@@ -336,8 +340,6 @@ public class DatabaseProvider extends ContentProvider {
                 null, null,
                 sortOrder
         );
-
-//        Helper.Log( TAG, selection + ", " + Arrays.toString( selectionArgs ) );
 
         cursor.setNotificationUri( getContext().getContentResolver(), uri );
         return cursor;

@@ -41,7 +41,7 @@ public class StructureInitializer {
     public static final int MORTAR_AND_PESTLE = R.drawable.structures_crafting_mortar_and_pestle;
     public static final int REFINING_FORGE = R.drawable.structures_crafting_refining_forge;
     public static final int SMITHY = R.drawable.structures_crafting_smithy;
-    public static final int INDUSTRIAL_GRINDER = R.drawable.industrial_grinder;
+    public static final int INDUSTRIAL_GRINDER = R.drawable.structures_crafting_industrial_grinder;
 
     // -- STRUCTURES > DEFENSES --
     public static final int BEAR_TRAP = R.drawable.structures_defenses_bear_trap;

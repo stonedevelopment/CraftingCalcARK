@@ -1,115 +1,22 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/in_game_background"
-    android:orientation="vertical"
-    tools:context=".DetailActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/in_game_background"
+              android:orientation="horizontal"
+              tools:context=".DetailActivity">
 
-    <LinearLayout
-        android:id="@+id/detail_content_infos"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/engram_detail_save_button"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:weightSum="1">
+    <include
+        android:id="@+id/topContainer"
+        layout="@layout/content_detail_top"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"/>
 
-        <ImageView
-            android:id="@+id/engram_detail_imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="5dp"
-            android:scaleType="fitStart"
-            android:src="@drawable/structures_stone_stone_wall" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/engram_detail_nameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stone Wall"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/engram_detail_categoryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="2dp"
-                android:text="Structures/Wood/Storage"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp" />
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/engram_detail_descriptionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="A brick-and-mortar wall that insulates the inside from the outside and seperates rooms."
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp" />
-            </ScrollView>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/detail_container_resources"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/engram_detail_save_button"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/detail_content_infos">
-
-        <NumberPicker
-            android:id="@+id/engram_detail_quantityNumberPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/engram_detail_resources"
-            android:layout_marginRight="5dp"
-            android:descendantFocusability="blocksDescendants"
-            android:solidColor="@color/crafting_queue_background"
-            android:theme="@style/AppTheme.Picker" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/engram_detail_resources"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/engram_detail_quantityNumberPicker"
-            android:scrollbars="vertical" />
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/engram_detail_save_button"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/bottomContainer"
+        layout="@layout/content_detail_bottom"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="right"
-        android:layout_toEndOf="@+id/engram_detail_remove_button"
-        android:text="@string/detail_activity_button_text_save_and_close" />
+        android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/engram_detail_remove_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/detail_activity_button_text_remove_from_queue" />
-</RelativeLayout>
+</LinearLayout>

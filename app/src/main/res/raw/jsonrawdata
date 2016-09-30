@@ -11,61 +11,6 @@
       "parent_id": 0
     },
     {
-      "_id": 300,
-      "name": "Weapons",
-      "parent_id": 0
-    },
-    {
-      "_id": 400,
-      "name": "Armor",
-      "parent_id": 0
-    },
-    {
-      "_id": 500,
-      "name": "Saddles",
-      "parent_id": 0
-    },
-    {
-      "_id": 600,
-      "name": "Navigation",
-      "parent_id": 0
-    },
-    {
-      "_id": 700,
-      "name": "Communication",
-      "parent_id": 0
-    },
-    {
-      "_id": 800,
-      "name": "Off-Hand",
-      "parent_id": 0
-    },
-    {
-      "_id": 900,
-      "name": "Composite",
-      "parent_id": 0
-    },
-    {
-      "_id": 1000,
-      "name": "Consumables",
-      "parent_id": 0
-    },
-    {
-      "_id": 1100,
-      "name": "Dyes",
-      "parent_id": 0
-    },
-    {
-      "_id": 1200,
-      "name": "Kibble",
-      "parent_id": 0
-    },
-    {
-      "_id": 1300,
-      "name": "Refined",
-      "parent_id": 0
-    },
-    {
       "_id": 201,
       "name": "Thatch",
       "parent_id": 200
@@ -74,6 +19,16 @@
       "_id": 202,
       "name": "Wood",
       "parent_id": 200
+    },
+    {
+      "_id": 2021,
+      "name": "Signs",
+      "parent_id": 202
+    },
+    {
+      "_id": 2022,
+      "name": "Storage",
+      "parent_id": 202
     },
     {
       "_id": 203,
@@ -106,6 +61,16 @@
       "parent_id": 200
     },
     {
+      "_id": 2081,
+      "name": "Wood",
+      "parent_id": 208
+    },
+    {
+      "_id": 2082,
+      "name": "Stone",
+      "parent_id": 208
+    },
+    {
       "_id": 209,
       "name": "Farming",
       "parent_id": 200
@@ -116,6 +81,16 @@
       "parent_id": 200
     },
     {
+      "_id": 2101,
+      "name": "Stone",
+      "parent_id": 210
+    },
+    {
+      "_id": 2102,
+      "name": "Metal",
+      "parent_id": 210
+    },
+    {
       "_id": 211,
       "name": "Fridges",
       "parent_id": 200
@@ -124,6 +99,16 @@
       "_id": 212,
       "name": "Metal",
       "parent_id": 200
+    },
+    {
+      "_id": 2121,
+      "name": "Signs",
+      "parent_id": 212
+    },
+    {
+      "_id": 2122,
+      "name": "Storage",
+      "parent_id": 212
     },
     {
       "_id": 213,
@@ -141,14 +126,39 @@
       "parent_id": 200
     },
     {
+      "_id": 2151,
+      "name": "Defenses",
+      "parent_id": 215
+    },
+    {
+      "_id": 2152,
+      "name": "Elevators",
+      "parent_id": 215
+    },
+    {
       "_id": 216,
       "name": "Electric",
       "parent_id": 200
     },
     {
+      "_id": 300,
+      "name": "Weapons",
+      "parent_id": 0
+    },
+    {
       "_id": 301,
       "name": "Primitive",
       "parent_id": 300
+    },
+    {
+      "_id": 3011,
+      "name": "Melee",
+      "parent_id": 301
+    },
+    {
+      "_id": 3012,
+      "name": "Ranged",
+      "parent_id": 301
     },
     {
       "_id": 302,
@@ -184,6 +194,11 @@
       "_id": 308,
       "name": "Ranged",
       "parent_id": 300
+    },
+    {
+      "_id": 400,
+      "name": "Armor",
+      "parent_id": 0
     },
     {
       "_id": 401,
@@ -236,6 +251,36 @@
       "parent_id": 400
     },
     {
+      "_id": 500,
+      "name": "Saddles",
+      "parent_id": 0
+    },
+    {
+      "_id": 600,
+      "name": "Navigation",
+      "parent_id": 0
+    },
+    {
+      "_id": 700,
+      "name": "Communication",
+      "parent_id": 0
+    },
+    {
+      "_id": 800,
+      "name": "Off-Hand",
+      "parent_id": 0
+    },
+    {
+      "_id": 900,
+      "name": "Composite",
+      "parent_id": 0
+    },
+    {
+      "_id": 1000,
+      "name": "Consumables",
+      "parent_id": 0
+    },
+    {
       "_id": 1001,
       "name": "Drugs",
       "parent_id": 1000
@@ -246,64 +291,19 @@
       "parent_id": 1000
     },
     {
-      "_id": 2021,
-      "name": "Signs",
-      "parent_id": 202
+      "_id": 1100,
+      "name": "Dyes",
+      "parent_id": 0
     },
     {
-      "_id": 2022,
-      "name": "Storage",
-      "parent_id": 202
+      "_id": 1200,
+      "name": "Kibble",
+      "parent_id": 0
     },
     {
-      "_id": 2081,
-      "name": "Wood",
-      "parent_id": 208
-    },
-    {
-      "_id": 2082,
-      "name": "Stone",
-      "parent_id": 208
-    },
-    {
-      "_id": 2101,
-      "name": "Stone",
-      "parent_id": 210
-    },
-    {
-      "_id": 2102,
-      "name": "Metal",
-      "parent_id": 210
-    },
-    {
-      "_id": 2121,
-      "name": "Signs",
-      "parent_id": 212
-    },
-    {
-      "_id": 2122,
-      "name": "Storage",
-      "parent_id": 212
-    },
-    {
-      "_id": 2151,
-      "name": "Defenses",
-      "parent_id": 215
-    },
-    {
-      "_id": 2152,
-      "name": "Elevators",
-      "parent_id": 215
-    },
-    {
-      "_id": 3011,
-      "name": "Melee",
-      "parent_id": 301
-    },
-    {
-      "_id": 3012,
-      "name": "Ranged",
-      "parent_id": 301
+      "_id": 1300,
+      "name": "Refined",
+      "parent_id": 0
     }
   ],
   "resource": [
@@ -518,6 +518,10 @@
     {
       "name": "Pteranodon Egg",
       "drawable": "pteranodon_egg"
+    },
+    {
+      "name": "Pelagornis Egg",
+      "drawable": "pelagornis_egg"
     },
     {
       "name": "Pulmonoscorpius Egg",
@@ -1285,6 +1289,42 @@
         },
         {
           "quantity": 10,
+          "drawable": "refined_absorbent_substrate"
+        }
+      ]
+    },
+    {
+      "name": "Night Vison Goggles",
+      "description": "Effortlessly see in the dark, though beware blindingly bright light sources!",
+      "drawable": "armor_misc_night_vision_goggles",
+      "category_id": 410,
+      "composition": [
+        {
+          "quantity": 240,
+          "drawable": "composites_polymer"
+        },
+        {
+          "quantity": 180,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 250,
+          "drawable": "composites_electronics"
+        },
+        {
+          "quantity": 210,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 250,
+          "drawable": "crystal"
+        },
+        {
+          "quantity": 30,
+          "drawable": "angler_gel"
+        },
+        {
+          "quantity": 15,
           "drawable": "refined_absorbent_substrate"
         }
       ]
@@ -4027,11 +4067,11 @@
     {
       "name": "Pelagornis Saddle",
       "description": "Equip a Pelagornis with this to ride it.",
-      "drawable": "saddles_pteranodon",
+      "drawable": "saddles_pelagornis",
       "category_id": 500,
       "composition": [
         {
-          "quantity": 100,
+          "quantity": 75,
           "drawable": "chitin_or_keratin"
         },
         {
@@ -4040,6 +4080,50 @@
         },
         {
           "quantity": 230,
+          "drawable": "hide"
+        }
+      ]
+    },
+    {
+      "name": "Allosaurus Saddle",
+      "description": "Equip an Allosaurus with this to ride it.",
+      "drawable": "saddles_allosaurus",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 170,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 320,
+          "drawable": "hide"
+        }
+      ]
+    },
+    {
+      "name": "Tapejara Saddle",
+      "description": "A saddle for your Tapejara. It has three seats! Bring your friends!",
+      "drawable": "saddles_tapejara",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 120,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 45,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 180,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 260,
           "drawable": "hide"
         }
       ]
@@ -5567,7 +5651,7 @@
     {
       "name": "Industrial Grinder",
       "description": "Grind up crafted items and certain resources!",
-      "drawable": "industrial_grinder",
+      "drawable": "structures_crafting_industrial_grinder",
       "category_id": 206,
       "composition": [
         {
@@ -6891,7 +6975,7 @@
     {
       "name": "Metal Staircase",
       "description": "A metal spiral staircase, useful in constructing multi-level buildings.",
-      "drawable": "blank",
+      "drawable": "structures_metal_metal_staircase",
       "category_id": 212,
       "composition": [
         {
@@ -6900,6 +6984,38 @@
         },
         {
           "quantity": 125,
+          "drawable": "refined_metal_ingot"
+        }
+      ]
+    },
+    {
+      "name": "Giant Metal Hatchframe",
+      "description": "This giant metal-plated concrete ceiling has a hole in it for trapdoors.",
+      "drawable": "structures_metal_giant_metal_hatchframe",
+      "category_id": 212,
+      "composition": [
+        {
+          "quantity": 64,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 240,
+          "drawable": "refined_metal_ingot"
+        }
+      ]
+    },
+    {
+      "name": "Giant Metal Trapdoor",
+      "description": "A large reinforced ceiling gate that can be used with a Gateway to most keep dinosaurs in or out.",
+      "drawable": "structures_metal_giant_metal_trapdoor",
+      "category_id": 212,
+      "composition": [
+        {
+          "quantity": 120,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 360,
           "drawable": "refined_metal_ingot"
         }
       ]
@@ -7727,7 +7843,7 @@
     {
       "name": "Stone Staircase",
       "description": "A stone spiral staircase, useful in constructing multi-level buildings.",
-      "drawable": "blank",
+      "drawable": "structures_stone_stone_staircase",
       "category_id": 203,
       "composition": [
         {
@@ -7740,6 +7856,46 @@
         },
         {
           "quantity": 100,
+          "drawable": "wood"
+        }
+      ]
+    },
+    {
+      "name": "Giant Stone Hatchframe",
+      "description": "This Giant Stone ceiling has a hole in it for trapdoors.",
+      "drawable": "structures_stone_giant_stone_hatchframe",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 400,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 120,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 200,
+          "drawable": "wood"
+        }
+      ]
+    },
+    {
+      "name": "Giant Reinforced Trapdoor",
+      "description": "A large reinforced ceiling gate that can be used with a Gateway to most keep dinosaurs in or out.",
+      "drawable": "structures_stone_giant_reinforced_trapdoor",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 300,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 120,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 210,
           "drawable": "wood"
         }
       ]
@@ -9353,6 +9509,34 @@
         {
           "quantity": 1,
           "drawable": "rockarrot"
+        }
+      ]
+    },
+    {
+      "name": "Pelagornis Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "drawable": "kibble",
+      "category_id": 1200,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "pelagornis_egg"
+        },
+        {
+          "quantity": 3,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 2,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 10,
+          "drawable": "chitin"
+        },
+        {
+          "quantity": 1,
+          "drawable": "citronal"
         }
       ]
     },

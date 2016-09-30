@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         craftingQueueEngramList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_engrams );
         craftingQueueResourceList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_resources );
 
-        RecyclerView.LayoutManager craftableEngramLayoutManager =
+        final RecyclerView.LayoutManager craftableEngramLayoutManager =
                 new GridLayoutManager( this, 1, GridLayoutManager.HORIZONTAL, false );
         if ( craftingQueueEngramList != null ) {
             RecyclerTouchListener craftingQueueEngramTouchListener = new RecyclerTouchListener( this, craftingQueueEngramList,
@@ -96,12 +96,12 @@ public class MainActivity extends AppCompatActivity {
                     new RecyclerTouchListener.ClickListener() {
                         @Override
                         public void onClick( View view, int position ) {
-                            // Check database for matching resource id
-                            // If found, add to queue (with matching quantities), if already not in queue
                         }
 
                         @Override
                         public void onLongClick( View view, int position ) {
+                            // Check database for matching resource id
+                            // If found, add to queue (with matching quantities), if already not in queue
                         }
                     } );
 
@@ -347,7 +347,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String getAppVersions() {
         return "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
-                "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n";
+                "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
+                "JSON File Version: " + getString( R.string.json_version ) + "\n";
     }
 
     private void delete( Uri contentUri ) {

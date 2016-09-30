@@ -1,5 +1,5 @@
 <resources>
-    <string name="json_version">245.0</string>
+    <string name="json_version">247.0</string>
 
     <string name="app_name">A:RC</string>
     <string name="app_name_full">ARK:Resource Calculator</string>
@@ -16,8 +16,8 @@
     <string name="debug_reset_database">Reset Database</string>
 
     <string name="detail_activity_title">Engram Details</string>
-    <string name="detail_activity_button_text_save_and_close">Save and Close</string>
-    <string name="detail_activity_button_text_remove_from_queue">Remove From Queue</string>
+    <string name="content_detail_save_button">Save and Close</string>
+    <string name="content_detail_remove_button">Remove From Queue</string>
 
     <string name="helpdialog_full_title">How to Use This App</string>
     <string name="helpdialog_ok_button">Close Help</string>
@@ -32,4 +32,6 @@
     <string name="pref_json_version">pref_json_version</string>
 
     <string name="exception_sql_insert">Failed to insert row into </string>
+    <string name="content_detail_number_picker_decrease">-</string>
+    <string name="content_detail_number_picker_increase">+</string>
 </resources>

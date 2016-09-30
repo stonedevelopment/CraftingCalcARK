@@ -1,37 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".DetailActivity"
-    android:background="@color/in_game_background">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/in_game_background"
+              android:orientation="vertical"
+              tools:context=".DetailActivity">
 
     <include
-        android:id="@+id/engram_detail_container_top"
-        layout="@layout/content_engram_detail_top" />
+        layout="@layout/content_detail_top"/>
 
     <include
-        layout="@layout/content_engram_detail_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/engram_detail_save_button"
-        android:layout_below="@id/engram_detail_container_top" />
+        layout="@layout/content_detail_bottom"/>
 
-    <Button
-        android:id="@+id/engram_detail_save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="right"
-        android:layout_toEndOf="@+id/engram_detail_remove_button"
-        android:text="@string/detail_activity_button_text_save_and_close" />
-
-    <Button
-        android:id="@+id/engram_detail_remove_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/detail_activity_button_text_remove_from_queue" />
-</RelativeLayout>
+</LinearLayout>

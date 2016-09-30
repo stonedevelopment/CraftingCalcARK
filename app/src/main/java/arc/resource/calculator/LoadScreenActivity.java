@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
+import java.util.Vector;
 
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.helpers.Helper;
@@ -103,8 +104,7 @@ public class LoadScreenActivity extends AppCompatActivity {
             return true;
         }
 
-        // TODO: return false
-        return true;
+        return false;
     }
 
     private class ParseInsertTask extends AsyncTask<Void, String, Void> {
@@ -136,9 +136,6 @@ public class LoadScreenActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute( Void aVoid ) {
-            textView.setText( "Initialization complete! Starting app..." );
-            progressBar.setProgress( mProgressData.getMax() );
-
             // Start MainActivity
             Intent intent = new Intent( getContext(), MainActivity.class );
             startActivity( intent );
@@ -218,13 +215,21 @@ public class LoadScreenActivity extends AppCompatActivity {
             insertResources( jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
 
-            publishProgress( "Inserting Engrams..." );
+            publishProgress( "Inserting Engrams... (Takes the longest to load.)" );
             insertEngrams( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
 
             publishProgress( "Inserting Complex Resources..." );
             insertComplexResources();
             mProgressData.incrementProgress();
+
+            publishProgress( "Initialization complete! Starting app..." );
+        }
+
+        void bulkInsertWithUri( Uri insertUri, Vector<ContentValues> vector ) {
+            ContentValues[] contentValues = new ContentValues[vector.size()];
+
+            getContext().getContentResolver().bulkInsert( insertUri, vector.toArray( contentValues ) );
         }
 
         void insertComplexResources() {
@@ -236,6 +241,8 @@ public class LoadScreenActivity extends AppCompatActivity {
             );
 
             if ( cursor != null && cursor.getCount() > 0 ) {
+                Vector<ContentValues> vector = new Vector<>( cursor.getCount() );
+
                 while ( cursor.moveToNext() ) {
                     long engramId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
                     long resourceId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY ) );
@@ -244,14 +251,18 @@ public class LoadScreenActivity extends AppCompatActivity {
                     values.put( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY, engramId );
                     values.put( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY, resourceId );
 
-                    getContext().getContentResolver().insert( DatabaseContract.ComplexResourceEntry.CONTENT_URI, values );
+                    vector.add( values );
+
                 }
 
                 cursor.close();
+                bulkInsertWithUri( DatabaseContract.ComplexResourceEntry.CONTENT_URI, vector );
             }
         }
 
         void insertResources( JSONArray jsonArray ) throws JSONException {
+            Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
+
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject resourceObject = jsonArray.getJSONObject( i );
 
@@ -262,11 +273,15 @@ public class LoadScreenActivity extends AppCompatActivity {
                 values.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, drawable );
 
-                getContext().getContentResolver().insert( DatabaseContract.ResourceEntry.CONTENT_URI, values );
+                vector.add( values );
             }
+
+            bulkInsertWithUri( DatabaseContract.ResourceEntry.CONTENT_URI, vector );
         }
 
         void insertCategories( JSONArray jsonArray ) throws JSONException {
+            Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
+
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
@@ -279,8 +294,10 @@ public class LoadScreenActivity extends AppCompatActivity {
                 values.put( DatabaseContract.CategoryEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY, parent_id );
 
-                getContext().getContentResolver().insert( DatabaseContract.CategoryEntry.CONTENT_URI, values );
+                vector.add( values );
             }
+
+            bulkInsertWithUri( DatabaseContract.CategoryEntry.CONTENT_URI, vector );
         }
 
         void insertEngrams( JSONArray jsonArray ) throws JSONException {

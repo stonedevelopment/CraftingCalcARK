@@ -39,6 +39,10 @@ public class Helper {
     public static final String FILTERED = "FILTERED";
     public static final String CHANGELOG = "CHANGELOG";
 
+    // Min and Max quantity allowed
+    public static final int MIN = 0;
+    public static final int MAX = 1000;
+
     public static void Log(String tag, String message) {
         if (isDebug) Log.d(tag, message);
     }

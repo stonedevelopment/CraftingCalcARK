@@ -1,17 +1,16 @@
 package arc.resource.calculator;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
@@ -31,10 +30,7 @@ import arc.resource.calculator.model.Showcase;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class DetailActivity extends AppCompatActivity {
-    private static final String LOGTAG = "DETAIL";
-
-    private static final int MIN = 0;
-    private static final int MAX = 100;
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     private long id;
     private Showcase showcase;
@@ -46,11 +42,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_detail );
 
-        ActionBar actionBar = getSupportActionBar();
-
-        assert actionBar != null;
-        actionBar.setBackgroundDrawable( new ColorDrawable( ContextCompat.getColor( this, R.color.in_game_background ) ) );
-
         RecyclerView.LayoutManager layoutManager_ResourceList =
                 new LinearLayoutManager( this );
 
@@ -58,10 +49,15 @@ public class DetailActivity extends AppCompatActivity {
         TextView nameText = ( TextView ) findViewById( R.id.engram_detail_nameText );
         TextView descriptionText = ( TextView ) findViewById( R.id.engram_detail_descriptionText );
         TextView categoryText = ( TextView ) findViewById( R.id.engram_detail_categoryText );
-        NumberPicker quantityNumberPicker = ( NumberPicker ) findViewById( R.id.engram_detail_quantityNumberPicker );
-        RecyclerView resourceList = ( RecyclerView ) findViewById( R.id.engram_detail_resources );
-        Button saveButton = ( Button ) findViewById( R.id.engram_detail_save_button );
-        Button removeButton = ( Button ) findViewById( R.id.engram_detail_remove_button );
+
+        Button increaseButton = ( Button ) findViewById( R.id.increaseButton );
+        final EditText quantityEditText = ( EditText ) findViewById( R.id.quantityEditText );
+        Button decreaseButton = ( Button ) findViewById( R.id.decreaseButton );
+
+        RecyclerView resourceList = ( RecyclerView ) findViewById( R.id.resourceList );
+
+        Button saveButton = ( Button ) findViewById( R.id.saveButton );
+        Button removeButton = ( Button ) findViewById( R.id.removeButton );
 
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
@@ -74,12 +70,14 @@ public class DetailActivity extends AppCompatActivity {
         assert nameText != null;
         assert descriptionText != null;
         assert categoryText != null;
-        assert quantityNumberPicker != null;
+        assert quantityEditText != null;
         assert resourceList != null;
+        assert increaseButton != null;
+        assert decreaseButton != null;
 
         showcase = new Showcase( this, id );
-        if ( showcase.getQuantity() <= MIN ) {
-            showcase.setQuantity( MIN + 1 );
+        if ( showcase.getQuantity() <= Helper.MIN ) {
+            showcase.setQuantity( Helper.MIN + 1 );
 
             removeButton.setEnabled( false );
             saveButton.setText( "Add to Queue" );
@@ -94,20 +92,52 @@ public class DetailActivity extends AppCompatActivity {
 
         resourceListAdapter = new ShowcaseResourceListAdapter( this, showcase.getQuantifiableComposition() );
 
-        quantityNumberPicker.setMinValue( MIN );
-        quantityNumberPicker.setMaxValue( MAX );
-        quantityNumberPicker.setValue( showcase.getQuantity() );
-        quantityNumberPicker.setOnValueChangedListener( new NumberPicker.OnValueChangeListener() {
+        quantityEditText.setText( showcase.getQuantityText() );
+        quantityEditText.addTextChangedListener( new TextWatcher() {
             @Override
-            public void onValueChange( NumberPicker picker, int oldVal, int newVal ) {
-                showcase.setQuantity( newVal );
-                resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
-                resourceListAdapter.Refresh();
+            public void beforeTextChanged( CharSequence s, int start, int count, int after ) {
+
+            }
+
+            @Override
+            public void onTextChanged( CharSequence s, int start, int before, int count ) {
+                if ( s.length() > 0 ) {
+                    int quantity = Integer.parseInt( s.toString() );
+
+                    if ( quantity > Helper.MAX ) {
+                        quantity = Helper.MAX;
+                        quantityEditText.setText( String.valueOf( quantity ) );
+                    }
+
+                    showcase.setQuantity( quantity );
+                    resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
+                    resourceListAdapter.Refresh();
+                }
+            }
+
+            @Override
+            public void afterTextChanged( Editable s ) {
+
             }
         } );
 
-        resourceList.setLayoutManager( layoutManager_ResourceList );
-        resourceList.setAdapter( resourceListAdapter );
+        decreaseButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                showcase.decreaseQuantity();
+
+                quantityEditText.setText( showcase.getQuantityText() );
+            }
+        } );
+
+        increaseButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                showcase.increaseQuantity();
+
+                quantityEditText.setText( showcase.getQuantityText() );
+            }
+        } );
 
         removeButton.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -122,6 +152,9 @@ public class DetailActivity extends AppCompatActivity {
                 FinishActivityWithResult( Helper.DETAIL_SAVE, showcase.getQuantity() );
             }
         } );
+
+        resourceList.setLayoutManager( layoutManager_ResourceList );
+        resourceList.setAdapter( resourceListAdapter );
     }
 
     private void FinishActivityWithResult( String resultCode, boolean result ) {

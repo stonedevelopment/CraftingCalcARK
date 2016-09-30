@@ -19,6 +19,14 @@
     </style>
   </head>
   <body>
+    $ 0.2.2a
+      % Version 0.2.2a
+      _ 09/30/2016
+      * Added loading screen for database initialization, finally.
+      * Migrated all data from initializer classes to JSON file.
+      * Includes all engrams up to Non-DLC PC version 247.0!
+      ! I will be looking into adding DLC engrams in the near future!
+
     $ 0.2.1a
       % Version 0.2.1a
       _ 08/19/2016

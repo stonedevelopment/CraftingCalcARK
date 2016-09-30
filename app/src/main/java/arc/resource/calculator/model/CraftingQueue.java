@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import java.util.HashMap;
 
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
@@ -28,7 +29,7 @@ import arc.resource.calculator.model.resource.QueueResource;
  */
 public class CraftingQueue {
     private static final String TAG = CraftingQueue.class.getSimpleName();
-    public static final int MAX = 100;
+
     public static final String STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES = "CRAFTING_QUEUE_HASCOMPLEXRESOURCES";
 
     private static CraftingQueue sInstance;
@@ -140,7 +141,7 @@ public class CraftingQueue {
         if ( queue == null ) {
             Insert( engramId, amount );
         } else {
-            if ( queue.getQuantity() < MAX ) {
+            if ( queue.getQuantity() < Helper.MAX ) {
                 queue.increaseQuantity( amount );
                 Update( queue );
             }
@@ -162,7 +163,7 @@ public class CraftingQueue {
         if ( queue != null ) {
             if ( amount > 0 ) {
                 queue.decreaseQuantity( amount );
-                if ( queue.getQuantity() > 0 ) {
+                if ( queue.getQuantity() > Helper.MIN ) {
                     Update( queue );
                 } else {
                     Remove( queue );
@@ -189,7 +190,7 @@ public class CraftingQueue {
         }
 
         // if quantities are not equal, update existing queue to database
-        if ( queue.getQuantity() != quantity && queue.getQuantity() <= MAX ) {
+        if ( queue.getQuantity() != quantity && queue.getQuantity() <= Helper.MAX ) {
             queue.setQuantity( quantity );
 
             Update( queue );

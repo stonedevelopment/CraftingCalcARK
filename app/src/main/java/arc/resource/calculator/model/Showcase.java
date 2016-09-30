@@ -63,6 +63,10 @@ public class Showcase {
         return mQuantity;
     }
 
+    public String getQuantityText() {
+        return String.valueOf( mQuantity );
+    }
+
     public SparseArray<CompositeResource> getComposition() {
         return mComposition;
     }
@@ -90,6 +94,16 @@ public class Showcase {
 
     public void setQuantity( int quantity ) {
         mQuantity = quantity;
+    }
+
+    public void increaseQuantity() {
+        mQuantity += 1;
+    }
+
+    public void decreaseQuantity() {
+        if ( mQuantity > 0 ) {
+            mQuantity -= 1;
+        }
     }
 
     public String getCategoryDescription() {
