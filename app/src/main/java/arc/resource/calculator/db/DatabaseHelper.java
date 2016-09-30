@@ -111,6 +111,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Helper.Log( TAG, "** Database successfully upgraded from v" + oldVersion + " to v" + newVersion );
     }
 
+    public void onReset() {
+
+    }
+
     private void CreateTable( SQLiteDatabase database, String table, String sql ) {
         Helper.Log( TAG, "-> Creating table: " + table );
 

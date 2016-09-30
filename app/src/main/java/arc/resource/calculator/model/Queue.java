@@ -22,7 +22,7 @@ public class Queue {
     // Quantity adjusted per User
     private int quantity;
 
-    public Queue(long id, long engramId, int quantity) {
+    public Queue( long id, long engramId, int quantity ) {
         this.id = id;
         this.engramId = engramId;
         this.quantity = quantity;
@@ -38,6 +38,18 @@ public class Queue {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity( int amount ) {
+        this.quantity = amount;
+    }
+
+    public void increaseQuantity( int amount ) {
+        this.quantity += amount;
+    }
+
+    public void decreaseQuantity( int amount ) {
+        this.quantity -= amount;
     }
 
     @Override

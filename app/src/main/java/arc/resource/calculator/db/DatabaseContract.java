@@ -60,10 +60,28 @@ public class DatabaseContract {
         // Foreign key from Category table
         public static final String COLUMN_CATEGORY_KEY = "category_id";
 
+        // SQL column helpers
+        public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
+        public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
+        public static final String SQL_COLUMN_DESCRIPTION = TABLE_NAME + "." + COLUMN_DESCRIPTION;
+        public static final String SQL_COLUMN_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE;
+        public static final String SQL_COLUMN_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY;
+
+        public static final String SQL_QUERY_WITH_QUEUE_TABLE = TABLE_NAME + " INNER JOIN " + QueueEntry.TABLE_NAME;
+        public static final String SQL_QUERY_WITH_QUEUE_TABLE_SELECTION =
+                SQL_COLUMN_ID + " = " + QueueEntry.SQL_COLUMN_ENGRAM_KEY;
+        public static final String[] SQL_QUERY_WITH_QUEUE_TABLE_PROJECTION = new String[]{
+                SQL_COLUMN_ID,
+                SQL_COLUMN_NAME,
+                SQL_COLUMN_DRAWABLE,
+                QueueEntry.SQL_COLUMN_ID,
+                QueueEntry.SQL_COLUMN_QUANTITY
+        };
+
         // Query helpers
-        public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
-        public static final String SQL_QUERY_WITH_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY + " = ?";
-        public static final String SQL_QUERY_WITH_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE + " = ?";
+        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
+        public static final String SQL_QUERY_WITH_CATEGORY_KEY = SQL_COLUMN_CATEGORY_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
 
         // Returns /engram/_id
         public static Uri buildUriWithId( long id ) {
@@ -109,9 +127,14 @@ public class DatabaseContract {
         // String value that Android Studio uses as its Drawable resource
         public static final String COLUMN_DRAWABLE = "drawable";
 
+        // SQL column helpers
+        public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
+        public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
+        public static final String SQL_COLUMN_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE;
+
         // Query helpers
-        public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
-        public static final String SQL_QUERY_WITH_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE + " = ?";
+        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
+        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
 
         // Returns /resource/_id
         public static Uri buildUriWithId( long id ) {
@@ -229,6 +252,12 @@ public class DatabaseContract {
             return ContentUris.withAppendedId( CONTENT_URI, id );
         }
 
+        // Returns /category/_id
+        public static Uri buildUriWithParentId( long id ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_CATEGORY_PARENT )
+                    .appendPath( Long.toString( id ) ).build();
+        }
+
         public static long getParentIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getPathSegments().get( 2 ) );
         }
@@ -260,10 +289,29 @@ public class DatabaseContract {
         public static final String COLUMN_ENGRAM_DRAWABLE = "engram_drawable";
         public static final String COLUMN_RESOURCE_DRAWABLE = "resource_drawable";
 
+        // SQL column helpers
+        public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
+        public static final String SQL_COLUMN_ENGRAM_KEY = TABLE_NAME + "." + COLUMN_ENGRAM_KEY;
+        public static final String SQL_COLUMN_RESOURCE_KEY = TABLE_NAME + "." + COLUMN_RESOURCE_KEY;
+        public static final String SQL_COLUMN_QUANTITY = TABLE_NAME + "." + COLUMN_QUANTITY;
+
         // Query helpers
-        public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
-        public static final String SQL_QUERY_WITH_ENGRAM_KEY = TABLE_NAME + "." + COLUMN_ENGRAM_KEY + " = ?";
-        public static final String SQL_QUERY_WITH_RESOURCE_KEY = TABLE_NAME + "." + COLUMN_RESOURCE_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
+        public static final String SQL_QUERY_WITH_ENGRAM_KEY = SQL_COLUMN_ENGRAM_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_RESOURCE_KEY = SQL_COLUMN_RESOURCE_KEY + " = ?";
+
+        public static final String SQL_QUERY_WITH_RESOURCE_TABLE =
+                TABLE_NAME +
+                        " INNER JOIN " + EngramEntry.TABLE_NAME +
+                        " INNER JOIN " + ResourceEntry.TABLE_NAME + " ON " + ResourceEntry.SQL_COLUMN_ID + " = " + SQL_COLUMN_RESOURCE_KEY;
+        public static final String SQL_QUERY_WITH_RESOURCE_TABLE_SELECTION =
+                SQL_COLUMN_ENGRAM_KEY + " = " + EngramEntry.SQL_COLUMN_ID;
+        public static final String[] SQL_QUERY_WITH_RESOURCE_TABLE_PROJECTION = new String[]{
+                ResourceEntry.SQL_COLUMN_ID,
+                ResourceEntry.SQL_COLUMN_NAME,
+                ResourceEntry.SQL_COLUMN_DRAWABLE,
+                SQL_COLUMN_QUANTITY
+        };
 
         // Returns /composition/engram/engram_id
         public static Uri buildUriWithEngramId( long engram_id ) {
@@ -304,11 +352,24 @@ public class DatabaseContract {
         // Foreign key from Engram table
         public static final String COLUMN_ENGRAM_KEY = "engram_id";
 
+        // SQL column helpers
+        public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
+        public static final String SQL_COLUMN_QUANTITY = TABLE_NAME + "." + COLUMN_QUANTITY;
+        public static final String SQL_COLUMN_ENGRAM_KEY = TABLE_NAME + "." + COLUMN_ENGRAM_KEY;
+
         // Query helpers
-        public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
-        public static final String SQL_QUERY_WITH_ENGRAM_KEY = TABLE_NAME + "." + COLUMN_ENGRAM_KEY + " = ?";
-        public static final String SQL_QUERY_WITH_ENGRAM_TABLE = TABLE_NAME + " INNER JOIN " + EngramEntry.TABLE_NAME +
-                " ON " + TABLE_NAME + "." + COLUMN_ENGRAM_KEY + " = " + EngramEntry.TABLE_NAME + "." + EngramEntry._ID;
+        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
+        public static final String SQL_QUERY_WITH_ENGRAM_KEY = SQL_COLUMN_ENGRAM_KEY + " = ?";
+
+        public static final String SQL_QUERY_WITH_ENGRAM_TABLE = TABLE_NAME + " INNER JOIN " + EngramEntry.TABLE_NAME;
+        public static final String SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION =
+                SQL_COLUMN_ENGRAM_KEY + " = " + EngramEntry.SQL_COLUMN_ID;
+        public static final String[] SQL_QUERY_WITH_ENGRAM_TABLE_PROJECTION = new String[]{
+                EngramEntry.SQL_COLUMN_ID,
+                EngramEntry.SQL_COLUMN_NAME,
+                EngramEntry.SQL_COLUMN_DRAWABLE,
+                SQL_COLUMN_QUANTITY
+        };
 
         // Returns /queue/_id
         public static Uri buildUriWithId( long id ) {

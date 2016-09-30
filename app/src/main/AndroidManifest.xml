@@ -9,8 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="arc.resource.calculator.SplashActivity"
-            android:theme="@style/AppTheme.Splash">
+            android:name=".LoadScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

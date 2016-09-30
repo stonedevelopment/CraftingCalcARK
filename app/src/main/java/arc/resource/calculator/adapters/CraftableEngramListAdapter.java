@@ -27,15 +27,20 @@ import arc.resource.calculator.viewholders.EngramViewHolder;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class CraftableEngramListAdapter extends RecyclerView.Adapter {
-    private static final String LOGTAG = "CraftableList";
+    private static final String TAG = CraftableEngramListAdapter.class.getSimpleName();
 
     private DisplayHelper displayHelper;
 
     private CraftingQueue craftingQueue;
 
+    private Context mContext;
+
     public CraftableEngramListAdapter(Context context) {
         this.displayHelper = DisplayHelper.getInstance();
         this.craftingQueue = CraftingQueue.getInstance(context);
+        this.mContext = context;
+
+        Refresh();
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,15 +58,16 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
 
         try {
-            int imageId = craftingQueue.getEngramImageId( position );
+            int imageId = mContext.getResources().getIdentifier( craftingQueue.getEngramDrawable( position ), "drawable", mContext.getPackageName() );
             String name = craftingQueue.getEngramName( position );
             int quantity = craftingQueue.getEngramQuantity( position );
+
 
             viewHolder.getImage().setImageResource( imageId );
             viewHolder.getNameText().setText( name );
             viewHolder.getQuantityText().setText( String.format( Locale.US, "x%1$d", quantity ) );
         } catch ( ArrayIndexOutOfBoundsException e ) {
-            Helper.Log( LOGTAG, e.getMessage() );
+            Helper.Log( TAG, e.getMessage() );
         }
     }
 
@@ -71,7 +77,7 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
     }
 
     public void Refresh() {
-        this.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public void increaseQuantity(int position, int amount) {

@@ -29,9 +29,12 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
     private static final String LOGTAG = "ResourceList";
 
     private CraftingQueue craftingQueue;
+    private Context mContext;
 
     public CraftableResourceListAdapter(Context context) {
         this.craftingQueue = CraftingQueue.getInstance(context);
+
+        this.mContext = context;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
         ResourceViewHolder viewHolder = (ResourceViewHolder) holder;
 
         try {
-            int imageId = craftingQueue.getResourceImageId( position );
+            int imageId = mContext.getResources().getIdentifier( craftingQueue.getResourceDrawable( position ), "drawable", mContext.getPackageName() );
             String name = craftingQueue.getResourceName( position );
             int quantity = craftingQueue.getResourceQuantity( position );
 

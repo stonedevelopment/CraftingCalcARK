@@ -1,5 +1,6 @@
 package arc.resource.calculator.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -25,42 +26,54 @@ import arc.resource.calculator.viewholders.ResourceViewHolder;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class ShowcaseResourceListAdapter extends RecyclerView.Adapter {
-    private static final String LOGTAG = "ResourceList";
+    private static final String TAG = ShowcaseResourceListAdapter.class.getSimpleName();
 
-    private SparseArray<QueueResource> resources = null;
+    private SparseArray<QueueResource> mComposition;
+    private Context mContext;
 
-    public ShowcaseResourceListAdapter( SparseArray<QueueResource> resources ) {
-        this.resources = resources;
+    public ShowcaseResourceListAdapter( Context context, SparseArray<QueueResource> composition ) {
+        this.mContext = context;
+        this.mComposition = composition;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_item_resource, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+        View itemView = LayoutInflater.from( parent.getContext() ).
+                inflate( R.layout.list_item_resource, parent, false );
 
-        return new ResourceViewHolder(itemView);
+        return new ResourceViewHolder( itemView );
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ResourceViewHolder viewHolder = (ResourceViewHolder) holder;
+    public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
+        ResourceViewHolder viewHolder = ( ResourceViewHolder ) holder;
 
-//        int imageId = resources.valueAt(position).getDrawable();
-        String name = resources.valueAt(position).getName();
-        int quantity = resources.valueAt(position).getQuantity();
+        QueueResource resource = getComposition().valueAt( position );
 
-//        viewHolder.getImageView().setImageResource(imageId);
-        viewHolder.getNameText().setText(name);
-        viewHolder.getQuantityText().setText(String.format(Locale.US, "%1$d", quantity));
+        int imageId = getContext().getResources().getIdentifier( resource.getDrawable(), "drawable", getContext().getPackageName() );
+        String name = resource.getName();
+        int quantity = resource.getProductOfQuantities();
+
+        viewHolder.getImageView().setImageResource( imageId );
+        viewHolder.getNameText().setText( name );
+        viewHolder.getQuantityText().setText( String.format( Locale.US, "%1$d", quantity ) );
     }
 
     @Override
     public int getItemCount() {
-        return resources.size();
+        return mComposition.size();
+    }
+
+    public SparseArray<QueueResource> getComposition() {
+        return mComposition;
     }
 
     public void setResources( SparseArray<QueueResource> resources ) {
-        this.resources = resources;
+        this.mComposition = resources;
+    }
+
+    public Context getContext() {
+        return mContext;
     }
 
     public void Refresh() {

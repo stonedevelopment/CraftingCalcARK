@@ -1,14 +1,3 @@
-package arc.resource.calculator.model;
-
-import android.content.Context;
-import android.util.SparseArray;
-
-import java.util.HashMap;
-
-import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.helpers.PreferenceHelper;
-import arc.resource.calculator.model.engram.DisplayEngram;
-
 /**
  * Copyright (C) 2016, Jared Stone
  * -
@@ -21,25 +10,46 @@ import arc.resource.calculator.model.engram.DisplayEngram;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
+package arc.resource.calculator.model;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.util.SparseArray;
+
+import java.util.HashMap;
+
+import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.helpers.Helper;
+import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.model.engram.DisplayEngram;
+
 public class DisplayCase {
     private static final String TAG = DisplayCase.class.getSimpleName();
+
     private static final long ROOT = 0;
 
     private boolean isFiltered;
     private long level;
     private long parent;
 
+    private Context mContext;
+
     private SparseArray<DisplayEngram> engrams = null;
     private SparseArray<Category> categories = null;
     private HashMap<Long, Queue> queues = null;
 
     public DisplayCase( Context context ) {
-        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance( context );
+        PreferenceHelper preferenceHelper = new PreferenceHelper( context );
         isFiltered = preferenceHelper.getBooleanPreference( Helper.FILTERED, true );
 
         // Retrieve saved level and parent from previous use
         level = preferenceHelper.getLongPreference( Helper.APP_LEVEL );
         parent = preferenceHelper.getLongPreference( Helper.APP_PARENT );
+//        level = 0;
+//        parent = 0;
+
+        mContext = context;
 
         UpdateData();
     }
@@ -58,10 +68,10 @@ public class DisplayCase {
 
     public boolean setIsFiltered( boolean filtered ) {
         if ( isFiltered() != filtered ) {
-            PreferenceHelper preferenceHelper = PreferenceHelper.getInstance( getContext() );
+            PreferenceHelper preferenceHelper = new PreferenceHelper( getContext() );
             preferenceHelper.setPreference( Helper.FILTERED, filtered );
 
-            this.isFiltered = filtered;
+            isFiltered = filtered;
 
             UpdateData();
 
@@ -82,25 +92,24 @@ public class DisplayCase {
      * -- METHODS THAT RETURN TO VIEWHOLDER --
      */
 
-    public int getImageId( int position ) {
+    public String getDrawable( int position ) {
         if ( isFiltered ) {
             if ( position >= categories.size() ) {
                 position -= categories.size();
 
                 DisplayEngram engram = engrams.valueAt( position );
 
-//                return engram.getImageId();
+                return engram.getDrawable();
             } else {
                 Category category = categories.valueAt( position );
 
-//                return category.getImageId();
+                return category.getDrawable();
             }
         } else {
             DisplayEngram engram = engrams.valueAt( position );
 
-//            return engram.getImageId();
+            return engram.getDrawable();
         }
-        return 0;
     }
 
     public String getName( int position ) {
@@ -151,8 +160,7 @@ public class DisplayCase {
     }
 
     public Context getContext() {
-//        return dataSource.getContext();
-        return null;
+        return mContext;
     }
 
     /**
@@ -230,41 +238,107 @@ public class DisplayCase {
      */
 
     private Category getCategory( long categoryId ) {
-//        return dataSource.findSingleCategory(categoryId);
+
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.CategoryEntry.buildUriWithId( categoryId ),
+                null, null, null, null );
+
+
+        if ( cursor.moveToFirst() ) {
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
+            long parent = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+
+            cursor.close();
+            return new Category(
+                    categoryId,
+                    name,
+                    parent );
+        }
+
+        cursor.close();
         return null;
     }
 
     private SparseArray<Category> getCategories() {
         SparseArray<Category> categories = new SparseArray<>();
 
-//        if (isFiltered()) {
-//            categories = dataSource.findFilteredCategories(getLevel());
-//
-//            if (getLevel() > 0) {
-//                Category category = new Category(0, getLevel(), getName(getParent()), getParent(), R.drawable.back);
-//                categories.put(0, category);
-//            }
-//
-//            debugCategories(categories);
-//        }
+        if ( isFiltered() ) {
+            Cursor cursor = getContext().getContentResolver().query(
+                    DatabaseContract.CategoryEntry.buildUriWithParentId( getLevel() ),
+                    null, null, null, null );
+
+            while ( cursor.moveToNext() ) {
+                long id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
+                String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
+                long parent = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+
+                categories.append( categories.size(), new Category( id, name, parent ) );
+            }
+
+            cursor.close();
+
+            if ( getLevel() > 0 ) {
+                Category category = new Category( getLevel(), getName( getParent() ), getParent(), "back" );
+                categories.put( 0, category );
+            }
+
+            debugCategories( categories );
+        }
 
         return categories;
     }
 
     private SparseArray<DisplayEngram> getEngrams() {
-//        SparseArray<DisplayEngram> engrams;
-//
-//        if (isFiltered()) {
-//            engrams = dataSource.findAllDisplayEngrams(getLevel());
-//        } else {
-//            engrams = dataSource.findAllDisplayEngrams();
-//        }
+        Uri uri;
+        if ( isFiltered() ) {
+            uri = DatabaseContract.EngramEntry.buildUriWithCategoryId( getLevel() );
+        } else {
+            uri = DatabaseContract.EngramEntry.CONTENT_URI;
+        }
+
+        Cursor cursor = getContext().getContentResolver().query(
+                uri, null, null, null, null );
+
+        SparseArray<DisplayEngram> engrams = new SparseArray<>();
+        while ( cursor.moveToNext() ) {
+            engrams.put( engrams.size(),
+                    new DisplayEngram(
+                            cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) ),
+                            cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
+                            cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) ),
+                            cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) ) ) );
+        }
+        cursor.close();
+
         return engrams;
     }
 
     private HashMap<Long, Queue> getQueues() {
-//        return dataSource.findAllQueues();
-        return null;
+        queues = QueryForQueues();
+        return queues;
+    }
+
+    private HashMap<Long, Queue> QueryForQueues() {
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.QueueEntry.CONTENT_URI,
+                null, null, null, null );
+
+        if ( cursor == null ) {
+            return new HashMap<>();
+        }
+
+        HashMap<Long, Queue> queues = new HashMap<>();
+        while ( cursor.moveToNext() ) {
+            long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.QueueEntry._ID ) );
+            long engramId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_ENGRAM_KEY ) );
+            int quantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) );
+
+            queues.put( engramId, new Queue( _id, engramId, quantity ) );
+        }
+
+        cursor.close();
+
+        return queues;
     }
 
     private void debugCategories( SparseArray<Category> categories ) {

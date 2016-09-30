@@ -17,61 +17,51 @@ import android.preference.PreferenceManager;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class PreferenceHelper {
-    private static PreferenceHelper sInstance;
+    private SharedPreferences mSharedPreferences;
 
-    private SharedPreferences preferences;
-
-    private PreferenceHelper(Context context) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    public static PreferenceHelper getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new PreferenceHelper(context);
-        }
-
-        return sInstance;
+    public PreferenceHelper( Context context ) {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences( context );
     }
 
     public int getIntPreference(String key) {
-        return preferences.getInt(key, 0);
+        return mSharedPreferences.getInt( key, 0 );
     }
 
     public String getStringPreference(String key) {
-        return preferences.getString(key, null);
+        return mSharedPreferences.getString( key, null );
     }
 
     public boolean getBooleanPreference(String key, boolean def) {
-        return preferences.getBoolean(key, def);
+        return mSharedPreferences.getBoolean( key, def );
     }
 
     public long getLongPreference(String key) {
-        return preferences.getLong(key, 0);
+        return mSharedPreferences.getLong( key, 0 );
     }
 
     public void setPreference(String key, int value) {
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         editor.putInt(key, value);
         editor.apply();
     }
 
     public void setPreference(String key, String value) {
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         editor.putString(key, value);
         editor.apply();
     }
 
     public void setPreference(String key, boolean value) {
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         editor.putBoolean(key, value);
         editor.apply();
     }
 
     public void setPreference(String key, long value) {
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         editor.putLong(key, value);
         editor.apply();

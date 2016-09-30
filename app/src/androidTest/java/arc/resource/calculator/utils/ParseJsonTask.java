@@ -10,7 +10,7 @@
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-package arc.resource.calculator.helpers;
+package arc.resource.calculator.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -43,18 +43,30 @@ public class ParseJsonTask extends AsyncTask<Void, Void, Vector<Vector<ContentVa
     private Vector<ContentValues> mEngramVector;
     private Vector<ContentValues> mCompositionVector;
 
-
     public ParseJsonTask( Context context ) {
+        this.mContext = context;
+
         this.mResourceVector = new Vector<>();
         this.mCategoryVector = new Vector<>();
         this.mEngramVector = new Vector<>();
         this.mCompositionVector = new Vector<>();
+    }
 
-        this.mContext = context;
+    // Only used for AndroidTests TODO: Should we use this in this manner?
+    public Vector<Vector<ContentValues>> getAllVectors() {
+        Vector<Vector<ContentValues>> vVector = new Vector<>();
+
+        vVector.add( mResourceVector );
+        vVector.add( mCategoryVector );
+        vVector.add( mEngramVector );
+        vVector.add( mCompositionVector );
+
+        return vVector;
     }
 
     @Override
     protected Vector<Vector<ContentValues>> doInBackground( Void... params ) {
+
         BufferedReader fileReader = null;
         String jsonString;
 
@@ -85,6 +97,7 @@ public class ParseJsonTask extends AsyncTask<Void, Void, Vector<Vector<ContentVa
                     fileReader.close();
                 } catch ( IOException e ) {
                     Log.e( TAG, "Error closing stream: ", e );
+                    return null;
                 }
             }
         }
@@ -94,23 +107,17 @@ public class ParseJsonTask extends AsyncTask<Void, Void, Vector<Vector<ContentVa
         } catch ( JSONException e ) {
             e.printStackTrace();
         }
-
         return null;
     }
 
-    @Override
-    protected void onPostExecute( Vector<Vector<ContentValues>> vVector ) {
-        super.onPostExecute( vVector );
-    }
-
     Vector<Vector<ContentValues>> parseJsonString( String jsonString ) throws JSONException {
-        Vector<Vector<ContentValues>> vVector = new Vector<>();
-
         JSONObject jsonObject = new JSONObject( jsonString );
+
         parseJsonToResources( jsonObject.getJSONArray( ResourceEntry.TABLE_NAME ) );
         parseJsonToCategories( jsonObject.getJSONArray( CategoryEntry.TABLE_NAME ) );
         parseJsonToEngrams( jsonObject.getJSONArray( EngramEntry.TABLE_NAME ) );
 
+        Vector<Vector<ContentValues>> vVector = new Vector<>();
         vVector.add( mResourceVector );
         vVector.add( mCategoryVector );
         vVector.add( mEngramVector );
@@ -144,10 +151,12 @@ public class ParseJsonTask extends AsyncTask<Void, Void, Vector<Vector<ContentVa
         for ( int i = 0; i < jsonArray.length(); i++ ) {
             JSONObject jsonObject = jsonArray.getJSONObject( i );
 
+            long _id = jsonObject.getLong( CategoryEntry._ID );
             String name = jsonObject.getString( CategoryEntry.COLUMN_NAME );
             long parent_id = jsonObject.getLong( CategoryEntry.COLUMN_PARENT_KEY );
 
             ContentValues values = new ContentValues();
+            values.put( CategoryEntry._ID, _id );
             values.put( CategoryEntry.COLUMN_NAME, name );
             values.put( CategoryEntry.COLUMN_PARENT_KEY, parent_id );
 

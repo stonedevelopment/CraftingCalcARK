@@ -43,4 +43,12 @@
             android:title="@string/action_about_arc"
             app:showAsAction="never" />
     </group>
+
+    <group android:id="@+id/debug_only">
+        <item
+            android:id="@+id/debug_reset_database"
+            android:orderInCategory="300"
+            android:title="@string/debug_reset_database"
+            app:showAsAction="never"/>
+    </group>
 </menu>

@@ -1,307 +1,307 @@
 {
   "category": [
     {
-      "id": 100,
+      "_id": 100,
       "name": "Misc",
       "parent_id": 0
     },
     {
-      "id": 200,
+      "_id": 200,
       "name": "Structures",
       "parent_id": 0
     },
     {
-      "id": 300,
+      "_id": 300,
       "name": "Weapons",
       "parent_id": 0
     },
     {
-      "id": 400,
+      "_id": 400,
       "name": "Armor",
       "parent_id": 0
     },
     {
-      "id": 500,
+      "_id": 500,
       "name": "Saddles",
       "parent_id": 0
     },
     {
-      "id": 600,
+      "_id": 600,
       "name": "Navigation",
       "parent_id": 0
     },
     {
-      "id": 700,
+      "_id": 700,
       "name": "Communication",
       "parent_id": 0
     },
     {
-      "id": 800,
+      "_id": 800,
       "name": "Off-Hand",
       "parent_id": 0
     },
     {
-      "id": 900,
+      "_id": 900,
       "name": "Composite",
       "parent_id": 0
     },
     {
-      "id": 1000,
+      "_id": 1000,
       "name": "Consumables",
       "parent_id": 0
     },
     {
-      "id": 1100,
+      "_id": 1100,
       "name": "Dyes",
       "parent_id": 0
     },
     {
-      "id": 1200,
+      "_id": 1200,
       "name": "Kibble",
       "parent_id": 0
     },
     {
-      "id": 1300,
+      "_id": 1300,
       "name": "Refined",
       "parent_id": 0
     },
     {
-      "id": 201,
+      "_id": 201,
       "name": "Thatch",
       "parent_id": 200
     },
     {
-      "id": 202,
+      "_id": 202,
       "name": "Wood",
       "parent_id": 200
     },
     {
-      "id": 203,
+      "_id": 203,
       "name": "Stone",
       "parent_id": 200
     },
     {
-      "id": 204,
+      "_id": 204,
       "name": "Cooking",
       "parent_id": 200
     },
     {
-      "id": 205,
+      "_id": 205,
       "name": "Beds",
       "parent_id": 200
     },
     {
-      "id": 206,
+      "_id": 206,
       "name": "Crafting",
       "parent_id": 200
     },
     {
-      "id": 207,
+      "_id": 207,
       "name": "Misc",
       "parent_id": 200
     },
     {
-      "id": 208,
+      "_id": 208,
       "name": "Furniture",
       "parent_id": 200
     },
     {
-      "id": 209,
+      "_id": 209,
       "name": "Farming",
       "parent_id": 200
     },
     {
-      "id": 210,
+      "_id": 210,
       "name": "Pipes",
       "parent_id": 200
     },
     {
-      "id": 211,
+      "_id": 211,
       "name": "Fridges",
       "parent_id": 200
     },
     {
-      "id": 212,
+      "_id": 212,
       "name": "Metal",
       "parent_id": 200
     },
     {
-      "id": 213,
+      "_id": 213,
       "name": "Defenses",
       "parent_id": 200
     },
     {
-      "id": 214,
+      "_id": 214,
       "name": "Greenhouse",
       "parent_id": 200
     },
     {
-      "id": 215,
+      "_id": 215,
       "name": "Electrical",
       "parent_id": 200
     },
     {
-      "id": 216,
+      "_id": 216,
       "name": "Electric",
       "parent_id": 200
     },
     {
-      "id": 301,
+      "_id": 301,
       "name": "Primitive",
       "parent_id": 300
     },
     {
-      "id": 302,
+      "_id": 302,
       "name": "Ammo",
       "parent_id": 300
     },
     {
-      "id": 303,
+      "_id": 303,
       "name": "Tripwires",
       "parent_id": 300
     },
     {
-      "id": 304,
+      "_id": 304,
       "name": "Explosives",
       "parent_id": 300
     },
     {
-      "id": 307,
+      "_id": 307,
       "name": "Attachments",
       "parent_id": 300
     },
     {
-      "id": 305,
+      "_id": 305,
       "name": "Firearms",
       "parent_id": 300
     },
     {
-      "id": 306,
+      "_id": 306,
       "name": "Melee",
       "parent_id": 300
     },
     {
-      "id": 308,
+      "_id": 308,
       "name": "Ranged",
       "parent_id": 300
     },
     {
-      "id": 401,
+      "_id": 401,
       "name": "Cloth",
       "parent_id": 400
     },
     {
-      "id": 402,
+      "_id": 402,
       "name": "Shields",
       "parent_id": 400
     },
     {
-      "id": 403,
+      "_id": 403,
       "name": "Hide",
       "parent_id": 400
     },
     {
-      "id": 404,
+      "_id": 404,
       "name": "Ghillie",
       "parent_id": 400
     },
     {
-      "id": 405,
+      "_id": 405,
       "name": "Chitin",
       "parent_id": 400
     },
     {
-      "id": 406,
+      "_id": 406,
       "name": "Fur",
       "parent_id": 400
     },
     {
-      "id": 407,
+      "_id": 407,
       "name": "Metal",
       "parent_id": 400
     },
     {
-      "id": 408,
+      "_id": 408,
       "name": "SCUBA",
       "parent_id": 400
     },
     {
-      "id": 409,
+      "_id": 409,
       "name": "Riot",
       "parent_id": 400
     },
     {
-      "id": 410,
+      "_id": 410,
       "name": "Misc",
       "parent_id": 400
     },
     {
-      "id": 1001,
+      "_id": 1001,
       "name": "Drugs",
       "parent_id": 1000
     },
     {
-      "id": 1002,
+      "_id": 1002,
       "name": "Food",
       "parent_id": 1000
     },
     {
-      "id": 2021,
+      "_id": 2021,
       "name": "Signs",
       "parent_id": 202
     },
     {
-      "id": 2022,
+      "_id": 2022,
       "name": "Storage",
       "parent_id": 202
     },
     {
-      "id": 2081,
+      "_id": 2081,
       "name": "Wood",
       "parent_id": 208
     },
     {
-      "id": 2082,
+      "_id": 2082,
       "name": "Stone",
       "parent_id": 208
     },
     {
-      "id": 2101,
+      "_id": 2101,
       "name": "Stone",
       "parent_id": 210
     },
     {
-      "id": 2102,
+      "_id": 2102,
       "name": "Metal",
       "parent_id": 210
     },
     {
-      "id": 2121,
+      "_id": 2121,
       "name": "Signs",
       "parent_id": 212
     },
     {
-      "id": 2122,
+      "_id": 2122,
       "name": "Storage",
       "parent_id": 212
     },
     {
-      "id": 2151,
+      "_id": 2151,
       "name": "Defenses",
       "parent_id": 215
     },
     {
-      "id": 2152,
+      "_id": 2152,
       "name": "Elevators",
       "parent_id": 215
     },
     {
-      "id": 3011,
+      "_id": 3011,
       "name": "Melee",
       "parent_id": 301
     },
     {
-      "id": 3012,
+      "_id": 3012,
       "name": "Ranged",
       "parent_id": 301
     }
@@ -6579,11 +6579,11 @@
       "category_id": 212,
       "composition": [
         {
-          "quantity": 10,
+          "quantity": 4,
           "drawable": "refined_cementing_paste"
         },
         {
-          "quantity": 35,
+          "quantity": 10,
           "drawable": "refined_metal_ingot"
         }
       ]

@@ -23,7 +23,7 @@ import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseProvider;
 import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.helpers.ParseJsonTask;
+import arc.resource.calculator.utils.ParseJsonTask;
 
 public class TestProvider extends AndroidTestCase {
     private static final String TAG = TestProvider.class.getSimpleName();

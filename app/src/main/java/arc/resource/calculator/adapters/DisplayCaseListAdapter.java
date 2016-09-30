@@ -30,53 +30,51 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     private static final String TAG = DisplayCaseListAdapter.class.getSimpleName();
 
     private DisplayHelper displayHelper;
-
     private DisplayCase displayCase;
+    private Context mContext;
 
-    private Context context;
-
-    public DisplayCaseListAdapter(Context context) {
-        this.context = context.getApplicationContext();
+    public DisplayCaseListAdapter( Context context ) {
+        this.mContext = context.getApplicationContext();
         this.displayHelper = DisplayHelper.getInstance();
-        this.displayCase = new DisplayCase(context);
+        this.displayCase = new DisplayCase( context );
     }
 
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_item_displaycase, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+        View itemView = LayoutInflater.from( parent.getContext() ).
+                inflate( R.layout.list_item_displaycase, parent, false );
 
-        return new DisplayCaseViewHolder(itemView);
+        return new DisplayCaseViewHolder( itemView );
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        DisplayCaseViewHolder viewHolder = (DisplayCaseViewHolder) holder;
+    public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
+        DisplayCaseViewHolder viewHolder = ( DisplayCaseViewHolder ) holder;
 
-        viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
-        viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
+        viewHolder.itemView.getLayoutParams().height = ( int ) displayHelper.getEngramDimensionsWithDensity();
+        viewHolder.itemView.getLayoutParams().width = ( int ) displayHelper.getEngramDimensionsWithDensity();
 
-        int imageId = displayCase.getImageId(position);
-        String name = displayCase.getName(position);
+        int imageId = getContext().getResources().getIdentifier( displayCase.getDrawable( position ), "drawable", getContext().getPackageName() );
+        String name = displayCase.getName( position );
 
-        viewHolder.getImage().setImageResource(imageId);
-        viewHolder.getNameText().setText(name);
+        viewHolder.getImage().setImageResource( imageId );
+        viewHolder.getNameText().setText( name );
 
-        if (displayCase.isEngram(position)) {
-            int quantity = displayCase.getQuantity(position);
+        if ( displayCase.isEngram( position ) ) {
+            int quantity = displayCase.getQuantity( position );
 
-            if (quantity > 0) {
-                viewHolder.getImage().setBackgroundColor(ContextCompat.getColor(context, R.color.crafting_queue_background));
-                viewHolder.getQuantityText().setText(String.format(Locale.US, "x%d", quantity));
-                viewHolder.getNameText().setSingleLine(true);
+            if ( quantity > 0 ) {
+                viewHolder.getImage().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
+                viewHolder.getQuantityText().setText( String.format( Locale.US, "x%d", quantity ) );
+                viewHolder.getNameText().setSingleLine( true );
             } else {
-                viewHolder.getImage().setBackgroundColor(ContextCompat.getColor(context, R.color.displaycase_engram_background));
-                viewHolder.getQuantityText().setText(null);
-                viewHolder.getNameText().setSingleLine(false);
+                viewHolder.getImage().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.displaycase_engram_background ) );
+                viewHolder.getQuantityText().setText( null );
+                viewHolder.getNameText().setSingleLine( false );
             }
         } else {
-            viewHolder.getImage().setBackgroundColor(0);
-            viewHolder.getQuantityText().setText(null);
-            viewHolder.getNameText().setSingleLine(false);
+            viewHolder.getImage().setBackgroundColor( 0 );
+            viewHolder.getQuantityText().setText( null );
+            viewHolder.getNameText().setSingleLine( false );
         }
     }
 
@@ -89,12 +87,12 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
      * -- PUBLIC UTILITY METHODS --
      */
 
-    public long getEngramId(int position) {
-        return displayCase.getEngramId(position);
+    public long getEngramId( int position ) {
+        return displayCase.getEngramId( position );
     }
 
-    public boolean isEngram(int position) {
-        return displayCase.isEngram(position);
+    public boolean isEngram( int position ) {
+        return displayCase.isEngram( position );
     }
 
     public long getLevel() {
@@ -105,8 +103,8 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         return displayCase.getParent();
     }
 
-    public void changeCategory(int position) {
-        displayCase.changeCategory(position);
+    public void changeCategory( int position ) {
+        displayCase.changeCategory( position );
 
         Refresh();
     }
@@ -115,8 +113,8 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         return displayCase.isFiltered();
     }
 
-    public void setFiltered(boolean isFiltered) {
-        displayCase.setIsFiltered(isFiltered);
+    public void setFiltered( boolean isFiltered ) {
+        displayCase.setIsFiltered( isFiltered );
     }
 
     /**
@@ -127,5 +125,9 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         displayCase.UpdateQueues();
 
         this.notifyDataSetChanged();
+    }
+
+    private Context getContext() {
+        return mContext;
     }
 }

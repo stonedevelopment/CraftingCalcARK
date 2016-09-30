@@ -18,6 +18,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
@@ -211,8 +212,8 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case CATEGORY_WITH_PARENT_ID:
-                _id = CategoryEntry.getParentIdFromUri( uri );
                 selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID;
+                selectionArgs = new String[]{ Long.toString( CategoryEntry.getParentIdFromUri( uri ) ) };
                 tableName = CategoryEntry.TABLE_NAME;
                 break;
 
@@ -271,6 +272,7 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case QUEUE_WITH_ENGRAM_ID:
+
                 _id = QueueEntry.getEngramIdFromUri( uri );
                 selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_KEY;
                 tableName = QueueEntry.TABLE_NAME;
@@ -299,8 +301,9 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case QUEUE_WITH_ENGRAM_TABLE:
-                selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
-                tableName = QueueEntry.TABLE_NAME;
+                projection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_PROJECTION;
+                selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION;
+                tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
                 break;
 
             case ENGRAM_WITH_DRAWABLE:
@@ -422,7 +425,7 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     @Override
-    public int update( Uri uri, ContentValues values, String selection, String[] selectionArgs ) {
+    public int update( @NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs ) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match( uri );
 

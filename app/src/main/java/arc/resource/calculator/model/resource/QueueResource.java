@@ -29,6 +29,14 @@ public class QueueResource extends CompositeResource {
         return queueQuantity;
     }
 
+    public void setQueueQuantity( int quantity ) {
+        this.queueQuantity = quantity;
+    }
+
+    public void increaseQueueQuantity( int amount ) {
+        this.queueQuantity += amount;
+    }
+
     public int getProductOfQuantities() {
         return getQuantity() * getQueueQuantity();
     }

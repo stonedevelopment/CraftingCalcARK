@@ -27,16 +27,28 @@ public class Category {
     // Foreign Key that references a Category's Primary Key used to track hierarchy when filtering folders
     private long parent;
 
+    // String literal of Resource Drawable to use for icon
+    private String drawable;
+
     public Category( long id, String name ) {
         this.id = id;
         this.name = name;
         this.parent = ROOT;
+        this.drawable = "folder";
     }
 
     public Category( long id, String name, long parent ) {
         this.id = id;
         this.name = name;
         this.parent = parent;
+        this.drawable = "folder";
+    }
+
+    public Category( long id, String name, long parent, String drawable ) {
+        this.id = id;
+        this.name = name;
+        this.parent = parent;
+        this.drawable = drawable;
     }
 
     public long getId() {
@@ -49,6 +61,10 @@ public class Category {
 
     public long getParent() {
         return parent;
+    }
+
+    public String getDrawable() {
+        return drawable;
     }
 
     @Override
