@@ -6,6 +6,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
 
@@ -89,7 +90,7 @@ public class Showcase {
             returnableComposition.append( i, queueResource );
         }
 
-        return returnableComposition;
+        return Helper.sortResourcesByName( returnableComposition );
     }
 
     public void setQuantity( int quantity ) {

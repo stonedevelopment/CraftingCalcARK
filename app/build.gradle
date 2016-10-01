@@ -15,14 +15,17 @@ android {
         applicationId 'arc.resource.calculator'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 22
-        versionName '0.2.2a'
+        versionCode 25
+        versionName '0.2.5a'
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            debuggable false
         }
     }
     productFlavors {

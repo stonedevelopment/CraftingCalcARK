@@ -431,9 +431,15 @@ public class CraftingQueue {
     }
 
     private SparseArray<QueueResource> getResources() {
-        if ( !hasComplexResources ) return QueryForEngramResources();
+        SparseArray<QueueResource> resources;
 
-        return getComplexResources();
+        if ( !hasComplexResources ) {
+            resources = QueryForEngramResources();
+        } else {
+            resources = getComplexResources();
+        }
+
+        return Helper.sortResourcesByName( resources );
     }
 
     private SparseArray<QueueResource> getComplexResources() {

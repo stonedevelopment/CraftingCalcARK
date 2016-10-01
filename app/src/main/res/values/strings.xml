@@ -1,5 +1,5 @@
 <resources>
-    <string name="json_version">247.0</string>
+    <string name="json_version">247.0.1</string>
 
     <string name="app_name">A:RC</string>
     <string name="app_name_full">ARK:Resource Calculator</string>

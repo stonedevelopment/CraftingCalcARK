@@ -57,4 +57,25 @@ public class Helper {
         }
         return array1;
     }
+
+    public static SparseArray<QueueResource> sortResourcesByName( SparseArray<QueueResource> resources ) {
+        boolean swapped = true;
+        while ( swapped ) {
+
+            swapped = false;
+            for ( int i = 0; i < resources.size() - 1; i++ ) {
+                String first = resources.valueAt( i ).getName();
+                String second = resources.valueAt( i + 1 ).getName();
+                if ( first.compareTo( second ) > 0 ) {
+                    // swap
+                    QueueResource tempResource = resources.valueAt( i + 1 );
+                    resources.put( i + 1, resources.valueAt( i ) );
+                    resources.put( i, tempResource );
+                    swapped = true;
+                }
+            }
+        }
+
+        return resources;
+    }
 }

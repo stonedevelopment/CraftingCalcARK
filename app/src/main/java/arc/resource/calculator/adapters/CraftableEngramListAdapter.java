@@ -35,27 +35,27 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
 
-    public CraftableEngramListAdapter(Context context) {
+    public CraftableEngramListAdapter( Context context ) {
         this.displayHelper = DisplayHelper.getInstance();
-        this.craftingQueue = CraftingQueue.getInstance(context);
+        this.craftingQueue = CraftingQueue.getInstance( context );
         this.mContext = context;
 
         Refresh();
     }
 
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_item_engram, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+        View itemView = LayoutInflater.from( parent.getContext() ).
+                inflate( R.layout.list_item_engram, parent, false );
 
-        return new EngramViewHolder(itemView);
+        return new EngramViewHolder( itemView );
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        EngramViewHolder viewHolder = (EngramViewHolder) holder;
+    public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
+        EngramViewHolder viewHolder = ( EngramViewHolder ) holder;
 
-        viewHolder.itemView.getLayoutParams().height = (int) displayHelper.getEngramDimensionsWithDensity();
-        viewHolder.itemView.getLayoutParams().width = (int) displayHelper.getEngramDimensionsWithDensity();
+        viewHolder.itemView.getLayoutParams().height = ( int ) displayHelper.getEngramDimensionsWithDensity();
+        viewHolder.itemView.getLayoutParams().width = ( int ) displayHelper.getEngramDimensionsWithDensity();
 
         try {
             int imageId = mContext.getResources().getIdentifier( craftingQueue.getEngramDrawable( position ), "drawable", mContext.getPackageName() );
@@ -80,27 +80,27 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void increaseQuantity(int position, int amount) {
-        craftingQueue.increaseQuantity(position, amount);
+    public void increaseQuantity( int position, int amount ) {
+        craftingQueue.increaseQuantity( position, amount );
     }
 
-    public void increaseQuantity(long engramId, int amount) {
-        craftingQueue.increaseQuantity(engramId, amount);
+    public void increaseQuantity( long engramId, int amount ) {
+        craftingQueue.increaseQuantity( engramId, amount );
     }
 
-    public void decreaseQuantity(int position, int amount) {
-        craftingQueue.decreaseQuantity(position, amount);
+    public void decreaseQuantity( int position, int amount ) {
+        craftingQueue.decreaseQuantity( position, amount );
     }
 
     public void ClearQueue() {
         craftingQueue.Clear();
     }
 
-    public void Remove(long engramId) {
-        craftingQueue.Remove(engramId);
+    public void Remove( long engramId ) {
+        craftingQueue.Remove( engramId );
     }
 
-    public void setQuantity(long engramId, int quantity) {
-        craftingQueue.setQuantity(engramId, quantity);
+    public void setQuantity( long engramId, int quantity ) {
+        craftingQueue.setQuantity( engramId, quantity );
     }
 }

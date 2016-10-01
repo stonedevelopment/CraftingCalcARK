@@ -19,13 +19,29 @@
     </style>
   </head>
   <body>
+    $ 0.2.5a
+      % Version 0.2.5a
+      _ 10/01/2016
+      * Removed the Toast message when you click on crafting queue item, remnants of earlier bugfix.
+      * Last update for the weekend, promises!
+
+    $ 0.2.4a
+      % Version 0.2.4a
+      _ 10/01/2016
+      * Hopefully fixed images not showing up on app release config. Weird bug.
+
+    $ 0.2.3a
+      % Version 0.2.3a
+      _ 09/30/2016
+      * Added a sort method for Resources in ListViews.
+
     $ 0.2.2a
       % Version 0.2.2a
       _ 09/30/2016
+      * Includes all engrams up to Non-DLC PC version 247.0!
       * Added loading screen for database initialization, finally.
       * Migrated all data from initializer classes to JSON file.
-      * Includes all engrams up to Non-DLC PC version 247.0!
-      ! I will be looking into adding DLC engrams in the near future!
+      ! I will be adding DLC engrams in the near future!
 
     $ 0.2.1a
       % Version 0.2.1a
