@@ -19,6 +19,13 @@
     </style>
   </head>
   <body>
+    $ 0.2.6a
+      % Version 0.2.6a
+      _ 10/05/2016
+      * Redesigned layouts to fit most screens, including Tablets! (Still not sure about TVs or Chromebooks)
+      * Fixed a few bugs you guys came across, should be pretty stable again.
+      ! If your display is funky, please tweet or email a screenshot and include the type of device you're using, thanks!!
+
     $ 0.2.5a
       % Version 0.2.5a
       _ 10/01/2016

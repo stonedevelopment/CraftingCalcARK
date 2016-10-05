@@ -31,8 +31,6 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     private DisplayCase mDisplayCase;
     private Context mContext;
 
-    private int mDimens;
-
     public DisplayCaseListAdapter( Context context ) {
         this.mContext = context.getApplicationContext();
         this.mDisplayCase = DisplayCase.getInstance( context );
@@ -50,7 +48,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         EngramGridViewHolder viewHolder = ( EngramGridViewHolder ) holder;
 
         int imageId = getContext().getResources().getIdentifier( mDisplayCase.getDrawable( position ), "drawable", getContext().getPackageName() );
-        String name = mDisplayCase.getName( position );
+        String name = mDisplayCase.getNameByPosition( position );
 
         viewHolder.getImage().setImageResource( imageId );
         viewHolder.getNameText().setText( name );

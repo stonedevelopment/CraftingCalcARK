@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.CraftableResourceListAdapter;
@@ -294,15 +293,7 @@ public class MainActivity extends AppCompatActivity {
         craftableResourceListAdapter.Refresh();
         displayCaseListAdapter.Refresh();
 
-//        GridLayoutManager layoutManager = ( GridLayoutManager ) displayCaseEngramList.getLayoutManager();
-//        layoutManager.setSpanCount( getGridViewSpanCountRecommendations() );
-//
-//        displayCaseEngramList.setLayoutManager( layoutManager );
-
         displayCaseEngramList.setLayoutParams( getDisplayCaseLayoutParams() );
-
-//        displayCaseEngramList.getLayoutParams().height = getDisplayCaseHeightRecommendations();
-//        displayCaseEngramList.getLayoutParams().width = getDisplayCaseWidthRecommendations();
     }
 
     private void createExtraViews() {
@@ -332,8 +323,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private LinearLayout.LayoutParams getDisplayCaseLayoutParams() {
-        Toast.makeText( MainActivity.this, DisplayHelper.getInstance().getSmallestWidthDensity() + "", Toast.LENGTH_SHORT ).show();
-
         if ( craftableEngramListAdapter.getItemCount() > 0 ) {
             if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ) {
                 return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.75f );

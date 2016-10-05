@@ -195,8 +195,6 @@ public class ChangeLog {
         NONE, ORDERED, UNORDERED,
     }
 
-    ;
-
     private Listmode listMode = Listmode.NONE;
     private StringBuffer sb = null;
     private static final String EOCL = "END_OF_CHANGE_LOG";

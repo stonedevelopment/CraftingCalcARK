@@ -40,15 +40,20 @@ public class CraftingQueue {
     private SparseArray<QueueEngram> mEngrams;
     private HashMap<Long, Long> mComplexResources;
 
-    private Context context;
+    private Context mContext;
 
     private CraftingQueue( Context context ) {
-        this.context = context;
+        this.mContext = context;
         this.hasComplexResources = new PreferenceHelper( context ).getBooleanPreference( STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES, false );
 
         if ( hasComplexResources ) {
             mComplexResources = QueryForComplexResources();
+        } else {
+            mComplexResources = new HashMap<>();
         }
+
+        mResources = new SparseArray<>();
+        mEngrams = new SparseArray<>();
 
         UpdateData();
     }
@@ -67,7 +72,7 @@ public class CraftingQueue {
     }
 
     public Context getContext() {
-        return context;
+        return mContext;
     }
 
     // -- PUBLIC SETTER METHODS --

@@ -33,8 +33,6 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
 
-    private int mDimens;
-
     public CraftableEngramListAdapter( Context context ) {
         this.mContext = context;
         this.mCraftingQueue = CraftingQueue.getInstance( context );
