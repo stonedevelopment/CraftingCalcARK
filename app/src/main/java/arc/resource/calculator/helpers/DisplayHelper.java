@@ -7,20 +7,18 @@ import android.view.Display;
 import arc.resource.calculator.R;
 
 public class DisplayHelper {
-    private static final String LOGTAG = "DisplayHelper";
+    private static final String TAG = DisplayHelper.class.getSimpleName();
 
     private static DisplayHelper sInstance;
-    private static Context sContext;
+    private Display mDisplay;
+    private Context mContext;
 
-    private int orientation;
+    private float mDensity;
+    private float mHeight;
+    private float mWidth;
 
-    private float density;
-    private float height;
-    private float width;
-
-    public static DisplayHelper createInstance(Context context, Display display) {
-        sContext = context;
-        sInstance = new DisplayHelper(display);
+    public static DisplayHelper createInstance( Context context, Display display ) {
+        sInstance = new DisplayHelper( context, display );
 
         return sInstance;
     }
@@ -29,45 +27,62 @@ public class DisplayHelper {
         return sInstance;
     }
 
-    private DisplayHelper(Display display) {
+    private DisplayHelper( Context context, Display display ) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
+        display.getMetrics( displayMetrics );
 
-        this.density = displayMetrics.density;
+        mContext = context;
+        mDisplay = display;
 
-        this.width = displayMetrics.widthPixels;
-        this.height = displayMetrics.heightPixels;
+        mDensity = displayMetrics.density;
+        mWidth = displayMetrics.widthPixels;
+        mHeight = displayMetrics.heightPixels;
+    }
 
-        this.orientation = display.getRotation();
+    public float getDensity() {
+        return mDensity;
+    }
+
+    public float getSmallestWidthDensity() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mDisplay.getMetrics( displayMetrics );
+
+        return displayMetrics.widthPixels / mDensity;
     }
 
     public float getEngramDimensions() {
-        float padding = sContext.getResources().getDimension(R.dimen.engram_thumbnail_padding);
-        float dpPadding = padding / density;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mDisplay.getMetrics( displayMetrics );
 
-        float dpHeight = height / density;
-        float dpWidth = width / density;
+        float padding = getContext().getResources().getDimension( R.dimen.engram_grid_view_holder_padding );
+        float dpPadding = padding / mDensity;
+
+        float dpHeight = displayMetrics.heightPixels / mDensity;
+        float dpWidth = displayMetrics.widthPixels / mDensity;
 
         float dimensions;
 
-        switch (orientation) {
+        switch ( mDisplay.getRotation() ) {
             case 0:
             case 2:
-                dimensions = (dpWidth / 5) - (dpPadding);
+                dimensions = ( dpWidth / 5 ) - ( dpPadding );
                 break;
 
             case 1:
             case 3:
             default:
-                dimensions = (dpHeight / 5) - (dpPadding);
+                dimensions = ( dpHeight / 5 ) - ( dpPadding );
                 break;
         }
 
-//      Helper.Log(LOGTAG, "density:" + density + " dpWidth:" + dpWidth + " dimensions:" + dimensions);
         return dimensions;
     }
 
     public float getEngramDimensionsWithDensity() {
-        return getEngramDimensions() * density;
+        return getEngramDimensions() * mDensity;
+    }
+
+    private Context getContext() {
+        return mContext;
     }
 }

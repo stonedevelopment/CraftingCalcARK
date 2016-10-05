@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/resource_list_imageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:paddingStart="0dp"
-        android:paddingEnd="10dp"
-        android:scaleType="centerInside" />
+        android:layout_width="@dimen/resource_view_holder_thumbnail_size"
+        android:layout_height="@dimen/resource_view_holder_thumbnail_size"/>
 
     <TextView
         android:id="@+id/resource_list_nameText"
@@ -20,17 +15,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:text="Angler Gel"
+        android:layout_marginLeft="@dimen/resource_view_holder_padding"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp" />
+        android:textSize="@dimen/resource_view_holder_text_size"/>
 
     <TextView
         android:id="@+id/resource_list_quantityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
-        android:text="10"
         android:textAlignment="textEnd"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp" />
+        android:layout_marginRight="@dimen/resource_view_holder_padding"
+        android:textSize="@dimen/resource_view_holder_text_size"/>
+
 </LinearLayout>

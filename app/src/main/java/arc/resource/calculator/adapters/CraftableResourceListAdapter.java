@@ -26,55 +26,59 @@ import arc.resource.calculator.viewholders.ResourceViewHolder;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class CraftableResourceListAdapter extends RecyclerView.Adapter {
-    private static final String LOGTAG = "ResourceList";
+    private static final String TAG = CraftableResourceListAdapter.class.getSimpleName();
 
-    private CraftingQueue craftingQueue;
+    private CraftingQueue mCraftingQueue;
     private Context mContext;
 
-    public CraftableResourceListAdapter(Context context) {
-        this.craftingQueue = CraftingQueue.getInstance(context);
+    public CraftableResourceListAdapter( Context context ) {
+        mContext = context;
 
-        this.mContext = context;
+        mCraftingQueue = CraftingQueue.getInstance( context );
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_item_resource, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+        View itemView = LayoutInflater.from( parent.getContext() ).
+                inflate( R.layout.list_item_resource, parent, false );
 
-        return new ResourceViewHolder(itemView);
+        return new ResourceViewHolder( itemView );
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ResourceViewHolder viewHolder = (ResourceViewHolder) holder;
+    public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
+        ResourceViewHolder viewHolder = ( ResourceViewHolder ) holder;
 
         try {
-            int imageId = mContext.getResources().getIdentifier( craftingQueue.getResourceDrawable( position ), "drawable", mContext.getPackageName() );
-            String name = craftingQueue.getResourceName( position );
-            int quantity = craftingQueue.getResourceQuantity( position );
+            int imageId = getContext().getResources().getIdentifier( mCraftingQueue.getResourceDrawable( position ), "drawable", getContext().getPackageName() );
+            String name = mCraftingQueue.getResourceName( position );
+            int quantity = mCraftingQueue.getResourceQuantity( position );
 
             viewHolder.getImageView().setImageResource( imageId );
             viewHolder.getNameText().setText( name );
             viewHolder.getQuantityText().setText( String.format( Locale.US, "%1$d", quantity ) );
         } catch ( ArrayIndexOutOfBoundsException e ) {
-            Helper.Log( LOGTAG, e.getMessage() );
+            Helper.Log( TAG, e.getMessage() );
         }
     }
 
     @Override
     public int getItemCount() {
-        return craftingQueue.getResourceItemCount();
+        return mCraftingQueue.getResourceItemCount();
     }
 
-    public void setBreakdownResources(boolean b) {
-        if (craftingQueue.hasComplexResources() != b) {
-            craftingQueue.setHasComplexResources(b);
+    private Context getContext() {
+        return mContext;
+    }
+
+    public void setBreakdownResources( boolean b ) {
+        if ( mCraftingQueue.hasComplexResources() != b ) {
+            mCraftingQueue.setHasComplexResources( b );
         }
     }
 
     public boolean getBreakdownResources() {
-        return craftingQueue.hasComplexResources();
+        return mCraftingQueue.hasComplexResources();
     }
 
     public void Refresh() {

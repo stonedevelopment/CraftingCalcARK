@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.model.DisplayCase;
-import arc.resource.calculator.viewholders.DisplayCaseViewHolder;
+import arc.resource.calculator.viewholders.EngramGridViewHolder;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -29,38 +28,35 @@ import arc.resource.calculator.viewholders.DisplayCaseViewHolder;
 public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     private static final String TAG = DisplayCaseListAdapter.class.getSimpleName();
 
-    private DisplayHelper displayHelper;
-    private DisplayCase displayCase;
+    private DisplayCase mDisplayCase;
     private Context mContext;
+
+    private int mDimens;
 
     public DisplayCaseListAdapter( Context context ) {
         this.mContext = context.getApplicationContext();
-        this.displayHelper = DisplayHelper.getInstance();
-        this.displayCase = new DisplayCase( context );
+        this.mDisplayCase = DisplayCase.getInstance( context );
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View itemView = LayoutInflater.from( parent.getContext() ).
-                inflate( R.layout.list_item_displaycase, parent, false );
+                inflate( R.layout.list_item_engram_thumbnail, parent, false );
 
-        return new DisplayCaseViewHolder( itemView );
+        return new EngramGridViewHolder( itemView );
     }
 
     @Override
     public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
-        DisplayCaseViewHolder viewHolder = ( DisplayCaseViewHolder ) holder;
+        EngramGridViewHolder viewHolder = ( EngramGridViewHolder ) holder;
 
-        viewHolder.itemView.getLayoutParams().height = ( int ) displayHelper.getEngramDimensionsWithDensity();
-        viewHolder.itemView.getLayoutParams().width = ( int ) displayHelper.getEngramDimensionsWithDensity();
-
-        int imageId = getContext().getResources().getIdentifier( displayCase.getDrawable( position ), "drawable", getContext().getPackageName() );
-        String name = displayCase.getName( position );
+        int imageId = getContext().getResources().getIdentifier( mDisplayCase.getDrawable( position ), "drawable", getContext().getPackageName() );
+        String name = mDisplayCase.getName( position );
 
         viewHolder.getImage().setImageResource( imageId );
         viewHolder.getNameText().setText( name );
 
-        if ( displayCase.isEngram( position ) ) {
-            int quantity = displayCase.getQuantity( position );
+        if ( mDisplayCase.isEngram( position ) ) {
+            int quantity = mDisplayCase.getQuantity( position );
 
             if ( quantity > 0 ) {
                 viewHolder.getImage().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
@@ -80,7 +76,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return displayCase.getCount();
+        return mDisplayCase.getCount();
     }
 
     /**
@@ -88,33 +84,33 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
      */
 
     public long getEngramId( int position ) {
-        return displayCase.getEngramId( position );
+        return mDisplayCase.getEngramId( position );
     }
 
     public boolean isEngram( int position ) {
-        return displayCase.isEngram( position );
+        return mDisplayCase.isEngram( position );
     }
 
     public long getLevel() {
-        return displayCase.getLevel();
+        return mDisplayCase.getLevel();
     }
 
     public long getParent() {
-        return displayCase.getParent();
+        return mDisplayCase.getParent();
     }
 
     public void changeCategory( int position ) {
-        displayCase.changeCategory( position );
+        mDisplayCase.changeCategory( position );
 
         Refresh();
     }
 
     public boolean isFiltered() {
-        return displayCase.isFiltered();
+        return mDisplayCase.isFiltered();
     }
 
     public void setFiltered( boolean isFiltered ) {
-        displayCase.setIsFiltered( isFiltered );
+        mDisplayCase.setIsFiltered( isFiltered );
     }
 
     /**
@@ -122,7 +118,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
      */
 
     public void Refresh() {
-        displayCase.UpdateQueues();
+        mDisplayCase.UpdateQueues();
 
         this.notifyDataSetChanged();
     }

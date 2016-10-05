@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
               android:padding="10dp"
@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/engram_detail_imageView"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detail_image_thumbnail_size"
+        android:scaleType="fitCenter"
         android:src="@drawable/structures_stone_stone_wall"/>
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Stone Wall"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"/>
+        android:textSize="@dimen/detail_name_text_size"/>
 
     <TextView
         android:id="@+id/engram_detail_categoryText"
@@ -29,7 +29,7 @@
         android:paddingBottom="2dp"
         android:text="Structures/Wood/Storage"
         android:textColor="@color/colorWhite"
-        android:textSize="12sp"/>
+        android:textSize="@dimen/detail_category_text_size"/>
 
     <TextView
         android:id="@+id/engram_detail_descriptionText"
@@ -37,6 +37,6 @@
         android:layout_height="wrap_content"
         android:text="A brick-and-mortar wall that insulates the inside from the outside and seperates rooms."
         android:textColor="@color/colorWhite"
-        android:textSize="14sp"/>
+        android:textSize="@dimen/detail_description_text_size"/>
 
 </LinearLayout>

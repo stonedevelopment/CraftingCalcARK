@@ -28,7 +28,7 @@
         android:layout_toStartOf="@id/increaseButton"
         android:digits="0123456789"
         android:gravity="center_horizontal"
-        android:theme="@style/AppTheme.Picker"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:theme="@style/AppTheme.Picker"/>
 
 </RelativeLayout>

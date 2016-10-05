@@ -27,6 +27,8 @@ import arc.resource.calculator.model.engram.DisplayEngram;
 public class DisplayCase {
     private static final String TAG = DisplayCase.class.getSimpleName();
 
+    private static DisplayCase sInstance;
+
     private static final long ROOT = 0;
 
     private boolean isFiltered;
@@ -39,19 +41,25 @@ public class DisplayCase {
     private SparseArray<Category> categories = null;
     private HashMap<Long, Queue> queues = null;
 
-    public DisplayCase( Context context ) {
+    private DisplayCase( Context context ) {
         PreferenceHelper preferenceHelper = new PreferenceHelper( context );
         isFiltered = preferenceHelper.getBooleanPreference( Helper.FILTERED, true );
 
         // Retrieve saved level and parent from previous use
         level = preferenceHelper.getLongPreference( Helper.APP_LEVEL );
         parent = preferenceHelper.getLongPreference( Helper.APP_PARENT );
-//        level = 0;
-//        parent = 0;
 
         mContext = context;
 
         UpdateData();
+    }
+
+    public static DisplayCase getInstance ( Context context) {
+        if ( sInstance == null ) {
+            sInstance = new DisplayCase( context );
+        }
+
+        return sInstance;
     }
 
     public boolean isFiltered() {

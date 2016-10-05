@@ -1,33 +1,43 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:context=".MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/content_displaycase"
+    <arc.resource.calculator.helpers.AutoFitRecyclerView
+        android:id="@+id/content_display_case_engrams"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:columnWidth="@dimen/engram_grid_view_holder_thumbnail_size"
+        android:padding="@dimen/grid_layout_padding"
         android:scrollbars="vertical"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/content_crafting_queue_engrams"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/content_displaycase"
-        android:padding="5dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="4dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/content_crafting_queue_resources"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/content_crafting_queue_engrams"
-        android:padding="5dp"
-        android:scrollbars="vertical"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/content_crafting_queue_engrams"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/engram_grid_view_holder_thumbnail_size"
+            android:layout_alignParentTop="true"/>
 
-</RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/content_crafting_queue_resources"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/content_crafting_queue_engrams"
+            android:padding="@dimen/resource_view_holder_padding"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
 

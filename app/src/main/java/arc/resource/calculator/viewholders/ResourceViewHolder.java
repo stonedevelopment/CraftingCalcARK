@@ -36,10 +36,6 @@ public class ResourceViewHolder extends RecyclerView.ViewHolder {
         return imageView;
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
     public TextView getNameText() {
         return nameText;
     }

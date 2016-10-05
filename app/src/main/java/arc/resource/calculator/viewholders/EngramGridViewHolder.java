@@ -19,30 +19,29 @@ import arc.resource.calculator.R;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class EngramViewHolder extends RecyclerView.ViewHolder {
+public class EngramGridViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView image;
-    private TextView nameText;
-    private TextView quantityText;
+    private ImageView mImageView;
+    private TextView mNameTextView;
+    private TextView mQuantityTextView;
 
-    public EngramViewHolder(View itemView) {
-        super(itemView);
+    public EngramGridViewHolder( View itemView ) {
+        super( itemView );
 
-        this.image = (ImageView) itemView.findViewById(R.id.list_item_engram_imageView);
-        this.nameText = (TextView) itemView.findViewById(R.id.list_item_engram_nameText);
-        this.quantityText = (TextView) itemView.findViewById(R.id.list_item_engram_quantityText);
-//        this.imageButton = (ImageButton) itemView.findViewById(R.id.list_item_engram_remove_imageButton);
+        mImageView = ( ImageView ) itemView.findViewById( R.id.list_item_engram_thumbnail_image_view );
+        mNameTextView = ( TextView ) itemView.findViewById( R.id.list_item_engram_thumbnail_name_text_view );
+        mQuantityTextView = ( TextView ) itemView.findViewById( R.id.list_item_engram_thumbnail_quantity_text_view );
     }
 
     public ImageView getImage() {
-        return image;
+        return mImageView;
     }
 
     public TextView getNameText() {
-        return nameText;
+        return mNameTextView;
     }
 
     public TextView getQuantityText() {
-        return quantityText;
+        return mQuantityTextView;
     }
 }

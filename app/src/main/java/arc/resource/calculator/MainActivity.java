@@ -2,7 +2,7 @@ package arc.resource.calculator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +11,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.CraftableResourceListAdapter;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.db.DatabaseHelper;
+import arc.resource.calculator.helpers.AutoFitRecyclerView;
 import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private CraftableEngramListAdapter craftableEngramListAdapter;
     private CraftableResourceListAdapter craftableResourceListAdapter;
 
-    private RecyclerView displayCaseEngramList;
+    private AutoFitRecyclerView displayCaseEngramList;
     private RecyclerView craftingQueueEngramList;
     private RecyclerView craftingQueueResourceList;
 
@@ -53,44 +54,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics( displayMetrics );
+        DisplayHelper.createInstance( this, getWindowManager().getDefaultDisplay() );
 
-        DisplayHelper.createInstance( this, display );
-
-        displayCaseEngramList = ( RecyclerView ) findViewById( R.id.content_displaycase );
+        displayCaseEngramList = ( AutoFitRecyclerView ) findViewById( R.id.content_display_case_engrams );
         craftingQueueEngramList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_engrams );
         craftingQueueResourceList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_resources );
 
-        final RecyclerView.LayoutManager craftableEngramLayoutManager =
-                new GridLayoutManager( this, 1, GridLayoutManager.HORIZONTAL, false );
         if ( craftingQueueEngramList != null ) {
             RecyclerTouchListener craftingQueueEngramTouchListener = new RecyclerTouchListener( this, craftingQueueEngramList,
                     new RecyclerTouchListener.ClickListener() {
                         @Override
                         public void onClick( View view, int position ) {
-                            craftableEngramListAdapter.increaseQuantity( position, 1 );
-                            RefreshViews();
+                            if ( position >= 0 ) {
+                                craftableEngramListAdapter.increaseQuantity( position, 1 );
+                                RefreshViews();
+                            }
                         }
 
                         @Override
                         public void onLongClick( View view, int position ) {
-                            craftableEngramListAdapter.decreaseQuantity( position, 1 );
-                            RefreshViews();
+                            if ( position >= 0 ) {
+                                craftableEngramListAdapter.decreaseQuantity( position, 1 );
+                                RefreshViews();
+                            }
                         }
                     } );
 
             craftableEngramListAdapter = new CraftableEngramListAdapter( this );
 
+            RecyclerView.LayoutManager craftableEngramLayoutManager =
+                    new GridLayoutManager( this, 1, GridLayoutManager.HORIZONTAL, false );
+
             craftingQueueEngramList.setLayoutManager( craftableEngramLayoutManager );
             craftingQueueEngramList.addOnItemTouchListener( craftingQueueEngramTouchListener );
-            craftingQueueEngramList.setHasFixedSize( true );
             craftingQueueEngramList.setAdapter( craftableEngramListAdapter );
         }
 
-        RecyclerView.LayoutManager craftableResourceLayoutManager =
-                new LinearLayoutManager( this );
         if ( craftingQueueResourceList != null ) {
             RecyclerTouchListener craftingQueueResourceTouchListener = new RecyclerTouchListener( this, craftingQueueResourceList,
                     new RecyclerTouchListener.ClickListener() {
@@ -107,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
             craftableResourceListAdapter = new CraftableResourceListAdapter( this );
 
+            RecyclerView.LayoutManager craftableResourceLayoutManager =
+                    new LinearLayoutManager( this );
+
             craftingQueueResourceList.setLayoutManager( craftableResourceLayoutManager );
-            craftingQueueResourceList.setHasFixedSize( true );
             craftingQueueResourceList.setAdapter( craftableResourceListAdapter );
         }
 
@@ -117,46 +118,34 @@ public class MainActivity extends AppCompatActivity {
                     new RecyclerTouchListener.ClickListener() {
                         @Override
                         public void onClick( View view, int position ) {
-                            if ( displayCaseListAdapter.isEngram( position ) ) {
-                                craftableEngramListAdapter.increaseQuantity( displayCaseListAdapter.getEngramId( position ), 1 );
-                                RefreshViews();
-                            } else {
-                                displayCaseListAdapter.changeCategory( position );
+                            if ( position >= 0 ) {
+                                if ( displayCaseListAdapter.isEngram( position ) ) {
+                                    craftableEngramListAdapter.increaseQuantity( displayCaseListAdapter.getEngramId( position ), 1 );
+                                    RefreshViews();
+                                } else {
+                                    displayCaseListAdapter.changeCategory( position );
+                                }
                             }
                         }
 
                         @Override
                         public void onLongClick( View view, int position ) {
-                            if ( displayCaseListAdapter.isEngram( position ) ) {
-                                Intent intent = new Intent( view.getContext(), DetailActivity.class );
-                                intent.putExtra( Helper.DETAIL_ID, displayCaseListAdapter.getEngramId( position ) );
+                            if ( position >= 0 ) {
+                                if ( displayCaseListAdapter.isEngram( position ) ) {
+                                    Intent intent = new Intent( view.getContext(), DetailActivity.class );
+                                    intent.putExtra( Helper.DETAIL_ID, displayCaseListAdapter.getEngramId( position ) );
 
-                                startActivityForResult( intent, Helper.DETAIL_ID_CODE );
-                            } else {
-                                displayCaseListAdapter.changeCategory( position );
+                                    startActivityForResult( intent, Helper.DETAIL_ID_CODE );
+                                } else {
+                                    displayCaseListAdapter.changeCategory( position );
+                                }
                             }
                         }
                     } );
 
+
             displayCaseListAdapter = new DisplayCaseListAdapter( this );
-            RecyclerView.LayoutManager displayCaseLayoutManager;
-
-            switch ( display.getRotation() ) {
-                case Surface.ROTATION_0:
-                case Surface.ROTATION_180:
-                    displayCaseLayoutManager = new GridLayoutManager( this, 5, GridLayoutManager.VERTICAL, false );
-                    break;
-                case Surface.ROTATION_270:
-                case Surface.ROTATION_90:
-                default:
-                    displayCaseLayoutManager = new GridLayoutManager( this, 4, GridLayoutManager.VERTICAL, false );
-                    break;
-            }
-
-            // Adjust the height of the Display Case to fit 3 rows of content in portrait view if crafting queue has items, if not, match parent's height
-            displayCaseEngramList.getLayoutParams().height = getDisplayCaseHeightRecommendations();
             displayCaseEngramList.addOnItemTouchListener( displayCaseTouchListener );
-            displayCaseEngramList.setLayoutManager( displayCaseLayoutManager );
             displayCaseEngramList.setAdapter( displayCaseListAdapter );
         }
 
@@ -165,13 +154,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
 
         PreferenceHelper preferenceHelper = new PreferenceHelper( this );
 
         preferenceHelper.setPreference( Helper.APP_LEVEL, displayCaseListAdapter.getLevel() );
         preferenceHelper.setPreference( Helper.APP_PARENT, displayCaseListAdapter.getParent() );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -300,7 +294,15 @@ public class MainActivity extends AppCompatActivity {
         craftableResourceListAdapter.Refresh();
         displayCaseListAdapter.Refresh();
 
-        displayCaseEngramList.getLayoutParams().height = getDisplayCaseHeightRecommendations();
+//        GridLayoutManager layoutManager = ( GridLayoutManager ) displayCaseEngramList.getLayoutManager();
+//        layoutManager.setSpanCount( getGridViewSpanCountRecommendations() );
+//
+//        displayCaseEngramList.setLayoutManager( layoutManager );
+
+        displayCaseEngramList.setLayoutParams( getDisplayCaseLayoutParams() );
+
+//        displayCaseEngramList.getLayoutParams().height = getDisplayCaseHeightRecommendations();
+//        displayCaseEngramList.getLayoutParams().width = getDisplayCaseWidthRecommendations();
     }
 
     private void createExtraViews() {
@@ -329,29 +331,74 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private LinearLayout.LayoutParams getDisplayCaseLayoutParams() {
+        Toast.makeText( MainActivity.this, DisplayHelper.getInstance().getSmallestWidthDensity() + "", Toast.LENGTH_SHORT ).show();
+
+        if ( craftableEngramListAdapter.getItemCount() > 0 ) {
+            if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ) {
+                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.75f );
+            } else {
+                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f );
+            }
+        }
+
+        return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT );
+    }
+
     private int getDisplayCaseHeightRecommendations() {
         if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-            return ( int ) ( DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3 );
-        } else {
-            return GridLayoutManager.LayoutParams.MATCH_PARENT;
+            if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ) {
+                int thumbnailSize = displayCaseEngramList.getColumnWidth();
+                int rowCount = getResources().getInteger( R.integer.grid_layout_row_count );
+
+                if ( rowCount > 0 && thumbnailSize > 0 ) {
+                    return thumbnailSize * rowCount;
+                }
+            }
         }
+
+        return GridLayoutManager.LayoutParams.MATCH_PARENT;
     }
 
     private int getDisplayCaseWidthRecommendations() {
         if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-            return ( int ) ( DisplayHelper.getInstance().getEngramDimensionsWithDensity() * 3 );
-        } else {
-            return GridLayoutManager.LayoutParams.MATCH_PARENT;
+            if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ) {
+                int thumbnailSize = displayCaseEngramList.getColumnWidth();
+                int colCount = getResources().getInteger( R.integer.grid_layout_column_count );
+
+                if ( colCount > 0 && thumbnailSize > 0 ) {
+                    return thumbnailSize * colCount;
+                }
+            }
         }
+
+        return GridLayoutManager.LayoutParams.MATCH_PARENT;
+    }
+
+    private float getGridViewThumbnailSizeRecommendations() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        float density = displayMetrics.density;
+
+        float padding = getResources().getDimension( R.dimen.engram_grid_view_holder_padding );
+        float dpPadding = padding / density;
+
+        float dpHeight = displayMetrics.heightPixels / density;
+        float dpWidth = displayMetrics.widthPixels / density;
+
+        return dpWidth / getGridViewSpanCountRecommendations();
+    }
+
+    private int getGridViewSpanCountRecommendations() {
+        if ( craftableEngramListAdapter.getItemCount() > 0 ) {
+            return getResources().getInteger( R.integer.grid_layout_column_count_with_queue );
+        }
+
+        return getResources().getInteger( R.integer.grid_layout_column_count );
     }
 
     private String getAppVersions() {
         return "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
                 "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
                 "JSON File Version: " + getString( R.string.json_version ) + "\n";
-    }
-
-    private void delete( Uri contentUri ) {
-        getContentResolver().delete( contentUri, null, null );
     }
 }

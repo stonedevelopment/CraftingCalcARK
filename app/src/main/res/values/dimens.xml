@@ -1,8 +1,23 @@
 <resources>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="engram_thumbnail_size">80dp</dimen>
-    <dimen name="resource_thumbnail_size">20dp</dimen>
-    <dimen name="engram_thumbnail_padding">2dp</dimen>
+
+    <!-- EngramViewHolder: Thumbnail size -->
+    <dimen name="engram_grid_view_holder_thumbnail_size">70dp</dimen>
+    <dimen name="engram_grid_view_holder_padding">2dp</dimen>
+    <dimen name="engram_grid_view_holder_quantity_text_size">24dp</dimen>
+    <dimen name="engram_grid_view_holder_name_text_size">14sp</dimen>
+
+    <!-- DisplayCase -->
+    <dimen name="grid_layout_padding">4dp</dimen>
+    <integer name="grid_layout_column_count">7</integer>
+    <integer name="grid_layout_column_count_with_queue">7</integer>
+    <integer name="grid_layout_row_count">4</integer>
+
+    <!-- CraftingQueue: Resource thumbnail size -->
+    <dimen name="resource_view_holder_thumbnail_size">20dp</dimen>
+    <dimen name="resource_view_holder_text_size">20sp</dimen>
+
 </resources>
