@@ -20,6 +20,7 @@
       "parent_id": 0,
       "version_id": 1
     },
+
     {
       "_id": 200,
       "name": "Structures",
@@ -230,6 +231,13 @@
       "parent_id": 200,
       "version_id": 2
     },
+    {
+      "_id": 224,
+      "name": "Heating",
+      "parent_id": 200,
+      "version_id": 2
+    },
+
     {
       "_id": 300,
       "name": "Weapons",
@@ -10462,6 +10470,19 @@
         }
       ],
       "version_id": 1
+    },
+    {
+      "name": "Brick",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_brick",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_clay"
+        }
+      ],
+      "version_id": 2
     }
   ]
 }
