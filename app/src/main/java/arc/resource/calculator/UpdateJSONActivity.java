@@ -115,10 +115,6 @@ public class UpdateJSONActivity extends AppCompatActivity {
             JSONObject newJSONObject = new JSONObject();
 
             newJSONObject.put(
-                    DatabaseContract.VersionEntry.TABLE_NAME,
-                    updateJSONArray( jsonObject.getJSONArray( DatabaseContract.VersionEntry.TABLE_NAME ) )
-            );
-            newJSONObject.put(
                     DatabaseContract.CategoryEntry.TABLE_NAME,
                     updateJSONArray( jsonObject.getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) )
             );

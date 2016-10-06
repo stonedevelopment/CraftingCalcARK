@@ -1,7 +1,11 @@
 <resources>
 
-    <!-- Version of JSON data file. Change this if you need database to refresh its contents. -->
-    <string name="json_version">247.0.1</string>
+    <!--
+    Version of JSON data file. Used to update contents of file to database.
+
+    247.1   Updated Categories to Primitive+
+    -->
+    <string name="json_version">247.1</string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
