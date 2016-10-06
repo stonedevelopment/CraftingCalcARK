@@ -20,7 +20,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
 import java.util.Vector;
 
 import arc.resource.calculator.db.DatabaseContract;
@@ -86,6 +85,7 @@ public class LoadScreenActivity extends AppCompatActivity {
         if ( isNewVersion() ) {
             new ParseInsertTask( this ).execute();
         } else {
+            // Start MainActivity
             Intent intent = new Intent( getApplicationContext(), MainActivity.class );
             startActivity( intent );
 
@@ -95,16 +95,11 @@ public class LoadScreenActivity extends AppCompatActivity {
 
     boolean isNewVersion() {
         String oldVersion = new PreferenceHelper( this ).getStringPreference( getString( R.string.pref_json_version ) );
-        String newVersion = getResources().getString( R.string.json_version );
+        String newVersion = getString( R.string.json_version );
 
-        Helper.Log( TAG, oldVersion + " = " + newVersion + "?" );
+        Helper.Log( TAG, oldVersion + " == " + newVersion + "?" );
 
-        if ( !Objects.equals( oldVersion, newVersion ) ) {
-            new PreferenceHelper( this ).setPreference( getString( R.string.pref_json_version ), newVersion );
-            return true;
-        }
-
-        return false;
+        return !oldVersion.equals( newVersion );
     }
 
     private class ParseInsertTask extends AsyncTask<Void, String, Void> {
@@ -122,7 +117,7 @@ public class LoadScreenActivity extends AppCompatActivity {
         protected void onPreExecute() {
             deleteAllRecordsFromProvider();
 
-            mProgressData = new ProgressData( 0, 5 );
+            mProgressData = new ProgressData( 0, 6 );
 
             progressBar.setMax( mProgressData.getMax() );
             progressBar.setProgress( mProgressData.getProgress() );
@@ -130,12 +125,21 @@ public class LoadScreenActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate( String... strings ) {
-            textView.setText( strings[0] );
+            String message = strings[0];
+
+            Helper.Log( TAG, message );
+            textView.setText( message );
             progressBar.setProgress( mProgressData.getProgress() );
         }
 
         @Override
         protected void onPostExecute( Void aVoid ) {
+            // Save new version to preferences
+            new PreferenceHelper( getContext() )
+                    .setPreference(
+                            getString( R.string.pref_json_version ),
+                            getString( R.string.json_version ) );
+
             // Start MainActivity
             Intent intent = new Intent( getContext(), MainActivity.class );
             startActivity( intent );
@@ -207,6 +211,10 @@ public class LoadScreenActivity extends AppCompatActivity {
         void parseJsonString( String jsonString ) throws JSONException {
             JSONObject jsonObject = new JSONObject( jsonString );
 
+            publishProgress( "Inserting Versions..." );
+            insertVersions( jsonObject.getJSONArray( DatabaseContract.VersionEntry.TABLE_NAME ) );
+            mProgressData.incrementProgress();
+
             publishProgress( "Inserting Categories..." );
             insertCategories( jsonObject.getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
@@ -260,18 +268,39 @@ public class LoadScreenActivity extends AppCompatActivity {
             }
         }
 
+        void insertVersions( JSONArray jsonArray ) throws JSONException {
+            Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
+
+            for ( int i = 0; i < jsonArray.length(); i++ ) {
+                JSONObject jsonObject = jsonArray.getJSONObject( i );
+
+                long _id = jsonObject.getLong( DatabaseContract.VersionEntry._ID );
+                String name = jsonObject.getString( DatabaseContract.VersionEntry.COLUMN_NAME );
+
+                ContentValues values = new ContentValues();
+                values.put( DatabaseContract.VersionEntry._ID, _id );
+                values.put( DatabaseContract.VersionEntry.COLUMN_NAME, name );
+
+                vector.add( values );
+            }
+
+            bulkInsertWithUri( DatabaseContract.VersionEntry.CONTENT_URI, vector );
+        }
+
         void insertResources( JSONArray jsonArray ) throws JSONException {
             Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
             for ( int i = 0; i < jsonArray.length(); i++ ) {
-                JSONObject resourceObject = jsonArray.getJSONObject( i );
+                JSONObject jsonObject = jsonArray.getJSONObject( i );
 
-                String name = resourceObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
-                String drawable = resourceObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
+                String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
+                String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
+                long version_id = jsonObject.getLong( DatabaseContract.ResourceEntry.COLUMN_VERSION_KEY );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, drawable );
+                values.put( DatabaseContract.ResourceEntry.COLUMN_VERSION_KEY, version_id );
 
                 vector.add( values );
             }
@@ -288,11 +317,13 @@ public class LoadScreenActivity extends AppCompatActivity {
                 long _id = jsonObject.getLong( DatabaseContract.CategoryEntry._ID );
                 String name = jsonObject.getString( DatabaseContract.CategoryEntry.COLUMN_NAME );
                 long parent_id = jsonObject.getLong( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY );
+                long version_id = jsonObject.getLong( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.CategoryEntry._ID, _id );
                 values.put( DatabaseContract.CategoryEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY, parent_id );
+                values.put( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY, version_id );
 
                 vector.add( values );
             }
@@ -308,12 +339,14 @@ public class LoadScreenActivity extends AppCompatActivity {
                 String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
                 String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
                 long category_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
+                long version_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_VERSION_KEY );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
                 values.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, drawable );
                 values.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
+                values.put( DatabaseContract.EngramEntry.COLUMN_VERSION_KEY, version_id );
 
                 Uri insertUri = getContext().getContentResolver().insert( DatabaseContract.EngramEntry.CONTENT_URI, values );
                 long engramId = DatabaseContract.getIdFromUri( insertUri );

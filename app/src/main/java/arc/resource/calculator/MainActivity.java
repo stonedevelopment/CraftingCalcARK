@@ -20,10 +20,11 @@ import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.CraftableResourceListAdapter;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.db.DatabaseHelper;
-import arc.resource.calculator.helpers.AutoFitRecyclerView;
 import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.views.AutoFitRecyclerView;
+import arc.resource.calculator.views.RecyclerTouchListener;
 
 /**
  * Copyright (C) 2016, Jared Stone

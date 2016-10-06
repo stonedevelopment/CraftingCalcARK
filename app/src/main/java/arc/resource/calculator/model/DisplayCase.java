@@ -252,22 +252,24 @@ public class DisplayCase {
      * -- PRIVATE UTILITY METHODS --
      */
 
-    private Category getCategory( long categoryId ) {
+    private Category getCategory( long _id ) {
 
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.CategoryEntry.buildUriWithId( categoryId ),
+                DatabaseContract.CategoryEntry.buildUriWithId( _id ),
                 null, null, null, null );
 
 
         if ( cursor.moveToFirst() ) {
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
-            long parent = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+            long version_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY ) );
 
             cursor.close();
             return new Category(
-                    categoryId,
+                    _id,
                     name,
-                    parent );
+                    parent_id,
+                    version_id );
         }
 
         cursor.close();
@@ -283,11 +285,12 @@ public class DisplayCase {
                     null, null, null, null );
 
             while ( cursor.moveToNext() ) {
-                long id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
+                long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
                 String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
-                long parent = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+                long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+                long version_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY ) );
 
-                categories.append( categories.size(), new Category( id, name, parent ) );
+                categories.append( categories.size(), new Category( _id, name, parent_id, version_id ) );
             }
 
             cursor.close();

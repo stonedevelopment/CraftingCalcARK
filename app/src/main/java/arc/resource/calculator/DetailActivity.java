@@ -88,7 +88,7 @@ public class DetailActivity extends AppCompatActivity {
         imageView.setImageResource( getResources().getIdentifier( showcase.getDrawable(), "drawable", getPackageName() ) );
         nameText.setText( showcase.getName() );
         descriptionText.setText( showcase.getDescription() );
-        categoryText.setText( showcase.getCategoryDescription() );
+        categoryText.setText( showcase.getCategoryHierarchy() );
 
         resourceListAdapter = new ShowcaseResourceListAdapter( this, showcase.getQuantifiableComposition() );
 

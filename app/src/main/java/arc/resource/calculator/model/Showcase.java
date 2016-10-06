@@ -30,6 +30,7 @@ public class Showcase {
     private String mDescription;
     private String mDrawable;
     private long mCategoryId;
+    private long mVersionId;
 
     private SparseArray<CompositeResource> mComposition;
 
@@ -93,6 +94,30 @@ public class Showcase {
         return Helper.sortResourcesByName( returnableComposition );
     }
 
+    public String getCategoryHierarchy() {
+        Category category = QueryForCategoryDetails( mCategoryId );
+
+        if ( category == null ) return null;
+
+        long parent_id = category.getParent();
+
+        StringBuilder builder = new StringBuilder( category.getName() );
+        while ( parent_id > 0 ) {
+            category = QueryForCategoryDetails( parent_id );
+            if ( category == null ) break;
+
+            parent_id = category.getParent();
+
+            builder.insert( 0, category.getName() + "/" );
+        }
+
+        return builder.toString();
+    }
+
+    public String getVersionName() {
+        return QueryForVersionName( mVersionId );
+    }
+
     public void setQuantity( int quantity ) {
         mQuantity = quantity;
     }
@@ -105,26 +130,6 @@ public class Showcase {
         if ( mQuantity > 0 ) {
             mQuantity -= 1;
         }
-    }
-
-    public String getCategoryDescription() {
-        Category category = QueryForCategoryDetails( mCategoryId );
-
-        if ( category == null ) return null;
-
-        long parentId = category.getParent();
-
-        StringBuilder builder = new StringBuilder( category.getName() );
-        while ( parentId > 0 ) {
-            category = QueryForCategoryDetails( parentId );
-            if ( category == null ) break;
-
-            parentId = category.getParent();
-
-            builder.insert( 0, category.getName() + "/" );
-        }
-
-        return builder.toString();
     }
 
     // Query Methods
@@ -140,6 +145,7 @@ public class Showcase {
             mDrawable = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) );
             mDescription = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION ) );
             mCategoryId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) );
+            mVersionId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_VERSION_KEY ) );
 
             cursor.close();
         } else {
@@ -205,18 +211,38 @@ public class Showcase {
 
         if ( cursor != null && cursor.moveToFirst() ) {
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
-            long parentId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+            long version_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY ) );
 
             cursor.close();
 
             return new Category(
                     _id,
                     name,
-                    parentId
+                    parent_id,
+                    version_id
             );
         } else {
-            // Engram does not exist!?
+            // Category does not exist!?
             Log.e( TAG, "QueryForCategoryDetails(" + _id + ") returned null?" );
+            return null;
+        }
+    }
+
+    private String QueryForVersionName( long _id ) {
+        Cursor cursor = mContext.getContentResolver().query(
+                DatabaseContract.VersionEntry.buildUriWithId( _id ),
+                null, null, null, null
+        );
+
+        if ( cursor != null && cursor.moveToFirst() ) {
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.VersionEntry.COLUMN_NAME ) );
+
+            cursor.close();
+            return name;
+        } else {
+            // Version does not exist!?
+            Log.e( TAG, "QueryForVersionName(" + _id + ") returned null?" );
             return null;
         }
     }

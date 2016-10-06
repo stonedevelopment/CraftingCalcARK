@@ -19,56 +19,58 @@ public class Category {
     private static final long ROOT = 0;
 
     // Primary Key used to track hierarchy when filtering folders
-    private long id;
+    private long mId;
 
     // String literal of Category's taken verbatim from in-game
-    private String name;
+    private String mName;
 
     // Foreign Key that references a Category's Primary Key used to track hierarchy when filtering folders
-    private long parent;
+    private long mParent;
 
     // String literal of Resource Drawable to use for icon
-    private String drawable;
+    private String mDrawable;
 
-    public Category( long id, String name ) {
-        this.id = id;
-        this.name = name;
-        this.parent = ROOT;
-        this.drawable = "folder";
+    // Foreign Key that references the Game Version this Category belongs to
+    private long mVersion;
+
+    public Category( long id, String name, long parent, long version ) {
+        this.mId = id;
+        this.mName = name;
+        this.mParent = parent;
+        this.mVersion = version;
+        this.mDrawable = "folder";
     }
 
-    public Category( long id, String name, long parent ) {
-        this.id = id;
-        this.name = name;
-        this.parent = parent;
-        this.drawable = "folder";
-    }
-
+    // Constructor used only for inserting a "back" category to go back one level
     public Category( long id, String name, long parent, String drawable ) {
-        this.id = id;
-        this.name = name;
-        this.parent = parent;
-        this.drawable = drawable;
+        this.mId = id;
+        this.mName = name;
+        this.mParent = parent;
+        this.mDrawable = drawable;
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public long getParent() {
-        return parent;
+        return mParent;
     }
 
     public String getDrawable() {
-        return drawable;
+        return mDrawable;
+    }
+
+    public long getVersion() {
+        return mVersion;
     }
 
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", parent=" + parent;
+        return "mId=" + mId + ", mName=" + mName + ", mParent=" + mParent;
     }
 }

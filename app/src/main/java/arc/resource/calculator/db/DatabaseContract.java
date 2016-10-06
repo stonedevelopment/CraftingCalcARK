@@ -37,6 +37,7 @@ public class DatabaseContract {
     public static final String PATH_CATEGORY_PARENT = "parent";
     public static final String PATH_QUEUE = "queue";
     public static final String PATH_DRAWABLE = "drawable";
+    public static final String PATH_VERSION = "version";
 
     // Inner class that defines the table contents of the engram table
     public static final class EngramEntry implements BaseColumns {
@@ -60,12 +61,21 @@ public class DatabaseContract {
         // Foreign key from Category table
         public static final String COLUMN_CATEGORY_KEY = "category_id";
 
+        // Foreign key from Game Version table
+        public static final String COLUMN_VERSION_KEY = "version_id";
+
         // SQL column helpers
         public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
         public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
-        public static final String SQL_COLUMN_DESCRIPTION = TABLE_NAME + "." + COLUMN_DESCRIPTION;
         public static final String SQL_COLUMN_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE;
         public static final String SQL_COLUMN_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY;
+        public static final String SQL_COLUMN_VERSION_KEY = TABLE_NAME + "." + COLUMN_VERSION_KEY;
+
+        // SQL query helpers
+        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
+        public static final String SQL_QUERY_WITH_CATEGORY_KEY = SQL_COLUMN_CATEGORY_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_VERSION_KEY = SQL_COLUMN_VERSION_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
 
         public static final String SQL_QUERY_WITH_QUEUE_TABLE = TABLE_NAME + " INNER JOIN " + QueueEntry.TABLE_NAME;
         public static final String SQL_QUERY_WITH_QUEUE_TABLE_SELECTION =
@@ -78,30 +88,37 @@ public class DatabaseContract {
                 QueueEntry.SQL_COLUMN_QUANTITY
         };
 
-        // Query helpers
-        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
-        public static final String SQL_QUERY_WITH_CATEGORY_KEY = SQL_COLUMN_CATEGORY_KEY + " = ?";
-        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
+        // SQL sort helpers
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
-        // Returns /engram/_id
-        public static Uri buildUriWithId( long id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, id );
+        // Returns /engram/<_id>
+        public static Uri buildUriWithId( long _id ) {
+            return ContentUris.withAppendedId( CONTENT_URI, _id );
         }
 
-        // Returns /engram/category/category_id
+        // Returns /engram/category/<category_id>
         public static Uri buildUriWithCategoryId( long category_id ) {
             return CONTENT_URI.buildUpon().appendPath( PATH_CATEGORY )
                     .appendPath( Long.toString( category_id ) ).build();
         }
 
-        // Returns /engram/<drawable>
+        // Returns /engram/drawable/<drawable>
         public static Uri buildUriWithDrawable( String drawable ) {
             return CONTENT_URI.buildUpon().appendPath( PATH_DRAWABLE )
                     .appendPath( drawable ).build();
         }
 
+        // Returns /engram/version/<version_id>
+        public static Uri buildUriWithVersionId( long version_id ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_VERSION )
+                    .appendPath( Long.toString( version_id ) ).build();
+        }
+
         public static long getCategoryIdFromUri( Uri uri ) {
+            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+        }
+
+        public static long getVersionIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getPathSegments().get( 2 ) );
         }
 
@@ -128,29 +145,46 @@ public class DatabaseContract {
         // String value that Android Studio uses as its Drawable resource
         public static final String COLUMN_DRAWABLE = "drawable";
 
+        // Foreign key from Game Version table
+        public static final String COLUMN_VERSION_KEY = "version_id";
+
         // SQL column helpers
         public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
         public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
         public static final String SQL_COLUMN_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE;
+        public static final String SQL_COLUMN_VERSION_KEY = TABLE_NAME + "." + COLUMN_VERSION_KEY;
 
-        // Query helpers
+        // SQL query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
         public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
+        public static final String SQL_QUERY_WITH_VERSION_KEY = SQL_COLUMN_VERSION_KEY + " = ?";
+
+        // SQL sort helpers
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
-        // Returns /resource/_id
-        public static Uri buildUriWithId( long id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, id );
+        // Returns /resource/<_id>
+        public static Uri buildUriWithId( long _id ) {
+            return ContentUris.withAppendedId( CONTENT_URI, _id );
         }
 
-        // Returns /resource/drawable
+        // Returns /resource/drawable/<drawable>
         public static Uri buildUriWithDrawable( String drawable ) {
             return CONTENT_URI.buildUpon().appendPath( PATH_DRAWABLE )
                     .appendPath( drawable ).build();
         }
 
+        // Returns /resource/version/<version_id>
+        public static Uri buildUriWithVersionId( long version_id ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_VERSION )
+                    .appendPath( Long.toString( version_id ) ).build();
+        }
+
         public static String getDrawableFromUri( Uri uri ) {
             return uri.getPathSegments().get( 2 );
+        }
+
+        public static long getVersionIdFromUri( Uri uri ) {
+            return Long.parseLong( uri.getPathSegments().get( 2 ) );
         }
     }
 
@@ -176,6 +210,7 @@ public class DatabaseContract {
         public static final String SQL_QUERY_WITH_ID = TABLE_NAME + "." + _ID + " = ?";
         public static final String SQL_QUERY_WITH_ENGRAM_KEY = TABLE_NAME + "." + COLUMN_ENGRAM_KEY + " = ?";
         public static final String SQL_QUERY_WITH_RESOURCE_KEY = TABLE_NAME + "." + COLUMN_RESOURCE_KEY + " = ?";
+
         public static final String SQL_QUERY_WITH_ENGRAM_TABLE = TABLE_NAME + " INNER JOIN " + EngramEntry.TABLE_NAME +
                 " ON " + TABLE_NAME + "." + COLUMN_ENGRAM_KEY + " = " + EngramEntry.TABLE_NAME + "." + EngramEntry._ID;
         public static final String SQL_QUERY_WITH_RESOURCE_TABLE = TABLE_NAME + " INNER JOIN " + ResourceEntry.TABLE_NAME +
@@ -190,10 +225,16 @@ public class DatabaseContract {
                 ResourceEntry.TABLE_NAME + "." + ResourceEntry._ID + " AS " + COLUMN_RESOURCE_KEY
         };
 
-        // Returns /complex_resource/engram/engram_id
+        // Returns /complex_resource/engram/<engram_id>
         public static Uri buildUriWithEngramId( long engram_id ) {
             return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM )
                     .appendPath( Long.toString( engram_id ) ).build();
+        }
+
+        // Returns /complex_resource/resource/<resource_id>
+        public static Uri buildUriWithResourceId( long resource_id ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_RESOURCE )
+                    .appendPath( Long.toString( resource_id ) ).build();
         }
 
         // Returns /complex_resource/engram/
@@ -201,18 +242,12 @@ public class DatabaseContract {
             return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM ).build();
         }
 
-        // Returns /complex_resource/resource/resource_id
-        public static Uri buildUriWithResourceId( long resource_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_RESOURCE )
-                    .appendPath( Long.toString( resource_id ) ).build();
-        }
-
         // Returns /complex_resource/resource/
         public static Uri buildUriWithResourceTable() {
             return CONTENT_URI.buildUpon().appendPath( PATH_RESOURCE ).build();
         }
 
-        // Returns /complex_resource/resource/
+        // Returns /complex_resource/engram/resource/
         public static Uri buildUriWithDrawable() {
             return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM )
                     .appendPath( PATH_RESOURCE ).build();
@@ -245,29 +280,80 @@ public class DatabaseContract {
         // Parent level, tied to category_id of another Category
         public static final String COLUMN_PARENT_KEY = "parent_id";
 
+        // Foreign key from Game Version table
+        public static final String COLUMN_VERSION_KEY = "version_id";
+
         // SQL column helpers
         public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
-        public static final String SQL_COLUMN_PARENT_KEY = TABLE_NAME + "." + COLUMN_PARENT_KEY;
         public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
+        public static final String SQL_COLUMN_PARENT_KEY = TABLE_NAME + "." + COLUMN_PARENT_KEY;
+        public static final String SQL_COLUMN_VERSION_KEY = TABLE_NAME + "." + COLUMN_VERSION_KEY;
 
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
         public static final String SQL_QUERY_WITH_PARENT_ID = SQL_COLUMN_PARENT_KEY + " = ?";
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
-        // Returns /category/_id
-        public static Uri buildUriWithId( long id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, id );
+        // Returns /category/<_id>
+        public static Uri buildUriWithId( long _id ) {
+            return ContentUris.withAppendedId( CONTENT_URI, _id );
         }
 
-        // Returns /category/_id
-        public static Uri buildUriWithParentId( long id ) {
+        // Returns /category/parent/<parent_id>
+        public static Uri buildUriWithParentId( long parent_id ) {
             return CONTENT_URI.buildUpon().appendPath( PATH_CATEGORY_PARENT )
-                    .appendPath( Long.toString( id ) ).build();
+                    .appendPath( Long.toString( parent_id ) ).build();
+        }
+
+        // Returns /category/version/<version_id>
+        public static Uri buildUriWithVersionId( long version_id ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_VERSION )
+                    .appendPath( Long.toString( version_id ) ).build();
         }
 
         public static long getParentIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getPathSegments().get( 2 ) );
+        }
+
+        public static long getVersionIdFromUri( Uri uri ) {
+            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+        }
+    }
+
+    // Inner class that defines the table contents of the version table.
+    public static final class VersionEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath( PATH_VERSION ).build();
+
+        public static final String CONTENT_DIR_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_VERSION;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_VERSION;
+
+        // Table name, duh.
+        public static final String TABLE_NAME = "version";
+
+        // Category name verbatim from game
+        public static final String COLUMN_NAME = "name";
+
+        // Dummy constant used in updating future json files
+        public static final String COLUMN_VERSION_KEY = "version_id";
+
+        // SQL column helpers
+        public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
+        public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
+
+        // Query helpers
+        public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
+        public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
+
+        // Returns /category/<_id>
+        public static Uri buildUriWithId( long id ) {
+            return ContentUris.withAppendedId( CONTENT_URI, id );
+        }
+
+        // Returns /category/<version_id>
+        public static Uri buildUriWithVersionId( long version_id ) {
+            return ContentUris.withAppendedId( CONTENT_URI, version_id );
         }
     }
 
