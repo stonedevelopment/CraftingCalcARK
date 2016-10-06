@@ -823,7 +823,7 @@
     },
     {
       "name": "Spoiled Meat",
-      "drawable": "spoiled_meat",
+      "drawable": "resources_meat_spoiled_meat",
       "version_id": 1
     },
     {
@@ -890,6 +890,146 @@
       "name": "Woolly Rhino Horn",
       "drawable": "woolly_rhino_horn",
       "version_id": 1
+    },
+    {
+      "name": "Cooked Bacon",
+      "drawable": "resources_meat_cooked_bacon",
+      "version_id": 2
+    },
+    {
+      "name": "Cooked Fish Fillet",
+      "drawable": "resources_meat_cooked_bacon",
+      "version_id": 2
+    },
+    {
+      "name": "Cooked Poultry",
+      "drawable": "resources_meat_cooked_poultry",
+      "version_id": 2
+    },
+    {
+      "name": "Cooked Spare Ribs",
+      "drawable": "resources_meat_cooked_spare_ribs",
+      "version_id": 2
+    },
+    {
+      "name": "Cured Bacon",
+      "drawable": "resources_meat_cured_bacon",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Bacon",
+      "drawable": "resources_meat_fresh_bacon",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Fat",
+      "drawable": "resources_meat_fresh_fat",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Fish Fillet",
+      "drawable": "resources_meat_fresh_fish_fillet",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Meat",
+      "drawable": "resources_meat_fresh_meat",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Poultry",
+      "drawable": "resources_meat_fresh_poultry",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Spare Ribs",
+      "drawable": "resources_meat_fresh_spare_ribs",
+      "version_id": 2
+    },
+    {
+      "name": "Cabbage",
+      "drawable": "resources_plants_cabbage",
+      "version_id": 2
+    },
+    {
+      "name": "Grapes",
+      "drawable": "resources_plants_grapes",
+      "version_id": 2
+    },
+    {
+      "name": "Tomato",
+      "drawable": "resources_plants_tomato",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Barley",
+      "drawable": "resources_plants_fresh_barley",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Cashew",
+      "drawable": "resources_plants_fresh_cashew",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Coffee Fruit",
+      "drawable": "resources_plants_fresh_coffee_fruit",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Rice",
+      "drawable": "resources_plants_fresh_rice",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Sugar Plant",
+      "drawable": "resources_plants_fresh_sugar_plant",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Tea Leaves",
+      "drawable": "resources_plants_fresh_tea_leaves",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Tobacco",
+      "drawable": "resources_plants_fresh_tobacco",
+      "version_id": 2
+    },
+    {
+      "name": "Fresh Wheat",
+      "drawable": "resources_plants_fresh_wheat",
+      "version_id": 2
+    },
+    {
+      "name": "Seeds",
+      "drawable": "resources_seeds",
+      "version_id": 2
+    },
+    {
+      "name": "Carbon",
+      "drawable": "resources_carbon",
+      "version_id": 2
+    },
+    {
+      "name": "Claystone",
+      "drawable": "resources_claystone",
+      "version_id": 2
+    },
+    {
+      "name": "Honey",
+      "drawable": "resources_honey",
+      "version_id": 2
+    },
+    {
+      "name": "Iron",
+      "drawable": "resources_iron",
+      "version_id": 2
+    },
+    {
+      "name": "Limestone",
+      "drawable": "resources_limestone",
+      "version_id": 2
     }
   ],
   "engram": [
