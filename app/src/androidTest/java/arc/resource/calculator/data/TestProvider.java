@@ -11,9 +11,6 @@ import android.test.AndroidTestCase;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
-import arc.resource.calculator.data.initializers.CategoryInitializer;
-import arc.resource.calculator.data.initializers.EngramInitializer;
-import arc.resource.calculator.data.initializers.ResourceInitializer;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
@@ -151,15 +148,15 @@ public class TestProvider extends AndroidTestCase {
     }
 
     private void bulkInsertResources() throws ExecutionException, InterruptedException {
-        bulkInsertByUri( ResourceEntry.CONTENT_URI, ResourceInitializer.getCount(), mResourceVector, ResourceEntry.TABLE_NAME );
+//        bulkInsertByUri( ResourceEntry.CONTENT_URI, ResourceInitializer.getCount(), mResourceVector, ResourceEntry.TABLE_NAME );
     }
 
     private void bulkInsertCategories() throws ExecutionException, InterruptedException {
-        bulkInsertByUri( CategoryEntry.CONTENT_URI, CategoryInitializer.getCount(), mCategoryVector, CategoryEntry.TABLE_NAME );
+//        bulkInsertByUri( CategoryEntry.CONTENT_URI, CategoryInitializer.getCount(), mCategoryVector, CategoryEntry.TABLE_NAME );
     }
 
     private void bulkInsertEngrams() throws ExecutionException, InterruptedException {
-        bulkInsertByUri( EngramEntry.CONTENT_URI, EngramInitializer.getCount(), mEngramVector, EngramEntry.TABLE_NAME );
+//        bulkInsertByUri( EngramEntry.CONTENT_URI, EngramInitializer.getCount(), mEngramVector, EngramEntry.TABLE_NAME );
     }
 
     private void bulkInsertByUri( Uri testUri, int expectedCount, Vector<ContentValues> expectedValues, String tableName ) throws ExecutionException, InterruptedException {

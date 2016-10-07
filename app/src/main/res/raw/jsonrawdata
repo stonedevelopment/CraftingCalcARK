@@ -1,5 +1,5 @@
 {
-  "version": [
+  "dlc": [
     {
       "_id": 1,
       "name": "Vanilla"
@@ -18,1026 +18,1024 @@
       "_id": 100,
       "name": "Misc",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
-
     {
       "_id": 200,
       "name": "Structures",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 201,
       "name": "Thatch",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 202,
       "name": "Wood",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2021,
       "name": "Signs",
       "parent_id": 202,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2022,
       "name": "Storage",
       "parent_id": 202,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2023,
       "name": "Fridge",
       "parent_id": 202,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 203,
       "name": "Stone",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 204,
       "name": "Cooking",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 205,
       "name": "Beds",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 206,
       "name": "Crafting",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 207,
       "name": "Misc",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 208,
       "name": "Furniture",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2081,
       "name": "Wood",
       "parent_id": 208,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2082,
       "name": "Stone",
       "parent_id": 208,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 209,
       "name": "Farming",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 210,
       "name": "Pipes",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2101,
       "name": "Stone",
       "parent_id": 210,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2102,
       "name": "Metal",
       "parent_id": 210,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 211,
       "name": "Fridges",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 212,
       "name": "Metal",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2121,
       "name": "Signs",
       "parent_id": 212,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2122,
       "name": "Storage",
       "parent_id": 212,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 213,
       "name": "Defenses",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 214,
       "name": "Greenhouse",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 215,
       "name": "Electrical",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2151,
       "name": "Defenses",
       "parent_id": 215,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 2152,
       "name": "Elevators",
       "parent_id": 215,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 216,
       "name": "Electric",
       "parent_id": 200,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 217,
       "name": "Trading",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 218,
       "name": "Tools",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 219,
       "name": "Storage",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 220,
       "name": "Steel",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 221,
       "name": "Lighting",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 222,
       "name": "Concrete",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 223,
       "name": "Brick",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "_id": 224,
       "name": "Heating",
       "parent_id": 200,
-      "version_id": 2
+      "dlc_id": 2
     },
-
     {
       "_id": 300,
       "name": "Weapons",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 301,
       "name": "Primitive",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 3011,
       "name": "Melee",
       "parent_id": 301,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 3012,
       "name": "Ranged",
       "parent_id": 301,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 302,
       "name": "Ammo",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 303,
       "name": "Tripwires",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 304,
       "name": "Explosives",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 307,
       "name": "Attachments",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 305,
       "name": "Firearms",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 306,
       "name": "Melee",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 308,
       "name": "Ranged",
       "parent_id": 300,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 400,
       "name": "Armor",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 401,
       "name": "Cloth",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 402,
       "name": "Shields",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 403,
       "name": "Hide",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 404,
       "name": "Ghillie",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 405,
       "name": "Chitin",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 406,
       "name": "Fur",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 407,
       "name": "Metal",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 408,
       "name": "SCUBA",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 409,
       "name": "Riot",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 410,
       "name": "Misc",
       "parent_id": 400,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 500,
       "name": "Saddles",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 600,
       "name": "Navigation",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 700,
       "name": "Communication",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 800,
       "name": "Off-Hand",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 900,
       "name": "Composite",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 1000,
       "name": "Consumables",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 1001,
       "name": "Drugs",
       "parent_id": 1000,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 1002,
       "name": "Food",
       "parent_id": 1000,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 1100,
       "name": "Dyes",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 1200,
       "name": "Kibble",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 1300,
       "name": "Refined",
       "parent_id": 0,
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "_id": 1400,
       "name": "Luxuries",
       "parent_id": 0,
-      "version_id": 2
+      "dlc_id": 2
     }
   ],
   "resource": [
     {
       "name": "Amarberry",
       "drawable": "amarberry",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Angler Gel",
       "drawable": "angler_gel",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Ankylo Egg",
       "drawable": "ankylo_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Araneo Egg",
       "drawable": "araneo_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Argentavis Egg",
       "drawable": "argentavis_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Azulberry",
       "drawable": "azulberry",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Berries (Any Kind)",
       "drawable": "berries",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Black Pearl",
       "drawable": "black_pearl",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Bronto Egg",
       "drawable": "bronto_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Carbonemys Egg",
       "drawable": "carbonemys_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Carno Egg",
       "drawable": "carno_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Chitin",
       "drawable": "chitin",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Chitin or Keratin",
       "drawable": "chitin_or_keratin",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Citronal",
       "drawable": "citronal",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Electronics",
       "drawable": "composites_electronics",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Polymer",
       "drawable": "composites_polymer",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Compy Egg",
       "drawable": "compy_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Narcotic",
       "drawable": "consumables_drugs_narcotic",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Stimulant",
       "drawable": "consumables_drugs_stimulant",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Fish Meat",
       "drawable": "cooked_fish_meat",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Meat",
       "drawable": "cooked_meat",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Meat Jerky",
       "drawable": "cooked_meat_jerky",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Meat or Fish Meat",
       "drawable": "cooked_meat_or_fish_meat",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Meat or Cooked Meat Jerky",
       "drawable": "cooked_meat_or_jerky",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Prime Meat",
       "drawable": "cooked_prime_meat",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Prime Meat or Prime Meat Jerky",
       "drawable": "cooked_prime_meat_or_prime_jerky",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Crystal",
       "drawable": "crystal",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Dilo Egg",
       "drawable": "dilo_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Dimetrodon Egg",
       "drawable": "dimetrodon_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Dimorphodon Egg",
       "drawable": "dimorph_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Diplodocus Egg",
       "drawable": "diplo_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Dodo Egg",
       "drawable": "dodo_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Feces (Any Size)",
       "drawable": "feces",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Fiber",
       "drawable": "fiber",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Flint",
       "drawable": "flint",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Gallimimus Egg",
       "drawable": "gallimimus_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Hide",
       "drawable": "hide",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Kairuku Egg",
       "drawable": "kairuku_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Keratin",
       "drawable": "keratin",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Leech Blood",
       "drawable": "leech_blood",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Longrass",
       "drawable": "longrass",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Lystrosaur Egg",
       "drawable": "lystro_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Mejoberry",
       "drawable": "mejoberry",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Metal Ore",
       "drawable": "metal_ore",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Narcoberry",
       "drawable": "narcoberry",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Obsidian",
       "drawable": "obsidian",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Oil",
       "drawable": "oil",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Organic Polymer",
       "drawable": "organic_polymer",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Pachy Egg",
       "drawable": "pachycephalosaurus_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Parasaur Egg",
       "drawable": "parasaur_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Pelt",
       "drawable": "pelt",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Prime Meat Jerky",
       "drawable": "prime_meat_jerky",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Pteranodon Egg",
       "drawable": "pteranodon_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Pelagornis Egg",
       "drawable": "pelagornis_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Pulmonoscorpius Egg",
       "drawable": "pulmonoscorpius_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Quetzal Egg",
       "drawable": "quetzal_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Raptor Egg",
       "drawable": "raptor_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Rare Flower",
       "drawable": "rare_flower",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Rare Mushroom",
       "drawable": "rare_mushroom",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Raw Meat",
       "drawable": "raw_meat",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Raw Prime Meat",
       "drawable": "raw_prime_meat",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Absorbent Substrate",
       "drawable": "refined_absorbent_substrate",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Beer Liquid",
       "drawable": "refined_beer_liquid",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cementing Paste",
       "drawable": "refined_cementing_paste",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Charcoal",
       "drawable": "refined_charcoal",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Fertilizer",
       "drawable": "refined_fertilizer",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Gasoline",
       "drawable": "refined_gasoline",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Gunpowder",
       "drawable": "refined_gunpowder",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Metal Ingot",
       "drawable": "refined_metal_ingot",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Sparkpowder",
       "drawable": "refined_sparkpowder",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Rex Egg",
       "drawable": "rex_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Rockarrot",
       "drawable": "rockarrot",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Sap",
       "drawable": "sap",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Sarco Egg",
       "drawable": "sarco_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Savoroot",
       "drawable": "savoroot",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Silica Pearls",
       "drawable": "silica_pearls",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Spino Egg",
       "drawable": "spino_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Spoiled Meat",
       "drawable": "resources_meat_spoiled_meat",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Stego Egg",
       "drawable": "stego_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Stimberry",
       "drawable": "stimberry",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Stone",
       "drawable": "stone",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Terror Bird Egg",
       "drawable": "terror_bird_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Thatch",
       "drawable": "thatch",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Tintoberry",
       "drawable": "tintoberry",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Titanoboa Egg",
       "drawable": "titanoboa_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Trike Egg",
       "drawable": "trike_egg",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Simple Rifle Ammo",
       "drawable": "weapons_ammo_simple_rifle_ammo",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Stone Arrow",
       "drawable": "weapons_ammo_stone_arrow",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Wood",
       "drawable": "wood",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Water Jar",
       "drawable": "misc_water_jar",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Woolly Rhino Horn",
       "drawable": "woolly_rhino_horn",
-      "version_id": 1
+      "dlc_id": 1
     },
     {
       "name": "Cooked Bacon",
       "drawable": "resources_meat_cooked_bacon",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Cooked Fish Fillet",
       "drawable": "resources_meat_cooked_bacon",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Cooked Poultry",
       "drawable": "resources_meat_cooked_poultry",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Cooked Spare Ribs",
       "drawable": "resources_meat_cooked_spare_ribs",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Cured Bacon",
       "drawable": "resources_meat_cured_bacon",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Bacon",
       "drawable": "resources_meat_fresh_bacon",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Fat",
       "drawable": "resources_meat_fresh_fat",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Fish Fillet",
       "drawable": "resources_meat_fresh_fish_fillet",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Meat",
       "drawable": "resources_meat_fresh_meat",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Poultry",
       "drawable": "resources_meat_fresh_poultry",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Spare Ribs",
       "drawable": "resources_meat_fresh_spare_ribs",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Cabbage",
       "drawable": "resources_plants_cabbage",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Grapes",
       "drawable": "resources_plants_grapes",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Tomato",
       "drawable": "resources_plants_tomato",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Barley",
       "drawable": "resources_plants_fresh_barley",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Cashew",
       "drawable": "resources_plants_fresh_cashew",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Coffee Fruit",
       "drawable": "resources_plants_fresh_coffee_fruit",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Rice",
       "drawable": "resources_plants_fresh_rice",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Sugar Plant",
       "drawable": "resources_plants_fresh_sugar_plant",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Tea Leaves",
       "drawable": "resources_plants_fresh_tea_leaves",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Tobacco",
       "drawable": "resources_plants_fresh_tobacco",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Fresh Wheat",
       "drawable": "resources_plants_fresh_wheat",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Seeds",
       "drawable": "resources_seeds",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Carbon",
       "drawable": "resources_carbon",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Claystone",
       "drawable": "resources_claystone",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Honey",
       "drawable": "resources_honey",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Iron",
       "drawable": "resources_iron",
-      "version_id": 2
+      "dlc_id": 2
     },
     {
       "name": "Limestone",
       "drawable": "resources_limestone",
-      "version_id": 2
+      "dlc_id": 2
     }
   ],
   "engram": [
@@ -1060,7 +1058,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Chitin Chestpiece",
@@ -1081,7 +1080,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Chitin Leggings",
@@ -1102,7 +1102,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Chitin Boots",
@@ -1123,7 +1124,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Chitin Gauntlets",
@@ -1144,7 +1146,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cloth Hat",
@@ -1157,7 +1160,8 @@
           "drawable": "fiber"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cloth Shirt",
@@ -1170,7 +1174,8 @@
           "drawable": "fiber"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cloth Pants",
@@ -1183,7 +1188,8 @@
           "drawable": "fiber"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cloth Boots",
@@ -1200,7 +1206,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cloth Gloves",
@@ -1217,7 +1224,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fur Cap",
@@ -1242,7 +1250,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fur Chestpiece",
@@ -1267,7 +1276,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fur Leggings",
@@ -1292,7 +1302,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fur Boots",
@@ -1317,7 +1328,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fur Gauntlets",
@@ -1342,7 +1354,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ghillie Mask",
@@ -1363,7 +1376,8 @@
           "drawable": "organic_polymer"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ghillie Chestpiece",
@@ -1384,7 +1398,8 @@
           "drawable": "organic_polymer"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ghillie Leggings",
@@ -1405,7 +1420,8 @@
           "drawable": "organic_polymer"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ghillie Boots",
@@ -1426,7 +1442,8 @@
           "drawable": "organic_polymer"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ghillie Gauntlets",
@@ -1447,7 +1464,8 @@
           "drawable": "organic_polymer"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Hide Hat",
@@ -1464,7 +1482,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Hide Shirt",
@@ -1481,7 +1500,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Hide Shirt",
@@ -1498,7 +1518,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Hide Boots",
@@ -1515,7 +1536,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Hide Gloves",
@@ -1532,7 +1554,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Flak Helmet",
@@ -1553,7 +1576,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Flak Chestpiece",
@@ -1574,7 +1598,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Flak Leggings",
@@ -1595,7 +1620,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Flak Boots",
@@ -1616,7 +1642,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Flak Gauntlets",
@@ -1637,7 +1664,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Heavy Miner's Helmet",
@@ -1670,7 +1698,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Gas Mask",
@@ -1691,7 +1720,8 @@
           "drawable": "refined_absorbent_substrate"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Night Vison Goggles",
@@ -1728,7 +1758,8 @@
           "drawable": "refined_absorbent_substrate"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Riot Helmet",
@@ -1757,7 +1788,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Riot Chestpiece",
@@ -1782,7 +1814,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Riot Leggings",
@@ -1807,7 +1840,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Riot Boots",
@@ -1832,7 +1866,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Riot Gauntlets",
@@ -1857,7 +1892,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "SCUBA Mask",
@@ -1882,7 +1918,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "SCUBA Tank",
@@ -1907,7 +1944,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "SCUBA Leggings",
@@ -1932,7 +1970,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "SCUBA Flippers",
@@ -1961,7 +2000,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Shield",
@@ -1982,7 +2022,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Shield",
@@ -2003,7 +2044,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Shield",
@@ -2028,7 +2070,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Radio",
@@ -2049,7 +2092,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electronics",
@@ -2066,7 +2110,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Polymer",
@@ -2083,7 +2128,8 @@
           "drawable": "refined_cementing_paste"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bug Repellant",
@@ -2108,7 +2154,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Lesser Antidote",
@@ -2133,7 +2180,8 @@
           "drawable": "rare_mushroom"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Narcotic",
@@ -2150,7 +2198,8 @@
           "drawable": "spoiled_meat"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stimulant",
@@ -2167,7 +2216,8 @@
           "drawable": "stimberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Battle Tartare",
@@ -2200,7 +2250,8 @@
           "drawable": "raw_prime_meat"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Beer Jar",
@@ -2217,7 +2268,8 @@
           "drawable": "refined_beer_liquid"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bingleberry Soup",
@@ -2225,7 +2277,8 @@
       "drawable": "consumables_food_bingleberry_soup",
       "category_id": 1002,
       "composition": [],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Broth of Enlightment",
@@ -2262,7 +2315,8 @@
           "drawable": "woolly_rhino_horn"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Calien Soup",
@@ -2291,7 +2345,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Enduro Stew",
@@ -2320,7 +2375,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Energy Brew",
@@ -2337,7 +2393,8 @@
           "drawable": "consumables_drugs_stimulant"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Focal Chili",
@@ -2370,7 +2427,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fria Curry",
@@ -2399,7 +2457,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Lazarus Chowder",
@@ -2428,7 +2487,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Medical Brew",
@@ -2445,7 +2505,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Mindwipe Tonic",
@@ -2478,7 +2539,8 @@
           "drawable": "rare_mushroom"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Shadow Steak Sauce",
@@ -2511,7 +2573,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sweet Veggie Cake",
@@ -2544,7 +2607,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Black",
@@ -2561,7 +2625,8 @@
           "drawable": "refined_charcoal"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Blue",
@@ -2578,7 +2643,8 @@
           "drawable": "refined_charcoal"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Brick",
@@ -2599,7 +2665,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Brown",
@@ -2624,7 +2691,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cantaloupe",
@@ -2649,7 +2717,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cyan",
@@ -2670,7 +2739,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Forest",
@@ -2695,7 +2765,8 @@
           "drawable": "refined_gunpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Green",
@@ -2716,7 +2787,8 @@
           "drawable": "refined_charcoal"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Magenta",
@@ -2737,7 +2809,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Mud",
@@ -2766,7 +2839,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Navy",
@@ -2787,7 +2861,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Olive",
@@ -2808,7 +2883,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Orange",
@@ -2829,7 +2905,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Parchment",
@@ -2850,7 +2927,8 @@
           "drawable": "stimberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pink",
@@ -2871,7 +2949,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Purple",
@@ -2892,7 +2971,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Red",
@@ -2909,7 +2989,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Royalty",
@@ -2934,7 +3015,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Silver",
@@ -2955,7 +3037,8 @@
           "drawable": "stimberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sky",
@@ -2976,7 +3059,8 @@
           "drawable": "stimberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Slate",
@@ -2997,7 +3081,8 @@
           "drawable": "stimberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tan",
@@ -3026,7 +3111,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tangerine",
@@ -3051,7 +3137,8 @@
           "drawable": "tintoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "White",
@@ -3068,7 +3155,8 @@
           "drawable": "stimberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Yellow",
@@ -3085,7 +3173,8 @@
           "drawable": "refined_charcoal"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Blood Extraction Syringe",
@@ -3102,7 +3191,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Canteen",
@@ -3127,7 +3217,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Flare Gun",
@@ -3152,7 +3243,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Magnifying Glass",
@@ -3185,7 +3277,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Note",
@@ -3202,7 +3295,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Paintbrush",
@@ -3223,7 +3317,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Parachute",
@@ -3244,7 +3339,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Re-Fertilizer",
@@ -3273,7 +3369,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Spray Painter",
@@ -3306,7 +3403,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Spyglass",
@@ -3331,7 +3429,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Water Jar",
@@ -3352,7 +3451,8 @@
           "drawable": "refined_cementing_paste"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Waterskin",
@@ -3369,7 +3469,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Raft",
@@ -3390,7 +3491,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Compass",
@@ -3411,7 +3513,8 @@
           "drawable": "metal_ore"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "GPS",
@@ -3428,7 +3531,8 @@
           "drawable": "composites_polymer"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Transponder Node",
@@ -3457,7 +3561,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Transponder Tracker",
@@ -3486,7 +3591,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Handcuffs",
@@ -3507,7 +3613,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ankylo Saddle",
@@ -3528,7 +3635,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Araneo Saddle",
@@ -3549,7 +3657,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Argentavis Saddle",
@@ -3570,7 +3679,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Arthropluera Saddle",
@@ -3607,7 +3717,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Beelzebufo Saddle",
@@ -3632,7 +3743,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bronto Saddle",
@@ -3653,7 +3765,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bronto Platform Saddle",
@@ -3682,7 +3795,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Carbonemys Saddle",
@@ -3703,7 +3817,8 @@
           "drawable": "refined_cementing_paste"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Carno Saddle",
@@ -3724,7 +3839,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Castoroides Saddle",
@@ -3753,7 +3869,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Diplodocus Saddle",
@@ -3778,7 +3895,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dire Bear Saddle",
@@ -3799,7 +3917,8 @@
           "drawable": "refined_cementing_paste"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Doedicurus Saddle",
@@ -3824,7 +3943,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dunkleosteus",
@@ -3849,7 +3969,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Gallimimus Saddle",
@@ -3874,7 +3995,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Giganotosaurus Saddle",
@@ -3895,7 +4017,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ichthyosaurus Saddle",
@@ -3924,7 +4047,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Mammoth Saddle",
@@ -3945,7 +4069,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Manta Saddle",
@@ -3974,7 +4099,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Megaloceros Saddle",
@@ -3995,7 +4121,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Megalodon Saddle",
@@ -4016,7 +4143,8 @@
           "drawable": "refined_cementing_paste"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Mosasaurus Saddle",
@@ -4045,7 +4173,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Mosasaurus Platform Saddle",
@@ -4074,7 +4203,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pachy Saddle",
@@ -4095,7 +4225,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Paracer Saddle",
@@ -4116,7 +4247,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Paracer Platform Saddle",
@@ -4145,7 +4277,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Parasaur Saddle",
@@ -4166,7 +4299,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Phiomia Saddle",
@@ -4187,7 +4321,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Plesiosaur Saddle",
@@ -4212,7 +4347,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Plesiosaur Platform Saddle",
@@ -4241,7 +4377,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Procoptodon Saddle",
@@ -4266,7 +4403,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pteranodon Saddle",
@@ -4287,7 +4425,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pulmonoscorpius Saddle",
@@ -4308,7 +4447,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Quetzal Saddle",
@@ -4333,7 +4473,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Quetzal Platform Saddle",
@@ -4362,7 +4503,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Raptor Saddle",
@@ -4383,7 +4525,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Rex Saddle",
@@ -4404,7 +4547,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sabertooth Saddle",
@@ -4425,7 +4569,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sarco Saddle",
@@ -4446,7 +4591,8 @@
           "drawable": "refined_cementing_paste"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Spino Saddle",
@@ -4471,7 +4617,8 @@
           "drawable": "silica_pearls"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stego Saddle",
@@ -4492,7 +4639,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Terror Bird",
@@ -4513,7 +4661,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Titanosaur Platform Saddle",
@@ -4538,7 +4687,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Trike Saddle",
@@ -4559,7 +4709,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Woolly Rhino Saddle",
@@ -4584,7 +4735,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pelagornis Saddle",
@@ -4605,7 +4757,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Allosaurus Saddle",
@@ -4626,7 +4779,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tapejara Saddle",
@@ -4651,7 +4805,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Advanced Bullet",
@@ -4668,7 +4823,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Advanced Rifle Bullet",
@@ -4685,7 +4841,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Advanced Sniper Bullet",
@@ -4702,7 +4859,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ballista Bolt",
@@ -4735,7 +4893,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Boulder",
@@ -4752,7 +4911,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "C4 Charge",
@@ -4769,7 +4929,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cannon Ball",
@@ -4786,7 +4947,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Chain Bola",
@@ -4807,7 +4969,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Grappling Hook",
@@ -4836,7 +4999,8 @@
           "drawable": "weapons_ammo_stone_arrow"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Arrow",
@@ -4865,7 +5029,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Rocket Propelled Grenade",
@@ -4894,7 +5059,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Simple Bullet",
@@ -4911,7 +5077,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Simple Rifle Ammo",
@@ -4928,7 +5095,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Simple Shotgun Ammo",
@@ -4945,7 +5113,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Arrow",
@@ -4966,7 +5135,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tranquilizer Arrow",
@@ -4983,7 +5153,8 @@
           "drawable": "weapons_ammo_stone_arrow"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tranquilizer Dart",
@@ -5004,7 +5175,8 @@
           "drawable": "weapons_ammo_simple_rifle_ammo"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Flashlight Attachment",
@@ -5025,7 +5197,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Holo-Scope Attachment",
@@ -5046,7 +5219,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Laser Attachment",
@@ -5067,7 +5241,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Scope Attachment",
@@ -5088,7 +5263,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Silencer Attachment",
@@ -5113,7 +5289,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "C4 Remote Detonator",
@@ -5142,7 +5319,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Grenade",
@@ -5175,7 +5353,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Improvised Explosive Device",
@@ -5208,7 +5387,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Poison Grenade",
@@ -5249,7 +5429,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Smoke Grenade",
@@ -5290,7 +5471,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Assault Rifle",
@@ -5311,7 +5493,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fabricated Pistol",
@@ -5332,7 +5515,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fabricated Sniper Rifle",
@@ -5353,7 +5537,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Longneck Rifle",
@@ -5374,7 +5559,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pump-Action Shotgun",
@@ -5395,7 +5581,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Rocket Launcher",
@@ -5416,7 +5603,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Shotgun",
@@ -5437,7 +5625,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Simple Pistol",
@@ -5458,7 +5647,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electric Prod",
@@ -5491,7 +5681,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Hatchet",
@@ -5512,7 +5703,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Pick",
@@ -5533,7 +5725,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Sickle",
@@ -5554,7 +5747,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pike",
@@ -5575,7 +5769,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Sword",
@@ -5596,7 +5791,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Spear",
@@ -5617,7 +5813,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Hatchet",
@@ -5638,7 +5835,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Pick",
@@ -5659,7 +5857,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Torch",
@@ -5680,7 +5879,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Club",
@@ -5697,7 +5897,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bola",
@@ -5722,7 +5923,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bow",
@@ -5739,7 +5941,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Compound Bow",
@@ -5760,7 +5963,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Slingshot",
@@ -5781,7 +5985,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Crossbow",
@@ -5802,7 +6007,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fishing Rod",
@@ -5823,7 +6029,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tripwire Alarm Trap",
@@ -5852,7 +6059,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tripwire Narcotic Trap",
@@ -5885,7 +6093,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bunk Bed",
@@ -5914,7 +6123,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Hide Sleeping Bag",
@@ -5931,7 +6141,8 @@
           "drawable": "hide"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Simple Bed",
@@ -5956,7 +6167,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Beer Barrel",
@@ -5977,7 +6189,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Campfire",
@@ -6002,7 +6215,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cooking Pot",
@@ -6027,7 +6241,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Industrial Cooker",
@@ -6052,7 +6267,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Industrial Grill",
@@ -6077,7 +6293,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Chemistry Bench",
@@ -6110,7 +6327,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fabricator",
@@ -6139,7 +6357,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Industrial Forge",
@@ -6168,7 +6387,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Mortar and Pestle",
@@ -6185,7 +6405,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Refining Forge",
@@ -6214,7 +6435,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Smithy",
@@ -6239,7 +6461,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Industrial Grinder",
@@ -6268,7 +6491,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bear Trap",
@@ -6289,7 +6513,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Homing Underwater Mine",
@@ -6326,7 +6551,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Large Bear Trap",
@@ -6347,7 +6573,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Air Conditioner",
@@ -6372,7 +6599,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Lamppost",
@@ -6393,7 +6621,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Omnidirectional Lamppost",
@@ -6414,7 +6643,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Refrigerator",
@@ -6439,7 +6669,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Remote Keypad",
@@ -6460,7 +6691,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electrical Cable - Intersection",
@@ -6473,7 +6705,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electrical Generator",
@@ -6490,7 +6723,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electrical Outlet",
@@ -6511,7 +6745,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electrical Cable - Inclined",
@@ -6524,7 +6759,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electrical Cable - Straight",
@@ -6537,7 +6773,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Electrical Cable - Vertical",
@@ -6550,7 +6787,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Auto Turret",
@@ -6575,7 +6813,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Elevator Track",
@@ -6600,7 +6839,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Small Elevator Platform",
@@ -6621,7 +6861,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Medium Elevator Platform",
@@ -6642,7 +6883,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Large Elevator Platform",
@@ -6663,7 +6905,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Compost Bin",
@@ -6684,7 +6927,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Small Crop Plot",
@@ -6709,7 +6953,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Medium Crop Plot",
@@ -6734,7 +6979,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Large Crop Plot",
@@ -6759,7 +7005,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Gravestone",
@@ -6776,7 +7023,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "War Drums",
@@ -6801,7 +7049,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Bench",
@@ -6822,7 +7071,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Chair",
@@ -6843,7 +7093,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Table",
@@ -6860,7 +7111,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Preserving Bin",
@@ -6885,7 +7137,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Greenhouse Ceiling",
@@ -6906,7 +7159,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Greenhouse Wall",
@@ -6927,7 +7181,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Greenhouse Wall Left",
@@ -6948,7 +7203,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Greenhouse Wall Right",
@@ -6969,7 +7225,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Greenhouse Doorframe",
@@ -6990,7 +7247,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Greenhouse Door",
@@ -7011,7 +7269,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Greenhouse Window",
@@ -7032,7 +7291,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Greenhouse Roof",
@@ -7053,7 +7313,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ballista Turret",
@@ -7086,7 +7347,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Catapult Turret",
@@ -7115,7 +7377,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Minigun Turret",
@@ -7140,7 +7403,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Rocket Turret",
@@ -7165,7 +7429,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Primitive Cannon",
@@ -7194,7 +7459,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Behemoth Gate",
@@ -7211,7 +7477,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Behemoth Gateway",
@@ -7232,7 +7499,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Catwalk",
@@ -7245,7 +7513,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Ceiling",
@@ -7262,7 +7531,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Dinosaur Gate",
@@ -7279,7 +7549,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Dinosaur Gateway",
@@ -7296,7 +7567,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Door",
@@ -7313,7 +7585,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Doorframe",
@@ -7330,7 +7603,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Fence Foundation",
@@ -7347,7 +7621,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Foundation",
@@ -7364,7 +7639,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Hatchframe",
@@ -7381,7 +7657,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Ladder",
@@ -7394,7 +7671,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Pillar",
@@ -7411,7 +7689,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Railing",
@@ -7428,7 +7707,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Ramp",
@@ -7445,7 +7725,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Spike Wall",
@@ -7462,7 +7743,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Trapdoor",
@@ -7479,7 +7761,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Tree Platform",
@@ -7500,7 +7783,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Wall",
@@ -7517,7 +7801,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Window",
@@ -7530,7 +7815,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Windowframe",
@@ -7547,7 +7833,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Metal Roof",
@@ -7564,7 +7851,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Metal Wall Left",
@@ -7581,7 +7869,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Metal Wall Right",
@@ -7598,7 +7887,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wall Torch",
@@ -7631,7 +7921,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Staircase",
@@ -7648,7 +7939,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Giant Metal Hatchframe",
@@ -7665,7 +7957,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Giant Metal Trapdoor",
@@ -7682,7 +7975,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Billboard",
@@ -7699,7 +7993,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Sign",
@@ -7716,7 +8011,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Wall Sign",
@@ -7733,7 +8029,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Vault",
@@ -7758,7 +8055,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Painting Canvas",
@@ -7779,7 +8077,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Single-Panel Flag",
@@ -7804,7 +8103,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Multi-Panel Flag",
@@ -7829,7 +8129,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Training Dummy",
@@ -7854,7 +8155,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Tree Sap Tap",
@@ -7871,7 +8173,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Trophy Base",
@@ -7884,7 +8187,8 @@
           "drawable": "obsidian"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Trophy Wall-Mount",
@@ -7901,7 +8205,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "War Map",
@@ -7922,7 +8227,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Irrigation Pipe - Inclined",
@@ -7939,7 +8245,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Irrigation Pipe - Intake",
@@ -7960,7 +8267,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Irrigation Pipe - Intersection",
@@ -7977,7 +8285,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Irrigation Pipe - Straight",
@@ -7994,7 +8303,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Irrigation Pipe - Tap",
@@ -8015,7 +8325,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Irrigation Pipe - Vertical",
@@ -8032,7 +8343,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Water Reservoir",
@@ -8049,7 +8361,8 @@
           "drawable": "refined_metal_ingot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Irrigation Pipe - Inclined",
@@ -8062,7 +8375,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Irrigation Pipe - Intake",
@@ -8075,7 +8389,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Irrigation Pipe - Intersection",
@@ -8088,7 +8403,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Irrigation Pipe - Straight",
@@ -8101,7 +8417,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Irrigation Pipe - Tap",
@@ -8118,7 +8435,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Irrigation Pipe - Vertical",
@@ -8131,7 +8449,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Water Reservoir",
@@ -8148,7 +8467,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Behemoth Reinforced Dinosaur Gate",
@@ -8169,7 +8489,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Behemoth Stone Dinosaur Gateway",
@@ -8190,7 +8511,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Reinforced Dinosaur Gate",
@@ -8211,7 +8533,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Reinforced Trapdoor",
@@ -8232,7 +8555,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Reinforced Window",
@@ -8253,7 +8577,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Reinforced Wooden Door",
@@ -8274,7 +8599,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Stone Roof",
@@ -8295,7 +8621,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Stone Wall Left",
@@ -8316,7 +8643,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Stone Wall Right",
@@ -8337,7 +8665,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Ceiling",
@@ -8358,7 +8687,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Dinosaur Gateway",
@@ -8379,7 +8709,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Doorframe",
@@ -8400,7 +8731,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Fence Foundation",
@@ -8421,7 +8753,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Foundation",
@@ -8442,7 +8775,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Hatchframe",
@@ -8463,7 +8797,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Pillar",
@@ -8484,7 +8819,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Railing",
@@ -8505,7 +8841,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Wall",
@@ -8526,7 +8863,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Windowframe",
@@ -8547,7 +8885,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stone Staircase",
@@ -8568,7 +8907,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Giant Stone Hatchframe",
@@ -8589,7 +8929,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Giant Reinforced Trapdoor",
@@ -8610,7 +8951,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Thatch Roof",
@@ -8631,7 +8973,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Thatch Wall Left",
@@ -8652,7 +8995,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Thatch Wall Right",
@@ -8673,7 +9017,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Thatch Door",
@@ -8690,7 +9035,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Thatch Doorframe",
@@ -8711,7 +9057,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Thatch Foundation",
@@ -8732,7 +9079,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Thatch Roof",
@@ -8753,7 +9101,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Thatch Wall",
@@ -8770,7 +9119,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dinosaur Gate",
@@ -8791,7 +9141,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dinosaur Gateway",
@@ -8816,7 +9167,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Rope Ladder",
@@ -8837,7 +9189,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Wood Wall Left",
@@ -8858,7 +9211,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Wood Wall Right",
@@ -8879,7 +9233,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sloped Wooden Roof",
@@ -8900,7 +9255,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Standing Torch",
@@ -8925,7 +9281,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Cage",
@@ -8946,7 +9303,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Catwalk",
@@ -8967,7 +9325,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Ceiling",
@@ -8988,7 +9347,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Door",
@@ -9009,7 +9369,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Doorframe",
@@ -9030,7 +9391,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Fence Foundation",
@@ -9051,7 +9413,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Foundation",
@@ -9072,7 +9435,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Hatchframe",
@@ -9093,7 +9457,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Ladder",
@@ -9114,7 +9479,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Pillar",
@@ -9135,7 +9501,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Railing",
@@ -9156,7 +9523,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Ramp",
@@ -9177,7 +9545,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Spike Wall",
@@ -9198,7 +9567,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Trapdoor",
@@ -9219,7 +9589,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Tree Platform",
@@ -9244,7 +9615,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Wall",
@@ -9265,7 +9637,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Window",
@@ -9286,7 +9659,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Windowframe",
@@ -9307,7 +9681,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Staircase",
@@ -9328,7 +9703,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Billboard",
@@ -9349,7 +9725,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Sign",
@@ -9370,7 +9747,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Wooden Wall Sign",
@@ -9391,7 +9769,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bookshelf",
@@ -9412,7 +9791,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Feeding Trough",
@@ -9437,7 +9817,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Large Storage Box",
@@ -9458,7 +9839,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Storage Box",
@@ -9479,7 +9861,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Ankylo Kibble",
@@ -9508,7 +9891,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Araneo Kibble",
@@ -9537,7 +9921,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Argentavis Kibble",
@@ -9566,7 +9951,8 @@
           "drawable": "prime_meat_jerky"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Bronto Kibble",
@@ -9595,7 +9981,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Carno Kibble",
@@ -9624,7 +10011,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Compy Kibble",
@@ -9653,7 +10041,8 @@
           "drawable": "mejoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dilo Kibble",
@@ -9682,7 +10071,8 @@
           "drawable": "mejoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dimetrodon Kibble",
@@ -9711,7 +10101,8 @@
           "drawable": "mejoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dimorph Kibble",
@@ -9740,7 +10131,8 @@
           "drawable": "mejoberry"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Diplo Kibble",
@@ -9769,7 +10161,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Dodo Kibble",
@@ -9798,7 +10191,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Gallimimus Kibble",
@@ -9827,7 +10221,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Kairuku Kibble",
@@ -9856,7 +10251,8 @@
           "drawable": "savoroot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Lystro Kibble",
@@ -9885,7 +10281,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pachy Kibble",
@@ -9914,7 +10311,8 @@
           "drawable": "pachycephalosaurus_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Parasaur Kibble",
@@ -9943,7 +10341,8 @@
           "drawable": "parasaur_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pteranodon Kibble",
@@ -9972,7 +10371,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pulmonoscorpios Kibble",
@@ -10001,7 +10401,8 @@
           "drawable": "pulmonoscorpius_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Quetzal Kibble",
@@ -10030,7 +10431,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Raptor Kibble",
@@ -10059,7 +10461,8 @@
           "drawable": "raptor_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Rex Kibble",
@@ -10088,7 +10491,8 @@
           "drawable": "rex_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sarco Kibble",
@@ -10117,7 +10521,8 @@
           "drawable": "sarco_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Spino Kibble",
@@ -10146,7 +10551,8 @@
           "drawable": "spino_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Stego Kibble",
@@ -10175,7 +10581,8 @@
           "drawable": "stego_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Terror Bird Kibble",
@@ -10204,7 +10611,8 @@
           "drawable": "terror_bird_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Titanoboa Kibble",
@@ -10233,7 +10641,8 @@
           "drawable": "titanoboa_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Trike Kibble",
@@ -10262,7 +10671,8 @@
           "drawable": "trike_egg"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Carbonemys Kibble",
@@ -10291,7 +10701,8 @@
           "drawable": "rockarrot"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Pelagornis Kibble",
@@ -10320,7 +10731,8 @@
           "drawable": "citronal"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Absorbent Substrate",
@@ -10341,7 +10753,8 @@
           "drawable": "sap"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Beer Liquid",
@@ -10358,7 +10771,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Cementing Paste",
@@ -10375,7 +10789,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Charcoal",
@@ -10388,7 +10803,8 @@
           "drawable": "wood"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Fertilizer",
@@ -10405,7 +10821,8 @@
           "drawable": "thatch"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Gasoline",
@@ -10422,7 +10839,8 @@
           "drawable": "oil"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Gunpowder",
@@ -10439,7 +10857,8 @@
           "drawable": "refined_sparkpowder"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Metal Ingot",
@@ -10452,7 +10871,8 @@
           "drawable": "metal_ore"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Sparkpowder",
@@ -10469,7 +10889,8 @@
           "drawable": "stone"
         }
       ],
-      "version_id": 1
+      "dlc_id": 1,
+      "yield": 1
     },
     {
       "name": "Brick",
@@ -10482,7 +10903,368 @@
           "drawable": "refined_clay"
         }
       ],
-      "version_id": 2
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cane Sugar",
+      "description": "Refined sugar made from a sugarcane plant and boiling over a cauldron.",
+      "drawable": "refined_cane_sugar",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_sugar_juice_bucket"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cashew Milk",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_cashew_milk",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "consumables_crops_ground_cashew"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Clay",
+      "description": "Clay that has been formed from grinding claystone and limestone on a handmill.",
+      "drawable": "refined_clay",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "resources_claystone"
+        },
+        {
+          "quantity": 10,
+          "drawable": "resources_limestone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cup of Malt",
+      "description": "Made from dried barley and boiling water. Used for alcoholic beverages.",
+      "drawable": "refined_cup_of_malt",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "refined_dried_barley"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Dried Barley",
+      "description": "Barley that's been dried for the purpose of making malt!",
+      "drawable": "refined_dried_barley",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_fresh_barley"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Dried Tea Bags",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_dried_tea_bags",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "resources_plants_fresh_tea_leaves"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 5
+    },
+    {
+      "name": "Dried Wheat",
+      "description": "Harvested from a wheat plant and dried on a preserving hut. It can be used to make flour.",
+      "drawable": "refined_dried_wheat",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_fresh_wheat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Dry Firewood",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_dry_firewood",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_firewood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fish Bait",
+      "description": "Lure for the fishing trap.",
+      "drawable": "refined_fish_bait",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_poultry"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 5
+    },
+    {
+      "name": "Fresh Cement",
+      "description": "Fresh cement that cen [sic] be formed into and used to build larger structures.",
+      "drawable": "refined_fresh_cement",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 2,
+          "drawable": "resources_limestone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fresh Dough",
+      "description": "Fresh dough made from flour on the baking station.",
+      "drawable": "refined_fresh_dough",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_sack_of_flour"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_natural_yeast"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fresh Firewood",
+      "description": "If this firewood is left to dry, it will have a longer burning time.",
+      "drawable": "refined_fresh_firewood",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fresh Sugar Juice Bucket",
+      "description": "Sugar juice pressed on the sugar press. Must be used with cauldron to make sugar.",
+      "drawable": "refined_fresh_sugar_juice_bucket",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "resources_plants_fresh_sugar_plant"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Glass",
+      "description": "Glass that has been heated in a forge to make a clear surface.",
+      "drawable": "refined_glass",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "silica_pearls"
+        },
+        {
+          "quantity": 5,
+          "drawable": "crystal"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Iron Ingot",
+      "description": "Created by refining iron ore in a forge.",
+      "drawable": "refined_iron_ingot",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "resources_iron"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Leather",
+      "description": "A thick piece of skin, hacked from a dead animal then cured on a tanning rack.",
+      "drawable": "refined_leather",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_salt"
+        },
+        {
+          "quantity": 5,
+          "drawable": "hide"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Natural Yeast",
+      "description": "Made from dough at a baking station. Used for baking various goods.",
+      "drawable": "refined_natural_yeast",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_sack_of_flour"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Organic Oil (from seeds)",
+      "description": "Oil made from grinding plant seed. Less dense than oil harvested from the sea.",
+      "drawable": "refined_organic_oil",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "resources_seeds"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Organic Oil (from fat)",
+      "description": "Oil made from heating animal fat. Less dense than oil harvested from the sea.",
+      "drawable": "refined_organic_oil",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 15,
+          "drawable": "resources_meat_fresh_fat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sack of Flour",
+      "description": "Refined flour made from wheat and a handmill.",
+      "drawable": "refined_sack_of_flour",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_dried_wheat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Salt",
+      "description": "Refined salt made from crystal and a grain wheel.",
+      "drawable": "refined_salt",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "crystal"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Steel Ingot",
+      "description": "Created by refining iron ore and carbon in a forge.",
+      "drawable": "refined_steel_ingot",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "resources_carbon"
+        },
+        {
+          "quantity": 2,
+          "drawable": "resources_iron"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Trap Bait",
+      "description": "Lure for the deadfall trap.",
+      "drawable": "refined_trap_bait",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_meat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 5
+    },
+    {
+      "name": "Wood Plank",
+      "description": "Timber that is flat, elongated, and rectangular mainly used in construction.",
+      "drawable": "refined_wood_plank",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
     }
   ]
 }

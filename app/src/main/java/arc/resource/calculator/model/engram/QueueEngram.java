@@ -13,24 +13,24 @@
 package arc.resource.calculator.model.engram;
 
 /**
- * Engram object that uses a quantity for working with totals in the CraftingQueue
+ * Engram object that uses a yielded quantity for working with totals in the CraftingQueue
  */
 public class QueueEngram extends Engram {
     // Quantity used to keep track of how many Engrams in CraftingQueue
-    private int quantity;
+    private int mQuantity;
 
-    public QueueEngram( long id, String name, String drawable, int quantity ) {
-        super( id, name, drawable );
+    public QueueEngram( long id, String name, String drawable, int yield, int quantity ) {
+        super( id, name, drawable, yield );
 
-        this.quantity = quantity;
+        this.mQuantity = quantity;
     }
 
     public Integer getQuantity() {
-        return quantity;
+        return mQuantity;
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", quantity=" + quantity;
+        return super.toString() + ", mQuantity=" + mQuantity;
     }
 }

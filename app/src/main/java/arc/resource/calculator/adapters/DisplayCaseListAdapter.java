@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.DisplayCase;
+import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.viewholders.EngramGridViewHolder;
 
 /**
@@ -54,7 +55,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         viewHolder.getNameText().setText( name );
 
         if ( mDisplayCase.isEngram( position ) ) {
-            int quantity = mDisplayCase.getQuantity( position );
+            int quantity = mDisplayCase.getQuantityWithYield( position );
 
             if ( quantity > 0 ) {
                 viewHolder.getImage().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
@@ -80,6 +81,10 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     /**
      * -- PUBLIC UTILITY METHODS --
      */
+
+    public DisplayEngram getEngram( int position ) {
+        return mDisplayCase.getEngram( position );
+    }
 
     public long getEngramId( int position ) {
         return mDisplayCase.getEngramId( position );

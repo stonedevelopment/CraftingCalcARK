@@ -28,10 +28,10 @@ public class DisplayCase {
     private static final String TAG = DisplayCase.class.getSimpleName();
 
     private static DisplayCase sInstance;
-
     private static final long ROOT = 0;
 
     private boolean isFiltered;
+
     private long mLevel;
     private long mParent;
 
@@ -80,8 +80,7 @@ public class DisplayCase {
 
     public boolean setIsFiltered( boolean filtered ) {
         if ( isFiltered() != filtered ) {
-            PreferenceHelper preferenceHelper = new PreferenceHelper( getContext() );
-            preferenceHelper.setPreference( Helper.FILTERED, filtered );
+            new PreferenceHelper( getContext() ).setPreference( Helper.FILTERED, filtered );
 
             isFiltered = filtered;
 
@@ -174,6 +173,28 @@ public class DisplayCase {
         return 0;
     }
 
+    public int getQuantityWithYield( int position ) {
+        if ( isFiltered ) {
+            if ( position < mCategories.size() ) {
+                return 0;
+            }
+
+            position -= mCategories.size();
+        }
+
+        DisplayEngram engram = mEngrams.valueAt( position );
+        Queue queue = mQueues.get( engram.getId() );
+
+        if ( queue != null ) {
+            int yield = engram.getYield();
+            int quantity = queue.getQuantity();
+
+            return quantity * yield;
+        }
+
+        return 0;
+    }
+
     public Context getContext() {
         return mContext;
     }
@@ -191,6 +212,20 @@ public class DisplayCase {
             return mEngrams.size() + mCategories.size();
         }
         return 0;
+    }
+
+    public DisplayEngram getEngram( int position ) {
+        if ( isFiltered ) {
+            if ( position >= mCategories.size() ) {
+                position -= mCategories.size();
+
+                return mEngrams.valueAt( position );
+            }
+        } else {
+            return mEngrams.valueAt( position );
+        }
+
+        return null;
     }
 
     public long getEngramId( int position ) {
@@ -262,14 +297,14 @@ public class DisplayCase {
         if ( cursor.moveToFirst() ) {
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
             long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
-            long version_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY ) );
+            long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY ) );
 
             cursor.close();
             return new Category(
                     _id,
                     name,
                     parent_id,
-                    version_id );
+                    dlc_id );
         }
 
         cursor.close();
@@ -288,9 +323,9 @@ public class DisplayCase {
                 long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
                 String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
                 long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
-                long version_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY ) );
+                long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY ) );
 
-                categories.append( categories.size(), new Category( _id, name, parent_id, version_id ) );
+                categories.append( categories.size(), new Category( _id, name, parent_id, dlc_id ) );
             }
 
             cursor.close();
@@ -324,6 +359,7 @@ public class DisplayCase {
                             cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) ),
                             cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
                             cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) ),
+                            cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) ),
                             cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) ) ) );
         }
         cursor.close();

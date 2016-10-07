@@ -22,13 +22,13 @@ import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
 import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
-import arc.resource.calculator.db.DatabaseContract.VersionEntry;
+import arc.resource.calculator.db.DatabaseContract.DLCEntry;
 import arc.resource.calculator.helpers.Helper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "database.db";
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
@@ -46,10 +46,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 EngramEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_DRAWABLE + " INTEGER NOT NULL, " +
+                EngramEntry.COLUMN_YIELD + " INTEGER NOT NULL, " +
                 EngramEntry.COLUMN_CATEGORY_KEY + " INTEGER NOT NULL, " +
-                EngramEntry.COLUMN_VERSION_KEY + " INTEGER NOT NULL, " +
+                EngramEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
                 "FOREIGN KEY (" + EngramEntry.COLUMN_CATEGORY_KEY + ") REFERENCES " + CategoryEntry.TABLE_NAME + " (" + CategoryEntry._ID + "), " +
-                "FOREIGN KEY (" + EngramEntry.COLUMN_VERSION_KEY + ") REFERENCES " + VersionEntry.TABLE_NAME + " (" + VersionEntry._ID + ")" +
+                "FOREIGN KEY (" + EngramEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
                 ")";
 
         final String SQL_CREATE_COMPOSITION_TABLE = "CREATE TABLE " + CompositionEntry.TABLE_NAME + " (" +
@@ -65,16 +66,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ResourceEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ResourceEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ResourceEntry.COLUMN_DRAWABLE + " INTEGER NOT NULL, " +
-                ResourceEntry.COLUMN_VERSION_KEY + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + ResourceEntry.COLUMN_VERSION_KEY + ") REFERENCES " + VersionEntry.TABLE_NAME + " (" + VersionEntry._ID + ")" +
+                ResourceEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
+                "FOREIGN KEY (" + ResourceEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
                 ")";
 
         final String SQL_CREATE_CATEGORY_TABLE = "CREATE TABLE " + CategoryEntry.TABLE_NAME + " (" +
                 CategoryEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
                 CategoryEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 CategoryEntry.COLUMN_PARENT_KEY + " INTEGER NOT NULL, " +
-                CategoryEntry.COLUMN_VERSION_KEY + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + CategoryEntry.COLUMN_VERSION_KEY + ") REFERENCES " + VersionEntry.TABLE_NAME + " (" + VersionEntry._ID + ")" +
+                CategoryEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
+                "FOREIGN KEY (" + CategoryEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
                 ")";
 
         final String SQL_CREATE_COMPLEX_RESOURCE_TABLE = "CREATE TABLE " + ComplexResourceEntry.TABLE_NAME + " (" +
@@ -92,12 +93,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + QueueEntry.COLUMN_ENGRAM_KEY + ") REFERENCES " + EngramEntry.TABLE_NAME + " (" + EngramEntry._ID + ")" +
                 ")";
 
-        final String SQL_CREATE_VERSION_TABLE = "CREATE TABLE " + VersionEntry.TABLE_NAME + " (" +
+        final String SQL_CREATE_DLC_TABLE = "CREATE TABLE " + DLCEntry.TABLE_NAME + " (" +
                 CategoryEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
                 CategoryEntry.COLUMN_NAME + " TEXT NOT NULL " +
                 ")";
 
-        CreateTable( database, VersionEntry.TABLE_NAME, SQL_CREATE_VERSION_TABLE );
+        CreateTable( database, DLCEntry.TABLE_NAME, SQL_CREATE_DLC_TABLE );
         CreateTable( database, CategoryEntry.TABLE_NAME, SQL_CREATE_CATEGORY_TABLE );
         CreateTable( database, ResourceEntry.TABLE_NAME, SQL_CREATE_RESOURCE_TABLE );
         CreateTable( database, EngramEntry.TABLE_NAME, SQL_CREATE_ENGRAM_TABLE );
@@ -118,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DropTable( database, EngramEntry.TABLE_NAME );
         DropTable( database, ResourceEntry.TABLE_NAME );
         DropTable( database, CategoryEntry.TABLE_NAME );
-        DropTable( database, VersionEntry.TABLE_NAME );
+        DropTable( database, DLCEntry.TABLE_NAME );
 
         onCreate( database );
 

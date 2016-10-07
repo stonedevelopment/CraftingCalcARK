@@ -27,7 +27,7 @@ import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
 import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
-import arc.resource.calculator.db.DatabaseContract.VersionEntry;
+import arc.resource.calculator.db.DatabaseContract.DLCEntry;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
@@ -39,12 +39,12 @@ public class DatabaseProvider extends ContentProvider {
     static final int ENGRAM_ID = 101;
     static final int ENGRAM_WITH_CATEGORY = 110;
     static final int ENGRAM_WITH_CATEGORY_ID = 111;
-    static final int ENGRAM_WITH_VERSION_ID = 112;
+    static final int ENGRAM_WITH_DLC_ID = 112;
     static final int ENGRAM_WITH_DRAWABLE = 113;
 
     static final int RESOURCE = 200;
     static final int RESOURCE_ID = 201;
-    static final int RESOURCE_WITH_VERSION_ID = 202;
+    static final int RESOURCE_WITH_DLC_ID = 202;
     static final int RESOURCE_WITH_DRAWABLE = 203;
 
     static final int COMPLEX_RESOURCE = 300;
@@ -59,7 +59,7 @@ public class DatabaseProvider extends ContentProvider {
     static final int CATEGORY_ID = 401;
     static final int CATEGORY_WITH_PARENT = 410;
     static final int CATEGORY_WITH_PARENT_ID = 411;
-    static final int CATEGORY_WITH_VERSION_ID = 412;
+    static final int CATEGORY_WITH_DLC_ID = 412;
 
     static final int COMPOSITION = 500;
     static final int COMPOSITION_ID = 501;
@@ -73,8 +73,8 @@ public class DatabaseProvider extends ContentProvider {
     static final int QUEUE_WITH_ENGRAM_TABLE = 610;
     static final int QUEUE_WITH_ENGRAM_ID = 611;
 
-    static final int VERSION = 700;
-    static final int VERSION_ID = 701;
+    static final int DLC = 700;
+    static final int DLC_ID = 701;
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher uriMatcher = new UriMatcher( UriMatcher.NO_MATCH );
@@ -84,7 +84,7 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/#", CATEGORY_ID );
 //        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" + DatabaseContract.PATH_CATEGORY_PARENT, CATEGORY_WITH_PARENT );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" + DatabaseContract.PATH_CATEGORY_PARENT + "/#", CATEGORY_WITH_PARENT_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" + DatabaseContract.PATH_VERSION + "/#", CATEGORY_WITH_VERSION_ID );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" + DatabaseContract.PATH_DLC + "/#", CATEGORY_WITH_DLC_ID );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE, COMPLEX_RESOURCE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/#", COMPLEX_RESOURCE_ID );
@@ -106,7 +106,7 @@ public class DatabaseProvider extends ContentProvider {
 //        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_CATEGORY, ENGRAM_WITH_CATEGORY );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_CATEGORY + "/#", ENGRAM_WITH_CATEGORY_ID );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_DRAWABLE + "/*", ENGRAM_WITH_DRAWABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_VERSION + "/#", ENGRAM_WITH_VERSION_ID );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_DLC + "/#", ENGRAM_WITH_DLC_ID );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE, QUEUE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE + "/#", QUEUE_ID );
@@ -116,10 +116,10 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE, RESOURCE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/#", RESOURCE_ID );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" + DatabaseContract.PATH_DRAWABLE + "/*", RESOURCE_WITH_DRAWABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" + DatabaseContract.PATH_VERSION + "/#", RESOURCE_WITH_VERSION_ID );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" + DatabaseContract.PATH_DLC + "/#", RESOURCE_WITH_DLC_ID );
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_VERSION, VERSION );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_VERSION + "/#", VERSION_ID );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC, DLC );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC + "/#", DLC_ID );
 
         return uriMatcher;
     }
@@ -135,7 +135,7 @@ public class DatabaseProvider extends ContentProvider {
 
             case ENGRAM_ID:
             case ENGRAM_WITH_CATEGORY_ID:
-            case ENGRAM_WITH_VERSION_ID:
+            case ENGRAM_WITH_DLC_ID:
             case ENGRAM_WITH_DRAWABLE:
                 return EngramEntry.CONTENT_ITEM_TYPE;
 
@@ -143,7 +143,7 @@ public class DatabaseProvider extends ContentProvider {
                 return ResourceEntry.CONTENT_DIR_TYPE;
 
             case RESOURCE_ID:
-            case RESOURCE_WITH_VERSION_ID:
+            case RESOURCE_WITH_DLC_ID:
             case RESOURCE_WITH_DRAWABLE:
                 return ResourceEntry.CONTENT_ITEM_TYPE;
 
@@ -163,7 +163,7 @@ public class DatabaseProvider extends ContentProvider {
 
             case CATEGORY_ID:
             case CATEGORY_WITH_PARENT_ID:
-            case CATEGORY_WITH_VERSION_ID:
+            case CATEGORY_WITH_DLC_ID:
                 return CategoryEntry.CONTENT_ITEM_TYPE;
 
             case COMPOSITION:
@@ -182,11 +182,11 @@ public class DatabaseProvider extends ContentProvider {
             case QUEUE_WITH_ENGRAM_ID:
                 return QueueEntry.CONTENT_ITEM_TYPE;
 
-            case VERSION:
-                return VersionEntry.CONTENT_DIR_TYPE;
+            case DLC:
+                return DLCEntry.CONTENT_DIR_TYPE;
 
-            case VERSION_ID:
-                return VersionEntry.CONTENT_ITEM_TYPE;
+            case DLC_ID:
+                return DLCEntry.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException( "Unknown uri: " + uri );
@@ -229,14 +229,14 @@ public class DatabaseProvider extends ContentProvider {
                 tableName = ResourceEntry.TABLE_NAME;
                 break;
 
-            case VERSION:
-                tableName = VersionEntry.TABLE_NAME;
+            case DLC:
+                tableName = DLCEntry.TABLE_NAME;
                 break;
 
-            case VERSION_ID:
+            case DLC_ID:
                 _id = DatabaseContract.getIdFromUri( uri );
-                selection = VersionEntry.SQL_QUERY_WITH_ID;
-                tableName = VersionEntry.TABLE_NAME;
+                selection = DLCEntry.SQL_QUERY_WITH_ID;
+                tableName = DLCEntry.TABLE_NAME;
                 break;
 
             case CATEGORY_ID:
@@ -403,8 +403,8 @@ public class DatabaseProvider extends ContentProvider {
             case QUEUE:
                 tableName = QueueEntry.TABLE_NAME;
                 break;
-            case VERSION:
-                tableName = VersionEntry.TABLE_NAME;
+            case DLC:
+                tableName = DLCEntry.TABLE_NAME;
                 break;
             default:
                 throw new UnsupportedOperationException( "Unknown uri: " + uri );
@@ -450,8 +450,8 @@ public class DatabaseProvider extends ContentProvider {
             case QUEUE:
                 rowsDeleted = db.delete( QueueEntry.TABLE_NAME, selection, selectionArgs );
                 break;
-            case VERSION:
-                rowsDeleted = db.delete( VersionEntry.TABLE_NAME, selection, selectionArgs );
+            case DLC:
+                rowsDeleted = db.delete( DLCEntry.TABLE_NAME, selection, selectionArgs );
                 break;
             default:
                 throw new UnsupportedOperationException( "Unknown uri: " + uri );
@@ -492,8 +492,8 @@ public class DatabaseProvider extends ContentProvider {
             case QUEUE:
                 rowsUpdated = db.update( QueueEntry.TABLE_NAME, values, selection, selectionArgs );
                 break;
-            case VERSION:
-                rowsUpdated = db.update( VersionEntry.TABLE_NAME, values, selection, selectionArgs );
+            case DLC:
+                rowsUpdated = db.update( DLCEntry.TABLE_NAME, values, selection, selectionArgs );
                 break;
             default:
                 throw new UnsupportedOperationException( "Unknown uri: " + uri );
@@ -525,8 +525,8 @@ public class DatabaseProvider extends ContentProvider {
             case COMPLEX_RESOURCE:
                 tableName = ComplexResourceEntry.TABLE_NAME;
                 break;
-            case VERSION:
-                tableName = VersionEntry.TABLE_NAME;
+            case DLC:
+                tableName = DLCEntry.TABLE_NAME;
                 break;
             default:
                 return super.bulkInsert( uri, values );

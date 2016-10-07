@@ -112,27 +112,19 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
         JSONObject parseStringToJSONObject( String jsonString ) throws JSONException {
             JSONObject jsonObject = new JSONObject( jsonString );
-            JSONObject newJSONObject = new JSONObject();
 
-            newJSONObject.put(
-                    DatabaseContract.CategoryEntry.TABLE_NAME,
-                    updateJSONArray( jsonObject.getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) )
-            );
-            newJSONObject.put(
-                    DatabaseContract.ResourceEntry.TABLE_NAME,
-                    updateJSONArray( jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) )
-            );
-            newJSONObject.put(
+            // Place what tables to update here
+            jsonObject.put(
                     DatabaseContract.EngramEntry.TABLE_NAME,
                     updateJSONArray( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) )
             );
 
-            return newJSONObject;
+            return jsonObject;
         }
 
         JSONArray updateJSONArray( JSONArray jsonArray ) throws JSONException {
             for ( int i = 0; i < jsonArray.length(); i++ ) {
-                jsonArray.getJSONObject( i ).put( DatabaseContract.VersionEntry.COLUMN_VERSION_KEY, 1 );
+                jsonArray.getJSONObject( i ).put( DatabaseContract.EngramEntry.COLUMN_YIELD, 1 );
             }
 
             Helper.Log( TAG, jsonArray.toString() );

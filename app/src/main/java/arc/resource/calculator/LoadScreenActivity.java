@@ -212,7 +212,7 @@ public class LoadScreenActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject( jsonString );
 
             publishProgress( "Inserting Versions..." );
-            insertVersions( jsonObject.getJSONArray( DatabaseContract.VersionEntry.TABLE_NAME ) );
+            insertVersions( jsonObject.getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
 
             publishProgress( "Inserting Categories..." );
@@ -274,17 +274,17 @@ public class LoadScreenActivity extends AppCompatActivity {
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
-                long _id = jsonObject.getLong( DatabaseContract.VersionEntry._ID );
-                String name = jsonObject.getString( DatabaseContract.VersionEntry.COLUMN_NAME );
+                long _id = jsonObject.getLong( DatabaseContract.DLCEntry._ID );
+                String name = jsonObject.getString( DatabaseContract.DLCEntry.COLUMN_NAME );
 
                 ContentValues values = new ContentValues();
-                values.put( DatabaseContract.VersionEntry._ID, _id );
-                values.put( DatabaseContract.VersionEntry.COLUMN_NAME, name );
+                values.put( DatabaseContract.DLCEntry._ID, _id );
+                values.put( DatabaseContract.DLCEntry.COLUMN_NAME, name );
 
                 vector.add( values );
             }
 
-            bulkInsertWithUri( DatabaseContract.VersionEntry.CONTENT_URI, vector );
+            bulkInsertWithUri( DatabaseContract.DLCEntry.CONTENT_URI, vector );
         }
 
         void insertResources( JSONArray jsonArray ) throws JSONException {
@@ -295,12 +295,12 @@ public class LoadScreenActivity extends AppCompatActivity {
 
                 String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
                 String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
-                long version_id = jsonObject.getLong( DatabaseContract.ResourceEntry.COLUMN_VERSION_KEY );
+                long dlc_id = jsonObject.getLong( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, drawable );
-                values.put( DatabaseContract.ResourceEntry.COLUMN_VERSION_KEY, version_id );
+                values.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, dlc_id );
 
                 vector.add( values );
             }
@@ -317,13 +317,13 @@ public class LoadScreenActivity extends AppCompatActivity {
                 long _id = jsonObject.getLong( DatabaseContract.CategoryEntry._ID );
                 String name = jsonObject.getString( DatabaseContract.CategoryEntry.COLUMN_NAME );
                 long parent_id = jsonObject.getLong( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY );
-                long version_id = jsonObject.getLong( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY );
+                long dlc_id = jsonObject.getLong( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.CategoryEntry._ID, _id );
                 values.put( DatabaseContract.CategoryEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY, parent_id );
-                values.put( DatabaseContract.CategoryEntry.COLUMN_VERSION_KEY, version_id );
+                values.put( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY, dlc_id );
 
                 vector.add( values );
             }
@@ -339,14 +339,14 @@ public class LoadScreenActivity extends AppCompatActivity {
                 String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
                 String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
                 long category_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
-                long version_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_VERSION_KEY );
+                long dlc_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
                 values.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, drawable );
                 values.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
-                values.put( DatabaseContract.EngramEntry.COLUMN_VERSION_KEY, version_id );
+                values.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dlc_id );
 
                 Uri insertUri = getContext().getContentResolver().insert( DatabaseContract.EngramEntry.CONTENT_URI, values );
                 long engramId = DatabaseContract.getIdFromUri( insertUri );

@@ -54,7 +54,7 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         try {
             int imageId = getContext().getResources().getIdentifier( mCraftingQueue.getEngramDrawable( position ), "drawable", getContext().getPackageName() );
             String name = mCraftingQueue.getEngramName( position );
-            int quantity = mCraftingQueue.getEngramQuantity( position );
+            int quantity = mCraftingQueue.getEngramQuantityWithYield( position );
 
             viewHolder.getImage().setImageResource( imageId );
             viewHolder.getNameText().setText( name );
@@ -76,16 +76,16 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void increaseQuantity( int position, int amount ) {
-        mCraftingQueue.increaseQuantity( position, amount );
+    public void increaseQuantity( int position ) {
+        mCraftingQueue.increaseQuantity( position );
     }
 
     public void increaseQuantity( long engramId, int amount ) {
         mCraftingQueue.increaseQuantity( engramId, amount );
     }
 
-    public void decreaseQuantity( int position, int amount ) {
-        mCraftingQueue.decreaseQuantity( position, amount );
+    public void decreaseQuantity( int position ) {
+        mCraftingQueue.decreaseQuantity( position );
     }
 
     public void ClearQueue() {

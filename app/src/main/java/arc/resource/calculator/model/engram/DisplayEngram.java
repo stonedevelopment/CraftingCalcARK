@@ -13,18 +13,18 @@
 package arc.resource.calculator.model.engram;
 
 /**
- * Engram object that holds the id of the category (level) it lays in
+ * Engram object that holds the id of the category (level) it lays on
  */
 public class DisplayEngram extends Engram {
-    private long categoryId;
+    private long mCategoryId;
 
-    public DisplayEngram( long id, String name, String drawable, long categoryId ) {
-        super( id, name, drawable );
+    public DisplayEngram( long id, String name, String drawable, int yield, long categoryId ) {
+        super( id, name, drawable, yield );
 
-        this.categoryId = categoryId;
+        this.mCategoryId = categoryId;
     }
 
     public long getCategoryId() {
-        return categoryId;
+        return mCategoryId;
     }
 }

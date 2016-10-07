@@ -18,34 +18,42 @@ package arc.resource.calculator.model.engram;
  */
 public class Engram {
     // Primary Key created by Database to track its row location.
-    private long id;
+    private long mId;
 
-    // String literal of an Engram's name verbatim from in-game
-    private String name;
+    // String literal of an Engram's mName verbatim from in-game
+    private String mName;
 
-    // Filename of drawable resource
-    private String drawable;
+    // Filename of mDrawable resource
+    private String mDrawable;
 
-    public Engram( long id, String name, String drawable ) {
-        this.id = id;
-        this.name = name;
-        this.drawable = drawable;
+    // Yield per crafted item
+    private int mYield;
+
+    public Engram( long id, String name, String drawable, int yield ) {
+        mId = id;
+        mName = name;
+        mDrawable = drawable;
+        mYield = yield;
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public String getDrawable() {
-        return drawable;
+        return mDrawable;
+    }
+
+    public int getYield() {
+        return mYield;
     }
 
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", drawable=" + drawable;
+        return "mId=" + mId + ", mName=" + mName + ", mDrawable=" + mDrawable;
     }
 }

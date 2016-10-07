@@ -102,14 +102,19 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onTextChanged( CharSequence s, int start, int before, int count ) {
                 if ( s.length() > 0 ) {
-                    int quantity = Integer.parseInt( s.toString() );
+                    int quantityFromText = Integer.parseInt( s.toString() );
 
-                    if ( quantity > Helper.MAX ) {
-                        quantity = Helper.MAX;
-                        quantityEditText.setText( String.valueOf( quantity ) );
+                    int quantityByYield = quantityFromText / showcase.getYield();
+
+                    if ( quantityByYield > Helper.MAX ) {
+                        quantityByYield = Helper.MAX / showcase.getYield();
+                        quantityEditText.setText( String.valueOf( quantityByYield ) );
                     }
 
-                    showcase.setQuantity( quantity );
+                    quantityEditText.setSelection( quantityEditText.length() );
+
+                    showcase.setQuantity( quantityByYield / showcase.getYield() );
+
                     resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
                     resourceListAdapter.Refresh();
                 }
@@ -127,6 +132,7 @@ public class DetailActivity extends AppCompatActivity {
                 showcase.decreaseQuantity();
 
                 quantityEditText.setText( showcase.getQuantityText() );
+                quantityEditText.setSelection( quantityEditText.length() );
             }
         } );
 
@@ -136,6 +142,7 @@ public class DetailActivity extends AppCompatActivity {
                 showcase.increaseQuantity();
 
                 quantityEditText.setText( showcase.getQuantityText() );
+                quantityEditText.setSelection( quantityEditText.length() );
             }
         } );
 
@@ -149,7 +156,7 @@ public class DetailActivity extends AppCompatActivity {
         saveButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                FinishActivityWithResult( Helper.DETAIL_SAVE, showcase.getQuantity() );
+                FinishActivityWithResult( Helper.DETAIL_SAVE, showcase.getQuantityWithYield() );
             }
         } );
 

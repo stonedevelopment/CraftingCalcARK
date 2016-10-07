@@ -10,7 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +22,7 @@ import arc.resource.calculator.db.DatabaseHelper;
 import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.views.AutoFitRecyclerView;
 import arc.resource.calculator.views.RecyclerTouchListener;
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick( View view, int position ) {
                             if ( position >= 0 ) {
-                                craftableEngramListAdapter.increaseQuantity( position, 1 );
+                                craftableEngramListAdapter.increaseQuantity( position );
                                 RefreshViews();
                             }
                         }
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onLongClick( View view, int position ) {
                             if ( position >= 0 ) {
-                                craftableEngramListAdapter.decreaseQuantity( position, 1 );
+                                craftableEngramListAdapter.decreaseQuantity( position );
                                 RefreshViews();
                             }
                         }
@@ -120,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick( View view, int position ) {
                             if ( position >= 0 ) {
                                 if ( displayCaseListAdapter.isEngram( position ) ) {
-                                    craftableEngramListAdapter.increaseQuantity( displayCaseListAdapter.getEngramId( position ), 1 );
+                                    DisplayEngram engram = displayCaseListAdapter.getEngram( position );
+
+                                    craftableEngramListAdapter.increaseQuantity( engram.getId(), engram.getYield() );
                                     RefreshViews();
                                 } else {
                                     displayCaseListAdapter.changeCategory( position );
@@ -333,57 +335,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT );
-    }
-
-    private int getDisplayCaseHeightRecommendations() {
-        if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-            if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ) {
-                int thumbnailSize = displayCaseEngramList.getColumnWidth();
-                int rowCount = getResources().getInteger( R.integer.grid_layout_row_count );
-
-                if ( rowCount > 0 && thumbnailSize > 0 ) {
-                    return thumbnailSize * rowCount;
-                }
-            }
-        }
-
-        return GridLayoutManager.LayoutParams.MATCH_PARENT;
-    }
-
-    private int getDisplayCaseWidthRecommendations() {
-        if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-            if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ) {
-                int thumbnailSize = displayCaseEngramList.getColumnWidth();
-                int colCount = getResources().getInteger( R.integer.grid_layout_column_count );
-
-                if ( colCount > 0 && thumbnailSize > 0 ) {
-                    return thumbnailSize * colCount;
-                }
-            }
-        }
-
-        return GridLayoutManager.LayoutParams.MATCH_PARENT;
-    }
-
-    private float getGridViewThumbnailSizeRecommendations() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        float density = displayMetrics.density;
-
-        float padding = getResources().getDimension( R.dimen.engram_grid_view_holder_padding );
-        float dpPadding = padding / density;
-
-        float dpHeight = displayMetrics.heightPixels / density;
-        float dpWidth = displayMetrics.widthPixels / density;
-
-        return dpWidth / getGridViewSpanCountRecommendations();
-    }
-
-    private int getGridViewSpanCountRecommendations() {
-        if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-            return getResources().getInteger( R.integer.grid_layout_column_count_with_queue );
-        }
-
-        return getResources().getInteger( R.integer.grid_layout_column_count );
     }
 
     private String getAppVersions() {

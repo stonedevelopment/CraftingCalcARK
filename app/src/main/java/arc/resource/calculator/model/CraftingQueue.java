@@ -111,6 +111,15 @@ public class CraftingQueue {
         return mEngrams.valueAt( position ).getQuantity();
     }
 
+    public int getEngramQuantityWithYield( int position ) {
+        QueueEngram engram = mEngrams.valueAt( position );
+
+        int quantity = engram.getQuantity();
+        int yield = engram.getYield();
+
+        return quantity * yield;
+    }
+
     // -- PUBLIC RESOURCE METHODS --
 
     public int getResourceItemCount() {
@@ -134,8 +143,10 @@ public class CraftingQueue {
 
     // -- PUBLIC QUANTITY METHODS --
 
-    public void increaseQuantity( int position, int amount ) {
-        increaseQuantity( mEngrams.valueAt( position ).getId(), amount );
+    public void increaseQuantity( int position ) {
+        QueueEngram engram = mEngrams.valueAt( position );
+
+        increaseQuantity( engram.getId(), engram.getYield() );
     }
 
     public void increaseQuantity( long engramId, int amount ) {
@@ -146,17 +157,18 @@ public class CraftingQueue {
         if ( queue == null ) {
             Insert( engramId, amount );
         } else {
-            if ( queue.getQuantity() < Helper.MAX ) {
+            if ( queue.getQuantity() < ( Helper.MAX + amount ) ) {
                 queue.increaseQuantity( amount );
                 Update( queue );
             }
         }
-
     }
 
-    public void decreaseQuantity( int position, int amount ) {
+    public void decreaseQuantity( int position ) {
         if ( position <= mEngrams.size() ) {
-            decreaseQuantity( mEngrams.valueAt( position ).getId(), amount );
+            QueueEngram engram = mEngrams.valueAt( position );
+
+            decreaseQuantity( engram.getId(), engram.getYield() );
         }
     }
 
@@ -164,11 +176,11 @@ public class CraftingQueue {
         Queue queue = QueryByEngramId( engramId );
 
         // if queue is empty, add new queue into system
-        // if queue exists, increase quantity by amount, update system with new object
+        // if queue exists, decrease quantity by amount, update system with new object
         if ( queue != null ) {
             if ( amount > 0 ) {
                 queue.decreaseQuantity( amount );
-                if ( queue.getQuantity() > Helper.MIN ) {
+                if ( queue.getQuantity() >= amount ) {
                     Update( queue );
                 } else {
                     Remove( queue );
@@ -263,7 +275,9 @@ public class CraftingQueue {
                             cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) ),
                             cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
                             cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) ),
-                            cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) ) ) );
+                            cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) ),
+                            cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) )
+                    ) );
         }
 
         cursor.close();
