@@ -80,8 +80,8 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         mCraftingQueue.increaseQuantity( position );
     }
 
-    public void increaseQuantity( long engramId, int amount ) {
-        mCraftingQueue.increaseQuantity( engramId, amount );
+    public void increaseQuantity( long engramId ) {
+        mCraftingQueue.increaseQuantity( engramId );
     }
 
     public void decreaseQuantity( int position ) {

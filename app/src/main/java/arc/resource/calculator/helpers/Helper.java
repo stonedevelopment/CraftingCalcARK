@@ -20,6 +20,9 @@ import arc.resource.calculator.model.resource.QueueResource;
 public class Helper {
     private static boolean isDebug = true;
 
+    // Temp ID used to only show prime ark until ready for others
+    public static final long DLC_ID = 1;
+
     public static final int DETAIL_ID_CODE = 1000;
 
     public static final String DETAIL_ID = "DETAIL_ID";

@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.Vector;
 
 import arc.resource.calculator.db.DatabaseContract;
@@ -94,12 +95,12 @@ public class LoadScreenActivity extends AppCompatActivity {
     }
 
     boolean isNewVersion() {
-        String oldVersion = new PreferenceHelper( this ).getStringPreference( getString( R.string.pref_json_version ) );
-        String newVersion = getString( R.string.json_version );
+        String oldVersion = new PreferenceHelper( this ).getStringPreference( getResources().getString( R.string.pref_json_version ) );
+        String newVersion = getResources().getString( R.string.json_version );
 
         Helper.Log( TAG, oldVersion + " == " + newVersion + "?" );
 
-        return !oldVersion.equals( newVersion );
+        return !Objects.equals( oldVersion, newVersion );
     }
 
     private class ParseInsertTask extends AsyncTask<Void, String, Void> {
@@ -338,6 +339,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
                 String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
                 String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
+                int yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
                 long category_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
                 long dlc_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
 
@@ -345,6 +347,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
                 values.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, drawable );
+                values.put( DatabaseContract.EngramEntry.COLUMN_YIELD, yield );
                 values.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
                 values.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dlc_id );
 
@@ -368,7 +371,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                         null, null, null, null
                 );
 
-                if ( cursor != null ) {
+                if ( cursor != null && cursor.getCount() > 0 ) {
                     cursor.moveToFirst();
 
                     long resourceId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ResourceEntry._ID ) );
@@ -381,6 +384,8 @@ public class LoadScreenActivity extends AppCompatActivity {
                     values.put( DatabaseContract.CompositionEntry.COLUMN_QUANTITY, quantity );
 
                     getContext().getContentResolver().insert( DatabaseContract.CompositionEntry.CONTENT_URI, values );
+                } else {
+                    Log.e( TAG, "empty cursor, drawable: " + drawable );
                 }
             }
         }

@@ -28,6 +28,12 @@ import arc.resource.calculator.helpers.Helper;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
+    /*
+    DATABASE_VERSION Changelog:
+    v3, Added Engram Yield column
+    v2, Added Versioning (DLC)
+    v1, Initial setup
+     */
     public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "database.db";
 

@@ -96,16 +96,16 @@ public class TestProvider extends AndroidTestCase {
         // Now, let's iterate through the Composition Vector and query for each id
         Vector<ContentValues> cVector = new Vector<>( mCompositionVector.size() );
         for ( ContentValues cValues : mCompositionVector ) {
-            String eDrawable = cValues.getAsString( CompositionEntry.COLUMN_ENGRAM_DRAWABLE );
-            String rDrawable = cValues.getAsString( CompositionEntry.COLUMN_RESOURCE_DRAWABLE );
-            int quantity = cValues.getAsInteger( CompositionEntry.COLUMN_QUANTITY );
-
-            ContentValues values = new ContentValues();
-            values.put( CompositionEntry.COLUMN_RESOURCE_KEY, getIDFromQuery( ResourceEntry.buildUriWithDrawable( rDrawable ) ) );
-            values.put( CompositionEntry.COLUMN_ENGRAM_KEY, getIDFromQuery( EngramEntry.buildUriWithDrawable( eDrawable ) ) );
-            values.put( CompositionEntry.COLUMN_QUANTITY, quantity );
-
-            cVector.add( values );
+//            String eDrawable = cValues.getAsString( CompositionEntry.COLUMN_ENGRAM_DRAWABLE );
+//            String rDrawable = cValues.getAsString( CompositionEntry.COLUMN_RESOURCE_DRAWABLE );
+//            int quantity = cValues.getAsInteger( CompositionEntry.COLUMN_QUANTITY );
+//
+//            ContentValues values = new ContentValues();
+//            values.put( CompositionEntry.COLUMN_RESOURCE_KEY, getIDFromQuery( ResourceEntry.buildUriWithDrawable( rDrawable ) ) );
+//            values.put( CompositionEntry.COLUMN_ENGRAM_KEY, getIDFromQuery( EngramEntry.buildUriWithDrawable( eDrawable ) ) );
+//            values.put( CompositionEntry.COLUMN_QUANTITY, quantity );
+//
+//            cVector.add( values );
         }
 
         bulkInsertByUri( CompositionEntry.CONTENT_URI, cVector.size(), cVector, CompositionEntry.TABLE_NAME );

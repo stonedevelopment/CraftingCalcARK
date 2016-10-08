@@ -144,12 +144,12 @@ public class Showcase {
     }
 
     public void increaseQuantity() {
-        mQuantity += getYield();
+        mQuantity += 1;
     }
 
     public void decreaseQuantity() {
-        if ( mQuantity >= mYield ) {
-            mQuantity -= mYield;
+        if ( mQuantity >= 1 ) {
+            mQuantity -= 1;
         }
     }
 
@@ -157,7 +157,7 @@ public class Showcase {
     private void QueryForEngramDetails() {
         // First, let's grab Engram full details.
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.EngramEntry.buildUriWithId( mId ),
+                DatabaseContract.buildUriWithId( DatabaseContract.EngramEntry.CONTENT_URI, mId ),
                 null, null, null, null
         );
 
@@ -203,7 +203,7 @@ public class Showcase {
                 int resourceQuantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
                 Cursor resourceCursor = mContext.getContentResolver().query(
-                        DatabaseContract.ResourceEntry.buildUriWithId( resourceId ),
+                        DatabaseContract.buildUriWithId( DatabaseContract.ResourceEntry.CONTENT_URI, resourceId ),
                         null, null, null, null
                 );
 
@@ -227,7 +227,7 @@ public class Showcase {
 
     private Category QueryForCategoryDetails( long _id ) {
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.CategoryEntry.buildUriWithId( _id ),
+                DatabaseContract.buildUriWithId( DatabaseContract.CategoryEntry.CONTENT_URI, _id ),
                 null, null, null, null
         );
 
@@ -255,7 +255,7 @@ public class Showcase {
         long _id = getDLCId();
 
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.DLCEntry.buildUriWithId( _id ),
+                DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, _id ),
                 null, null, null, null
         );
 

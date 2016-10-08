@@ -15,6 +15,7 @@ package arc.resource.calculator.model;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 import android.util.SparseArray;
 
 import java.util.HashMap;
@@ -275,7 +276,7 @@ public class DisplayCase {
             // Update lists with new data
             UpdateData();
         } else {
-            // position out of bounds
+            Log.e( TAG, "mCategories, position out of bounds: " + position );
         }
     }
 
@@ -288,13 +289,12 @@ public class DisplayCase {
      */
 
     private Category getCategory( long _id ) {
-
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.CategoryEntry.buildUriWithId( _id ),
+                DatabaseContract.buildUriWithId( DatabaseContract.CategoryEntry.CONTENT_URI, _id ),
                 null, null, null, null );
 
 
-        if ( cursor.moveToFirst() ) {
+        if ( cursor != null && cursor.moveToFirst() ) {
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
             long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
             long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY ) );
@@ -307,7 +307,6 @@ public class DisplayCase {
                     dlc_id );
         }
 
-        cursor.close();
         return null;
     }
 
@@ -316,8 +315,12 @@ public class DisplayCase {
 
         if ( isFiltered() ) {
             Cursor cursor = getContext().getContentResolver().query(
-                    DatabaseContract.CategoryEntry.buildUriWithParentId( getLevel() ),
+                    DatabaseContract.CategoryEntry.buildUriWithParentId( Helper.DLC_ID, getLevel() ),
                     null, null, null, null );
+
+            if ( cursor == null ) {
+                return new SparseArray<>();
+            }
 
             while ( cursor.moveToNext() ) {
                 long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
@@ -344,13 +347,17 @@ public class DisplayCase {
     private SparseArray<DisplayEngram> getEngrams() {
         Uri uri;
         if ( isFiltered() ) {
-            uri = DatabaseContract.EngramEntry.buildUriWithCategoryId( getLevel() );
+            uri = DatabaseContract.EngramEntry.buildUriWithCategoryId( Helper.DLC_ID, getLevel() );
         } else {
-            uri = DatabaseContract.EngramEntry.CONTENT_URI;
+            uri = DatabaseContract.EngramEntry.buildUriWithDLCId( Helper.DLC_ID );
         }
 
         Cursor cursor = getContext().getContentResolver().query(
                 uri, null, null, null, null );
+
+        if ( cursor == null ) {
+            return new SparseArray<>();
+        }
 
         SparseArray<DisplayEngram> engrams = new SparseArray<>();
         while ( cursor.moveToNext() ) {

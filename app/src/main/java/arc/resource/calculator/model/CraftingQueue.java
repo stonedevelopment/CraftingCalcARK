@@ -138,7 +138,7 @@ public class CraftingQueue {
         QueueResource resource = mResources.valueAt( position );
         int quantity = resource.getQuantity();
         int queueQuantity = resource.getQueueQuantity();
-        return quantity * queueQuantity;
+        return queueQuantity;
     }
 
     // -- PUBLIC QUANTITY METHODS --
@@ -146,18 +146,20 @@ public class CraftingQueue {
     public void increaseQuantity( int position ) {
         QueueEngram engram = mEngrams.valueAt( position );
 
-        increaseQuantity( engram.getId(), engram.getYield() );
+        increaseQuantity( engram.getId() );
     }
 
-    public void increaseQuantity( long engramId, int amount ) {
+    public void increaseQuantity( long engramId ) {
         Queue queue = QueryByEngramId( engramId );
+
+        int amount = 1;
 
         // if queue is empty, add new queue into system
         // if queue exists, increase quantity by amount, update system with new object
         if ( queue == null ) {
             Insert( engramId, amount );
         } else {
-            if ( queue.getQuantity() < ( Helper.MAX + amount ) ) {
+            if ( queue.getQuantity() < Helper.MAX ) {
                 queue.increaseQuantity( amount );
                 Update( queue );
             }
@@ -168,23 +170,23 @@ public class CraftingQueue {
         if ( position <= mEngrams.size() ) {
             QueueEngram engram = mEngrams.valueAt( position );
 
-            decreaseQuantity( engram.getId(), engram.getYield() );
+            decreaseQuantity( engram.getId() );
         }
     }
 
-    public void decreaseQuantity( long engramId, int amount ) {
+    public void decreaseQuantity( long engramId ) {
         Queue queue = QueryByEngramId( engramId );
+
+        int amount = 1;
 
         // if queue is empty, add new queue into system
         // if queue exists, decrease quantity by amount, update system with new object
         if ( queue != null ) {
-            if ( amount > 0 ) {
-                queue.decreaseQuantity( amount );
-                if ( queue.getQuantity() >= amount ) {
-                    Update( queue );
-                } else {
-                    Remove( queue );
-                }
+            queue.decreaseQuantity( amount );
+            if ( queue.getQuantity() >= amount ) {
+                Update( queue );
+            } else {
+                Remove( queue );
             }
         }
     }
@@ -305,7 +307,7 @@ public class CraftingQueue {
                 int quantity = compositionCursor.getInt( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
                 Cursor resourceCursor = getContext().getContentResolver().query(
-                        DatabaseContract.ResourceEntry.buildUriWithId( resourceId ),
+                        DatabaseContract.buildUriWithId( DatabaseContract.ResourceEntry.CONTENT_URI, resourceId ),
                         null, null, null, null );
 
                 if ( resourceCursor == null ) {
@@ -316,17 +318,18 @@ public class CraftingQueue {
                     String name = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
                     String drawable = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE ) );
 
+                    int queueQuantity = engram.getQuantity() * quantity;
+
                     QueueResource queueResource = resourceMap.get( resourceId );
                     if ( queueResource != null ) {
-                        queueResource.increaseQuantity( quantity );
-                        queueResource.increaseQueueQuantity( engram.getQuantity() );
+                        queueResource.increaseQueueQuantity( queueQuantity );
                     } else {
                         queueResource = new QueueResource(
                                 resourceId,
                                 name,
                                 drawable,
                                 quantity,
-                                engram.getQuantity()
+                                queueQuantity
                         );
                     }
                     resourceMap.put( resourceId, queueResource );
@@ -360,7 +363,7 @@ public class CraftingQueue {
             int quantity = compositionCursor.getInt( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
             Cursor resourceCursor = getContext().getContentResolver().query(
-                    DatabaseContract.ResourceEntry.buildUriWithId( resourceId ),
+                    DatabaseContract.buildUriWithId( DatabaseContract.ResourceEntry.CONTENT_URI, resourceId ),
                     null, null, null, null );
 
             if ( resourceCursor == null ) {
@@ -480,34 +483,36 @@ public class CraftingQueue {
                     for ( int k = 0; k < complexComposition.size(); k++ ) {
                         CompositeResource complexCompositeResource = complexComposition.valueAt( k );
 
+                        int queueQuantity = compositeResource.getQuantity() * ( complexCompositeResource.getQuantity() * engram.getQuantity() );
+
                         queueResource = resourceMap.get( complexCompositeResource.getId() );
                         if ( queueResource != null ) {
-                            queueResource.increaseQuantity( complexCompositeResource.getQuantity() );
-                            queueResource.increaseQueueQuantity( compositeResource.getQuantity() * engram.getQuantity() );
+                            queueResource.increaseQueueQuantity( queueQuantity );
                         } else {
                             queueResource = new QueueResource(
                                     complexCompositeResource.getId(),
                                     complexCompositeResource.getName(),
                                     complexCompositeResource.getDrawable(),
                                     complexCompositeResource.getQuantity(),
-                                    compositeResource.getQuantity() * engram.getQuantity()
+                                    queueQuantity
                             );
                         }
 
                         resourceMap.put( queueResource.getId(), queueResource );
                     }
                 } else {
+                    int queueQuantity = compositeResource.getQuantity() * engram.getQuantity();
+
                     queueResource = resourceMap.get( compositeResource.getId() );
                     if ( queueResource != null ) {
-                        queueResource.increaseQuantity( compositeResource.getQuantity() );
-                        queueResource.increaseQueueQuantity( engram.getQuantity() );
+                        queueResource.increaseQueueQuantity( queueQuantity );
                     } else {
                         queueResource = new QueueResource(
                                 compositeResource.getId(),
                                 compositeResource.getName(),
                                 compositeResource.getDrawable(),
                                 compositeResource.getQuantity(),
-                                engram.getQuantity()
+                                queueQuantity
                         );
                     }
 
@@ -523,6 +528,67 @@ public class CraftingQueue {
         }
 
         return resources;
+    }
+
+    private HashMap<Long, QueueResource> getComposition( long _id, int quantity ) {
+        HashMap<Long, QueueResource> resourceMap = new HashMap<>();
+
+        SparseArray<CompositeResource> composition = QueryForComposition( _id );
+
+        for ( int i = 0; i < composition.size(); i++ ) {
+            CompositeResource compositeResource = composition.valueAt( i );
+
+            if ( mComplexResources.containsKey( compositeResource.getId() ) ) {
+                long engramId = mComplexResources.get( compositeResource.getId() );
+
+                HashMap<Long, QueueResource> complexCompositionResourceMap = getComposition( engramId, compositeResource.getQuantity() );
+
+                for ( QueueResource queueResource : complexCompositionResourceMap.values() ) {
+
+                }
+
+//                SparseArray<CompositeResource> complexComposition = QueryForComposition( engramId );
+//                for ( int k = 0; k < complexComposition.size(); k++ ) {
+//                    CompositeResource complexCompositeResource = complexComposition.valueAt( k );
+//
+//                    int queueQuantity = compositeResource.getQuantity() * ( complexCompositeResource.getQuantity() * engram.getQuantity() );
+//
+//                    queueResource = resourceMap.get( complexCompositeResource.getId() );
+//                    if ( queueResource != null ) {
+//                        queueResource.increaseQueueQuantity( queueQuantity );
+//                    } else {
+//                        queueResource = new QueueResource(
+//                                complexCompositeResource.getId(),
+//                                complexCompositeResource.getName(),
+//                                complexCompositeResource.getDrawable(),
+//                                complexCompositeResource.getQuantity(),
+//                                queueQuantity
+//                        );
+//                    }
+//
+//                    resourceMap.put( queueResource.getId(), queueResource );
+//                }
+            } else {
+                int queueQuantity = compositeResource.getQuantity() * quantity;
+
+                QueueResource queueResource = resourceMap.get( compositeResource.getId() );
+                if ( queueResource != null ) {
+                    queueResource.increaseQueueQuantity( queueQuantity );
+                } else {
+                    queueResource = new QueueResource(
+                            compositeResource.getId(),
+                            compositeResource.getName(),
+                            compositeResource.getDrawable(),
+                            compositeResource.getQuantity(),
+                            queueQuantity
+                    );
+                }
+
+                resourceMap.put( queueResource.getId(), queueResource );
+            }
+        }
+
+        return resourceMap;
     }
 
     private void UpdateData() {

@@ -1036,6 +1036,51 @@
       "name": "Limestone",
       "drawable": "resources_limestone",
       "dlc_id": 2
+    },
+    {
+      "name": "Clay",
+      "drawable": "refined_clay",
+      "dlc_id": 2
+    },
+    {
+      "name": "Fresh Sugar Juice Bucket",
+      "drawable": "refined_fresh_sugar_juice_bucket",
+      "dlc_id": 2
+    },
+    {
+      "name": "Ground Cashew",
+      "drawable": "consumables_crops_ground_cashew",
+      "dlc_id": 2
+    },
+    {
+      "name": "Dried Barley",
+      "drawable": "refined_dried_barley",
+      "dlc_id": 2
+    },
+    {
+      "name": "Fresh Firewood",
+      "drawable": "refined_fresh_firewood",
+      "dlc_id": 2
+    },
+    {
+      "name": "Natural Yeast",
+      "drawable": "refined_natural_yeast",
+      "dlc_id": 2
+    },
+    {
+      "name": "Salt",
+      "drawable": "refined_salt",
+      "dlc_id": 2
+    },
+    {
+      "name": "Sack of Flour",
+      "drawable": "refined_sack_of_flour",
+      "dlc_id": 2
+    },
+    {
+      "name": "Dried Wheat",
+      "drawable": "refined_dried_wheat",
+      "dlc_id": 2
     }
   ],
   "engram": [
@@ -2195,7 +2240,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "spoiled_meat"
+          "drawable": "resources_meat_spoiled_meat"
         }
       ],
       "dlc_id": 1,
@@ -9687,7 +9732,7 @@
     {
       "name": "Wooden Staircase",
       "description": "A wooden spiral staircase, useful in constructing multi-level buildings.",
-      "drawable": "blank",
+      "drawable": "structures_wood_wooden_staircase",
       "category_id": 202,
       "composition": [
         {

@@ -24,10 +24,10 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
+import arc.resource.calculator.db.DatabaseContract.DLCEntry;
 import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
-import arc.resource.calculator.db.DatabaseContract.DLCEntry;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
@@ -37,36 +37,25 @@ public class DatabaseProvider extends ContentProvider {
 
     static final int ENGRAM = 100;
     static final int ENGRAM_ID = 101;
-    static final int ENGRAM_WITH_CATEGORY = 110;
-    static final int ENGRAM_WITH_CATEGORY_ID = 111;
-    static final int ENGRAM_WITH_DLC_ID = 112;
-    static final int ENGRAM_WITH_DRAWABLE = 113;
+    static final int ENGRAM_WITH_CATEGORY = 102;
+    static final int ENGRAM_WITH_DRAWABLE = 103;
+    static final int ENGRAM_WITH_DLC = 104;
 
     static final int RESOURCE = 200;
     static final int RESOURCE_ID = 201;
-    static final int RESOURCE_WITH_DLC_ID = 202;
-    static final int RESOURCE_WITH_DRAWABLE = 203;
+    static final int RESOURCE_WITH_DRAWABLE = 202;
 
     static final int COMPLEX_RESOURCE = 300;
     static final int COMPLEX_RESOURCE_ID = 301;
-    static final int COMPLEX_RESOURCE_WITH_ENGRAM_TABLE = 310;
-    static final int COMPLEX_RESOURCE_WITH_ENGRAM_ID = 311;
-    static final int COMPLEX_RESOURCE_WITH_RESOURCE_TABLE = 320;
-    static final int COMPLEX_RESOURCE_WITH_RESOURCE_ID = 321;
-    static final int COMPLEX_RESOURCE_WITH_DRAWABLE = 322;
+    static final int COMPLEX_RESOURCE_WITH_DRAWABLES = 322;
 
     static final int CATEGORY = 400;
     static final int CATEGORY_ID = 401;
-    static final int CATEGORY_WITH_PARENT = 410;
-    static final int CATEGORY_WITH_PARENT_ID = 411;
-    static final int CATEGORY_WITH_DLC_ID = 412;
+    static final int CATEGORY_WITH_PARENT = 403;
 
     static final int COMPOSITION = 500;
     static final int COMPOSITION_ID = 501;
-    static final int COMPOSITION_WITH_ENGRAM = 510;
-    static final int COMPOSITION_WITH_ENGRAM_ID = 511;
-    static final int COMPOSITION_WITH_RESOURCE = 520;
-    static final int COMPOSITION_WITH_RESOURCE_ID = 521;
+    static final int COMPOSITION_WITH_ENGRAM = 511;
 
     static final int QUEUE = 600;
     static final int QUEUE_ID = 601;
@@ -82,31 +71,20 @@ public class DatabaseProvider extends ContentProvider {
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY, CATEGORY );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/#", CATEGORY_ID );
-//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" + DatabaseContract.PATH_CATEGORY_PARENT, CATEGORY_WITH_PARENT );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" + DatabaseContract.PATH_CATEGORY_PARENT + "/#", CATEGORY_WITH_PARENT_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" + DatabaseContract.PATH_DLC + "/#", CATEGORY_WITH_DLC_ID );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/#/" + DatabaseContract.PATH_DLC + "/#", CATEGORY_WITH_PARENT );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE, COMPLEX_RESOURCE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/#", COMPLEX_RESOURCE_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" + DatabaseContract.PATH_ENGRAM, COMPLEX_RESOURCE_WITH_ENGRAM_TABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" + DatabaseContract.PATH_ENGRAM + "/#", COMPLEX_RESOURCE_WITH_ENGRAM_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" + DatabaseContract.PATH_RESOURCE, COMPLEX_RESOURCE_WITH_RESOURCE_TABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" + DatabaseContract.PATH_RESOURCE + "/#", COMPLEX_RESOURCE_WITH_RESOURCE_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" + DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_RESOURCE, COMPLEX_RESOURCE_WITH_DRAWABLE );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" + DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_RESOURCE, COMPLEX_RESOURCE_WITH_DRAWABLES );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION, COMPOSITION );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/#", COMPOSITION_ID );
-//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/" + DatabaseContract.PATH_ENGRAM, COMPOSITION_WITH_ENGRAM_TABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/" + DatabaseContract.PATH_ENGRAM + "/#", COMPOSITION_WITH_ENGRAM_ID );
-//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/" + DatabaseContract.PATH_RESOURCE, COMPOSITION_WITH_RESOURCE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/" + DatabaseContract.PATH_RESOURCE + "/#", COMPOSITION_WITH_RESOURCE_ID );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/" + DatabaseContract.PATH_ENGRAM + "/#", COMPOSITION_WITH_ENGRAM );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM, ENGRAM );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/#", ENGRAM_ID );
-//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_CATEGORY, ENGRAM_WITH_CATEGORY );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_CATEGORY + "/#", ENGRAM_WITH_CATEGORY_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_DRAWABLE + "/*", ENGRAM_WITH_DRAWABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_DLC + "/#", ENGRAM_WITH_DLC_ID );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_DLC + "/#", ENGRAM_WITH_DLC );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_CATEGORY + "/#/" + DatabaseContract.PATH_DLC + "/#", ENGRAM_WITH_CATEGORY );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE, QUEUE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE + "/#", QUEUE_ID );
@@ -116,7 +94,6 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE, RESOURCE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/#", RESOURCE_ID );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" + DatabaseContract.PATH_DRAWABLE + "/*", RESOURCE_WITH_DRAWABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" + DatabaseContract.PATH_DLC + "/#", RESOURCE_WITH_DLC_ID );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC, DLC );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC + "/#", DLC_ID );
@@ -131,59 +108,50 @@ public class DatabaseProvider extends ContentProvider {
         switch ( match ) {
             case ENGRAM:
             case ENGRAM_WITH_CATEGORY:
+            case ENGRAM_WITH_DLC:
                 return EngramEntry.CONTENT_DIR_TYPE;
-
-            case ENGRAM_ID:
-            case ENGRAM_WITH_CATEGORY_ID:
-            case ENGRAM_WITH_DLC_ID:
-            case ENGRAM_WITH_DRAWABLE:
-                return EngramEntry.CONTENT_ITEM_TYPE;
 
             case RESOURCE:
                 return ResourceEntry.CONTENT_DIR_TYPE;
 
-            case RESOURCE_ID:
-            case RESOURCE_WITH_DLC_ID:
-            case RESOURCE_WITH_DRAWABLE:
-                return ResourceEntry.CONTENT_ITEM_TYPE;
-
             case COMPLEX_RESOURCE:
-            case COMPLEX_RESOURCE_WITH_ENGRAM_TABLE:
-            case COMPLEX_RESOURCE_WITH_RESOURCE_TABLE:
-            case COMPLEX_RESOURCE_WITH_DRAWABLE:
+            case COMPLEX_RESOURCE_WITH_DRAWABLES:
                 return ComplexResourceEntry.CONTENT_DIR_TYPE;
 
-            case COMPLEX_RESOURCE_ID:
-            case COMPLEX_RESOURCE_WITH_ENGRAM_ID:
-            case COMPLEX_RESOURCE_WITH_RESOURCE_ID:
-                return ComplexResourceEntry.CONTENT_ITEM_TYPE;
-
             case CATEGORY:
+            case CATEGORY_WITH_PARENT:
                 return CategoryEntry.CONTENT_DIR_TYPE;
-
-            case CATEGORY_ID:
-            case CATEGORY_WITH_PARENT_ID:
-            case CATEGORY_WITH_DLC_ID:
-                return CategoryEntry.CONTENT_ITEM_TYPE;
 
             case COMPOSITION:
                 return CompositionEntry.CONTENT_DIR_TYPE;
-
-            case COMPOSITION_ID:
-            case COMPOSITION_WITH_ENGRAM_ID:
-            case COMPOSITION_WITH_RESOURCE_ID:
-                return CompositionEntry.CONTENT_ITEM_TYPE;
 
             case QUEUE:
             case QUEUE_WITH_ENGRAM_TABLE:
                 return QueueEntry.CONTENT_DIR_TYPE;
 
+            case DLC:
+                return DLCEntry.CONTENT_DIR_TYPE;
+
+            case ENGRAM_ID:
+                return EngramEntry.CONTENT_ITEM_TYPE;
+
+            case RESOURCE_ID:
+            case RESOURCE_WITH_DRAWABLE:
+                return ResourceEntry.CONTENT_ITEM_TYPE;
+
+            case COMPLEX_RESOURCE_ID:
+                return ComplexResourceEntry.CONTENT_ITEM_TYPE;
+
+            case CATEGORY_ID:
+                return CategoryEntry.CONTENT_ITEM_TYPE;
+
+            case COMPOSITION_ID:
+            case COMPOSITION_WITH_ENGRAM:
+                return CompositionEntry.CONTENT_ITEM_TYPE;
+
             case QUEUE_ID:
             case QUEUE_WITH_ENGRAM_ID:
                 return QueueEntry.CONTENT_ITEM_TYPE;
-
-            case DLC:
-                return DLCEntry.CONTENT_DIR_TYPE;
 
             case DLC_ID:
                 return DLCEntry.CONTENT_ITEM_TYPE;
@@ -216,7 +184,6 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case ENGRAM:
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = EngramEntry.TABLE_NAME;
                 break;
 
@@ -245,9 +212,12 @@ public class DatabaseProvider extends ContentProvider {
                 tableName = CategoryEntry.TABLE_NAME;
                 break;
 
-            case CATEGORY_WITH_PARENT_ID:
-                selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID;
-                selectionArgs = new String[]{ Long.toString( CategoryEntry.getParentIdFromUri( uri ) ) };
+            case CATEGORY_WITH_PARENT:
+                selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID + " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_ID;
+                selectionArgs = new String[]{
+                        Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
+                        Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                };
                 sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = CategoryEntry.TABLE_NAME;
                 break;
@@ -258,33 +228,15 @@ public class DatabaseProvider extends ContentProvider {
                 tableName = ComplexResourceEntry.TABLE_NAME;
                 break;
 
-            case COMPLEX_RESOURCE_WITH_ENGRAM_ID:
-                _id = ComplexResourceEntry.getEngramIdFromUri( uri );
-                selection = ComplexResourceEntry.SQL_QUERY_WITH_ENGRAM_KEY;
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
-
-            case COMPLEX_RESOURCE_WITH_RESOURCE_ID:
-                _id = ComplexResourceEntry.getResourceIdFromUri( uri );
-                selection = ComplexResourceEntry.SQL_QUERY_WITH_RESOURCE_KEY;
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
-
             case COMPOSITION_ID:
                 _id = DatabaseContract.getIdFromUri( uri );
                 selection = CompositionEntry.SQL_QUERY_WITH_ID;
                 tableName = CompositionEntry.TABLE_NAME;
                 break;
 
-            case COMPOSITION_WITH_ENGRAM_ID:
+            case COMPOSITION_WITH_ENGRAM:
                 _id = CompositionEntry.getEngramIdFromUri( uri );
                 selection = CompositionEntry.SQL_QUERY_WITH_ENGRAM_KEY;
-                tableName = CompositionEntry.TABLE_NAME;
-                break;
-
-            case COMPOSITION_WITH_RESOURCE_ID:
-                _id = CompositionEntry.getResourceIdFromUri( uri );
-                selection = CompositionEntry.SQL_QUERY_WITH_RESOURCE_KEY;
                 tableName = CompositionEntry.TABLE_NAME;
                 break;
 
@@ -294,9 +246,21 @@ public class DatabaseProvider extends ContentProvider {
                 tableName = EngramEntry.TABLE_NAME;
                 break;
 
-            case ENGRAM_WITH_CATEGORY_ID:
-                _id = EngramEntry.getCategoryIdFromUri( uri );
-                selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY;
+            case ENGRAM_WITH_CATEGORY:
+                selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY + " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                selectionArgs = new String[]{
+                        Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
+                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                };
+                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                tableName = EngramEntry.TABLE_NAME;
+                break;
+
+            case ENGRAM_WITH_DLC:
+                selection = EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                selectionArgs = new String[]{
+                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                };
                 sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = EngramEntry.TABLE_NAME;
                 break;
@@ -319,17 +283,7 @@ public class DatabaseProvider extends ContentProvider {
                 tableName = ResourceEntry.TABLE_NAME;
                 break;
 
-            case COMPLEX_RESOURCE_WITH_ENGRAM_TABLE:
-                selection = ComplexResourceEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
-
-            case COMPLEX_RESOURCE_WITH_RESOURCE_TABLE:
-                selection = ComplexResourceEntry.SQL_QUERY_WITH_RESOURCE_TABLE;
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
-
-            case COMPLEX_RESOURCE_WITH_DRAWABLE:
+            case COMPLEX_RESOURCE_WITH_DRAWABLES:
                 projection = ComplexResourceEntry.SQL_QUERY_WITH_DRAWABLE_PROJECTION;
                 selection = ComplexResourceEntry.SQL_QUERY_WITH_DRAWABLE_SELECTION;
                 tableName = ComplexResourceEntry.SQL_QUERY_WITH_DRAWABLE_TABLE;

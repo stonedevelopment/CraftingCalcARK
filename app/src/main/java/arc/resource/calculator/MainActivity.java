@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                                 if ( displayCaseListAdapter.isEngram( position ) ) {
                                     DisplayEngram engram = displayCaseListAdapter.getEngram( position );
 
-                                    craftableEngramListAdapter.increaseQuantity( engram.getId(), engram.getYield() );
+                                    craftableEngramListAdapter.increaseQuantity( engram.getId() );
                                     RefreshViews();
                                 } else {
                                     displayCaseListAdapter.changeCategory( position );

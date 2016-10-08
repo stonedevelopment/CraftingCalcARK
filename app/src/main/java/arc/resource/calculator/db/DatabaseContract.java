@@ -81,41 +81,19 @@ public class DatabaseContract {
         public static final String SQL_QUERY_WITH_CATEGORY_KEY = SQL_COLUMN_CATEGORY_KEY + " = ?";
         public static final String SQL_QUERY_WITH_DLC_KEY = SQL_COLUMN_DLC_KEY + " = ?";
 
-        public static final String SQL_QUERY_WITH_QUEUE_TABLE = TABLE_NAME + " INNER JOIN " + QueueEntry.TABLE_NAME;
-        public static final String SQL_QUERY_WITH_QUEUE_TABLE_SELECTION =
-                SQL_COLUMN_ID + " = " + QueueEntry.SQL_COLUMN_ENGRAM_KEY;
-        public static final String[] SQL_QUERY_WITH_QUEUE_TABLE_PROJECTION = new String[]{
-                SQL_COLUMN_ID,
-                SQL_COLUMN_NAME,
-                SQL_COLUMN_DRAWABLE,
-                QueueEntry.SQL_COLUMN_ID,
-                QueueEntry.SQL_COLUMN_QUANTITY
-        };
-
         // SQL sort helpers
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
-        // Returns /engram/<_id>
-        public static Uri buildUriWithId( long _id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, _id );
-        }
-
-        // Returns /engram/category/<category_id>
-        public static Uri buildUriWithCategoryId( long category_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_CATEGORY )
-                    .appendPath( Long.toString( category_id ) ).build();
-        }
-
-        // Returns /engram/drawable/<drawable>
-        public static Uri buildUriWithDrawable( String drawable ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_DRAWABLE )
-                    .appendPath( drawable ).build();
-        }
-
-        // Returns /engram/dlc/<dlc_id>
+        // Returns /engram/dlc/#
         public static Uri buildUriWithDLCId( long dlc_id ) {
             return CONTENT_URI.buildUpon().appendPath( PATH_DLC )
                     .appendPath( Long.toString( dlc_id ) ).build();
+        }
+
+        // Returns /engram/category/#/dlc/#
+        public static Uri buildUriWithCategoryId( long dlc_id, long category_id ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_CATEGORY ).appendPath( Long.toString( category_id ) )
+                    .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) ).build();
         }
 
         public static long getCategoryIdFromUri( Uri uri ) {
@@ -123,11 +101,11 @@ public class DatabaseContract {
         }
 
         public static long getDLCIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+            return Long.parseLong( uri.getLastPathSegment() );
         }
 
         public static String getDrawableFromUri( Uri uri ) {
-            return uri.getPathSegments().get( 2 );
+            return uri.getLastPathSegment();
         }
     }
 
@@ -166,29 +144,14 @@ public class DatabaseContract {
         // SQL sort helpers
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
-        // Returns /resource/<_id>
-        public static Uri buildUriWithId( long _id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, _id );
-        }
-
-        // Returns /resource/drawable/<drawable>
+        // Returns /resource/drawable/*
         public static Uri buildUriWithDrawable( String drawable ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_DRAWABLE )
-                    .appendPath( drawable ).build();
-        }
-
-        // Returns /resource/dlc/<dlc_id>
-        public static Uri buildUriWithDLCId( long dlc_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_DLC )
-                    .appendPath( Long.toString( dlc_id ) ).build();
+            return CONTENT_URI.buildUpon()
+                    .appendPath( PATH_DRAWABLE ).appendPath( drawable ).build();
         }
 
         public static String getDrawableFromUri( Uri uri ) {
-            return uri.getPathSegments().get( 2 );
-        }
-
-        public static long getDLCIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+            return uri.getLastPathSegment();
         }
     }
 
@@ -229,40 +192,11 @@ public class DatabaseContract {
                 ResourceEntry.TABLE_NAME + "." + ResourceEntry._ID + " AS " + COLUMN_RESOURCE_KEY
         };
 
-        // Returns /complex_resource/engram/<engram_id>
-        public static Uri buildUriWithEngramId( long engram_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM )
-                    .appendPath( Long.toString( engram_id ) ).build();
-        }
-
-        // Returns /complex_resource/resource/<resource_id>
-        public static Uri buildUriWithResourceId( long resource_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_RESOURCE )
-                    .appendPath( Long.toString( resource_id ) ).build();
-        }
-
-        // Returns /complex_resource/engram/
-        public static Uri buildUriWithEngramTable() {
-            return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM ).build();
-        }
-
-        // Returns /complex_resource/resource/
-        public static Uri buildUriWithResourceTable() {
-            return CONTENT_URI.buildUpon().appendPath( PATH_RESOURCE ).build();
-        }
-
         // Returns /complex_resource/engram/resource/
         public static Uri buildUriWithDrawable() {
-            return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM )
+            return CONTENT_URI.buildUpon()
+                    .appendPath( PATH_ENGRAM )
                     .appendPath( PATH_RESOURCE ).build();
-        }
-
-        public static long getEngramIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
-        }
-
-        public static long getResourceIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
         }
     }
 
@@ -296,31 +230,23 @@ public class DatabaseContract {
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
         public static final String SQL_QUERY_WITH_PARENT_ID = SQL_COLUMN_PARENT_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_DLC_ID = SQL_COLUMN_DLC_KEY + " = ?";
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
-        // Returns /category/<_id>
-        public static Uri buildUriWithId( long _id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, _id );
-        }
-
-        // Returns /category/parent/<parent_id>
-        public static Uri buildUriWithParentId( long parent_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_CATEGORY_PARENT )
-                    .appendPath( Long.toString( parent_id ) ).build();
-        }
-
-        // Returns /category/dlc/<dlc_id>
-        public static Uri buildUriWithDLCId( long dlc_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_DLC )
-                    .appendPath( Long.toString( dlc_id ) ).build();
+        // Returns /category/#/dlc/#
+        public static Uri buildUriWithParentId( long dlc_id, long parent_id ) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath( Long.toString( parent_id ) )
+                    .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) )
+                    .build();
         }
 
         public static long getParentIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+            return Long.parseLong( uri.getPathSegments().get( 1 ) );
         }
 
         public static long getDLCIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+            return Long.parseLong( uri.getLastPathSegment() );
         }
     }
 
@@ -346,11 +272,6 @@ public class DatabaseContract {
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
-
-        // Returns /dlc/<_id>
-        public static Uri buildUriWithId( long id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, id );
-        }
     }
 
     // Inner class that defines the table contents of the composition table
@@ -390,42 +311,15 @@ public class DatabaseContract {
         public static final String SQL_QUERY_WITH_ENGRAM_KEY = SQL_COLUMN_ENGRAM_KEY + " = ?";
         public static final String SQL_QUERY_WITH_RESOURCE_KEY = SQL_COLUMN_RESOURCE_KEY + " = ?";
 
-        public static final String SQL_QUERY_WITH_RESOURCE_TABLE =
-                TABLE_NAME +
-                        " INNER JOIN " + EngramEntry.TABLE_NAME +
-                        " INNER JOIN " + ResourceEntry.TABLE_NAME + " ON " + ResourceEntry.SQL_COLUMN_ID + " = " + SQL_COLUMN_RESOURCE_KEY;
-        public static final String SQL_QUERY_WITH_RESOURCE_TABLE_SELECTION =
-                SQL_COLUMN_ENGRAM_KEY + " = " + EngramEntry.SQL_COLUMN_ID;
-        public static final String[] SQL_QUERY_WITH_RESOURCE_TABLE_PROJECTION = new String[]{
-                ResourceEntry.SQL_COLUMN_ID,
-                ResourceEntry.SQL_COLUMN_NAME,
-                ResourceEntry.SQL_COLUMN_DRAWABLE,
-                SQL_COLUMN_QUANTITY
-        };
-
-        // Returns /composition/<_id>
-        public static Uri buildUriWithId( Uri uri, long id ) {
-            return ContentUris.withAppendedId( uri, id );
-        }
-
-        // Returns /composition/engram/<engram_id>
+        // Returns /composition/engram/#
         public static Uri buildUriWithEngramId( long engram_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM )
+            return CONTENT_URI.buildUpon()
+                    .appendPath( PATH_ENGRAM )
                     .appendPath( Long.toString( engram_id ) ).build();
         }
 
-        // Returns /composition/resource/<resource_id>
-        public static Uri buildUriWithResourceId( long resource_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_RESOURCE )
-                    .appendPath( Long.toString( resource_id ) ).build();
-        }
-
         public static long getEngramIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
-        }
-
-        public static long getResourceIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+            return Long.parseLong( uri.getLastPathSegment() );
         }
     }
 
@@ -463,28 +357,24 @@ public class DatabaseContract {
                 EngramEntry.SQL_COLUMN_ID,
                 EngramEntry.SQL_COLUMN_NAME,
                 EngramEntry.SQL_COLUMN_DRAWABLE,
+                EngramEntry.SQL_COLUMN_YIELD,
                 SQL_COLUMN_QUANTITY
         };
         public static final String SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME = EngramEntry.SQL_COLUMN_NAME + " ASC";
-
-        // Returns /queue/<_id>
-        public static Uri buildUriWithId( long id ) {
-            return ContentUris.withAppendedId( CONTENT_URI, id );
-        }
-
-        // Returns /queue/engram/<engram_id>
-        public static Uri buildUriWithEngramId( long engram_id ) {
-            return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM )
-                    .appendPath( Long.toString( engram_id ) ).build();
-        }
 
         // Returns /queue/engram/
         public static Uri buildUriWithEngramTable() {
             return CONTENT_URI.buildUpon().appendPath( PATH_ENGRAM ).build();
         }
 
+        // Returns /queue/engram/#
+        public static Uri buildUriWithEngramId( long engram_id ) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath( PATH_ENGRAM ).appendPath( Long.toString( engram_id ) ).build();
+        }
+
         public static long getEngramIdFromUri( Uri uri ) {
-            return Long.parseLong( uri.getPathSegments().get( 2 ) );
+            return Long.parseLong( uri.getLastPathSegment() );
         }
     }
 

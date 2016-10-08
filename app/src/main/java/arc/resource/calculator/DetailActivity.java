@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,38 +91,38 @@ public class DetailActivity extends AppCompatActivity {
         resourceListAdapter = new ShowcaseResourceListAdapter( this, showcase.getQuantifiableComposition() );
 
         quantityEditText.setText( showcase.getQuantityText() );
-        quantityEditText.addTextChangedListener( new TextWatcher() {
-            @Override
-            public void beforeTextChanged( CharSequence s, int start, int count, int after ) {
-
-            }
-
-            @Override
-            public void onTextChanged( CharSequence s, int start, int before, int count ) {
-                if ( s.length() > 0 ) {
-                    int quantityFromText = Integer.parseInt( s.toString() );
-
-                    int quantityByYield = quantityFromText / showcase.getYield();
-
-                    if ( quantityByYield > Helper.MAX ) {
-                        quantityByYield = Helper.MAX / showcase.getYield();
-                        quantityEditText.setText( String.valueOf( quantityByYield ) );
-                    }
-
-                    quantityEditText.setSelection( quantityEditText.length() );
-
-                    showcase.setQuantity( quantityByYield / showcase.getYield() );
-
-                    resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
-                    resourceListAdapter.Refresh();
-                }
-            }
-
-            @Override
-            public void afterTextChanged( Editable s ) {
-
-            }
-        } );
+//        quantityEditText.addTextChangedListener( new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged( CharSequence s, int start, int count, int after ) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged( CharSequence s, int start, int before, int count ) {
+//                if ( s.length() > 0 ) {
+//                    int quantityFromText = Integer.parseInt( s.toString() );
+//
+//                    int quantityByYield = quantityFromText / showcase.getYield();
+//
+//                    if ( quantityByYield > Helper.MAX ) {
+//                        quantityByYield = Helper.MAX / showcase.getYield();
+//                        quantityEditText.setText( String.valueOf( quantityByYield ) );
+//                    }
+//
+//                    quantityEditText.setSelection( quantityEditText.length() );
+//
+//                    showcase.setQuantity( quantityByYield / showcase.getYield() );
+//
+//                    resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
+//                    resourceListAdapter.Refresh();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged( Editable s ) {
+//
+//            }
+//        } );
 
         decreaseButton.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -133,6 +131,9 @@ public class DetailActivity extends AppCompatActivity {
 
                 quantityEditText.setText( showcase.getQuantityText() );
                 quantityEditText.setSelection( quantityEditText.length() );
+
+                resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
+                resourceListAdapter.Refresh();
             }
         } );
 
@@ -143,6 +144,9 @@ public class DetailActivity extends AppCompatActivity {
 
                 quantityEditText.setText( showcase.getQuantityText() );
                 quantityEditText.setSelection( quantityEditText.length() );
+
+                resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
+                resourceListAdapter.Refresh();
             }
         } );
 
