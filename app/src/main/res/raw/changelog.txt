@@ -19,6 +19,14 @@
     </style>
   </head>
   <body>
+    $ 0.2.7a
+      % Version 0.2.7a
+      _ 10/08/2016
+      * Added Yield attribute for Engrams that produce more than 1 per craft. (If you notice one that's not right, please let me know!)
+      * Fixed quantity calculation formula for complex resources (currently only goes back 1 level, will work on this in future versions)
+      * Fixed Wooden Staircase not having an image.
+      ! In the process of adding Primitive+ DLC engrams (there's so many!) to app, so expect database initializations on every update until it's all added, sorry for the inconvenience. :) Will be adding Scorched Earth directly afterwards!
+
     $ 0.2.6a
       % Version 0.2.6a
       _ 10/05/2016

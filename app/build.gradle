@@ -15,8 +15,8 @@ android {
         applicationId 'arc.resource.calculator'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 26
-        versionName '0.2.6a'
+        versionCode 27
+        versionName '0.2.7a'
         signingConfig signingConfigs.config
     }
     buildTypes {

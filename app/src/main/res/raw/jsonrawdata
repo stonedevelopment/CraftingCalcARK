@@ -417,6 +417,18 @@
       "dlc_id": 1
     },
     {
+      "_id": 1003,
+      "name": "Crops",
+      "parent_id": 1000,
+      "dlc_id": 1
+    },
+    {
+      "_id": 1004,
+      "name": "Feces",
+      "parent_id": 1000,
+      "dlc_id": 1
+    },
+    {
       "_id": 1100,
       "name": "Dyes",
       "parent_id": 0,
@@ -973,8 +985,8 @@
       "dlc_id": 2
     },
     {
-      "name": "Fresh Cashew",
-      "drawable": "resources_plants_fresh_cashew",
+      "name": "Cashew",
+      "drawable": "resources_plants_cashew",
       "dlc_id": 2
     },
     {
@@ -1024,7 +1036,7 @@
     },
     {
       "name": "Honey",
-      "drawable": "resources_honey",
+      "drawable": "refined_honey",
       "dlc_id": 2
     },
     {
@@ -1055,6 +1067,11 @@
     {
       "name": "Dried Barley",
       "drawable": "refined_dried_barley",
+      "dlc_id": 2
+    },
+    {
+      "name": "Dried Tobacco",
+      "drawable": "refined_dried_tobacco",
       "dlc_id": 2
     },
     {
@@ -2177,6 +2194,20 @@
       "yield": 1
     },
     {
+      "name": "Ground Cashew",
+      "description": "",
+      "drawable": "consumables_crops_ground_cashew",
+      "category_id": 1003,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_cashew"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Bug Repellant",
       "description": "This gnarly paste makes you nearly invisible to bugs. Just don't attack them, and they'll ignore you! Effect lasts 10 minutes.",
       "drawable": "consumables_drugs_bug_repellant",
@@ -2653,6 +2684,350 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Amarberry Juice",
+      "description": "Amarberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_amarberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "amarberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Azulberry Juice",
+      "description": "Azulberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_azulberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "azulberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Baked Bread Loaf",
+      "description": "Sates your hunger, and provides health while being digested.",
+      "drawable": "consumables_food_baked_bread_loaf",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_dough"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Baked Honey Loaf",
+      "description": "Sates your hunger, and provides health while being digested.",
+      "drawable": "consumables_food_baked_honey_loaf",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_dough"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_honey"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Braggot Mead",
+      "description": "Alcoholic mead made from honey and malt.",
+      "drawable": "consumables_food_braggot_mead",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_honey"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Chicken and Rice",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_chicken_and_rice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_cooked_poultry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_cooked_rice"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Rice",
+      "description": "Cooked Rice that can be combined with other consumables.",
+      "drawable": "consumables_food_cooked_rice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "resources_plants_fresh_rice"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cup of Coffee",
+      "description": "This fresh cup of coffee refreshes your body like an oasis. Consume it to gain increased hyperthermic insulation, and slow your rate of food consumption. Effects last 15 minutes.",
+      "drawable": "consumables_food_cup_of_coffee",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "resources_plants_fresh_coffee_fruit"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cup of Tea",
+      "description": "This fresh cup of tea refreshes your body like an oasis. Consume it to gain increased hyperthermic insulation, and slow your rate of water consumption. Effects last 15 minutes.",
+      "drawable": "consumables_food_cup_of_tea",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_dried_tea_bags"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fermented Wine",
+      "description": "Wine courage!! Consume it do deal increased melee damage, and gain extra stamina regen. Effects last 15 minutes.",
+      "drawable": "consumables_food_fermented_wine",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "refined_cane_sugar"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_grape_juice"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fillet and Bread",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_fillet_and_bread",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_cooked_fish_fillet"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_baked_bread_loaf"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Grape Juice",
+      "description": "Grape juice made on the fruit press. Can be used to make wine.",
+      "drawable": "consumables_food_grape_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "resources_plants_grapes"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Mejoberry Juice",
+      "description": "Mejoberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_mejoberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Prime Salad",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_prime_salad",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "cooked_prime_meat"
+        },
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_cabbage"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Salad",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_salad",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "resources_plants_tomato"
+        },
+        {
+          "quantity": 5,
+          "drawable": "resources_plants_cabbage"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Stimbull Juice",
+      "description": "Stimbull juice made on the fruit press. The best drink for restoring your energy reserves!",
+      "drawable": "consumables_food_stimbull_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "stimberry"
+        },
+        {
+          "quantity": 10,
+          "drawable": "narcoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Tintoberry Juice",
+      "description": "Tintoberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_tintoberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "tintoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Tomato Juice",
+      "description": "Tomato juice made on the fruit press. Great for restoring your vitality!",
+      "drawable": "consumables_food_tomato_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "resources_plants_tomato"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_salt"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Wheat Beer",
+      "description": "Beer muscles!! Consume it to deal increased melee damage, and gain extra stamina regen. Effects last 15 minutes.",
+      "drawable": "consumables_food_wheat_beer",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "resources_plants_fresh_wheat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Bonemeal Fertilizer",
+      "description": "Bonemeal is a mixture of finely and coarsely ground animal bones and slaughter-house waste products. It is mainly used as an organic fertilizer for plants.",
+      "drawable": "consumables_feces_bonemeal_fertilizer",
+      "category_id": 1004,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "keratin"
+        },
+        {
+          "quantity": 3,
+          "drawable": "resources_meat_spoiled_meat"
+        },
+        {
+          "quantity": 5,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 3,
+          "drawable": "charcoal"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -3537,6 +3912,58 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Rowboat",
+      "description": "A floating wooden platform that you can pilot across the water. Can support the weight of structures and be built on.",
+      "drawable": "misc_rowboat",
+      "category_id": 100,
+      "composition": [
+        {
+          "quantity": 100,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 25,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 200,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 200,
+          "drawable": "refined_beeswax"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sailboat",
+      "description": "A boat you can pilot across the water. Faster than your average raft.",
+      "drawable": "misc_sailboat",
+      "category_id": 100,
+      "composition": [
+        {
+          "quantity": 125,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 75,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 500,
+          "drawable": "refined_wood_planks"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_steel_ingot"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -5818,6 +6245,28 @@
       "yield": 1
     },
     {
+      "name": "BattleAxe",
+      "description": "A mighty axe used for serious battles!",
+      "drawable": "weapons_melee_battleaxe",
+      "category_id": 306,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "refined_leather"
+        },
+        {
+          "quantity": 35,
+          "drawable": "refined_steel_ingot"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Metal Sword",
       "description": "The undisputed ruler of short-range combat. Needs a hotter flame to be forged.",
       "drawable": "primitive_melee_metal_sword",
@@ -5925,6 +6374,28 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Viking Axe",
+      "description": "A mighty battle axe wielded by the toughest of foes.",
+      "drawable": "primitive_melee_viking_axe",
+      "category_id": 3011,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "refined_steel_ingot"
+        },
+        {
+          "quantity": 15,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 1,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -6216,6 +6687,54 @@
       "yield": 1
     },
     {
+      "name": "Simple Hammock",
+      "description": "Thatch may not make the most comfortable mattress, but this bed acts as a respawn point for you and your Tribe.",
+      "drawable": "structures_beds_simple_hammock",
+      "category_id": 205,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 40,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 80,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 15,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Teepee",
+      "description": "Like a bed, this will allow your tribe a universal spawn point. But unlike a bed, no foundation required [sic]",
+      "drawable": "structures_beds_teepee",
+      "category_id": 205,
+      "composition": [
+        {
+          "quantity": 15,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 30,
+          "drawable": "refined_leather"
+        },
+        {
+          "quantity": 12,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Beer Barrel",
       "description": "Ferments tasty brew from Thatch, Water, and Berries",
       "drawable": "structures_cooking_beer_barrel",
@@ -6339,6 +6858,164 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Baker's Oven",
+      "description": "Perfect for baking delicious edibles!",
+      "drawable": "structures_cooking_bakers_oven",
+      "category_id": 204,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 25,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 50,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Big Bonfire",
+      "description": "The biggest and safest fire you can make. Requires a form of wood or crude oil as a fuel source.",
+      "drawable": "structures_cooking_big_bonfire",
+      "category_id": 204,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 35,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 100,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Big Campfire",
+      "description": "Perfect for cooking meat, staying warm, and providing light. Increased heat and light radius! Must use a form of wood as a fuel source.",
+      "drawable": "structures_cooking_big_campfire",
+      "category_id": 204,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 25,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 50,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Candles",
+      "description": "Perfect for cooking meat, staying warm, and providing light. Increased heat and light radius.",
+      "drawable": "structures_cooking_candles",
+      "category_id": 204,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "refined_beeswax"
+        },
+        {
+          "quantity": 5,
+          "drawable": "resources_iron"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cauldron",
+      "description": "Must contain basic fuel to light the fire. Put various ingredients with water in this to make soups, stews, and dyes.",
+      "drawable": "structures_cooking_cauldron",
+      "category_id": 204,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 5,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 25,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fermenting Barrel",
+      "description": "Combine malt as fuel with various items to make fermented beverages.",
+      "drawable": "structures_cooking_fermenting_barrel",
+      "category_id": 204,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 20,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Primitive Grill",
+      "description": "Perfect for cooking meat in bulk, staying warm, and providing light. Must use crude oil as a fuel source.",
+      "drawable": "structures_cooking_primitive_grill",
+      "category_id": 204,
+      "composition": [
+        {
+          "quantity": 125,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 5,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 10,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -6540,6 +7217,162 @@
       "yield": 1
     },
     {
+      "name": "Cement Mixer",
+      "description": "Before making cement structures, the cement must be mixed.",
+      "drawable": "structures_crafting_cement_mixer",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_steel_ingot"
+        },
+        {
+          "quantity": 10,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Construction Table",
+      "description": "Place materials along with blueprints in this to create tools.",
+      "drawable": "structures_crafting_construction_table",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 5,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fruit Press",
+      "description": "Used to convert berries into juice. This juice may be combines with other resources or drank on its own for its nutritional value.",
+      "drawable": "structures_crafting_fruit_press",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Grindstone",
+      "description": "This simple stone contraption can be used to grind resources into new substances.",
+      "drawable": "structures_crafting_grindstone",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Handmill",
+      "description": "This simple stone contraption can be used to grind resources into new substances.",
+      "drawable": "structures_crafting_handmill",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Station",
+      "description": "A station to convert wood longs to planks and beams.",
+      "drawable": "structures_crafting_lumber_station",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 120,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 40,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 100,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Modular Table",
+      "description": "Place items on this sturdy table (M&P, Lantern)",
+      "drawable": "structures_crafting_cement_mixer",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 10,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Well Bucket",
+      "description": "This bucket is used like a tap to gain access to a Water Well.",
+      "drawable": "structures_crafting_well_bucket",
+      "category_id": 206,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 2,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Bear Trap",
       "description": "Immobilizes humans and small creatures.",
       "drawable": "structures_defenses_bear_trap",
@@ -6619,6 +7452,50 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Deadfall Trap",
+      "description": "Kills small creatures so they may be harvested.",
+      "drawable": "structures_defenses_deadfall_trap",
+      "category_id": 213,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fish Trap",
+      "description": "Immobilizes small fish to harvest for meat.",
+      "drawable": "structures_defenses_fish_trap",
+      "category_id": 213,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -6823,7 +7700,7 @@
     },
     {
       "name": "Electrical Cable - Vertical",
-      "description": " vertical cable for transmitting electricity up and down cliffs.",
+      "description": "A vertical cable for transmitting electricity up and down cliffs.",
       "drawable": "structures_electrical_vertical_electrical_cable",
       "category_id": 215,
       "composition": [
@@ -6833,6 +7710,24 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Oil Tank",
+      "description": "A large machine that stores large amounts of oil.",
+      "drawable": "structures_electrical_oil_tank",
+      "category_id": 215,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "refined_steel_ingot"
+        },
+        {
+          "quantity": 25,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -7054,6 +7949,28 @@
       "yield": 1
     },
     {
+      "name": "Apiary",
+      "description": "The best place to put bees. Provides honey and beeswax over time when bees are present.",
+      "drawable": "structures_farming_apiary",
+      "category_id": 209,
+      "composition": [
+        {
+          "quantity": 12,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 75,
+          "drawable": "refined_wood_plank"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Gravestone",
       "description": "A simple unadorned stone headstone to mark a grave or commemorate a loved one.",
       "drawable": "furniture_stone_gravestone",
@@ -7069,6 +7986,42 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Bench",
+      "description": "A simpleand [sic] stylish wooden bench for group sitting.",
+      "drawable": "furniture_wood_lumber_bench",
+      "category_id": 2081,
+      "composition": [
+        {
+          "quantity": 45,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 150,
+          "drawable": "refined_wood_plank"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Chair",
+      "description": "A simple wooden bench for solo sitting.",
+      "drawable": "furniture_wood_lumber_chair",
+      "category_id": 2081,
+      "composition": [
+        {
+          "quantity": 14,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 50,
+          "drawable": "refined_wood_plank"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -7183,6 +8136,62 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Meat Preserving Shed",
+      "description": "Burns sparkpowder at low temperatures to dehydrate food and kill bacteria. Keeps perishables from spoiling for a longer time.",
+      "drawable": "structures_fridges_meat_preserving_shed",
+      "category_id": 211,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 60,
+          "drawable": "refined_wood_plank"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Smokehouse",
+      "description": "Burns sparkpowder at low temperatures to dehydrate food and kill bacteria. Keeps perishables from spoiling for a long time.",
+      "drawable": "structures_fridges_smokehouse",
+      "category_id": 211,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 60,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_brick"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -8024,6 +9033,24 @@
       "yield": 1
     },
     {
+      "name": "Steel Pillar",
+      "description": "This steel-plated concrete pillar adds structural integrity to the area it is build [sic] under. Can also act as stilts for buildings on inclines.",
+      "drawable": "structures_metal_steel_pillar",
+      "category_id": 212,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "refined_steel_ingot"
+        },
+        {
+          "quantity": 7,
+          "drawable": "refined_cementing_paste"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Metal Billboard",
       "description": "A large metal billboard for landmark navigation or relaying messages.",
       "drawable": "metal_signs_metal_billboard",
@@ -8075,6 +9102,24 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Steel Safebox",
+      "description": "A steel box to store valuables in.",
+      "drawable": "metal_storage_steel_safebox",
+      "category_id": 2122,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "refined_steel_ingot"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_cementing_paste"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -8410,6 +9455,24 @@
       "yield": 1
     },
     {
+      "name": "Steel Water Tower",
+      "description": "Attach this to pipes to store rain, irrigation, or manually deposited water for later use. Will automatically irrigate nearby crops if attached to a tap. Stores a large amount of water!",
+      "drawable": "pipes_metal_steel_water_tower",
+      "category_id": 2102,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 75,
+          "drawable": "refined_steel_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Stone Irrigation Pipe - Inclined",
       "description": "An inclined stone pipe for an irrigation network, used for transporting water up and down hills.",
       "drawable": "pipes_stone_stone_irrigation_pipe_inclined",
@@ -8513,6 +9576,20 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Well Chain",
+      "description": "A chain to attach to a well for fetching water.",
+      "drawable": "pipes_stone_well_chain",
+      "category_id": 2101,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -8997,6 +10074,232 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Ceiling",
+      "description": "A stable traditional adobe ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
+      "drawable": "structures_stone_adobe_ceiling",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "refined_clay"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Doorframe",
+      "description": "A traditional brick wall that provides entrance to a structure.",
+      "drawable": "structures_stone_adobe_doorframe",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_clay"
+        },
+        {
+          "quantity": 15,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Foundation",
+      "description": "A foundation is required to build structures in an area. This one is made from sturdy adobe.",
+      "drawable": "structures_stone_adobe_foundation",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 45,
+          "drawable": "refined_clay"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Wall",
+      "description": "A brick-and-mortar wall that provides the most insulation the inside from the outside and separates rooms.",
+      "drawable": "structures_stone_adobe_wall",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "refined_clay"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Windowframe",
+      "description": "A traditional brick wall with a hole for a window.",
+      "drawable": "structures_stone_adobe_windowframe",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_clay"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Big Stone Fence",
+      "description": "A big brick-and-mortar fence.",
+      "drawable": "structures_stone_big_stone_fence",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Concrete Ceiling",
+      "description": "A stable traditional concrete ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
+      "drawable": "structures_stone_adobe_ceiling",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 4,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Door",
+      "description": "A lumber door that provides entrance to a structure. Can be locked for security.",
+      "drawable": "structures_stone_lumber_door",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 28,
+          "drawable": "refined_wood_plank"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Reinforced Glass Door",
+      "description": "A reinforced glass door that provides entrance to structures. Can be locked for security.",
+      "drawable": "structures_stone_reinforced_glass_door",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 2,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Reinforced Glass Window",
+      "description": "Reinforced glass window covering to provide protection from projectiles and spying.",
+      "drawable": "structures_stone_reinforced_glass_window",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Cement Roof",
+      "description": "An inclined cement roof. Slightly different angle than the ramp.",
+      "drawable": "structures_stone_sloped_cement_roof",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Small Stone Fence",
+      "description": "A small brick-and-mortar fence.",
+      "drawable": "structures_stone_small_stone_fence",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Water Well",
+      "description": "Stores large amounts of rain water for later use. Cannot be attached to irrigation systems.",
+      "drawable": "structures_stone_water_well",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 120,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 20,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -9751,6 +11054,505 @@
       "dlc_id": 1,
       "yield": 1
     },
+
+    {
+      "name": "Big Fence Opening",
+      "description": "Used for a long opening in the big wood fence tier. Snappable!",
+      "drawable": "structures_wood_big_fence__opening",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Big Fence Post",
+      "description": "Used as a post section in the big wood fence tier. Snappable!",
+      "drawable": "structures_wood_big_fence__post",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Big Fence Section",
+      "description": "Used as a section in the big wood fence tier. Snappable!",
+      "drawable": "structures_wood_big_fence__section",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Firewood Holder",
+      "description": "Store bulk amounts of firewood and convert fresh firewood to dry firewood.",
+      "drawable": "structures_wood_firewood_holder",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lantern",
+      "description": "An oil lantern used to place on a market stall for night-time vending!",
+      "drawable": "structures_wood_lantern",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+
+    {
+      "name": "Left-Sloped Lumber Wall",
+      "description": "A sturdy wooden sloped wall that insulates the inside from the outside, seprarates [sic] rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "drawable": "structures_wood_left_sloped_lumber_wall",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 10,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Ceiling",
+      "description": "A stable lumber ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
+      "drawable": "structures_wood_lumber_ceiling",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Dino Gate",
+      "description": "A large lumber and stone gateway that can be used with a Gate to keep most dinosaurs in or out.",
+      "drawable": "structures_wood_lumber_dino_gate",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 100,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 40,
+          "drawable": "stone"
+        },
+         {
+          "quantity": 35,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 25,
+          "drawable": "fiber"
+        },
+         {
+          "quantity": 120,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Doorframe",
+      "description": "A lumber wall that provides entrance to a structure.",
+      "drawable": "structures_wood_lumber_doorframe",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 45,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 16,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Foundation",
+      "description": "A foundation is required to build structures in an area. This one is made from sturdy lumber.",
+      "drawable": "structures_wood_lumber_foundation",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 100,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 40,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Glass Ceiling",
+      "description": "A stable glass ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
+      "drawable": "structures_wood_lumber_glass_ceiling",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        }      ,
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }      ,
+        {
+          "quantity": 2,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Glass Pane",
+      "description": "A lumber wall that provides light.",
+      "drawable": "structures_wood_lumber_glass_pane",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 6,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Ramp",
+      "description": "A reinforced inclined lumber floor for traveling up or down levels.",
+      "drawable": "structures_wood_lumber_ramp",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Wall",
+      "description": "A sturdy lumber wall that insulates the inside from the outside, seprarates [sic] rooms, and provides structural integrity.",
+      "drawable": "structures_wood_lumber_wall",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 80,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Windowframe",
+      "description": "A lumber wall with a hole for a window.",
+      "drawable": "structures_wood_lumber_windowframe",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 45,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 16,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Miner's Box",
+      "description": "Bulk storage for stone, metal, flint, and ingots.",
+      "drawable": "structures_wood_miners_box",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 15,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Modern Storage Shelf",
+      "description": "Store bulk amounts of any item.",
+      "drawable": "structures_wood_modern_storage_shelf",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 80,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 40,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 8,
+          "drawable": "resources_iron"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Pontoon Bridge",
+      "description": "A primitive floating bridge that can be placed in water.",
+      "drawable": "structures_wood_pontoon_bridge",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 4,
+          "drawable": "refined_cementing_paste"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Right-Sloped Lumber Wall",
+      "description": "A sturdy lumber sloped wall that insulates the inside from the outside, seprarates [sic] rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "drawable": "structures_wood_right_sloped_lumber_wall",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 10,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Glass Roof",
+      "description": "An inclined glass roof. Slightly different angle than the ramp.",
+      "drawable": "structures_wood_sloped_glass_roof",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 15,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 2,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Lumber Glass Wall Right",
+      "description": "A sturdy lumber sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "drawable": "structures_wood_sloped_lumber_glass_wall_right",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Lumber Glass Wall Left",
+      "description": "A sturdy lumber sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "drawable": "structures_wood_sloped_lumber_glass_wall_left",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Lumber Roof",
+      "description": "An inclined lumber roof. Slightly different angle than the ramp.",
+      "drawable": "structures_wood_sloped_lumber_roof",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 100,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Table Lantern",
+      "description": "An oil lantern used to place on a modular table night-time light!",
+      "drawable": "structures_wood_table_lantern",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_glass"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Wood Handrail",
+      "description": "A sturdy lumber handrail for decorative purposes.",
+      "drawable": "structures_wood_wood_handrail",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 7,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Wood Storage Shed",
+      "description": "Store bulk amounts of wood and thatch.",
+      "drawable": "structures_wood_wood_storage_shed",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 80,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 40,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 8,
+          "drawable": "resources_iron"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+
     {
       "name": "Wooden Billboard",
       "description": "A large wooden billboard for landmark navigation or relaying messages.",
@@ -9817,6 +11619,30 @@
       "dlc_id": 1,
       "yield": 1
     },
+
+    {
+      "name": "Wooden Arrow Sign",
+      "description": "A simple wooden sign with an arrow for a landmark navigation or relaying messages.",
+      "drawable": "wood_signs_wooden_arrow_sign",
+      "category_id": 2021,
+      "composition": [
+        {
+          "quantity": 4,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 3,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+
     {
       "name": "Bookshelf",
       "description": "A large bookshelf to store Blueprints, Notes, and other small trinkets in.",
@@ -9907,6 +11733,551 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+
+    {
+      "name": "APS Mailbox",
+      "description": "Mailbox for the Federated Postal Service of ARK.",
+      "drawable": "wood_storage_aps_mailbox",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Barrel of Gunpowder",
+      "description": "A very tempermental [sic] primitive explosive. Has a slight chance of misfiring.",
+      "drawable": "wood_storage_barrel_of_gunpowder",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "refined_steel_ingot"
+        },
+        {
+          "quantity": 125,
+          "drawable": "refined_gunpowder"
+        },
+        {
+          "quantity": 60,
+          "drawable": "refined_sparkpowder"
+        },
+        {
+          "quantity": 10,
+          "drawable": "oil"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Covered Wooden Cabinet",
+      "description": "A wooden cabinet that's able to store a limited amount of items.",
+      "drawable": "wood_storage_covered_wooden_cabinet",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Storage Barrel",
+      "description": "A small barrel to store goods in.",
+      "drawable": "wood_storage_storage_barrel",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_iron_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Trading Crate",
+      "description": "A small box to trade goods in.",
+      "drawable": "wood_storage_trading_crate",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Trading Crate (Bread)",
+      "description": "A small box to trade goods in.",
+      "drawable": "wood_storage_trading_crate_bread",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Trading Crate (Eggs)",
+      "description": "A small box to trade goods in.",
+      "drawable": "wood_storage_trading_crate_eggs",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Trading Crate (Fruits & Veggies)",
+      "description": "A small box to trade goods in.",
+      "drawable": "wood_storage_trading_crate_fruits_veggies",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Weapon Rack",
+      "description": "Store your weapons and tools!",
+      "drawable": "wood_storage_weapon_rack",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Wooden Cabinet",
+      "description": "A wooden cabinet that's able to store a limited amount of items.",
+      "drawable": "wood_storage_covered_wooden_cabinet",
+      "category_id": 2022,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+
+    {
+      "name": "Preserving Campfire",
+      "description": "A primitive way of preserving meat and drying crops. Must use sparkpowder or a form of oil as a fuel source.",
+      "drawable": "wood_fridge_preserving_campfire",
+      "category_id": 2023,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 60,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 40,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+
+    {
+      "name": "Behemoth Brick Dinosaur Gateway",
+      "description": "A massive brick-and-mortar gateway that can be used for penning up huge dinosaurs.",
+      "drawable": "structures_brick_behemoth_brick_dinosaur_gateway",
+      "category_id": 223,
+      "composition": [
+        {
+          "quantity": 450,
+          "drawable": "refined_brick"
+        },
+        {
+          "quantity": 50,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 100,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Brick Doorframe",
+      "description": "A traditional brick wall that provides entrance to a structure.",
+      "drawable": "structures_brick_brick_doorframe",
+      "category_id": 223,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_brick"
+        },
+        {
+          "quantity": 5,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Brick Wall",
+      "description": "A brick-and-mortar styled wall that provides the most protection.",
+      "drawable": "structures_brick_brick_wall",
+      "category_id": 223,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "refined_brick"
+        },
+        {
+          "quantity": 2,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Brick Windowframe",
+      "description": "A traditional brick wall with a hole for a window.",
+      "drawable": "structures_brick_brick_windowframe",
+      "category_id": 223,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "refined_brick"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Brick Wall Left",
+      "description": "A sturdy brick sloped wall that provides protection. Used in conjuction with the roof.",
+      "drawable": "structures_brick_sloped_brick_wall_left",
+      "category_id": 223,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_brick"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 2,
+          "drawable": "refined_cementing_paste"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Brick Wall Right",
+      "description": "A sturdy brick sloped wall that provides protection. Used in conjuction with the roof.",
+      "drawable": "structures_brick_sloped_brick_wall_right",
+      "category_id": 223,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_brick"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 2,
+          "drawable": "refined_cementing_paste"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Concrete Foundation",
+      "description": "A foundation is required to build in an area. This one is made from traditional concrete.",
+      "drawable": "structures_concrete_concrete_foundation",
+      "category_id": 222,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Concrete Pillar",
+      "description": "Adds structural integrity to the area it is build {sic} on. Can also act as stilts for buildings on inclines.",
+      "drawable": "structures_concrete_concrete_pillar",
+      "category_id": 222,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Concrete Ramp",
+      "description": "An inclined concrete floor for travelling up or down levels. Can also be used to make an angled roof.",
+      "drawable": "structures_concrete_concrete_ramp",
+      "category_id": 222,
+      "composition": [
+        {
+          "quantity": 3,
+          "drawable": "refined_fresh_cement"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Lumber Pillar",
+      "description": "Adds structural integrity to the area it is built on. Can also act as stilts for buildings on inclines.",
+      "drawable": "structures_concrete_lumber_pillar",
+      "category_id": 222,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Brazier",
+      "description": "Increased heating and light radius!",
+      "drawable": "structures_heating_brazier",
+      "category_id": 224,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 10,
+          "drawable": "refined_steel_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Ceiling Lamp",
+      "description": "This snappable hanging torch will attach to ceilings. This torch only uses oil and sparkpowder.",
+      "drawable": "structures_lighting_ceiling_lamp",
+      "category_id": 221,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "refined_iron_ingot"
+        },
+        {
+          "quantity": 1,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 5,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Steel Handrail",
+      "description": "A sturdy steel handrail for decorative purposes.",
+      "drawable": "structures_steel_steel_handrail",
+      "category_id": 220,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_steel_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Tanning Rack",
+      "description": "Use salt and hide to make leather!",
+      "drawable": "structures_tools_tanning_rack",
+      "category_id": 217,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 20,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Windmill",
+      "description": "Mill your custom grains.",
+      "drawable": "structures_tools_windmill",
+      "category_id": 217,
+      "composition": [
+        {
+          "quantity": 120,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 200,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_steel_ingot"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Market Stall",
+      "description": "This market stall can travel with you. You may place trading crates that can be picked up. The stall itself can also be picked up.",
+      "drawable": "structures_trading_market_stall",
+      "category_id": 218,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "refined_wood_plank"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_leather"
+        }
+      ],
+      "dlc_id": 2,
       "yield": 1
     },
     {
@@ -11054,6 +13425,20 @@
       "yield": 1
     },
     {
+      "name": "Dried Tobacco",
+      "description": "May be rolled with a note. When you're having on [sic] of those days.",
+      "drawable": "refined_dried_tobacco",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_fresh_tobacco"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
       "name": "Dry Firewood",
       "description": "Soft clay that has been heated in a forge to make hard brick.",
       "drawable": "refined_dry_firewood",
@@ -11306,6 +13691,52 @@
         {
           "quantity": 1,
           "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Beeswax",
+      "description": "Natural wax produced by honey bees. A very effective binding agent with many uses.",
+      "drawable": "refined_beeswax",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "resources_bees_worker_bee"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Honey",
+      "description": "Sweet food made by bees foraging nectar from flowers. Bees must be kept in an apiary to produce honey.",
+      "drawable": "refined_honey",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "resources_bees_worker_bee"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cigarette",
+      "description": "When you're having one of those days! Drastically reduces hunger but increses [sic] oxygen consumption. Effects last 30 minutes.",
+      "drawable": "luxuries_cigarette",
+      "category_id": 1400,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "misc_note"
+        },
+        {
+          "quantity": 5,
+          "drawable": "refined_dried_tobacco"
         }
       ],
       "dlc_id": 2,
