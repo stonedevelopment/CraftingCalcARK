@@ -110,7 +110,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 
         private ProgressData mProgressData;
 
-        public ParseInsertTask( Context context ) {
+        ParseInsertTask( Context context ) {
             this.mContext = context;
         }
 
@@ -122,6 +122,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 
             progressBar.setMax( mProgressData.getMax() );
             progressBar.setProgress( mProgressData.getProgress() );
+
         }
 
         @Override
@@ -197,6 +198,7 @@ public class LoadScreenActivity extends AppCompatActivity {
         }
 
         void deleteAllRecordsFromProvider() {
+            delete( DatabaseContract.DLCEntry.CONTENT_URI );
             delete( DatabaseContract.ResourceEntry.CONTENT_URI );
             delete( DatabaseContract.ComplexResourceEntry.CONTENT_URI );
             delete( DatabaseContract.CompositionEntry.CONTENT_URI );
@@ -354,11 +356,13 @@ public class LoadScreenActivity extends AppCompatActivity {
                 Uri insertUri = getContext().getContentResolver().insert( DatabaseContract.EngramEntry.CONTENT_URI, values );
                 long engramId = DatabaseContract.getIdFromUri( insertUri );
 
+//                Log.v( TAG, "** insertComposition: " + values.toString() );
+
                 insertComposition( engramId, jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME ) );
             }
         }
 
-        void insertComposition( long engramId, JSONArray jsonArray ) throws JSONException {
+        void insertComposition( long engram_id, JSONArray jsonArray ) throws JSONException {
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
@@ -371,21 +375,58 @@ public class LoadScreenActivity extends AppCompatActivity {
                         null, null, null, null
                 );
 
-                if ( cursor != null && cursor.getCount() > 0 ) {
-                    cursor.moveToFirst();
+                if ( cursor == null ) {
+                    continue;
+                }
 
-                    long resourceId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ResourceEntry._ID ) );
+                long resource_id = 0;
+                if ( cursor.moveToFirst() ) {
+                    resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ResourceEntry._ID ) );
 
                     cursor.close();
+                } else {
+                    Log.e( TAG, " -! Resource not found, adding Engram as resource, drawable: " + drawable );
 
+                    cursor = getContext().getContentResolver().query(
+                            DatabaseContract.EngramEntry.buildUriWithDrawable( drawable ),
+                            null, null, null, null
+                    );
+
+                    if ( cursor == null ) {
+                        Log.e( TAG, "   -- cursor == null" );
+                        continue;
+                    }
+
+                    if ( cursor.moveToFirst() ) {
+                        String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
+                        long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DLC_KEY ) );
+
+                        cursor.close();
+
+                        // Add Engram as resource
+                        ContentValues values = new ContentValues();
+                        values.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
+                        values.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, drawable );
+                        values.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, dlc_id );
+
+//                        Log.v( TAG, "   -- " + values.toString() );
+
+                        Uri uri = getContext().getContentResolver().insert( DatabaseContract.ResourceEntry.CONTENT_URI, values );
+                        resource_id = DatabaseContract.getIdFromUri( uri );
+                    } else {
+                        Log.e( TAG, "   -- moveToFirst() did not fire" );
+                    }
+                }
+
+                if ( resource_id > 0 ) {
                     ContentValues values = new ContentValues();
-                    values.put( DatabaseContract.CompositionEntry.COLUMN_ENGRAM_KEY, engramId );
-                    values.put( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY, resourceId );
+                    values.put( DatabaseContract.CompositionEntry.COLUMN_ENGRAM_KEY, engram_id );
+                    values.put( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY, resource_id );
                     values.put( DatabaseContract.CompositionEntry.COLUMN_QUANTITY, quantity );
 
                     getContext().getContentResolver().insert( DatabaseContract.CompositionEntry.CONTENT_URI, values );
                 } else {
-                    Log.e( TAG, "empty cursor, drawable: " + drawable );
+                    Log.e( TAG, "   -- insertComposition Failed: engram_id: " + engram_id + ", drawable: " + drawable );
                 }
             }
         }

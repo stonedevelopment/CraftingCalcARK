@@ -32,10 +32,6 @@ public class Helper {
     public static final String DETAIL_SAVE = "DETAIL_SAVE";
 
     // Preference key constants
-    public static final String ENGRAM_VERSION = "ENGRAM_VERSION";
-    public static final String CATEGORY_VERSION = "CATEGORY_VERSION";
-    public static final String RESOURCE_VERSION = "RESOURCE_VERSION";
-    public static final String COMPLEX_RESOURCE_VERSION = "COMPLEX_RESOURCE_VERSION";
     public static final String APP_LEVEL = "APP_LEVEL";
     public static final String APP_PARENT = "APP_PARENT";
 
@@ -45,6 +41,9 @@ public class Helper {
     // Min and Max quantity allowed
     public static final int MIN = 0;
     public static final int MAX = 1000;
+
+    public static final int DLC_VANILLA_ID = 1;
+    public static final int DLC_PRIMITIVE_PLUS_ID = 2;
 
     public static void Log(String tag, String message) {
         if (isDebug) Log.d(tag, message);

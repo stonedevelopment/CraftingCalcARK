@@ -21,6 +21,10 @@
   </head>
   <body>
     $ START_OF_HELP_FILE
+      % Change DLC Version
+      * Click menu (top right).
+      * Click Change DLC.
+      * Click desired DLC version.
       % Increasing Quantities
       * To increase quantity by 1: Single click any Engram thumbnail.
       * Adjust to any quantity: Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, adjust the dial to desired quantity, then press the Add/Update button.
@@ -30,7 +34,7 @@
       % Remove Engram From Queue
       * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, press the Remove From Queue button.
       % Clear the Crafting Queue
-      * Click the Menu button (top-right of screen), then click Clear Crafting Queue.
+      * Click the Clear Queue button below the Crafting Queue Resources list.
     $ END_OF_HELP_FILE
   </body>
 </html>

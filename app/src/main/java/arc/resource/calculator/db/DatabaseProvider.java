@@ -28,6 +28,7 @@ import arc.resource.calculator.db.DatabaseContract.DLCEntry;
 import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
+import arc.resource.calculator.helpers.Helper;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
@@ -84,6 +85,7 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM, ENGRAM );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/#", ENGRAM_ID );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_DLC + "/#", ENGRAM_WITH_DLC );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_DRAWABLE + "/*", ENGRAM_WITH_DRAWABLE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" + DatabaseContract.PATH_CATEGORY + "/#/" + DatabaseContract.PATH_DLC + "/#", ENGRAM_WITH_CATEGORY );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE, QUEUE );
@@ -213,11 +215,23 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case CATEGORY_WITH_PARENT:
-                selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID + " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_ID;
-                selectionArgs = new String[]{
-                        Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
-                        Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
-                };
+                if ( CategoryEntry.getDLCIdFromUri( uri ) == Helper.DLC_VANILLA_ID ) {
+                    selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID + " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
+                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                    };
+                } else {
+                    selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID + " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEYS;
+                    selectionArgs = new String[]{
+                            Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
+                            Long.toString( Helper.DLC_VANILLA_ID ),
+                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                    };
+                }
+
+                Helper.Log( TAG, selection );
+
                 sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = CategoryEntry.TABLE_NAME;
                 break;
@@ -247,20 +261,40 @@ public class DatabaseProvider extends ContentProvider {
                 break;
 
             case ENGRAM_WITH_CATEGORY:
-                selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY + " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
+                if ( EngramEntry.getDLCIdFromUri( uri ) == Helper.DLC_VANILLA_ID ) {
+                    selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_AND_VANILLA_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                } else {
+                    selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_AND_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
+                            Long.toString( Helper.DLC_VANILLA_ID ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                }
+
+                Helper.Log( TAG, selection );
+
                 sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = EngramEntry.TABLE_NAME;
                 break;
 
             case ENGRAM_WITH_DLC:
-                selection = EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
+                if ( EngramEntry.getDLCIdFromUri( uri ) == Helper.DLC_VANILLA_ID ) {
+                    selection = EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                } else {
+                    selection = EngramEntry.SQL_QUERY_WITH_DLC_KEYS;
+                    selectionArgs = new String[]{
+                            Long.toString( Helper.DLC_VANILLA_ID ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                }
                 sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                 tableName = EngramEntry.TABLE_NAME;
                 break;

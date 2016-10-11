@@ -20,6 +20,7 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
+import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
@@ -311,11 +312,14 @@ public class DisplayCase {
     }
 
     private SparseArray<Category> getCategories() {
+        PreferenceHelper preferenceHelper = new PreferenceHelper( getContext() );
+        long dlcId = preferenceHelper.getIntPreference( getContext().getString( R.string.pref_dlc_setting ) );
+
         SparseArray<Category> categories = new SparseArray<>();
 
         if ( isFiltered() ) {
             Cursor cursor = getContext().getContentResolver().query(
-                    DatabaseContract.CategoryEntry.buildUriWithParentId( Helper.DLC_ID, getLevel() ),
+                    DatabaseContract.CategoryEntry.buildUriWithParentId( dlcId, getLevel() ),
                     null, null, null, null );
 
             if ( cursor == null ) {
@@ -345,11 +349,14 @@ public class DisplayCase {
     }
 
     private SparseArray<DisplayEngram> getEngrams() {
+        PreferenceHelper preferenceHelper = new PreferenceHelper( getContext() );
+        long dlcId = preferenceHelper.getIntPreference( getContext().getString( R.string.pref_dlc_setting ) );
+
         Uri uri;
         if ( isFiltered() ) {
-            uri = DatabaseContract.EngramEntry.buildUriWithCategoryId( Helper.DLC_ID, getLevel() );
+            uri = DatabaseContract.EngramEntry.buildUriWithCategoryId( dlcId, getLevel() );
         } else {
-            uri = DatabaseContract.EngramEntry.buildUriWithDLCId( Helper.DLC_ID );
+            uri = DatabaseContract.EngramEntry.buildUriWithDLCId( dlcId );
         }
 
         Cursor cursor = getContext().getContentResolver().query(
@@ -413,7 +420,7 @@ public class DisplayCase {
         Helper.Log( TAG, "-- Display completed." );
     }
 
-    private void UpdateData() {
+    public void UpdateData() {
         mEngrams = getEngrams();
         mCategories = getCategories();
         mQueues = getQueues();

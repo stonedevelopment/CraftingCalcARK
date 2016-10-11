@@ -426,7 +426,7 @@
       "_id": 1004,
       "name": "Feces",
       "parent_id": 1000,
-      "dlc_id": 1
+      "dlc_id": 2
     },
     {
       "_id": 1100,
@@ -525,16 +525,6 @@
       "dlc_id": 1
     },
     {
-      "name": "Electronics",
-      "drawable": "composites_electronics",
-      "dlc_id": 1
-    },
-    {
-      "name": "Polymer",
-      "drawable": "composites_polymer",
-      "dlc_id": 1
-    },
-    {
       "name": "Compy Egg",
       "drawable": "compy_egg",
       "dlc_id": 1
@@ -547,41 +537,6 @@
     {
       "name": "Stimulant",
       "drawable": "consumables_drugs_stimulant",
-      "dlc_id": 1
-    },
-    {
-      "name": "Cooked Fish Meat",
-      "drawable": "cooked_fish_meat",
-      "dlc_id": 1
-    },
-    {
-      "name": "Cooked Meat",
-      "drawable": "cooked_meat",
-      "dlc_id": 1
-    },
-    {
-      "name": "Cooked Meat Jerky",
-      "drawable": "cooked_meat_jerky",
-      "dlc_id": 1
-    },
-    {
-      "name": "Cooked Meat or Fish Meat",
-      "drawable": "cooked_meat_or_fish_meat",
-      "dlc_id": 1
-    },
-    {
-      "name": "Cooked Meat or Cooked Meat Jerky",
-      "drawable": "cooked_meat_or_jerky",
-      "dlc_id": 1
-    },
-    {
-      "name": "Cooked Prime Meat",
-      "drawable": "cooked_prime_meat",
-      "dlc_id": 1
-    },
-    {
-      "name": "Cooked Prime Meat or Prime Meat Jerky",
-      "drawable": "cooked_prime_meat_or_prime_jerky",
       "dlc_id": 1
     },
     {
@@ -710,11 +665,6 @@
       "dlc_id": 1
     },
     {
-      "name": "Prime Meat Jerky",
-      "drawable": "prime_meat_jerky",
-      "dlc_id": 1
-    },
-    {
       "name": "Pteranodon Egg",
       "drawable": "pteranodon_egg",
       "dlc_id": 1
@@ -751,57 +701,32 @@
     },
     {
       "name": "Raw Meat",
-      "drawable": "raw_meat",
+      "drawable": "resources_meat_raw_meat",
       "dlc_id": 1
     },
     {
       "name": "Raw Prime Meat",
-      "drawable": "raw_prime_meat",
+      "drawable": "resources_meat_raw_prime_meat",
       "dlc_id": 1
     },
     {
-      "name": "Absorbent Substrate",
-      "drawable": "refined_absorbent_substrate",
+      "name": "Raw Fish Meat",
+      "drawable": "resources_meat_raw_fish_meat",
       "dlc_id": 1
     },
     {
-      "name": "Beer Liquid",
-      "drawable": "refined_beer_liquid",
+      "name": "Cooked Meat or Fish Meat",
+      "drawable": "consumables_food_cooked_meat_or_fish_meat",
       "dlc_id": 1
     },
     {
-      "name": "Cementing Paste",
-      "drawable": "refined_cementing_paste",
+      "name": "Cooked Meat or Meat Jerky",
+      "drawable": "consumables_food_cooked_meat_or_jerky",
       "dlc_id": 1
     },
     {
-      "name": "Charcoal",
-      "drawable": "refined_charcoal",
-      "dlc_id": 1
-    },
-    {
-      "name": "Fertilizer",
-      "drawable": "refined_fertilizer",
-      "dlc_id": 1
-    },
-    {
-      "name": "Gasoline",
-      "drawable": "refined_gasoline",
-      "dlc_id": 1
-    },
-    {
-      "name": "Gunpowder",
-      "drawable": "refined_gunpowder",
-      "dlc_id": 1
-    },
-    {
-      "name": "Metal Ingot",
-      "drawable": "refined_metal_ingot",
-      "dlc_id": 1
-    },
-    {
-      "name": "Sparkpowder",
-      "drawable": "refined_sparkpowder",
+      "name": "Cooked Prime Meat or Prime Meat Jerky",
+      "drawable": "consumables_food_cooked_prime_meat_or_prime_jerky",
       "dlc_id": 1
     },
     {
@@ -885,54 +810,14 @@
       "dlc_id": 1
     },
     {
-      "name": "Simple Rifle Ammo",
-      "drawable": "weapons_ammo_simple_rifle_ammo",
-      "dlc_id": 1
-    },
-    {
-      "name": "Stone Arrow",
-      "drawable": "weapons_ammo_stone_arrow",
-      "dlc_id": 1
-    },
-    {
       "name": "Wood",
       "drawable": "wood",
-      "dlc_id": 1
-    },
-    {
-      "name": "Water Jar",
-      "drawable": "misc_water_jar",
       "dlc_id": 1
     },
     {
       "name": "Woolly Rhino Horn",
       "drawable": "woolly_rhino_horn",
       "dlc_id": 1
-    },
-    {
-      "name": "Cooked Bacon",
-      "drawable": "resources_meat_cooked_bacon",
-      "dlc_id": 2
-    },
-    {
-      "name": "Cooked Fish Fillet",
-      "drawable": "resources_meat_cooked_bacon",
-      "dlc_id": 2
-    },
-    {
-      "name": "Cooked Poultry",
-      "drawable": "resources_meat_cooked_poultry",
-      "dlc_id": 2
-    },
-    {
-      "name": "Cooked Spare Ribs",
-      "drawable": "resources_meat_cooked_spare_ribs",
-      "dlc_id": 2
-    },
-    {
-      "name": "Cured Bacon",
-      "drawable": "resources_meat_cured_bacon",
-      "dlc_id": 2
     },
     {
       "name": "Fresh Bacon",
@@ -1035,11 +920,6 @@
       "dlc_id": 2
     },
     {
-      "name": "Honey",
-      "drawable": "refined_honey",
-      "dlc_id": 2
-    },
-    {
       "name": "Iron",
       "drawable": "resources_iron",
       "dlc_id": 2
@@ -1050,57 +930,1638 @@
       "dlc_id": 2
     },
     {
-      "name": "Clay",
-      "drawable": "refined_clay",
+      "name": "Drone Bee",
+      "drawable": "resources_bees_drone_bee",
       "dlc_id": 2
     },
     {
-      "name": "Fresh Sugar Juice Bucket",
-      "drawable": "refined_fresh_sugar_juice_bucket",
+      "name": "Queen Bee",
+      "drawable": "resources_bees_queen_bee",
       "dlc_id": 2
     },
     {
-      "name": "Ground Cashew",
-      "drawable": "consumables_crops_ground_cashew",
-      "dlc_id": 2
-    },
-    {
-      "name": "Dried Barley",
-      "drawable": "refined_dried_barley",
-      "dlc_id": 2
-    },
-    {
-      "name": "Dried Tobacco",
-      "drawable": "refined_dried_tobacco",
-      "dlc_id": 2
-    },
-    {
-      "name": "Fresh Firewood",
-      "drawable": "refined_fresh_firewood",
-      "dlc_id": 2
-    },
-    {
-      "name": "Natural Yeast",
-      "drawable": "refined_natural_yeast",
-      "dlc_id": 2
-    },
-    {
-      "name": "Salt",
-      "drawable": "refined_salt",
-      "dlc_id": 2
-    },
-    {
-      "name": "Sack of Flour",
-      "drawable": "refined_sack_of_flour",
-      "dlc_id": 2
-    },
-    {
-      "name": "Dried Wheat",
-      "drawable": "refined_dried_wheat",
+      "name": "Worker Bee",
+      "drawable": "resources_bees_worker_bee",
       "dlc_id": 2
     }
   ],
   "engram": [
+    {
+      "name": "Absorbent Substrate",
+      "description": "This sticky compound excels at absorbing other chemicals.",
+      "drawable": "refined_absorbent_substrate",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 8,
+          "drawable": "black_pearl"
+        },
+        {
+          "quantity": 8,
+          "drawable": "oil"
+        },
+        {
+          "quantity": 8,
+          "drawable": "sap"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Beer Liquid",
+      "description": "Put it in a glass jar to drink it!",
+      "drawable": "refined_beer_liquid",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "berries"
+        },
+        {
+          "quantity": 40,
+          "drawable": "thatch"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Cementing Paste",
+      "description": "Paste created at Mortar and Pestle.",
+      "drawable": "refined_cementing_paste",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 4,
+          "drawable": "chitin_or_keratin"
+        },
+        {
+          "quantity": 8,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Charcoal",
+      "description": "Created by burning wood.",
+      "drawable": "refined_charcoal",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Fertilizer",
+      "description": "A fertilizer high in nitrogen. Use this to help your crops grow.",
+      "drawable": "refined_fertilizer",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 3,
+          "drawable": "feces"
+        },
+        {
+          "quantity": 50,
+          "drawable": "thatch"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Gasoline",
+      "description": "An advanced fuel. Can only be used in machines designed to consume it.",
+      "drawable": "refined_gasoline",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 3,
+          "drawable": "oil"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Metal Ingot",
+      "description": "Created by refining metal ore in a forge.",
+      "drawable": "refined_metal_ingot",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "metal_ore"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Sparkpowder",
+      "description": "Created by grinding flint with stone in a Mortar and Pestle.",
+      "drawable": "refined_sparkpowder",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 1,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Gunpowder",
+      "description": "A powerful propellant. Necessary for any firearm or explosive.",
+      "drawable": "refined_gunpowder",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_charcoal"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_sparkpowder"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Clay",
+      "description": "Clay that has been formed from grinding claystone and limestone on a handmill.",
+      "drawable": "refined_clay",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "resources_claystone"
+        },
+        {
+          "quantity": 10,
+          "drawable": "resources_limestone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Brick",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_brick",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_clay"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fresh Sugar Juice Bucket",
+      "description": "Sugar juice pressed on the sugar press. Must be used with cauldron to make sugar.",
+      "drawable": "refined_fresh_sugar_juice_bucket",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "resources_plants_fresh_sugar_plant"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cane Sugar",
+      "description": "Refined sugar made from a sugarcane plant and boiling over a cauldron.",
+      "drawable": "refined_cane_sugar",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_sugar_juice_bucket"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Ground Cashew",
+      "description": "",
+      "drawable": "consumables_crops_ground_cashew",
+      "category_id": 1003,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_cashew"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cashew Milk",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_cashew_milk",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "consumables_crops_ground_cashew"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Dried Barley",
+      "description": "Barley that's been dried for the purpose of making malt!",
+      "drawable": "refined_dried_barley",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_fresh_barley"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cup of Malt",
+      "description": "Made from dried barley and boiling water. Used for alcoholic beverages.",
+      "drawable": "refined_cup_of_malt",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "refined_dried_barley"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Dried Tea Bags",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_dried_tea_bags",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "resources_plants_fresh_tea_leaves"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 5
+    },
+    {
+      "name": "Dried Wheat",
+      "description": "Harvested from a wheat plant and dried on a preserving hut. It can be used to make flour.",
+      "drawable": "refined_dried_wheat",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_fresh_wheat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Sack of Flour",
+      "description": "Refined flour made from wheat and a handmill.",
+      "drawable": "refined_sack_of_flour",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_dried_wheat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Dried Tobacco",
+      "description": "May be rolled with a note. When you're having on [sic] of those days.",
+      "drawable": "refined_dried_tobacco",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_fresh_tobacco"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fresh Firewood",
+      "description": "If this firewood is left to dry, it will have a longer burning time.",
+      "drawable": "refined_fresh_firewood",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Dry Firewood",
+      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "drawable": "refined_dry_firewood",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_firewood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fish Bait",
+      "description": "Lure for the fishing trap.",
+      "drawable": "refined_fish_bait",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_poultry"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 5
+    },
+    {
+      "name": "Fresh Cement",
+      "description": "Fresh cement that cen [sic] be formed into and used to build larger structures.",
+      "drawable": "refined_fresh_cement",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 2,
+          "drawable": "resources_limestone"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Natural Yeast",
+      "description": "Made from dough at a baking station. Used for baking various goods.",
+      "drawable": "refined_natural_yeast",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_sack_of_flour"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fresh Dough",
+      "description": "Fresh dough made from flour on the baking station.",
+      "drawable": "refined_fresh_dough",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_sack_of_flour"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_natural_yeast"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Glass",
+      "description": "Glass that has been heated in a forge to make a clear surface.",
+      "drawable": "refined_glass",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "silica_pearls"
+        },
+        {
+          "quantity": 5,
+          "drawable": "crystal"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Iron Ingot",
+      "description": "Created by refining iron ore in a forge.",
+      "drawable": "refined_iron_ingot",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "resources_iron"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Salt",
+      "description": "Refined salt made from crystal and a grain wheel.",
+      "drawable": "refined_salt",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "crystal"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Leather",
+      "description": "A thick piece of skin, hacked from a dead animal then cured on a tanning rack.",
+      "drawable": "refined_leather",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_salt"
+        },
+        {
+          "quantity": 5,
+          "drawable": "hide"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Organic Oil (from seeds)",
+      "description": "Oil made from grinding plant seed. Less dense than oil harvested from the sea.",
+      "drawable": "refined_organic_oil",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "resources_seeds"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Organic Oil (from fat)",
+      "description": "Oil made from heating animal fat. Less dense than oil harvested from the sea.",
+      "drawable": "refined_organic_oil",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 15,
+          "drawable": "resources_meat_fresh_fat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Steel Ingot",
+      "description": "Created by refining iron ore and carbon in a forge.",
+      "drawable": "refined_steel_ingot",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "resources_carbon"
+        },
+        {
+          "quantity": 2,
+          "drawable": "resources_iron"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Trap Bait",
+      "description": "Lure for the deadfall trap.",
+      "drawable": "refined_trap_bait",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_meat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 5
+    },
+    {
+      "name": "Wood Plank",
+      "description": "Timber that is flat, elongated, and rectangular mainly used in construction.",
+      "drawable": "refined_wood_plank",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Beeswax",
+      "description": "Natural wax produced by honey bees. A very effective binding agent with many uses.",
+      "drawable": "refined_beeswax",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "resources_bees_worker_bee"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Honey",
+      "description": "Sweet food made by bees foraging nectar from flowers. Bees must be kept in an apiary to produce honey.",
+      "drawable": "refined_honey",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 7,
+          "drawable": "resources_bees_worker_bee"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Electronics",
+      "description": "This multipurpose computer chip can be used to create electronic devices.",
+      "drawable": "composites_electronics",
+      "category_id": 900,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 3,
+          "drawable": "silica_pearls"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Polymer",
+      "description": "These incredibly strong, lightweight plates can be shaped and then heat treated into casings for anything.",
+      "drawable": "composites_polymer",
+      "category_id": 900,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "obsidian"
+        },
+        {
+          "quantity": 2,
+          "drawable": "refined_cementing_paste"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Narcotic",
+      "description": "Increases your health, but puts you to sleep.",
+      "drawable": "consumables_drugs_narcotic",
+      "category_id": 1001,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "narcoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_spoiled_meat"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Stimulant",
+      "description": "Keeps you awake, but dehydrates you.",
+      "drawable": "consumables_drugs_stimulant",
+      "category_id": 1001,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "refined_sparkpowder"
+        },
+        {
+          "quantity": 5,
+          "drawable": "stimberry"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Bug Repellant",
+      "description": "This gnarly paste makes you nearly invisible to bugs. Just don't attack them, and they'll ignore you! Effect lasts 10 minutes.",
+      "drawable": "consumables_drugs_bug_repellant",
+      "category_id": 1001,
+      "composition": [
+        {
+          "quantity": 4,
+          "drawable": "citronal"
+        },
+        {
+          "quantity": 2,
+          "drawable": "consumables_drugs_narcotic"
+        },
+        {
+          "quantity": 6,
+          "drawable": "pelt"
+        },
+        {
+          "quantity": 4,
+          "drawable": "rockarrot"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Lesser Antidote",
+      "description": "Cures Lesser Afflictions!",
+      "drawable": "consumables_drugs_lesser_antidote",
+      "category_id": 1001,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "consumables_drugs_narcotic"
+        },
+        {
+          "quantity": 5,
+          "drawable": "leech_blood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "rare_flower"
+        },
+        {
+          "quantity": 10,
+          "drawable": "rare_mushroom"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Battle Tartare",
+      "description": "Only eat this dish when you intend to go into a brawl. It causes pain and stress to your body, but grants you almost supernatural strength, speed, and resilience. Warning: This concoction can be habit forming.",
+      "drawable": "consumables_food_battle_tartare",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "citronal"
+        },
+        {
+          "quantity": 8,
+          "drawable": "consumables_drugs_stimulant"
+        },
+        {
+          "quantity": 1,
+          "drawable": "longrass"
+        },
+        {
+          "quantity": 20,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 2,
+          "drawable": "rare_flower"
+        },
+        {
+          "quantity": 3,
+          "drawable": "resources_meat_raw_prime_meat"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Fish Meat",
+      "description": "Sates your hunger SLIGHTLY, and provides health while being digested. Wild carnivores will eat it, but prefer raw meat.",
+      "drawable": "consumables_food_cooked_fish_meat",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_raw_fish_meat"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Meat",
+      "description": "Sates your hunger and provides health while being digested. Wild carnivores will eat it, but prefer raw meat.",
+      "drawable": "consumables_food_cooked_meat",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_raw_meat"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Meat Jerky",
+      "description": "Sates your hunger and provides health while being digested. Wild carnivores will eat it, but prefer raw meat.",
+      "drawable": "consumables_food_cooked_meat_jerky",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_cooked_meat"
+        },
+        {
+          "quantity": 1,
+          "drawable": "oil"
+        },
+        {
+          "quantity": 3,
+          "drawable": "refined_sparkpowder"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Prime Meat",
+      "description": "Sates your hunger, and provides health while being digested. More effective than normal meat. Wild Carnivores like this meat a lot.",
+      "drawable": "consumables_food_cooked_prime_meat",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_raw_prime_meat"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Prime Meat Jerky",
+      "description": "Sates your hunger and provides health while being digested. Wild carnivores will eat it, but prefer raw meat.",
+      "drawable": "consumables_food_prime_meat_jerky",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_cooked_prime_meat"
+        },
+        {
+          "quantity": 1,
+          "drawable": "oil"
+        },
+        {
+          "quantity": 3,
+          "drawable": "refined_sparkpowder"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Water Jar",
+      "description": "Safely carries a lot of water, but is also a bit heavy.",
+      "drawable": "misc_water_jar",
+      "category_id": 100,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "crystal"
+        },
+        {
+          "quantity": 5,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 7,
+          "drawable": "refined_cementing_paste"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Beer Jar",
+      "description": "Mmmmm.",
+      "drawable": "consumables_food_beer_jar",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "misc_water_jar"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_beer_liquid"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Broth of Enlightment",
+      "description": "A single sip of this incredible broth will expand your mind and broaden your horizons, granting greatly increased experience gain for a brief time.",
+      "drawable": "consumables_food_broth_of_enlightenment",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "black_pearl"
+        },
+        {
+          "quantity": 2,
+          "drawable": "citronal"
+        },
+        {
+          "quantity": 2,
+          "drawable": "longrass"
+        },
+        {
+          "quantity": 10,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 2,
+          "drawable": "rockarrot"
+        },
+        {
+          "quantity": 2,
+          "drawable": "savoroot"
+        },
+        {
+          "quantity": 5,
+          "drawable": "woolly_rhino_horn"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Calien Soup",
+      "description": "This simple vegetarian dish refreshes you body like an oasis. Helps keep you stay hydrated and feel cool.",
+      "drawable": "consumables_food_calien_soup",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "amarberry"
+        },
+        {
+          "quantity": 5,
+          "drawable": "citronal"
+        },
+        {
+          "quantity": 2,
+          "drawable": "consumables_drugs_stimulant"
+        },
+        {
+          "quantity": 10,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 20,
+          "drawable": "tintoberry"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Enduro Stew",
+      "description": "This hearty dish is like a workout in the form of a meal. You will find yourself hitting harder and running longer after eating this.",
+      "drawable": "consumables_food_enduro_stew",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "consumables_drugs_stimulant"
+        },
+        {
+          "quantity": 9,
+          "drawable": "consumables_food_cooked_meat_or_fish_meat"
+        },
+        {
+          "quantity": 10,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 5,
+          "drawable": "rockarrot"
+        },
+        {
+          "quantity": 5,
+          "drawable": "savoroot"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Energy Brew",
+      "description": "his brew doesn't have any nutritional value, but fills your stamina.",
+      "drawable": "consumables_food_energy_brew",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "azulberry"
+        },
+        {
+          "quantity": 2,
+          "drawable": "consumables_drugs_stimulant"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Focal Chili",
+      "description": "This filling dish is full of nutritional energy. Consume it to gain increased crafting speed, and gain increased movement speed. Effect lasts 15 minutes.",
+      "drawable": "consumables_food_focal_chili",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "amarberry"
+        },
+        {
+          "quantity": 20,
+          "drawable": "azulberry"
+        },
+        {
+          "quantity": 5,
+          "drawable": "citronal"
+        },
+        {
+          "quantity": 9,
+          "drawable": "consumables_food_cooked_meat"
+        },
+        {
+          "quantity": 10,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 20,
+          "drawable": "tintoberry"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Fria Curry",
+      "description": "his spicy vegetarian dish fills the body with a comfortable warmth. It controls your appetite while helping you ignore cold.",
+      "drawable": "consumables_food_fria_curry",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "azulberry"
+        },
+        {
+          "quantity": 2,
+          "drawable": "consumables_drugs_narcotic"
+        },
+        {
+          "quantity": 5,
+          "drawable": "longrass"
+        },
+        {
+          "quantity": 10,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 5,
+          "drawable": "rockarrot"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Lazarus Chowder",
+      "description": "This creamy dish improves the body's natural constitution. You will recover from injury more quickly after eating this, and your body will need less oxygen.",
+      "drawable": "consumables_food_lazarus_chowder",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "consumables_drugs_narcotic"
+        },
+        {
+          "quantity": 9,
+          "drawable": "consumables_food_cooked_meat"
+        },
+        {
+          "quantity": 5,
+          "drawable": "longrass"
+        },
+        {
+          "quantity": 10,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 5,
+          "drawable": "savoroot"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Medical Brew",
+      "description": "This brew doesn't have any nutritional value, but it promotes healing.",
+      "drawable": "consumables_food_medical_brew",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "consumables_drugs_narcotic"
+        },
+        {
+          "quantity": 20,
+          "drawable": "tintoberry"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Mindwipe Tonic",
+      "description": "When consumed, this tonic causes neural overload. Synapses fire off too quickly resulting in damage to the memory centers of the brain related to construction. Warning: this concoction may cause temporary memory loss, and resetting of Engrams.",
+      "drawable": "consumables_food_mindwipe_tonic",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 72,
+          "drawable": "consumables_drugs_narcotic"
+        },
+        {
+          "quantity": 72,
+          "drawable": "consumables_drugs_stimulant"
+        },
+        {
+          "quantity": 24,
+          "drawable": "consumables_food_cooked_prime_meat"
+        },
+        {
+          "quantity": 200,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 20,
+          "drawable": "rare_flower"
+        },
+        {
+          "quantity": 20,
+          "drawable": "rare_mushroom"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Shadow Steak Sauce",
+      "description": "Only eat this dish in the dark. It causes the light receptors in your eyes to become hyperactive, improves your hand-eye coordination, and allows your body to ignore extreme temperatures. Warning: this concoction can be habit-forming.",
+      "drawable": "consumables_food_shadow_steak_saute",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 8,
+          "drawable": "consumables_drugs_narcotic"
+        },
+        {
+          "quantity": 3,
+          "drawable": "consumables_food_cooked_prime_meat"
+        },
+        {
+          "quantity": 20,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 2,
+          "drawable": "rare_mushroom"
+        },
+        {
+          "quantity": 1,
+          "drawable": "rockarrot"
+        },
+        {
+          "quantity": 1,
+          "drawable": "savoroot"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Sweet Veggie Cake",
+      "description": "A sappy-sweet vegetable cake which Herbivores find delicious. Sadly, humans and carnivores tend to find its taste repugnant.",
+      "drawable": "consumables_food_sweet_veggie_cake",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 4,
+          "drawable": "consumables_drugs_stimulant"
+        },
+        {
+          "quantity": 25,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 2,
+          "drawable": "longrass"
+        },
+        {
+          "quantity": 2,
+          "drawable": "rockarrot"
+        },
+        {
+          "quantity": 7,
+          "drawable": "sap"
+        },
+        {
+          "quantity": 2,
+          "drawable": "savoroot"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Cured Bacon",
+      "description": "This bacon still needs to be put on an open fire before eating.",
+      "drawable": "resources_meat_cured_bacon",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_bacon"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_salt"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Bacon",
+      "description": "Sates your hunger, and provides health while being digested. More effective than normal meat. Wild carnivores like this meat a lot.",
+      "drawable": "resources_meat_cooked_bacon",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_cured_bacon"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Fish Fillet",
+      "description": "A very nutritious fillet of fish.",
+      "drawable": "resources_meat_cooked_fish_fillet",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_fish_fillet"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Poultry",
+      "description": "Sates your hunger, and provides health while being digested. More effective than normal meat. Wild carnivores like this meat a lot.",
+      "drawable": "resources_meat_cooked_poultry",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_poultry"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Spare Ribs",
+      "description": "Sates your hunger, and provides health while being digested. More effective than normal meat. Wild carnivores like this meat a lot.",
+      "drawable": "resources_meat_cooked_spare_ribs",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_fresh_spare_ribs"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Amarberry Juice",
+      "description": "Amarberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_amarberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "amarberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Azulberry Juice",
+      "description": "Azulberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_azulberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "azulberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Baked Bread Loaf",
+      "description": "Sates your hunger, and provides health while being digested.",
+      "drawable": "consumables_food_baked_bread_loaf",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_dough"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Baked Honey Loaf",
+      "description": "Sates your hunger, and provides health while being digested.",
+      "drawable": "consumables_food_baked_honey_loaf",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_fresh_dough"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_honey"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Braggot Mead",
+      "description": "Alcoholic mead made from honey and malt.",
+      "drawable": "consumables_food_braggot_mead",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_honey"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cooked Rice",
+      "description": "Cooked Rice that can be combined with other consumables.",
+      "drawable": "consumables_food_cooked_rice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "resources_plants_fresh_rice"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Chicken and Rice",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_chicken_and_rice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_cooked_poultry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_cooked_rice"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cup of Coffee",
+      "description": "This fresh cup of coffee refreshes your body like an oasis. Consume it to gain increased hyperthermic insulation, and slow your rate of food consumption. Effects last 15 minutes.",
+      "drawable": "consumables_food_cup_of_coffee",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "resources_plants_fresh_coffee_fruit"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Cup of Tea",
+      "description": "This fresh cup of tea refreshes your body like an oasis. Consume it to gain increased hyperthermic insulation, and slow your rate of water consumption. Effects last 15 minutes.",
+      "drawable": "consumables_food_cup_of_tea",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_dried_tea_bags"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Grape Juice",
+      "description": "Grape juice made on the fruit press. Can be used to make wine.",
+      "drawable": "consumables_food_grape_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "resources_plants_grapes"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fermented Wine",
+      "description": "Wine courage!! Consume it do deal increased melee damage, and gain extra stamina regen. Effects last 15 minutes.",
+      "drawable": "consumables_food_fermented_wine",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "refined_cane_sugar"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_grape_juice"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Fillet and Bread",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_fillet_and_bread",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_meat_cooked_fish_fillet"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_baked_bread_loaf"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Mejoberry Juice",
+      "description": "Mejoberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_mejoberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Prime Salad",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_prime_salad",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_cooked_prime_meat"
+        },
+        {
+          "quantity": 1,
+          "drawable": "resources_plants_cabbage"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Salad",
+      "description": "A meal that is so filling, it reduces your hunger for a short period.",
+      "drawable": "consumables_food_salad",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "resources_plants_tomato"
+        },
+        {
+          "quantity": 5,
+          "drawable": "resources_plants_cabbage"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Stimbull Juice",
+      "description": "Stimbull juice made on the fruit press. The best drink for restoring your energy reserves!",
+      "drawable": "consumables_food_stimbull_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "stimberry"
+        },
+        {
+          "quantity": 10,
+          "drawable": "narcoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Tintoberry Juice",
+      "description": "Tintoberry juice made on the fruit press. Great for restoring your energy reserves!",
+      "drawable": "consumables_food_tintoberry_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "tintoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_cane_sugar"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Tomato Juice",
+      "description": "Tomato juice made on the fruit press. Great for restoring your vitality!",
+      "drawable": "consumables_food_tomato_juice",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "resources_plants_tomato"
+        },
+        {
+          "quantity": 1,
+          "drawable": "refined_salt"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Wheat Beer",
+      "description": "Beer muscles!! Consume it to deal increased melee damage, and gain extra stamina regen. Effects last 15 minutes.",
+      "drawable": "consumables_food_wheat_beer",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "resources_plants_fresh_wheat"
+        }
+      ],
+      "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Stone Arrow",
+      "description": "An arrow for the bow.",
+      "drawable": "weapons_ammo_stone_arrow",
+      "category_id": 302,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 1,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 2,
+          "drawable": "thatch"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
     {
       "name": "Chitin Helmet",
       "description": "Provides moderate physical protection, but can get a little warm.",
@@ -2158,853 +3619,6 @@
       "yield": 1
     },
     {
-      "name": "Electronics",
-      "description": "This multipurpose computer chip can be used to create electronic devices.",
-      "drawable": "composites_electronics",
-      "category_id": 900,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_metal_ingot"
-        },
-        {
-          "quantity": 3,
-          "drawable": "silica_pearls"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Polymer",
-      "description": "These incredibly strong, lightweight plates can be shaped and then heat treated into casings for anything.",
-      "drawable": "composites_polymer",
-      "category_id": 900,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "obsidian"
-        },
-        {
-          "quantity": 2,
-          "drawable": "refined_cementing_paste"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Ground Cashew",
-      "description": "",
-      "drawable": "consumables_crops_ground_cashew",
-      "category_id": 1003,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_plants_cashew"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Bug Repellant",
-      "description": "This gnarly paste makes you nearly invisible to bugs. Just don't attack them, and they'll ignore you! Effect lasts 10 minutes.",
-      "drawable": "consumables_drugs_bug_repellant",
-      "category_id": 1001,
-      "composition": [
-        {
-          "quantity": 4,
-          "drawable": "citronal"
-        },
-        {
-          "quantity": 2,
-          "drawable": "consumables_drugs_narcotic"
-        },
-        {
-          "quantity": 6,
-          "drawable": "pelt"
-        },
-        {
-          "quantity": 4,
-          "drawable": "rockarrot"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Lesser Antidote",
-      "description": "Cures Lesser Afflictions!",
-      "drawable": "consumables_drugs_lesser_antidote",
-      "category_id": 1001,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "consumables_drugs_narcotic"
-        },
-        {
-          "quantity": 5,
-          "drawable": "leech_blood"
-        },
-        {
-          "quantity": 10,
-          "drawable": "rare_flower"
-        },
-        {
-          "quantity": 10,
-          "drawable": "rare_mushroom"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Narcotic",
-      "description": "Increases your health, but puts you to sleep.",
-      "drawable": "consumables_drugs_narcotic",
-      "category_id": 1001,
-      "composition": [
-        {
-          "quantity": 5,
-          "drawable": "narcoberry"
-        },
-        {
-          "quantity": 1,
-          "drawable": "resources_meat_spoiled_meat"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Stimulant",
-      "description": "Keeps you awake, but dehydrates you.",
-      "drawable": "consumables_drugs_stimulant",
-      "category_id": 1001,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "refined_sparkpowder"
-        },
-        {
-          "quantity": 5,
-          "drawable": "stimberry"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Battle Tartare",
-      "description": "Only eat this dish when you intend to go into a brawl. It causes pain and stress to your body, but grants you almost supernatural strength, speed, and resilience. Warning: This concoction can be habit forming.",
-      "drawable": "consumables_food_battle_tartare",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "citronal"
-        },
-        {
-          "quantity": 8,
-          "drawable": "consumables_drugs_stimulant"
-        },
-        {
-          "quantity": 1,
-          "drawable": "longrass"
-        },
-        {
-          "quantity": 20,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 2,
-          "drawable": "rare_flower"
-        },
-        {
-          "quantity": 3,
-          "drawable": "raw_prime_meat"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Beer Jar",
-      "description": "Mmmmm.",
-      "drawable": "consumables_food_beer_jar",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "misc_water_jar"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_beer_liquid"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Bingleberry Soup",
-      "description": "Eat it to gain mega nourishment, long-term fortification. (NOT YET CRAFTABLE)",
-      "drawable": "consumables_food_bingleberry_soup",
-      "category_id": 1002,
-      "composition": [],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Broth of Enlightment",
-      "description": "A single sip of this incredible broth will expand your mind and broaden your horizons, granting greatly increased experience gain for a brief time.",
-      "drawable": "consumables_food_broth_of_enlightenment",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "black_pearl"
-        },
-        {
-          "quantity": 2,
-          "drawable": "citronal"
-        },
-        {
-          "quantity": 2,
-          "drawable": "longrass"
-        },
-        {
-          "quantity": 10,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 2,
-          "drawable": "rockarrot"
-        },
-        {
-          "quantity": 2,
-          "drawable": "savoroot"
-        },
-        {
-          "quantity": 5,
-          "drawable": "woolly_rhino_horn"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Calien Soup",
-      "description": "This simple vegetarian dish refreshes you body like an oasis. Helps keep you stay hydrated and feel cool.",
-      "drawable": "consumables_food_calien_soup",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "amarberry"
-        },
-        {
-          "quantity": 5,
-          "drawable": "citronal"
-        },
-        {
-          "quantity": 2,
-          "drawable": "consumables_drugs_stimulant"
-        },
-        {
-          "quantity": 10,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 20,
-          "drawable": "tintoberry"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Enduro Stew",
-      "description": "This hearty dish is like a workout in the form of a meal. You will find yourself hitting harder and running longer after eating this.",
-      "drawable": "consumables_food_enduro_stew",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "consumables_drugs_stimulant"
-        },
-        {
-          "quantity": 9,
-          "drawable": "cooked_meat_or_fish_meat"
-        },
-        {
-          "quantity": 10,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 5,
-          "drawable": "rockarrot"
-        },
-        {
-          "quantity": 5,
-          "drawable": "savoroot"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Energy Brew",
-      "description": "his brew doesn't have any nutritional value, but fills your stamina.",
-      "drawable": "consumables_food_energy_brew",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "azulberry"
-        },
-        {
-          "quantity": 2,
-          "drawable": "consumables_drugs_stimulant"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Focal Chili",
-      "description": "This filling dish is full of nutritional energy. Consume it to gain increased crafting speed, and gain increased movement speed. Effect lasts 15 minutes.",
-      "drawable": "consumables_food_focal_chili",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "amarberry"
-        },
-        {
-          "quantity": 20,
-          "drawable": "azulberry"
-        },
-        {
-          "quantity": 5,
-          "drawable": "citronal"
-        },
-        {
-          "quantity": 9,
-          "drawable": "cooked_meat"
-        },
-        {
-          "quantity": 10,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 20,
-          "drawable": "tintoberry"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Fria Curry",
-      "description": "his spicy vegetarian dish fills the body with a comfortable warmth. It controls your appetite while helping you ignore cold.",
-      "drawable": "consumables_food_fria_curry",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "azulberry"
-        },
-        {
-          "quantity": 2,
-          "drawable": "consumables_drugs_narcotic"
-        },
-        {
-          "quantity": 5,
-          "drawable": "longrass"
-        },
-        {
-          "quantity": 10,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 5,
-          "drawable": "rockarrot"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Lazarus Chowder",
-      "description": "This creamy dish improves the body's natural constitution. You will recover from injury more quickly after eating this, and your body will need less oxygen.",
-      "drawable": "consumables_food_lazarus_chowder",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "consumables_drugs_narcotic"
-        },
-        {
-          "quantity": 9,
-          "drawable": "cooked_meat"
-        },
-        {
-          "quantity": 5,
-          "drawable": "longrass"
-        },
-        {
-          "quantity": 10,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 5,
-          "drawable": "savoroot"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Medical Brew",
-      "description": "This brew doesn't have any nutritional value, but it promotes healing.",
-      "drawable": "consumables_food_medical_brew",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "consumables_drugs_narcotic"
-        },
-        {
-          "quantity": 20,
-          "drawable": "tintoberry"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Mindwipe Tonic",
-      "description": "When consumed, this tonic causes neural overload. Synapses fire off too quickly resulting in damage to the memory centers of the brain related to construction. Warning: this concoction may cause temporary memory loss, and resetting of Engrams.",
-      "drawable": "consumables_food_mindwipe_tonic",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 72,
-          "drawable": "consumables_drugs_narcotic"
-        },
-        {
-          "quantity": 72,
-          "drawable": "consumables_drugs_stimulant"
-        },
-        {
-          "quantity": 24,
-          "drawable": "cooked_prime_meat"
-        },
-        {
-          "quantity": 200,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 20,
-          "drawable": "rare_flower"
-        },
-        {
-          "quantity": 20,
-          "drawable": "rare_mushroom"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Shadow Steak Sauce",
-      "description": "Only eat this dish in the dark. It causes the light receptors in your eyes to become hyperactive, improves your hand-eye coordination, and allows your body to ignore extreme temperatures. Warning: this concoction can be habit-forming.",
-      "drawable": "consumables_food_shadow_steak_saute",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 8,
-          "drawable": "consumables_drugs_narcotic"
-        },
-        {
-          "quantity": 3,
-          "drawable": "cooked_prime_meat"
-        },
-        {
-          "quantity": 20,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 2,
-          "drawable": "rare_mushroom"
-        },
-        {
-          "quantity": 1,
-          "drawable": "rockarrot"
-        },
-        {
-          "quantity": 1,
-          "drawable": "savoroot"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Sweet Veggie Cake",
-      "description": "A sappy-sweet vegetable cake which Herbivores find delicious. Sadly, humans and carnivores tend to find its taste repugnant.",
-      "drawable": "consumables_food_sweet_veggie_cake",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 4,
-          "drawable": "consumables_drugs_stimulant"
-        },
-        {
-          "quantity": 25,
-          "drawable": "fiber"
-        },
-        {
-          "quantity": 2,
-          "drawable": "longrass"
-        },
-        {
-          "quantity": 2,
-          "drawable": "rockarrot"
-        },
-        {
-          "quantity": 7,
-          "drawable": "sap"
-        },
-        {
-          "quantity": 2,
-          "drawable": "savoroot"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Amarberry Juice",
-      "description": "Amarberry juice made on the fruit press. Great for restoring your energy reserves!",
-      "drawable": "consumables_food_amarberry_juice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "amarberry"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_cane_sugar"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Azulberry Juice",
-      "description": "Azulberry juice made on the fruit press. Great for restoring your energy reserves!",
-      "drawable": "consumables_food_azulberry_juice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "azulberry"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_cane_sugar"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Baked Bread Loaf",
-      "description": "Sates your hunger, and provides health while being digested.",
-      "drawable": "consumables_food_baked_bread_loaf",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_fresh_dough"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Baked Honey Loaf",
-      "description": "Sates your hunger, and provides health while being digested.",
-      "drawable": "consumables_food_baked_honey_loaf",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_fresh_dough"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_honey"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Braggot Mead",
-      "description": "Alcoholic mead made from honey and malt.",
-      "drawable": "consumables_food_braggot_mead",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 30,
-          "drawable": "refined_honey"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Chicken and Rice",
-      "description": "A meal that is so filling, it reduces your hunger for a short period.",
-      "drawable": "consumables_food_chicken_and_rice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_meat_cooked_poultry"
-        },
-        {
-          "quantity": 1,
-          "drawable": "consumables_food_cooked_rice"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Cooked Rice",
-      "description": "Cooked Rice that can be combined with other consumables.",
-      "drawable": "consumables_food_cooked_rice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 5,
-          "drawable": "resources_plants_fresh_rice"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Cup of Coffee",
-      "description": "This fresh cup of coffee refreshes your body like an oasis. Consume it to gain increased hyperthermic insulation, and slow your rate of food consumption. Effects last 15 minutes.",
-      "drawable": "consumables_food_cup_of_coffee",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 5,
-          "drawable": "resources_plants_fresh_coffee_fruit"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Cup of Tea",
-      "description": "This fresh cup of tea refreshes your body like an oasis. Consume it to gain increased hyperthermic insulation, and slow your rate of water consumption. Effects last 15 minutes.",
-      "drawable": "consumables_food_cup_of_tea",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 5,
-          "drawable": "refined_dried_tea_bags"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Fermented Wine",
-      "description": "Wine courage!! Consume it do deal increased melee damage, and gain extra stamina regen. Effects last 15 minutes.",
-      "drawable": "consumables_food_fermented_wine",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "refined_cane_sugar"
-        },
-        {
-          "quantity": 1,
-          "drawable": "consumables_food_grape_juice"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Fillet and Bread",
-      "description": "A meal that is so filling, it reduces your hunger for a short period.",
-      "drawable": "consumables_food_fillet_and_bread",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_meat_cooked_fish_fillet"
-        },
-        {
-          "quantity": 1,
-          "drawable": "consumables_food_baked_bread_loaf"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Grape Juice",
-      "description": "Grape juice made on the fruit press. Can be used to make wine.",
-      "drawable": "consumables_food_grape_juice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 35,
-          "drawable": "resources_plants_grapes"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Mejoberry Juice",
-      "description": "Mejoberry juice made on the fruit press. Great for restoring your energy reserves!",
-      "drawable": "consumables_food_mejoberry_juice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "mejoberry"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_cane_sugar"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Prime Salad",
-      "description": "A meal that is so filling, it reduces your hunger for a short period.",
-      "drawable": "consumables_food_prime_salad",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "cooked_prime_meat"
-        },
-        {
-          "quantity": 1,
-          "drawable": "resources_plants_cabbage"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Salad",
-      "description": "A meal that is so filling, it reduces your hunger for a short period.",
-      "drawable": "consumables_food_salad",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "resources_plants_tomato"
-        },
-        {
-          "quantity": 5,
-          "drawable": "resources_plants_cabbage"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Stimbull Juice",
-      "description": "Stimbull juice made on the fruit press. The best drink for restoring your energy reserves!",
-      "drawable": "consumables_food_stimbull_juice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "stimberry"
-        },
-        {
-          "quantity": 10,
-          "drawable": "narcoberry"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_cane_sugar"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Tintoberry Juice",
-      "description": "Tintoberry juice made on the fruit press. Great for restoring your energy reserves!",
-      "drawable": "consumables_food_tintoberry_juice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "tintoberry"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_cane_sugar"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Tomato Juice",
-      "description": "Tomato juice made on the fruit press. Great for restoring your vitality!",
-      "drawable": "consumables_food_tomato_juice",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "resources_plants_tomato"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_salt"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Wheat Beer",
-      "description": "Beer muscles!! Consume it to deal increased melee damage, and gain extra stamina regen. Effects last 15 minutes.",
-      "drawable": "consumables_food_wheat_beer",
-      "category_id": 1002,
-      "composition": [
-        {
-          "quantity": 35,
-          "drawable": "resources_plants_fresh_wheat"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
       "name": "Bonemeal Fertilizer",
       "description": "Bonemeal is a mixture of finely and coarsely ground animal bones and slaughter-house waste products. It is mainly used as an organic fertilizer for plants.",
       "drawable": "consumables_feces_bonemeal_fertilizer",
@@ -3024,7 +3638,7 @@
         },
         {
           "quantity": 3,
-          "drawable": "charcoal"
+          "drawable": "refined_charcoal"
         }
       ],
       "dlc_id": 2,
@@ -3853,28 +4467,6 @@
       "yield": 1
     },
     {
-      "name": "Water Jar",
-      "description": "Safely carries a lot of water, but is also a bit heavy.",
-      "drawable": "misc_water_jar",
-      "category_id": 100,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "crystal"
-        },
-        {
-          "quantity": 5,
-          "drawable": "hide"
-        },
-        {
-          "quantity": 7,
-          "drawable": "refined_cementing_paste"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
       "name": "Waterskin",
       "description": "Good to keep you hydrated, but slowly leaks water.",
       "drawable": "misc_waterskin",
@@ -3956,7 +4548,7 @@
         },
         {
           "quantity": 500,
-          "drawable": "refined_wood_planks"
+          "drawable": "refined_wood_plank"
         },
         {
           "quantity": 20,
@@ -5583,28 +6175,6 @@
         {
           "quantity": 1,
           "drawable": "refined_metal_ingot"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Stone Arrow",
-      "description": "An arrow for the bow.",
-      "drawable": "weapons_ammo_stone_arrow",
-      "category_id": 302,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "fiber"
-        },
-        {
-          "quantity": 1,
-          "drawable": "flint"
-        },
-        {
-          "quantity": 2,
-          "drawable": "thatch"
         }
       ],
       "dlc_id": 1,
@@ -11054,11 +11624,10 @@
       "dlc_id": 1,
       "yield": 1
     },
-
     {
       "name": "Big Fence Opening",
       "description": "Used for a long opening in the big wood fence tier. Snappable!",
-      "drawable": "structures_wood_big_fence__opening",
+      "drawable": "structures_wood_big_fence___opening",
       "category_id": 202,
       "composition": [
         {
@@ -11072,7 +11641,7 @@
     {
       "name": "Big Fence Post",
       "description": "Used as a post section in the big wood fence tier. Snappable!",
-      "drawable": "structures_wood_big_fence__post",
+      "drawable": "structures_wood_big_fence___post",
       "category_id": 202,
       "composition": [
         {
@@ -11086,7 +11655,7 @@
     {
       "name": "Big Fence Section",
       "description": "Used as a section in the big wood fence tier. Snappable!",
-      "drawable": "structures_wood_big_fence__section",
+      "drawable": "structures_wood_big_fence___section",
       "category_id": 202,
       "composition": [
         {
@@ -11129,7 +11698,6 @@
       "dlc_id": 2,
       "yield": 1
     },
-
     {
       "name": "Left-Sloped Lumber Wall",
       "description": "A sturdy wooden sloped wall that insulates the inside from the outside, seprarates [sic] rooms, and provides structural integrity. Used in conjunction with the roof.",
@@ -11180,7 +11748,7 @@
           "quantity": 40,
           "drawable": "stone"
         },
-         {
+        {
           "quantity": 35,
           "drawable": "thatch"
         },
@@ -11188,7 +11756,7 @@
           "quantity": 25,
           "drawable": "fiber"
         },
-         {
+        {
           "quantity": 120,
           "drawable": "wood"
         }
@@ -11245,11 +11813,11 @@
         {
           "quantity": 15,
           "drawable": "thatch"
-        }      ,
+        },
         {
           "quantity": 10,
           "drawable": "fiber"
-        }      ,
+        },
         {
           "quantity": 2,
           "drawable": "refined_glass"
@@ -11552,7 +12120,6 @@
       "dlc_id": 2,
       "yield": 1
     },
-
     {
       "name": "Wooden Billboard",
       "description": "A large wooden billboard for landmark navigation or relaying messages.",
@@ -11619,7 +12186,6 @@
       "dlc_id": 1,
       "yield": 1
     },
-
     {
       "name": "Wooden Arrow Sign",
       "description": "A simple wooden sign with an arrow for a landmark navigation or relaying messages.",
@@ -11642,7 +12208,6 @@
       "dlc_id": 2,
       "yield": 1
     },
-
     {
       "name": "Bookshelf",
       "description": "A large bookshelf to store Blueprints, Notes, and other small trinkets in.",
@@ -11735,7 +12300,6 @@
       "dlc_id": 1,
       "yield": 1
     },
-
     {
       "name": "APS Mailbox",
       "description": "Mailbox for the Federated Postal Service of ARK.",
@@ -11948,7 +12512,6 @@
       "dlc_id": 2,
       "yield": 1
     },
-
     {
       "name": "Preserving Campfire",
       "description": "A primitive way of preserving meat and drying crops. Must use sparkpowder or a form of oil as a fuel source.",
@@ -11971,7 +12534,6 @@
       "dlc_id": 1,
       "yield": 1
     },
-
     {
       "name": "Behemoth Brick Dinosaur Gateway",
       "description": "A massive brick-and-mortar gateway that can be used for penning up huge dinosaurs.",
@@ -12300,7 +12862,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12330,7 +12892,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12364,7 +12926,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         }
       ],
       "dlc_id": 1,
@@ -12382,7 +12944,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 3,
@@ -12412,7 +12974,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "cooked_meat"
+          "drawable": "consumables_food_cooked_meat"
         },
         {
           "quantity": 3,
@@ -12446,7 +13008,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "cooked_fish_meat"
+          "drawable": "consumables_food_cooked_fish_meat"
         },
         {
           "quantity": 3,
@@ -12472,7 +13034,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12502,7 +13064,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12528,7 +13090,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_or_jerky"
+          "drawable": "consumables_food_cooked_meat_or_jerky"
         },
         {
           "quantity": 1,
@@ -12588,7 +13150,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat"
+          "drawable": "consumables_food_cooked_meat"
         },
         {
           "quantity": 1,
@@ -12618,7 +13180,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 3,
@@ -12648,7 +13210,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_or_jerky"
+          "drawable": "consumables_food_cooked_meat_or_jerky"
         },
         {
           "quantity": 3,
@@ -12678,7 +13240,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_prime_meat_or_prime_jerky"
+          "drawable": "consumables_food_cooked_prime_meat_or_prime_jerky"
         },
         {
           "quantity": 3,
@@ -12712,7 +13274,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "cooked_meat"
+          "drawable": "consumables_food_cooked_meat"
         },
         {
           "quantity": 3,
@@ -12738,7 +13300,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_or_jerky"
+          "drawable": "consumables_food_cooked_meat_or_jerky"
         },
         {
           "quantity": 3,
@@ -12768,7 +13330,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_or_jerky"
+          "drawable": "consumables_food_cooked_meat_or_jerky"
         },
         {
           "quantity": 3,
@@ -12810,7 +13372,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12836,7 +13398,7 @@
         },
         {
           "quantity": 3,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12858,7 +13420,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 3,
@@ -12900,7 +13462,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12918,7 +13480,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 3,
@@ -12956,7 +13518,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -12990,7 +13552,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -13012,7 +13574,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "cooked_meat_or_jerky"
+          "drawable": "consumables_food_cooked_meat_or_jerky"
         },
         {
           "quantity": 3,
@@ -13038,7 +13600,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 3,
@@ -13068,7 +13630,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "cooked_meat_jerky"
+          "drawable": "consumables_food_cooked_meat_jerky"
         },
         {
           "quantity": 3,
@@ -13110,7 +13672,7 @@
         },
         {
           "quantity": 1,
-          "drawable": "prime_meat_jerky"
+          "drawable": "consumables_food_prime_meat_jerky"
         },
         {
           "quantity": 1,
@@ -13148,580 +13710,6 @@
         }
       ],
       "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Absorbent Substrate",
-      "description": "This sticky compound excels at absorbing other chemicals.",
-      "drawable": "refined_absorbent_substrate",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 8,
-          "drawable": "black_pearl"
-        },
-        {
-          "quantity": 8,
-          "drawable": "oil"
-        },
-        {
-          "quantity": 8,
-          "drawable": "sap"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Beer Liquid",
-      "description": "Put it in a glass jar to drink it!",
-      "drawable": "refined_beer_liquid",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 50,
-          "drawable": "berries"
-        },
-        {
-          "quantity": 40,
-          "drawable": "thatch"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Cementing Paste",
-      "description": "Paste created at Mortar and Pestle.",
-      "drawable": "refined_cementing_paste",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 4,
-          "drawable": "chitin_or_keratin"
-        },
-        {
-          "quantity": 8,
-          "drawable": "stone"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Charcoal",
-      "description": "Created by burning wood.",
-      "drawable": "refined_charcoal",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Fertilizer",
-      "description": "A fertilizer high in nitrogen. Use this to help your crops grow.",
-      "drawable": "refined_fertilizer",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 3,
-          "drawable": "feces"
-        },
-        {
-          "quantity": 50,
-          "drawable": "thatch"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Gasoline",
-      "description": "An advanced fuel. Can only be used in machines designed to consume it.",
-      "drawable": "refined_gasoline",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 5,
-          "drawable": "hide"
-        },
-        {
-          "quantity": 3,
-          "drawable": "oil"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Gunpowder",
-      "description": "A powerful propellant. Necessary for any firearm or explosive.",
-      "drawable": "refined_gunpowder",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_charcoal"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_sparkpowder"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Metal Ingot",
-      "description": "Created by refining metal ore in a forge.",
-      "drawable": "refined_metal_ingot",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "metal_ore"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Sparkpowder",
-      "description": "Created by grinding flint with stone in a Mortar and Pestle.",
-      "drawable": "refined_sparkpowder",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "flint"
-        },
-        {
-          "quantity": 1,
-          "drawable": "stone"
-        }
-      ],
-      "dlc_id": 1,
-      "yield": 1
-    },
-    {
-      "name": "Brick",
-      "description": "Soft clay that has been heated in a forge to make hard brick.",
-      "drawable": "refined_brick",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_clay"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Cane Sugar",
-      "description": "Refined sugar made from a sugarcane plant and boiling over a cauldron.",
-      "drawable": "refined_cane_sugar",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_fresh_sugar_juice_bucket"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Cashew Milk",
-      "description": "Soft clay that has been heated in a forge to make hard brick.",
-      "drawable": "refined_cashew_milk",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "consumables_crops_ground_cashew"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Clay",
-      "description": "Clay that has been formed from grinding claystone and limestone on a handmill.",
-      "drawable": "refined_clay",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "resources_claystone"
-        },
-        {
-          "quantity": 10,
-          "drawable": "resources_limestone"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Cup of Malt",
-      "description": "Made from dried barley and boiling water. Used for alcoholic beverages.",
-      "drawable": "refined_cup_of_malt",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 25,
-          "drawable": "refined_dried_barley"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Dried Barley",
-      "description": "Barley that's been dried for the purpose of making malt!",
-      "drawable": "refined_dried_barley",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_plants_fresh_barley"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Dried Tea Bags",
-      "description": "Soft clay that has been heated in a forge to make hard brick.",
-      "drawable": "refined_dried_tea_bags",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "resources_plants_fresh_tea_leaves"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 5
-    },
-    {
-      "name": "Dried Wheat",
-      "description": "Harvested from a wheat plant and dried on a preserving hut. It can be used to make flour.",
-      "drawable": "refined_dried_wheat",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_plants_fresh_wheat"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Dried Tobacco",
-      "description": "May be rolled with a note. When you're having on [sic] of those days.",
-      "drawable": "refined_dried_tobacco",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_plants_fresh_tobacco"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Dry Firewood",
-      "description": "Soft clay that has been heated in a forge to make hard brick.",
-      "drawable": "refined_dry_firewood",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_fresh_firewood"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Fish Bait",
-      "description": "Lure for the fishing trap.",
-      "drawable": "refined_fish_bait",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_meat_fresh_poultry"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 5
-    },
-    {
-      "name": "Fresh Cement",
-      "description": "Fresh cement that cen [sic] be formed into and used to build larger structures.",
-      "drawable": "refined_fresh_cement",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 7,
-          "drawable": "refined_cementing_paste"
-        },
-        {
-          "quantity": 2,
-          "drawable": "resources_limestone"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Fresh Dough",
-      "description": "Fresh dough made from flour on the baking station.",
-      "drawable": "refined_fresh_dough",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_sack_of_flour"
-        },
-        {
-          "quantity": 1,
-          "drawable": "refined_natural_yeast"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Fresh Firewood",
-      "description": "If this firewood is left to dry, it will have a longer burning time.",
-      "drawable": "refined_fresh_firewood",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Fresh Sugar Juice Bucket",
-      "description": "Sugar juice pressed on the sugar press. Must be used with cauldron to make sugar.",
-      "drawable": "refined_fresh_sugar_juice_bucket",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "resources_plants_fresh_sugar_plant"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Glass",
-      "description": "Glass that has been heated in a forge to make a clear surface.",
-      "drawable": "refined_glass",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "silica_pearls"
-        },
-        {
-          "quantity": 5,
-          "drawable": "crystal"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Iron Ingot",
-      "description": "Created by refining iron ore in a forge.",
-      "drawable": "refined_iron_ingot",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "resources_iron"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Leather",
-      "description": "A thick piece of skin, hacked from a dead animal then cured on a tanning rack.",
-      "drawable": "refined_leather",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "refined_salt"
-        },
-        {
-          "quantity": 5,
-          "drawable": "hide"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Natural Yeast",
-      "description": "Made from dough at a baking station. Used for baking various goods.",
-      "drawable": "refined_natural_yeast",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 5,
-          "drawable": "refined_sack_of_flour"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Organic Oil (from seeds)",
-      "description": "Oil made from grinding plant seed. Less dense than oil harvested from the sea.",
-      "drawable": "refined_organic_oil",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 25,
-          "drawable": "resources_seeds"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Organic Oil (from fat)",
-      "description": "Oil made from heating animal fat. Less dense than oil harvested from the sea.",
-      "drawable": "refined_organic_oil",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 15,
-          "drawable": "resources_meat_fresh_fat"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Sack of Flour",
-      "description": "Refined flour made from wheat and a handmill.",
-      "drawable": "refined_sack_of_flour",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "refined_dried_wheat"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Salt",
-      "description": "Refined salt made from crystal and a grain wheel.",
-      "drawable": "refined_salt",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "crystal"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Steel Ingot",
-      "description": "Created by refining iron ore and carbon in a forge.",
-      "drawable": "refined_steel_ingot",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 2,
-          "drawable": "resources_carbon"
-        },
-        {
-          "quantity": 2,
-          "drawable": "resources_iron"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Trap Bait",
-      "description": "Lure for the deadfall trap.",
-      "drawable": "refined_trap_bait",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "resources_meat_fresh_meat"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 5
-    },
-    {
-      "name": "Wood Plank",
-      "description": "Timber that is flat, elongated, and rectangular mainly used in construction.",
-      "drawable": "refined_wood_plank",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 1,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Beeswax",
-      "description": "Natural wax produced by honey bees. A very effective binding agent with many uses.",
-      "drawable": "refined_beeswax",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 7,
-          "drawable": "resources_bees_worker_bee"
-        }
-      ],
-      "dlc_id": 2,
-      "yield": 1
-    },
-    {
-      "name": "Honey",
-      "description": "Sweet food made by bees foraging nectar from flowers. Bees must be kept in an apiary to produce honey.",
-      "drawable": "refined_honey",
-      "category_id": 1300,
-      "composition": [
-        {
-          "quantity": 7,
-          "drawable": "resources_bees_worker_bee"
-        }
-      ],
-      "dlc_id": 2,
       "yield": 1
     },
     {

@@ -19,6 +19,14 @@
     </style>
   </head>
   <body>
+    $ 0.2.8a
+      % Version 0.2.8a
+      _ 10/11/2016
+      * FINALLY added all Engrams (hopefully!) for the Official DLC Primitive+! (Change through menu!)
+      * Added a Clear Queue button, to clear the crafting queue easier.
+      * Reworked how embedded Engrams are found, so if you see anything out of the ordinary please let me know.
+      ! Will be adding Scorched Earth DLC next!
+
     $ 0.2.7a
       % Version 0.2.7a
       _ 10/08/2016

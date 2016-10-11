@@ -15,9 +15,10 @@ android {
         applicationId 'arc.resource.calculator'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 27
-        versionName '0.2.7a'
+        versionCode 28
+        versionName '0.2.8a'
         signingConfig signingConfigs.config
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -34,9 +35,10 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.google.code.gson:gson:2.4'
+    compile 'com.android.support:support-vector-drawable:23.4.0'
+    testCompile 'junit:junit:4.12'
 }

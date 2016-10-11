@@ -80,6 +80,11 @@ public class DatabaseContract {
         public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
         public static final String SQL_QUERY_WITH_CATEGORY_KEY = SQL_COLUMN_CATEGORY_KEY + " = ?";
         public static final String SQL_QUERY_WITH_DLC_KEY = SQL_COLUMN_DLC_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_DLC_KEYS = SQL_COLUMN_DLC_KEY + " IN (?, ?)";
+        public static final String SQL_QUERY_WITH_CATEGORY_AND_VANILLA_DLC_KEY = SQL_QUERY_WITH_CATEGORY_KEY + " AND " +
+                SQL_QUERY_WITH_DLC_KEY;
+        public static final String SQL_QUERY_WITH_CATEGORY_AND_DLC_KEY = SQL_QUERY_WITH_CATEGORY_KEY + " AND (" +
+                SQL_QUERY_WITH_DLC_KEYS + ")";
 
         // SQL sort helpers
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
@@ -94,6 +99,11 @@ public class DatabaseContract {
         public static Uri buildUriWithCategoryId( long dlc_id, long category_id ) {
             return CONTENT_URI.buildUpon().appendPath( PATH_CATEGORY ).appendPath( Long.toString( category_id ) )
                     .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) ).build();
+        }
+
+        // Returns /engram/drawable/*
+        public static Uri buildUriWithDrawable( String drawable ) {
+            return CONTENT_URI.buildUpon().appendPath( PATH_DRAWABLE ).appendPath( drawable ).build();
         }
 
         public static long getCategoryIdFromUri( Uri uri ) {
@@ -230,7 +240,9 @@ public class DatabaseContract {
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
         public static final String SQL_QUERY_WITH_PARENT_ID = SQL_COLUMN_PARENT_KEY + " = ?";
-        public static final String SQL_QUERY_WITH_DLC_ID = SQL_COLUMN_DLC_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_DLC_KEY = SQL_COLUMN_DLC_KEY + " = ?";
+        public static final String SQL_QUERY_WITH_DLC_KEYS = SQL_COLUMN_DLC_KEY + " IN (?, ?)";
+
         public static final String SQL_SORT_ORDER_BY_NAME = SQL_COLUMN_NAME + " ASC";
 
         // Returns /category/#/dlc/#

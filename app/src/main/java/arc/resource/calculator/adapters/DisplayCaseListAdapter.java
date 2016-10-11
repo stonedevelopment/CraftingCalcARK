@@ -121,7 +121,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
      */
 
     public void Refresh() {
-        mDisplayCase.UpdateQueues();
+        mDisplayCase.UpdateData();
 
         this.notifyDataSetChanged();
     }

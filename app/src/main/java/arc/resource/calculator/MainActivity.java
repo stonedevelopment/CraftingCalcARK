@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
@@ -151,6 +152,16 @@ public class MainActivity extends AppCompatActivity {
             displayCaseEngramList.setAdapter( displayCaseListAdapter );
         }
 
+        Button buttonClearQueue = ( Button ) findViewById( R.id.content_crafting_queue_clear_queue );
+        assert buttonClearQueue != null;
+        buttonClearQueue.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                craftableEngramListAdapter.ClearQueue();
+                RefreshViews();
+            }
+        } );
+
         createExtraViews();
         RefreshViews();
     }
@@ -174,6 +185,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu( Menu menu ) {
         getMenuInflater().inflate( R.menu.menu_main, menu );
 
+        PreferenceHelper preferenceHelper = new PreferenceHelper( this);
+        long dlcSetting = preferenceHelper.getIntPreference( getString( R.string.pref_dlc_setting ) );
+
+        // DLC Setting not set yet, set to default, Vanilla. TODO: Have better system for defaults
+        if ( dlcSetting == 0 ) {
+            preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_VANILLA_ID );
+        }
+
         if ( displayCaseListAdapter.isFiltered() ) {
             menu.findItem( R.id.action_show_all ).setTitle( R.string.action_show_filtered );
         } else {
@@ -191,10 +210,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
+        PreferenceHelper preferenceHelper = new PreferenceHelper( this );
+        int prefValue = preferenceHelper.getIntPreference( getString( R.string.pref_dlc_setting ) );
+
         switch ( item.getItemId() ) {
-            case R.id.action_clearQueue:
-                craftableEngramListAdapter.ClearQueue();
-                RefreshViews();
+            case R.id.action_dlc_settings_vanilla:
+                if ( prefValue != Helper.DLC_VANILLA_ID ) {
+                    preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_VANILLA_ID );
+
+                    craftableEngramListAdapter.ClearQueue();
+                    RefreshViews();
+                }
+                break;
+
+            case R.id.action_dlc_settings_primitive_plus:
+                if ( prefValue != Helper.DLC_PRIMITIVE_PLUS_ID ) {
+                    preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_PRIMITIVE_PLUS_ID );
+
+                    craftableEngramListAdapter.ClearQueue();
+                    RefreshViews();
+                }
                 break;
 
             case R.id.action_breakdownResources:

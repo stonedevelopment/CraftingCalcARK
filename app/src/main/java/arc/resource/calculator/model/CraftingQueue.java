@@ -31,7 +31,7 @@ import arc.resource.calculator.model.resource.QueueResource;
 public class CraftingQueue {
     private static final String TAG = CraftingQueue.class.getSimpleName();
 
-    public static final String STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES = "CRAFTING_QUEUE_HASCOMPLEXRESOURCES";
+    private static final String STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES = "CRAFTING_QUEUE_HASCOMPLEXRESOURCES";
 
     private static CraftingQueue sInstance;
 
@@ -257,9 +257,11 @@ public class CraftingQueue {
     }
 
     public void Clear() {
-        getContext().getContentResolver().delete( DatabaseContract.QueueEntry.CONTENT_URI, null, null );
+        if ( mEngrams.size() > 0 && mResources.size() > 0 ) {
+            getContext().getContentResolver().delete( DatabaseContract.QueueEntry.CONTENT_URI, null, null );
 
-        UpdateData();
+            UpdateData();
+        }
     }
 
     private SparseArray<QueueEngram> QueryForEngrams() {
@@ -393,9 +395,8 @@ public class CraftingQueue {
         compositionCursor.close();
 
         SparseArray<CompositeResource> resources = new SparseArray<>();
-        for ( long resourceId : resourceMap.keySet() ) {
-            CompositeResource resource = resourceMap.get( resourceId );
-            resources.put( resources.size(), resource );
+        for ( Long resource_id : resourceMap.keySet() ) {
+            resources.put( resources.size(), resourceMap.get( resource_id ) );
         }
 
         return resources;
@@ -424,9 +425,28 @@ public class CraftingQueue {
         return null;
     }
 
+    private Long QueryForEngramIdByDrawable( String drawable ) {
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.EngramEntry.buildUriWithDrawable( drawable ),
+                null, null, null, null );
+
+        if ( cursor == null ) {
+            return null;
+        }
+
+        if ( cursor.moveToFirst() ) {
+            Long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) );
+
+            cursor.close();
+            return _id;
+        }
+
+        return null;
+    }
+
     private HashMap<Long, Long> QueryForComplexResources() {
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.ComplexResourceEntry.CONTENT_URI,
+                DatabaseContract.ComplexResourceEntry.buildUriWithDrawable(),
                 null, null, null, null );
 
         if ( cursor == null || cursor.getCount() <= 0 ) {
@@ -476,17 +496,15 @@ public class CraftingQueue {
             for ( int j = 0; j < composition.size(); j++ ) {
                 CompositeResource compositeResource = composition.valueAt( j );
 
-                QueueResource queueResource;
-                if ( mComplexResources.containsKey( compositeResource.getId() ) ) {
-                    long engramId = mComplexResources.get( compositeResource.getId() );
-
+                Long engramId = mComplexResources.get( compositeResource.getId() );
+                if ( engramId != null ) {
                     SparseArray<CompositeResource> complexComposition = QueryForComposition( engramId );
                     for ( int k = 0; k < complexComposition.size(); k++ ) {
                         CompositeResource complexCompositeResource = complexComposition.valueAt( k );
 
                         int queueQuantity = compositeResource.getQuantity() * ( complexCompositeResource.getQuantity() * engram.getQuantity() );
 
-                        queueResource = resourceMap.get( complexCompositeResource.getId() );
+                        QueueResource queueResource = resourceMap.get( complexCompositeResource.getId() );
                         if ( queueResource != null ) {
                             queueResource.increaseQueueQuantity( queueQuantity );
                         } else {
@@ -504,7 +522,7 @@ public class CraftingQueue {
                 } else {
                     int queueQuantity = compositeResource.getQuantity() * engram.getQuantity();
 
-                    queueResource = resourceMap.get( compositeResource.getId() );
+                    QueueResource queueResource = resourceMap.get( compositeResource.getId() );
                     if ( queueResource != null ) {
                         queueResource.increaseQueueQuantity( queueQuantity );
                     } else {
@@ -523,9 +541,8 @@ public class CraftingQueue {
         }
 
         SparseArray<QueueResource> resources = new SparseArray<>();
-        for ( long resourceId : resourceMap.keySet() ) {
-            QueueResource queueResource = resourceMap.get( resourceId );
-            resources.put( resources.size(), queueResource );
+        for ( Long resource_id : resourceMap.keySet() ) {
+            resources.put( resources.size(), resourceMap.get( resource_id ) );
         }
 
         return resources;
@@ -554,13 +571,11 @@ public class CraftingQueue {
 
         SparseArray<CompositeResource> composition = QueryForComposition( _id );
 
-        for ( int i = 0; i < composition.size(); i++ ) {
-            CompositeResource compositeResource = composition.valueAt( i );
+        if ( composition.size() > 0 ) {
+            for ( int i = 0; i < composition.size(); i++ ) {
+                CompositeResource compositeResource = composition.valueAt( i );
 
-            if ( mComplexResources.containsKey( compositeResource.getId() ) ) {
-                long engramId = mComplexResources.get( compositeResource.getId() );
-
-                LongSparseArray<QueueResource> compositionResources = getComposition( engramId, compositeResource.getQuantity() );
+                LongSparseArray<QueueResource> compositionResources = getComposition( _id, compositeResource.getQuantity() );
 
                 for ( int j = 0; j < compositionResources.size(); j++ ) {
                     QueueResource complexCompositeResource = compositionResources.valueAt( j );
@@ -582,24 +597,22 @@ public class CraftingQueue {
 
                     resources.put( queueResource.getId(), queueResource );
                 }
-            } else {
-                int queueQuantity = compositeResource.getQuantity() * quantity;
-
-                QueueResource queueResource = resources.get( compositeResource.getId() );
-                if ( queueResource != null ) {
-                    queueResource.increaseQueueQuantity( queueQuantity );
-                } else {
-                    queueResource = new QueueResource(
-                            compositeResource.getId(),
-                            compositeResource.getName(),
-                            compositeResource.getDrawable(),
-                            compositeResource.getQuantity(),
-                            queueQuantity
-                    );
-                }
-
-                resources.put( queueResource.getId(), queueResource );
             }
+        } else {
+            QueueResource queueResource = resources.get( _id );
+            if ( queueResource != null ) {
+                queueResource.increaseQueueQuantity( quantity );
+            } else {
+//                queueResource = new QueueResource(
+//                        compositeResource.getId(),
+//                        compositeResource.getName(),
+//                        compositeResource.getDrawable(),
+//                        compositeResource.getQuantity(),
+//                        queueQuantity
+//                );
+            }
+
+            resources.put( queueResource.getId(), queueResource );
         }
 
         return resources;
