@@ -235,6 +235,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
 
+            case R.id.action_dlc_settings_scorched_earth:
+                if ( prefValue != Helper.DLC_SCORCHED_EARTH_ID ) {
+                    preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_SCORCHED_EARTH_ID );
+
+                    craftableEngramListAdapter.ClearQueue();
+                    RefreshViews();
+                }
+                break;
+
             case R.id.action_breakdownResources:
                 craftableResourceListAdapter.setHasComplexResources( !craftableResourceListAdapter.hasComplexResources() );
 

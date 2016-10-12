@@ -19,6 +19,12 @@
     </style>
   </head>
   <body>
+    $ 0.2.9a
+      % Version 0.2.9a
+      _ 10/12/2016
+      * Oops, fixed bug where the new Clear Queue button threw an error. Forgot to add the button to the landscape layout, sorry all!
+      ! I see some errors of bulkInsert that are being thrown from an older version, hopefully an update will stop this for you.
+
     $ 0.2.8a
       % Version 0.2.8a
       _ 10/11/2016

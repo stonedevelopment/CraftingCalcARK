@@ -24,6 +24,9 @@
             <item
                 android:id="@+id/action_dlc_settings_primitive_plus"
                 android:title="@string/action_dlc_settings_primitive_plus"/>
+            <item
+                android:id="@+id/action_dlc_settings_scorched_earth"
+                android:title="@string/action_dlc_settings_scorched_earth"/>
         </menu>
     </item>
 

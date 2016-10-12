@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
+        <color android:color="@color/in_game_background_dark"/>
+    </item>
+    <item>
         <bitmap
-            android:src="@drawable/arkcc_banner_vertical"
-            android:tileMode="disabled"
-            android:gravity="center"/>
+            android:src="@drawable/arc_splash_vert"
+            android:gravity="center_horizontal|center_vertical"
+            />
     </item>
 </layer-list>

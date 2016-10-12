@@ -44,6 +44,7 @@ public class Helper {
 
     public static final int DLC_VANILLA_ID = 1;
     public static final int DLC_PRIMITIVE_PLUS_ID = 2;
+    public static final int DLC_SCORCHED_EARTH_ID = 3;
 
     public static void Log(String tag, String message) {
         if (isDebug) Log.d(tag, message);

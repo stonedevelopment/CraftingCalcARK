@@ -237,6 +237,24 @@
       "dlc_id": 2
     },
     {
+      "_id": 225,
+      "name": "Adobe",
+      "parent_id": 200,
+      "dlc_id": 3
+    },
+    {
+      "_id": 226,
+      "name": "Oil Pump",
+      "parent_id": 200,
+      "dlc_id": 3
+    },
+    {
+      "_id": 227,
+      "name": "Water Well",
+      "parent_id": 200,
+      "dlc_id": 3
+    },
+    {
       "_id": 300,
       "name": "Weapons",
       "parent_id": 0,
@@ -367,6 +385,12 @@
       "name": "Misc",
       "parent_id": 400,
       "dlc_id": 1
+    },
+    {
+      "_id": 411,
+      "name": "Desert Cloth",
+      "parent_id": 400,
+      "dlc_id": 3
     },
     {
       "_id": 500,
@@ -947,6 +971,64 @@
   ],
   "engram": [
     {
+      "name": "Clay",
+      "description": "Created by grinding Sand with Cactus Sap in a Mortar and Pestle.",
+      "drawable": "refined_clay_scorched_earth",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "resources_sand"
+        },
+        {
+          "quantity": 1,
+          "drawable": "resources_cactus_sap"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Preserving Salt",
+      "description": "Created by grinding salt with sulfur in a Mortar and Pestle. Preserves food.",
+      "drawable": "refined_preserving_salt",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_sulfur"
+        },
+        {
+          "quantity": 2,
+          "drawable": "resources_raw_salt"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Propellant",
+      "description": "Used to manufacture highly flammable resources.",
+      "drawable": "refined_propellant",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "resources_sulfur"
+        },
+        {
+          "quantity": 1,
+          "drawable": "resources_cactus_sap"
+        },
+        {
+          "quantity": 1,
+          "drawable": "oil"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
       "name": "Absorbent Substrate",
       "description": "This sticky compound excels at absorbing other chemicals.",
       "drawable": "refined_absorbent_substrate",
@@ -1107,7 +1189,7 @@
     {
       "name": "Clay",
       "description": "Clay that has been formed from grinding claystone and limestone on a handmill.",
-      "drawable": "refined_clay",
+      "drawable": "refined_clay_primitive_plus",
       "category_id": 1300,
       "composition": [
         {
@@ -1130,7 +1212,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "refined_clay"
+          "drawable": "refined_clay_primitive_plus"
         }
       ],
       "dlc_id": 2,
@@ -3597,6 +3679,124 @@
       "yield": 1
     },
     {
+      "name": "Desert Cloth Boots",
+      "description": "Hide-soled shoes provide some protection from the heat and cold, but only minimal protection from injuries.",
+      "drawable": "armor_desert_cloth_cloth_boots",
+      "category_id": 411,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 12,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 10,
+          "drawable": "resources_silk"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Desert Cloth Gloves",
+      "description": "Hide-padded gloves provide some protection from the heat and cold, but only minimal protection from injuries.",
+      "drawable": "armor_desert_cloth_cloth_gloves",
+      "category_id": 411,
+      "composition": [
+        {
+          "quantity": 4,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 10,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 8,
+          "drawable": "resources_silk"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Desert Cloth Pants",
+      "description": "Provides some protection from the heat and cold, but only minimal protection from injuries.",
+      "drawable": "armor_desert_cloth_cloth_pants",
+      "category_id": 411,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 25,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 15,
+          "drawable": "resources_silk"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Desert Cloth Shirt",
+      "description": "Provides some protection from the heat and cold, but only minimal protection from injuries.",
+      "drawable": "armor_desert_cloth_cloth_shirt",
+      "category_id": 411,
+      "composition": [
+        {
+          "quantity": 8,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 20,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 12,
+          "drawable": "resources_silk"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Desert Goggles and Hat",
+      "description": "You can see better during sandstorms. Provides some protection from the heat and cold, but only minimal protection from injuries.",
+      "drawable": "armor_desert_cloth_goggles_and_hat",
+      "category_id": 411,
+      "composition": [
+        {
+          "quantity": 6,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 10,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 3,
+          "drawable": "silica_pearls"
+        },
+        {
+          "quantity": 10,
+          "drawable": "crystal"
+        },
+        {
+          "quantity": 3,
+          "drawable": "resources_silk"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
       "name": "Radio",
       "description": "Use this to communicate securely over great distances.",
       "drawable": "communication_radio",
@@ -5873,6 +6073,124 @@
       "yield": 1
     },
     {
+      "name": "Lymantria Saddle",
+      "description": "Equip a Lymantria with this to ride it.",
+      "drawable": "saddles_lymantria_saddle",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 130,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 125,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 95,
+          "drawable": "chitin_or_keratin"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Mantis Saddle",
+      "description": "Equip a Mantis with this to ride it.",
+      "drawable": "saddles_mantis_saddle",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 120,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 75,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 35,
+          "drawable": "refined_metal_ingot"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Morellatops Saddle",
+      "description": "Equip a Morellatops with this to ride it.",
+      "drawable": "saddles_morellatops_saddle",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 140,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 80,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Rock Golem Saddle",
+      "description": "Equip a Rock Golem with this to ride it.",
+      "drawable": "saddles_rock_golem_saddle",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 270,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 150,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 35,
+          "drawable": "refined_metal_ingot"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Thorny Dragon Saddle",
+      "description": "Equip a Thorny Dragon with this to ride it.",
+      "drawable": "saddles_thorny_dragon_saddle",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 270,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 150,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 35,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 85,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 125,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
       "name": "Advanced Bullet",
       "description": "A small-caliber modern bullet, primarily used with fabricated handguns.",
       "drawable": "weapons_ammo_advanced_bullet",
@@ -6221,6 +6539,76 @@
       "yield": 1
     },
     {
+      "name": "Flame Arrow",
+      "description": "Lights the target on fire, and can also light oil slicks.",
+      "drawable": "weapons_ammo_flame_arrow",
+      "category_id": 302,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "refined_propellant"
+        },
+        {
+          "quantity": 1,
+          "drawable": "weapons_ammo_stone_arrow"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Flamethrower Ammo",
+      "description": "Fuel for the Flamethrower.",
+      "drawable": "weapons_ammo_flamethrower_ammo",
+      "category_id": 302,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "refined_propellant"
+        },
+        {
+          "quantity": 10,
+          "drawable": "refined_gasoline"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Rocket Homing Missile",
+      "description": "Advanced projectile with trajectory auto-correction.",
+      "drawable": "weapons_ammo_rocket_homing_missile",
+      "category_id": 302,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "refined_gunpowder"
+        },
+        {
+          "quantity": 20,
+          "drawable": "crystal"
+        },
+        {
+          "quantity": 40,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 15,
+          "drawable": "composites_polymer"
+        },
+        {
+          "quantity": 5,
+          "drawable": "composites_electronics"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
       "name": "Flashlight Attachment",
       "description": "This flashlight sheds light out in a wide area, but makes you easier to see too. Attach this to a supporting weapon to shine light from a weapon.",
       "drawable": "weapons_attachments_flashlight_attachment",
@@ -6514,6 +6902,62 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Cluster Grenade",
+      "description": "Splits in several explosive fragments.",
+      "drawable": "weapons_explosive_cluster_grenade",
+      "category_id": 304,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "refined_gunpowder"
+        },
+        {
+          "quantity": 10,
+          "drawable": "crystal"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 15,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 10,
+          "drawable": "composites_polymer"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_propellant"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Oil Jar",
+      "description": "Throw it to create an oil slick which can be lit on fire! This sticky substance can also slow people down which step in it!",
+      "drawable": "weapons_explosive_oil_jar",
+      "category_id": 304,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "refined_gunpowder"
+        },
+        {
+          "quantity": 10,
+          "drawable": "refined_propellant"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_clay_scorched_earth"
+        }
+      ],
+      "dlc_id": 3,
       "yield": 1
     },
     {
@@ -6837,6 +7281,32 @@
       "yield": 1
     },
     {
+      "name": "Chainsaw",
+      "description": "The fastest way to cut a tree.",
+      "drawable": "weapons_melee_chainsaw",
+      "category_id": 306,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "composites_polymer"
+        },
+        {
+          "quantity": 50,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 25,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 25,
+          "drawable": "composites_electronics"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
       "name": "Metal Sword",
       "description": "The undisputed ruler of short-range combat. Needs a hotter flame to be forged.",
       "drawable": "primitive_melee_metal_sword",
@@ -6966,6 +7436,54 @@
         }
       ],
       "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Boomerang",
+      "description": "Your trusty ranged weapon.",
+      "drawable": "primitive_melee_boomerang",
+      "category_id": 3011,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "resources_sand"
+        },
+        {
+          "quantity": 15,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 3,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Whip",
+      "description": "Keeps your foes at bay, keeps your herd moving.",
+      "drawable": "primitive_melee_whip",
+      "category_id": 3011,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 25,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "resources_silk"
+        }
+      ],
+      "dlc_id": 3,
       "yield": 1
     },
     {
@@ -8301,6 +8819,28 @@
       "yield": 1
     },
     {
+      "name": "Wind Turbine",
+      "description": "Converts the force of the wind into electricity.",
+      "drawable": "structures_electrical_wind_turbine",
+      "category_id": 215,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 20,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 25,
+          "drawable": "composites_electronics"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
       "name": "Auto Turret",
       "description": "Requires electricity to run. Consumes bullets while firing. Can be configured to automatically attack hostiles within range.",
       "drawable": "electrical_defenses_auto_turret",
@@ -8538,6 +9078,66 @@
         }
       ],
       "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Vessel",
+      "description": "Stores preservings salts and makes them last longer.",
+      "drawable": "structures_furniture_vessel",
+      "category_id": 208,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 7,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Mirror",
+      "description": "Put it on a wall, and look at your beautiful self!",
+      "drawable": "structures_furniture_mirror",
+      "category_id": 208,
+      "composition": [
+        {
+          "quantity": 100,
+          "drawable": "resources_sand"
+        },
+        {
+          "quantity": 7,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 100,
+          "drawable": "crystal"
+        },
+        {
+          "quantity": 70,
+          "drawable": "obsidian"
+        },
+        {
+          "quantity": 100,
+          "drawable": "silica_pearls"
+        },
+        {
+          "quantity": 50,
+          "drawable": "refined_metal_ingot"
+        }
+      ],
+      "dlc_id": 3,
       "yield": 1
     },
     {
@@ -10654,7 +11254,7 @@
       "composition": [
         {
           "quantity": 35,
-          "drawable": "refined_clay"
+          "drawable": "refined_clay_primitive_plus"
         },
         {
           "quantity": 10,
@@ -10672,7 +11272,7 @@
       "composition": [
         {
           "quantity": 30,
-          "drawable": "refined_clay"
+          "drawable": "refined_clay_primitive_plus"
         },
         {
           "quantity": 15,
@@ -10690,7 +11290,7 @@
       "composition": [
         {
           "quantity": 45,
-          "drawable": "refined_clay"
+          "drawable": "refined_clay_primitive_plus"
         }
       ],
       "dlc_id": 2,
@@ -10704,7 +11304,7 @@
       "composition": [
         {
           "quantity": 35,
-          "drawable": "refined_clay"
+          "drawable": "refined_clay_primitive_plus"
         },
         {
           "quantity": 10,
@@ -10722,7 +11322,7 @@
       "composition": [
         {
           "quantity": 30,
-          "drawable": "refined_clay"
+          "drawable": "refined_clay_primitive_plus"
         },
         {
           "quantity": 20,
@@ -12121,6 +12721,36 @@
       "yield": 1
     },
     {
+      "name": "Tent",
+      "description": "A portable Tent where you can take cover in hostile environments.",
+      "drawable": "structures_wood_tent",
+      "category_id": 202,
+      "composition": [
+        {
+          "quantity": 25,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 50,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 15,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "resources_silk"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
       "name": "Wooden Billboard",
       "description": "A large wooden billboard for landmark navigation or relaying messages.",
       "drawable": "wood_signs_wooden_billboard",
@@ -12840,6 +13470,678 @@
         }
       ],
       "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Ceiling",
+      "description": "A stable adobe-plated concrete ceiling that provides insulation, and doubles as a floor for higher levels.",
+      "drawable": "structures_adobe_adobe_ceiling",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Dinosaur Gate",
+      "description": "A large adobe gate that can be used with a Gateway to most keep dinosaurs in or out.",
+      "drawable": "structures_adobe_adobe_dinosaur_gate",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 60,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Dinosaur Gateway",
+      "description": "A large adobe gateway that can be used with a Gate to keep most dinosaurs in or out.",
+      "drawable": "structures_adobe_adobe_dinosaur_gateway",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 80,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 280,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 70,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 50,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Door",
+      "description": "A stable adobe door that provides entance to structures. Can be locked for security.",
+      "drawable": "structures_adobe_adobe_door",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 7,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 5,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Doorframe",
+      "description": "A adobe wall that provides entrance to a structure.",
+      "drawable": "structures_adobe_adobe_doorframe",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 15,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 8,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 8,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Fence Foundation",
+      "description": "This very strong, narrow foundation is used to build walls around an area.",
+      "drawable": "structures_adobe_adobe_fence_foundation",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 10,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 3,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 5,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Foundation",
+      "description": "Required to build structures in an area.",
+      "drawable": "structures_adobe_adobe_foundation",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 80,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 40,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 15,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Hatchframe",
+      "description": "This Adobe concrete ceiling has a hole in it for trapdoors.",
+      "drawable": "structures_adobe_adobe_hatchframe",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 12,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Ladder",
+      "description": "A simple adobe ladder used to climb up or down tall structures. Can also be used to extend existing ladders.",
+      "drawable": "structures_adobe_adobe_ladder",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 4,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 5,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 7,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 3,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Pillar",
+      "description": "The adobe pillar adds structural integrity to the area it is built under. Can also act as stilts for buildings on inclines.",
+      "drawable": "structures_adobe_adobe_pillar",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Railing",
+      "description": "A adobe railing that acts a a simple barrier to prevent people from falling.",
+      "drawable": "structures_adobe_adobe_railing",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 5,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 5,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 3,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Ramp",
+      "description": "An inclined adobe-plated concrete floor for travelling up or down levels. Can also be used to make an angled roof.",
+      "drawable": "structures_adobe_adobe_ramp",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Staircase",
+      "description": "An adobe spiral staircase, useful in constructing multi-level buildings.",
+      "drawable": "structures_adobe_adobe_staircase",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 200,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 100,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 50,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 40,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Trapdoor",
+      "description": "This adobe slab can be used to secure hatches.",
+      "drawable": "structures_adobe_adobe_trapdoor",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 7,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 5,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Wall",
+      "description": "An adobe wall that insulates the inside from the outside and separates rooms.",
+      "drawable": "structures_adobe_adobe_wall",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 8,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Window",
+      "description": "Adobe plates on hinges that cover windows to provide protection from projectiles and spying.",
+      "drawable": "structures_adobe_adobe_window",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 8,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 4,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 2,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 4,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Adobe Windowframe",
+      "description": "An adobe wall, with a hole for a window.",
+      "drawable": "structures_adobe_adobe_windowframe",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 36,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 15,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 9,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 8,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Behemoth Adobe Dinosaur Gate",
+      "description": "A large, reinforced adobe gate that can be used with a Behemoth Gateway to keep dinosaurs in or out.",
+      "drawable": "structures_adobe_behemoth_adobe_dinosaur_gate",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 450,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 450,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 450,
+          "drawable": "thatch"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Behemoth Adobe Dinosaur Gateway",
+      "description": "A large adobe gateway that can be used with a Gate to keep most dinosaurs in or out.",
+      "drawable": "structures_adobe_behemoth_adobe_dinosaur_gateway",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 80,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 280,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 70,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 50,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Giant Adobe Hatchframe",
+      "description": "This Giant Adobe concrete ceiling has a hole in it for trapdoors.",
+      "drawable": "structures_adobe_giant_adobe_hatchframe",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 70,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 5,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Giant Adobe Trapdoor",
+      "description": "A large adobe gate that can be used with a Gateway to most keep dinosaurs in or out.",
+      "drawable": "structures_adobe_adobe_foundation",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 100,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 45,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Adobe Roof",
+      "description": "An inclined adobe-framed roof. Slightly different angle than the ramp. Excellent for growing crops indoors.",
+      "drawable": "structures_adobe_sloped_adobe_roof",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Adobe Wall Left",
+      "description": "A sturdy adobe-framed, sloped wall that insulates the inside from the outside, seprarates rooms, and provides structural integrity. Used in conjunction with the roof. Excellent for growing crops indoors.",
+      "drawable": "structures_adobe_sloped_adobe_wall_left",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 5,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 8,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Sloped Adobe Wall Right",
+      "description": "A sturdy adobe-framed, sloped wall that insulates the inside from the outside, seprarates rooms, and provides structural integrity. Used in conjunction with the roof. Excellent for growing crops indoors.",
+      "drawable": "structures_adobe_sloped_adobe_wall_right",
+      "category_id": 225,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "refined_clay_scorched_earth"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 5,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 8,
+          "drawable": "fiber"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Oil Pump",
+      "description": "Extracts Oil from an Oil zone.",
+      "drawable": "structures_oil_pump_oil_pump",
+      "category_id": 226,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 25,
+          "drawable": "composites_electronics"
+        },
+        {
+          "quantity": 25,
+          "drawable": "crystal"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Water Well",
+      "description": "This stone tap allows access to the water in an irrigation network. Can refill containers, irrigate crop plots, or provide a refreshing drink.",
+      "drawable": "structures_water_well_water_well",
+      "category_id": 227,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 20,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 15,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 50,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 10,
+          "drawable": "flint"
+        }
+      ],
+      "dlc_id": 3,
       "yield": 1
     },
     {
@@ -13710,6 +15012,126 @@
         }
       ],
       "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Mantis Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "drawable": "kibble",
+      "category_id": 1200,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "eggs_mantis_egg"
+        },
+        {
+          "quantity": 3,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 2,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "obsidian"
+        },
+        {
+          "quantity": 1,
+          "drawable": "citronal"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Morellatops (Camelsaurus) Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "drawable": "kibble",
+      "category_id": 1200,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "eggs_morellatops_egg"
+        },
+        {
+          "quantity": 3,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 2,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 50,
+          "drawable": "chitin"
+        },
+        {
+          "quantity": 1,
+          "drawable": "savoroot"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Thorny Dragon Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "drawable": "kibble",
+      "category_id": 1200,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "eggs_thorny_dragon_egg"
+        },
+        {
+          "quantity": 3,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 2,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_cooked_meat_jerky"
+        },
+        {
+          "quantity": 1,
+          "drawable": "savoroot"
+        }
+      ],
+      "dlc_id": 3,
+      "yield": 1
+    },
+    {
+      "name": "Vulture Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "drawable": "kibble",
+      "category_id": 1200,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "eggs_vulture_egg"
+        },
+        {
+          "quantity": 3,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 2,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 1,
+          "drawable": "consumables_food_cooked_meat"
+        },
+        {
+          "quantity": 1,
+          "drawable": "longrass"
+        }
+      ],
+      "dlc_id": 3,
       "yield": 1
     },
     {

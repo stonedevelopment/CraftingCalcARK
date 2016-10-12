@@ -3,13 +3,14 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    247.6   Added all Engrams from Scorch Earth!!!
     247.5   Removed Refined Engrams from Resources, added Cooked Meats to Engrams
     247.4   Added all (hopefully!) Engrams from Primitive+
     247.3   Updated Refined Engrams to Primitive+, added Yield to Engrams
     247.2   Updated Resources to Primitive+, added DLC table
     247.1   Updated Categories to Primitive+
     -->
-    <string name="json_version">247.5</string>
+    <string name="json_version">247.6</string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
@@ -128,5 +129,6 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="content_main_clear_queue">Clear Queue</string>
     <string name="action_line_break">--</string>
+    <string name="action_dlc_settings_scorched_earth">Scorched Earth</string>
 
 </resources>
