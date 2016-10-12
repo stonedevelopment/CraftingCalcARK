@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,6 @@ import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.CraftableResourceListAdapter;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.db.DatabaseHelper;
-import arc.resource.calculator.helpers.DisplayHelper;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
 import arc.resource.calculator.model.engram.DisplayEngram;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-        DisplayHelper.createInstance( this, getWindowManager().getDefaultDisplay() );
+//        DisplayHelper.createInstance( this, getWindowManager().getDefaultDisplay() );
 
         displayCaseEngramList = ( AutoFitRecyclerView ) findViewById( R.id.content_display_case_engrams );
         craftingQueueEngramList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_engrams );
@@ -153,14 +153,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Button buttonClearQueue = ( Button ) findViewById( R.id.content_crafting_queue_clear_queue );
-        assert buttonClearQueue != null;
-        buttonClearQueue.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                craftableEngramListAdapter.ClearQueue();
-                RefreshViews();
-            }
-        } );
+        if ( buttonClearQueue != null ) {
+            buttonClearQueue.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick( View v ) {
+                    craftableEngramListAdapter.ClearQueue();
+                    RefreshViews();
+                }
+            } );
+        } else {
+            Log.e( TAG, "Clear Queue button returned null?" );
+        }
 
         createExtraViews();
         RefreshViews();
@@ -185,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu( Menu menu ) {
         getMenuInflater().inflate( R.menu.menu_main, menu );
 
-        PreferenceHelper preferenceHelper = new PreferenceHelper( this);
+        PreferenceHelper preferenceHelper = new PreferenceHelper( this );
         long dlcSetting = preferenceHelper.getIntPreference( getString( R.string.pref_dlc_setting ) );
 
         // DLC Setting not set yet, set to default, Vanilla. TODO: Have better system for defaults
@@ -199,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem( R.id.action_show_all ).setTitle( R.string.action_show_all );
         }
 
-        if ( craftableResourceListAdapter.getBreakdownResources() ) {
+        if ( craftableResourceListAdapter.hasComplexResources() ) {
             menu.findItem( R.id.action_breakdownResources ).setTitle( R.string.action_breakdown_resources_raw );
         } else {
             menu.findItem( R.id.action_breakdownResources ).setTitle( R.string.action_breakdown_resources_refined );
@@ -233,9 +236,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_breakdownResources:
-                craftableResourceListAdapter.setBreakdownResources( !craftableResourceListAdapter.getBreakdownResources() );
+                craftableResourceListAdapter.setHasComplexResources( !craftableResourceListAdapter.hasComplexResources() );
 
-                if ( craftableResourceListAdapter.getBreakdownResources() ) {
+                if ( craftableResourceListAdapter.hasComplexResources() ) {
                     item.setTitle( R.string.action_breakdown_resources_raw );
                 } else {
                     item.setTitle( R.string.action_breakdown_resources_refined );
@@ -279,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage(
                                 "Developed by: Shane Stone/Stone Development\n" +
                                         "Email: jaredstone1982@gmail.com/stonedevs@gmail.com\n" +
-                                        "Twitter: @MasterxOfxNone/@StoneDevs\n" +
+                                        "Twitter: @MasterxOfxNone/@ARKResourceCalc\n" +
                                         "Steam/Xbox Live: MasterxOfxNone\n\n" +
                                         getAppVersions() )
                         .show();
@@ -339,17 +342,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar( toolbar );
 
         showChangeLog();
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        if (fab != null) {
-//            fab.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-//                }
-//            });
-//        }
     }
 
     private void showChangeLog() {

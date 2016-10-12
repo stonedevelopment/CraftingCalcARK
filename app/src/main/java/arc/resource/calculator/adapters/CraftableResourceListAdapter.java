@@ -71,13 +71,13 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
         return mContext;
     }
 
-    public void setBreakdownResources( boolean b ) {
+    public void setHasComplexResources( boolean b ) {
         if ( mCraftingQueue.hasComplexResources() != b ) {
             mCraftingQueue.setHasComplexResources( b );
         }
     }
 
-    public boolean getBreakdownResources() {
+    public boolean hasComplexResources() {
         return mCraftingQueue.hasComplexResources();
     }
 
