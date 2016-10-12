@@ -23,6 +23,14 @@
         android:layout_weight="1"
         android:padding="4dp">
 
+        <Button
+            android:id="@+id/content_crafting_queue_clear_queue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/content_main_clear_queue"
+            android:layout_alignParentBottom="true"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/content_crafting_queue_engrams"
             android:layout_width="match_parent"
@@ -33,7 +41,7 @@
             android:id="@+id/content_crafting_queue_resources"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@id/content_crafting_queue_clear_queue"
             android:layout_below="@id/content_crafting_queue_engrams"
             android:padding="@dimen/resource_view_holder_padding"/>
 
