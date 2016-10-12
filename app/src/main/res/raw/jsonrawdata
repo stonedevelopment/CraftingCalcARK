@@ -967,6 +967,66 @@
       "name": "Worker Bee",
       "drawable": "resources_bees_worker_bee",
       "dlc_id": 2
+    },
+    {
+      "name": "Cactus Sap",
+      "drawable": "resources_cactus_sap",
+      "dlc_id": 3
+    },
+    {
+      "name": "Raw Salt",
+      "drawable": "resources_raw_salt",
+      "dlc_id": 3
+    },
+    {
+      "name": "Sand",
+      "drawable": "resources_sand",
+      "dlc_id": 3
+    },
+    {
+      "name": "Silk",
+      "drawable": "resources_silk",
+      "dlc_id": 3
+    },
+    {
+      "name": "Sulfur",
+      "drawable": "resources_sulfur",
+      "dlc_id": 3
+    },
+    {
+      "name": "Wyvern Milk",
+      "drawable": "resources_wyvern_milk",
+      "dlc_id": 3
+    },
+    {
+      "name": "Camelsaurus Egg",
+      "drawable": "eggs_camelsaurus_egg",
+      "dlc_id": 3
+    },
+    {
+      "name": "Mantis Egg",
+      "drawable": "eggs_mantis_egg",
+      "dlc_id": 3
+    },
+    {
+      "name": "Moth Egg",
+      "drawable": "eggs_moth_egg",
+      "dlc_id": 3
+    },
+    {
+      "name": "Thorny Dragon Egg",
+      "drawable": "eggs_thorny_dragon_egg",
+      "dlc_id": 3
+    },
+    {
+      "name": "Vulture Egg",
+      "drawable": "eggs_vulture_egg",
+      "dlc_id": 3
+    },
+    {
+      "name": "Wyvern Egg",
+      "drawable": "eggs_wyvern_egg_fire",
+      "dlc_id": 3
     }
   ],
   "engram": [
@@ -15052,7 +15112,7 @@
       "composition": [
         {
           "quantity": 1,
-          "drawable": "eggs_morellatops_egg"
+          "drawable": "eggs_camelsaurus_egg"
         },
         {
           "quantity": 3,
