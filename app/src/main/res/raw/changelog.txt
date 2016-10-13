@@ -19,6 +19,12 @@
     </style>
   </head>
   <body>
+    $ 0.3.0a
+      % Version 0.3.0a
+      _ 10/12/2016
+      * Added all Engrams for all DLCs including Scorched Earth!!!!
+      ! Will be adding folder hierarchy and DLC name displays in the near future.
+
     $ 0.2.9a
       % Version 0.2.9a
       _ 10/12/2016
