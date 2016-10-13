@@ -3,6 +3,7 @@ package arc.resource.calculator.helpers;
 import android.util.Log;
 import android.util.SparseArray;
 
+import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.resource.QueueResource;
 
 /**

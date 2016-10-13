@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.DisplayCase;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.viewholders.EngramGridViewHolder;
@@ -102,10 +103,16 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
         return mDisplayCase.getParent();
     }
 
+    public Category getCategoryDetails( long categoryId ) {
+        return mDisplayCase.getCategory( categoryId );
+    }
+
     public void changeCategory( int position ) {
         mDisplayCase.changeCategory( position );
+    }
 
-        Refresh();
+    public void setLevelToRoot() {
+        mDisplayCase.setLevelToRoot();
     }
 
     public boolean isFiltered() {

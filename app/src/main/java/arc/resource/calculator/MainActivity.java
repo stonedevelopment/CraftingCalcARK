@@ -3,6 +3,7 @@ package arc.resource.calculator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,19 +11,21 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.CraftableResourceListAdapter;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
+import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.db.DatabaseHelper;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.views.AutoFitRecyclerView;
 import arc.resource.calculator.views.RecyclerTouchListener;
@@ -35,7 +38,7 @@ import arc.resource.calculator.views.RecyclerTouchListener;
  * -
  * Web: https://github.com/jaredstone1982/CraftingCalcARK
  * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
+ * Twitter: @MasterxOfxNone/@ARKResourceCalc
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
@@ -127,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                                     RefreshViews();
                                 } else {
                                     displayCaseListAdapter.changeCategory( position );
+
+                                    RefreshViews();
                                 }
                             }
                         }
@@ -146,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } );
 
-
             displayCaseListAdapter = new DisplayCaseListAdapter( this );
             displayCaseEngramList.addOnItemTouchListener( displayCaseTouchListener );
             displayCaseEngramList.setAdapter( displayCaseListAdapter );
@@ -157,12 +161,9 @@ public class MainActivity extends AppCompatActivity {
             buttonClearQueue.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick( View v ) {
-                    craftableEngramListAdapter.ClearQueue();
-                    RefreshViews();
+                    ClearQueue();
                 }
             } );
-        } else {
-            Log.e( TAG, "Clear Queue button returned null?" );
         }
 
         createExtraViews();
@@ -173,10 +174,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        PreferenceHelper preferenceHelper = new PreferenceHelper( this );
-
-        preferenceHelper.setPreference( Helper.APP_LEVEL, displayCaseListAdapter.getLevel() );
-        preferenceHelper.setPreference( Helper.APP_PARENT, displayCaseListAdapter.getParent() );
+        SaveSettings();
     }
 
     @Override
@@ -221,8 +219,9 @@ public class MainActivity extends AppCompatActivity {
                 if ( prefValue != Helper.DLC_VANILLA_ID ) {
                     preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_VANILLA_ID );
 
-                    craftableEngramListAdapter.ClearQueue();
-                    RefreshViews();
+                    displayCaseListAdapter.setLevelToRoot();
+
+                    ClearQueue();
                 }
                 break;
 
@@ -230,8 +229,9 @@ public class MainActivity extends AppCompatActivity {
                 if ( prefValue != Helper.DLC_PRIMITIVE_PLUS_ID ) {
                     preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_PRIMITIVE_PLUS_ID );
 
-                    craftableEngramListAdapter.ClearQueue();
-                    RefreshViews();
+                    displayCaseListAdapter.setLevelToRoot();
+
+                    ClearQueue();
                 }
                 break;
 
@@ -239,8 +239,9 @@ public class MainActivity extends AppCompatActivity {
                 if ( prefValue != Helper.DLC_SCORCHED_EARTH_ID ) {
                     preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_SCORCHED_EARTH_ID );
 
-                    craftableEngramListAdapter.ClearQueue();
-                    RefreshViews();
+                    displayCaseListAdapter.setLevelToRoot();
+
+                    ClearQueue();
                 }
                 break;
 
@@ -338,12 +339,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void SaveSettings() {
+        PreferenceHelper preferenceHelper = new PreferenceHelper( this );
+
+        preferenceHelper.setPreference( Helper.APP_LEVEL, displayCaseListAdapter.getLevel() );
+        preferenceHelper.setPreference( Helper.APP_PARENT, displayCaseListAdapter.getParent() );
+    }
+
+    public void ClearQueue() {
+        craftableEngramListAdapter.ClearQueue();
+
+        RefreshViews();
+    }
+
     private void RefreshViews() {
         craftableEngramListAdapter.Refresh();
         craftableResourceListAdapter.Refresh();
         displayCaseListAdapter.Refresh();
 
         displayCaseEngramList.setLayoutParams( getDisplayCaseLayoutParams() );
+
+//        TextView textViewCategory = ( TextView ) findViewById( R.id.content_category_hierarchy_text );
+//        if ( textViewCategory != null ) {
+//            textViewCategory.setText( getCategoryHierarchy() );
+//        }
+//
+//        TextView textViewDLC = ( TextView ) findViewById( R.id.content_dlc_text );
+//        if ( textViewDLC != null ) {
+//            textViewDLC.setText( "DLC: Scorched Earth" );
+//        }
     }
 
     private void createExtraViews() {
@@ -377,5 +401,50 @@ public class MainActivity extends AppCompatActivity {
         return "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
                 "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
                 "JSON File Version: " + getString( R.string.json_version ) + "\n";
+    }
+
+    String getDLCName() {
+        long dlc_id = new PreferenceHelper( this ).getIntPreference( getString( R.string.pref_dlc_setting ) );
+        Cursor cursor = getContentResolver().query( DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, dlc_id ),
+                null, null, null, null );
+
+        if ( cursor == null ) return null;
+
+        try {
+            if ( cursor.moveToFirst() ) {
+                String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
+                if ( name != null ) {
+                    return name;
+                }
+            }
+        } finally {
+            cursor.close();
+
+        }
+        return null;
+    }
+
+    public String getCategoryHierarchy() {
+        Category category = displayCaseListAdapter.getCategoryDetails( displayCaseListAdapter.getLevel() );
+
+        StringBuilder builder = new StringBuilder();
+        if ( category != null ) {
+            long parent_id = category.getParent();
+
+            builder.append( category.getName() );
+            while ( parent_id > 0 ) {
+                category = displayCaseListAdapter.getCategoryDetails( parent_id );
+                if ( category == null ) break;
+
+                parent_id = category.getParent();
+
+                builder.insert( 0, category.getName() + "/" );
+            }
+            builder.insert( 0, "/" );
+        }
+        builder.insert( 0, getDLCName() );
+        builder.append( "/" );
+
+        return builder.toString();
     }
 }

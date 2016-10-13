@@ -328,6 +328,8 @@ public class LoadScreenActivity extends AppCompatActivity {
                 values.put( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY, parent_id );
                 values.put( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY, dlc_id );
 
+                Helper.Log( TAG, values.toString() );
+
                 vector.add( values );
             }
 

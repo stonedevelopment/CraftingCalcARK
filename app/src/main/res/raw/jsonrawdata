@@ -3741,7 +3741,7 @@
     {
       "name": "Desert Cloth Boots",
       "description": "Hide-soled shoes provide some protection from the heat and cold, but only minimal protection from injuries.",
-      "drawable": "armor_desert_cloth_cloth_boots",
+      "drawable": "armor_desert_cloth_desert_cloth_boots",
       "category_id": 411,
       "composition": [
         {
@@ -3763,7 +3763,7 @@
     {
       "name": "Desert Cloth Gloves",
       "description": "Hide-padded gloves provide some protection from the heat and cold, but only minimal protection from injuries.",
-      "drawable": "armor_desert_cloth_cloth_gloves",
+      "drawable": "armor_desert_cloth_desert_cloth_gloves",
       "category_id": 411,
       "composition": [
         {
@@ -3785,7 +3785,7 @@
     {
       "name": "Desert Cloth Pants",
       "description": "Provides some protection from the heat and cold, but only minimal protection from injuries.",
-      "drawable": "armor_desert_cloth_cloth_pants",
+      "drawable": "armor_desert_cloth_desert_cloth_pants",
       "category_id": 411,
       "composition": [
         {
@@ -3807,7 +3807,7 @@
     {
       "name": "Desert Cloth Shirt",
       "description": "Provides some protection from the heat and cold, but only minimal protection from injuries.",
-      "drawable": "armor_desert_cloth_cloth_shirt",
+      "drawable": "armor_desert_cloth_desert_cloth_shirt",
       "category_id": 411,
       "composition": [
         {
@@ -3829,7 +3829,7 @@
     {
       "name": "Desert Goggles and Hat",
       "description": "You can see better during sandstorms. Provides some protection from the heat and cold, but only minimal protection from injuries.",
-      "drawable": "armor_desert_cloth_goggles_and_hat",
+      "drawable": "armor_desert_cloth_desert_goggles_and_hat",
       "category_id": 411,
       "composition": [
         {

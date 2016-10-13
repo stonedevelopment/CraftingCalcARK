@@ -281,6 +281,11 @@ public class DisplayCase {
         }
     }
 
+    public void setLevelToRoot() {
+        setLevel( ROOT );
+        setParent( ROOT );
+    }
+
     public void UpdateQueues() {
         mQueues = getQueues();
     }
@@ -289,11 +294,10 @@ public class DisplayCase {
      * -- PRIVATE UTILITY METHODS --
      */
 
-    private Category getCategory( long _id ) {
+    public Category getCategory( long _id ) {
         Cursor cursor = getContext().getContentResolver().query(
                 DatabaseContract.buildUriWithId( DatabaseContract.CategoryEntry.CONTENT_URI, _id ),
                 null, null, null, null );
-
 
         if ( cursor != null && cursor.moveToFirst() ) {
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
@@ -332,7 +336,7 @@ public class DisplayCase {
                 long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
                 long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY ) );
 
-                categories.append( categories.size(), new Category( _id, name, parent_id, dlc_id ) );
+                categories.append( categories.size() + 1, new Category( _id, name, parent_id, dlc_id ) );
             }
 
             cursor.close();
