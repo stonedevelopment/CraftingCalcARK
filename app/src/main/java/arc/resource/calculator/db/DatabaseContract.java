@@ -17,13 +17,15 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import arc.resource.calculator.BuildConfig;
+
 /**
  * Defines table and column names for the database.
  */
 public class DatabaseContract {
 
     // Unique address key to be used within the base content uri
-    public static final String CONTENT_AUTHORITY = "com.gmail.stonedevs.ark.resource.calculator.provider";
+    public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     // Base URI which apps will use to contact content provider
     public static final Uri BASE_CONTENT_URI = Uri.parse( "content://" + CONTENT_AUTHORITY );

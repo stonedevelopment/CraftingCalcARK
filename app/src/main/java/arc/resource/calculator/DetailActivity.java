@@ -14,6 +14,7 @@ import android.widget.TextView;
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.Showcase;
+import arc.resource.calculator.util.AdUtil;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -40,6 +41,11 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_detail );
 
+        Bundle extras = getIntent().getExtras();
+        if ( extras != null ) {
+            id = extras.getLong( Helper.DETAIL_ID );
+        }
+
         RecyclerView.LayoutManager layoutManager_ResourceList =
                 new LinearLayoutManager( this );
 
@@ -48,19 +54,16 @@ public class DetailActivity extends AppCompatActivity {
         TextView descriptionText = ( TextView ) findViewById( R.id.engram_detail_descriptionText );
         TextView categoryText = ( TextView ) findViewById( R.id.engram_detail_categoryText );
 
-        Button increaseButton = ( Button ) findViewById( R.id.increaseButton );
-        final EditText quantityEditText = ( EditText ) findViewById( R.id.quantityEditText );
+        Button decreaseButtonBy10 = ( Button ) findViewById( R.id.decreaseButtonBy10 );
         Button decreaseButton = ( Button ) findViewById( R.id.decreaseButton );
+        final EditText quantityEditText = ( EditText ) findViewById( R.id.quantityEditText );
+        Button increaseButton = ( Button ) findViewById( R.id.increaseButton );
+        Button increaseButtonBy10 = ( Button ) findViewById( R.id.increaseButtonBy10 );
 
         RecyclerView resourceList = ( RecyclerView ) findViewById( R.id.resourceList );
 
         Button saveButton = ( Button ) findViewById( R.id.saveButton );
         Button removeButton = ( Button ) findViewById( R.id.removeButton );
-
-        Bundle extras = getIntent().getExtras();
-        if ( extras != null ) {
-            id = extras.getLong( Helper.DETAIL_ID );
-        }
 
         assert removeButton != null;
         assert saveButton != null;
@@ -72,6 +75,8 @@ public class DetailActivity extends AppCompatActivity {
         assert resourceList != null;
         assert increaseButton != null;
         assert decreaseButton != null;
+        assert increaseButtonBy10 != null;
+        assert decreaseButtonBy10 != null;
 
         showcase = new Showcase( this, id );
         if ( showcase.getQuantity() <= Helper.MIN ) {
@@ -150,6 +155,32 @@ public class DetailActivity extends AppCompatActivity {
             }
         } );
 
+        decreaseButtonBy10.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                showcase.decreaseQuantityBy10();
+
+                quantityEditText.setText( showcase.getQuantityText() );
+                quantityEditText.setSelection( quantityEditText.length() );
+
+                resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
+                resourceListAdapter.Refresh();
+            }
+        } );
+
+        increaseButtonBy10.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                showcase.increaseQuantityBy10();
+
+                quantityEditText.setText( showcase.getQuantityText() );
+                quantityEditText.setSelection( quantityEditText.length() );
+
+                resourceListAdapter.setResources( showcase.getQuantifiableComposition() );
+                resourceListAdapter.Refresh();
+            }
+        } );
+
         removeButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
@@ -166,6 +197,8 @@ public class DetailActivity extends AppCompatActivity {
 
         resourceList.setLayoutManager( layoutManager_ResourceList );
         resourceList.setAdapter( resourceListAdapter );
+
+        AdUtil.loadAdView( this );
     }
 
     private void FinishActivityWithResult( String resultCode, boolean result ) {

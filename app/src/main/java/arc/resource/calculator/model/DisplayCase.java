@@ -12,6 +12,7 @@
  */
 package arc.resource.calculator.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import java.util.HashMap;
+import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
@@ -28,8 +30,6 @@ import arc.resource.calculator.model.engram.DisplayEngram;
 
 public class DisplayCase {
     private static final String TAG = DisplayCase.class.getSimpleName();
-
-    private static DisplayCase sInstance;
     private static final long ROOT = 0;
 
     private boolean isFiltered;
@@ -40,10 +40,12 @@ public class DisplayCase {
     private Context mContext;
 
     private SparseArray<DisplayEngram> mEngrams;
+
     private SparseArray<Category> mCategories;
+
     private HashMap<Long, Queue> mQueues;
 
-    private DisplayCase( Context context ) {
+    public DisplayCase( Context context ) {
         PreferenceHelper preferenceHelper = new PreferenceHelper( context );
         isFiltered = preferenceHelper.getBooleanPreference( Helper.FILTERED, true );
 
@@ -58,14 +60,6 @@ public class DisplayCase {
         mQueues = new HashMap<>();
 
         UpdateData();
-    }
-
-    public static DisplayCase getInstance( Context context ) {
-        if ( sInstance == null ) {
-            sInstance = new DisplayCase( context );
-        }
-
-        return sInstance;
     }
 
     public boolean isFiltered() {

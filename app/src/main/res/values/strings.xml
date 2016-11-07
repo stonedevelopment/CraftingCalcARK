@@ -3,14 +3,19 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    249.2   Fixed Crops category to Primitive+
+    249.1   Updated C4 Charge with correct composition
+    249.0   Added Clown Mask Skin and its resources for Fear Evolved 2
+    248.0   Added Chalicotherium Saddle and Kaprosuchus Saddle
     247.6   Added all Engrams from Scorch Earth!!!
     247.5   Removed Refined Engrams from Resources, added Cooked Meats to Engrams
     247.4   Added all (hopefully!) Engrams from Primitive+
     247.3   Updated Refined Engrams to Primitive+, added Yield to Engrams
     247.2   Updated Resources to Primitive+, added DLC table
     247.1   Updated Categories to Primitive+
+
     -->
-    <string name="json_version">247.6</string>
+    <string name="json_version">249.2</string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
@@ -34,8 +39,10 @@
     <!-- Strings used with the DetailActivity layout -->
     <string name="content_detail_save_button">Save and Close</string>
     <string name="content_detail_remove_button">Remove From Queue</string>
-    <string name="content_detail_number_picker_decrease">-</string>
-    <string name="content_detail_number_picker_increase">+</string>
+    <string name="content_detail_number_picker_decrease">-1</string>
+    <string name="content_detail_number_picker_decrease_by_10">-10</string>
+    <string name="content_detail_number_picker_increase">+1</string>
+    <string name="content_detail_number_picker_increase_by_10">+10</string>
 
     <!-- Strings used with the Help Dialog -->
     <string name="helpdialog_full_title">How to Use This App</string>
@@ -130,5 +137,7 @@
     <string name="content_main_clear_queue">Clear Queue</string>
     <string name="action_line_break">--</string>
     <string name="action_dlc_settings_scorched_earth">Scorched Earth</string>
+    <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
+    <string name="banner_ad_app_id">ca-app-pub-8859801923918627~2903432190</string>
 
 </resources>

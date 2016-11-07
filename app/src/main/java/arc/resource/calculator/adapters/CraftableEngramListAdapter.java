@@ -56,12 +56,12 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
             String name = mCraftingQueue.getEngramName( position );
             int quantity = mCraftingQueue.getEngramQuantityWithYield( position );
 
-            viewHolder.getImage().setImageResource( imageId );
-            viewHolder.getNameText().setText( name );
+            viewHolder.getThumbnail().setImageResource( imageId );
+            viewHolder.getName().setText( name );
 
-            viewHolder.getImage().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
-            viewHolder.getQuantityText().setText( String.format( Locale.US, "x%d", quantity ) );
-            viewHolder.getNameText().setSingleLine( true );
+            viewHolder.getThumbnail().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
+            viewHolder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
+            viewHolder.getName().setSingleLine( true );
         } catch ( ArrayIndexOutOfBoundsException e ) {
             Helper.Log( TAG, e.getMessage() );
         }

@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/res-auto"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
@@ -23,13 +24,22 @@
         android:layout_weight="1"
         android:padding="4dp">
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"/>
+
         <Button
             android:id="@+id/content_crafting_queue_clear_queue"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/content_main_clear_queue"
-            android:layout_alignParentBottom="true"/>
+            android:layout_above="@id/adView"
+            android:text="@string/content_main_clear_queue"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/content_crafting_queue_engrams"

@@ -21,27 +21,35 @@ import arc.resource.calculator.R;
  */
 public class EngramGridViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView mImageView;
-    private TextView mNameTextView;
-    private TextView mQuantityTextView;
+    private View mView;
 
-    public EngramGridViewHolder( View itemView ) {
-        super( itemView );
+    private ImageView mThumbnail;
+    private TextView mName;
+    private TextView mQuantity;
 
-        mImageView = ( ImageView ) itemView.findViewById( R.id.list_item_engram_thumbnail_image_view );
-        mNameTextView = ( TextView ) itemView.findViewById( R.id.list_item_engram_thumbnail_name_text_view );
-        mQuantityTextView = ( TextView ) itemView.findViewById( R.id.list_item_engram_thumbnail_quantity_text_view );
+    public EngramGridViewHolder( View view ) {
+        super( view );
+
+        mView = view;
+
+        mThumbnail = ( ImageView ) view.findViewById( R.id.list_item_engram_thumbnail_image_view );
+        mName = ( TextView ) view.findViewById( R.id.list_item_engram_thumbnail_name_text_view );
+        mQuantity = ( TextView ) view.findViewById( R.id.list_item_engram_thumbnail_quantity_text_view );
     }
 
-    public ImageView getImage() {
-        return mImageView;
+    public View getView() {
+        return mView;
     }
 
-    public TextView getNameText() {
-        return mNameTextView;
+    public ImageView getThumbnail() {
+        return mThumbnail;
     }
 
-    public TextView getQuantityText() {
-        return mQuantityTextView;
+    public TextView getName() {
+        return mName;
+    }
+
+    public TextView getQuantity() {
+        return mQuantity;
     }
 }

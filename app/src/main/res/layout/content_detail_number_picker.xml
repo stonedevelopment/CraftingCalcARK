@@ -1,35 +1,47 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/decreaseButtonBy10"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/content_detail_number_picker_decrease_by_10"/>
 
     <Button
         android:id="@+id/decreaseButton"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:text="@string/content_detail_number_picker_decrease"/>
+
+    <EditText
+        android:id="@+id/quantityEditText"
+        style="?android:attr/editTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:digits="0123456789"
+        android:enabled="false"
+        android:gravity="center_horizontal"
+        android:inputType="number"
+        android:theme="@style/AppTheme.Picker"/>
 
     <Button
         android:id="@+id/increaseButton"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:text="@string/content_detail_number_picker_increase"/>
 
-    <EditText
-        android:id="@+id/quantityEditText"
-        style="?android:attr/editTextStyle"
+    <Button
+        android:id="@+id/increaseButtonBy10"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/decreaseButton"
-        android:layout_toStartOf="@id/increaseButton"
-        android:digits="0123456789"
-        android:gravity="center_horizontal"
-        android:inputType="number"
-        android:enabled="false"
-        android:theme="@style/AppTheme.Picker"/>
+        android:text="@string/content_detail_number_picker_increase_by_10"/>
 
-</RelativeLayout>
+</LinearLayout>

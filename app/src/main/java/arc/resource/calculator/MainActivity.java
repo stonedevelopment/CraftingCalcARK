@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.CraftableResourceListAdapter;
@@ -26,7 +25,7 @@ import arc.resource.calculator.db.DatabaseHelper;
 import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.helpers.PreferenceHelper;
 import arc.resource.calculator.model.Category;
-import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.views.AutoFitRecyclerView;
 import arc.resource.calculator.views.RecyclerTouchListener;
 
@@ -71,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick( View view, int position ) {
                             if ( position >= 0 ) {
                                 craftableEngramListAdapter.increaseQuantity( position );
-                                RefreshViews();
+
+                                // TODO: still need to add a refreshItem to each ListAdapter
+                                displayCaseListAdapter.refreshData();
+                                craftableEngramListAdapter.Refresh();
+                                craftableResourceListAdapter.Refresh();
                             }
                         }
 
@@ -79,8 +82,11 @@ public class MainActivity extends AppCompatActivity {
                         public void onLongClick( View view, int position ) {
                             if ( position >= 0 ) {
                                 craftableEngramListAdapter.decreaseQuantity( position );
-                                RefreshViews();
-                            }
+
+                                // TODO: still need to add a refreshItem to each ListAdapter
+                                displayCaseListAdapter.refreshData();
+                                craftableEngramListAdapter.Refresh();
+                                craftableResourceListAdapter.Refresh();                            }
                         }
                     } );
 
@@ -124,14 +130,17 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick( View view, int position ) {
                             if ( position >= 0 ) {
                                 if ( displayCaseListAdapter.isEngram( position ) ) {
-                                    DisplayEngram engram = displayCaseListAdapter.getEngram( position );
+                                    craftableEngramListAdapter.increaseQuantity(
+                                            displayCaseListAdapter.getEngram( position ).getId() );
 
-                                    craftableEngramListAdapter.increaseQuantity( engram.getId() );
-                                    RefreshViews();
+                                    // TODO: still need to add a refreshItem to each ListAdapter
+                                    craftableEngramListAdapter.Refresh();
+                                    craftableResourceListAdapter.Refresh();
+
+                                    displayCaseListAdapter.refreshData();
                                 } else {
                                     displayCaseListAdapter.changeCategory( position );
-
-                                    RefreshViews();
+                                    displayCaseListAdapter.refreshData();
                                 }
                             }
                         }
@@ -146,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivityForResult( intent, Helper.DETAIL_ID_CODE );
                                 } else {
                                     displayCaseListAdapter.changeCategory( position );
+                                    displayCaseListAdapter.refreshData();
                                 }
                             }
                         }
@@ -165,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             } );
         }
+
+        AdUtil.loadAdView( this );
 
         createExtraViews();
         RefreshViews();
@@ -355,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
     private void RefreshViews() {
         craftableEngramListAdapter.Refresh();
         craftableResourceListAdapter.Refresh();
-        displayCaseListAdapter.Refresh();
+        displayCaseListAdapter.refreshData();
 
         displayCaseEngramList.setLayoutParams( getDisplayCaseLayoutParams() );
 

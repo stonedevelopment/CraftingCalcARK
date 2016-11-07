@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/res-auto"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
@@ -8,30 +9,30 @@
               tools:context=".MainActivity">
 
     <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
-        <!--<TextView-->
-            <!--android:id="@+id/content_category_hierarchy_text"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="@dimen/grid_layout_padding"-->
-            <!--android:layout_marginTop="@dimen/grid_layout_padding"-->
-            <!--android:fontFamily="sans-serif"-->
-            <!--android:textColor="@color/colorWhite"-->
-            <!--android:textAlignment="center"-->
-            <!--android:textSize="@dimen/detail_category_text_size"/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/content_category_hierarchy_text"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/grid_layout_padding"-->
+    <!--android:layout_marginTop="@dimen/grid_layout_padding"-->
+    <!--android:fontFamily="sans-serif"-->
+    <!--android:textColor="@color/colorWhite"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textSize="@dimen/detail_category_text_size"/>-->
 
-        <!--<TextView-->
-            <!--android:id="@+id/content_dlc_text"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_marginRight="@dimen/grid_layout_padding"-->
-            <!--android:layout_marginTop="@dimen/grid_layout_padding"-->
-            <!--android:fontFamily="sans-serif"-->
-            <!--android:textColor="@color/colorWhite"-->
-            <!--android:textSize="@dimen/detail_category_text_size"/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/content_dlc_text"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_marginRight="@dimen/grid_layout_padding"-->
+    <!--android:layout_marginTop="@dimen/grid_layout_padding"-->
+    <!--android:fontFamily="sans-serif"-->
+    <!--android:textColor="@color/colorWhite"-->
+    <!--android:textSize="@dimen/detail_category_text_size"/>-->
 
     <!--</RelativeLayout>-->
 
@@ -51,18 +52,28 @@
         android:layout_weight="1"
         android:padding="4dp">
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"/>
+
         <Button
             android:id="@+id/content_crafting_queue_clear_queue"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@id/adView"
             android:text="@string/content_main_clear_queue"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/content_crafting_queue_engrams"
             android:layout_width="match_parent"
             android:layout_height="@dimen/engram_grid_view_holder_thumbnail_size"
+            android:layout_above="@id/content_crafting_queue_engrams"
             android:layout_alignParentTop="true"/>
 
         <android.support.v7.widget.RecyclerView

@@ -444,7 +444,7 @@
       "_id": 1003,
       "name": "Crops",
       "parent_id": 1000,
-      "dlc_id": 1
+      "dlc_id": 2
     },
     {
       "_id": 1004,
@@ -475,6 +475,18 @@
       "name": "Luxuries",
       "parent_id": 0,
       "dlc_id": 2
+    },
+    {
+      "_id": 1500,
+      "name": "Events",
+      "parent_id": 0,
+      "dlc_id": 1
+    },
+    {
+      "_id": 1501,
+      "name": "Fear Evolved 2",
+      "parent_id": 1500,
+      "dlc_id": 1
     }
   ],
   "resource": [
@@ -1027,6 +1039,31 @@
       "name": "Wyvern Egg",
       "drawable": "eggs_wyvern_egg_fire",
       "dlc_id": 3
+    },
+    {
+      "name": "DodoRex Mask Skin",
+      "drawable": "fear_evolved_2_dodorex_mask_skin",
+      "dlc_id": 1
+    },
+    {
+      "name": "DodoWyvern Mask Skin",
+      "drawable": "fear_evolved_2_dodowyvern_mask_skin",
+      "dlc_id": 1
+    },
+    {
+      "name": "Pumpkin",
+      "drawable": "fear_evolved_2_pumpkin",
+      "dlc_id": 1
+    },
+    {
+      "name": "Scarecrow",
+      "drawable": "fear_evolved_2_scarecrow",
+      "dlc_id": 1
+    },
+    {
+      "name": "Stolen Headstone",
+      "drawable": "fear_evolved_2_stolen_headstone",
+      "dlc_id": 4
     }
   ],
   "engram": [
@@ -6133,6 +6170,50 @@
       "yield": 1
     },
     {
+      "name": "Chalicotherium Saddle",
+      "description": "Equip a Chalicotherium with this to ride it.",
+      "drawable": "saddles_chalicotherium",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 45,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 180,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 265,
+          "drawable": "hide"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
+      "name": "Kaprosuchus Saddle",
+      "description": "Equip a Kaprosuchus with this to ride it.",
+      "drawable": "saddles_kaprosuchus",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 65,
+          "drawable": "chitin_or_keratin"
+        },
+        {
+          "quantity": 120,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 165,
+          "drawable": "hide"
+        }
+      ],
+      "dlc_id": 1,
+      "yield": 1
+    },
+    {
       "name": "Lymantria Saddle",
       "description": "Equip a Lymantria with this to ride it.",
       "drawable": "saddles_lymantria_saddle",
@@ -6363,12 +6444,32 @@
       "category_id": 302,
       "composition": [
         {
-          "quantity": 3,
+          "quantity": 75,
           "drawable": "refined_gunpowder"
         },
         {
-          "quantity": 1,
-          "drawable": "refined_metal_ingot"
+          "quantity": 25,
+          "drawable": "crystal"
+        },
+        {
+          "quantity": 5,
+          "drawable": "refined_cementing_paste"
+        },
+        {
+          "quantity": 50,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 5,
+          "drawable": "hide"
+        },
+        {
+          "quantity": 10,
+          "drawable": "composites_polymer"
+        },
+        {
+          "quantity": 5,
+          "drawable": "composites_electronics"
         }
       ],
       "dlc_id": 1,
@@ -15210,6 +15311,36 @@
         }
       ],
       "dlc_id": 2,
+      "yield": 1
+    },
+    {
+      "name": "Clown Mask Skin",
+      "description": "You can use this to skin the appearance of a helmet or hat. Provides a jovial look.",
+      "drawable": "fear_evolved_2_clown_mask_skin",
+      "category_id": 1501,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "fear_evolved_2_dodorex_mask_skin"
+        },
+        {
+          "quantity": 1,
+          "drawable": "fear_evolved_2_dodowyvern_mask_skin"
+        },
+        {
+          "quantity": 50,
+          "drawable": "fear_evolved_2_pumpkin"
+        },
+        {
+          "quantity": 10,
+          "drawable": "fear_evolved_2_scarecrow"
+        },
+        {
+          "quantity": 50,
+          "drawable": "fear_evolved_2_stolen_headstone"
+        }
+      ],
+      "dlc_id": 1,
       "yield": 1
     }
   ]

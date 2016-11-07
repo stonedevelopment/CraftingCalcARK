@@ -27,7 +27,7 @@ import arc.resource.calculator.viewholders.EngramGridViewHolder;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class DisplayCaseListAdapter extends RecyclerView.Adapter {
+public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewHolder> {
     private static final String TAG = DisplayCaseListAdapter.class.getSimpleName();
 
     private DisplayCase mDisplayCase;
@@ -35,10 +35,10 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
 
     public DisplayCaseListAdapter( Context context ) {
         this.mContext = context.getApplicationContext();
-        this.mDisplayCase = DisplayCase.getInstance( context );
+        this.mDisplayCase = new DisplayCase( context );
     }
 
-    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+    public EngramGridViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View itemView = LayoutInflater.from( parent.getContext() ).
                 inflate( R.layout.list_item_engram_thumbnail, parent, false );
 
@@ -46,31 +46,30 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
-        EngramGridViewHolder viewHolder = ( EngramGridViewHolder ) holder;
+    public void onBindViewHolder( final EngramGridViewHolder holder, int position ) {
 
         int imageId = getContext().getResources().getIdentifier( mDisplayCase.getDrawable( position ), "drawable", getContext().getPackageName() );
-        String name = mDisplayCase.getNameByPosition( position );
+        holder.getThumbnail().setImageResource( imageId );
 
-        viewHolder.getImage().setImageResource( imageId );
-        viewHolder.getNameText().setText( name );
+        String name = mDisplayCase.getNameByPosition( position );
+        holder.getName().setText( name );
 
         if ( mDisplayCase.isEngram( position ) ) {
             int quantity = mDisplayCase.getQuantityWithYield( position );
 
             if ( quantity > 0 ) {
-                viewHolder.getImage().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
-                viewHolder.getQuantityText().setText( String.format( Locale.US, "x%d", quantity ) );
-                viewHolder.getNameText().setSingleLine( true );
+                holder.getThumbnail().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
+                holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
+                holder.getName().setSingleLine( true );
             } else {
-                viewHolder.getImage().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.displaycase_engram_background ) );
-                viewHolder.getQuantityText().setText( null );
-                viewHolder.getNameText().setSingleLine( false );
+                holder.getThumbnail().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.displaycase_engram_background ) );
+                holder.getQuantity().setText( null );
+                holder.getName().setSingleLine( false );
             }
         } else {
-            viewHolder.getImage().setBackgroundColor( 0 );
-            viewHolder.getQuantityText().setText( null );
-            viewHolder.getNameText().setSingleLine( false );
+            holder.getThumbnail().setBackgroundColor( 0 );
+            holder.getQuantity().setText( null );
+            holder.getName().setSingleLine( false );
         }
     }
 
@@ -127,10 +126,20 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter {
      * -- UTILITY METHODS --
      */
 
-    public void Refresh() {
+    public void refreshData() {
         mDisplayCase.UpdateData();
 
         this.notifyDataSetChanged();
+    }
+
+    public void refreshItem( int position ) {
+        notifyItemChanged( position );
+    }
+
+    public void refreshItemByEngramId( int position ) {
+        if ( isEngram( position ) ) {
+            notifyItemChanged( position );
+        }
     }
 
     private Context getContext() {

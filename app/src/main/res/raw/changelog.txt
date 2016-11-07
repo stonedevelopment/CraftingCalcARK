@@ -19,6 +19,33 @@
     </style>
   </head>
   <body>
+    $ 1.0.2
+      % Version 1.0.2
+      _ 11/04/2016
+      * Updated C4 Charge with its correct composition, thanks to who pointed that out.
+      * Default setting for Show All/Filtered is back to Filtered.
+      ! New features being added soon! Including an exciting partnership with another amazing ARK app!
+
+    $ 1.0.1
+      % Version 1.0.1
+      _ 11/01/2016
+      * Added +10 buttons to Engram Detail screen (long press Engram thumbnail).
+      ! Migrating to 2 app versions, one free with ads and the other without.
+
+    $ 1.0.0
+      % Version 1.0.0
+      _ 10/31/2016
+      * First public release!!
+      * Includes all Engrams up to PC version 249.0!
+      * New items: Clown Mask Skin
+      ! My apologies for the delay in updates; I've recently moved to a new city and am still settling in. Thanks for all the great feedback and ratings!! I will continue to improve this app with your ideas and mine once I'm all settled in. Thanks again! -Shane.
+
+    $ 0.3.1a
+      % Version 0.3.1a
+      _ 10/22/2016
+      * Includes all Engrams up to PC version 248.0!
+      * New items: Chalicotherium Saddle and Kaprosuchus Saddle
+
     $ 0.3.0a
       % Version 0.3.0a
       _ 10/12/2016

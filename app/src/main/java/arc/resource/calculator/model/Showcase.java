@@ -148,8 +148,35 @@ public class Showcase {
     }
 
     public void decreaseQuantity() {
-        if ( mQuantity >= 1 ) {
+        if ( mQuantity > 0 ) {
             mQuantity -= 1;
+        }
+    }
+
+    public void increaseQuantityBy10() {
+        int amount = getQuantity() + 10;
+        int floor = amount / 10;
+
+        setQuantity( floor * 10 );
+    }
+
+    public void decreaseQuantityBy10() {
+        if ( mQuantity >= 10 ) {
+            int amount, floor;
+
+            if ( getQuantity() % 10 == 0 ) {
+                amount = getQuantity() - 10;
+            } else {
+                amount = getQuantity();
+            }
+
+            floor = amount / 10;
+
+            setQuantity( floor * 10 );
+        } else {
+            if ( mQuantity > 0 ) {
+                mQuantity = 0;
+            }
         }
     }
 
