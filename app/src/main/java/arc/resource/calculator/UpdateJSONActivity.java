@@ -58,7 +58,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 JSONObject jsonObject =
                         parseStringToJSONObject( jsonString );
 
-                File path = mContext.getExternalFilesDir( null );
+                File path = getContext().getExternalFilesDir( null );
                 File file = new File( path, "jsonExport.txt" );
 
                 try ( FileOutputStream fileOutputStream = new FileOutputStream( file ) ) {
@@ -116,8 +116,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
             // Place what tables to update here
             jsonObject.put(
-                    DatabaseContract.EngramEntry.TABLE_NAME,
-                    updateJSONArray( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) )
+                    DatabaseContract.CategoryEntry.TABLE_NAME,
+                    updateJSONArray( jsonObject.getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) )
             );
 
             return jsonObject;
@@ -125,7 +125,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
         JSONArray updateJSONArray( JSONArray jsonArray ) throws JSONException {
             for ( int i = 0; i < jsonArray.length(); i++ ) {
-                jsonArray.getJSONObject( i ).put( DatabaseContract.EngramEntry.COLUMN_YIELD, 1 );
+                jsonArray.getJSONObject( i ).put( DatabaseContract.CategoryEntry.COLUMN_STATION_KEY,
+                        new JSONArray().put( 0 ) );
             }
 
             Helper.Log( TAG, jsonArray.toString() );

@@ -58,11 +58,11 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
             int quantity = mDisplayCase.getQuantityWithYield( position );
 
             if ( quantity > 0 ) {
-                holder.getThumbnail().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
+                holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_crafting_queue ) );
                 holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
                 holder.getName().setSingleLine( true );
             } else {
-                holder.getThumbnail().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.displaycase_engram_background ) );
+                holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_display_case ) );
                 holder.getQuantity().setText( null );
                 holder.getName().setSingleLine( false );
             }

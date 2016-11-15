@@ -425,9 +425,9 @@ public class CraftingQueue {
         return null;
     }
 
-    private Long QueryForEngramIdByDrawable( String drawable ) {
+    private Long QueryForEngramIdByDrawable( String drawable, long dlc_id ) {
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.EngramEntry.buildUriWithDrawable( drawable ),
+                DatabaseContract.EngramEntry.buildUriWithDrawable( drawable, dlc_id ),
                 null, null, null, null );
 
         if ( cursor == null ) {

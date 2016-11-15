@@ -43,6 +43,9 @@
     <string name="content_detail_number_picker_decrease_by_10">-10</string>
     <string name="content_detail_number_picker_increase">+1</string>
     <string name="content_detail_number_picker_increase_by_10">+10</string>
+    <string name="content_detail_mock_text_name">Stone Wall</string>
+    <string name="content_detail_mock_text_category">Structures/Wood/Storage</string>
+    <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and seperates rooms.</string>
 
     <!-- Strings used with the Help Dialog -->
     <string name="helpdialog_full_title">How to Use This App</string>
@@ -135,8 +138,10 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="content_main_clear_queue">Clear Queue</string>
+
     <string name="action_line_break">--</string>
     <string name="action_dlc_settings_scorched_earth">Scorched Earth</string>
+
     <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
     <string name="banner_ad_app_id">ca-app-pub-8859801923918627~2903432190</string>
 

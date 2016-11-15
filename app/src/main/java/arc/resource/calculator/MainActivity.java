@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-//        DisplayHelper.createInstance( this, getWindowManager().getDefaultDisplay() );
-
         displayCaseEngramList = ( AutoFitRecyclerView ) findViewById( R.id.content_display_case_engrams );
         craftingQueueEngramList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_engrams );
         craftingQueueResourceList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_resources );

@@ -19,10 +19,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
+import arc.resource.calculator.db.DatabaseContract.DLCEntry;
 import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
-import arc.resource.calculator.db.DatabaseContract.DLCEntry;
+import arc.resource.calculator.db.DatabaseContract.StationEntry;
 import arc.resource.calculator.helpers.Helper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -47,15 +48,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate( SQLiteDatabase database ) {
         Helper.Log( TAG, "** Database (" + DATABASE_NAME + " v" + DATABASE_VERSION + ") not found, creating it.." );
 
+        // COLUMN_DRAWABLE can be NULL on account of newly created Engrams, placeholders will take their place.
         final String SQL_CREATE_ENGRAM_TABLE = "CREATE TABLE " + EngramEntry.TABLE_NAME + " (" +
                 EngramEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 EngramEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
-                EngramEntry.COLUMN_DRAWABLE + " INTEGER NOT NULL, " +
+                EngramEntry.COLUMN_DRAWABLE + " TEXT, " +
                 EngramEntry.COLUMN_YIELD + " INTEGER NOT NULL, " +
+                EngramEntry.COLUMN_LEVEL + " INTEGER NOT NULL, " +
                 EngramEntry.COLUMN_CATEGORY_KEY + " INTEGER NOT NULL, " +
+                EngramEntry.COLUMN_STATION_KEY + " INTEGER NOT NULL, " +
                 EngramEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
                 "FOREIGN KEY (" + EngramEntry.COLUMN_CATEGORY_KEY + ") REFERENCES " + CategoryEntry.TABLE_NAME + " (" + CategoryEntry._ID + "), " +
+                "FOREIGN KEY (" + EngramEntry.COLUMN_STATION_KEY + ") REFERENCES " + StationEntry.TABLE_NAME + " (" + StationEntry._ID + "), " +
                 "FOREIGN KEY (" + EngramEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
                 ")";
 
@@ -68,10 +73,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + CompositionEntry.COLUMN_ENGRAM_KEY + ") REFERENCES " + EngramEntry.TABLE_NAME + " (" + EngramEntry._ID + ") " +
                 ")";
 
+        // COLUMN_DRAWABLE can be NULL on account of newly created Resources, placeholders will take their place.
         final String SQL_CREATE_RESOURCE_TABLE = "CREATE TABLE " + ResourceEntry.TABLE_NAME + " (" +
                 ResourceEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ResourceEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                ResourceEntry.COLUMN_DRAWABLE + " INTEGER NOT NULL, " +
+                ResourceEntry.COLUMN_DRAWABLE + " TEXT, " +
                 ResourceEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
                 "FOREIGN KEY (" + ResourceEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
                 ")";
@@ -80,7 +86,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 CategoryEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
                 CategoryEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 CategoryEntry.COLUMN_PARENT_KEY + " INTEGER NOT NULL, " +
+                CategoryEntry.COLUMN_STATION_KEY + " INTEGER NOT NULL, " +
                 CategoryEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
+                "FOREIGN KEY (" + CategoryEntry.COLUMN_STATION_KEY + ") REFERENCES " + StationEntry.TABLE_NAME + " (" + StationEntry._ID + "), " +
                 "FOREIGN KEY (" + CategoryEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
                 ")";
 
@@ -104,7 +112,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 CategoryEntry.COLUMN_NAME + " TEXT NOT NULL " +
                 ")";
 
+        // COLUMN_DRAWABLE can be NULL since SELF doesn't have icon, placeholder will take its place
+        final String SQL_CREATE_STATION_TABLE = "CREATE TABLE " + StationEntry.TABLE_NAME + " (" +
+                StationEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                StationEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                StationEntry.COLUMN_DRAWABLE + " TEXT, " +
+                StationEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
+                "FOREIGN KEY (" + StationEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
+                ")";
+
         CreateTable( database, DLCEntry.TABLE_NAME, SQL_CREATE_DLC_TABLE );
+        CreateTable( database, StationEntry.TABLE_NAME, SQL_CREATE_STATION_TABLE );
         CreateTable( database, CategoryEntry.TABLE_NAME, SQL_CREATE_CATEGORY_TABLE );
         CreateTable( database, ResourceEntry.TABLE_NAME, SQL_CREATE_RESOURCE_TABLE );
         CreateTable( database, EngramEntry.TABLE_NAME, SQL_CREATE_ENGRAM_TABLE );
@@ -125,6 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DropTable( database, EngramEntry.TABLE_NAME );
         DropTable( database, ResourceEntry.TABLE_NAME );
         DropTable( database, CategoryEntry.TABLE_NAME );
+        DropTable( database, StationEntry.TABLE_NAME );
         DropTable( database, DLCEntry.TABLE_NAME );
 
         onCreate( database );

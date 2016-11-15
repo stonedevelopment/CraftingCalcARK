@@ -26,7 +26,7 @@ import arc.resource.calculator.viewholders.EngramGridViewHolder;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class CraftableEngramListAdapter extends RecyclerView.Adapter {
+public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridViewHolder> {
     private static final String TAG = CraftableEngramListAdapter.class.getSimpleName();
 
     private CraftingQueue mCraftingQueue;
@@ -40,7 +40,7 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
         Refresh();
     }
 
-    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+    public EngramGridViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View itemView = LayoutInflater.from( parent.getContext() ).
                 inflate( R.layout.list_item_engram_thumbnail, parent, false );
 
@@ -48,20 +48,19 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
-        EngramGridViewHolder viewHolder = ( EngramGridViewHolder ) holder;
-
+    public void onBindViewHolder( EngramGridViewHolder holder, int position ) {
         try {
             int imageId = getContext().getResources().getIdentifier( mCraftingQueue.getEngramDrawable( position ), "drawable", getContext().getPackageName() );
             String name = mCraftingQueue.getEngramName( position );
             int quantity = mCraftingQueue.getEngramQuantityWithYield( position );
 
-            viewHolder.getThumbnail().setImageResource( imageId );
-            viewHolder.getName().setText( name );
+            holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_crafting_queue ) );
+            holder.getThumbnail().setImageResource( imageId );
 
-            viewHolder.getThumbnail().setBackgroundColor( ContextCompat.getColor( getContext(), R.color.crafting_queue_background ) );
-            viewHolder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
-            viewHolder.getName().setSingleLine( true );
+            holder.getName().setText( name );
+            holder.getName().setSingleLine( true );
+
+            holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
         } catch ( ArrayIndexOutOfBoundsException e ) {
             Helper.Log( TAG, e.getMessage() );
         }
