@@ -1993,6 +1993,20 @@
       ]
     },
     {
+      "name": "Deathworm Horn",
+      "drawable": "resources_deathworm_horn",
+      "dlc_id": [
+        3
+      ]
+    },
+    {
+      "name": "Leech Blood or Horns",
+      "drawable": "resources_leech_blood_or_horns",
+      "dlc_id": [
+        3
+      ]
+    },
+    {
       "name": "DodoRex Mask Skin",
       "drawable": "fear_evolved_2_dodorex_mask_skin",
       "dlc_id": [
@@ -2308,6 +2322,22 @@
       "dlc_id": [
         2
       ]
+    },
+    {
+      "_id": 30,
+      "name": "Candles",
+      "drawable": "structures_cooking_candles",
+      "dlc_id": [
+        2
+      ]
+    },
+    {
+      "_id": 31,
+      "name": "Big Bonfire",
+      "drawable": "structures_cooking_big_bonfire",
+      "dlc_id": [
+        2
+      ]
     }
   ],
   "engram": [
@@ -2523,7 +2553,14 @@
       ],
       "yield": 1,
       "station_id": [
-        2
+        2,
+        4,
+        7,
+        8,
+        10,
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -2573,7 +2610,7 @@
         2,
         3
       ],
-      "yield": 1,
+      "yield": 5,
       "station_id": [
         7,
         10
@@ -2622,11 +2659,35 @@
         2,
         3
       ],
-      "yield": 1,
+      "yield": 2,
       "station_id": [
         3,
         9,
         25
+      ],
+      "level": 5
+    },
+    {
+      "name": "Sparkpowder",
+      "description": "Created by grinding flint with stone in a Mortar and Pestle.",
+      "drawable": "refined_sparkpowder",
+      "category_id": 1300,
+      "composition": [
+        {
+          "quantity": 2,
+          "drawable": "flint"
+        },
+        {
+          "quantity": 1,
+          "drawable": "stone"
+        }
+      ],
+      "dlc_id": [
+        2
+      ],
+      "yield": 2,
+      "station_id": [
+        29
       ],
       "level": 5
     },
@@ -2753,13 +2814,17 @@
     },
     {
       "name": "Ground Cashew",
-      "description": "",
+      "description": "Ground cashew can be used to make cashew milk. [sic]",
       "drawable": "consumables_crops_ground_cashew",
       "category_id": 1003,
       "composition": [
         {
           "quantity": 1,
           "drawable": "resources_plants_cashew"
+        },
+        {
+          "quantity": 1,
+          "drawable": "resources_water"
         }
       ],
       "dlc_id": [
@@ -2767,9 +2832,9 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        25
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Cashew Milk",
@@ -2811,7 +2876,7 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        27
       ],
       "level": 1
     },
@@ -2875,7 +2940,7 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        27
       ],
       "level": 1
     },
@@ -2895,7 +2960,8 @@
       ],
       "yield": 1,
       "station_id": [
-        25
+        25,
+        29
       ],
       "level": 25
     },
@@ -2915,7 +2981,7 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        27
       ],
       "level": 1
     },
@@ -2933,15 +2999,15 @@
       "dlc_id": [
         2
       ],
-      "yield": 1,
+      "yield": 2,
       "station_id": [
-        0
+        26
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Dry Firewood",
-      "description": "Soft clay that has been heated in a forge to make hard brick.",
+      "description": "Wood specifically meant to burn in long lasting fires!",
       "drawable": "refined_dry_firewood",
       "category_id": 1300,
       "composition": [
@@ -3109,7 +3175,8 @@
       ],
       "yield": 1,
       "station_id": [
-        25
+        25,
+        29
       ],
       "level": 25
     },
@@ -3133,7 +3200,7 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        28
       ],
       "level": 1
     },
@@ -3174,9 +3241,12 @@
       "yield": 1,
       "station_id": [
         2,
-        4
+        4,
+        17,
+        30,
+        31
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Steel Ingot",
@@ -3239,9 +3309,9 @@
       ],
       "yield": 2,
       "station_id": [
-        0
+        26
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Beeswax",
@@ -3498,7 +3568,8 @@
       "yield": 1,
       "station_id": [
         3,
-        9
+        9,
+        25
       ],
       "level": 10
     },
@@ -3533,7 +3604,8 @@
       "yield": 1,
       "station_id": [
         3,
-        9
+        9,
+        25
       ],
       "level": 15
     },
@@ -3548,8 +3620,8 @@
           "drawable": "consumables_drugs_narcotic"
         },
         {
-          "quantity": 5,
-          "drawable": "leech_blood"
+          "quantity": 3,
+          "drawable": "resources_leech_blood_or_horns"
         },
         {
           "quantity": 10,
@@ -3562,13 +3634,13 @@
       ],
       "dlc_id": [
         1,
-        2,
-        3
+        2
       ],
       "yield": 1,
       "station_id": [
         3,
-        9
+        9,
+        20
       ],
       "level": 20
     },
@@ -3591,7 +3663,10 @@
       "yield": 1,
       "station_id": [
         2,
-        8
+        8,
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -3614,7 +3689,10 @@
       "yield": 1,
       "station_id": [
         2,
-        8
+        8,
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -3667,7 +3745,10 @@
       "yield": 1,
       "station_id": [
         2,
-        8
+        8,
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -3727,9 +3808,10 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        0,
+        21
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Beer Jar",
@@ -3845,7 +3927,55 @@
       ],
       "dlc_id": [
         1,
-        2,
+        2
+      ],
+      "yield": 1,
+      "station_id": [
+        4,
+        6
+      ],
+      "level": 1
+    },
+    {
+      "name": "Broth of Enlightment",
+      "description": "A single sip of this incredible broth will expand your mind and broaden your horizons, granting greatly increased experience gain for a brief time.",
+      "drawable": "consumables_food_broth_of_enlightenment",
+      "category_id": 1002,
+      "composition": [
+        {
+          "quantity": 1,
+          "drawable": "black_pearl"
+        },
+        {
+          "quantity": 2,
+          "drawable": "citronal"
+        },
+        {
+          "quantity": 2,
+          "drawable": "longrass"
+        },
+        {
+          "quantity": 10,
+          "drawable": "mejoberry"
+        },
+        {
+          "quantity": 2,
+          "drawable": "rockarrot"
+        },
+        {
+          "quantity": 2,
+          "drawable": "savoroot"
+        },
+        {
+          "quantity": 5,
+          "drawable": "resources_deathworm_horn"
+        },
+        {
+          "quantity": 1,
+          "drawable": "resources_water"
+        }
+      ],
+      "dlc_id": [
         3
       ],
       "yield": 1,
@@ -4330,7 +4460,7 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        27
       ],
       "level": 1
     },
@@ -4351,7 +4481,10 @@
       "yield": 1,
       "station_id": [
         2,
-        8
+        8,
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -4372,7 +4505,10 @@
       "yield": 1,
       "station_id": [
         2,
-        8
+        8,
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -4393,7 +4529,10 @@
       "yield": 1,
       "station_id": [
         2,
-        8
+        8,
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -4415,7 +4554,9 @@
       "station_id": [
         2,
         8,
-        17
+        17,
+        30,
+        31
       ],
       "level": 1
     },
@@ -4895,7 +5036,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Feathered Stone Arrow",
@@ -5155,7 +5296,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Cloth Shirt",
@@ -5177,7 +5318,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Cloth Pants",
@@ -5199,7 +5340,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Cloth Boots",
@@ -5225,7 +5366,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Cloth Gloves",
@@ -5251,7 +5392,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Fur Cap",
@@ -5451,7 +5592,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Ghillie Chestpiece",
@@ -5481,7 +5622,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Ghillie Leggings",
@@ -5511,7 +5652,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Ghillie Boots",
@@ -5541,7 +5682,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 40
     },
     {
       "name": "Ghillie Gauntlets",
@@ -5571,7 +5712,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 40
     },
     {
       "name": "Hide Hat",
@@ -5597,7 +5738,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Hide Shirt",
@@ -5623,10 +5764,10 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
-      "name": "Hide Shirt",
+      "name": "Hide Pants",
       "description": "Keeps you warm while providing some physical protection.",
       "drawable": "armor_hide_hide_pants",
       "category_id": 403,
@@ -5649,7 +5790,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Hide Boots",
@@ -5675,7 +5816,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Hide Gloves",
@@ -5701,7 +5842,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Flak Helmet",
@@ -6343,7 +6484,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Riot Shield",
@@ -6553,34 +6694,7 @@
       ],
       "yield": 1,
       "station_id": [
-        11
-      ],
-      "level": 25
-    },
-    {
-      "name": "Radio",
-      "description": "Use this to communicate securely over great distances.",
-      "drawable": "communication_radio",
-      "category_id": 700,
-      "composition": [
-        {
-          "quantity": 40,
-          "drawable": "crystal"
-        },
-        {
-          "quantity": 40,
-          "drawable": "refined_metal_ingot"
-        },
-        {
-          "quantity": 40,
-          "drawable": "refined_sparkpowder"
-        }
-      ],
-      "dlc_id": [
-        2
-      ],
-      "yield": 1,
-      "station_id": [
+        11,
         20
       ],
       "level": 25
@@ -7532,7 +7646,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Canteen",
@@ -7632,7 +7746,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Magnifying Glass",
@@ -7674,7 +7788,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Note",
@@ -7700,7 +7814,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Paintbrush",
@@ -7730,7 +7844,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Parachute",
@@ -7760,7 +7874,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Re-Fertilizer",
@@ -7796,9 +7910,10 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        3,
+        9
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Spray Painter",
@@ -7874,7 +7989,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Waterskin",
@@ -7898,9 +8013,10 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        0,
+        21
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Wooden Raft",
@@ -7930,7 +8046,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Rowboat",
@@ -7962,7 +8078,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Sailboat",
@@ -7994,7 +8110,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Compass",
@@ -8024,7 +8140,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "GPS",
@@ -10406,7 +10522,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Tranquilizer Dart",
@@ -10460,7 +10576,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Flamethrower Ammo",
@@ -10900,7 +11016,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Cluster Grenade",
@@ -10968,7 +11084,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Assault Rifle",
@@ -11722,7 +11838,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Stone Hatchet",
@@ -11752,7 +11868,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Stone Pick",
@@ -11844,7 +11960,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Club",
@@ -11870,7 +11986,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Viking Axe",
@@ -11974,7 +12090,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Bola",
@@ -12008,7 +12124,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Bow",
@@ -12034,7 +12150,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Compound Bow",
@@ -12094,7 +12210,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "LongBow",
@@ -12186,7 +12302,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Tripwire Alarm Trap",
@@ -12224,7 +12340,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Tripwire Narcotic Trap",
@@ -12266,7 +12382,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Bunk Bed",
@@ -12330,7 +12446,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Simple Bed",
@@ -12364,7 +12480,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Simple Hammock",
@@ -12396,7 +12512,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Teepee",
@@ -12424,7 +12540,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Beer Barrel",
@@ -12488,7 +12604,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Cooking Pot",
@@ -12522,7 +12638,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Industrial Cooker",
@@ -12646,7 +12762,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Big Campfire",
@@ -12674,7 +12790,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Candles",
@@ -12688,7 +12804,7 @@
         },
         {
           "quantity": 5,
-          "drawable": "resources_iron"
+          "drawable": "metal_ore"
         }
       ],
       "dlc_id": [
@@ -12698,7 +12814,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 40
     },
     {
       "name": "Cauldron",
@@ -12818,7 +12934,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Chemistry Bench",
@@ -12962,7 +13078,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Refining Forge",
@@ -13000,7 +13116,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Smithy",
@@ -13034,7 +13150,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Industrial Grinder",
@@ -13128,7 +13244,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Fruit Press",
@@ -13228,7 +13344,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Modular Table",
@@ -13276,7 +13392,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 40
     },
     {
       "name": "Bear Trap",
@@ -13412,7 +13528,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Fish Trap",
@@ -13440,7 +13556,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Air Conditioner",
@@ -13982,7 +14098,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Small Crop Plot",
@@ -14016,7 +14132,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Medium Crop Plot",
@@ -14050,7 +14166,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Large Crop Plot",
@@ -14084,7 +14200,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Apiary",
@@ -14140,7 +14256,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Mirror",
@@ -14184,7 +14300,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Gravestone",
@@ -14210,7 +14326,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Lumber Bench",
@@ -14234,7 +14350,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Lumber Chair",
@@ -14258,7 +14374,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "War Drums",
@@ -14292,7 +14408,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Bench",
@@ -14309,7 +14425,7 @@
           "drawable": "thatch"
         },
         {
-          "quantity": 12,
+          "quantity": 120,
           "drawable": "wood"
         }
       ],
@@ -14322,7 +14438,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Chair",
@@ -14352,7 +14468,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Table",
@@ -14378,7 +14494,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Preserving Bin",
@@ -14412,7 +14528,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Meat Preserving Shed",
@@ -15836,7 +15952,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Single-Panel Flag",
@@ -15870,7 +15986,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Multi-Panel Flag",
@@ -15904,7 +16020,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Training Dummy",
@@ -15938,7 +16054,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Tree Sap Tap",
@@ -16012,7 +16128,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "War Map",
@@ -16042,7 +16158,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 50
     },
     {
       "name": "Metal Irrigation Pipe - Inclined",
@@ -16278,7 +16394,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Stone Irrigation Pipe - Intake",
@@ -16300,7 +16416,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Stone Irrigation Pipe - Intersection",
@@ -16322,7 +16438,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Stone Irrigation Pipe - Straight",
@@ -16344,7 +16460,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Stone Irrigation Pipe - Tap",
@@ -16370,7 +16486,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Stone Irrigation Pipe - Vertical",
@@ -16392,7 +16508,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Water Reservoir",
@@ -16418,7 +16534,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Well Chain",
@@ -16438,7 +16554,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 40
     },
     {
       "name": "Behemoth Reinforced Dinosaur Gate",
@@ -16477,15 +16593,15 @@
       "category_id": 203,
       "composition": [
         {
-          "quantity": 450,
+          "quantity": 900,
           "drawable": "stone"
         },
         {
-          "quantity": 450,
+          "quantity": 900,
           "drawable": "thatch"
         },
         {
-          "quantity": 450,
+          "quantity": 900,
           "drawable": "wood"
         }
       ],
@@ -16499,546 +16615,6 @@
         11
       ],
       "level": 30
-    },
-    {
-      "name": "Reinforced Dinosaur Gate",
-      "description": "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
-      "drawable": "structures_stone_reinforced_dinosaur_gate",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 20,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 30,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Reinforced Trapdoor",
-      "description": "This small reinforced door can be used to secure hatches.",
-      "drawable": "structures_stone_reinforced_trapdoor",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 8,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 14,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Reinforced Window",
-      "description": "Reinforced window covering to provide protection from projectiles and spying.",
-      "drawable": "structures_stone_reinforced_window",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 8,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 3,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 4,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Reinforced Wooden Door",
-      "description": "A reinforced wooden door that provides entrance to structures. Can be locked for security.",
-      "drawable": "structures_stone_reinforced_wooden_door",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 8,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 14,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Sloped Stone Roof",
-      "description": "An inclined stone roof. Slightly different angle than the ramp.",
-      "drawable": "structures_stone_sloped_stone_roof",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 20,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 30,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Sloped Stone Wall Left",
-      "description": "A sturdy stone sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
-      "drawable": "structures_stone_sloped_stone_wall_left",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 10,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 10,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Sloped Stone Wall Right",
-      "description": "A sturdy stone sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
-      "drawable": "structures_stone_sloped_stone_wall_right",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 20,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 10,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 10,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Ceiling",
-      "description": "A stable brick-and-mortar ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
-      "drawable": "structures_stone_stone_ceiling",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 20,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 30,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Dinosaur Gateway",
-      "description": "A large brick-and-mortar gateway that can be used with a Gate to keep most dinosaurs in or out.",
-      "drawable": "structures_stone_stone_dinosaur_gateway",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 280,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 100,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 140,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Doorframe",
-      "description": "A stone wall that provides entrance to a structure.",
-      "drawable": "structures_stone_stone_doorframe",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 30,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 12,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 16,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Fence Foundation",
-      "description": "This strong, narrow foundation is used to build walls around an area.",
-      "drawable": "structures_stone_stone_fence_foundation",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 15,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 10,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 10,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Foundation",
-      "description": "A foundation is required to build structures in an area. This one is made from brick-and-mortar.",
-      "drawable": "structures_stone_stone_foundation",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 80,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 30,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 40,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Hatchframe",
-      "description": "This brick-and-mortar ceiling has a hole in it for trapdoors.",
-      "drawable": "structures_stone_stone_hatchframe",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 50,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 15,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 25,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Pillar",
-      "description": "Adds structural integrity to the area it is built on. Can also act as stilts for buildings on inclines.",
-      "drawable": "structures_stone_stone_pillar",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 30,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 10,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 15,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Railing",
-      "description": "A brick-and-mortar railing that acts as a simple barrier to prevent people from falling.",
-      "drawable": "structures_stone_stone_railing",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 60,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 20,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 30,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Wall",
-      "description": "A brick-and-mortar wall that insulates the inside from the outside and separates rooms.",
-      "drawable": "structures_stone_stone_wall",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 40,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 15,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 20,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Windowframe",
-      "description": "A brick-and-mortar wall with a hole for a window.",
-      "drawable": "structures_stone_stone_windowframe",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 35,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 12,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 18,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Stone Staircase",
-      "description": "A stone spiral staircase, useful in constructing multi-level buildings.",
-      "drawable": "structures_stone_stone_staircase",
-      "category_id": 203,
-      "composition": [
-        {
-          "quantity": 200,
-          "drawable": "stone"
-        },
-        {
-          "quantity": 75,
-          "drawable": "thatch"
-        },
-        {
-          "quantity": 100,
-          "drawable": "wood"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
     },
     {
       "name": "Giant Stone Hatchframe",
@@ -17070,6 +16646,580 @@
         20
       ],
       "level": 35
+    },
+    {
+      "name": "Reinforced Dinosaur Gate",
+      "description": "A large, reinforced wooden gate that can be used with a Gateway to keep dinosaurs in or out.",
+      "drawable": "structures_stone_reinforced_dinosaur_gate",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Reinforced Trapdoor",
+      "description": "This small reinforced door can be used to secure hatches.",
+      "drawable": "structures_stone_reinforced_trapdoor",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 8,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 14,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 30
+    },
+    {
+      "name": "Reinforced Window",
+      "description": "Reinforced window covering to provide protection from projectiles and spying.",
+      "drawable": "structures_stone_reinforced_window",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 8,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 3,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 4,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 30
+    },
+    {
+      "name": "Reinforced Wooden Door",
+      "description": "A reinforced wooden door that provides entrance to structures. Can be locked for security.",
+      "drawable": "structures_stone_reinforced_wooden_door",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 8,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 14,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Sloped Stone Roof",
+      "description": "An inclined stone roof. Slightly different angle than the ramp.",
+      "drawable": "structures_stone_sloped_stone_roof",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Sloped Stone Wall Left",
+      "description": "A sturdy stone sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "drawable": "structures_stone_sloped_stone_wall_left",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Sloped Stone Wall Right",
+      "description": "A sturdy stone sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "drawable": "structures_stone_sloped_stone_wall_right",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Stone Ceiling",
+      "description": "A stable brick-and-mortar ceiling that insulates the inside from the outside, and doubles as a floor for higher levels.",
+      "drawable": "structures_stone_stone_ceiling",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 60,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 20,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 30,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Stone Dinosaur Gateway",
+      "description": "A large brick-and-mortar gateway that can be used with a Gate to keep most dinosaurs in or out.",
+      "drawable": "structures_stone_stone_dinosaur_gateway",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 280,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 100,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 140,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Stone Doorframe",
+      "description": "A stone wall that provides entrance to a structure.",
+      "drawable": "structures_stone_stone_doorframe",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 12,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 16,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Stone Fence Foundation",
+      "description": "This strong, narrow foundation is used to build walls around an area.",
+      "drawable": "structures_stone_stone_fence_foundation",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 15,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 15
+    },
+    {
+      "name": "Stone Foundation",
+      "description": "A foundation is required to build structures in an area. This one is made from brick-and-mortar.",
+      "drawable": "structures_stone_stone_foundation",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 80,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 30,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 40,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Stone Hatchframe",
+      "description": "This brick-and-mortar ceiling has a hole in it for trapdoors.",
+      "drawable": "structures_stone_stone_hatchframe",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 50,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 25,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 25
+    },
+    {
+      "name": "Stone Pillar",
+      "description": "Adds structural integrity to the area it is built on. Can also act as stilts for buildings on inclines.",
+      "drawable": "structures_stone_stone_pillar",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 10,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 15,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 25
+    },
+    {
+      "name": "Stone Railing",
+      "description": "A brick-and-mortar railing that acts as a simple barrier to prevent people from falling.",
+      "drawable": "structures_stone_stone_railing",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 20,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 7,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 10,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Stone Wall",
+      "description": "A brick-and-mortar wall that insulates the inside from the outside and separates rooms.",
+      "drawable": "structures_stone_stone_wall",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 40,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 15,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 20,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 15
+    },
+    {
+      "name": "Stone Windowframe",
+      "description": "A brick-and-mortar wall with a hole for a window.",
+      "drawable": "structures_stone_stone_windowframe",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 35,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 12,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 18,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 25
+    },
+    {
+      "name": "Stone Staircase",
+      "description": "A stone spiral staircase, useful in constructing multi-level buildings.",
+      "drawable": "structures_stone_stone_staircase",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 200,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 75,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 100,
+          "drawable": "wood"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 20
+    },
+    {
+      "name": "Stone Fireplace",
+      "description": "A nice, relaxing fireplace. Keeps a large area very warm and provides light.",
+      "drawable": "structures_stone_stone_fireplace",
+      "category_id": 203,
+      "composition": [
+        {
+          "quantity": 450,
+          "drawable": "stone"
+        },
+        {
+          "quantity": 80,
+          "drawable": "thatch"
+        },
+        {
+          "quantity": 120,
+          "drawable": "wood"
+        },
+        {
+          "quantity": 20,
+          "drawable": "flint"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 30
     },
     {
       "name": "Giant Reinforced Trapdoor",
@@ -17124,7 +17274,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Adobe Doorframe",
@@ -17148,7 +17298,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Adobe Foundation",
@@ -17168,7 +17318,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Adobe Wall",
@@ -17192,7 +17342,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Adobe Windowframe",
@@ -17216,7 +17366,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Big Stone Fence",
@@ -17236,7 +17386,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Concrete Ceiling",
@@ -17256,7 +17406,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Lumber Door",
@@ -17280,7 +17430,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Reinforced Glass Door",
@@ -17304,7 +17454,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Reinforced Glass Window",
@@ -17328,7 +17478,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Sloped Cement Roof",
@@ -17348,7 +17498,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Small Stone Fence",
@@ -17368,7 +17518,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Tudor Bar",
@@ -17482,7 +17632,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Sloped Thatch Wall Left",
@@ -17512,7 +17662,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Sloped Thatch Wall Right",
@@ -17542,7 +17692,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Thatch Door",
@@ -17568,7 +17718,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Thatch Doorframe",
@@ -17598,7 +17748,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Thatch Foundation",
@@ -17628,7 +17778,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 2
     },
     {
       "name": "Thatch Roof",
@@ -17658,7 +17808,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Thatch Wall",
@@ -17684,7 +17834,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Dinosaur Gate",
@@ -17714,7 +17864,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Dinosaur Gateway",
@@ -17748,7 +17898,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Rope Ladder",
@@ -17778,7 +17928,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Sloped Wood Wall Left",
@@ -17808,7 +17958,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Sloped Wood Wall Right",
@@ -17838,7 +17988,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Sloped Wooden Roof",
@@ -17868,7 +18018,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Standing Torch",
@@ -17902,7 +18052,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Cage",
@@ -17932,7 +18082,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Catwalk",
@@ -17962,7 +18112,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Wooden Ceiling",
@@ -17992,7 +18142,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Door",
@@ -18022,7 +18172,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Doorframe",
@@ -18052,7 +18202,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Fence Foundation",
@@ -18082,7 +18232,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Foundation",
@@ -18112,7 +18262,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Wooden Hatchframe",
@@ -18142,7 +18292,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Ladder",
@@ -18172,7 +18322,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Pillar",
@@ -18202,7 +18352,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Railing",
@@ -18232,7 +18382,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Ramp",
@@ -18262,7 +18412,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Spike Wall",
@@ -18292,7 +18442,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Trapdoor",
@@ -18322,7 +18472,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Wooden Tree Platform",
@@ -18386,7 +18536,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Wooden Window",
@@ -18416,7 +18566,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Wooden Windowframe",
@@ -18446,7 +18596,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Wooden Staircase",
@@ -18476,10 +18626,10 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
-      "name": "Big Fence Opening",
+      "name": "Big Fence - Opening",
       "description": "Used for a long opening in the big wood fence tier. Snappable!",
       "drawable": "structures_wood_big_fence___opening",
       "category_id": 202,
@@ -18496,10 +18646,10 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
-      "name": "Big Fence Post",
+      "name": "Big Fence - Post",
       "description": "Used as a post section in the big wood fence tier. Snappable!",
       "drawable": "structures_wood_big_fence___post",
       "category_id": 202,
@@ -18516,10 +18666,10 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
-      "name": "Big Fence Section",
+      "name": "Big Fence - Section",
       "description": "Used as a section in the big wood fence tier. Snappable!",
       "drawable": "structures_wood_big_fence___section",
       "category_id": 202,
@@ -18536,7 +18686,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Lantern",
@@ -18584,7 +18734,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Lumber Ceiling",
@@ -18608,7 +18758,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Lumber Dinosaur Gate",
@@ -18696,7 +18846,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Lumber Foundation",
@@ -18720,7 +18870,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Lumber Glass Ceiling",
@@ -18752,7 +18902,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Lumber Glass Pane",
@@ -18780,7 +18930,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Lumber Ramp",
@@ -18804,7 +18954,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Lumber Wall",
@@ -18813,7 +18963,7 @@
       "category_id": 202,
       "composition": [
         {
-          "quantity": 80,
+          "quantity": 60,
           "drawable": "refined_wood_plank"
         },
         {
@@ -18828,7 +18978,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Lumber Windowframe",
@@ -18852,7 +19002,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Pontoon Bridge",
@@ -18904,7 +19054,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Sloped Glass Roof",
@@ -18928,7 +19078,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Sloped Lumber Glass Wall Right",
@@ -18952,7 +19102,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Sloped Lumber Glass Wall Left",
@@ -18976,7 +19126,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Sloped Lumber Roof",
@@ -19000,7 +19150,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Table Lantern",
@@ -19048,7 +19198,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wood Storage Shed",
@@ -19070,7 +19220,7 @@
         },
         {
           "quantity": 8,
-          "drawable": "resources_iron"
+          "drawable": "metal_ore"
         }
       ],
       "dlc_id": [
@@ -19116,7 +19266,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Billboard",
@@ -19146,7 +19296,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Wooden Sign",
@@ -19176,7 +19326,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Wooden Wall Sign",
@@ -19185,15 +19335,15 @@
       "category_id": 2021,
       "composition": [
         {
-          "quantity": 4,
+          "quantity": 2,
           "drawable": "fiber"
         },
         {
-          "quantity": 3,
+          "quantity": 2,
           "drawable": "thatch"
         },
         {
-          "quantity": 5,
+          "quantity": 3,
           "drawable": "wood"
         }
       ],
@@ -19206,7 +19356,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Arrow Sign",
@@ -19234,7 +19384,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 3
     },
     {
       "name": "Bookshelf",
@@ -19264,7 +19414,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Feeding Trough",
@@ -19298,7 +19448,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Large Storage Box",
@@ -19328,7 +19478,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Storage Box",
@@ -19358,7 +19508,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "APS Mailbox",
@@ -19438,7 +19588,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Firewood Holder",
@@ -19504,7 +19654,7 @@
         },
         {
           "quantity": 8,
-          "drawable": "resources_iron"
+          "drawable": "metal_ore"
         }
       ],
       "dlc_id": [
@@ -19536,7 +19686,7 @@
         },
         {
           "quantity": 8,
-          "drawable": "resources_iron"
+          "drawable": "metal_ore"
         }
       ],
       "dlc_id": [
@@ -19568,7 +19718,7 @@
         },
         {
           "quantity": 8,
-          "drawable": "resources_iron"
+          "drawable": "metal_ore"
         }
       ],
       "dlc_id": [
@@ -19610,7 +19760,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Trading Crate",
@@ -19638,7 +19788,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Trading Crate (Bread)",
@@ -19666,7 +19816,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Trading Crate (Eggs)",
@@ -19694,7 +19844,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Trading Crate (Fruits & Veggies)",
@@ -19722,7 +19872,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Weapon Rack",
@@ -19746,7 +19896,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Wooden Cabinet",
@@ -19770,7 +19920,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Concrete Dinosaur Gate",
@@ -19850,7 +20000,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 40
     },
     {
       "name": "Brick Wall",
@@ -19874,7 +20024,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 45
     },
     {
       "name": "Brick Windowframe",
@@ -19902,7 +20052,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 45
     },
     {
       "name": "Sloped Brick Wall Left",
@@ -19934,7 +20084,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 45
     },
     {
       "name": "Sloped Brick Wall Right",
@@ -19966,7 +20116,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 45
     },
     {
       "name": "Concrete Foundation",
@@ -19986,7 +20136,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Concrete Pillar",
@@ -20026,7 +20176,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Lumber Pillar",
@@ -20046,7 +20196,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
     },
     {
       "name": "Brazier",
@@ -20146,7 +20296,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Windmill",
@@ -20174,7 +20324,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Market Stall",
@@ -20198,7 +20348,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Adobe Ceiling",
@@ -20230,7 +20380,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Dinosaur Gate",
@@ -20262,7 +20412,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Adobe Dinosaur Gateway",
@@ -20294,7 +20444,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Adobe Door",
@@ -20326,7 +20476,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Doorframe",
@@ -20358,7 +20508,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Fence Foundation",
@@ -20390,7 +20540,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Foundation",
@@ -20422,7 +20572,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Hatchframe",
@@ -20454,7 +20604,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Adobe Ladder",
@@ -20486,7 +20636,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Pillar",
@@ -20514,7 +20664,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Adobe Railing",
@@ -20546,7 +20696,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Ramp",
@@ -20578,7 +20728,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Adobe Staircase",
@@ -20610,7 +20760,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Adobe Trapdoor",
@@ -20642,7 +20792,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Adobe Wall",
@@ -20674,7 +20824,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Adobe Window",
@@ -20706,7 +20856,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Adobe Windowframe",
@@ -20738,7 +20888,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Behemoth Adobe Dinosaur Gate",
@@ -20894,7 +21044,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Sloped Adobe Wall Left",
@@ -20926,7 +21076,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Sloped Adobe Wall Right",
@@ -20958,7 +21108,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Oil Pump",
@@ -21026,7 +21176,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Ankylo Kibble",
@@ -22461,7 +22611,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Clown Mask Skin",
@@ -22497,7 +22647,8 @@
       ],
       "yield": 1,
       "station_id": [
-        0
+        4,
+        6
       ],
       "level": 1
     }
