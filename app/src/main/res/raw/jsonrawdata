@@ -8275,6 +8275,36 @@
       "level": 25
     },
     {
+      "name": "Allosaurus Saddle",
+      "description": "Equip an Allosaurus with this to ride it.",
+      "drawable": "saddles_allosaurus",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 30,
+          "drawable": "refined_metal_ingot"
+        },
+        {
+          "quantity": 170,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 320,
+          "drawable": "hide"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        11
+      ],
+      "level": 50
+    },
+    {
       "name": "Ankylo Saddle",
       "description": "Equip an Ankylo with this to ride it.",
       "drawable": "saddles_ankylo",
@@ -8332,7 +8362,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 40
     },
     {
       "name": "Argentavis Saddle",
@@ -8362,7 +8392,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 55
     },
     {
       "name": "Arthropluera Saddle",
@@ -8442,7 +8472,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Bronto Saddle",
@@ -8540,7 +8570,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Carno Saddle",
@@ -8672,7 +8702,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Doedicurus Saddle",
@@ -8842,7 +8872,37 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
+    },
+    {
+      "name": "Kaprosuchus Saddle",
+      "description": "Equip a Kaprosuchus with this to ride it.",
+      "drawable": "saddles_kaprosuchus",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 65,
+          "drawable": "chitin_or_keratin"
+        },
+        {
+          "quantity": 120,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 165,
+          "drawable": "hide"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 40
     },
     {
       "name": "Mammoth Saddle",
@@ -8970,7 +9030,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 45
     },
     {
       "name": "Mosasaur Saddle",
@@ -9076,7 +9136,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Paracer Saddle",
@@ -9174,7 +9234,37 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 10
+    },
+    {
+      "name": "Pelagornis Saddle",
+      "description": "Equip a Pelagornis with this to ride it.",
+      "drawable": "saddles_pelagornis",
+      "category_id": 500,
+      "composition": [
+        {
+          "quantity": 75,
+          "drawable": "chitin_or_keratin"
+        },
+        {
+          "quantity": 125,
+          "drawable": "fiber"
+        },
+        {
+          "quantity": 230,
+          "drawable": "hide"
+        }
+      ],
+      "dlc_id": [
+        1,
+        2,
+        3
+      ],
+      "yield": 1,
+      "station_id": [
+        0
+      ],
+      "level": 40
     },
     {
       "name": "Phiomia Saddle",
@@ -9204,7 +9294,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 5
     },
     {
       "name": "Plesiosaur Saddle",
@@ -9340,7 +9430,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Pulmonoscorpius Saddle",
@@ -9370,7 +9460,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Quetz Saddle",
@@ -9472,7 +9562,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Rex Saddle",
@@ -9562,7 +9652,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 35
     },
     {
       "name": "Spino Saddle",
@@ -9626,7 +9716,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 30
     },
     {
       "name": "Terror Bird",
@@ -9656,7 +9746,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 25
     },
     {
       "name": "Titanosaur Platform Saddle",
@@ -9720,7 +9810,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 20
     },
     {
       "name": "Woolly Rhino Saddle",
@@ -9755,66 +9845,6 @@
         11
       ],
       "level": 45
-    },
-    {
-      "name": "Pelagornis Saddle",
-      "description": "Equip a Pelagornis with this to ride it.",
-      "drawable": "saddles_pelagornis",
-      "category_id": 500,
-      "composition": [
-        {
-          "quantity": 75,
-          "drawable": "chitin_or_keratin"
-        },
-        {
-          "quantity": 125,
-          "drawable": "fiber"
-        },
-        {
-          "quantity": 230,
-          "drawable": "hide"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
-      "name": "Allosaurus Saddle",
-      "description": "Equip an Allosaurus with this to ride it.",
-      "drawable": "saddles_allosaurus",
-      "category_id": 500,
-      "composition": [
-        {
-          "quantity": 30,
-          "drawable": "refined_metal_ingot"
-        },
-        {
-          "quantity": 170,
-          "drawable": "fiber"
-        },
-        {
-          "quantity": 320,
-          "drawable": "hide"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        11
-      ],
-      "level": 50
     },
     {
       "name": "Tapejara Saddle",
@@ -9881,36 +9911,6 @@
       "level": 50
     },
     {
-      "name": "Kaprosuchus Saddle",
-      "description": "Equip a Kaprosuchus with this to ride it.",
-      "drawable": "saddles_kaprosuchus",
-      "category_id": 500,
-      "composition": [
-        {
-          "quantity": 65,
-          "drawable": "chitin_or_keratin"
-        },
-        {
-          "quantity": 120,
-          "drawable": "fiber"
-        },
-        {
-          "quantity": 165,
-          "drawable": "hide"
-        }
-      ],
-      "dlc_id": [
-        1,
-        2,
-        3
-      ],
-      "yield": 1,
-      "station_id": [
-        0
-      ],
-      "level": 1
-    },
-    {
       "name": "Lymantria Saddle",
       "description": "Equip a Lymantria with this to ride it.",
       "drawable": "saddles_lymantria_saddle",
@@ -9936,7 +9936,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 45
     },
     {
       "name": "Mantis Saddle",
@@ -9964,7 +9964,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 50
     },
     {
       "name": "Morellatops Saddle",
@@ -9992,7 +9992,7 @@
       "station_id": [
         0
       ],
-      "level": 1
+      "level": 15
     },
     {
       "name": "Rock Golem Saddle",
