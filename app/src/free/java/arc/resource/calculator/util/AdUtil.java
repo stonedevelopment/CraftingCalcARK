@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
@@ -17,7 +16,7 @@ public class AdUtil {
 
         MobileAds.initialize( context, context.getString( R.string.banner_ad_app_id ) );
 
-        AdView adView = ( AdView ) activity.findViewById( R.id.adView );
+        AdView adView = ( AdView ) activity.findViewById( R.id.banner_ad );
         AdRequest adRequest = new AdRequest.Builder().build();
 
         adView.loadAd( adRequest );

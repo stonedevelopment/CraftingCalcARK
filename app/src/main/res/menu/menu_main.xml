@@ -4,51 +4,22 @@
       tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_show_all"
-        android:title="@string/action_show_all"
-        app:showAsAction="always"/>
+        android:id="@+id/action_settings"
+        android:title="@string/action_title_settings"/>
 
     <item
-        android:id="@+id/action_breakdownResources"
-        android:title="@string/action_breakdown_resources_refined"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/action_show_helpdialog"
+        android:title="@string/action_title_help"
+        app:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_dlc_settings"
-        android:title="@string/action_dlc_settings">
-        <!-- DLC Settings submenu -->
-        <menu>
-            <item
-                android:id="@+id/action_dlc_settings_vanilla"
-                android:title="@string/action_dlc_settings_vanilla"/>
-            <item
-                android:id="@+id/action_dlc_settings_primitive_plus"
-                android:title="@string/action_dlc_settings_primitive_plus"/>
-            <item
-                android:id="@+id/action_dlc_settings_scorched_earth"
-                android:title="@string/action_dlc_settings_scorched_earth"/>
-        </menu>
-    </item>
+        android:id="@+id/action_show_changelog"
+        android:title="@string/action_title_changelog"
+        app:showAsAction="never"/>
 
-    <item android:title="@string/action_line_break"/>
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/action_title_about"
+        app:showAsAction="never"/>
 
-    <group android:id="@+id/group_help_changelog">
-        <item
-            android:id="@+id/action_show_helpdialog"
-            android:title="@string/helpdialog_full_title"
-            app:showAsAction="never"/>
-        <item
-            android:id="@+id/action_show_changelog"
-            android:title="@string/changelog_full_title"
-            app:showAsAction="never"/>
-    </group>
-
-    <item android:title="@string/action_line_break"/>
-
-    <group android:id="@+id/group_view_infos">
-        <item
-            android:id="@+id/action_about"
-            android:title="@string/action_about_arc"
-            app:showAsAction="never"/>
-    </group>
 </menu>

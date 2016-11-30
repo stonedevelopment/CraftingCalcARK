@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/hierarchy_text"
+        style="@style/AppTheme.Text.DisplayCase.Hierarchy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/display_case_hierarchy_indention"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/display_case_engram_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/display_case_view_holder_padding"
+        android:background="@drawable/frame"/>
+
+</LinearLayout>

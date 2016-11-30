@@ -4,17 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import android.util.LongSparseArray;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.helpers.PreferenceHelper;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
+import arc.resource.calculator.util.Helper;
+import arc.resource.calculator.util.PrefsUtil;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -31,27 +32,15 @@ import arc.resource.calculator.model.resource.QueueResource;
 public class CraftingQueue {
     private static final String TAG = CraftingQueue.class.getSimpleName();
 
-    private static final String STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES = "CRAFTING_QUEUE_HASCOMPLEXRESOURCES";
-
     private static CraftingQueue sInstance;
-
-    private boolean hasComplexResources;
 
     private SparseArray<QueueResource> mResources;
     private SparseArray<QueueEngram> mEngrams;
-    private HashMap<Long, Long> mComplexResources;
 
     private Context mContext;
 
     private CraftingQueue( Context context ) {
         this.mContext = context;
-        this.hasComplexResources = new PreferenceHelper( context ).getBooleanPreference( STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES, false );
-
-        if ( hasComplexResources ) {
-            mComplexResources = QueryForComplexResources();
-        } else {
-            mComplexResources = new HashMap<>();
-        }
 
         mResources = new SparseArray<>();
         mEngrams = new SparseArray<>();
@@ -69,29 +58,11 @@ public class CraftingQueue {
     // -- PUBLIC GETTER METHODS --
 
     public boolean hasComplexResources() {
-        return hasComplexResources;
+        return new PrefsUtil( getContext() ).getRefinedFilterPreference();
     }
 
     public Context getContext() {
         return mContext;
-    }
-
-    // -- PUBLIC SETTER METHODS --
-
-    public void setHasComplexResources( boolean hasComplexResources ) {
-        if ( this.hasComplexResources != hasComplexResources ) {
-            this.hasComplexResources = hasComplexResources;
-
-            new PreferenceHelper( getContext() ).setPreference( STRING_KEY_CRAFTING_QUEUE_HASCOMPLEXRESOURCES, hasComplexResources );
-
-            if ( hasComplexResources ) {
-                mComplexResources = QueryForComplexResources();
-            } else {
-                mComplexResources = new HashMap<>();
-            }
-
-            UpdateData();
-        }
     }
 
     // -- PUBLIC ENGRAM METHODS --
@@ -102,6 +73,10 @@ public class CraftingQueue {
 
     public String getEngramDrawable( int position ) {
         return mEngrams.valueAt( position ).getDrawable();
+    }
+
+    public long getEngramId( int position ) {
+        return mEngrams.valueAt( position ).getId();
     }
 
     public String getEngramName( int position ) {
@@ -220,12 +195,14 @@ public class CraftingQueue {
     // -- PUBLIC DATABASE QUERY METHODS --
 
     public void Remove( Queue queue ) {
-        getContext().getContentResolver().delete(
-                DatabaseContract.QueueEntry.CONTENT_URI,
-                DatabaseContract.QueueEntry.SQL_QUERY_WITH_ID,
-                new String[]{ Long.toString( queue.getId() ) } );
+        if ( queue != null ) {
+            getContext().getContentResolver().delete(
+                    DatabaseContract.QueueEntry.CONTENT_URI,
+                    DatabaseContract.QueueEntry.SQL_QUERY_WITH_ID,
+                    new String[]{ Long.toString( queue.getId() ) } );
 
-        UpdateData();
+            UpdateData();
+        }
     }
 
     public void Remove( long engramId ) {
@@ -257,32 +234,38 @@ public class CraftingQueue {
     }
 
     public void Clear() {
-        if ( mEngrams.size() > 0 && mResources.size() > 0 ) {
-            getContext().getContentResolver().delete( DatabaseContract.QueueEntry.CONTENT_URI, null, null );
+        getContext().getContentResolver().delete( DatabaseContract.QueueEntry.CONTENT_URI, null, null );
 
-            UpdateData();
-        }
+        UpdateData();
     }
 
     private SparseArray<QueueEngram> QueryForEngrams() {
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
+
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.QueueEntry.buildUriWithEngramTable(),
+                DatabaseContract.QueueEntry.buildUriWithEngramTable( dlc_id ),
                 null, null, null, null );
 
         if ( cursor == null ) {
             return new SparseArray<>();
         }
 
+        List<Long> engramIds = new ArrayList<>();
         SparseArray<QueueEngram> engrams = new SparseArray<>();
         while ( cursor.moveToNext() ) {
-            engrams.put( engrams.size(),
-                    new QueueEngram(
-                            cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) ),
-                            cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
-                            cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) ),
-                            cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) ),
-                            cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) )
-                    ) );
+            QueueEngram engram = new QueueEngram(
+                    cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) ),
+                    cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
+                    cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) ),
+                    cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) ),
+                    cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) )
+            );
+
+            if ( !engramIds.contains( engram.getId() ) ) {
+                engrams.put( engrams.size(), engram );
+                engramIds.add( engram.getId() );
+            }
+
         }
 
         cursor.close();
@@ -291,6 +274,8 @@ public class CraftingQueue {
     }
 
     private SparseArray<QueueResource> QueryForEngramResources() {
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
+
         HashMap<Long, QueueResource> resourceMap = new HashMap<>();
 
         Cursor compositionCursor;
@@ -298,46 +283,51 @@ public class CraftingQueue {
             QueueEngram engram = mEngrams.valueAt( i );
 
             compositionCursor = getContext().getContentResolver().query(
-                    DatabaseContract.CompositionEntry.buildUriWithEngramId( engram.getId() ),
+                    DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram.getId() ),
                     null, null, null, null );
 
             if ( compositionCursor == null ) {
                 continue;
             }
 
+            List<Long> resourceIds = new ArrayList<>();
             while ( compositionCursor.moveToNext() ) {
                 long resourceId = compositionCursor.getLong( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
                 int quantity = compositionCursor.getInt( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
-                Cursor resourceCursor = getContext().getContentResolver().query(
-                        DatabaseContract.buildUriWithId( DatabaseContract.ResourceEntry.CONTENT_URI, resourceId ),
-                        null, null, null, null );
+                if ( !resourceIds.contains( resourceId ) ) {
+                    Cursor resourceCursor = getContext().getContentResolver().query(
+                            DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, resourceId ),
+                            null, null, null, null );
 
-                if ( resourceCursor == null ) {
-                    continue;
-                }
-
-                if ( resourceCursor.moveToFirst() ) {
-                    String name = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
-                    String drawable = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE ) );
-
-                    int queueQuantity = engram.getQuantity() * quantity;
-
-                    QueueResource queueResource = resourceMap.get( resourceId );
-                    if ( queueResource != null ) {
-                        queueResource.increaseQueueQuantity( queueQuantity );
-                    } else {
-                        queueResource = new QueueResource(
-                                resourceId,
-                                name,
-                                drawable,
-                                quantity,
-                                queueQuantity
-                        );
+                    if ( resourceCursor == null ) {
+                        continue;
                     }
-                    resourceMap.put( resourceId, queueResource );
+
+                    if ( resourceCursor.moveToFirst() ) {
+                        resourceIds.add( resourceId );
+
+                        String name = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
+                        String drawable = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE ) );
+
+                        int queueQuantity = engram.getQuantity() * quantity;
+
+                        QueueResource queueResource = resourceMap.get( resourceId );
+                        if ( queueResource != null ) {
+                            queueResource.increaseQueueQuantity( queueQuantity );
+                        } else {
+                            queueResource = new QueueResource(
+                                    resourceId,
+                                    name,
+                                    drawable,
+                                    quantity,
+                                    queueQuantity
+                            );
+                        }
+                        resourceMap.put( resourceId, queueResource );
+                    }
+                    resourceCursor.close();
                 }
-                resourceCursor.close();
             }
             compositionCursor.close();
         }
@@ -351,140 +341,6 @@ public class CraftingQueue {
         return resources;
     }
 
-    private SparseArray<CompositeResource> QueryForComposition( long engramId ) {
-        Cursor compositionCursor = getContext().getContentResolver().query(
-                DatabaseContract.CompositionEntry.buildUriWithEngramId( engramId ),
-                null, null, null, null );
-
-        if ( compositionCursor == null ) {
-            return new SparseArray<>();
-        }
-
-        HashMap<Long, CompositeResource> resourceMap = new HashMap<>();
-        while ( compositionCursor.moveToNext() ) {
-            long resourceId = compositionCursor.getLong( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
-            int quantity = compositionCursor.getInt( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
-
-            Cursor resourceCursor = getContext().getContentResolver().query(
-                    DatabaseContract.buildUriWithId( DatabaseContract.ResourceEntry.CONTENT_URI, resourceId ),
-                    null, null, null, null );
-
-            if ( resourceCursor == null ) {
-                continue;
-            }
-
-            if ( resourceCursor.moveToFirst() ) {
-                String name = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
-                String drawable = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE ) );
-
-                CompositeResource resource = resourceMap.get( resourceId );
-                if ( resource != null ) {
-                    resource.increaseQuantity( quantity );
-                } else {
-                    resource = new CompositeResource(
-                            resourceId,
-                            name,
-                            drawable,
-                            quantity
-                    );
-                }
-                resourceMap.put( resourceId, resource );
-            }
-            resourceCursor.close();
-        }
-        compositionCursor.close();
-
-        SparseArray<CompositeResource> resources = new SparseArray<>();
-        for ( Long resource_id : resourceMap.keySet() ) {
-            resources.put( resources.size(), resourceMap.get( resource_id ) );
-        }
-
-        return resources;
-    }
-
-    private Queue QueryByEngramId( long engramId ) {
-        Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.QueueEntry.buildUriWithEngramId( engramId ),
-                null, null, null, null );
-
-        if ( cursor == null ) {
-            return null;
-        }
-
-        if ( cursor.moveToFirst() ) {
-            Queue queue = new Queue(
-                    cursor.getLong( cursor.getColumnIndex( DatabaseContract.QueueEntry._ID ) ),
-                    cursor.getLong( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_ENGRAM_KEY ) ),
-                    cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) )
-            );
-
-            cursor.close();
-            return queue;
-        }
-
-        return null;
-    }
-
-    private Long QueryForEngramIdByDrawable( String drawable, long dlc_id ) {
-        Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.EngramEntry.buildUriWithDrawable( drawable, dlc_id ),
-                null, null, null, null );
-
-        if ( cursor == null ) {
-            return null;
-        }
-
-        if ( cursor.moveToFirst() ) {
-            Long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) );
-
-            cursor.close();
-            return _id;
-        }
-
-        return null;
-    }
-
-    private HashMap<Long, Long> QueryForComplexResources() {
-        Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.ComplexResourceEntry.buildUriWithDrawable(),
-                null, null, null, null );
-
-        if ( cursor == null || cursor.getCount() <= 0 ) {
-            Log.e( TAG, "QueryForComplexResources() returned null?" );
-            return null;
-        }
-
-        HashMap<Long, Long> idMap = new HashMap<>();
-        while ( cursor.moveToNext() ) {
-            long engramId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
-            long resourceId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY ) );
-
-            idMap.put( resourceId, engramId );
-        }
-
-        cursor.close();
-
-        return idMap;
-    }
-
-    // -- PRIVATE UTILITY METHODS --
-
-    private SparseArray<QueueEngram> getEngrams() {
-        return QueryForEngrams();
-    }
-
-    private SparseArray<QueueResource> getResources() {
-        SparseArray<QueueResource> resources;
-
-        if ( !hasComplexResources ) {
-            resources = QueryForEngramResources();
-        } else {
-            resources = getComplexResources();
-        }
-
-        return Helper.sortResourcesByName( resources );
-    }
-
     private SparseArray<QueueResource> getComplexResources() {
         HashMap<Long, QueueResource> resourceMap = new HashMap<>();
 
@@ -496,7 +352,7 @@ public class CraftingQueue {
             for ( int j = 0; j < composition.size(); j++ ) {
                 CompositeResource compositeResource = composition.valueAt( j );
 
-                Long engramId = mComplexResources.get( compositeResource.getId() );
+                Long engramId = QueryForComplexResource( compositeResource.getId() );
                 if ( engramId != null ) {
                     SparseArray<CompositeResource> complexComposition = QueryForComposition( engramId );
                     for ( int k = 0; k < complexComposition.size(); k++ ) {
@@ -548,78 +404,173 @@ public class CraftingQueue {
         return resources;
     }
 
-    private SparseArray<QueueResource> getComplexResourcesRecursively() {
-        LongSparseArray<QueueResource> resourceMap = new LongSparseArray<>();
+    private SparseArray<CompositeResource> QueryForComposition( long engramId ) {
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
 
-        for ( int i = 0; i < mEngrams.size(); i++ ) {
-            QueueEngram engram = mEngrams.valueAt( i );
+        Cursor compositionCursor = getContext().getContentResolver().query(
+                DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engramId ),
+                null, null, null, null );
 
-            resourceMap = getComposition( engram.getId(), engram.getQuantity() );
+        if ( compositionCursor == null ) {
+            return new SparseArray<>();
         }
 
-        SparseArray<QueueResource> resources = new SparseArray<>();
-        for ( int i = 0; i < resourceMap.size(); i++ ) {
-            QueueResource queueResource = resourceMap.valueAt( i );
-            resources.put( resources.size(), queueResource );
+        List<Long> resourceIds = new ArrayList<>();
+        HashMap<Long, CompositeResource> resourceMap = new HashMap<>();
+        while ( compositionCursor.moveToNext() ) {
+            long resourceId = compositionCursor.getLong( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
+            int quantity = compositionCursor.getInt( compositionCursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
+
+            if ( !resourceIds.contains( resourceId ) ) {
+                resourceIds.add( resourceId );
+
+                Cursor resourceCursor = getContext().getContentResolver().query(
+                        DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, resourceId ),
+                        null, null, null, null );
+
+                if ( resourceCursor == null ) {
+                    continue;
+                }
+
+                if ( resourceCursor.moveToFirst() ) {
+                    String name = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
+                    String drawable = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE ) );
+
+                    CompositeResource resource = resourceMap.get( resourceId );
+                    if ( resource != null ) {
+                        resource.increaseQuantity( quantity );
+                    } else {
+                        resource = new CompositeResource(
+                                resourceId,
+                                name,
+                                drawable,
+                                quantity
+                        );
+                    }
+                    resourceMap.put( resourceId, resource );
+                }
+
+                resourceCursor.close();
+            }
+        }
+        compositionCursor.close();
+
+        SparseArray<CompositeResource> resources = new SparseArray<>();
+        for ( Long resource_id : resourceMap.keySet() ) {
+            resources.put( resources.size(), resourceMap.get( resource_id ) );
         }
 
         return resources;
     }
 
-    private LongSparseArray<QueueResource> getComposition( long _id, int quantity ) {
-        LongSparseArray<QueueResource> resources = new LongSparseArray<>();
+    private Queue QueryByEngramId( long engramId ) {
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
 
-        SparseArray<CompositeResource> composition = QueryForComposition( _id );
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.QueueEntry.buildUriWithEngramId( engramId ),
+                null, null, null, null );
 
-        if ( composition.size() > 0 ) {
-            for ( int i = 0; i < composition.size(); i++ ) {
-                CompositeResource compositeResource = composition.valueAt( i );
-
-                LongSparseArray<QueueResource> compositionResources = getComposition( _id, compositeResource.getQuantity() );
-
-                for ( int j = 0; j < compositionResources.size(); j++ ) {
-                    QueueResource complexCompositeResource = compositionResources.valueAt( j );
-
-                    int queueQuantity = compositeResource.getQuantity() * ( complexCompositeResource.getQuantity() * quantity );
-
-                    QueueResource queueResource = resources.get( compositionResources.keyAt( j ) );
-                    if ( queueResource != null ) {
-                        queueResource.increaseQueueQuantity( queueQuantity );
-                    } else {
-                        queueResource = new QueueResource(
-                                compositeResource.getId(),
-                                compositeResource.getName(),
-                                compositeResource.getDrawable(),
-                                compositeResource.getQuantity(),
-                                queueQuantity
-                        );
-                    }
-
-                    resources.put( queueResource.getId(), queueResource );
-                }
-            }
-        } else {
-            QueueResource queueResource = resources.get( _id );
-            if ( queueResource != null ) {
-                queueResource.increaseQueueQuantity( quantity );
-            } else {
-//                queueResource = new QueueResource(
-//                        compositeResource.getId(),
-//                        compositeResource.getName(),
-//                        compositeResource.getDrawable(),
-//                        compositeResource.getQuantity(),
-//                        queueQuantity
-//                );
-            }
-
-            resources.put( queueResource.getId(), queueResource );
+        if ( cursor == null ) {
+            return null;
         }
 
-        return resources;
+        if ( cursor.moveToFirst() ) {
+            Queue queue = new Queue(
+                    cursor.getLong( cursor.getColumnIndex( DatabaseContract.QueueEntry._ID ) ),
+                    cursor.getLong( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_ENGRAM_KEY ) ),
+                    cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) )
+            );
+
+            cursor.close();
+            return queue;
+        }
+
+        return null;
+    }
+
+    private Long QueryForEngramIdByDrawable( String drawable, long dlc_id ) {
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.EngramEntry.buildUriWithDrawable( drawable, dlc_id ),
+                null, null, null, null );
+
+        if ( cursor == null ) {
+            return null;
+        }
+
+        if ( cursor.moveToFirst() ) {
+            Long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) );
+
+            cursor.close();
+            return _id;
+        }
+
+        return null;
+    }
+
+    private HashMap<Long, Long> QueryForComplexResources() {
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.ComplexResourceEntry.CONTENT_URI,
+                null, null, null, null );
+
+        if ( cursor == null || cursor.getCount() <= 0 ) {
+            Log.e( TAG, "QueryForComplexResources() returned null?" );
+            return null;
+        }
+
+        HashMap<Long, Long> idMap = new HashMap<>();
+        while ( cursor.moveToNext() ) {
+            long engram_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
+            long resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY ) );
+
+            idMap.put( resource_id, engram_id );
+        }
+
+        cursor.close();
+
+        return idMap;
+    }
+
+    private Long QueryForComplexResource( long resource_id ) {
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.ComplexResourceEntry.buildUriWithResourceId( resource_id ),
+                null, null, null, null );
+
+        if ( cursor != null && cursor.moveToFirst() ) {
+            long engram_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
+
+            cursor.close();
+            return engram_id;
+        }
+
+        return null;
+    }
+
+    // -- PRIVATE UTILITY METHODS --
+
+    private SparseArray<QueueEngram> getEngrams() {
+        return QueryForEngrams();
+    }
+
+    private SparseArray<QueueResource> getResources() {
+        SparseArray<QueueResource> resources;
+
+        Log.e( TAG, String.valueOf( hasComplexResources() ) );
+
+        if ( hasComplexResources() ) {
+            resources = getComplexResources();
+        } else {
+            resources = QueryForEngramResources();
+        }
+
+        return Helper.sortResourcesByName( resources );
     }
 
     private void UpdateData() {
         mEngrams = getEngrams();
+        UpdateResources();
+    }
+
+    public void UpdateResources() {
         mResources = getResources();
     }
 }

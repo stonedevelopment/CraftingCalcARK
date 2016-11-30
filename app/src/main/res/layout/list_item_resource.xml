@@ -7,26 +7,26 @@
     <ImageView
         android:id="@+id/resource_list_imageView"
         android:layout_width="@dimen/resource_view_holder_thumbnail_size"
-        android:layout_height="@dimen/resource_view_holder_thumbnail_size"/>
+        android:layout_height="@dimen/resource_view_holder_thumbnail_size"
+        android:adjustViewBounds="true"
+        android:layout_marginStart="@dimen/resource_view_holder_padding"
+        android:layout_marginEnd="@dimen/resource_view_holder_padding"
+        />
 
     <TextView
         android:id="@+id/resource_list_nameText"
+        style="@style/AppTheme.Text.Resource.Name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:layout_marginLeft="@dimen/resource_view_holder_padding"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/resource_view_holder_text_size"/>
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/resource_list_quantityText"
+        style="@style/AppTheme.Text.Resource.Quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorWhite"
-        android:layout_marginRight="@dimen/resource_view_holder_padding"
-        android:textSize="@dimen/resource_view_holder_text_size"/>
+        android:layout_marginEnd="@dimen/resource_view_holder_padding"/>
 
 </LinearLayout>

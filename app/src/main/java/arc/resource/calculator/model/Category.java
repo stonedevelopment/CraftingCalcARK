@@ -16,8 +16,6 @@ package arc.resource.calculator.model;
  * Base Category object
  */
 public class Category {
-    private static final long ROOT = 0;
-
     // Primary Key used to track hierarchy when filtering folders
     private long mId;
 
@@ -30,14 +28,10 @@ public class Category {
     // String literal of Resource Drawable to use for icon
     private String mDrawable;
 
-    // Foreign Key that references the Game Version this Category belongs to
-    private long mVersion;
-
-    public Category( long id, String name, long parent, long version ) {
-        this.mId = id;
+    public Category( long _id, String name, long parent ) {
+        this.mId = _id;
         this.mName = name;
         this.mParent = parent;
-        this.mVersion = version;
         this.mDrawable = "folder";
     }
 
@@ -63,10 +57,6 @@ public class Category {
 
     public String getDrawable() {
         return mDrawable;
-    }
-
-    public long getVersion() {
-        return mVersion;
     }
 
     @Override

@@ -12,183 +12,207 @@
  */
 package arc.resource.calculator.model;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.helpers.PreferenceHelper;
 import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.util.DbUtil;
+import arc.resource.calculator.util.PrefsUtil;
 
 public class DisplayCase {
     private static final String TAG = DisplayCase.class.getSimpleName();
     private static final long ROOT = 0;
+    private static final long STATION_ROOT = -1;
 
-    private boolean isFiltered;
-
-    private long mLevel;
-    private long mParent;
+    private long mLastCategoryLevel;
+    private long mLastCategoryParent;
+    private long mStation;
 
     private Context mContext;
 
     private SparseArray<DisplayEngram> mEngrams;
-
     private SparseArray<Category> mCategories;
-
+    private SparseArray<Station> mStations;
     private HashMap<Long, Queue> mQueues;
 
     public DisplayCase( Context context ) {
-        PreferenceHelper preferenceHelper = new PreferenceHelper( context );
-        isFiltered = preferenceHelper.getBooleanPreference( Helper.FILTERED, true );
+        PrefsUtil prefs = new PrefsUtil( context );
 
-        // Retrieve saved level and parent from previous use
-        mLevel = preferenceHelper.getLongPreference( Helper.APP_LEVEL );
-        mParent = preferenceHelper.getLongPreference( Helper.APP_PARENT );
+        // Retrieve last viewed category level and parent from previous use
+        mLastCategoryLevel = prefs.getLastCategoryLevel();
+        mLastCategoryParent = prefs.getLastCategoryParent();
+
+        // Retrieve last viewed Station id
+        mStation = prefs.getLastStationId();
 
         mContext = context;
 
         mEngrams = new SparseArray<>();
         mCategories = new SparseArray<>();
+        mStations = new SparseArray<>();
         mQueues = new HashMap<>();
 
         UpdateData();
     }
 
-    public boolean isFiltered() {
-        return isFiltered;
+    private boolean isFilteredByCategory() {
+        return new PrefsUtil( getContext() ).getCategoryFilterPreference();
     }
 
-    public long getLevel() {
-        return mLevel;
+    private boolean isFilteredByStation() {
+        return new PrefsUtil( getContext() ).getStationFilterPreference();
     }
 
-    public long getParent() {
-        return mParent;
+    private boolean isFilteredByLevel() {
+        return new PrefsUtil( getContext() ).getLevelFilterPreference();
     }
 
-    public boolean setIsFiltered( boolean filtered ) {
-        if ( isFiltered() != filtered ) {
-            new PreferenceHelper( getContext() ).setPreference( Helper.FILTERED, filtered );
+    private boolean isCurrentCategoryLevelRoot() {
+        return getCurrentCategoryLevel() == ROOT;
+    }
 
-            isFiltered = filtered;
+    private boolean isCurrentCategoryLevelStationRoot() {
+        return getCurrentCategoryLevel() == STATION_ROOT;
+    }
 
-            UpdateData();
+    private boolean isRoot( long level ) {
+        return level == ROOT;
+    }
 
-            return true;
+    private boolean isStationRoot( long level ) {
+        return level == STATION_ROOT;
+    }
+
+    public long getCurrentCategoryLevel() {
+        return mLastCategoryLevel;
+    }
+
+    public long getCurrentCategoryParent() {
+        return mLastCategoryParent;
+    }
+
+    private void setCurrentCategoryLevels( long level, long parent ) {
+        mLastCategoryLevel = level;
+        mLastCategoryParent = parent;
+    }
+
+    public void resetCategoryLevels() {
+        if ( isFilteredByStation() ) {
+            setCurrentCategoryLevelsToStationRoot();
+        } else {
+            setCurrentCategoryLevelsToRoot();
         }
-        return false;
     }
 
-    public void setLevel( long level ) {
-        this.mLevel = level;
+    private void setCurrentCategoryLevelsToRoot() {
+        setCurrentCategoryLevels( ROOT, ROOT );
     }
 
-    public void setParent( long parent ) {
-        this.mParent = parent;
+    private void setCurrentCategoryLevelsToStationRoot() {
+        setCurrentCategoryLevels( STATION_ROOT, STATION_ROOT );
+    }
+
+    public long getCurrentStationId() {
+        return mStation;
+    }
+
+    private void setCurrentStationId( long stationId ) {
+        mStation = stationId;
+    }
+
+    private int getRequiredLevelPref() {
+        return new PrefsUtil( getContext() ).getRequiredLevel();
     }
 
     /**
      * -- METHODS THAT RETURN TO VIEWHOLDER --
      */
 
-    public String getDrawable( int position ) {
-        if ( isFiltered ) {
-            if ( position >= mCategories.size() ) {
-                position -= mCategories.size();
-
-                DisplayEngram engram = mEngrams.valueAt( position );
-
-                return engram.getDrawable();
-            } else {
-                Category category = mCategories.valueAt( position );
-
-                return category.getDrawable();
-            }
-        } else {
-            DisplayEngram engram = mEngrams.valueAt( position );
-
-            return engram.getDrawable();
+    public String getDrawableByPosition( int position ) {
+        if ( isStation( position ) ) {
+            return mStations.valueAt( position ).getDrawable();
         }
+
+        if ( isCategory( position ) ) {
+            return mCategories.valueAt( position ).getDrawable();
+        }
+
+        if ( isEngram( position ) ) {
+            position -= ( mStations.size() + mCategories.size() );
+
+            return mEngrams.valueAt( position ).getDrawable();
+        }
+
+        // Not a station, category, or engram
+        Log.e( TAG, "getDrawableByPosition(): position is not recognized: " + position );
+        return null;
     }
 
     public String getNameByPosition( int position ) {
-        if ( isFiltered ) {
-            if ( position >= mCategories.size() ) {
-                position -= mCategories.size();
-
-                DisplayEngram engram = mEngrams.valueAt( position );
-
-                return engram.getName();
-            } else {
-                Category category = mCategories.valueAt( position );
-
-                return category.getName();
-            }
-        } else {
-            DisplayEngram engram = mEngrams.valueAt( position );
-
-            return engram.getName();
+        if ( isStation( position ) ) {
+            return mStations.valueAt( position ).getName();
         }
+
+        if ( isCategory( position ) ) {
+            return mCategories.valueAt( position ).getName();
+        }
+
+        if ( isEngram( position ) ) {
+            position -= ( mStations.size() + mCategories.size() );
+
+            return mEngrams.valueAt( position ).getName();
+        }
+
+        // Not a station, category, or engram
+        Log.e( TAG, "getNameByPosition(): position is not recognized: " + position );
+        return null;
     }
 
-    public String getNameByCategoryId( long categoryId ) {
-        if ( categoryId > ROOT ) {
-            Category category = getCategory( categoryId );
+    private String getNameByCategoryId( long categoryId ) {
+        Category category = getCategoryById( categoryId );
 
-            if ( category != null ) {
-                return "Go Back to " + category.getName();
-            }
+        if ( category != null ) {
+            return String.format( getContext().getString( R.string.format_category_go_back ), category.getName() );
         }
 
-        return "Go Back";
+        return getContext().getString( R.string.category_go_back );
     }
 
-    public int getQuantity( int position ) {
-        if ( isFiltered ) {
-            if ( position < mCategories.size() ) {
-                return 0;
-            }
+    private String getNameByStationId( long stationId ) {
+        Station station = getStationById( stationId );
 
-            position -= mCategories.size();
+        if ( station != null ) {
+            return String.format( getContext().getString( R.string.format_station_go_back ), station.getName() );
         }
 
-        Queue queue = mQueues.get( mEngrams.valueAt( position ).getId() );
-
-        if ( queue != null ) {
-            return queue.getQuantity();
-        }
-
-        return 0;
+        return getContext().getString( R.string.station_go_back );
     }
 
     public int getQuantityWithYield( int position ) {
-        if ( isFiltered ) {
-            if ( position < mCategories.size() ) {
-                return 0;
-            }
+        DisplayEngram engram = getEngramByPosition( position );
 
-            position -= mCategories.size();
-        }
-
-        DisplayEngram engram = mEngrams.valueAt( position );
         Queue queue = mQueues.get( engram.getId() );
-
-        if ( queue != null ) {
-            int yield = engram.getYield();
-            int quantity = queue.getQuantity();
-
-            return quantity * yield;
+        if ( queue == null ) {
+            return 0;
         }
 
-        return 0;
+        int yield = engram.getYield();
+        int quantity = queue.getQuantity();
+
+        return quantity * yield;
+    }
+
+    public int getCount() {
+        return mEngrams.size() + ( mStations.size() + mCategories.size() );
     }
 
     public Context getContext() {
@@ -196,166 +220,32 @@ public class DisplayCase {
     }
 
     /**
-     * -- PUBLIC METHODS --
+     * ENGRAM METHODS
      */
 
     public boolean isEngram( int position ) {
-        return position >= mCategories.size();
-    }
-
-    public int getCount() {
-        if ( mEngrams != null && mCategories != null ) {
-            return mEngrams.size() + mCategories.size();
-        }
-        return 0;
-    }
-
-    public DisplayEngram getEngram( int position ) {
-        if ( isFiltered ) {
-            if ( position >= mCategories.size() ) {
-                position -= mCategories.size();
-
-                return mEngrams.valueAt( position );
-            }
-        } else {
-            return mEngrams.valueAt( position );
-        }
-
-        return null;
+        return position >= ( mStations.size() + mCategories.size() );
     }
 
     public long getEngramId( int position ) {
-        if ( isFiltered ) {
-            if ( position >= mCategories.size() ) {
-                position -= mCategories.size();
+        return getEngramByPosition( position ).getId();
+    }
 
-                return mEngrams.valueAt( position ).getId();
-            }
-        } else {
-            return mEngrams.valueAt( position ).getId();
+    public DisplayEngram getEngramByPosition( int position ) {
+        position -= ( mStations.size() + mCategories.size() );
+
+        return mEngrams.valueAt( position );
+    }
+
+    private SparseArray<DisplayEngram> getEngrams( Uri uri ) {
+        if ( isCurrentCategoryLevelStationRoot() ) {
+            return new SparseArray<>();
         }
 
-        return 0;
-    }
+        Log.d( TAG, uri.toString() );
 
-    public void changeCategory( int position ) {
-        if ( position < mCategories.size() ) {
-            // position within bounds
-            Category category = mCategories.valueAt( position );
-
-            Helper.Log( TAG, "Changing category to [" + position + "] " + category.toString() );
-
-            if ( getLevel() == ROOT ) {
-                // ROOT LEVEL
-                setLevel( category.getId() );   // Grabbing ID is the best way to track its location.
-                setParent( category.getParent() );
-            } else {
-                if ( position == 0 ) {
-                    // back button or FIRST CATEGORY, revert back to parent level or root level
-                    if ( category.getParent() > ROOT ) {
-                        Category parentCategory = getCategory( category.getParent() );
-
-                        setLevel( category.getParent() );
-                        setParent( parentCategory.getParent() );
-                    } else {
-                        setLevel( ROOT );
-                        setParent( ROOT );
-                    }
-                } else {
-                    // position is > 0, making this a normal category object
-                    setLevel( category.getId() );   // Grabbing ID is the best way to track its location.
-                    setParent( category.getParent() );
-                }
-            }
-
-            // Update lists with new data
-            UpdateData();
-        } else {
-            Log.e( TAG, "mCategories, position out of bounds: " + position );
-        }
-    }
-
-    public void setLevelToRoot() {
-        setLevel( ROOT );
-        setParent( ROOT );
-    }
-
-    public void UpdateQueues() {
-        mQueues = getQueues();
-    }
-
-    /**
-     * -- PRIVATE UTILITY METHODS --
-     */
-
-    public Category getCategory( long _id ) {
-        Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.buildUriWithId( DatabaseContract.CategoryEntry.CONTENT_URI, _id ),
-                null, null, null, null );
-
-        if ( cursor != null && cursor.moveToFirst() ) {
-            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
-            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
-            long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY ) );
-
-            cursor.close();
-            return new Category(
-                    _id,
-                    name,
-                    parent_id,
-                    dlc_id );
-        }
-
-        return null;
-    }
-
-    private SparseArray<Category> getCategories() {
-        PreferenceHelper preferenceHelper = new PreferenceHelper( getContext() );
-        long dlcId = preferenceHelper.getIntPreference( getContext().getString( R.string.pref_dlc_setting ) );
-
-        SparseArray<Category> categories = new SparseArray<>();
-
-        if ( isFiltered() ) {
-            Cursor cursor = getContext().getContentResolver().query(
-                    DatabaseContract.CategoryEntry.buildUriWithParentId( dlcId, getLevel() ),
-                    null, null, null, null );
-
-            if ( cursor == null ) {
-                return new SparseArray<>();
-            }
-
-            while ( cursor.moveToNext() ) {
-                long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
-                String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
-                long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
-                long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY ) );
-
-                categories.append( categories.size() + 1, new Category( _id, name, parent_id, dlc_id ) );
-            }
-
-            cursor.close();
-
-            if ( getLevel() > 0 ) {
-                Category category = new Category( getLevel(), getNameByCategoryId( getParent() ), getParent(), "back" );
-                categories.put( 0, category );
-            }
-
-            debugCategories( categories );
-        }
-
-        return categories;
-    }
-
-    private SparseArray<DisplayEngram> getEngrams() {
-        PreferenceHelper preferenceHelper = new PreferenceHelper( getContext() );
-        long dlcId = preferenceHelper.getIntPreference( getContext().getString( R.string.pref_dlc_setting ) );
-
-        Uri uri;
-        if ( isFiltered() ) {
-            uri = DatabaseContract.EngramEntry.buildUriWithCategoryId( dlcId, getLevel() );
-        } else {
-            uri = DatabaseContract.EngramEntry.buildUriWithDLCId( dlcId );
-        }
+        SparseArray<DisplayEngram> engrams = new SparseArray<>();
+        List<String> engramNameList = new ArrayList<>();
 
         Cursor cursor = getContext().getContentResolver().query(
                 uri, null, null, null, null );
@@ -364,20 +254,332 @@ public class DisplayCase {
             return new SparseArray<>();
         }
 
-        SparseArray<DisplayEngram> engrams = new SparseArray<>();
         while ( cursor.moveToNext() ) {
-            engrams.put( engrams.size(),
-                    new DisplayEngram(
-                            cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) ),
-                            cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
-                            cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) ),
-                            cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) ),
-                            cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) ) ) );
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
+
+            if ( !engramNameList.contains( name ) ) {
+                engramNameList.add( name );
+                engrams.put(
+                        engrams.size(),
+                        new DisplayEngram(
+                                cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) ),
+                                cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
+                                cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) ),
+                                cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) ),
+                                cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) )
+                        )
+                );
+            }
         }
+
         cursor.close();
 
         return engrams;
     }
+
+    /**
+     * CATEGORY METHODS
+     */
+
+    public boolean isCategory( int position ) {
+        return position >= mStations.size() && position < mCategories.size();
+    }
+
+    public void changeCategory( int position ) {
+        Category category = mCategories.valueAt( position );
+
+        Log.d( TAG, "Changing category to [" + position + "] " + category.toString() );
+
+        if ( isFilteredByStation() ) {
+            if ( isCurrentCategoryLevelRoot() ) {
+                if ( position == 0 ) {
+                    // Back button to station list
+                    setCurrentCategoryLevelsToStationRoot();
+                } else {
+                    // Normal Category object
+                    // Grabbing ID is the best way to track its location.
+                    setCurrentCategoryLevels(
+                            category.getId(),
+                            category.getParent()
+                    );
+                }
+            } else {
+                if ( position == 0 ) {
+                    // Back button to previous category list
+                    if ( isRoot( category.getParent() ) ) {
+                        setCurrentCategoryLevelsToRoot();
+                    } else {
+                        setCurrentCategoryLevels(
+                                category.getParent(),
+                                getCategoryById( category.getParent() ).getParent()
+                        );
+                    }
+                } else {
+                    // Normal Category object
+                    // Grabbing ID is the best way to track its location.
+                    setCurrentCategoryLevels(
+                            category.getId(),
+                            category.getParent()
+                    );
+                }
+            }
+        } else {
+            if ( isCurrentCategoryLevelRoot() ) {
+                // Normal Category object
+                // Grabbing ID is the best way to track its location.
+                setCurrentCategoryLevels(
+                        category.getId(),
+                        category.getParent()
+                );
+            } else {
+                if ( position == 0 ) {
+                    // Back button to previous category list
+                    if ( isRoot( category.getParent() ) ) {
+                        setCurrentCategoryLevelsToRoot();
+                    } else {
+                        setCurrentCategoryLevels(
+                                category.getParent(),
+                                getCategoryById( category.getParent() ).getParent()
+                        );
+                    }
+                } else {
+                    // Normal Category object
+                    // Grabbing ID is the best way to track its location.
+                    setCurrentCategoryLevels(
+                            category.getId(),
+                            category.getParent()
+                    );
+                }
+            }
+        }
+
+        // Update lists with new data
+        UpdateData();
+    }
+
+    public Category getCategoryById( long _id ) {
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
+
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, _id ),
+                null, null, null, null );
+
+        if ( cursor != null && cursor.moveToFirst() ) {
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
+            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+
+            cursor.close();
+            return new Category(
+                    _id,
+                    name,
+                    parent_id );
+        }
+
+        return null;
+    }
+
+    private SparseArray<Category> getCategories() {
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
+
+        // Check to make sure parent isn't -1, happens when you press Stop in Android Studio, bleh.
+        if ( getCurrentCategoryParent() < 0 ) {
+            return new SparseArray<>();
+        }
+
+        SparseArray<Category> categories = new SparseArray<>();
+        List<Long> categoryIdList = new ArrayList<>();
+
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.CategoryEntry.buildUriWithParentId( dlc_id, getCurrentCategoryLevel() ),
+                null, null, null, null );
+
+        if ( cursor == null ) {
+            return new SparseArray<>();
+        }
+
+        if ( !isCurrentCategoryLevelRoot() ) {
+            categories.put(
+                    categories.size(),
+                    new Category(
+                            getCurrentCategoryLevel(),
+                            getNameByCategoryId( getCurrentCategoryParent() ),
+                            getCurrentCategoryParent(),
+                            "back" )
+            );
+        }
+
+        while ( cursor.moveToNext() ) {
+            long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
+            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+
+            if ( !categoryIdList.contains( _id ) ) {
+                categoryIdList.add( _id );
+                categories.put( categories.size(), new Category( _id, name, parent_id ) );
+            }
+        }
+
+        cursor.close();
+
+        return categories;
+    }
+
+    private SparseArray<Category> getCategoriesByStation() {
+        if ( isCurrentCategoryLevelStationRoot() ) {
+            return new SparseArray<>();
+        }
+
+        // Check to make sure parent isn't -1, happens when you press Stop in Android Studio, bleh.
+        if ( getCurrentCategoryParent() < 0 ) {
+            return new SparseArray<>();
+        }
+
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
+
+        SparseArray<Category> categories = new SparseArray<>();
+        List<Long> categoryIdList = new ArrayList<>();
+
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.CategoryEntry.buildUriWithStationId( dlc_id, getCurrentCategoryLevel(), getCurrentStationId() ),
+                null, null, null, null );
+
+        if ( isCurrentCategoryLevelRoot() ) {
+            categories.put(
+                    categories.size(),
+                    new Category(
+                            getCurrentStationId(),
+                            getContext().getString( R.string.format_go_back_to_stations ),
+                            STATION_ROOT,
+                            "back" )
+            );
+        } else {
+            if ( isRoot( getCurrentCategoryParent() ) ) {
+                categories.put(
+                        categories.size(),
+                        new Category(
+                                getCurrentCategoryLevel(),
+                                getNameByStationId( getCurrentStationId() ),
+                                getCurrentCategoryParent(),
+                                "back" )
+                );
+            } else {
+                categories.put(
+                        categories.size(),
+                        new Category(
+                                getCurrentCategoryLevel(),
+                                getNameByCategoryId( getCurrentCategoryParent() ),
+                                getCurrentCategoryParent(),
+                                "back" )
+                );
+            }
+        }
+
+        if ( cursor == null ) {
+            return new SparseArray<>();
+        }
+
+        while ( cursor.moveToNext() ) {
+            long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
+            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+
+            if ( !categoryIdList.contains( _id ) ) {
+                categoryIdList.add( _id );
+                categories.put( categories.size(), new Category( _id, name, parent_id ) );
+            }
+        }
+
+        cursor.close();
+
+        return categories;
+    }
+
+    private SparseArray<Category> getBackCategoryAsStation() {
+        SparseArray<Category> categories = new SparseArray<>();
+
+        categories.append( 0,
+                new Category(
+                        getCurrentStationId(),
+                        getContext().getString( R.string.format_go_back_to_stations ),
+                        STATION_ROOT,
+                        "back" )
+        );
+
+        return categories;
+    }
+
+    /**
+     * STATION METHODS
+     */
+
+    public boolean isStation( int position ) {
+        return position < mStations.size();
+    }
+
+    public void changeStation( int position ) {
+        Station station = mStations.valueAt( position );
+
+        Log.d( TAG, "Changing station to [" + position + "] " + station.toString() );
+
+        // Set as current station
+        setCurrentStationId( station.getId() );
+
+        // Set category back to root in order to display categories with this station
+        setCurrentCategoryLevelsToRoot();
+    }
+
+    private Station getStationById( long _id ) {
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
+
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.StationEntry.buildUriWithId( dlc_id, _id ),
+                null, null, null, null );
+
+        if ( cursor != null && cursor.moveToFirst() ) {
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_NAME ) );
+            String drawable = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_DRAWABLE ) );
+
+            cursor.close();
+            return new Station(
+                    _id,
+                    name,
+                    drawable,
+                    dlc_id );
+        }
+
+        return null;
+    }
+
+    private SparseArray<Station> getStations() {
+        long dlcId = new PrefsUtil( getContext() ).getDLCPreference();
+
+        SparseArray<Station> stations = new SparseArray<>();
+
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.StationEntry.buildUriWithDLCId( dlcId ),
+                null, null, null, null );
+
+        if ( cursor == null ) {
+            return new SparseArray<>();
+        }
+
+        while ( cursor.moveToNext() ) {
+            long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.StationEntry._ID ) );
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_NAME ) );
+            String drawable = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_DRAWABLE ) );
+            long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_DLC_KEY ) );
+
+            stations.append( stations.size(), new Station( _id, name, drawable, dlc_id ) );
+        }
+
+        cursor.close();
+
+        return stations;
+    }
+
+    /**
+     * QUEUE METHODS
+     */
 
     private HashMap<Long, Queue> getQueues() {
         mQueues = QueryForQueues();
@@ -407,20 +609,143 @@ public class DisplayCase {
         return queues;
     }
 
-    private void debugCategories( SparseArray<Category> categories ) {
-        Helper.Log( TAG, "-- Displaying mCategories at mLevel " + getLevel() + ".." );
+    public String getHierarchicalText() {
+        StringBuilder builder = new StringBuilder();
 
-        for ( int i = 0; i < categories.size(); i++ ) {
-            Category category = categories.valueAt( i );
-            Helper.Log( TAG, "-> [" + i + "/" + categories.keyAt( i ) + "] " + category.toString() );
+        if ( isFilteredByStation() ) {
+            builder.append( "Crafting Stations/" );
+
+            if ( !isCurrentCategoryLevelStationRoot() ) {
+                builder.append( getStationById( getCurrentStationId() ).getName() ).append( "/" );
+                if ( isFilteredByCategory() ) {
+                    if ( !isCurrentCategoryLevelRoot() ) {
+                        builder.append( getCategoryHierarchicalText() );
+                    }
+                }
+            }
+        } else if ( isFilteredByCategory() ) {
+            builder.append( "../" );
+            if ( !isCurrentCategoryLevelRoot() ) {
+                builder.append( getCategoryHierarchicalText() );
+            }
+        } else {
+            builder.append( "Engrams/" );
         }
 
-        Helper.Log( TAG, "-- Display completed." );
+        return builder.toString();
+    }
+
+    private String getCategoryHierarchicalText() {
+        Category category = DbUtil.QueryForCategoryDetails( getContext(), getCurrentCategoryLevel() );
+
+        StringBuilder builder = new StringBuilder();
+        if ( category != null ) {
+            builder.append( category.getName() ).append( "/" );
+
+            long parent_id = category.getParent();
+            while ( parent_id > 0 ) {
+                category = DbUtil.QueryForCategoryDetails( getContext(), parent_id );
+                if ( category == null ) break;
+
+                parent_id = category.getParent();
+
+                builder.insert( 0, category.getName() + "/" );
+            }
+        }
+
+        return builder.toString();
     }
 
     public void UpdateData() {
-        mEngrams = getEngrams();
-        mCategories = getCategories();
+        long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
+
+        Uri engramUri;
+        if ( isFilteredByCategory() ) {
+            if ( isFilteredByStation() ) {
+                if ( isCurrentCategoryLevelStationRoot() ) {
+                    mEngrams = new SparseArray<>();
+                    mCategories = new SparseArray<>();
+                    mStations = getStations();
+                } else {
+                    if ( isFilteredByLevel() ) {
+                        engramUri = DatabaseContract.EngramEntry.buildUriWithCategoryIdStationIdAndLevel(
+                                dlc_id,
+                                getCurrentCategoryLevel(),
+                                getCurrentStationId(),
+                                getRequiredLevelPref()
+                        );
+                    } else {
+                        engramUri = DatabaseContract.EngramEntry.buildUriWithCategoryIdAndStationId(
+                                dlc_id,
+                                getCurrentCategoryLevel(),
+                                getCurrentStationId()
+                        );
+                    }
+
+                    mEngrams = getEngrams( engramUri );
+                    mCategories = getCategoriesByStation();
+                    mStations = new SparseArray<>();
+                }
+            } else {
+                if ( isFilteredByLevel() ) {
+                    engramUri = DatabaseContract.EngramEntry.buildUriWithCategoryIdAndLevel(
+                            dlc_id,
+                            getCurrentCategoryLevel(),
+                            getRequiredLevelPref()
+                    );
+                } else {
+                    engramUri = DatabaseContract.EngramEntry.buildUriWithCategoryId(
+                            dlc_id,
+                            getCurrentCategoryLevel()
+                    );
+                }
+
+                mEngrams = getEngrams( engramUri );
+                mCategories = getCategories();
+                mStations = new SparseArray<>();
+            }
+        } else {
+            if ( isFilteredByStation() ) {
+                if ( isCurrentCategoryLevelStationRoot() ) {
+                    mEngrams = new SparseArray<>();
+                    mCategories = new SparseArray<>();
+                    mStations = getStations();
+                } else {
+                    if ( isFilteredByLevel() ) {
+                        engramUri = DatabaseContract.EngramEntry.buildUriWithStationIdAndLevel(
+                                dlc_id,
+                                getCurrentStationId(),
+                                getRequiredLevelPref()
+                        );
+                    } else {
+                        engramUri = DatabaseContract.EngramEntry.buildUriWithStationId(
+                                dlc_id,
+                                getCurrentStationId()
+                        );
+                    }
+
+                    mEngrams = getEngrams( engramUri );
+                    mCategories = getBackCategoryAsStation();
+                    mStations = new SparseArray<>();
+                }
+            } else {
+                if ( isFilteredByLevel() ) {
+                    engramUri = DatabaseContract.EngramEntry.buildUriWithLevel(
+                            dlc_id,
+                            getRequiredLevelPref()
+                    );
+                } else {
+                    engramUri = DatabaseContract.EngramEntry.buildUriWithDLCId(
+                            dlc_id
+                    );
+                }
+
+                mEngrams = getEngrams( engramUri );
+                mCategories = new SparseArray<>();
+                mStations = new SparseArray<>();
+            }
+        }
+
         mQueues = getQueues();
     }
 }

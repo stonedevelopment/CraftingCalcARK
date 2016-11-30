@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- DisplayCase: Text Sizes -->
+    <dimen name="display_case_hierarchy_text_size">20sp</dimen>
+
+    <!-- DisplayCase: ViewHolders: Text Sizes -->
+    <dimen name="engram_grid_view_holder_quantity_text_size">38sp</dimen>
+    <dimen name="engram_grid_view_holder_name_text_size">20sp</dimen>
+
+    <!-- ViewHolder for Resources -->
+    <dimen name="resource_view_holder_padding">12dp</dimen>
+    <dimen name="resource_view_holder_thumbnail_size">40dp</dimen>
+    <dimen name="resource_view_holder_text_size">24sp</dimen>
+
+</resources>

@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 
 import java.util.Locale;
 
+import arc.resource.calculator.MainActivity;
 import arc.resource.calculator.R;
-import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.util.Helper;
 import arc.resource.calculator.viewholders.EngramGridViewHolder;
 
 /**
@@ -42,7 +43,7 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridV
 
     public EngramGridViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View itemView = LayoutInflater.from( parent.getContext() ).
-                inflate( R.layout.list_item_engram_thumbnail, parent, false );
+                inflate( R.layout.list_item_craftable_engram_thumbnail, parent, false );
 
         return new EngramGridViewHolder( itemView );
     }
@@ -50,6 +51,11 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridV
     @Override
     public void onBindViewHolder( EngramGridViewHolder holder, int position ) {
         try {
+            int dimensions = ( int ) MainActivity.mCraftableEngramDimensions;
+
+            holder.itemView.getLayoutParams().height = dimensions;
+            holder.itemView.getLayoutParams().width = dimensions;
+
             int imageId = getContext().getResources().getIdentifier( mCraftingQueue.getEngramDrawable( position ), "drawable", getContext().getPackageName() );
             String name = mCraftingQueue.getEngramName( position );
             int quantity = mCraftingQueue.getEngramQuantityWithYield( position );
@@ -73,6 +79,10 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridV
 
     public void Refresh() {
         notifyDataSetChanged();
+    }
+
+    public long getEngramId( int position ) {
+        return mCraftingQueue.getEngramId( position );
     }
 
     public void increaseQuantity( int position ) {

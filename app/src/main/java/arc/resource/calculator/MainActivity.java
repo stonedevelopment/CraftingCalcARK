@@ -10,23 +10,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import arc.resource.calculator.adapters.CraftableEngramListAdapter;
 import arc.resource.calculator.adapters.CraftableResourceListAdapter;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.db.DatabaseHelper;
-import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.helpers.PreferenceHelper;
 import arc.resource.calculator.model.Category;
 import arc.resource.calculator.util.AdUtil;
-import arc.resource.calculator.views.AutoFitRecyclerView;
+import arc.resource.calculator.util.DisplayUtil;
+import arc.resource.calculator.util.Helper;
+import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.views.RecyclerTouchListener;
 
 /**
@@ -48,18 +50,28 @@ public class MainActivity extends AppCompatActivity {
     private CraftableEngramListAdapter craftableEngramListAdapter;
     private CraftableResourceListAdapter craftableResourceListAdapter;
 
-    private AutoFitRecyclerView displayCaseEngramList;
+    private RecyclerView displayCaseEngramList;
     private RecyclerView craftingQueueEngramList;
     private RecyclerView craftingQueueResourceList;
+
+    public static float mEngramDimensions;
+    public static float mCraftableEngramDimensions;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-        displayCaseEngramList = ( AutoFitRecyclerView ) findViewById( R.id.content_display_case_engrams );
-        craftingQueueEngramList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_engrams );
-        craftingQueueResourceList = ( RecyclerView ) findViewById( R.id.content_crafting_queue_resources );
+//        Toolbar toolbar = ( Toolbar ) findViewById( R.id.toolbar );
+//        setSupportActionBar( toolbar );
+
+        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
+        mEngramDimensions = displayUtil.getDisplayCaseGridViewHolderDimensions();
+        mCraftableEngramDimensions = displayUtil.getCraftingQueueGridViewHolderDimensions();
+
+        displayCaseEngramList = ( RecyclerView ) findViewById( R.id.display_case_engram_list );
+        craftingQueueEngramList = ( RecyclerView ) findViewById( R.id.crafting_queue_engram_list );
+        craftingQueueResourceList = ( RecyclerView ) findViewById( R.id.crafting_queue_resource_list );
 
         if ( craftingQueueEngramList != null ) {
             RecyclerTouchListener craftingQueueEngramTouchListener = new RecyclerTouchListener( this, craftingQueueEngramList,
@@ -69,31 +81,31 @@ public class MainActivity extends AppCompatActivity {
                             if ( position >= 0 ) {
                                 craftableEngramListAdapter.increaseQuantity( position );
 
-                                // TODO: still need to add a refreshItem to each ListAdapter
-                                displayCaseListAdapter.refreshData();
-                                craftableEngramListAdapter.Refresh();
-                                craftableResourceListAdapter.Refresh();
+                                RefreshViews( false );
+                            } else {
+                                Log.e( TAG, "craftingQueueEngramList.onClick(): Position is less than 0? " + position );
                             }
                         }
 
                         @Override
                         public void onLongClick( View view, int position ) {
                             if ( position >= 0 ) {
-                                craftableEngramListAdapter.decreaseQuantity( position );
+                                Intent intent = new Intent( view.getContext(), DetailActivity.class );
+                                intent.putExtra( Helper.DETAIL_ID, craftableEngramListAdapter.getEngramId( position ) );
 
-                                // TODO: still need to add a refreshItem to each ListAdapter
-                                displayCaseListAdapter.refreshData();
-                                craftableEngramListAdapter.Refresh();
-                                craftableResourceListAdapter.Refresh();                            }
+                                startActivityForResult( intent, Helper.REQUEST_CODE_DETAIL_ACTIVITY );
+                            } else {
+                                Log.e( TAG, "craftingQueueEngramList.onLongClick(): Position is less than 0? " + position );
+                            }
                         }
-                    } );
+                    }
+            );
 
             craftableEngramListAdapter = new CraftableEngramListAdapter( this );
 
-            RecyclerView.LayoutManager craftableEngramLayoutManager =
-                    new GridLayoutManager( this, 1, GridLayoutManager.HORIZONTAL, false );
-
-            craftingQueueEngramList.setLayoutManager( craftableEngramLayoutManager );
+            craftingQueueEngramList.setLayoutManager(
+                    new GridLayoutManager( this, 1, GridLayoutManager.HORIZONTAL, false )
+            );
             craftingQueueEngramList.addOnItemTouchListener( craftingQueueEngramTouchListener );
             craftingQueueEngramList.setAdapter( craftableEngramListAdapter );
         }
@@ -128,18 +140,29 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick( View view, int position ) {
                             if ( position >= 0 ) {
                                 if ( displayCaseListAdapter.isEngram( position ) ) {
+                                    boolean viewChanged =
+                                            craftableEngramListAdapter.getItemCount() == 0;
+
                                     craftableEngramListAdapter.increaseQuantity(
-                                            displayCaseListAdapter.getEngram( position ).getId() );
+                                            displayCaseListAdapter.getEngram( position ).getId()
+                                    );
 
-                                    // TODO: still need to add a refreshItem to each ListAdapter
-                                    craftableEngramListAdapter.Refresh();
-                                    craftableResourceListAdapter.Refresh();
+                                    RefreshViews( viewChanged );
 
-                                    displayCaseListAdapter.refreshData();
-                                } else {
+                                    if ( viewChanged ) {
+                                        displayCaseEngramList.scrollToPosition( position );
+                                    }
+                                } else if ( displayCaseListAdapter.isCategory( position ) ) {
                                     displayCaseListAdapter.changeCategory( position );
-                                    displayCaseListAdapter.refreshData();
+                                    RefreshDisplayCase();
+                                } else if ( displayCaseListAdapter.isStation( position ) ) {
+                                    displayCaseListAdapter.changeStation( position );
+                                    RefreshDisplayCase();
+                                } else {
+                                    Log.e( TAG, "displayCaseEngramList.onClick(): Position is out of bounds? " + position );
                                 }
+                            } else {
+                                Log.e( TAG, "displayCaseEngramList.onClick(): Position is less than 0? " + position );
                             }
                         }
 
@@ -150,34 +173,56 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intent = new Intent( view.getContext(), DetailActivity.class );
                                     intent.putExtra( Helper.DETAIL_ID, displayCaseListAdapter.getEngramId( position ) );
 
-                                    startActivityForResult( intent, Helper.DETAIL_ID_CODE );
-                                } else {
+                                    startActivityForResult( intent, Helper.REQUEST_CODE_DETAIL_ACTIVITY );
+                                } else if ( displayCaseListAdapter.isCategory( position ) ) {
                                     displayCaseListAdapter.changeCategory( position );
-                                    displayCaseListAdapter.refreshData();
+                                    RefreshDisplayCase();
+                                } else if ( displayCaseListAdapter.isStation( position ) ) {
+                                    displayCaseListAdapter.changeStation( position );
+                                    RefreshDisplayCase();
+                                } else {
+                                    Log.e( TAG, "displayCaseEngramList.onLongClick(): Position is out of bounds? " + position );
                                 }
+                            } else {
+                                Log.e( TAG, "displayCaseEngramList.onLongClick(): Position is less than 0? " + position );
                             }
                         }
-                    } );
+                    }
+            );
+
+            displayCaseEngramList.addOnItemTouchListener( displayCaseTouchListener );
 
             displayCaseListAdapter = new DisplayCaseListAdapter( this );
-            displayCaseEngramList.addOnItemTouchListener( displayCaseTouchListener );
             displayCaseEngramList.setAdapter( displayCaseListAdapter );
         }
 
-        Button buttonClearQueue = ( Button ) findViewById( R.id.content_crafting_queue_clear_queue );
+        Button buttonClearQueue = ( Button ) findViewById( R.id.clear_queue_button );
         if ( buttonClearQueue != null ) {
             buttonClearQueue.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick( View v ) {
-                    ClearQueue();
+                    ClearCraftingQueue();
+                    RefreshViews( true );
                 }
             } );
         }
 
         AdUtil.loadAdView( this );
 
-        createExtraViews();
-        RefreshViews();
+        showChangeLog();
+
+        if ( getIntent().getBooleanExtra( getString( R.string.intent_key_did_update ), false ) ) {
+            ClearCraftingQueue();
+
+            getIntent().putExtra( getString( R.string.intent_key_did_update ), false );
+        }
+
+        RefreshViews( true );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -188,96 +233,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onConfigurationChanged( Configuration newConfig ) {
+        super.onConfigurationChanged( newConfig );
     }
 
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
         getMenuInflater().inflate( R.menu.menu_main, menu );
-
-        PreferenceHelper preferenceHelper = new PreferenceHelper( this );
-        long dlcSetting = preferenceHelper.getIntPreference( getString( R.string.pref_dlc_setting ) );
-
-        // DLC Setting not set yet, set to default, Vanilla. TODO: Have better system for defaults
-        if ( dlcSetting == 0 ) {
-            preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_VANILLA_ID );
-        }
-
-        if ( displayCaseListAdapter.isFiltered() ) {
-            menu.findItem( R.id.action_show_all ).setTitle( R.string.action_show_filtered );
-        } else {
-            menu.findItem( R.id.action_show_all ).setTitle( R.string.action_show_all );
-        }
-
-        if ( craftableResourceListAdapter.hasComplexResources() ) {
-            menu.findItem( R.id.action_breakdownResources ).setTitle( R.string.action_breakdown_resources_raw );
-        } else {
-            menu.findItem( R.id.action_breakdownResources ).setTitle( R.string.action_breakdown_resources_refined );
-        }
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
-        PreferenceHelper preferenceHelper = new PreferenceHelper( this );
-        int prefValue = preferenceHelper.getIntPreference( getString( R.string.pref_dlc_setting ) );
-
         switch ( item.getItemId() ) {
-            case R.id.action_dlc_settings_vanilla:
-                if ( prefValue != Helper.DLC_VANILLA_ID ) {
-                    preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_VANILLA_ID );
-
-                    displayCaseListAdapter.setLevelToRoot();
-
-                    ClearQueue();
-                }
-                break;
-
-            case R.id.action_dlc_settings_primitive_plus:
-                if ( prefValue != Helper.DLC_PRIMITIVE_PLUS_ID ) {
-                    preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_PRIMITIVE_PLUS_ID );
-
-                    displayCaseListAdapter.setLevelToRoot();
-
-                    ClearQueue();
-                }
-                break;
-
-            case R.id.action_dlc_settings_scorched_earth:
-                if ( prefValue != Helper.DLC_SCORCHED_EARTH_ID ) {
-                    preferenceHelper.setPreference( getString( R.string.pref_dlc_setting ), Helper.DLC_SCORCHED_EARTH_ID );
-
-                    displayCaseListAdapter.setLevelToRoot();
-
-                    ClearQueue();
-                }
-                break;
-
-            case R.id.action_breakdownResources:
-                craftableResourceListAdapter.setHasComplexResources( !craftableResourceListAdapter.hasComplexResources() );
-
-                if ( craftableResourceListAdapter.hasComplexResources() ) {
-                    item.setTitle( R.string.action_breakdown_resources_raw );
-                } else {
-                    item.setTitle( R.string.action_breakdown_resources_refined );
-                }
-
-                RefreshViews();
-                break;
-
-            case R.id.action_show_all:
-                displayCaseListAdapter.setFiltered( !displayCaseListAdapter.isFiltered() );
-
-                if ( displayCaseListAdapter.isFiltered() ) {
-                    item.setTitle( R.string.action_show_filtered );
-                } else {
-                    item.setTitle( R.string.action_show_all );
-                }
-
-                RefreshViews();
-                break;
+            case R.id.action_settings:
+                startActivityForResult(
+                        new Intent( this, SettingsActivity.class ),
+                        Helper.REQUEST_CODE_SETTINGS_ACTIVITY );
+                return true;
 
             case R.id.action_show_changelog:
                 ChangeLog changeLog = new ChangeLog( this );
@@ -290,20 +268,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_about:
-                AlertDialog.Builder builder = new AlertDialog.Builder( this );
-
-                builder.setTitle( getResources().getString( R.string.action_about ) + " " + getResources().getString( R.string.app_name_full ) )
+                new AlertDialog.Builder( this )
+                        .setTitle( getString( R.string.about_dialog_full_title ) )
                         .setIcon( R.drawable.wood_signs_wooden_sign )
-                        .setNegativeButton( "Close", new DialogInterface.OnClickListener() {
+                        .setNegativeButton( getString( R.string.about_dialog_close_button ), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick( DialogInterface dialog, int which ) {
                             }
                         } )
                         .setMessage(
-                                "Developed by: Shane Stone/Stone Development\n" +
-                                        "Email: jaredstone1982@gmail.com/stonedevs@gmail.com\n" +
-                                        "Twitter: @MasterxOfxNone/@ARKResourceCalc\n" +
-                                        "Steam/Xbox Live: MasterxOfxNone\n\n" +
+                                "Passionately developed by Shane Stone.\n\n" +
+                                        "Email:\n  jaredstone1982@gmail.com\n  stonedevs@gmail.com\n\n" +
+                                        "Twitter:\n  @MasterxOfxNone\n  @ARKResourceCalc\n\n" +
+                                        "Steam:\n  MasterxOfxNone\n" +
+                                        "Xbox Live:\n  MasterxOfxNone\n\n" +
                                         getAppVersions() )
                         .show();
                 break;
@@ -319,72 +297,123 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
         super.onActivityResult( requestCode, resultCode, data );
 
-        if ( requestCode == Helper.DETAIL_ID_CODE ) {
-            if ( resultCode == RESULT_OK ) {
-                Bundle extras = data.getExtras();
-                long id = extras.getLong( Helper.DETAIL_ID );
-                String result = extras.getString( Helper.DETAIL_RESULT_CODE );
+        switch ( requestCode ) {
+            case Helper.REQUEST_CODE_DETAIL_ACTIVITY:
+                if ( resultCode == RESULT_OK ) {
+                    Bundle extras = data.getExtras();
+                    long id = extras.getLong( Helper.DETAIL_ID );
+                    String result = extras.getString( Helper.RESULT_CODE_DETAIL_ACTIVITY );
 
-                assert result != null;
-                switch ( result ) {
-                    case Helper.DETAIL_REMOVE:
-                        boolean doRemove = extras.getBoolean( Helper.DETAIL_REMOVE );
-                        if ( doRemove ) {
-                            craftableEngramListAdapter.Remove( id );
-                        }
-                        break;
-                    case Helper.DETAIL_SAVE:
-                        int quantity = extras.getInt( Helper.DETAIL_QUANTITY );
+                    assert result != null;
+                    switch ( result ) {
+                        case Helper.DETAIL_REMOVE:
+                            boolean doRemove = extras.getBoolean( Helper.DETAIL_REMOVE );
+                            if ( doRemove ) {
+                                craftableEngramListAdapter.Remove( id );
+                            }
+                            break;
+                        case Helper.DETAIL_SAVE:
+                            int quantity = extras.getInt( Helper.DETAIL_QUANTITY );
 
-                        if ( quantity > 0 ) {
-                            craftableEngramListAdapter.setQuantity( id, quantity );
-                        } else {
-                            craftableEngramListAdapter.Remove( id );
-                        }
-                        break;
+                            if ( quantity > 0 ) {
+                                craftableEngramListAdapter.setQuantity( id, quantity );
+                            } else {
+                                craftableEngramListAdapter.Remove( id );
+                            }
+                            break;
+                    }
+
+                    RefreshViews( true );
                 }
+                break;
+            case Helper.REQUEST_CODE_SETTINGS_ACTIVITY:
+                if ( resultCode == RESULT_OK ) {
+                    Bundle extras = data.getExtras();
 
-                RefreshViews();
-            }
+                    boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
+                    boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
+                    boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
+                    boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
+                    boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
+                    boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
+
+                    if ( dlcValueChange || categoryPrefChange || stationPrefChange || levelPrefChange || levelValueChange ) {
+                        ResetSettings();
+                        SaveSettings();
+
+                        if ( dlcValueChange ) {
+                            ClearCraftingQueue();
+                        }
+                    }
+
+                    if ( refinedPrefChange ) {
+                        RefreshCraftingQueueResources();
+                    }
+
+                    RefreshViews( true );
+                }
+                break;
         }
     }
 
+    private void ResetSettings() {
+        displayCaseListAdapter.resetLevels();
+    }
+
     public void SaveSettings() {
-        PreferenceHelper preferenceHelper = new PreferenceHelper( this );
+        PrefsUtil prefs = new PrefsUtil( getApplicationContext() );
 
-        preferenceHelper.setPreference( Helper.APP_LEVEL, displayCaseListAdapter.getLevel() );
-        preferenceHelper.setPreference( Helper.APP_PARENT, displayCaseListAdapter.getParent() );
+        if ( prefs.getCategoryFilterPreference() ) {
+            prefs.saveCategoryLevels(
+                    displayCaseListAdapter.getLevel(),
+                    displayCaseListAdapter.getParent()
+            );
+        }
+
+        if ( prefs.getStationFilterPreference() ) {
+            prefs.saveStationId( displayCaseListAdapter.getStationId() );
+        }
+
+        Log.d( TAG, "SaveSettings(): level: " + displayCaseListAdapter.getLevel() +
+                ", parent: " + displayCaseListAdapter.getParent() +
+                ", station: " + displayCaseListAdapter.getStationId()
+        );
     }
 
-    public void ClearQueue() {
-        craftableEngramListAdapter.ClearQueue();
+    private void RefreshViews( boolean viewChanged ) {
+        RefreshCraftingQueue();
+        RefreshDisplayCase();
 
-        RefreshViews();
+        if ( viewChanged ) {
+            displayCaseEngramList.setLayoutManager( getAdjustedLayoutManager() );
+            displayCaseEngramList.setLayoutParams( getDisplayCaseLayoutParams() );
+
+            FrameLayout topContainer = ( FrameLayout ) findViewById( R.id.content_main_top_container );
+            topContainer.setLayoutParams( getDisplayCaseContainerLayoutParams() );
+
+            FrameLayout bottomContainer = ( FrameLayout ) findViewById( R.id.content_main_bottom_container );
+            bottomContainer.setLayoutParams( getCraftingQueueContainerLayoutParams() );
+        }
     }
 
-    private void RefreshViews() {
-        craftableEngramListAdapter.Refresh();
-        craftableResourceListAdapter.Refresh();
+    private void RefreshDisplayCase() {
         displayCaseListAdapter.refreshData();
 
-        displayCaseEngramList.setLayoutParams( getDisplayCaseLayoutParams() );
-
-//        TextView textViewCategory = ( TextView ) findViewById( R.id.content_category_hierarchy_text );
-//        if ( textViewCategory != null ) {
-//            textViewCategory.setText( getCategoryHierarchy() );
-//        }
-//
-//        TextView textViewDLC = ( TextView ) findViewById( R.id.content_dlc_text );
-//        if ( textViewDLC != null ) {
-//            textViewDLC.setText( "DLC: Scorched Earth" );
-//        }
+        TextView categoryHierarchy = ( TextView ) findViewById( R.id.hierarchy_text );
+        categoryHierarchy.setText( displayCaseListAdapter.getHierarchicalText() );
     }
 
-    private void createExtraViews() {
-        Toolbar toolbar = ( Toolbar ) findViewById( R.id.toolbar );
-        setSupportActionBar( toolbar );
+    private void RefreshCraftingQueue() {
+        craftableEngramListAdapter.Refresh();
+        craftableResourceListAdapter.Refresh();
+    }
 
-        showChangeLog();
+    private void RefreshCraftingQueueResources() {
+        craftableResourceListAdapter.RefreshData();
+    }
+
+    public void ClearCraftingQueue() {
+        craftableEngramListAdapter.ClearQueue();
     }
 
     private void showChangeLog() {
@@ -395,16 +424,95 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private LinearLayout.LayoutParams getDisplayCaseLayoutParams() {
-        if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-            if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ) {
-                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.75f );
-            } else {
-                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f );
+    private RecyclerView.LayoutManager getAdjustedLayoutManager() {
+        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
+
+        int numCols = getResources().getInteger( R.integer.display_case_column_count );
+        if ( displayUtil.isLandscape() ) {
+            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
+                numCols /= 2;
             }
         }
 
-        return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT );
+        return new GridLayoutManager( this, numCols );
+    }
+
+    private LinearLayout.LayoutParams getCraftingQueueContainerLayoutParams() {
+        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
+
+        mCraftableEngramDimensions = displayUtil.getCraftingQueueGridViewHolderDimensions();
+
+        if ( displayUtil.isPortrait() ) {
+            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
+                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f );
+            } else {
+                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0 );
+            }
+        } else {
+            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
+                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f );
+            } else {
+                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT );
+            }
+        }
+    }
+
+    private LinearLayout.LayoutParams getDisplayCaseContainerLayoutParams() {
+        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
+
+        if ( displayUtil.isPortrait() ) {
+            if ( craftableEngramListAdapter.getItemCount() == 0 ) {
+                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f );
+            } else {
+                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
+            }
+        } else {
+            if ( craftableEngramListAdapter.getItemCount() == 0 ) {
+                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f );
+            } else {
+                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT );
+            }
+        }
+    }
+
+    private LinearLayout.LayoutParams getDisplayCaseLayoutParams() {
+        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
+
+        mEngramDimensions = displayUtil.getDisplayCaseGridViewHolderDimensions();
+        mCraftableEngramDimensions = displayUtil.getCraftingQueueGridViewHolderDimensions();
+
+        if ( displayUtil.isPortrait() ) {
+            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
+                int numRows = getResources().getInteger( R.integer.display_case_row_count );
+                float padding = getResources().getDimension( R.dimen.display_case_view_holder_padding );
+
+                // Padding * 2 for top and bottom or start and end
+                float containerPadding = ( padding * 2 );
+
+                return new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        ( int ) ( mEngramDimensions * numRows + containerPadding )
+                );
+            } else {
+                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f );
+            }
+        } else {
+            // landscape
+            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
+                int numCols = getResources().getInteger( R.integer.display_case_column_count );
+
+                return new LinearLayout.LayoutParams(
+                        ( int ) ( mEngramDimensions * ( numCols / 2 ) ),
+                        0,
+                        1f
+                );
+            } else {
+                return new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1f );
+            }
+        }
     }
 
     private String getAppVersions() {
@@ -414,23 +522,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     String getDLCName() {
-        long dlc_id = new PreferenceHelper( this ).getIntPreference( getString( R.string.pref_dlc_setting ) );
+        long dlc_id = new PrefsUtil( this ).getDLCPreference();
         Cursor cursor = getContentResolver().query( DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, dlc_id ),
                 null, null, null, null );
 
         if ( cursor == null ) return null;
 
-        try {
-            if ( cursor.moveToFirst() ) {
-                String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
-                if ( name != null ) {
-                    return name;
-                }
+        if ( cursor.moveToFirst() ) {
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
+            if ( name != null ) {
+                return name;
             }
-        } finally {
-            cursor.close();
-
         }
+        cursor.close();
+
         return null;
     }
 

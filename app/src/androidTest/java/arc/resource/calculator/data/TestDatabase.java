@@ -3,7 +3,7 @@ package arc.resource.calculator.data;
 import android.test.AndroidTestCase;
 
 import arc.resource.calculator.db.DatabaseHelper;
-import arc.resource.calculator.helpers.Helper;
+import arc.resource.calculator.util.Helper;
 
 public class TestDatabase extends AndroidTestCase {
     private static final String TAG = TestDatabase.class.getSimpleName();

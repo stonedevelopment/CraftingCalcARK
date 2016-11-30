@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SettingsActivity: DLC names -->
+    <string-array name="pref_dlc_list_titles">
+        <item>@string/pref_dlc_label_vanilla</item>
+        <item>@string/pref_dlc_label_primitive_plus</item>
+        <item>@string/pref_dlc_label_scorched_earth</item>
+    </string-array>
+
+    <!-- SettingsActivity: DLC values -->
+    <string-array name="pref_dlc_list_values">
+        <item>@string/pref_dlc_value_vanilla</item>
+        <item>@string/pref_dlc_value_primitive_plus</item>
+        <item>@string/pref_dlc_value_scorched_earth</item>
+    </string-array>
+
+</resources>

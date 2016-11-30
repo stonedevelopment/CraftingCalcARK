@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,16 +15,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.Vector;
 
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.helpers.Helper;
-import arc.resource.calculator.helpers.PreferenceHelper;
+import arc.resource.calculator.util.Helper;
+import arc.resource.calculator.util.JsonUtil;
+import arc.resource.calculator.util.PrefsUtil;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -54,23 +50,15 @@ public class LoadScreenActivity extends AppCompatActivity {
             this.max = max;
         }
 
-        public int getProgress() {
+        int getProgress() {
             return progress;
         }
 
-        public void setProgress( int progress ) {
-            this.progress = progress;
-        }
-
-        public int getMax() {
+        int getMax() {
             return max;
         }
 
-        public void setMax( int max ) {
-            this.max = max;
-        }
-
-        public void incrementProgress() {
+        void incrementProgress() {
             progress++;
         }
     }
@@ -86,17 +74,24 @@ public class LoadScreenActivity extends AppCompatActivity {
         if ( isNewVersion() ) {
             new ParseInsertTask( this ).execute();
         } else {
-            // Start MainActivity
-            Intent intent = new Intent( getApplicationContext(), MainActivity.class );
-            startActivity( intent );
-
-            finish();
+            startMainActivity( false );
         }
     }
 
+    void startMainActivity( boolean didUpdate ) {
+        Intent intent = new Intent( getApplicationContext(), MainActivity.class );
+        intent.putExtra(
+                getString( R.string.intent_key_did_update ),
+                didUpdate );
+
+        startActivity( intent );
+
+        finish();
+    }
+
     boolean isNewVersion() {
-        String oldVersion = new PreferenceHelper( this ).getStringPreference( getResources().getString( R.string.pref_json_version ) );
-        String newVersion = getResources().getString( R.string.json_version );
+        String oldVersion = new PrefsUtil( this ).getJSONVersion();
+        String newVersion = getString( R.string.json_version );
 
         Helper.Log( TAG, oldVersion + " == " + newVersion + "?" );
 
@@ -129,7 +124,7 @@ public class LoadScreenActivity extends AppCompatActivity {
         protected void onProgressUpdate( String... strings ) {
             String message = strings[0];
 
-            Helper.Log( TAG, message );
+//            Helper.Log( TAG, message );
             textView.setText( message );
             progressBar.setProgress( mProgressData.getProgress() );
         }
@@ -137,16 +132,13 @@ public class LoadScreenActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute( Void aVoid ) {
             // Save new version to preferences
-            new PreferenceHelper( getContext() )
-                    .setPreference(
-                            getString( R.string.pref_json_version ),
-                            getString( R.string.json_version ) );
+            PrefsUtil prefs = new PrefsUtil( getContext() );
 
-            // Start MainActivity
-            Intent intent = new Intent( getContext(), MainActivity.class );
-            startActivity( intent );
+            prefs.updateJSONVersion( getString( R.string.json_version ) );
+            prefs.saveStationIdBackToDefault();
+            prefs.saveCategoryLevelsBackToDefault();
 
-            finish();
+            startMainActivity( true );
         }
 
         @Override
@@ -154,40 +146,7 @@ public class LoadScreenActivity extends AppCompatActivity {
             publishProgress( "Parsing JSON file..." );
             mProgressData.incrementProgress();
 
-            BufferedReader fileReader = null;
-            String jsonString;
-
-            try {
-                InputStream fileStream = getContext().getResources().openRawResource( R.raw.jsonrawdata );
-                StringBuffer buffer = new StringBuffer();
-
-                fileReader = new BufferedReader( new InputStreamReader( fileStream ) );
-
-                String line;
-                while ( ( line = fileReader.readLine() ) != null ) {
-                    buffer.append( line + "\n" );
-                }
-
-                // If empty string, no need to parse.
-                if ( buffer.length() == 0 ) {
-                    return null;
-                }
-
-                jsonString = buffer.toString();
-
-            } catch ( IOException e ) {
-                Log.e( TAG, "Error: ", e );
-                return null;
-            } finally {
-                if ( fileReader != null ) {
-                    try {
-                        fileReader.close();
-                    } catch ( IOException e ) {
-                        Log.e( TAG, "Error closing stream: ", e );
-                        return null;
-                    }
-                }
-            }
+            String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext() );
 
             try {
                 parseJsonString( jsonString );
@@ -203,6 +162,7 @@ public class LoadScreenActivity extends AppCompatActivity {
             delete( DatabaseContract.ComplexResourceEntry.CONTENT_URI );
             delete( DatabaseContract.CompositionEntry.CONTENT_URI );
             delete( DatabaseContract.CategoryEntry.CONTENT_URI );
+            delete( DatabaseContract.StationEntry.CONTENT_URI );
             delete( DatabaseContract.EngramEntry.CONTENT_URI );
             delete( DatabaseContract.QueueEntry.CONTENT_URI );
         }
@@ -215,7 +175,7 @@ public class LoadScreenActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject( jsonString );
 
             publishProgress( "Inserting DLC Versions..." );
-            insertVersions( jsonObject.getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
+            insertDLC( jsonObject.getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
 
             publishProgress( "Inserting Stations..." );
@@ -230,12 +190,12 @@ public class LoadScreenActivity extends AppCompatActivity {
             insertResources( jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
 
-            publishProgress( "Inserting Engrams... (This may take awhile...)" );
+            publishProgress( "Inserting Engrams..." );
             insertEngrams( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
 
             publishProgress( "Inserting Complex Resources..." );
-            insertComplexResources();
+            insertComplexResources( jsonObject.getJSONArray( DatabaseContract.ComplexResourceEntry.TABLE_NAME ) );
             mProgressData.incrementProgress();
 
             publishProgress( "Initialization complete! Starting app..." );
@@ -247,34 +207,30 @@ public class LoadScreenActivity extends AppCompatActivity {
             getContext().getContentResolver().bulkInsert( insertUri, vector.toArray( contentValues ) );
         }
 
-        void insertComplexResources() {
-            Cursor cursor = mContext.getContentResolver().query(
-                    DatabaseContract.ComplexResourceEntry.buildUriWithDrawable(),
-                    DatabaseContract.ComplexResourceEntry.SQL_QUERY_WITH_DRAWABLE_PROJECTION,
-                    DatabaseContract.ComplexResourceEntry.SQL_QUERY_WITH_DRAWABLE_SELECTION,
-                    null, null
-            );
+        void insertComplexResources( JSONArray jsonArray ) throws JSONException {
+            Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
-            if ( cursor != null && cursor.getCount() > 0 ) {
-                Vector<ContentValues> vector = new Vector<>( cursor.getCount() );
+            for ( int i = 0; i < jsonArray.length(); i++ ) {
+                JSONObject jsonObject = jsonArray.getJSONObject( i );
 
-                while ( cursor.moveToNext() ) {
-                    long engram_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
-                    long resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY ) );
+                long resource_id = jsonObject.getLong( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY );
+                long engram_id = jsonObject.getLong( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY );
 
-                    ContentValues values = new ContentValues();
-                    values.put( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY, engram_id );
-                    values.put( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY, resource_id );
+                //Log.d( TAG, "-- insertComplexResources > resource_id: " + resource_id + ", engram_id: " + engram_id );
 
-                    vector.add( values );
-                }
+                ContentValues values = new ContentValues();
+                values.put( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY, resource_id );
+                values.put( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY, engram_id );
 
-                cursor.close();
-                bulkInsertWithUri( DatabaseContract.ComplexResourceEntry.CONTENT_URI, vector );
+                //Log.d( TAG, "   ++ insertComplexResources Success!" );
+
+                vector.add( values );
             }
+
+            bulkInsertWithUri( DatabaseContract.ComplexResourceEntry.CONTENT_URI, vector );
         }
 
-        void insertVersions( JSONArray jsonArray ) throws JSONException {
+        void insertDLC( JSONArray jsonArray ) throws JSONException {
             Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
             for ( int i = 0; i < jsonArray.length(); i++ ) {
@@ -283,9 +239,13 @@ public class LoadScreenActivity extends AppCompatActivity {
                 long _id = jsonObject.getLong( DatabaseContract.DLCEntry._ID );
                 String name = jsonObject.getString( DatabaseContract.DLCEntry.COLUMN_NAME );
 
+                //Log.d( TAG, "-- insertDLC > _id: " + _id + ", name: " + name );
+
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.DLCEntry._ID, _id );
                 values.put( DatabaseContract.DLCEntry.COLUMN_NAME, name );
+
+                //Log.d( TAG, "   ++ insertDLC Success!" );
 
                 vector.add( values );
             }
@@ -299,17 +259,23 @@ public class LoadScreenActivity extends AppCompatActivity {
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
+                long _id = jsonObject.getLong( DatabaseContract.ResourceEntry._ID );
                 String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
                 String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
                 JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
+
+                //Log.d( TAG, "-- insertResources > " + _id + " name: " + name + ", drawable: " + drawable );
 
                 for ( int d = 0; d < dlc_ids.length(); d++ ) {
                     long dlc_id = dlc_ids.getLong( d );
 
                     ContentValues values = new ContentValues();
+                    values.put( DatabaseContract.ResourceEntry._ID, _id );
                     values.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
                     values.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, drawable );
                     values.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, dlc_id );
+
+                    //Log.d( TAG, "   ++ insertResources Success! dlc_id: " + dlc_id );
 
                     vector.add( values );
                 }
@@ -329,6 +295,8 @@ public class LoadScreenActivity extends AppCompatActivity {
                 String drawable = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_DRAWABLE );
                 JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.StationEntry.COLUMN_DLC_KEY );
 
+                //Log.d( TAG, "-- insertStations > _id: " + _id + ", name: " + name + ", drawable: " + drawable );
+
                 for ( int d = 0; d < dlc_ids.length(); d++ ) {
                     long dlc_id = dlc_ids.getLong( d );
 
@@ -337,6 +305,8 @@ public class LoadScreenActivity extends AppCompatActivity {
                     values.put( DatabaseContract.StationEntry.COLUMN_NAME, name );
                     values.put( DatabaseContract.StationEntry.COLUMN_DRAWABLE, drawable );
                     values.put( DatabaseContract.StationEntry.COLUMN_DLC_KEY, dlc_id );
+
+                    //Log.d( TAG, "   ++ insertStations Success! dlc_id: " + dlc_id );
 
                     vector.add( values );
                 }
@@ -357,21 +327,26 @@ public class LoadScreenActivity extends AppCompatActivity {
                 JSONArray station_ids = jsonObject.getJSONArray( DatabaseContract.CategoryEntry.COLUMN_STATION_KEY );
                 JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY );
 
+                //Log.d( TAG, "-- insertCategories > _id: " + _id + ", name: " + name + ", parent_id: " + parent_id );
+
                 // first go through dlc_ids...
-                for ( int d = 0; d <= dlc_ids.length(); d++ ) {
+                for ( int d = 0; d < dlc_ids.length(); d++ ) {
                     long dlc_id = dlc_ids.getLong( d );
 
                     // ...while going through station_ids
-                    for ( int s = 0; s <= station_ids.length(); s++ ) {
+                    for ( int s = 0; s < station_ids.length(); s++ ) {
                         long station_id = station_ids.getLong( s );
+
+                        //Log.d( TAG, "   -? dlc_id: " + dlc_id + ", station_id: " + station_id );
 
                         // check if dlc_id and station_id's dlc_id match
                         Cursor cursor = getContentResolver().query(
-                                DatabaseContract.StationEntry.buildUriWithId( station_id, dlc_id ),
+                                DatabaseContract.StationEntry.buildUriWithId( dlc_id, station_id ),
                                 null, null, null, null );
 
                         // no match found, try next station_id
                         if ( cursor == null ) {
+                            //Log.e( TAG, "   -! cursor == null! (possibly because it wasn't added with proper dlc_id)" );
                             continue;
                         }
 
@@ -385,6 +360,8 @@ public class LoadScreenActivity extends AppCompatActivity {
                             values.put( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY, dlc_id );
 
                             vector.add( values );
+                        } else {
+                            //Log.e( TAG, "   -! moveToFirst() did not fire! (possibly because it wasn't added with proper dlc_id)" );
                         }
 
                         cursor.close();
@@ -396,9 +373,13 @@ public class LoadScreenActivity extends AppCompatActivity {
         }
 
         void insertEngrams( JSONArray jsonArray ) throws JSONException {
+            Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
+            Vector<ContentValues> compositionVector = new Vector<>();
+
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
+                long _id = jsonObject.getLong( DatabaseContract.EngramEntry._ID );
                 String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
                 String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
                 String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
@@ -408,27 +389,34 @@ public class LoadScreenActivity extends AppCompatActivity {
                 JSONArray station_ids = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_STATION_KEY );
                 JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
 
+                //Log.w( TAG, "-- insertEngrams > " + name );
+
                 // first go through dlc_ids...
-                for ( int d = 0; d <= dlc_ids.length(); d++ ) {
+                for ( int d = 0; d < dlc_ids.length(); d++ ) {
                     long dlc_id = dlc_ids.getLong( d );
 
                     // ...while going through station_ids
-                    for ( int s = 0; s <= station_ids.length(); s++ ) {
+                    for ( int s = 0; s < station_ids.length(); s++ ) {
                         long station_id = station_ids.getLong( s );
+
+                        //Log.d( TAG, "   -? dlc_id: " + dlc_id + ", station_id: " + station_id );
 
                         // check if dlc_id and station_id's dlc_id match
                         Cursor cursor = getContentResolver().query(
-                                DatabaseContract.StationEntry.buildUriWithId( station_id, dlc_id ),
+                                DatabaseContract.StationEntry.buildUriWithId( dlc_id, station_id ),
                                 null, null, null, null );
 
                         // no match found, try next station_id
                         if ( cursor == null ) {
+                            //Log.e( TAG, "   -! cursor == null! (possibly because it doesn't belong in requested dlc_id)" );
+                            //Log.e( TAG, "       > drawable: " + drawable );
                             continue;
                         }
 
                         // match found, adding values into vector
                         if ( cursor.moveToFirst() ) {
                             ContentValues values = new ContentValues();
+                            values.put( DatabaseContract.EngramEntry._ID, _id );
                             values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
                             values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
                             values.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, drawable );
@@ -438,89 +426,52 @@ public class LoadScreenActivity extends AppCompatActivity {
                             values.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
                             values.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dlc_id );
 
-                            Uri insertUri = getContext().getContentResolver().insert( DatabaseContract.EngramEntry.CONTENT_URI, values );
-                            long engram_id = DatabaseContract.getIdFromUri( insertUri );
+                            vector.add( values );
 
-                            insertComposition( engram_id, dlc_id, jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME ) );
+                            //Log.d( TAG, "   +> engram_id: " + _id );
+
+                            compositionVector.addAll( insertComposition( _id, dlc_id, jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME ) ) );
+
+                            //Log.w( TAG, "-- insertEngrams Success!" );
+                        } else {
+                            //Log.e( TAG, "   -! moveToFirst() did not fire! (possibly because it wasn't added with proper dlc_id)" );
+                            //Log.e( TAG, "       > drawable: " + drawable );
                         }
 
                         cursor.close();
                     }
                 }
             }
+
+            bulkInsertWithUri( DatabaseContract.EngramEntry.CONTENT_URI, vector );
+            bulkInsertWithUri( DatabaseContract.CompositionEntry.CONTENT_URI, compositionVector );
         }
 
-        void insertComposition( long engram_id, long dlc_id, JSONArray jsonArray ) throws JSONException {
+        Vector<ContentValues> insertComposition( long engram_id, long dlc_id, JSONArray jsonArray ) throws JSONException {
             Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
+
+            //Log.d( TAG, "   -- insertComposition > engram_id: " + engram_id );
 
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
                 // Drawable of Resource that will tie itself to this Composition
-                String drawable = jsonObject.getString( DatabaseContract.CompositionEntry.COLUMN_DRAWABLE );
+                long resource_id = jsonObject.getLong( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY );
                 int quantity = jsonObject.getInt( DatabaseContract.CompositionEntry.COLUMN_QUANTITY );
 
-                Cursor cursor = getContext().getContentResolver().query(
-                        DatabaseContract.ResourceEntry.buildUriWithDrawable( drawable, dlc_id ),
-                        null, null, null, null
-                );
+                ContentValues values = new ContentValues();
+                values.put( DatabaseContract.CompositionEntry.COLUMN_ENGRAM_KEY, engram_id );
+                values.put( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY, resource_id );
+                values.put( DatabaseContract.CompositionEntry.COLUMN_DLC_KEY, dlc_id );
+                values.put( DatabaseContract.CompositionEntry.COLUMN_QUANTITY, quantity );
 
-                if ( cursor == null ) {
-                    continue;
-                }
+                //Log.d( TAG, "      +> engram_id: " + engram_id + ", resource_id: " + resource_id + ", dlc_id: " + dlc_id + ", quantity: " + quantity );
 
-                long resource_id = 0;
-                if ( cursor.moveToFirst() ) {
-                    resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ResourceEntry._ID ) );
-                } else {
-                    Log.e( TAG, " -! Resource not found, adding Engram as resource, drawable: " + drawable + ", dlc: " + dlc_id );
-
-                    cursor = getContext().getContentResolver().query(
-                            DatabaseContract.EngramEntry.buildUriWithDrawable( drawable, dlc_id ),
-                            null, null, null, null
-                    );
-
-                    if ( cursor == null ) {
-                        Log.e( TAG, "   -! cursor == null! (possibly because it wasn't added with proper dlc_id)" );
-                        continue;
-                    }
-
-                    if ( cursor.moveToFirst() ) {
-                        String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
-
-                        // Add Engram as resource
-                        ContentValues values = new ContentValues();
-                        values.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
-                        values.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, drawable );
-                        values.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, dlc_id );
-
-                        Uri uri = getContext().getContentResolver().insert( DatabaseContract.ResourceEntry.CONTENT_URI, values );
-                        resource_id = DatabaseContract.getIdFromUri( uri );
-                    } else {
-                        Log.e( TAG, "   -! moveToFirst() did not fire!  (possibly because it wasn't added with proper dlc_id)" );
-                    }
-                }
-
-                if ( resource_id > 0 ) {
-                    ContentValues values = new ContentValues();
-                    values.put( DatabaseContract.CompositionEntry.COLUMN_ENGRAM_KEY, engram_id );
-                    values.put( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY, resource_id );
-                    values.put( DatabaseContract.CompositionEntry.COLUMN_QUANTITY, quantity );
-
-                    vector.add( values );
-                } else {
-                    Log.e( TAG, "   -- insertComposition Failed: engram_id: " + engram_id + ", drawable: " + drawable );
-                }
-
-                cursor.close();
+                vector.add( values );
             }
 
-            // Bulk insert current composition
-            if ( vector.size() > 0 ) {
-                getContext().getContentResolver().bulkInsert( DatabaseContract.CompositionEntry.CONTENT_URI, ( ContentValues[] ) vector.toArray() );
-            } else {
-                Log.e( TAG, "-! Vector is empty for engram_id: " + engram_id + "/" + jsonArray.toString() );
-            }
+//            bulkInsertWithUri( DatabaseContract.CompositionEntry.CONTENT_URI, vector );
+            return vector;
         }
 
         Context getContext() {

@@ -1,0 +1,60 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:defaultValue="@string/pref_dlc_value_vanilla"
+        android:entries="@array/pref_dlc_list_titles"
+        android:entryValues="@array/pref_dlc_list_values"
+        android:key="@string/pref_dlc_key"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:summary="@string/pref_dlc_description"
+        android:title="@string/pref_dlc_title"/>
+
+    <PreferenceCategory
+        android:title="Engram Filters">
+
+        <SwitchPreference
+            android:defaultValue="@string/pref_filter_category_value_default"
+            android:icon="@drawable/folder"
+            android:key="@string/pref_filter_category_key"
+            android:summary="@string/pref_filter_category_description"
+            android:title="@string/pref_filter_category_title"/>
+
+        <SwitchPreference
+            android:defaultValue="@string/pref_filter_station_value_default"
+            android:icon="@drawable/structures_crafting_smithy"
+            android:key="@string/pref_filter_station_key"
+            android:summary="@string/pref_filter_station_description"
+            android:title="@string/pref_filter_station_title"/>
+
+        <SwitchPreference
+            android:defaultValue="@string/pref_filter_level_value_default"
+            android:icon="@drawable/metal_storage_vault"
+            android:key="@string/pref_filter_level_key"
+            android:summary="@string/pref_filter_level_description"
+            android:title="@string/pref_filter_level_title"/>
+
+        <ListPreference
+            android:defaultValue="@string/pref_edit_text_level_value_default"
+            android:dependency="@string/pref_filter_level_key"
+            android:key="@string/pref_edit_text_level_key"
+            android:summary="@string/pref_edit_text_level_description"
+            android:title="@string/pref_edit_text_level_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Resource Filters">
+
+        <SwitchPreference
+            android:defaultValue="@string/pref_filter_refined_value_default"
+            android:icon="@drawable/metal_ore"
+            android:key="@string/pref_filter_refined_key"
+            android:summary="@string/pref_filter_refined_description"
+            android:title="@string/pref_filter_refined_title"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

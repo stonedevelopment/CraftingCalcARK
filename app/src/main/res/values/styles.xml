@@ -3,13 +3,84 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/in_game_background</item>
-        <item name="colorPrimaryDark">@color/in_game_background_dark</item>
-        <item name="colorAccent">@color/in_game_background_light</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColorPrimary">@color/colorWhite</item>
+    <style name="AppTheme.Settings">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.Text">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.Text.DisplayCase"/>
+
+    <style name="AppTheme.Text.DisplayCase.Hierarchy">
+        <item name="android:textSize">@dimen/engram_grid_view_holder_name_text_size</item>
+    </style>
+
+    <style name="AppTheme.Text.Engram"/>
+
+    <style name="AppTheme.Text.Engram.Name">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+        <item name="android:textSize">@dimen/engram_grid_view_holder_name_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">@string/content_detail_mock_text_name</item>
+    </style>
+
+    <style name="AppTheme.Text.Engram.Quantity">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/engram_grid_view_holder_quantity_text_size</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">@string/content_detail_mock_text_quantity</item>
+    </style>
+
+    <style name="AppTheme.Text.Resource">
+        <item name="android:textSize">@dimen/resource_view_holder_text_size</item>
+    </style>
+
+    <style name="AppTheme.Text.Resource.Name"/>
+
+    <style name="AppTheme.Text.Resource.Quantity">
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+
+    <style name="AppTheme.Text.Detail"/>
+
+    <style name="AppTheme.Text.Detail.Name">
+        <item name="android:textSize">@dimen/detail_name_text_size</item>
+        <item name="android:text">@string/content_detail_mock_text_name</item>
+    </style>
+
+    <style name="AppTheme.Text.Detail.Category">
+        <item name="android:textSize">@dimen/detail_category_text_size</item>
+        <item name="android:text">@string/content_detail_mock_text_category</item>
+    </style>
+
+    <style name="AppTheme.Text.Detail.Station">
+        <item name="android:textSize">@dimen/detail_category_text_size</item>
+        <item name="android:text">@string/content_detail_crafted_in_no_station</item>
+    </style>
+
+    <style name="AppTheme.Text.Detail.Level">
+        <item name="android:textSize">@dimen/detail_category_text_size</item>
+        <item name="android:text">@string/content_detail_required_level_format</item>
+    </style>
+
+    <style name="AppTheme.Text.Detail.Description">
+        <item name="android:textSize">@dimen/detail_description_text_size</item>
+        <item name="android:text">@string/content_detail_mock_text_description</item>
+    </style>
+
+    <style name="AppTheme.Text.Picker">
         <item name="android:textSize">@dimen/detail_number_picker_text_size</item>
     </style>
 
@@ -18,16 +89,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Splash" parent="AppTheme.NoActionBar">
+    <style name="AppTheme.Splash">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:windowBackground">@color/in_game_background</item>
+    <style name="AppTheme.AppBarOverlay">
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:windowBackground">@color/in_game_background</item>
+    <style name="AppTheme.PopupOverlay">
     </style>
 
 </resources>

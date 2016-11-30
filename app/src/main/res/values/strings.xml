@@ -1,8 +1,10 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
 
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    250.1   Migrated Resources and Engrams to include custom _ids
+    250.0   Added Stations and Levels
     249.2   Fixed Crops category to Primitive+
     249.1   Updated C4 Charge with correct composition
     249.0   Added Clown Mask Skin and its resources for Fear Evolved 2
@@ -15,41 +17,49 @@
     247.1   Updated Categories to Primitive+
 
     -->
-    <string name="json_version">249.2</string>
+    <string name="json_version">250.1</string>
+
+    <string name="intent_key_did_update">did_update</string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
     <string name="app_name_full">ARK:Resource Calculator</string>
-    <string name="detail_activity_title">Engram Details</string>
 
-    <!-- Strings used with the toggleable ActionBar buttons -->
-    <string name="action_show_all">[All] Filtered</string>
-    <string name="action_show_filtered">All [Filtered]</string>
-    <string name="action_breakdown_resources_refined">[Refined] Raw</string>
-    <string name="action_breakdown_resources_raw">Refined [Raw]</string>
+    <string name="title_activity_detail">Engram Details</string>
+    <string name="title_activity_settings">Settings</string>
 
     <!-- Menu titles -->
-    <string name="action_clear_queue">Clear Crafting Queue</string>
-    <string name="action_about">About</string>
-    <string name="action_about_arc">About A:RC</string>
-    <string name="action_dlc_settings">Change DLC</string>
-    <string name="action_dlc_settings_primitive_plus">Primitive+</string>
-    <string name="action_dlc_settings_vanilla">Vanilla</string>
+    <string name="action_title_settings">Settings</string>
+    <string name="action_title_help">How to use this app</string>
+    <string name="action_title_changelog">Changelog</string>
+    <string name="action_title_about">About this app</string>
+
+    <!-- Strings used with the MainActivity layout -->
+    <string name="content_main_clear_queue">Clear Queue</string>
 
     <!-- Strings used with the DetailActivity layout -->
     <string name="content_detail_save_button">Save and Close</string>
     <string name="content_detail_remove_button">Remove From Queue</string>
+    <string name="content_detail_crafted_in_format"><xliff:g>%1$s</xliff:g> can be crafted at the <xliff:g>%2$s</xliff:g></string>
+    <string name="content_detail_crafted_in_no_station"><xliff:g>%1$s</xliff:g> can be crafted without a station</string>
+    <string name="content_detail_required_level_any_level">, and can be crafted at any level.</string>
+    <string name="content_detail_required_level_format">, but requires level <xliff:g>%1$s</xliff:g> to craft.</string>
     <string name="content_detail_number_picker_decrease">-1</string>
     <string name="content_detail_number_picker_decrease_by_10">-10</string>
     <string name="content_detail_number_picker_increase">+1</string>
     <string name="content_detail_number_picker_increase_by_10">+10</string>
+    <string name="content_detail_mock_text_quantity">x0</string>
     <string name="content_detail_mock_text_name">Stone Wall</string>
-    <string name="content_detail_mock_text_category">Structures/Wood/Storage</string>
-    <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and seperates rooms.</string>
+    <string name="content_detail_mock_text_category">Structures/Stone</string>
+    <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and separates rooms.</string>
+
+    <!-- Strings used with the About Dialog -->
+    <string name="about_dialog_full_title">About ARK:Resource Calculator</string>
+    <string name="about_dialog_close_button">Close</string>
 
     <!-- Strings used with the Help Dialog -->
-    <string name="helpdialog_full_title">How to Use This App</string>
-    <string name="helpdialog_ok_button">Close Help</string>
+    <string name="help_dialog_full_title">How to Use This App</string>
+    <string name="help_dialog_ok_button">Close</string>
 
     <!-- Strings used with the Changelog Dialog -->
     <string name="changelog_full_title">Changelog</string>
@@ -58,90 +68,158 @@
     <string name="changelog_show_full">More…</string>
     <string name="background_color">black</string>
 
-    <!-- String key constants used by SharedPreferences -->
-    <string name="pref_json_version">pref_json_version</string>
-    <string name="pref_dlc_setting">pref_dlc_setting</string>
+    <!-- Strings related to Go Back -->
+    <string name="go_back">Go back</string>
+    <string name="format_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
+    <string name="format_go_back_to_stations">Go back to Crafting Stations</string>
+
+    <!-- Strings related to Categories -->
+    <string name="category_go_back">Go back</string>
+    <string name="format_category_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
+
+    <!-- Strings related to Stations -->
+    <string name="station_go_back">Go back</string>
+    <string name="format_station_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
+
+    <!-- Strings related to Required Level -->
+    <string name="level_max_value">100</string>
+    <string name="level_min_value">1</string>
 
     <!-- String constants used by exceptions -->
     <string name="exception_sql_insert">Failed to insert row into </string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
 
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
+    <!-- Key name for JSON version preference, holds latest version of raw json file -->
+    <string name="pref_json_version">pref_json_version</string>
 
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
+    <!-- Key name for Category Level preference, holds last viewed Category's _id. -->
+    <string name="pref_category_level">category_level</string>
+
+    <!-- Key name for Category Parent Level preference, holds last viewed Category's parent_id. -->
+    <string name="pref_category_parent">category_parent</string>
+
+    <!-- Default value for Category Level preference, aka ROOT -->
+    <string name="pref_category_default_value">0</string>
+
+    <!-- Default value for Category Level preference if filtering by Stations also, aka STATION_ROOT -->
+    <string name="pref_category_default_value_with_stations">-1</string>
+
+    <!-- Key name for Crafting Station preference, holds last viewed Station's _id. -->
+    <string name="pref_station_id">station_id</string>
+
+    <!-- Default value for Crafting Station preference, no stations selected -->
+    <string name="pref_station_id_default_value">-1</string>
+
+    <!-- Strings related to DLC settings -->
+
+    <!-- Title for DLC Version preference, used by SettingsActivity -->
+    <string name="pref_dlc_title">DLC</string>
+
+    <!-- Description for DLC Version preference, used by SettingsActivity -->
+    <string name="pref_dlc_description">Choose which DLC you are playing! (Currently set to <xliff:g>%1$s</xliff:g>)</string>
+
+    <!-- Key name for DLC Version preference in SharedPreferences -->
+    <string name="pref_dlc_key">dlc</string>
+
+    <!-- Label for the DLC Version: Vanilla preference -->
+    <string name="pref_dlc_label_vanilla">ARK:Survival Evolved</string>
+
+    <!-- Label for the DLC Version: Primitive+ preference -->
+    <string name="pref_dlc_label_primitive_plus">ARK:Survival Evolved: Primitive+</string>
+
+    <!-- Label for the DLC Version: Scorched Earth preference -->
+    <string name="pref_dlc_label_scorched_earth">ARK:Survival Evolved: Scorched Earth</string>
+
+    <!-- Label for the DLC Version: Vanilla preference -->
+    <string name="pref_dlc_label_default">@string/pref_dlc_label_vanilla</string>
+
+    <!-- Value in SharedPreferences for DLC Version: Vanilla -->
+    <string name="pref_dlc_value_vanilla">1</string>
+
+    <!-- Value in SharedPreferences for DLC Version: Primitive+ -->
+    <string name="pref_dlc_value_primitive_plus">2</string>
+
+    <!-- Value in SharedPreferences for DLC Version: Scorched Earth -->
+    <string name="pref_dlc_value_scorched_earth">3</string>
+
+    <!-- Default value for DLC Version preference in SharedPreferences -->
+    <string name="pref_dlc_value_default">@string/pref_dlc_value_vanilla</string>
+
+    <!-- Strings related to Category Filter settings -->
+    <!-- Title for Category Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_category_title">Enable filtering by Folder</string>
+
+    <!-- Description for Category Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_category_description">Filter Engrams by folders that match in-game
+        folders! (Disabling this will show all Engrams from all folders.)
     </string>
 
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
+    <!-- Key name for Category Filter preference in SharedPreferences -->
+    <string name="pref_filter_category_key">category_filter</string>
 
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
+    <!-- Default value for Category Filter preference in SharedPreferences -->
+    <string name="pref_filter_category_value_default">true</string>
 
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <!-- Strings related to Station Filter settings -->
+    <!-- Title for Station Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_station_title">Enable filtering by Crafting Stations</string>
 
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
+    <!-- Description for Station Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_station_description">Filter Engrams by Crafting Stations that match
+        in-game stations! (Disabling this will show all Engrams from all stations.)
+    </string>
 
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
+    <!-- Key name for Station Filter preference in SharedPreferences -->
+    <string name="pref_filter_station_key">station_filter</string>
 
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
+    <!-- Default value for Station Filter preference in SharedPreferences -->
+    <string name="pref_filter_station_value_default">true</string>
 
-    <string-array name="multi_select_list_preference_default_value"/>
+    <!-- Strings related to Level Filter settings -->
+    <!-- Title for Level Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_level_title">Enable filtering by Required Level</string>
 
-    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <!-- Description for Level Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_level_description">Filter Engrams by Required Level! Dependent upon
+        which level is selected below. (Disabling this will show all Engrams from all levels.)
+    </string>
 
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
+    <!-- Key name for Level Filter preference in SharedPreferences -->
+    <string name="pref_filter_level_key">level_filter</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <!-- Default value for Level Filter preference in SharedPreferences -->
+    <string name="pref_filter_level_value_default">false</string>
 
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
+    <!-- Strings related to Level EditText settings -->
+    <!-- Title for Level EditText preference, used by SettingsActivity -->
+    <string name="pref_edit_text_level_title">Current level</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="content_main_clear_queue">Clear Queue</string>
+    <!-- Description for Level EditText preference, used by SettingsActivity -->
+    <string name="pref_edit_text_level_description">Change this to your in-game level! (Currently set as level <xliff:g>%1$s</xliff:g>)</string>
 
-    <string name="action_line_break">--</string>
-    <string name="action_dlc_settings_scorched_earth">Scorched Earth</string>
+    <!-- Key name for Level EditText preference in SharedPreferences -->
+    <string name="pref_edit_text_level_key">level_edit_text</string>
 
+    <!-- Default value for Level EditText preference in SharedPreferences -->
+    <string name="pref_edit_text_level_value_default">@string/level_max_value</string>
+
+    <!-- Strings related to Refined Resource Filter settings -->
+    <!-- Title for Refined Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_refined_title">Breakdown Refined Materials</string>
+
+    <!-- Description for Refined Filter preference, used by SettingsActivity -->
+    <string name="pref_filter_refined_description">Displays raw materials in place of their refined
+        Engram recipe. (Example: Show 2 Metal Ore instead of 1 Metal Ingot.)
+    </string>
+
+    <!-- Key name for Refined Filter preference in SharedPreferences -->
+    <string name="pref_filter_refined_key">refined_filter</string>
+
+    <!-- Default value for Refined Filter preference in SharedPreferences -->
+    <string name="pref_filter_refined_value_default">false</string>
+
+    <!-- Strings related to MobAds -->
     <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
     <string name="banner_ad_app_id">ca-app-pub-8859801923918627~2903432190</string>
 

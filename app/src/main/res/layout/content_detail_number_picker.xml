@@ -1,14 +1,18 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:paddingTop="@dimen/detail_padding"
+    android:paddingBottom="@dimen/detail_padding"
+    android:background="@drawable/frame">
 
     <Button
         android:id="@+id/decreaseButtonBy10"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:text="@string/content_detail_number_picker_decrease_by_10"/>
 
     <Button
@@ -16,25 +20,17 @@
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/decreaseButtonBy10"
         android:text="@string/content_detail_number_picker_decrease"/>
-
-    <EditText
-        android:id="@+id/quantityEditText"
-        style="?android:attr/editTextStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:digits="0123456789"
-        android:enabled="false"
-        android:gravity="center_horizontal"
-        android:inputType="number"
-        android:theme="@style/AppTheme.Picker"/>
 
     <Button
         android:id="@+id/increaseButton"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/increaseButtonBy10"
         android:text="@string/content_detail_number_picker_increase"/>
 
     <Button
@@ -42,6 +38,19 @@
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:text="@string/content_detail_number_picker_increase_by_10"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/quantityEditText"
+        style="@style/AppTheme.Text.Picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:text="TESTING"
+        android:layout_alignBaseline="@+id/decreaseButtonBy10"/>
+
+</RelativeLayout>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import java.util.Locale;
 
+import arc.resource.calculator.MainActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.DisplayCase;
@@ -34,8 +35,8 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
     private Context mContext;
 
     public DisplayCaseListAdapter( Context context ) {
-        this.mContext = context.getApplicationContext();
-        this.mDisplayCase = new DisplayCase( context );
+        mContext = context.getApplicationContext();
+        mDisplayCase = new DisplayCase( mContext );
     }
 
     public EngramGridViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
@@ -48,7 +49,15 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
     @Override
     public void onBindViewHolder( final EngramGridViewHolder holder, int position ) {
 
-        int imageId = getContext().getResources().getIdentifier( mDisplayCase.getDrawable( position ), "drawable", getContext().getPackageName() );
+        int dimensions = ( int ) MainActivity.mEngramDimensions;
+
+        holder.itemView.getLayoutParams().height = dimensions;
+
+        int imageId = getContext().getResources().getIdentifier(
+                mDisplayCase.getDrawableByPosition( position ),
+                "drawable",
+                getContext().getPackageName()
+        );
         holder.getThumbnail().setImageResource( imageId );
 
         String name = mDisplayCase.getNameByPosition( position );
@@ -58,7 +67,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
             int quantity = mDisplayCase.getQuantityWithYield( position );
 
             if ( quantity > 0 ) {
-                holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_crafting_queue ) );
+                holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_craftable_engram_display_case ) );
                 holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
                 holder.getName().setSingleLine( true );
             } else {
@@ -83,7 +92,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
      */
 
     public DisplayEngram getEngram( int position ) {
-        return mDisplayCase.getEngram( position );
+        return mDisplayCase.getEngramByPosition( position );
     }
 
     public long getEngramId( int position ) {
@@ -95,31 +104,27 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
     }
 
     public long getLevel() {
-        return mDisplayCase.getLevel();
+        return mDisplayCase.getCurrentCategoryLevel();
     }
 
     public long getParent() {
-        return mDisplayCase.getParent();
+        return mDisplayCase.getCurrentCategoryParent();
+    }
+
+    public long getStationId() {
+        return mDisplayCase.getCurrentStationId();
     }
 
     public Category getCategoryDetails( long categoryId ) {
-        return mDisplayCase.getCategory( categoryId );
+        return mDisplayCase.getCategoryById( categoryId );
     }
 
     public void changeCategory( int position ) {
         mDisplayCase.changeCategory( position );
     }
 
-    public void setLevelToRoot() {
-        mDisplayCase.setLevelToRoot();
-    }
-
-    public boolean isFiltered() {
-        return mDisplayCase.isFiltered();
-    }
-
-    public void setFiltered( boolean isFiltered ) {
-        mDisplayCase.setIsFiltered( isFiltered );
+    public void changeStation( int position ) {
+        mDisplayCase.changeStation( position );
     }
 
     /**
@@ -142,7 +147,23 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
         }
     }
 
+    public void resetLevels() {
+        mDisplayCase.resetCategoryLevels();
+    }
+
+    public String getHierarchicalText() {
+        return mDisplayCase.getHierarchicalText();
+    }
+
     private Context getContext() {
         return mContext;
+    }
+
+    public boolean isCategory( int position ) {
+        return mDisplayCase.isCategory( position );
+    }
+
+    public boolean isStation( int position ) {
+        return mDisplayCase.isStation( position );
     }
 }

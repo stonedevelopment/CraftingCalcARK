@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- DisplayCase: Grid Columns/Rows -->
+    <integer name="display_case_column_count">5</integer>
+    <integer name="display_case_row_count">3</integer>
+
+    <!-- DisplayCase: Padding -->
+    <dimen name="grid_layout_padding">8dp</dimen>
+
+    <!-- DisplayCase: Text Sizes -->
+    <dimen name="display_case_hierarchy_text_size">18sp</dimen>
+
+    <!-- DisplayCase: ViewHolders: Text Sizes -->
+    <dimen name="engram_grid_view_holder_quantity_text_size">30sp</dimen>
+    <dimen name="engram_grid_view_holder_name_text_size">16sp</dimen>
+
+    <!-- ViewHolder for Resources -->
+    <dimen name="resource_view_holder_padding">8dp</dimen>
+    <dimen name="resource_view_holder_thumbnail_size">36dp</dimen>
+    <dimen name="resource_view_holder_text_size">18sp</dimen>
+
+    <!-- DetailActivity -->
+    <dimen name="detail_thumbnail_size">256dp</dimen>
+
+    <dimen name="detail_name_text_size">28sp</dimen>
+    <dimen name="detail_category_text_size">18sp</dimen>
+    <dimen name="detail_description_text_size">20sp</dimen>
+    <dimen name="detail_number_picker_text_size">26sp</dimen>
+
+    <!-- ActionBar -->
+    <dimen name="action_bar_height">56dp</dimen>
+
+</resources>

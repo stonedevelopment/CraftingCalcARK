@@ -5,10 +5,14 @@ import android.database.Cursor;
 import android.util.Log;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.helpers.Helper;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
+import arc.resource.calculator.util.Helper;
+import arc.resource.calculator.util.PrefsUtil;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -30,6 +34,9 @@ public class Showcase {
     private String mDescription;
     private String mDrawable;
     private long mCategoryId;
+    private List<Long> mStationIds;
+    private long mStationId;
+    private int mRequiredLevel;
     private long mDLCId;
 
     private SparseArray<CompositeResource> mComposition;
@@ -40,8 +47,12 @@ public class Showcase {
     private Context mContext;
 
     public Showcase( Context context, long engramId ) {
-        this.mContext = context;
-        this.mId = engramId;
+        mContext = context;
+        mId = engramId;
+
+        mStationIds = new ArrayList<>();
+
+        mDLCId = new PrefsUtil( mContext ).getDLCPreference();
 
         QueryForEngramDetails();
     }
@@ -64,6 +75,10 @@ public class Showcase {
 
     public String getDescription() {
         return mDescription;
+    }
+
+    public int getRequiredLevel() {
+        return mRequiredLevel;
     }
 
     public int getYield() {
@@ -131,6 +146,26 @@ public class Showcase {
         return builder.toString();
     }
 
+    public long getStationId() {
+        return mStationId;
+    }
+
+    public String getStationName() {
+        return QueryForStationName( mStationId );
+    }
+
+    public String getStations() {
+        List<String> names = new ArrayList<>();
+
+        for ( Long _id : mStationIds ) {
+            String name = QueryForStationName( _id );
+
+            names.add( name );
+        }
+
+        return names.toString();
+    }
+
     public long getDLCId() {
         return mDLCId;
     }
@@ -184,22 +219,33 @@ public class Showcase {
     private void QueryForEngramDetails() {
         // First, let's grab Engram full details.
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.buildUriWithId( DatabaseContract.EngramEntry.CONTENT_URI, mId ),
+                DatabaseContract.EngramEntry.buildUriWithId( mDLCId, mId ),
                 null, null, null, null
         );
 
-        if ( cursor != null && cursor.moveToFirst() ) {
+        if ( cursor == null ) {
+            Log.e( TAG, "QueryForEngramDetails(" + mId + ") returned null." );
+            return;
+        }
+
+        if ( cursor.moveToFirst() ) {
             mName = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
             mDrawable = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) );
             mDescription = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION ) );
             mYield = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) );
             mCategoryId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) );
-            mDLCId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DLC_KEY ) );
+            mStationId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_STATION_KEY ) );
+            mRequiredLevel = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_LEVEL ) );
+
+            mStationIds.add( mStationId );
+            while ( cursor.moveToNext() ) {
+                mStationIds.add( cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_STATION_KEY ) ) );
+            }
 
             cursor.close();
         } else {
             // Engram does not exist!?
-            Log.e( TAG, "QueryForEngramDetails(" + mId + ") returned null?" );
+            Log.e( TAG, "QueryForEngramDetails(" + mId + "): moveToFirst did not fire!" );
             return;
         }
 
@@ -219,61 +265,93 @@ public class Showcase {
 
         // Finally, let's grab Engram Composition details.
         cursor = getContext().getContentResolver().query(
-                DatabaseContract.CompositionEntry.buildUriWithEngramId( mId ),
+                DatabaseContract.CompositionEntry.buildUriWithEngramId( mDLCId, mId ),
                 null, null, null, null
         );
 
-        mComposition = new SparseArray<>();
-        if ( cursor != null && cursor.getCount() > 0 ) {
-            while ( cursor.moveToNext() ) {
-                long resourceId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
-                int resourceQuantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
+        if ( cursor == null ) {
+            Log.e( TAG, "QueryForEngramDetails(" + mId + "), Composition cursor returned null." );
+            return;
+        }
 
+        mComposition = new SparseArray<>();
+        List<Long> resourceIds = new ArrayList<>();
+        while ( cursor.moveToNext() ) {
+            long resourceId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
+            int resourceQuantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
+
+            if ( !resourceIds.contains( resourceId ) ) {
                 Cursor resourceCursor = mContext.getContentResolver().query(
-                        DatabaseContract.buildUriWithId( DatabaseContract.ResourceEntry.CONTENT_URI, resourceId ),
+                        DatabaseContract.ResourceEntry.buildUriWithId( mDLCId, resourceId ),
                         null, null, null, null
                 );
 
-                if ( resourceCursor != null && resourceCursor.moveToFirst() ) {
+                if ( resourceCursor == null ) {
+                    Log.e( TAG, "QueryForEngramDetails(" + mId + "), Resource cursor returned null." );
+                    return;
+                }
+
+                if ( resourceCursor.moveToFirst() ) {
+                    resourceIds.add( resourceId );
+
                     String resourceName = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
                     String resourceDrawable = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) );
 
                     CompositeResource resource = new CompositeResource( resourceId, resourceName, resourceDrawable, resourceQuantity );
                     mComposition.put( mComposition.size(), resource );
 
+                    Log.d( TAG, "QueryForEngramDetails, CompositeResource: " + resource.toString() );
+
                     resourceCursor.close();
+                } else {
+                    Log.e( TAG, "QueryForEngramDetails(" + mId + "), Resource cursor.moveToFirst() did not fire!" );
+                    return;
                 }
             }
-
-            cursor.close();
-        } else {
-            // Engram composition does not exist!?
-            Log.e( TAG, "QueryForEngramDetails(" + mId + ") composition returned null?" );
         }
+
+        cursor.close();
     }
 
     private Category QueryForCategoryDetails( long _id ) {
         Cursor cursor = getContext().getContentResolver().query(
-                DatabaseContract.buildUriWithId( DatabaseContract.CategoryEntry.CONTENT_URI, _id ),
+                DatabaseContract.CategoryEntry.buildUriWithId( mDLCId, _id ),
                 null, null, null, null
         );
 
         if ( cursor != null && cursor.moveToFirst() ) {
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
             long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
-            long dlc_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY ) );
 
             cursor.close();
 
             return new Category(
                     _id,
                     name,
-                    parent_id,
-                    dlc_id
+                    parent_id
             );
         } else {
             // Category does not exist!?
             Log.e( TAG, "QueryForCategoryDetails(" + _id + ") returned null?" );
+            return null;
+        }
+    }
+
+    private String QueryForStationName( long _id ) {
+        Cursor cursor = getContext().getContentResolver().query(
+                DatabaseContract.StationEntry.buildUriWithId( mDLCId, _id ),
+                null, null, null, null
+        );
+
+        if ( cursor != null && cursor.moveToFirst() ) {
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_NAME ) );
+
+            cursor.close();
+
+            return name;
+        } else {
+            // Station does not exist!?
+            Log.e( TAG, "QueryForStationName(" + _id + ") returned null?" );
             return null;
         }
     }

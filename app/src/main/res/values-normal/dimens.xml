@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- DisplayCase: Text Sizes -->
+    <dimen name="display_case_hierarchy_text_size">16sp</dimen>
+
+    <!-- DisplayCase: Grid Columns/Rows -->
+    <integer name="display_case_column_count">5</integer>
+    <integer name="display_case_row_count">3</integer>
+
+    <!-- ViewHolder for Resources -->
+    <dimen name="resource_view_holder_padding">8dp</dimen>
+    <dimen name="resource_view_holder_thumbnail_size">30dp</dimen>
+    <dimen name="resource_view_holder_text_size">16sp</dimen>
+
+    <!-- DetailActivity -->
+    <dimen name="detail_thumbnail_size">128dp</dimen>
+
+    <dimen name="detail_name_text_size">28sp</dimen>
+    <dimen name="detail_category_text_size">12sp</dimen>
+    <dimen name="detail_description_text_size">14sp</dimen>
+    <dimen name="detail_number_picker_text_size">14sp</dimen>
+
+</resources>

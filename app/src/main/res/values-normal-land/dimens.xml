@@ -1,0 +1,6 @@
+<resources>
+
+    <!-- DisplayCase: Grid Columns/Rows -->
+    <integer name="display_case_column_count">8</integer>
+
+</resources>

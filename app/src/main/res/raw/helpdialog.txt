@@ -1,4 +1,3 @@
-
 <html>
   <head>
     <style type='text/css'>
@@ -23,18 +22,32 @@
     $ START_OF_HELP_FILE
       % Change DLC Version
       * Click menu (top right).
-      * Click Change DLC.
-      * Click desired DLC version.
-      % Increasing Quantities
+      * Click Settings.
+      * Click DLC.
+      * Choose desired DLC from list.
+      % Adjusting Quantities
       * To increase quantity by 1: Single click any Engram thumbnail.
-      * Adjust to any quantity: Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, adjust the dial to desired quantity, then press the Add/Update button.
-      % Decreasing Quantities
-      * Decrease quantity by 1: Long click an Engram thumbnail from the Crafting Queue (below).
-      * Decrease quantity by more than 1: Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, adjust the dial to desired quantity, then press the Update button.
+      * Adjust to any quantity: Long click any Engram thumbnail to open a detailed view of Engram, adjust quantity to desired amount, then press the Add/Update button.
       % Remove Engram From Queue
-      * Long click an Engram thumbnail from the main list (above) to open a detailed view of Engram, press the Remove From Queue button.
+      * Long click any Engram thumbnail to open a detailed view of Engram, press the Remove button.
       % Clear the Crafting Queue
-      * Click the Clear Queue button below the Crafting Queue Resources list.
+      * Click the Clear button below the Crafting Queue Resources list.
+      % Filter Engrams by Folder
+      * Click menu (top right).
+      * Click Settings.
+      * Click Filter by Folders button to enable or disable this feature.
+      % Filter Engrams by Station
+      * Click menu (top right).
+      * Click Settings.
+      * Click Filter by Stations button to enable or disable this feature.
+      % Filter Engrams by Required Level
+      * Click menu (top right).
+      * Click Settings.
+      * Click Filter by Level button to enable or disable this feature.
+      % Change Required Level
+      * Click menu (top right).
+      * Click Settings.
+      * If Filter by Level is enabled, click on Current Level, scroll to desired Level.
     $ END_OF_HELP_FILE
   </body>
 </html>

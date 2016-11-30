@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.helpers.Helper;
+import arc.resource.calculator.util.Helper;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.viewholders.ResourceViewHolder;
 
@@ -71,17 +71,11 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
         return mContext;
     }
 
-    public void setHasComplexResources( boolean b ) {
-        if ( mCraftingQueue.hasComplexResources() != b ) {
-            mCraftingQueue.setHasComplexResources( b );
-        }
-    }
-
-    public boolean hasComplexResources() {
-        return mCraftingQueue.hasComplexResources();
-    }
-
     public void Refresh() {
         this.notifyDataSetChanged();
+    }
+
+    public void RefreshData() {
+        mCraftingQueue.UpdateResources();
     }
 }
