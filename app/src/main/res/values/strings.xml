@@ -3,6 +3,7 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    252.0   Added Megalosaurus and Pachyrhinosaurus saddles
     250.1   Migrated Resources and Engrams to include custom _ids
     250.0   Added Stations and Levels
     249.2   Fixed Crops category to Primitive+
@@ -17,7 +18,7 @@
     247.1   Updated Categories to Primitive+
 
     -->
-    <string name="json_version">250.1</string>
+    <string name="json_version">252.0</string>
 
     <string name="intent_key_did_update">did_update</string>
 

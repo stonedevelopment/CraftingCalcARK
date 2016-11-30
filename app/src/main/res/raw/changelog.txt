@@ -19,6 +19,13 @@
     </style>
   </head>
   <body>
+    $ 1.1.0
+      % Version 1.1.0
+      _ 11/30/2016
+      * New Features: Filter by Crafting Stations and by Required Level!!!
+      * Added Megalosaurus and Pachyrhinosaurus saddles!
+      ! Find a bug or an error in an Engram recipe? Please tweet us or email us and we'll get it fixed quick like.
+
     $ 1.0.2
       % Version 1.0.2
       _ 11/04/2016
