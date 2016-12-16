@@ -7,7 +7,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,9 +19,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.Helper;
 import arc.resource.calculator.util.JsonUtil;
 import arc.resource.calculator.util.PrefsUtil;
@@ -35,58 +41,65 @@ import arc.resource.calculator.util.PrefsUtil;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class LoadScreenActivity extends AppCompatActivity {
+public class LoadScreenActivity extends AppCompatActivity implements UpdateReceiver.Receiver {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
-    TextView textView;
-    ProgressBar progressBar;
+    private UpdateReceiver mReceiver;
 
-    static class ProgressData {
-        private int progress;
-        private int max;
-
-        ProgressData( int progress, int max ) {
-            this.progress = progress;
-            this.max = max;
-        }
-
-        int getProgress() {
-            return progress;
-        }
-
-        int getMax() {
-            return max;
-        }
-
-        void incrementProgress() {
-            progress++;
-        }
-    }
+    private boolean mIsActive;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_load_screen );
 
-        textView = ( TextView ) findViewById( R.id.textView_status );
-        progressBar = ( ProgressBar ) findViewById( R.id.progressBar );
+        mIsActive = true;
 
         if ( isNewVersion() ) {
-            new ParseInsertTask( this ).execute();
+            mReceiver = new UpdateReceiver( new Handler() );
+            mReceiver.setReceiver( this );
+
+            Intent intent = new Intent( this, UpdateService.class );
+            intent.putExtra( UpdateService.PARAM_REQUEST_ID, 100 );
+            intent.putExtra( UpdateService.PARAM_TIME, System.currentTimeMillis() );
+            intent.putExtra( UpdateService.PARAM_RECEIVER, mReceiver );
+            startService( intent );
+
+            AdUtil.loadAdView( this );
         } else {
             startMainActivity( false );
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mIsActive = true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mIsActive = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mIsActive = false;
+    }
+
     void startMainActivity( boolean didUpdate ) {
-        Intent intent = new Intent( getApplicationContext(), MainActivity.class );
-        intent.putExtra(
-                getString( R.string.intent_key_did_update ),
-                didUpdate );
+        if ( mIsActive ) {
+            Intent intent = new Intent( getApplicationContext(), MainActivity.class );
+            intent.putExtra(
+                    getString( R.string.intent_key_did_update ),
+                    didUpdate );
 
-        startActivity( intent );
+            startActivity( intent );
 
-        finish();
+            finish();
+        }
     }
 
     boolean isNewVersion() {
@@ -98,35 +111,116 @@ public class LoadScreenActivity extends AppCompatActivity {
         return !Objects.equals( oldVersion, newVersion );
     }
 
-    private class ParseInsertTask extends AsyncTask<Void, String, Void> {
+    @Override
+    public void onReceiveResult( int resultCode, Bundle resultData ) {
+        long startTime = resultData.getLong( UpdateService.PARAM_TIME );
+
+        String message;
+        switch ( resultCode ) {
+            case UpdateService.STATUS_STARTED:
+                message = getString( R.string.load_activity_status_message_started );
+                break;
+
+            case UpdateService.STATUS_UPDATING:
+                message = getString( R.string.load_activity_status_message_updating );
+                break;
+
+            case UpdateService.STATUS_FINISHED:
+                message = getString( R.string.load_activity_status_message_finished );
+
+                new Timer( TAG ).schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                postExecution();
+                            }
+                        },
+                        1000
+                );
+                break;
+
+            case UpdateService.STATUS_ERROR:
+                message = String.format(
+                        getString( R.string.load_activity_status_message_error_format ),
+                        resultData.getString( UpdateService.PARAM_MESSAGE ) );
+                break;
+
+            default:
+                message = "Unknown message code: " + resultCode + ", " + resultData.toString();
+        }
+
+        UpdateStatusText( startTime, message );
+    }
+
+    void UpdateStatusText( long startTime, String message ) {
+        TextView status = ( TextView ) findViewById( R.id.status );
+        status.setText( message );
+    }
+
+    void postExecution() {
+        // Save new version to preferences
+        PrefsUtil prefs = new PrefsUtil( this );
+
+        prefs.updateJSONVersion( getString( R.string.json_version ) );
+        prefs.saveStationIdBackToDefault();
+        prefs.saveCategoryLevelsBackToDefault();
+
+        startMainActivity( true );
+    }
+
+    private class ParseInsertTask extends AsyncTask<Void, Void, Void> {
         private final String TAG = ParseInsertTask.class.getSimpleName();
 
         private Context mContext;
 
-        private ProgressData mProgressData;
+        private ProgressBar mProgressBar;
+        private TextView mStatus;
+        private Timer mTimer;
+        private TimerTask mTimerTask;
 
-        ParseInsertTask( Context context ) {
-            this.mContext = context;
+        private String mStatusText;
+        private long mStartTime;
+
+        ParseInsertTask( Context context, ProgressBar progressBar, TextView status ) {
+            mContext = context;
+            mProgressBar = progressBar;
+            mStatus = status;
         }
 
         @Override
         protected void onPreExecute() {
             deleteAllRecordsFromProvider();
 
-            mProgressData = new ProgressData( 0, 6 );
+            mProgressBar.setMax( 1 );
+            mProgressBar.setProgress( 0 );
 
-            progressBar.setMax( mProgressData.getMax() );
-            progressBar.setProgress( mProgressData.getProgress() );
+            mStartTime = System.currentTimeMillis();
+            mStatusText = "New version found, initializing..";
 
+            mTimer = new Timer( getString( R.string.key_timer ) );
+            mTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    publishProgress();
+                }
+            };
+
+            mTimer.scheduleAtFixedRate( mTimerTask, 100, 100 );
         }
 
         @Override
-        protected void onProgressUpdate( String... strings ) {
-            String message = strings[0];
+        protected void onProgressUpdate( Void... params ) {
+            mStatus.setText( formatStatus( mStatusText ) );
+        }
 
-//            Helper.Log( TAG, message );
-            textView.setText( message );
-            progressBar.setProgress( mProgressData.getProgress() );
+        String formatStatus( String message ) {
+            long elapsed = System.currentTimeMillis() - mStartTime;
+            String elapsedTime = DateUtils.formatElapsedTime( elapsed / 1000 );
+
+            return String.format(
+                    getString( R.string.load_activity_status_message_format ),
+                    message,
+                    elapsedTime );
         }
 
         @Override
@@ -143,8 +237,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground( Void... params ) {
-            publishProgress( "Parsing JSON file..." );
-            mProgressData.incrementProgress();
+            mStatusText = formatStatus( "Parsing JSON file..." );
 
             String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext() );
 
@@ -174,31 +267,14 @@ public class LoadScreenActivity extends AppCompatActivity {
         void parseJsonString( String jsonString ) throws JSONException {
             JSONObject jsonObject = new JSONObject( jsonString );
 
-            publishProgress( "Inserting DLC Versions..." );
             insertDLC( jsonObject.getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
-            mProgressData.incrementProgress();
-
-            publishProgress( "Inserting Stations..." );
             insertStations( jsonObject.getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) );
-            mProgressData.incrementProgress();
-
-            publishProgress( "Inserting Categories..." );
             insertCategories( jsonObject.getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) );
-            mProgressData.incrementProgress();
-
-            publishProgress( "Inserting Resources..." );
             insertResources( jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) );
-            mProgressData.incrementProgress();
-
-            publishProgress( "Inserting Engrams..." );
             insertEngrams( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) );
-            mProgressData.incrementProgress();
-
-            publishProgress( "Inserting Complex Resources..." );
             insertComplexResources( jsonObject.getJSONArray( DatabaseContract.ComplexResourceEntry.TABLE_NAME ) );
-            mProgressData.incrementProgress();
 
-            publishProgress( "Initialization complete! Starting app..." );
+            mStatusText = formatStatus( "Initialization complete! Starting app..." );
         }
 
         void bulkInsertWithUri( Uri insertUri, Vector<ContentValues> vector ) {
@@ -227,6 +303,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 vector.add( values );
             }
 
+            mStatusText = "Inserting " + vector.size() + " Complex Resources..";
             bulkInsertWithUri( DatabaseContract.ComplexResourceEntry.CONTENT_URI, vector );
         }
 
@@ -250,6 +327,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 vector.add( values );
             }
 
+            mStatusText = "Inserting " + vector.size() + " DLC versions...";
             bulkInsertWithUri( DatabaseContract.DLCEntry.CONTENT_URI, vector );
         }
 
@@ -281,6 +359,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 }
             }
 
+            mStatusText = "Inserting " + vector.size() + " Resources...";
             bulkInsertWithUri( DatabaseContract.ResourceEntry.CONTENT_URI, vector );
         }
 
@@ -312,6 +391,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 }
             }
 
+            mStatusText = "Inserting " + vector.size() + " Stations...";
             bulkInsertWithUri( DatabaseContract.StationEntry.CONTENT_URI, vector );
         }
 
@@ -369,6 +449,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 }
             }
 
+            mStatusText = "Inserting " + vector.size() + " Categories...";
             bulkInsertWithUri( DatabaseContract.CategoryEntry.CONTENT_URI, vector );
         }
 
@@ -428,8 +509,6 @@ public class LoadScreenActivity extends AppCompatActivity {
 
                             vector.add( values );
 
-                            //Log.d( TAG, "   +> engram_id: " + _id );
-
                             compositionVector.addAll( insertComposition( _id, dlc_id, jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME ) ) );
 
                             //Log.w( TAG, "-- insertEngrams Success!" );
@@ -443,7 +522,10 @@ public class LoadScreenActivity extends AppCompatActivity {
                 }
             }
 
+            mStatusText = "Inserting " + vector.size() + " Engrams...";
             bulkInsertWithUri( DatabaseContract.EngramEntry.CONTENT_URI, vector );
+
+            mStatusText = "Inserting " + compositionVector.size() + " Engram Compositions...";
             bulkInsertWithUri( DatabaseContract.CompositionEntry.CONTENT_URI, compositionVector );
         }
 

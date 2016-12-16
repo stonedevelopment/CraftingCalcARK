@@ -1,4 +1,4 @@
-<resources xmlns:xliff="http://schemas.android.com/tools">
+<resources xmlns:x="urn:oasis:names:tc:xliff:document:1.2" xmlns:xliff="http://schemas.android.com/tools">
 
     <!--
     Version of JSON data file. Used to update contents of file to database.
@@ -21,6 +21,22 @@
     <string name="json_version">252.0</string>
 
     <string name="intent_key_did_update">did_update</string>
+
+    <!-- LoadActivity -->
+    <string name="key_timer">loadactivity_timer</string>
+
+    <!-- LoadActivity: Status Messages -->
+    <string name="load_activity_status_message_format">
+        [Updating Database]\n<x:g id="message">%1$s</x:g>\nElapsed time: <x:g id="time">%2$s</x:g>
+    </string>
+    <string name="load_activity_status_message_started">New version found! Starting initialization..</string>
+    <string name="load_activity_status_message_updating">Database initialization in progress..</string>
+    <string name="load_activity_status_message_finished">Initialization complete! Starting app..</string>
+    <string name="load_activity_status_message_error_format">
+        Oops! Look like we found an error:\n
+        <x:g id="error_message">%1$s</x:g>\n
+        Try restarting app?
+    </string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
@@ -85,9 +101,6 @@
     <!-- Strings related to Required Level -->
     <string name="level_max_value">100</string>
     <string name="level_min_value">1</string>
-
-    <!-- String constants used by exceptions -->
-    <string name="exception_sql_insert">Failed to insert row into </string>
 
     <!-- Strings related to Settings -->
 
@@ -219,6 +232,10 @@
 
     <!-- Default value for Refined Filter preference in SharedPreferences -->
     <string name="pref_filter_refined_value_default">false</string>
+
+    <!-- Exceptions -->
+    <string name="exception_unknown_uri">Unknown uri: <x:g>%1$s</x:g></string>
+    <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>
 
     <!-- Strings related to MobAds -->
     <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>

@@ -360,6 +360,8 @@ public class DisplayCase {
     public Category getCategoryById( long _id ) {
         long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
 
+        // FIXME:   There are instances where categoryId = -1
+
         Cursor cursor = getContext().getContentResolver().query(
                 DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, _id ),
                 null, null, null, null );

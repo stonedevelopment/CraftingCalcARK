@@ -122,7 +122,9 @@ public class CraftingQueue {
     public void increaseQuantity( int position ) {
         QueueEngram engram = mEngrams.valueAt( position );
 
-        increaseQuantity( engram.getId() );
+        if ( engram != null ) {
+            increaseQuantity( engram.getId() );
+        }
     }
 
     public void increaseQuantity( long engramId ) {

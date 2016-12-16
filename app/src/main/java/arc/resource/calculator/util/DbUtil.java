@@ -9,10 +9,6 @@ import arc.resource.calculator.model.Category;
 
 import static java.security.AccessController.getContext;
 
-/**
- * Created by jared on 11/26/2016.
- */
-
 public class DbUtil {
     private static final String TAG = DbUtil.class.getSimpleName();
 

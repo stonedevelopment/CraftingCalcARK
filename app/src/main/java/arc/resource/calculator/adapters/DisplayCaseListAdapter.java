@@ -49,9 +49,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
     @Override
     public void onBindViewHolder( final EngramGridViewHolder holder, int position ) {
 
-        int dimensions = ( int ) MainActivity.mEngramDimensions;
-
-        holder.itemView.getLayoutParams().height = dimensions;
+        holder.itemView.getLayoutParams().height = ( int ) MainActivity.mEngramDimensions;
 
         int imageId = getContext().getResources().getIdentifier(
                 mDisplayCase.getDrawableByPosition( position ),

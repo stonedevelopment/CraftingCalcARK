@@ -19,6 +19,12 @@
     </style>
   </head>
   <body>
+    $ 1.1.1
+      % Version 1.1.1
+      _ 12/16/2016
+      * Tremendously increased database initialization duration!
+      ! Find a bug or an error in an Engram recipe? Please tweet us or email us and we'll get it fixed quick like.
+
     $ 1.1.0
       % Version 1.1.0
       _ 11/30/2016

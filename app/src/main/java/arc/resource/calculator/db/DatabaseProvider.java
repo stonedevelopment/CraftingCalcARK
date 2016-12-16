@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
@@ -32,6 +33,8 @@ import arc.resource.calculator.db.DatabaseContract.StationEntry;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
+
+    private static final int SQL_ID_ERRONEOUS_RECORD = -1;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private DatabaseHelper mOpenHelper;
@@ -76,6 +79,13 @@ public class DatabaseProvider extends ContentProvider {
     static final int STATION = 800;
     static final int STATION_ID_WITH_DLC = 801;
     static final int STATION_WITH_DLC = 802;
+
+    @Override
+    public boolean onCreate() {
+        mOpenHelper = new DatabaseHelper( getContext() );
+
+        return true;
+    }
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher uriMatcher = new UriMatcher( UriMatcher.NO_MATCH );
@@ -200,584 +210,521 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public String getType( Uri uri ) {
-        final int match = sUriMatcher.match( uri );
+        try {
+            final int match = sUriMatcher.match( uri );
+            switch ( match ) {
+                case ENGRAM:
+                case ENGRAM_WITH_CATEGORY:
+                case ENGRAM_WITH_CATEGORY_AND_STATION:
+                case ENGRAM_WITH_DLC:
+                case ENGRAM_WITH_LEVEL:
+                case ENGRAM_WITH_LEVEL_AND_CATEGORY:
+                case ENGRAM_WITH_LEVEL_AND_STATION:
+                case ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION:
+                case ENGRAM_WITH_STATION:
+                    return EngramEntry.CONTENT_DIR_TYPE;
 
-        switch ( match ) {
-            case ENGRAM:
-            case ENGRAM_WITH_CATEGORY:
-            case ENGRAM_WITH_CATEGORY_AND_STATION:
-            case ENGRAM_WITH_DLC:
-            case ENGRAM_WITH_LEVEL:
-            case ENGRAM_WITH_LEVEL_AND_CATEGORY:
-            case ENGRAM_WITH_LEVEL_AND_STATION:
-            case ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION:
-            case ENGRAM_WITH_STATION:
-                return EngramEntry.CONTENT_DIR_TYPE;
+                case RESOURCE:
+                case RESOURCE_WITH_DRAWABLE:
+                    return ResourceEntry.CONTENT_DIR_TYPE;
 
-            case RESOURCE:
-            case RESOURCE_WITH_DRAWABLE:
-                return ResourceEntry.CONTENT_DIR_TYPE;
+                case COMPLEX_RESOURCE:
+                    return ComplexResourceEntry.CONTENT_DIR_TYPE;
 
-            case COMPLEX_RESOURCE:
-                return ComplexResourceEntry.CONTENT_DIR_TYPE;
+                case CATEGORY:
+                case CATEGORY_WITH_PARENT:
+                case CATEGORY_WITH_PARENT_AND_STATION:
+                    return CategoryEntry.CONTENT_DIR_TYPE;
 
-            case CATEGORY:
-            case CATEGORY_WITH_PARENT:
-            case CATEGORY_WITH_PARENT_AND_STATION:
-                return CategoryEntry.CONTENT_DIR_TYPE;
+                case COMPOSITION:
+                    return CompositionEntry.CONTENT_DIR_TYPE;
 
-            case COMPOSITION:
-                return CompositionEntry.CONTENT_DIR_TYPE;
+                case QUEUE:
+                case QUEUE_WITH_ENGRAM_TABLE:
+                    return QueueEntry.CONTENT_DIR_TYPE;
 
-            case QUEUE:
-            case QUEUE_WITH_ENGRAM_TABLE:
-                return QueueEntry.CONTENT_DIR_TYPE;
+                case DLC:
+                    return DLCEntry.CONTENT_DIR_TYPE;
 
-            case DLC:
-                return DLCEntry.CONTENT_DIR_TYPE;
+                case STATION:
+                case STATION_WITH_DLC:
+                    return StationEntry.CONTENT_DIR_TYPE;
 
-            case STATION:
-            case STATION_WITH_DLC:
-                return StationEntry.CONTENT_DIR_TYPE;
+                case ENGRAM_ID_WITH_DLC:
+                case ENGRAM_WITH_DRAWABLE:
+                    return EngramEntry.CONTENT_ITEM_TYPE;
 
-            case ENGRAM_ID_WITH_DLC:
-            case ENGRAM_WITH_DRAWABLE:
-                return EngramEntry.CONTENT_ITEM_TYPE;
+                case RESOURCE_ID_WITH_DLC:
+                    return ResourceEntry.CONTENT_ITEM_TYPE;
 
-            case RESOURCE_ID_WITH_DLC:
-                return ResourceEntry.CONTENT_ITEM_TYPE;
+                case COMPLEX_RESOURCE_ID:
+                case COMPLEX_RESOURCE_WITH_RESOURCE:
+                    return ComplexResourceEntry.CONTENT_ITEM_TYPE;
 
-            case COMPLEX_RESOURCE_ID:
-            case COMPLEX_RESOURCE_WITH_RESOURCE:
-                return ComplexResourceEntry.CONTENT_ITEM_TYPE;
+                case CATEGORY_ID_WITH_DLC:
+                    return CategoryEntry.CONTENT_ITEM_TYPE;
 
-            case CATEGORY_ID_WITH_DLC:
-                return CategoryEntry.CONTENT_ITEM_TYPE;
+                case COMPOSITION_ID:
+                case COMPOSITION_WITH_ENGRAM:
+                    return CompositionEntry.CONTENT_ITEM_TYPE;
 
-            case COMPOSITION_ID:
-            case COMPOSITION_WITH_ENGRAM:
-                return CompositionEntry.CONTENT_ITEM_TYPE;
+                case QUEUE_ID:
+                case QUEUE_WITH_ENGRAM_ID:
+                    return QueueEntry.CONTENT_ITEM_TYPE;
 
-            case QUEUE_ID:
-            case QUEUE_WITH_ENGRAM_ID:
-                return QueueEntry.CONTENT_ITEM_TYPE;
+                case DLC_ID:
+                    return DLCEntry.CONTENT_ITEM_TYPE;
 
-            case DLC_ID:
-                return DLCEntry.CONTENT_ITEM_TYPE;
+                case STATION_ID_WITH_DLC:
+                    return StationEntry.CONTENT_ITEM_TYPE;
 
-            case STATION_ID_WITH_DLC:
-                return StationEntry.CONTENT_ITEM_TYPE;
-
-            default:
-                throw new UnsupportedOperationException( "Unknown uri: " + uri );
+                default:
+                    throw new URIException( uri.toString() );
+            }
+        } catch ( URIException e ) {
+            Log.e( TAG, e.getMessage() );
+            return null;
         }
     }
 
     @Override
-    public Cursor query( Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder ) {
-        final int match = sUriMatcher.match( uri );
+    public Cursor query( @NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder ) {
+        try {
+            String tableName;
+            switch ( sUriMatcher.match( uri ) ) {
+                case CATEGORY:
+                    sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = CategoryEntry.TABLE_NAME;
+                    break;
 
-        Cursor cursor;
+                case COMPLEX_RESOURCE:
+                    tableName = ComplexResourceEntry.TABLE_NAME;
+                    break;
 
-        long _id = 0;
-        String tableName;
+                case COMPOSITION:
+                    tableName = CompositionEntry.TABLE_NAME;
+                    break;
 
-        switch ( match ) {
-            case CATEGORY:
-                tableName = CategoryEntry.TABLE_NAME;
-                break;
+                case ENGRAM:
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case COMPLEX_RESOURCE:
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
+                case QUEUE:
+                    tableName = QueueEntry.TABLE_NAME;
+                    break;
 
-            case COMPOSITION:
-                tableName = CompositionEntry.TABLE_NAME;
-                break;
+                case RESOURCE:
+                    sortOrder = ResourceEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = ResourceEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM:
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case DLC:
+                    sortOrder = DLCEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = DLCEntry.TABLE_NAME;
+                    break;
 
-            case QUEUE:
-                tableName = QueueEntry.TABLE_NAME;
-                break;
+                case STATION:
+                    sortOrder = StationEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = StationEntry.TABLE_NAME;
+                    break;
 
-            case RESOURCE:
-                sortOrder = ResourceEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = ResourceEntry.TABLE_NAME;
-                break;
+                case DLC_ID:
+                    selection = DLCEntry.SQL_QUERY_WITH_ID;
+                    selectionArgs = new String[]{
+                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                    };
+                    tableName = DLCEntry.TABLE_NAME;
+                    break;
 
-            case DLC:
-                tableName = DLCEntry.TABLE_NAME;
-                break;
+                case CATEGORY_ID_WITH_DLC:
+                    selection = CategoryEntry.SQL_QUERY_WITH_ID +
+                            " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( CategoryEntry.getIdFromUri( uri ) ),
+                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                    };
+                    tableName = CategoryEntry.TABLE_NAME;
+                    break;
 
-            case STATION:
-                sortOrder = StationEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = StationEntry.TABLE_NAME;
-                break;
+                case CATEGORY_WITH_PARENT:
+                    selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID +
+                            " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
+                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = CategoryEntry.TABLE_NAME;
+                    break;
 
-            case DLC_ID:
-                _id = DatabaseContract.getIdFromUri( uri );
-                selection = DLCEntry.SQL_QUERY_WITH_ID;
-                tableName = DLCEntry.TABLE_NAME;
-                break;
+                case CATEGORY_WITH_PARENT_AND_STATION:
+                    selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID +
+                            " AND " + CategoryEntry.SQL_QUERY_WITH_STATION_KEY +
+                            " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
+                            Long.toString( CategoryEntry.getStationIdFromUri( uri ) ),
+                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = CategoryEntry.TABLE_NAME;
+                    break;
 
-            case CATEGORY_ID_WITH_DLC:
-                selection = CategoryEntry.SQL_QUERY_WITH_ID +
-                        " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( CategoryEntry.getIdFromUri( uri ) ),
-                        Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
-                };
-                tableName = CategoryEntry.TABLE_NAME;
-                break;
+                case COMPLEX_RESOURCE_ID:
+                    selection = ComplexResourceEntry.SQL_QUERY_WITH_ID;
+                    selectionArgs = new String[]{
+                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                    };
+                    tableName = ComplexResourceEntry.TABLE_NAME;
+                    break;
 
-            case CATEGORY_WITH_PARENT:
-                selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID +
-                        " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
-                        Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = CategoryEntry.TABLE_NAME;
-                break;
+                case COMPOSITION_ID:
+                    selection = CompositionEntry.SQL_QUERY_WITH_ID;
+                    selectionArgs = new String[]{
+                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                    };
+                    tableName = CompositionEntry.TABLE_NAME;
+                    break;
 
-            case CATEGORY_WITH_PARENT_AND_STATION:
-                selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID +
-                        " AND " + CategoryEntry.SQL_QUERY_WITH_STATION_KEY +
-                        " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
-                        Long.toString( CategoryEntry.getStationIdFromUri( uri ) ),
-                        Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = CategoryEntry.TABLE_NAME;
-                break;
+                case COMPOSITION_WITH_ENGRAM:
+                    selection = CompositionEntry.SQL_QUERY_WITH_ENGRAM_KEY +
+                            " AND " + CompositionEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( CompositionEntry.getEngramIdFromUri( uri ) ),
+                            Long.toString( CompositionEntry.getDLCIdFromUri( uri ) )
+                    };
+                    tableName = CompositionEntry.TABLE_NAME;
+                    break;
 
-            case COMPLEX_RESOURCE_ID:
-                _id = DatabaseContract.getIdFromUri( uri );
-                selection = ComplexResourceEntry.SQL_QUERY_WITH_ID;
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
+                case ENGRAM_ID_WITH_DLC:
+                    selection = EngramEntry.SQL_QUERY_WITH_ID +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getIdFromUri( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case COMPOSITION_ID:
-                _id = DatabaseContract.getIdFromUri( uri );
-                selection = CompositionEntry.SQL_QUERY_WITH_ID;
-                tableName = CompositionEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_CATEGORY:
+                    selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case COMPOSITION_WITH_ENGRAM:
-                selection = CompositionEntry.SQL_QUERY_WITH_ENGRAM_KEY +
-                        " AND " + CompositionEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( CompositionEntry.getEngramIdFromUri( uri ) ),
-                        Long.toString( CompositionEntry.getDLCIdFromUri( uri ) )
-                };
-                tableName = CompositionEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_CATEGORY_AND_STATION:
+                    selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_STATION_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
+                            Long.toString( EngramEntry.getStationIdFromUriWithCategory( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_ID_WITH_DLC:
-                selection = EngramEntry.SQL_QUERY_WITH_ID +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getIdFromUri( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_DLC:
+                    selection = EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_CATEGORY:
-                selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_STATION:
+                    selection = EngramEntry.SQL_QUERY_WITH_STATION_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getStationIdFromUri( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_CATEGORY_AND_STATION:
-                selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_STATION_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                        Long.toString( EngramEntry.getStationIdFromUriWithCategory( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_LEVEL:
+                    selection = EngramEntry.SQL_QUERY_WITH_LEVEL +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Integer.toString( EngramEntry.getLevelFromUri( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_DLC:
-                selection = EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_LEVEL_AND_CATEGORY:
+                    selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
+                            Integer.toString( EngramEntry.getLevelFromUriWithCategory( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_STATION:
-                selection = EngramEntry.SQL_QUERY_WITH_STATION_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getStationIdFromUri( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_LEVEL_AND_STATION:
+                    selection = EngramEntry.SQL_QUERY_WITH_STATION_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getStationIdFromUri( uri ) ),
+                            Integer.toString( EngramEntry.getLevelFromUriWithStation( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_LEVEL:
-                selection = EngramEntry.SQL_QUERY_WITH_LEVEL +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Integer.toString( EngramEntry.getLevelFromUri( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION:
+                    selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_STATION_KEY +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
+                            Long.toString( EngramEntry.getStationIdFromUriWithCategory( uri ) ),
+                            Integer.toString( EngramEntry.getLevelFromUriWithCategoryAndStation( uri ) ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_LEVEL_AND_CATEGORY:
-                selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                        Integer.toString( EngramEntry.getLevelFromUriWithCategory( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case QUEUE_ID:
+                    selection = QueueEntry.SQL_QUERY_WITH_ID;
+                    selectionArgs = new String[]{
+                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                    };
+                    tableName = QueueEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_LEVEL_AND_STATION:
-                selection = EngramEntry.SQL_QUERY_WITH_STATION_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getStationIdFromUri( uri ) ),
-                        Integer.toString( EngramEntry.getLevelFromUriWithStation( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case QUEUE_WITH_ENGRAM_ID:
+                    selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( QueueEntry.getEngramIdFromUri( uri ) )
+                    };
+                    tableName = QueueEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION:
-                selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_STATION_KEY +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                        Long.toString( EngramEntry.getStationIdFromUriWithCategory( uri ) ),
-                        Integer.toString( EngramEntry.getLevelFromUriWithCategoryAndStation( uri ) ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
-                };
-                sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case RESOURCE_ID_WITH_DLC:
+                    selection = ResourceEntry.SQL_QUERY_WITH_ID +
+                            " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( ResourceEntry.getIdFromUri( uri ) ),
+                            Long.toString( ResourceEntry.getDLCIdFromUri( uri ) )
+                    };
+                    tableName = ResourceEntry.TABLE_NAME;
+                    break;
 
-            case QUEUE_ID:
-                _id = DatabaseContract.getIdFromUri( uri );
-                selection = QueueEntry.SQL_QUERY_WITH_ID;
-                tableName = QueueEntry.TABLE_NAME;
-                break;
+                case COMPLEX_RESOURCE_WITH_RESOURCE:
+                    selection = ComplexResourceEntry.SQL_QUERY_WITH_RESOURCE_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( ComplexResourceEntry.getResourceIdFromUri( uri ) )
+                    };
+                    tableName = ComplexResourceEntry.TABLE_NAME;
+                    break;
 
-            case QUEUE_WITH_ENGRAM_ID:
-                selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( QueueEntry.getEngramIdFromUri( uri ) )
-                };
-                tableName = QueueEntry.TABLE_NAME;
-                break;
+                case QUEUE_WITH_ENGRAM_TABLE:
+                    projection = QueueEntry.SQL_PROJECTION;
+                    selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION;
+                    selectionArgs = new String[]{
+                            Long.toString( QueueEntry.getDLCIdFromUri( uri ) ) };
+                    sortOrder = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME;
+                    tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
+                    break;
 
-            case RESOURCE_ID_WITH_DLC:
-                selection = ResourceEntry.SQL_QUERY_WITH_ID +
-                        " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( ResourceEntry.getIdFromUri( uri ) ),
-                        Long.toString( ResourceEntry.getDLCIdFromUri( uri ) )
-                };
-                tableName = ResourceEntry.TABLE_NAME;
-                break;
+                case ENGRAM_WITH_DRAWABLE:
+                    projection = new String[]{ EngramEntry.COLUMN_NAME };
+                    selection = EngramEntry.SQL_QUERY_WITH_DRAWABLE +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            EngramEntry.getDrawableFromUri( uri ),
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) ) };
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
 
-            case COMPLEX_RESOURCE_WITH_RESOURCE:
-                selection = ComplexResourceEntry.SQL_QUERY_WITH_RESOURCE_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( ComplexResourceEntry.getResourceIdFromUri( uri ) )
-                };
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
+                case RESOURCE_WITH_DRAWABLE:
+                    projection = new String[]{ ResourceEntry._ID };
+                    selection = ResourceEntry.SQL_QUERY_WITH_DRAWABLE +
+                            " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            ResourceEntry.getDrawableFromUri( uri ),
+                            Long.toString( ResourceEntry.getDLCIdFromUri( uri ) ) };
+                    tableName = ResourceEntry.TABLE_NAME;
+                    break;
 
-            case QUEUE_WITH_ENGRAM_TABLE:
-                projection = QueueEntry.SQL_PROJECTION;
-                selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION;
-                selectionArgs = new String[]{
-                        Long.toString( QueueEntry.getDLCIdFromUri( uri ) ) };
-                sortOrder = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME;
-                tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
-                break;
+                case STATION_ID_WITH_DLC:
+                    selection = StationEntry.SQL_QUERY_WITH_ID +
+                            " AND " + StationEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( StationEntry.getIdFromUri( uri ) ),
+                            Long.toString( StationEntry.getDLCIdFromUri( uri ) )
+                    };
+                    tableName = StationEntry.TABLE_NAME;
+                    break;
 
-            case ENGRAM_WITH_DRAWABLE:
-                projection = new String[]{ EngramEntry.COLUMN_NAME };
-                selection = EngramEntry.SQL_QUERY_WITH_DRAWABLE +
-                        " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        EngramEntry.getDrawableFromUri( uri ),
-                        Long.toString( EngramEntry.getDLCIdFromUri( uri ) ) };
-                tableName = EngramEntry.TABLE_NAME;
-                break;
+                case STATION_WITH_DLC:
+                    selection = StationEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( StationEntry.getDLCIdFromUri( uri ) )
+                    };
+                    tableName = StationEntry.TABLE_NAME;
+                    break;
 
-            case RESOURCE_WITH_DRAWABLE:
-                projection = new String[]{ ResourceEntry._ID };
-                selection = ResourceEntry.SQL_QUERY_WITH_DRAWABLE +
-                        " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        ResourceEntry.getDrawableFromUri( uri ),
-                        Long.toString( ResourceEntry.getDLCIdFromUri( uri ) ) };
-                tableName = ResourceEntry.TABLE_NAME;
-                break;
+                default:
+                    throw new URIException( uri.toString() );
+            }
 
-            case STATION_ID_WITH_DLC:
-                selection = StationEntry.SQL_QUERY_WITH_ID +
-                        " AND " + StationEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( StationEntry.getIdFromUri( uri ) ),
-                        Long.toString( StationEntry.getDLCIdFromUri( uri ) )
-                };
-                tableName = StationEntry.TABLE_NAME;
-                break;
+            // Query database with provided args, null or not.
+            Cursor cursor = mOpenHelper.getReadableDatabase().query(
+                    tableName,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null, null,
+                    sortOrder
+            );
 
-            case STATION_WITH_DLC:
-                selection = StationEntry.SQL_QUERY_WITH_DLC_KEY;
-                selectionArgs = new String[]{
-                        Long.toString( StationEntry.getDLCIdFromUri( uri ) )
-                };
-                tableName = StationEntry.TABLE_NAME;
-                break;
-
-            default:
-                throw new UnsupportedOperationException( "Unknown uri: " + uri );
+            cursor.setNotificationUri( getContext().getContentResolver(), uri );
+            return cursor;
+        } catch ( URIException e ) {
+            Log.e( TAG, e.getMessage() );
+            return null;
         }
-
-        // Override selectionArgs if switch matched a case that provides an 'id'
-        if ( _id != 0 ) {
-            selectionArgs = new String[]{ Long.toString( _id ) };
-        }
-
-        // Query database with provided args, null or not.
-        cursor = mOpenHelper.getReadableDatabase().query(
-                tableName,
-                projection,
-                selection,
-                selectionArgs,
-                null, null,
-                sortOrder
-        );
-
-        cursor.setNotificationUri( getContext().getContentResolver(), uri );
-        return cursor;
     }
 
     @Override
-    public Uri insert( Uri uri, ContentValues values ) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final int match = sUriMatcher.match( uri );
+    public Uri insert( @NonNull Uri uri, ContentValues values ) {
+        try {
+            long _id = mOpenHelper.getWritableDatabase()
+                    .insert( getTableNameFromUriMatch( uri ), null, values );
 
-        String tableName;
+            Uri returnUri;
+            if ( _id != SQL_ID_ERRONEOUS_RECORD )
+                returnUri = DatabaseContract.buildUriWithId( uri, _id );
+            else
+                throw new android.database.SQLException(
+                        String.format(
+                                getContext().getString( R.string.exception_sql_insert ),
+                                uri ) );
 
-        switch ( match ) {
-            case ENGRAM:
-                tableName = EngramEntry.TABLE_NAME;
-                break;
-            case RESOURCE:
-                tableName = ResourceEntry.TABLE_NAME;
-                break;
-            case CATEGORY:
-                tableName = CategoryEntry.TABLE_NAME;
-                break;
-            case COMPOSITION:
-                tableName = CompositionEntry.TABLE_NAME;
-                break;
-            case COMPLEX_RESOURCE:
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
-            case QUEUE:
-                tableName = QueueEntry.TABLE_NAME;
-                break;
-            case DLC:
-                tableName = DLCEntry.TABLE_NAME;
-                break;
-            case STATION:
-                tableName = StationEntry.TABLE_NAME;
-                break;
-            default:
-                throw new UnsupportedOperationException( "Unknown uri: " + uri );
-        }
-
-        long _id = db.insert( tableName, null, values );
-
-        Uri returnUri;
-        if ( _id > 0 )
-            returnUri = DatabaseContract.buildUriWithId( uri, _id );
-        else
-            throw new android.database.SQLException( getContext().getString( R.string.exception_sql_insert ) + uri );
-
-        getContext().getContentResolver().notifyChange( uri, null );
-        return returnUri;
-    }
-
-    @Override
-    public int delete( Uri uri, String selection, String[] selectionArgs ) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final int match = sUriMatcher.match( uri );
-
-        int rowsDeleted;
-
-        if ( selection == null ) selection = "1";
-
-        switch ( match ) {
-            case ENGRAM:
-                rowsDeleted = db.delete( EngramEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            case RESOURCE:
-                rowsDeleted = db.delete( ResourceEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            case CATEGORY:
-                rowsDeleted = db.delete( CategoryEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            case COMPOSITION:
-                rowsDeleted = db.delete( CompositionEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            case COMPLEX_RESOURCE:
-                rowsDeleted = db.delete( ComplexResourceEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            case QUEUE:
-                rowsDeleted = db.delete( QueueEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            case DLC:
-                rowsDeleted = db.delete( DLCEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            case STATION:
-                rowsDeleted = db.delete( StationEntry.TABLE_NAME, selection, selectionArgs );
-                break;
-            default:
-                throw new UnsupportedOperationException( "Unknown uri: " + uri );
-        }
-
-        if ( rowsDeleted != 0 ) {
             getContext().getContentResolver().notifyChange( uri, null );
+            return returnUri;
+        } catch ( URIException e ) {
+            Log.e( TAG, e.getMessage() );
+            return null;
         }
+    }
 
-        return rowsDeleted;
+    @Override
+    public int delete( @NonNull Uri uri, String selection, String[] selectionArgs ) {
+        try {
+            if ( selection == null ) selection = "1";
+
+            int rowsDeleted = mOpenHelper.getWritableDatabase()
+                    .delete( getTableNameFromUriMatch( uri ), selection, selectionArgs );
+            if ( rowsDeleted != 0 ) getContext().getContentResolver().notifyChange( uri, null );
+
+            return rowsDeleted;
+        } catch ( URIException e ) {
+            Log.e( TAG, e.getMessage() );
+            return 0;
+        }
     }
 
     @Override
     public int update( @NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs ) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final int match = sUriMatcher.match( uri );
-
-        int rowsUpdated;
-
-        if ( selection == null ) selection = "1";
-
-        switch ( match ) {
-            case ENGRAM:
-                rowsUpdated = db.update( EngramEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            case RESOURCE:
-                rowsUpdated = db.update( ResourceEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            case CATEGORY:
-                rowsUpdated = db.update( CategoryEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            case COMPOSITION:
-                rowsUpdated = db.update( CompositionEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            case COMPLEX_RESOURCE:
-                rowsUpdated = db.update( ComplexResourceEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            case QUEUE:
-                rowsUpdated = db.update( QueueEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            case DLC:
-                rowsUpdated = db.update( DLCEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            case STATION:
-                rowsUpdated = db.update( StationEntry.TABLE_NAME, values, selection, selectionArgs );
-                break;
-            default:
-                throw new UnsupportedOperationException( "Unknown uri: " + uri );
-        }
-
-        if ( rowsUpdated != 0 ) {
-            getContext().getContentResolver().notifyChange( uri, null );
-        }
-
-        return rowsUpdated;
-    }
-
-    @Override
-    public int bulkInsert( Uri uri, ContentValues[] values ) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final int match = sUriMatcher.match( uri );
-
-        String tableName;
-        switch ( match ) {
-            case ENGRAM:
-                tableName = EngramEntry.TABLE_NAME;
-                break;
-            case RESOURCE:
-                tableName = ResourceEntry.TABLE_NAME;
-                break;
-            case CATEGORY:
-                tableName = CategoryEntry.TABLE_NAME;
-                break;
-            case COMPLEX_RESOURCE:
-                tableName = ComplexResourceEntry.TABLE_NAME;
-                break;
-            case DLC:
-                tableName = DLCEntry.TABLE_NAME;
-                break;
-            case STATION:
-                tableName = StationEntry.TABLE_NAME;
-                break;
-            default:
-                return super.bulkInsert( uri, values );
-        }
-
-        int rowsInserted = 0;
-        db.beginTransaction();
         try {
-            for ( ContentValues value : values ) {
-                long _id = db.insert( tableName, null, value );
+            if ( selection == null ) selection = "1";
 
-                if ( _id > -1 )
-                    rowsInserted++;
-                else
-                    throw new android.database.SQLException( getContext().getString( R.string.exception_sql_insert ) + uri );
-            }
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
+            int rowsUpdated = mOpenHelper.getWritableDatabase()
+                    .update( getTableNameFromUriMatch( uri ), values, selection, selectionArgs );
+            if ( rowsUpdated > 0 ) getContext().getContentResolver().notifyChange( uri, null );
+
+            return rowsUpdated;
+        } catch ( URIException e ) {
+            Log.e( TAG, e.getMessage() );
+            return 0;
         }
-
-        getContext().getContentResolver().notifyChange( uri, null );
-        return rowsInserted;
     }
 
     @Override
-    public boolean onCreate() {
-        mOpenHelper = new DatabaseHelper( getContext() );
+    public int bulkInsert( @NonNull Uri uri, @NonNull ContentValues[] values ) {
+        try {
+            final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+            int rowsInserted = 0;
+            try {
+                db.beginTransaction();
+                for ( ContentValues value : values ) {
+                    long _id = db.insert( getTableNameFromUriMatch( uri ), null, value );
 
-        return true;
+                    if ( _id > -1 ) rowsInserted++;
+                    else
+                        throw new android.database.SQLException(
+                                String.format(
+                                        getContext().getString( R.string.exception_sql_insert ),
+                                        uri ) );
+                }
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+
+            getContext().getContentResolver().notifyChange( uri, null );
+            return rowsInserted;
+        } catch ( URIException e ) {
+            Log.e( TAG, e.getMessage() );
+            return 0;
+        }
+    }
+
+    String getTableNameFromUriMatch( @NonNull Uri uri ) throws URIException {
+        switch ( sUriMatcher.match( uri ) ) {
+            case ENGRAM:
+                return EngramEntry.TABLE_NAME;
+
+            case RESOURCE:
+                return ResourceEntry.TABLE_NAME;
+
+            case CATEGORY:
+                return CategoryEntry.TABLE_NAME;
+
+            case COMPOSITION:
+                return CompositionEntry.TABLE_NAME;
+
+            case COMPLEX_RESOURCE:
+                return ComplexResourceEntry.TABLE_NAME;
+
+            case QUEUE:
+                return QueueEntry.TABLE_NAME;
+
+            case DLC:
+                return DLCEntry.TABLE_NAME;
+
+            case STATION:
+                return StationEntry.TABLE_NAME;
+
+            default:
+                throw new URIException( uri.toString() );
+        }
+    }
+
+    class URIException extends Exception {
+        URIException( String uri ) {
+            super( String.format( getContext().getString( R.string.exception_unknown_uri ), uri ) );
+        }
     }
 }
