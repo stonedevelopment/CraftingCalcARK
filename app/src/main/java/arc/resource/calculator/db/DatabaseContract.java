@@ -42,6 +42,7 @@ public class DatabaseContract {
     public static final String PATH_QUEUE = "queue";
     public static final String PATH_RESOURCE = "resource";
     public static final String PATH_STATION = "station";
+    public static final String PATH_QUANTITY = "quantity";
 
     // Inner class that defines the table contents of the engram table
     public static final class EngramEntry implements BaseColumns {
@@ -569,10 +570,14 @@ public class DatabaseContract {
         // Foreign key from Engram table
         public static final String COLUMN_ENGRAM_KEY = "engram_id";
 
+        // Foreign key from Station table
+        public static final String COLUMN_STATION_KEY = "station_id";
+
         // SQL column helpers
         public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
         public static final String SQL_COLUMN_QUANTITY = TABLE_NAME + "." + COLUMN_QUANTITY;
         public static final String SQL_COLUMN_ENGRAM_KEY = TABLE_NAME + "." + COLUMN_ENGRAM_KEY;
+        public static final String SQL_COLUMN_STATION_KEY = TABLE_NAME + "." + COLUMN_STATION_KEY;
 
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
@@ -608,11 +613,11 @@ public class DatabaseContract {
                     .build();
         }
 
-        public static long getEngramIdFromUri( Uri uri ) {
+        static long getEngramIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getLastPathSegment() );
         }
 
-        public static long getDLCIdFromUri( Uri uri ) {
+        static long getDLCIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getLastPathSegment() );
         }
     }
@@ -621,7 +626,7 @@ public class DatabaseContract {
         return ContentUris.withAppendedId( uri, _id );
     }
 
-    public static long getIdFromUri( Uri uri ) {
+    static long getIdFromUri( Uri uri ) {
         return ContentUris.parseId( uri );
     }
 }

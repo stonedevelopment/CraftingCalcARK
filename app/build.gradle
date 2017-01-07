@@ -15,8 +15,8 @@ android {
         applicationId 'arc.resource.calculator'
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 36
-        versionName '1.1.1'
+        versionCode 37
+        versionName '1.1.2'
         signingConfig signingConfigs.config
         vectorDrawables.useSupportLibrary = true
     }

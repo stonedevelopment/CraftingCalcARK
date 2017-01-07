@@ -20,7 +20,6 @@ import arc.resource.calculator.R;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class EngramGridViewHolder extends RecyclerView.ViewHolder {
-
     private View mView;
 
     private ImageView mThumbnail;

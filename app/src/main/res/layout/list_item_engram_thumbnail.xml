@@ -9,7 +9,6 @@
         android:id="@+id/list_item_engram_thumbnail_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:adjustViewBounds="true"
         android:background="@drawable/frame_engram_display_case"
         tools:src="@drawable/structures_stone_stone_wall"/>
 

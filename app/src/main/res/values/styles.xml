@@ -105,4 +105,9 @@
     <style name="AppTheme.PopupOverlay">
     </style>
 
+    <style name="AlertDialogCustom" parent="@style/Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
 </resources>

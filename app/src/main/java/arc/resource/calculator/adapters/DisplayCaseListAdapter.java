@@ -11,9 +11,9 @@ import java.util.Locale;
 
 import arc.resource.calculator.MainActivity;
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.DisplayCase;
 import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.viewholders.EngramGridViewHolder;
 
 /**
@@ -35,8 +35,8 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
     private Context mContext;
 
     public DisplayCaseListAdapter( Context context ) {
-        mContext = context.getApplicationContext();
-        mDisplayCase = new DisplayCase( mContext );
+        mContext = context;
+        mDisplayCase = new DisplayCase( context );
     }
 
     public EngramGridViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
@@ -48,35 +48,39 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
 
     @Override
     public void onBindViewHolder( final EngramGridViewHolder holder, int position ) {
-
         holder.itemView.getLayoutParams().height = ( int ) MainActivity.mEngramDimensions;
+        holder.itemView.getLayoutParams().width = ( int ) MainActivity.mEngramDimensions;
 
-        int imageId = getContext().getResources().getIdentifier(
-                mDisplayCase.getDrawableByPosition( position ),
-                "drawable",
-                getContext().getPackageName()
-        );
-        holder.getThumbnail().setImageResource( imageId );
+        try {
+            int imageId = getContext().getResources().getIdentifier(
+                    mDisplayCase.getDrawableByPosition( position ),
+                    "drawable",
+                    getContext().getPackageName() );
 
-        String name = mDisplayCase.getNameByPosition( position );
-        holder.getName().setText( name );
+            holder.getThumbnail().setImageResource( imageId );
 
-        if ( mDisplayCase.isEngram( position ) ) {
-            int quantity = mDisplayCase.getQuantityWithYield( position );
+            String name = mDisplayCase.getNameByPosition( position );
+            holder.getName().setText( name );
 
-            if ( quantity > 0 ) {
-                holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_craftable_engram_display_case ) );
-                holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
-                holder.getName().setSingleLine( true );
+            if ( mDisplayCase.isEngram( position ) ) {
+                int quantity = mDisplayCase.getQuantityWithYield( position );
+
+                if ( quantity > 0 ) {
+                    holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_craftable_engram_display_case ) );
+                    holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
+                    holder.getName().setSingleLine( true );
+                } else {
+                    holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_display_case ) );
+                    holder.getQuantity().setText( null );
+                    holder.getName().setSingleLine( false );
+                }
             } else {
-                holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_display_case ) );
+                holder.getThumbnail().setBackgroundColor( 0 );
                 holder.getQuantity().setText( null );
                 holder.getName().setSingleLine( false );
             }
-        } else {
-            holder.getThumbnail().setBackgroundColor( 0 );
-            holder.getQuantity().setText( null );
-            holder.getName().setSingleLine( false );
+        } catch ( Exception e ) {
+            ExceptionUtil.SendErrorReportWithAlertDialog( getContext(), TAG, e );
         }
     }
 
@@ -89,12 +93,9 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
      * -- PUBLIC UTILITY METHODS --
      */
 
-    public DisplayEngram getEngram( int position ) {
-        return mDisplayCase.getEngramByPosition( position );
-    }
-
-    public long getEngramId( int position ) {
-        return mDisplayCase.getEngramId( position );
+    public DisplayEngram getEngram( int position ) throws ExceptionUtil.IndexOutOfBoundsException,
+            ExceptionUtil.ArrayElementNullException {
+        return mDisplayCase.getEngram( position );
     }
 
     public boolean isEngram( int position ) {
@@ -113,15 +114,11 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
         return mDisplayCase.getCurrentStationId();
     }
 
-    public Category getCategoryDetails( long categoryId ) {
-        return mDisplayCase.getCategoryById( categoryId );
-    }
-
-    public void changeCategory( int position ) {
+    public void changeCategory( int position ) throws Exception {
         mDisplayCase.changeCategory( position );
     }
 
-    public void changeStation( int position ) {
+    public void changeStation( int position ) throws Exception {
         mDisplayCase.changeStation( position );
     }
 
@@ -129,27 +126,17 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<EngramGridViewH
      * -- UTILITY METHODS --
      */
 
-    public void refreshData() {
+    public void refreshData() throws Exception {
         mDisplayCase.UpdateData();
 
         this.notifyDataSetChanged();
-    }
-
-    public void refreshItem( int position ) {
-        notifyItemChanged( position );
-    }
-
-    public void refreshItemByEngramId( int position ) {
-        if ( isEngram( position ) ) {
-            notifyItemChanged( position );
-        }
     }
 
     public void resetLevels() {
         mDisplayCase.resetCategoryLevels();
     }
 
-    public String getHierarchicalText() {
+    public String getHierarchicalText() throws Exception {
         return mDisplayCase.getHierarchicalText();
     }
 

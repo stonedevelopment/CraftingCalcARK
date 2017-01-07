@@ -112,4 +112,8 @@ public class Helper {
 
         return categories;
     }
+
+    private String addSpaces( int n ) {
+        return new String( new char[n * 2] ).replace( "\0", " " );
+    }
 }

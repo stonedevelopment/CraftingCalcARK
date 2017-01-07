@@ -3,6 +3,9 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    253.1   Updated Dyes with yields of 5, Misc category (for Camera) added Smithy to station_id's
+    253.0   Added Camera, Tusoteuthis Saddle, Therizinosaurus Saddle
+    252.1   Added total_conversion table, to allow for easy resource conversions in the future
     252.0   Added Megalosaurus and Pachyrhinosaurus saddles
     250.1   Migrated Resources and Engrams to include custom _ids
     250.0   Added Stations and Levels
@@ -18,7 +21,7 @@
     247.1   Updated Categories to Primitive+
 
     -->
-    <string name="json_version">252.0</string>
+    <string name="json_version">253.1</string>
 
     <string name="intent_key_did_update">did_update</string>
 
@@ -87,8 +90,8 @@
 
     <!-- Strings related to Go Back -->
     <string name="go_back">Go back</string>
+    <string name="go_back_to_stations">Go back to Crafting Stations</string>
     <string name="format_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
-    <string name="format_go_back_to_stations">Go back to Crafting Stations</string>
 
     <!-- Strings related to Categories -->
     <string name="category_go_back">Go back</string>
@@ -233,9 +236,25 @@
     <!-- Default value for Refined Filter preference in SharedPreferences -->
     <string name="pref_filter_refined_value_default">false</string>
 
+    <!-- AlertDialogs -->
+    <string name="ad_error_reported_title">Oops! An error just occurred.</string>
+    <string name="ad_error_reported_message">
+        But don\'t you worry, we caught the error and sent a report for it to be fixed in a future
+        version. Until then, a work-around could be to reset your settings or, if the problem continues,
+        reinstall the app.\n
+        \n
+        Sorry for any inconvenience,\n
+        Shane.
+    </string>
+
     <!-- Exceptions -->
     <string name="exception_unknown_uri">Unknown uri: <x:g>%1$s</x:g></string>
     <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>
+    <string name="exception_array_out_of_bounds">
+        Position: <x:g>%1d</x:g>\n
+        Categories.size: <x:g>%2d</x:g>
+        Categories: <x:g>%3$s</x:g>
+    </string>
 
     <!-- Strings related to MobAds -->
     <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>

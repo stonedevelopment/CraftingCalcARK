@@ -54,9 +54,9 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter {
         String name = resource.getName();
         int quantity = resource.getProductOfQuantities();
 
-        viewHolder.getImageView().setImageResource( imageId );
-        viewHolder.getNameText().setText( name );
-        viewHolder.getQuantityText().setText( String.format( Locale.US, "%1$d", quantity ) );
+        viewHolder.getThumbnail().setImageResource( imageId );
+        viewHolder.getName().setText( name );
+        viewHolder.getQuantity().setText( String.format( Locale.US, "%1$d", quantity ) );
     }
 
     @Override

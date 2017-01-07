@@ -19,10 +19,20 @@
     </style>
   </head>
   <body>
+    $ 1.1.2
+      % Version 1.1.2
+      _ 01/07/2016
+      * Includes all Engrams up to PC version 253.0!
+      * -> Added Camera, Tusoteuthis Saddle, and Therizinosaurus Saddle
+      * Breakdown Resources now breaks refined resources down to their raw materials properly.
+      * Various bug fixes, added silent error reporting for better understanding of future bugs.
+      * Changed how Engram Details screen appears. Made it entirely scrollable for to fit better on small screens.
+      ! Have an idea, suggestion, or just want to say What's Up? Tweet us @ARKResourceCalc or @MasterxOfxNone - same goes for Steam/Xbox.
+
     $ 1.1.1
       % Version 1.1.1
       _ 12/16/2016
-      * Tremendously increased database initialization duration!
+      * Tremendously decreased database initialization duration!
       ! Find a bug or an error in an Engram recipe? Please tweet us or email us and we'll get it fixed quick like.
 
     $ 1.1.0

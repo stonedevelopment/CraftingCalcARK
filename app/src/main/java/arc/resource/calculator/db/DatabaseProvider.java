@@ -17,9 +17,9 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
@@ -30,11 +30,12 @@ import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
+import arc.resource.calculator.model.Queue;
+import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.util.ExceptionUtil.URIUnknownException;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
-
-    private static final int SQL_ID_ERRONEOUS_RECORD = -1;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private DatabaseHelper mOpenHelper;
@@ -83,7 +84,6 @@ public class DatabaseProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = new DatabaseHelper( getContext() );
-
         return true;
     }
 
@@ -209,9 +209,10 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     @Override
-    public String getType( Uri uri ) {
+    public String getType( @NonNull Uri uri ) {
+        final int match = sUriMatcher.match( uri );
+
         try {
-            final int match = sUriMatcher.match( uri );
             switch ( match ) {
                 case ENGRAM:
                 case ENGRAM_WITH_CATEGORY:
@@ -279,16 +280,19 @@ public class DatabaseProvider extends ContentProvider {
                     return StationEntry.CONTENT_ITEM_TYPE;
 
                 default:
-                    throw new URIException( uri.toString() );
+                    throw new URIUnknownException( uri );
             }
-        } catch ( URIException e ) {
-            Log.e( TAG, e.getMessage() );
-            return null;
+        } catch ( URIUnknownException e ) {
+            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
         }
+
+        return null;
     }
 
     @Override
     public Cursor query( @NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder ) {
+        Cursor cursor = null;
+
         try {
             String tableName;
             switch ( sUriMatcher.match( uri ) ) {
@@ -541,7 +545,8 @@ public class DatabaseProvider extends ContentProvider {
                     projection = QueueEntry.SQL_PROJECTION;
                     selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION;
                     selectionArgs = new String[]{
-                            Long.toString( QueueEntry.getDLCIdFromUri( uri ) ) };
+                            Long.toString( QueueEntry.getDLCIdFromUri( uri ) )
+                    };
                     sortOrder = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME;
                     tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
                     break;
@@ -585,11 +590,11 @@ public class DatabaseProvider extends ContentProvider {
                     break;
 
                 default:
-                    throw new URIException( uri.toString() );
+                    throw new URIUnknownException( uri );
             }
 
             // Query database with provided args, null or not.
-            Cursor cursor = mOpenHelper.getReadableDatabase().query(
+            cursor = mOpenHelper.getReadableDatabase().query(
                     tableName,
                     projection,
                     selection,
@@ -599,99 +604,117 @@ public class DatabaseProvider extends ContentProvider {
             );
 
             cursor.setNotificationUri( getContext().getContentResolver(), uri );
-            return cursor;
-        } catch ( URIException e ) {
-            Log.e( TAG, e.getMessage() );
-            return null;
+        } catch ( Exception e ) {
+            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
         }
+
+        return cursor;
     }
 
     @Override
     public Uri insert( @NonNull Uri uri, ContentValues values ) {
+        Uri returnUri = null;
+
         try {
             long _id = mOpenHelper.getWritableDatabase()
                     .insert( getTableNameFromUriMatch( uri ), null, values );
 
-            Uri returnUri;
-            if ( _id != SQL_ID_ERRONEOUS_RECORD )
+            if ( _id >= 0 ) {
                 returnUri = DatabaseContract.buildUriWithId( uri, _id );
-            else
-                throw new android.database.SQLException(
-                        String.format(
-                                getContext().getString( R.string.exception_sql_insert ),
-                                uri ) );
-
-            getContext().getContentResolver().notifyChange( uri, null );
-            return returnUri;
-        } catch ( URIException e ) {
-            Log.e( TAG, e.getMessage() );
-            return null;
+                getContext().getContentResolver().notifyChange( uri, null );
+            } else {
+                throw new SQLiteException();
+            }
+        } catch ( Exception e ) {
+            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
         }
+
+        return returnUri;
     }
 
     @Override
     public int delete( @NonNull Uri uri, String selection, String[] selectionArgs ) {
+        int rowsDeleted = 0;
+
         try {
-            if ( selection == null ) selection = "1";
+            String tableName = getTableNameFromUriMatch( uri );
 
-            int rowsDeleted = mOpenHelper.getWritableDatabase()
-                    .delete( getTableNameFromUriMatch( uri ), selection, selectionArgs );
-            if ( rowsDeleted != 0 ) getContext().getContentResolver().notifyChange( uri, null );
+            switch ( sUriMatcher.match( uri ) ) {
+                case QUEUE:
+                    tableName = QueueEntry.TABLE_NAME;
+                    selection = "1";
+                    break;
 
-            return rowsDeleted;
-        } catch ( URIException e ) {
-            Log.e( TAG, e.getMessage() );
-            return 0;
+                case QUEUE_ID:
+                    tableName = QueueEntry.TABLE_NAME;
+                    selection = QueueEntry.SQL_QUERY_WITH_ID;
+                    selectionArgs = new String[]{
+                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                    };
+                    break;
+            }
+
+            rowsDeleted = mOpenHelper.getWritableDatabase()
+                    .delete( tableName, selection, selectionArgs );
+
+            if ( rowsDeleted > 0 )
+                getContext().getContentResolver().notifyChange( uri, null );
+        } catch ( URIUnknownException e ) {
+            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
         }
+        return rowsDeleted;
     }
 
     @Override
     public int update( @NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs ) {
+        int rowsUpdated = 0;
+
         try {
-            if ( selection == null ) selection = "1";
+            if ( selection == null )
+                selection = "1";
 
-            int rowsUpdated = mOpenHelper.getWritableDatabase()
+            rowsUpdated = mOpenHelper.getWritableDatabase()
                     .update( getTableNameFromUriMatch( uri ), values, selection, selectionArgs );
-            if ( rowsUpdated > 0 ) getContext().getContentResolver().notifyChange( uri, null );
-
-            return rowsUpdated;
-        } catch ( URIException e ) {
-            Log.e( TAG, e.getMessage() );
-            return 0;
+            if ( rowsUpdated > 0 )
+                getContext().getContentResolver().notifyChange( uri, null );
+        } catch ( URIUnknownException e ) {
+            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
         }
+
+        return rowsUpdated;
     }
 
     @Override
     public int bulkInsert( @NonNull Uri uri, @NonNull ContentValues[] values ) {
-        try {
-            final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-            int rowsInserted = 0;
-            try {
-                db.beginTransaction();
-                for ( ContentValues value : values ) {
-                    long _id = db.insert( getTableNameFromUriMatch( uri ), null, value );
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        int rowsInserted = 0;
 
-                    if ( _id > -1 ) rowsInserted++;
-                    else
-                        throw new android.database.SQLException(
-                                String.format(
-                                        getContext().getString( R.string.exception_sql_insert ),
-                                        uri ) );
-                }
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
+        try {
+            db.beginTransaction();
+
+            for ( ContentValues value : values ) {
+                long _id = db.insert( getTableNameFromUriMatch( uri ), null, value );
+
+                if ( _id > -1 ) rowsInserted++;
+                else
+                    throw new SQLiteException(
+                            String.format(
+                                    getContext().getString( R.string.exception_sql_insert ),
+                                    uri ) );
             }
 
-            getContext().getContentResolver().notifyChange( uri, null );
-            return rowsInserted;
-        } catch ( URIException e ) {
-            Log.e( TAG, e.getMessage() );
-            return 0;
+            db.setTransactionSuccessful();
+        } catch ( URIUnknownException | SQLiteException e ) {
+            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
+        } finally {
+            db.endTransaction();
         }
+
+        getContext().getContentResolver().notifyChange( uri, null );
+        return rowsInserted;
     }
 
-    String getTableNameFromUriMatch( @NonNull Uri uri ) throws URIException {
+    String getTableNameFromUriMatch( @NonNull Uri uri ) throws URIUnknownException {
         switch ( sUriMatcher.match( uri ) ) {
             case ENGRAM:
                 return EngramEntry.TABLE_NAME;
@@ -709,6 +732,7 @@ public class DatabaseProvider extends ContentProvider {
                 return ComplexResourceEntry.TABLE_NAME;
 
             case QUEUE:
+            case QUEUE_ID:
                 return QueueEntry.TABLE_NAME;
 
             case DLC:
@@ -718,13 +742,7 @@ public class DatabaseProvider extends ContentProvider {
                 return StationEntry.TABLE_NAME;
 
             default:
-                throw new URIException( uri.toString() );
-        }
-    }
-
-    class URIException extends Exception {
-        URIException( String uri ) {
-            super( String.format( getContext().getString( R.string.exception_unknown_uri ), uri ) );
+                throw new URIUnknownException( uri );
         }
     }
 }

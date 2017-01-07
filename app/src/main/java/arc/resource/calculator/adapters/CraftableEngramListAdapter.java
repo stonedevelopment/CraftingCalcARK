@@ -12,7 +12,8 @@ import java.util.Locale;
 import arc.resource.calculator.MainActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.CraftingQueue;
-import arc.resource.calculator.util.Helper;
+import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.viewholders.EngramGridViewHolder;
 
 /**
@@ -31,14 +32,13 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridV
     private static final String TAG = CraftableEngramListAdapter.class.getSimpleName();
 
     private CraftingQueue mCraftingQueue;
-
     private Context mContext;
 
-    public CraftableEngramListAdapter( Context context ) {
+    public CraftableEngramListAdapter( Context context ) throws Exception {
         this.mContext = context;
         this.mCraftingQueue = CraftingQueue.getInstance( context );
 
-        Refresh();
+        NotifyDataChanged();
     }
 
     public EngramGridViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
@@ -50,25 +50,27 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridV
 
     @Override
     public void onBindViewHolder( EngramGridViewHolder holder, int position ) {
+        holder.getView().getLayoutParams().height = ( int ) MainActivity.mEngramDimensions;
+        holder.getView().getLayoutParams().width = ( int ) MainActivity.mEngramDimensions;
+
         try {
-            int dimensions = ( int ) MainActivity.mCraftableEngramDimensions;
+            int imageId = getContext().getResources().getIdentifier(
+                    mCraftingQueue.getEngram( position ).getDrawable(),
+                    "drawable",
+                    getContext().getPackageName() );
 
-            holder.itemView.getLayoutParams().height = dimensions;
-            holder.itemView.getLayoutParams().width = dimensions;
-
-            int imageId = getContext().getResources().getIdentifier( mCraftingQueue.getEngramDrawable( position ), "drawable", getContext().getPackageName() );
-            String name = mCraftingQueue.getEngramName( position );
-            int quantity = mCraftingQueue.getEngramQuantityWithYield( position );
-
+            // FIXME: 12/22/2016 Create crafting queue viewholder, why set background on every bind?
             holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_crafting_queue ) );
             holder.getThumbnail().setImageResource( imageId );
 
+            String name = mCraftingQueue.getEngram( position ).getName();
             holder.getName().setText( name );
             holder.getName().setSingleLine( true );
 
+            int quantity = mCraftingQueue.getEngramQuantityWithYield( position );
             holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
-        } catch ( ArrayIndexOutOfBoundsException e ) {
-            Helper.Log( TAG, e.getMessage() );
+        } catch ( Exception e ) {
+            ExceptionUtil.SendErrorReportWithAlertDialog( getContext(), TAG, e );
         }
     }
 
@@ -77,36 +79,32 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridV
         return mCraftingQueue.getEngramItemCount();
     }
 
-    public void Refresh() {
+    public void NotifyDataChanged() {
         notifyDataSetChanged();
     }
 
-    public long getEngramId( int position ) {
-        return mCraftingQueue.getEngramId( position );
+    public QueueEngram getEngram( int position ) throws Exception {
+        return mCraftingQueue.getEngram( position );
     }
 
-    public void increaseQuantity( int position ) {
-        mCraftingQueue.increaseQuantity( position );
+    public void increaseQuantity( Context context, int position ) throws Exception {
+        mCraftingQueue.increaseQuantity( context, position );
     }
 
-    public void increaseQuantity( long engramId ) {
-        mCraftingQueue.increaseQuantity( engramId );
+    public void increaseQuantity( Context context, long engramId ) throws Exception {
+        mCraftingQueue.increaseQuantity( context, engramId );
     }
 
-    public void decreaseQuantity( int position ) {
-        mCraftingQueue.decreaseQuantity( position );
+    public void ClearQueue( Context context ) throws Exception {
+        mCraftingQueue.ClearContents( context );
     }
 
-    public void ClearQueue() {
-        mCraftingQueue.Clear();
+    public void Delete( Context context, long engramId ) throws Exception {
+        mCraftingQueue.Delete( context, engramId );
     }
 
-    public void Remove( long engramId ) {
-        mCraftingQueue.Remove( engramId );
-    }
-
-    public void setQuantity( long engramId, int quantity ) {
-        mCraftingQueue.setQuantity( engramId, quantity );
+    public void setQuantity( Context context, long engramId, int quantity ) throws Exception {
+        mCraftingQueue.setQuantity( context, engramId, quantity );
     }
 
     private Context getContext() {

@@ -1,5 +1,6 @@
 package arc.resource.calculator;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
     JSONArray mResourceJsonArray = new JSONArray();
     JSONArray mEngramJsonArray = new JSONArray();
     JSONArray mComplexResourceJsonArray = new JSONArray();
+    JSONArray mConversionJsonArray = new JSONArray();
 
     SparseArray<Resource> mResourceMap = new SparseArray<>();
     SparseArray<Engram> mEngramMap = new SparseArray<>();
@@ -146,16 +148,16 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
             JSONObject jsonObject = new JSONObject( jsonString );
 
-            // Place what tables to update here
-            publishProgress( "Updating Resources..." );
-            mResourceJsonArray = updateResourceJSONArray( jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) );
+            // Pull conversion table from file
+            mConversionJsonArray = jsonObject.getJSONArray( "conversion" );
 
+            // Place what tables to update here
             publishProgress( "Updating Engrams..." );
             mEngramJsonArray = updateEngramJSONArray( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) );
 
-            jsonObject.put( DatabaseContract.ResourceEntry.TABLE_NAME, mResourceJsonArray );
-            jsonObject.put( DatabaseContract.EngramEntry.TABLE_NAME, mEngramJsonArray );
-            jsonObject.put( DatabaseContract.ComplexResourceEntry.TABLE_NAME, mComplexResourceJsonArray );
+            jsonObject.put(
+                    DatabaseContract.EngramEntry.TABLE_NAME,
+                    updateEngramJSONArray( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) ) );
 
             return jsonObject;
         }

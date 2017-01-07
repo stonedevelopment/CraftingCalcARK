@@ -111,42 +111,6 @@ public class TestProvider extends AndroidTestCase {
         bulkInsertByUri( CompositionEntry.CONTENT_URI, cVector.size(), cVector, CompositionEntry.TABLE_NAME );
     }
 
-    public void testBulkInsertComplexResources() throws ExecutionException, InterruptedException {
-        // First, let's parse raw json file into Vector objects containing ContentValues
-        parseJSONIntoVectors();
-
-        // Next, we bulk insert Resources
-        bulkInsertResources();
-
-        // Next, we bulk insert Engrams
-        bulkInsertEngrams();
-
-        // Now, let us query database for matching drawable strings
-        Cursor cursor = getContext().getContentResolver().query(
-                ComplexResourceEntry.buildUriWithDrawable(), null, null, null, null );
-
-        // Check if we found atleast 1
-        assertTrue( cursor.getCount() > 0 );
-
-        // Create Vector to use for bulkInsert after cursor is closed
-        Vector<ContentValues> cVector = new Vector<>();
-        while ( cursor.moveToNext() ) {
-            long engram_id = cursor.getLong( cursor.getColumnIndex( ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
-            long resource_id = cursor.getLong( cursor.getColumnIndex( ComplexResourceEntry.COLUMN_RESOURCE_KEY ) );
-
-            ContentValues values = new ContentValues();
-            values.put( ComplexResourceEntry.COLUMN_ENGRAM_KEY, engram_id );
-            values.put( ComplexResourceEntry.COLUMN_RESOURCE_KEY, resource_id );
-
-            Helper.Log( TAG, values.toString() );
-
-            cVector.add( values );
-        }
-        cursor.close();
-
-        bulkInsertByUri( ComplexResourceEntry.CONTENT_URI, cVector.size(), cVector, ComplexResourceEntry.TABLE_NAME );
-    }
-
     private void bulkInsertResources() throws ExecutionException, InterruptedException {
 //        bulkInsertByUri( ResourceEntry.CONTENT_URI, ResourceInitializer.getCount(), mResourceVector, ResourceEntry.TABLE_NAME );
     }

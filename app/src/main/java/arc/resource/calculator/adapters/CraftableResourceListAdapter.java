@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.util.Helper;
 import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.viewholders.ResourceViewHolder;
 
 /**
@@ -25,20 +25,20 @@ import arc.resource.calculator.viewholders.ResourceViewHolder;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class CraftableResourceListAdapter extends RecyclerView.Adapter {
+public class CraftableResourceListAdapter extends RecyclerView.Adapter<ResourceViewHolder> {
     private static final String TAG = CraftableResourceListAdapter.class.getSimpleName();
 
     private CraftingQueue mCraftingQueue;
     private Context mContext;
 
-    public CraftableResourceListAdapter( Context context ) {
+    public CraftableResourceListAdapter( Context context ) throws Exception {
         mContext = context;
 
         mCraftingQueue = CraftingQueue.getInstance( context );
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+    public ResourceViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View itemView = LayoutInflater.from( parent.getContext() ).
                 inflate( R.layout.list_item_resource, parent, false );
 
@@ -46,19 +46,20 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder( RecyclerView.ViewHolder holder, int position ) {
-        ResourceViewHolder viewHolder = ( ResourceViewHolder ) holder;
-
+    public void onBindViewHolder( ResourceViewHolder holder, int position ) {
         try {
-            int imageId = getContext().getResources().getIdentifier( mCraftingQueue.getResourceDrawable( position ), "drawable", getContext().getPackageName() );
-            String name = mCraftingQueue.getResourceName( position );
-            int quantity = mCraftingQueue.getResourceQuantity( position );
+            int imageId = getContext().getResources().getIdentifier(
+                    mCraftingQueue.getResource( position ).getDrawable(),
+                    "drawable",
+                    getContext().getPackageName() );
+            String name = mCraftingQueue.getResource( position ).getName();
+            int quantity = mCraftingQueue.getResource( position ).getQuantity();
 
-            viewHolder.getImageView().setImageResource( imageId );
-            viewHolder.getNameText().setText( name );
-            viewHolder.getQuantityText().setText( String.format( Locale.US, "%1$d", quantity ) );
-        } catch ( ArrayIndexOutOfBoundsException e ) {
-            Helper.Log( TAG, e.getMessage() );
+            holder.getThumbnail().setImageResource( imageId );
+            holder.getName().setText( name );
+            holder.getQuantity().setText( String.format( Locale.US, "%1$d", quantity ) );
+        } catch ( Exception e ) {
+            ExceptionUtil.SendErrorReportWithAlertDialog( getContext(), TAG, e );
         }
     }
 
@@ -71,11 +72,11 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter {
         return mContext;
     }
 
-    public void Refresh() {
-        this.notifyDataSetChanged();
+    public void NotifyDataChanged() {
+        notifyDataSetChanged();
     }
 
-    public void RefreshData() {
-        mCraftingQueue.UpdateResources();
+    public void RefreshData() throws Exception {
+        mCraftingQueue.UpdateResources(getContext());
     }
 }

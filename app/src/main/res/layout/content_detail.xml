@@ -1,43 +1,49 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:ads="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="@dimen/detail_padding"
-              app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:context=".DetailActivity">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/content_main_top_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/grid_layout_padding">
-
-        <include
-            layout="@layout/content_detail_top"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/content_main_bottom_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/grid_layout_padding">
-
-        <include
-            layout="@layout/content_detail_bottom"/>
-
-    </FrameLayout>
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/banner_ad"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"/>
+        android:orientation="vertical"
+        android:padding="@dimen/detail_padding"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".DetailActivity">
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/content_main_top_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/grid_layout_padding">
+
+            <include
+                layout="@layout/content_detail_top"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/content_main_bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/grid_layout_padding">
+
+            <include
+                layout="@layout/content_detail_bottom"/>
+
+        </FrameLayout>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/banner_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"/>
+
+    </LinearLayout>
+</ScrollView>
