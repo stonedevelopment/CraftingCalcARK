@@ -3,6 +3,7 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    253.2   Updated Total Conversion table with Fresh Meat and Rotten Meat (oops!)
     253.1   Updated Dyes with yields of 5, Misc category (for Camera) added Smithy to station_id's
     253.0   Added Camera, Tusoteuthis Saddle, Therizinosaurus Saddle
     252.1   Added total_conversion table, to allow for easy resource conversions in the future
@@ -21,7 +22,7 @@
     247.1   Updated Categories to Primitive+
 
     -->
-    <string name="json_version">253.1</string>
+    <string name="json_version">253.2</string>
 
     <string name="intent_key_did_update">did_update</string>
 

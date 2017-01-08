@@ -49,8 +49,13 @@ public class ExceptionUtil {
 
     // Cursor returned null, show requested _id
     public static class CursorNullException extends Exception {
+
         public CursorNullException( Uri uri ) {
             super( uri.toString() );
+        }
+
+        public CursorNullException( Uri uri, String contents ) {
+            super( uri.toString() + " array:" + contents );
         }
     }
 

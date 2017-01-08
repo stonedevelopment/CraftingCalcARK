@@ -42,7 +42,7 @@ public class DisplayCase {
 
     private Context mContext;
 
-    private SparseArray<DisplayEngram> mEngrams;
+    private LongSparseArray<DisplayEngram> mEngrams;
     private SparseArray<Category> mCategories;
     private SparseArray<Station> mStations;
     private LongSparseArray<Queue> mQueues;
@@ -59,7 +59,7 @@ public class DisplayCase {
 
         mContext = context;
 
-        mEngrams = new SparseArray<>();
+        mEngrams = new LongSparseArray<>();
         mCategories = new SparseArray<>();
         mStations = new SparseArray<>();
         mQueues = new LongSparseArray<>();
@@ -221,8 +221,8 @@ public class DisplayCase {
         }
     }
 
-    private SparseArray<DisplayEngram> getEngrams( Uri uri ) throws ExceptionUtil.CursorNullException {
-        SparseArray<DisplayEngram> engrams = new SparseArray<>();
+    private LongSparseArray<DisplayEngram> getEngrams( Uri uri ) throws ExceptionUtil.CursorNullException {
+        LongSparseArray<DisplayEngram> engrams = new LongSparseArray<>();
 
         Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null );
 
@@ -230,16 +230,17 @@ public class DisplayCase {
             throw new ExceptionUtil.CursorNullException( uri );
 
         while ( cursor.moveToNext() ) {
-            engrams.put(
-                    engrams.size(),
-                    new DisplayEngram(
-                            cursor.getLong( cursor.getColumnIndex( EngramEntry._ID ) ),
-                            cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_NAME ) ),
-                            cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_DRAWABLE ) ),
-                            cursor.getInt( cursor.getColumnIndex( EngramEntry.COLUMN_YIELD ) ),
-                            cursor.getLong( cursor.getColumnIndex( EngramEntry.COLUMN_CATEGORY_KEY ) )
-                    )
-            );
+            long _id = cursor.getLong( cursor.getColumnIndex( EngramEntry._ID ) );
+
+            if ( engrams.indexOfKey( _id ) < 0 )
+                engrams.put(
+                        _id,
+                        new DisplayEngram(
+                                cursor.getLong( cursor.getColumnIndex( EngramEntry._ID ) ),
+                                cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_NAME ) ),
+                                cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_DRAWABLE ) ),
+                                cursor.getInt( cursor.getColumnIndex( EngramEntry.COLUMN_YIELD ) ),
+                                cursor.getLong( cursor.getColumnIndex( EngramEntry.COLUMN_CATEGORY_KEY ) ) ) );
         }
 
         cursor.close();
@@ -596,7 +597,7 @@ public class DisplayCase {
     public void UpdateData() throws Exception {
         long dlc_id = new PrefsUtil( getContext() ).getDLCPreference();
 
-        mEngrams = new SparseArray<>();
+        mEngrams = new LongSparseArray<>();
         mCategories = new SparseArray<>();
         mStations = new SparseArray<>();
 

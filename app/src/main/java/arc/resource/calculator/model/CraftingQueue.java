@@ -3,9 +3,7 @@ package arc.resource.calculator.model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.net.Uri;
-import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 
@@ -166,7 +164,7 @@ public class CraftingQueue {
 
         if ( queue == null )
             throw new ExceptionUtil.CursorNullException(
-                    QueueEntry.buildUriWithEngramId( engramId ) );
+                    QueueEntry.buildUriWithEngramId( engramId ), mEngrams.toString() );
 
         Delete( context, DatabaseContract.buildUriWithId( QueueEntry.CONTENT_URI, queue.getId() ) );
     }
