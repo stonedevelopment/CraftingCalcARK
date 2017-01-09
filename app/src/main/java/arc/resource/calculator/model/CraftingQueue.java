@@ -135,8 +135,7 @@ public class CraftingQueue {
 
         // if quantity is 0, remove queue from database
         if ( quantity == 0 ) {
-            Delete(
-                    context,
+            Delete( context,
                     DatabaseContract.buildUriWithId( QueueEntry.CONTENT_URI, queue.getId() ) );
             return;
         }
@@ -152,9 +151,8 @@ public class CraftingQueue {
     // -- DATABASE QUERY METHODS --
 
     private void Delete( Context context, Uri uri ) throws Exception {
-        context.getContentResolver().delete( uri, null, null );
-
-        UpdateData( context );
+        if ( context.getContentResolver().delete( uri, null, null ) > 0 )
+            UpdateData( context );
     }
 
     public void Delete( Context context, long engramId ) throws Exception {
@@ -163,8 +161,7 @@ public class CraftingQueue {
                 QueueEntry.buildUriWithEngramId( engramId ) );
 
         if ( queue == null )
-            throw new ExceptionUtil.CursorNullException(
-                    QueueEntry.buildUriWithEngramId( engramId ), mEngrams.toString() );
+            return;
 
         Delete( context, DatabaseContract.buildUriWithId( QueueEntry.CONTENT_URI, queue.getId() ) );
     }

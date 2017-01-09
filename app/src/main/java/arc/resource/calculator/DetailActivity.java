@@ -187,7 +187,10 @@ public class DetailActivity extends AppCompatActivity {
         saveButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                FinishActivityWithResult( Helper.DETAIL_SAVE, mShowcase.getQuantityWithYield() );
+                if ( mShowcase.getQuantity() > 0 )
+                    FinishActivityWithResult( Helper.DETAIL_SAVE, mShowcase.getQuantityWithYield() );
+                else
+                    FinishActivityWithResult( Helper.DETAIL_REMOVE, true );
             }
         } );
 
@@ -208,11 +211,11 @@ public class DetailActivity extends AppCompatActivity {
         finish();
     }
 
-    private void FinishActivityWithResult( String resultCode, int result ) {
+    private void FinishActivityWithResult( String resultCode, int quantity ) {
         Intent returnIntent = getIntent();
 
         returnIntent.putExtra( Helper.RESULT_CODE_DETAIL_ACTIVITY, resultCode );
-        returnIntent.putExtra( Helper.DETAIL_QUANTITY, result );
+        returnIntent.putExtra( Helper.DETAIL_QUANTITY, quantity );
 
         setResult( RESULT_OK, returnIntent );
 

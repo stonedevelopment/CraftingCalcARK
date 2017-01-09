@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                         assert result != null;
                         switch ( result ) {
                             case Helper.DETAIL_REMOVE:
-                                if ( extras.getBoolean( Helper.DETAIL_REMOVE ) )
+                                if ( extras.getBoolean( result ) )
                                     craftableEngramListAdapter.Delete(
                                             getApplicationContext(),
                                             id );
