@@ -19,6 +19,11 @@
     </style>
   </head>
   <body>
+    $ 1.1.4
+      % Version 1.1.4
+      _ 01/08/2016
+      * Bugfix: Rare error found when removing an Engram from the Queue on the Engram Details screen. FIXED!
+
     $ 1.1.3
       % Version 1.1.3
       _ 01/08/2016
