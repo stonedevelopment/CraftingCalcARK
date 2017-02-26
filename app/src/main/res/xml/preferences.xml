@@ -18,21 +18,21 @@
 
         <SwitchPreference
             android:defaultValue="@string/pref_filter_category_value_default"
-            android:icon="@drawable/folder"
+            android:icon="@drawable/prefs_icons_folder"
             android:key="@string/pref_filter_category_key"
             android:summary="@string/pref_filter_category_description"
             android:title="@string/pref_filter_category_title"/>
 
         <SwitchPreference
             android:defaultValue="@string/pref_filter_station_value_default"
-            android:icon="@drawable/structures_crafting_smithy"
+            android:icon="@drawable/prefs_icons_station"
             android:key="@string/pref_filter_station_key"
             android:summary="@string/pref_filter_station_description"
             android:title="@string/pref_filter_station_title"/>
 
         <SwitchPreference
             android:defaultValue="@string/pref_filter_level_value_default"
-            android:icon="@drawable/metal_storage_vault"
+            android:icon="@drawable/prefs_icons_level"
             android:key="@string/pref_filter_level_key"
             android:summary="@string/pref_filter_level_description"
             android:title="@string/pref_filter_level_title"/>
@@ -51,10 +51,11 @@
 
         <SwitchPreference
             android:defaultValue="@string/pref_filter_refined_value_default"
-            android:icon="@drawable/metal_ore"
+            android:icon="@drawable/prefs_icons_breakdown_resources"
             android:key="@string/pref_filter_refined_key"
             android:summary="@string/pref_filter_refined_description"
             android:title="@string/pref_filter_refined_title"/>
 
     </PreferenceCategory>
+
 </PreferenceScreen>

@@ -13,7 +13,7 @@ public class ExceptionUtil {
     public static void SendErrorReportWithAlertDialog( Context context, String tag, Exception e ) {
         SendErrorReport( context, tag, e );
 
-        AlertUtil.AlertDialogError( context ).show();
+        DialogUtil.Error( context ).show();
     }
 
     public static void SendErrorReport( Context context, String tag, Exception e ) {

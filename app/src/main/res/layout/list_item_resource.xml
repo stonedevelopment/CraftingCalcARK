@@ -8,10 +8,9 @@
         android:id="@+id/resource_list_imageView"
         android:layout_width="@dimen/resource_view_holder_thumbnail_size"
         android:layout_height="@dimen/resource_view_holder_thumbnail_size"
-        android:adjustViewBounds="true"
-        android:layout_marginStart="@dimen/resource_view_holder_padding"
         android:layout_marginEnd="@dimen/resource_view_holder_padding"
-        />
+        android:layout_marginStart="@dimen/resource_view_holder_padding"
+        android:adjustViewBounds="true"/>
 
     <TextView
         android:id="@+id/resource_list_nameText"

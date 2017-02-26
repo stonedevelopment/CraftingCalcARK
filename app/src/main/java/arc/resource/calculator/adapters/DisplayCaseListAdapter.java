@@ -90,7 +90,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<DisplayCaseList
             int quantity = mDisplayCase.getQuantityWithYieldByPosition( position );
 
             if ( quantity > 0 ) {
-                holder.getImageView().setBackground( ContextCompat.getDrawable( context, R.drawable.frame_craftable_engram_display_case ) );
+                holder.getImageView().setBackground( ContextCompat.getDrawable( context, R.drawable.frame_engram_crafting_queue ) );
                 holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
                 holder.getName().setMaxLines( 1 );
             } else {

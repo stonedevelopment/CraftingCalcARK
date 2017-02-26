@@ -82,8 +82,8 @@
 
     <!-- String used with the QuantityChooser Dialog -->
     <string name="quantity_dialog_full_title">Edit Quantity</string>
-    <string name="quantity_dialog_save_button">Save</string>
-    <string name="quantity_dialog_cancel_button">Cancel</string>
+    <string name="quantity_dialog_positive_button">Update</string>
+    <string name="quantity_dialog_negative_button">Cancel</string>
 
     <!-- Strings used with the Help Dialog -->
     <string name="help_dialog_full_title">How to Use This App</string>

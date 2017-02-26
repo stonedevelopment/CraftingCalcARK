@@ -2,7 +2,6 @@ package arc.resource.calculator;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -15,12 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import arc.resource.calculator.db.DatabaseHelper;
 import arc.resource.calculator.listeners.MainActivityListener;
 import arc.resource.calculator.listeners.SendErrorReportListener;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
-import arc.resource.calculator.util.AlertUtil;
+import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.util.Util;
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 
         Toast.makeText( this, getString( R.string.dimens ), Toast.LENGTH_SHORT ).show();
 
-        UpdateContainerLayoutParams();
+        updateContainerLayoutParams();
 
         AdUtil.loadAdView( this );
 
@@ -130,17 +128,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.action_about:
-                new AlertDialog.Builder( this )
-                        .setTitle( getString( R.string.about_dialog_full_title ) )
-                        .setIcon( R.drawable.wood_signs_wooden_sign )
-                        .setMessage(
-                                "Passionately developed by Shane Stone.\n\n" +
-                                        "Email:\n  jaredstone1982@gmail.com\n  stonedevs@gmail.com\n\n" +
-                                        "Twitter:\n  @MasterxOfxNone\n  @ARKResourceCalc\n\n" +
-                                        "Steam:\n  MasterxOfxNone\n" +
-                                        "Xbox Live:\n  MasterxOfxNone\n\n" +
-                                        getAppVersions() )
-                        .show();
+                DialogUtil.About( MainActivity.this ).show();
                 break;
 
             default:
@@ -176,11 +164,11 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.floating_action_edit_quantity:
-                AlertUtil.AlertDialogEditQuantity( MainActivity.this, menuInfo.getId() ).show();
+                DialogUtil.EditQuantity( MainActivity.this, menuInfo.getId() ).show();
                 break;
 
             case R.id.floating_action_view_details:
-                StartDetailActivity( menuInfo.getId() );
+                startDetailActivity( menuInfo.getId() );
                 break;
         }
 
@@ -238,7 +226,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void StartDetailActivity( long _id ) {
+    private void startDetailActivity( long _id ) {
         mCallback.requestSaveCategoryLevels( this );
 
         Intent intent = new Intent( this, DetailActivity.class );
@@ -255,15 +243,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void UpdateContainerLayoutParams() {
-        Log.d( TAG, "UpdateContainerLayoutParams()" );
+    private void updateContainerLayoutParams() {
+        Log.d( TAG, "updateContainerLayoutParams()" );
 
         boolean isQueueEmpty = mQueueEngramRecyclerView.getAdapter().getItemCount() == 0;
 
-        setBottomContainerLayoutParams( isQueueEmpty );
-    }
-
-    private void setBottomContainerLayoutParams( boolean isQueueEmpty ) {
         LinearLayout.LayoutParams layoutParams;
 
         if ( isQueueEmpty ) {
@@ -276,12 +260,6 @@ public class MainActivity extends AppCompatActivity
         container.setLayoutParams( layoutParams );
     }
 
-    private String getAppVersions() {
-        return "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
-                "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
-                "JSON File Version: " + getString( R.string.json_version ) + "\n";
-    }
-
     @Override
     public void onCategoryHierarchyResolved( String text ) {
         mCategoryHierarchyTextView.setText( text );
@@ -289,7 +267,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRequestLayoutUpdate() {
-        UpdateContainerLayoutParams();
+        updateContainerLayoutParams();
     }
 
     @Override
