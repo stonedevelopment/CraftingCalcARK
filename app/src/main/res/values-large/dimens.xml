@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="dimens">large</string>
+
     <!-- DisplayCase: Grid Columns/Rows -->
     <integer name="display_case_column_count">5</integer>
     <integer name="display_case_row_count">3</integer>
@@ -14,6 +16,13 @@
     <!-- DisplayCase: ViewHolders: Text Sizes -->
     <dimen name="engram_grid_view_holder_quantity_text_size">30sp</dimen>
     <dimen name="engram_grid_view_holder_name_text_size">16sp</dimen>
+
+    <!-- CraftingQueue: ViewHolders -->
+    <dimen name="craftable_engram_grid_view_holder_size">96dp</dimen>
+
+    <!-- CraftingQueue: ViewHolders: Text Sizes -->
+    <dimen name="queue_engram_grid_view_holder_quantity_text_size">30sp</dimen>
+    <dimen name="queue_engram_grid_view_holder_name_text_size">16sp</dimen>
 
     <!-- ViewHolder for Resources -->
     <dimen name="resource_view_holder_padding">8dp</dimen>

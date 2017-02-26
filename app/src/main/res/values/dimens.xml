@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="dimens">base</string>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">4dp</dimen>
@@ -21,12 +23,18 @@
     <dimen name="display_case_view_holder_padding">4dp</dimen>
     <dimen name="engram_grid_view_holder_corner_radius">8dp</dimen>
 
-    <dimen name="craftable_engram_grid_view_holder_padding">4dp</dimen>
-    <dimen name="craftable_engram_grid_view_holder_corner_radius">8dp</dimen>
-
     <!-- DisplayCase: ViewHolders: Text Sizes -->
     <dimen name="engram_grid_view_holder_quantity_text_size">24sp</dimen>
     <dimen name="engram_grid_view_holder_name_text_size">12sp</dimen>
+
+    <!-- CraftingQueue: ViewHolders -->
+    <dimen name="craftable_engram_grid_view_holder_size">72dp</dimen>
+    <dimen name="craftable_engram_grid_view_holder_padding">4dp</dimen>
+    <dimen name="craftable_engram_grid_view_holder_corner_radius">8dp</dimen>
+
+    <!-- CraftingQueue: ViewHolders: Text Sizes -->
+    <dimen name="queue_engram_grid_view_holder_quantity_text_size">20sp</dimen>
+    <dimen name="queue_engram_grid_view_holder_name_text_size">10sp</dimen>
 
     <!-- ViewHolder for Resources -->
     <dimen name="resource_view_holder_padding">4dp</dimen>

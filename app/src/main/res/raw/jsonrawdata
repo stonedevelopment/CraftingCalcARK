@@ -6,7 +6,7 @@
     },
     {
       "_id": 2,
-      "name": "Primitive+"
+      "name": "Primitive Plus"
     },
     {
       "_id": 3,
@@ -19736,7 +19736,7 @@
       "drawable": "soap",
       "yield": 1,
       "level": 1,
-      "category_id": 0,
+      "category_id": 1300,
       "dlc_id": [
         1,
         2,

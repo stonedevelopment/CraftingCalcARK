@@ -26,21 +26,13 @@ public class Category {
     private long mParent;
 
     // String literal of Resource Drawable to use for icon
-    private String mDrawable;
+    private String mFile;
 
     public Category( long _id, String name, long parent ) {
-        this.mId = _id;
-        this.mName = name;
-        this.mParent = parent;
-        this.mDrawable = "folder";
-    }
-
-    // Constructor used only for inserting a "back" category to go back one level
-    public Category( long id, String name, long parent, String drawable ) {
-        this.mId = id;
-        this.mName = name;
-        this.mParent = parent;
-        this.mDrawable = drawable;
+        mId = _id;
+        mName = name;
+        mParent = parent;
+        mFile = "folder.png";
     }
 
     public long getId() {
@@ -55,12 +47,12 @@ public class Category {
         return mParent;
     }
 
-    public String getDrawable() {
-        return mDrawable;
+    public String getImagePath() {
+        return mFile;
     }
 
     @Override
     public String toString() {
-        return "mId=" + mId + ", mName=" + mName + ", mParent=" + mParent;
+        return "mEngramId=" + mId + ", mName=" + mName + ", mParent=" + mParent;
     }
 }

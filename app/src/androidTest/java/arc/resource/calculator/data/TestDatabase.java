@@ -3,7 +3,7 @@ package arc.resource.calculator.data;
 import android.test.AndroidTestCase;
 
 import arc.resource.calculator.db.DatabaseHelper;
-import arc.resource.calculator.util.Helper;
+import arc.resource.calculator.util.Util;
 
 public class TestDatabase extends AndroidTestCase {
     private static final String TAG = TestDatabase.class.getSimpleName();
@@ -19,13 +19,13 @@ public class TestDatabase extends AndroidTestCase {
 
         TestUtilities.insertEngram( getContext(), categoryRowId );
 
-        Helper.Log( TAG, "testEngramTable: " + categoryRowId );
+        Util.Log( TAG, "testEngramTable: " + categoryRowId );
     }
 
     public void testResourceTable() throws Exception {
         TestUtilities.insertResource( getContext() );
 
-        Helper.Log( TAG, "testResourceTable" );
+        Util.Log( TAG, "testResourceTable" );
     }
 
     public void testComplexResourceTable() throws Exception {
@@ -41,7 +41,7 @@ public class TestDatabase extends AndroidTestCase {
         // Finally, insert Complex Resource with provided necessities.
         TestUtilities.insertComplexResource( getContext(), engramRowId, resourceRowId );
 
-        Helper.Log( TAG, "testComplexResourceTable: " + categoryRowId + ", " + engramRowId + ", " + resourceRowId );
+        Util.Log( TAG, "testComplexResourceTable: " + categoryRowId + ", " + engramRowId + ", " + resourceRowId );
     }
 
     public void testCompositionTable() throws Exception {
@@ -58,13 +58,13 @@ public class TestDatabase extends AndroidTestCase {
         // Finally, insert Complex Resource with provided necessities.
         TestUtilities.insertComposition( getContext(), engramRowId, resourceRowId, quantity );
 
-        Helper.Log( TAG, "testCompositionTable: " + categoryRowId + ", " + engramRowId + ", " + resourceRowId + ", " + quantity );
+        Util.Log( TAG, "testCompositionTable: " + categoryRowId + ", " + engramRowId + ", " + resourceRowId + ", " + quantity );
     }
 
     public void testCategoryTable() throws Exception {
         TestUtilities.insertCategory( getContext() );
 
-        Helper.Log( TAG, "testCategoryTable" );
+        Util.Log( TAG, "testCategoryTable" );
     }
 
     public void testQueueTable() throws Exception {
@@ -79,10 +79,10 @@ public class TestDatabase extends AndroidTestCase {
         // Finally, insert Queue with provided necessities.
         TestUtilities.insertQueue( getContext(), engramRowId, quantity );
 
-        Helper.Log( TAG, "testQueueTable: " + categoryRowId + ", " + engramRowId + ", " + quantity );
+        Util.Log( TAG, "testQueueTable: " + categoryRowId + ", " + engramRowId + ", " + quantity );
     }
 
-    // Helper method to delete the database whenever we're ready to
+    // Util method to delete the database whenever we're ready to
     void deleteDatabase() {
         getContext().deleteDatabase( DatabaseHelper.DATABASE_NAME );
     }

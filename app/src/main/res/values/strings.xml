@@ -3,6 +3,8 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    253.4   Fixed various file/folder errors
+    253.3   Database upgrade, replaced drawable for file/folder
     253.2   Updated Total Conversion table with Fresh Meat and Rotten Meat (oops!)
     253.1   Updated Dyes with yields of 5, Misc category (for Camera) added Smithy to station_id's
     253.0   Added Camera, Tusoteuthis Saddle, Therizinosaurus Saddle
@@ -22,7 +24,7 @@
     247.1   Updated Categories to Primitive+
 
     -->
-    <string name="json_version">253.2</string>
+    <string name="json_version">253.5</string>
 
     <string name="intent_key_did_update">did_update</string>
 
@@ -77,6 +79,11 @@
     <!-- Strings used with the About Dialog -->
     <string name="about_dialog_full_title">About ARK:Resource Calculator</string>
     <string name="about_dialog_close_button">Close</string>
+
+    <!-- String used with the QuantityChooser Dialog -->
+    <string name="quantity_dialog_full_title">Edit Quantity</string>
+    <string name="quantity_dialog_save_button">Save</string>
+    <string name="quantity_dialog_cancel_button">Cancel</string>
 
     <!-- Strings used with the Help Dialog -->
     <string name="help_dialog_full_title">How to Use This App</string>
@@ -260,5 +267,8 @@
     <!-- Strings related to MobAds -->
     <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
     <string name="banner_ad_app_id">ca-app-pub-8859801923918627~2903432190</string>
+    <string name="context_menu_view_details">View Details</string>
+    <string name="context_menu_edit_quantity">Edit Quantity</string>
+    <string name="context_menu_remove_from_queue">Remove From Queue</string>
 
 </resources>

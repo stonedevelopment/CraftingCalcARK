@@ -19,7 +19,6 @@ import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseProvider;
-import arc.resource.calculator.util.Helper;
 import arc.resource.calculator.utils.ParseJsonTask;
 
 public class TestProvider extends AndroidTestCase {

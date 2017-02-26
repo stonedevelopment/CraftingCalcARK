@@ -11,8 +11,9 @@ import java.util.List;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
-import arc.resource.calculator.util.Helper;
+import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
+import arc.resource.calculator.util.Util;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -32,33 +33,27 @@ public class Showcase {
     private long mId;
     private String mName;
     private String mDescription;
-    private String mDrawable;
+    private String mImagePath;
     private long mCategoryId;
     private List<Long> mStationIds;
     private long mStationId;
     private int mRequiredLevel;
     private long mDLCId;
 
+    // TODO: 1/22/2017 SparseLongArray
     private SparseArray<CompositeResource> mComposition;
 
     private int mYield;
     private int mQuantity;
 
-    private Context mContext;
-
-    public Showcase( Context context, long engramId ) {
-        mContext = context;
-        mId = engramId;
-
+    public Showcase( Context context, long _id ) {
+        mId = _id;
         mStationIds = new ArrayList<>();
+        mDLCId = new PrefsUtil( context ).getDLCPreference();
 
-        mDLCId = new PrefsUtil( mContext ).getDLCPreference();
+        mQuantity = 0;
 
-        QueryForEngramDetails();
-    }
-
-    private Context getContext() {
-        return mContext;
+        QueryForEngramDetails( context );
     }
 
     public long getId() {
@@ -69,8 +64,8 @@ public class Showcase {
         return mName;
     }
 
-    public String getDrawable() {
-        return mDrawable;
+    public String getImagePath() {
+        return mImagePath;
     }
 
     public String getDescription() {
@@ -97,6 +92,15 @@ public class Showcase {
         return String.valueOf( getQuantityWithYield() );
     }
 
+    public QueueResource getResource( int position ) throws Exception {
+        QueueResource resource = getQuantifiableComposition().valueAt( position );
+
+        if ( resource == null )
+            throw new ExceptionUtil.ArrayElementNullException( position, mComposition.toString() );
+
+        return resource;
+    }
+
     public SparseArray<CompositeResource> getComposition() {
         return mComposition;
     }
@@ -112,22 +116,23 @@ public class Showcase {
             QueueResource queueResource = new QueueResource(
                     resource.getId(),
                     resource.getName(),
-                    resource.getDrawable(),
+                    resource.getFolder(),
+                    resource.getFile(),
                     resource.getQuantity(),
                     getQuantity()
             );
             returnableComposition.append( i, queueResource );
         }
 
-        return Helper.sortResourcesByName( returnableComposition );
+        return Util.sortResourcesByName( returnableComposition );
     }
 
     public long getCategoryId() {
         return mCategoryId;
     }
 
-    public String getCategoryHierarchy() {
-        Category category = QueryForCategoryDetails( mCategoryId );
+    public String getCategoryHierarchy( Context context ) {
+        Category category = QueryForCategoryDetails( context, mCategoryId );
 
         if ( category == null ) return null;
 
@@ -135,7 +140,7 @@ public class Showcase {
 
         StringBuilder builder = new StringBuilder( category.getName() );
         while ( parent_id > 0 ) {
-            category = QueryForCategoryDetails( parent_id );
+            category = QueryForCategoryDetails( context, parent_id );
             if ( category == null ) break;
 
             parent_id = category.getParent();
@@ -150,15 +155,15 @@ public class Showcase {
         return mStationId;
     }
 
-    public String getStationName() {
-        return QueryForStationName( mStationId );
+    public String getStationName( Context context ) {
+        return QueryForStationName( context, mStationId );
     }
 
-    public String getStations() {
+    public String getStations( Context context ) {
         List<String> names = new ArrayList<>();
 
         for ( Long _id : mStationIds ) {
-            String name = QueryForStationName( _id );
+            String name = QueryForStationName( context, _id );
 
             names.add( name );
         }
@@ -170,10 +175,6 @@ public class Showcase {
         return mDLCId;
     }
 
-    public String getDLCName() {
-        return QueryForDLCName();
-    }
-
     public void setQuantity( int quantity ) {
         mQuantity = quantity;
     }
@@ -182,43 +183,42 @@ public class Showcase {
         mQuantity += 1;
     }
 
+    public void increaseQuantity( int increment ) {
+        int amount = getQuantity() + increment;
+        int floor = amount / increment;
+
+        setQuantity( floor * increment );
+    }
+
     public void decreaseQuantity() {
-        if ( mQuantity > 0 ) {
+        if ( mQuantity > 1 ) {
             mQuantity -= 1;
         }
     }
 
-    public void increaseQuantityBy10() {
-        int amount = getQuantity() + 10;
-        int floor = amount / 10;
-
-        setQuantity( floor * 10 );
-    }
-
-    public void decreaseQuantityBy10() {
-        if ( mQuantity >= 10 ) {
-            int amount, floor;
-
-            if ( getQuantity() % 10 == 0 ) {
-                amount = getQuantity() - 10;
+    public void decreaseQuantity( int decrement ) {
+        if ( mQuantity >= decrement ) {
+            int amount;
+            if ( getQuantity() % decrement == 0 ) {
+                amount = getQuantity() - decrement;
             } else {
                 amount = getQuantity();
             }
 
-            floor = amount / 10;
+            int floor = amount / decrement;
 
-            setQuantity( floor * 10 );
+            setQuantity( floor * decrement );
         } else {
-            if ( mQuantity > 0 ) {
-                mQuantity = 0;
+            if ( mQuantity > 1 ) {
+                mQuantity = 1;
             }
         }
     }
 
     // Query Methods
-    private void QueryForEngramDetails() {
+    private void QueryForEngramDetails( Context context ) {
         // First, let's grab Engram full details.
-        Cursor cursor = getContext().getContentResolver().query(
+        Cursor cursor = context.getContentResolver().query(
                 DatabaseContract.EngramEntry.buildUriWithId( mDLCId, mId ),
                 null, null, null, null
         );
@@ -230,7 +230,11 @@ public class Showcase {
 
         if ( cursor.moveToFirst() ) {
             mName = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
-            mDrawable = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) );
+
+            String folder = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER ) );
+            String file = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE ) );
+            mImagePath = folder + file;
+
             mDescription = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION ) );
             mYield = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) );
             mCategoryId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) );
@@ -250,7 +254,7 @@ public class Showcase {
         }
 
         // Next, let's grab matching Queue details, if there are any.
-        cursor = getContext().getContentResolver().query(
+        cursor = context.getContentResolver().query(
                 DatabaseContract.QueueEntry.buildUriWithEngramId( mId ),
                 null, null, null, null
         );
@@ -259,12 +263,10 @@ public class Showcase {
             mQuantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) );
 
             cursor.close();
-        } else {
-            mQuantity = 0;
         }
 
         // Finally, let's grab Engram Composition details.
-        cursor = getContext().getContentResolver().query(
+        cursor = context.getContentResolver().query(
                 DatabaseContract.CompositionEntry.buildUriWithEngramId( mDLCId, mId ),
                 null, null, null, null
         );
@@ -281,7 +283,7 @@ public class Showcase {
             int resourceQuantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
             if ( !resourceIds.contains( resourceId ) ) {
-                Cursor resourceCursor = mContext.getContentResolver().query(
+                Cursor resourceCursor = context.getContentResolver().query(
                         DatabaseContract.ResourceEntry.buildUriWithId( mDLCId, resourceId ),
                         null, null, null, null
                 );
@@ -295,9 +297,10 @@ public class Showcase {
                     resourceIds.add( resourceId );
 
                     String resourceName = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
-                    String resourceDrawable = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DRAWABLE ) );
+                    String resourceFolder = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER ) );
+                    String resourceFile = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE ) );
 
-                    CompositeResource resource = new CompositeResource( resourceId, resourceName, resourceDrawable, resourceQuantity );
+                    CompositeResource resource = new CompositeResource( resourceId, resourceName, resourceFolder, resourceFile, resourceQuantity );
                     mComposition.put( mComposition.size(), resource );
 
                     Log.d( TAG, "QueryForEngramDetails, CompositeResource: " + resource.toString() );
@@ -313,8 +316,8 @@ public class Showcase {
         cursor.close();
     }
 
-    private Category QueryForCategoryDetails( long _id ) {
-        Cursor cursor = getContext().getContentResolver().query(
+    private Category QueryForCategoryDetails( Context context, long _id ) {
+        Cursor cursor = context.getContentResolver().query(
                 DatabaseContract.CategoryEntry.buildUriWithId( mDLCId, _id ),
                 null, null, null, null
         );
@@ -337,8 +340,8 @@ public class Showcase {
         }
     }
 
-    private String QueryForStationName( long _id ) {
-        Cursor cursor = getContext().getContentResolver().query(
+    private String QueryForStationName( Context context, long _id ) {
+        Cursor cursor = context.getContentResolver().query(
                 DatabaseContract.StationEntry.buildUriWithId( mDLCId, _id ),
                 null, null, null, null
         );
@@ -356,10 +359,10 @@ public class Showcase {
         }
     }
 
-    private String QueryForDLCName() {
+    private String QueryForDLCName( Context context ) {
         long _id = getDLCId();
 
-        Cursor cursor = getContext().getContentResolver().query(
+        Cursor cursor = context.getContentResolver().query(
                 DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, _id ),
                 null, null, null, null
         );

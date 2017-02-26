@@ -1,7 +1,8 @@
 package arc.resource.calculator;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.model.Category;
+import arc.resource.calculator.model.DisplayCase;
+import arc.resource.calculator.util.ExceptionUtil;
 
 public class UpdateJSONActivity extends AppCompatActivity {
     private static final String TAG = UpdateJSONActivity.class.getSimpleName();
@@ -37,10 +41,14 @@ public class UpdateJSONActivity extends AppCompatActivity {
     SparseArray<Engram> mEngramMap = new SparseArray<>();
     SparseArray<Engram> mIncompleteEngramMap = new SparseArray<>();
 
+    DisplayCase mDisplayCase;
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_update_json );
+
+        mDisplayCase = DisplayCase.getInstance( getApplicationContext(), false );
 
         updateConsole( "App started, executing task..." );
 
@@ -149,12 +157,15 @@ public class UpdateJSONActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject( jsonString );
 
             // Pull conversion table from file
-            mConversionJsonArray = jsonObject.getJSONArray( "conversion" );
+//            mConversionJsonArray = jsonObject.getJSONArray( "conversion" );
 
             // Place what tables to update here
-            publishProgress( "Updating Engrams..." );
-            mEngramJsonArray = updateEngramJSONArray( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) );
-
+            jsonObject.put(
+                    DatabaseContract.ResourceEntry.TABLE_NAME,
+                    updateResourceJSONArray( jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) ) );
+            jsonObject.put(
+                    DatabaseContract.StationEntry.TABLE_NAME,
+                    updateStationJSONArray( jsonObject.getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) ) );
             jsonObject.put(
                     DatabaseContract.EngramEntry.TABLE_NAME,
                     updateEngramJSONArray( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) ) );
@@ -162,50 +173,157 @@ public class UpdateJSONActivity extends AppCompatActivity {
             return jsonObject;
         }
 
+        String trimChars( String incoming ) {
+            return incoming.toLowerCase()
+                    .replace( " ", "_" )
+                    .replace( "\'", "" )
+                    .replace( "-", "" )
+                    .replace( "(", "" )
+                    .replace( ")", "" )
+                    + ".png";
+        }
+
         JSONArray updateResourceJSONArray( JSONArray jsonArray ) throws JSONException {
             publishProgress( " - Parsing JSONObjects into SparseArray.." );
 
-            SparseArray<Resource> resources = new SparseArray<>();
-
-            // Fill Resource SparseArray with JSONArray data
+            JSONArray updatedJsonArray = new JSONArray();
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
-                String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
+                long _id = jsonObject.getLong( DatabaseContract.ResourceEntry._ID );
                 String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
+                String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
                 JSONArray dlcJsonArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
 
-                int[] dlc_ids = new int[dlcJsonArray.length()];
-                for ( int j = 0; j < dlcJsonArray.length(); j++ ) {
-                    dlc_ids[j] = dlcJsonArray.getInt( j );
+                int dlc_id;
+                if ( dlcJsonArray.length() > 1 ) {
+                    dlc_id = 1;
+                } else {
+                    dlc_id = dlcJsonArray.getInt( 0 );
                 }
 
-                resources.put(
-                        resources.size(),
-                        new Resource( name, drawable, dlc_ids )
-                );
+                String dlc_name = null;
+                switch ( dlc_id ) {
+                    case 1:
+                        dlc_name = "Vanilla";
+                        break;
+                    case 2:
+                        dlc_name = "Primitive Plus";
+                        break;
+                    case 3:
+                        dlc_name = "Scorched Earth";
+                        break;
+                }
+
+                String imageFolder = dlc_name + "/Resources/";
+                String imageFile = trimChars( name );
+
+                Log.d( TAG, imageFolder + imageFile );
+
+                JSONObject newJsonObject = new JSONObject();
+                newJsonObject.put( DatabaseContract.ResourceEntry._ID, _id );
+                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
+                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FOLDER, imageFolder );
+                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FILE, imageFile );
+                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, dlcJsonArray );
+
+                updatedJsonArray.put( newJsonObject );
             }
 
-            // Sort Resource SparseArray by its name
-            publishProgress( " - Sorting Resource SparseArray.." );
-            resources = sortResourcesByName( resources.clone() );
+//                SparseArray<Resource> resources = new SparseArray<>();
+//
+//            // Fill Resource SparseArray with JSONArray data
+//            for ( int i = 0; i < jsonArray.length(); i++ ) {
+//                JSONObject jsonObject = jsonArray.getJSONObject( i );
+//
+//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FOLDER, "" );
+//
+//                String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
+//                String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
+//                JSONArray dlcJsonArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
+//
+//                int[] dlc_ids = new int[dlcJsonArray.length()];
+//                for ( int j = 0; j < dlcJsonArray.length(); j++ ) {
+//                    dlc_ids[j] = dlcJsonArray.getInt( j );
+//                }
+//
+//                resources.put(
+//                        resources.size(),
+//                        new Resource( name, drawable, dlc_ids )
+//                );
+//            }
+//
+//            // Sort Resource SparseArray by its name
+//            publishProgress( " - Sorting Resource SparseArray.." );
+//            resources = sortResourcesByName( resources.clone() );
+//
+//            // Create new JSONArray, add _id element
+//            publishProgress( " - Converting SparseArray into JSONArray.." );
+//            JSONArray updatedJsonArray = new JSONArray();
+//            for ( int i = 0; i < resources.size(); i++ ) {
+//                Resource resource = resources.valueAt( i );
+//
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put( DatabaseContract.ResourceEntry._ID, i );
+//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_NAME, resource.name );
+//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, resource.drawable );
+//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, new JSONArray( resource.dlc_ids ) );
+//
+//                publishProgress( "  - " + jsonObject.toString() );
+//                updatedJsonArray.put( jsonObject );
+//
+//                mResourceMap.put( i, resource );
+//            }
 
-            // Create new JSONArray, add _id element
-            publishProgress( " - Converting SparseArray into JSONArray.." );
+            publishProgress( "Updating complete!" );
+            return updatedJsonArray;
+        }
+
+        JSONArray updateStationJSONArray( JSONArray jsonArray ) throws JSONException {
+            publishProgress( " - Parsing JSONObjects into SparseArray.." );
+
             JSONArray updatedJsonArray = new JSONArray();
-            for ( int i = 0; i < resources.size(); i++ ) {
-                Resource resource = resources.valueAt( i );
+            for ( int i = 0; i < jsonArray.length(); i++ ) {
+                JSONObject jsonObject = jsonArray.getJSONObject( i );
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put( DatabaseContract.ResourceEntry._ID, i );
-                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_NAME, resource.name );
-                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, resource.drawable );
-                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, new JSONArray( resource.dlc_ids ) );
+                long _id = jsonObject.getLong( DatabaseContract.StationEntry._ID );
+                String drawable = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_DRAWABLE );
+                String name = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_NAME );
+                JSONArray dlcJsonArray = jsonObject.getJSONArray( DatabaseContract.StationEntry.COLUMN_DLC_KEY );
 
-                publishProgress( "  - " + jsonObject.toString() );
-                updatedJsonArray.put( jsonObject );
+                int dlc_id;
+                if ( dlcJsonArray.length() > 1 ) {
+                    dlc_id = 1;
+                } else {
+                    dlc_id = dlcJsonArray.getInt( 0 );
+                }
 
-                mResourceMap.put( i, resource );
+                String dlc_name = null;
+                switch ( dlc_id ) {
+                    case 1:
+                        dlc_name = "Vanilla";
+                        break;
+                    case 2:
+                        dlc_name = "Primitive Plus";
+                        break;
+                    case 3:
+                        dlc_name = "Scorched Earth";
+                        break;
+                }
+
+                String imageFolder = dlc_name + "/Stations/";
+                String imageFile = trimChars( name );
+
+                Log.d( TAG, imageFolder + imageFile );
+
+                JSONObject newJsonObject = new JSONObject();
+                newJsonObject.put( DatabaseContract.StationEntry._ID, _id );
+                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_NAME, name );
+                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER, imageFolder );
+                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE, imageFile );
+                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_DLC_KEY, dlcJsonArray );
+
+                updatedJsonArray.put( newJsonObject );
             }
 
             publishProgress( "Updating complete!" );
@@ -260,17 +378,58 @@ public class UpdateJSONActivity extends AppCompatActivity {
             return -1;
         }
 
+        private boolean isRoot( long level ) {
+            return level == 0;
+        }
+
+        public String getCategoryHierarchicalText( Uri uri ) throws Exception {
+            Category category = getCategory( uri );
+
+            StringBuilder builder = new StringBuilder( category.getName() ).append( "/" );
+
+            while ( !isRoot( category.getParent() ) ) {
+                category = getCategory(
+                        DatabaseContract.CategoryEntry.buildUriWithId(
+                                DatabaseContract.CategoryEntry.getDLCIdFromUri( uri ), category.getParent() ) );
+
+                builder.insert( 0, category.getName() + "/" );
+            }
+
+            return builder.toString();
+        }
+
+        private Category getCategory( Uri uri ) throws ExceptionUtil.CursorNullException,
+                ExceptionUtil.CursorEmptyException {
+            Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null );
+
+            if ( cursor == null )
+                throw new ExceptionUtil.CursorNullException( uri );
+
+            if ( !cursor.moveToFirst() )
+                throw new ExceptionUtil.CursorEmptyException( uri );
+
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
+            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
+
+            Category category = new Category(
+                    DatabaseContract.CategoryEntry.getIdFromUri( uri ),
+                    name,
+                    parent_id );
+
+            cursor.close();
+            return category;
+        }
+
         JSONArray updateEngramJSONArray( JSONArray jsonArray ) throws JSONException {
             publishProgress( " - Parsing JSONObjects into SparseArray.." );
 
-            SparseArray<Engram> engrams = new SparseArray<>();
-
-            // Fill Engram SparseArray with JSONArray data
+            JSONArray updatedJsonArray = new JSONArray();
             for ( int i = 0; i < jsonArray.length(); i++ ) {
                 JSONObject jsonObject = jsonArray.getJSONObject( i );
 
+                long _id = jsonObject.getLong( DatabaseContract.ResourceEntry._ID );
                 String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
-                String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
+//                String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
                 String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
                 Integer yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
                 Integer level = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_LEVEL );
@@ -279,39 +438,104 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 JSONArray sJsonArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_STATION_KEY );
                 JSONArray cJsonArray = jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME );
 
-                int[] dlc_ids = new int[dJsonArray.length()];
-                for ( int j = 0; j < dJsonArray.length(); j++ ) {
-                    dlc_ids[j] = dJsonArray.getInt( j );
+                int dlc_id;
+                if ( dJsonArray.length() > 1 ) {
+                    dlc_id = 1;
+                } else {
+                    dlc_id = dJsonArray.getInt( 0 );
                 }
 
-                int[] station_ids = new int[sJsonArray.length()];
-                for ( int j = 0; j < sJsonArray.length(); j++ ) {
-                    station_ids[j] = sJsonArray.getInt( j );
+                String dlc_name = null;
+                switch ( dlc_id ) {
+                    case 1:
+                        dlc_name = "Vanilla";
+                        break;
+                    case 2:
+                        dlc_name = "Primitive Plus";
+                        break;
+                    case 3:
+                        dlc_name = "Scorched Earth";
+                        break;
                 }
 
-                HashMap<String, Integer> composition = new HashMap<>();
-                for ( int j = 0; j < cJsonArray.length(); j++ ) {
-                    JSONObject compositionJsonObject = cJsonArray.getJSONObject( j );
-                    int cQuantity = compositionJsonObject.getInt( DatabaseContract.CompositionEntry.COLUMN_QUANTITY );
-                    String cDrawable = compositionJsonObject.getString( DatabaseContract.CompositionEntry.COLUMN_DRAWABLE );
+                String imageFolder = dlc_name + "/Engrams/";
 
-                    composition.put( cDrawable, cQuantity );
+                try {
+                    imageFolder += getCategoryHierarchicalText( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, category_id ) );
+                } catch ( Exception e ) {
+                    e.printStackTrace();
                 }
 
-                engrams.put(
-                        engrams.size(),
-                        new Engram( name, description, drawable, yield, level, composition,
-                                category_id, station_ids, dlc_ids )
-                );
+                String imageFile = trimChars( name );
+
+                Log.d( TAG, imageFolder + imageFile );
+
+                JSONObject newJsonObject = new JSONObject();
+
+                newJsonObject.put( DatabaseContract.EngramEntry._ID, _id );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_YIELD, yield );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_LEVEL, level );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER, imageFolder );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE, imageFile );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dJsonArray );
+                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, sJsonArray );
+                newJsonObject.put( DatabaseContract.CompositionEntry.TABLE_NAME, cJsonArray );
+
+                updatedJsonArray.put( newJsonObject );
             }
 
-            // Sort Engram SparseArray by its name
-            publishProgress( " - Sorting SparseArray.." );
-            mEngramMap = sortEngramsByName( engrams.clone() );
-
-            // Create new JSONArray, add _id element
-            publishProgress( " - Converting SparseArray into JSONArray.." );
-            JSONArray updatedJsonArray = convertEngramSparseArray( mEngramMap );
+//            SparseArray<Engram> engrams = new SparseArray<>();
+//
+//            // Fill Engram SparseArray with JSONArray data
+//            for ( int i = 0; i < jsonArray.length(); i++ ) {
+//                JSONObject jsonObject = jsonArray.getJSONObject( i );
+//
+//                String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
+//                String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
+//                String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
+//                Integer yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
+//                Integer level = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_LEVEL );
+//                Integer category_id = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
+//                JSONArray dJsonArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
+//                JSONArray sJsonArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_STATION_KEY );
+//                JSONArray cJsonArray = jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME );
+//
+//                int[] dlc_ids = new int[dJsonArray.length()];
+//                for ( int j = 0; j < dJsonArray.length(); j++ ) {
+//                    dlc_ids[j] = dJsonArray.getInt( j );
+//                }
+//
+//                int[] station_ids = new int[sJsonArray.length()];
+//                for ( int j = 0; j < sJsonArray.length(); j++ ) {
+//                    station_ids[j] = sJsonArray.getInt( j );
+//                }
+//
+//                HashMap<String, Integer> composition = new HashMap<>();
+//                for ( int j = 0; j < cJsonArray.length(); j++ ) {
+//                    JSONObject compositionJsonObject = cJsonArray.getJSONObject( j );
+//                    int cQuantity = compositionJsonObject.getInt( DatabaseContract.CompositionEntry.COLUMN_QUANTITY );
+//                    String cDrawable = compositionJsonObject.getString( DatabaseContract.CompositionEntry.COLUMN_DRAWABLE );
+//
+//                    composition.put( cDrawable, cQuantity );
+//                }
+//
+//                engrams.put(
+//                        engrams.size(),
+//                        new Engram( name, description, drawable, yield, level, composition,
+//                                category_id, station_ids, dlc_ids )
+//                );
+//            }
+//
+//            // Sort Engram SparseArray by its name
+//            publishProgress( " - Sorting SparseArray.." );
+//            mEngramMap = sortEngramsByName( engrams.clone() );
+//
+//            // Create new JSONArray, add _id element
+//            publishProgress( " - Converting SparseArray into JSONArray.." );
+//            JSONArray updatedJsonArray = convertEngramSparseArray( mEngramMap );
 
             publishProgress( "Updating complete!" );
             Log.d( TAG, "Updating complete!" );
@@ -330,7 +554,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 jsonObject.put( DatabaseContract.EngramEntry._ID, _id );
                 jsonObject.put( DatabaseContract.EngramEntry.COLUMN_NAME, engram.name );
                 jsonObject.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, engram.description );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, engram.drawable );
+//                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, engram.drawable );
                 jsonObject.put( DatabaseContract.EngramEntry.COLUMN_YIELD, engram.yield );
                 jsonObject.put( DatabaseContract.EngramEntry.COLUMN_LEVEL, engram.level );
                 jsonObject.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, engram.category_id );

@@ -20,19 +20,23 @@ public class Engram {
     // Primary Key created by Database to track its row location.
     private long mId;
 
-    // String literal of an Engram's mName verbatim from in-game
+    // String literal of an Engram's name verbatim from in-game
     private String mName;
 
-    // Filename of mDrawable resource
-    private String mDrawable;
+    // String literal of Engram's image folder
+    private String mFolder;
+
+    // String literal of Engram's image filename
+    private String mFile;
 
     // Yield per crafted item
     private int mYield;
 
-    public Engram( long id, String name, String drawable, int yield ) {
+    public Engram( long id, String name, String folder, String file, int yield ) {
         mId = id;
         mName = name;
-        mDrawable = drawable;
+        mFolder = folder;
+        mFile = file;
         mYield = yield;
     }
 
@@ -44,8 +48,16 @@ public class Engram {
         return mName;
     }
 
-    public String getDrawable() {
-        return mDrawable;
+    private String getFolder() {
+        return mFolder;
+    }
+
+    private String getFile() {
+        return mFile;
+    }
+
+    public String getImagePath() {
+        return getFolder() + getFile();
     }
 
     public int getYield() {
@@ -54,6 +66,6 @@ public class Engram {
 
     @Override
     public String toString() {
-        return "mId=" + mId + ", mName=" + mName + ", mDrawable=" + mDrawable;
+        return "mId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile;
     }
 }

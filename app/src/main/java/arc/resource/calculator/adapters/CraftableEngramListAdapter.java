@@ -1,20 +1,25 @@
 package arc.resource.calculator.adapters;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
-import arc.resource.calculator.MainActivity;
 import arc.resource.calculator.R;
+import arc.resource.calculator.listeners.CraftingQueueListener;
+import arc.resource.calculator.listeners.QueueEngramListener;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.viewholders.EngramGridViewHolder;
+import arc.resource.calculator.util.ListenerUtil;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -28,49 +33,64 @@ import arc.resource.calculator.viewholders.EngramGridViewHolder;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridViewHolder> {
+public class CraftableEngramListAdapter extends RecyclerView.Adapter<CraftableEngramListAdapter.ViewHolder>
+        implements CraftingQueueListener, QueueEngramListener {
     private static final String TAG = CraftableEngramListAdapter.class.getSimpleName();
 
+    private static final long INVALID_ITEM_ID = -1;
+    private static final long INVALID_ITEM_POSITION = -1;
+
+    private static CraftableEngramListAdapter sInstance;
+
     private CraftingQueue mCraftingQueue;
-    private Context mContext;
+    private ListenerUtil mCallback;
 
-    public CraftableEngramListAdapter( Context context ) throws Exception {
-        this.mContext = context;
-        this.mCraftingQueue = CraftingQueue.getInstance( context );
+    public static CraftableEngramListAdapter getInstance( Context context ) {
+        if ( sInstance == null ) {
+            sInstance = new CraftableEngramListAdapter( context );
+        }
 
-        NotifyDataChanged();
+        return sInstance;
     }
 
-    public EngramGridViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
+    private CraftableEngramListAdapter( Context context ) {
+        mCraftingQueue = CraftingQueue.getInstance( context );
+        mCallback = ListenerUtil.getInstance();
+
+        mCallback.addCraftingQueueListener( this );
+        mCallback.addCraftingQueueEngramListener( this );
+    }
+
+    public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View itemView = LayoutInflater.from( parent.getContext() ).
                 inflate( R.layout.list_item_craftable_engram_thumbnail, parent, false );
 
-        return new EngramGridViewHolder( itemView );
+        return new ViewHolder( itemView );
     }
 
     @Override
-    public void onBindViewHolder( EngramGridViewHolder holder, int position ) {
-        holder.getView().getLayoutParams().height = ( int ) MainActivity.mEngramDimensions;
-        holder.getView().getLayoutParams().width = ( int ) MainActivity.mEngramDimensions;
+    public void onBindViewHolder( ViewHolder holder, int position ) {
+        View view = holder.itemView;
+        Context context = view.getContext();
 
+        QueueEngram engram = getEngram( position );
+
+        String imagePath = "file:///android_asset/" + engram.getImagePath();
+        Picasso.with( context )
+                .load( imagePath )
+                .placeholder( R.drawable.placeholder_empty )
+                .into( holder.getImageView() );
+
+        holder.getName().setText( engram.getName() );
+        holder.getQuantity().setText( String.format( Locale.US, "x%d", engram.getQuantityWithYield() ) );
+    }
+
+    @Override
+    public long getItemId( int position ) {
         try {
-            int imageId = getContext().getResources().getIdentifier(
-                    mCraftingQueue.getEngram( position ).getDrawable(),
-                    "drawable",
-                    getContext().getPackageName() );
-
-            // FIXME: 12/22/2016 Create crafting queue viewholder, why set background on every bind?
-            holder.getThumbnail().setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_engram_crafting_queue ) );
-            holder.getThumbnail().setImageResource( imageId );
-
-            String name = mCraftingQueue.getEngram( position ).getName();
-            holder.getName().setText( name );
-            holder.getName().setSingleLine( true );
-
-            int quantity = mCraftingQueue.getEngramQuantityWithYield( position );
-            holder.getQuantity().setText( String.format( Locale.US, "x%d", quantity ) );
+            return getEngram( position ).getId();
         } catch ( Exception e ) {
-            ExceptionUtil.SendErrorReportWithAlertDialog( getContext(), TAG, e );
+            return INVALID_ITEM_ID;
         }
     }
 
@@ -79,35 +99,119 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<EngramGridV
         return mCraftingQueue.getEngramItemCount();
     }
 
-    public void NotifyDataChanged() {
+    private QueueEngram getEngram( int position ) {
+        return mCraftingQueue.getEngramByPosition( position );
+    }
+
+    @Override
+    public void onRequestRemoveOneFromQueue( Context context, long engram_id ) {
+
+    }
+
+    @Override
+    public void onRequestRemoveAllFromQueue( Context context ) {
+
+    }
+
+    @Override
+    public void onRequestIncreaseQuantity( Context context, int position ) {
+
+    }
+
+    @Override
+    public void onRequestIncreaseQuantity( Context context, long engram_id ) {
+
+    }
+
+    @Override
+    public void onRequestUpdateQuantity( Context context, long engram_id, int quantity ) {
+
+    }
+
+    @Override
+    public void onRowInserted( Context context, long queueId, long engramId, int quantity, boolean wasQueueEmpty ) {
+        int position = mCraftingQueue.getPositionByEngramId( engramId );
+
+        if ( position != INVALID_ITEM_POSITION )
+            notifyItemInserted( position );
+        else
+            notifyDataSetChanged();
+
+        if ( wasQueueEmpty )
+            mCallback.requestLayoutUpdate();
+    }
+
+    @Override
+    public void onRowUpdated( Context context, long queueId, long engramId, int quantity ) {
+        int position = mCraftingQueue.getPositionByEngramId( engramId );
+
+        if ( position != INVALID_ITEM_POSITION )
+            notifyItemChanged( position );
+        else
+            notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRowDeleted( Context context, Uri uri, int positionStart, int itemCount, boolean isQueueEmpty ) {
+        Log.d( TAG, "onRowDeleted(): " + uri + ", " + positionStart + ", " + itemCount + ", " + isQueueEmpty );
+        notifyItemRangeRemoved( positionStart, itemCount );
+
+        if ( isQueueEmpty )
+            mCallback.requestLayoutUpdate();
+    }
+
+    @Override
+    public void onEngramDataSetChangeRequest( Context context ) {
+        // do nothing
+    }
+
+    @Override
+    public void onEngramDataSetChanged( boolean isQueueEmpty ) {
         notifyDataSetChanged();
+
+        if ( isQueueEmpty )
+            mCallback.requestLayoutUpdate();
     }
 
-    public QueueEngram getEngram( int position ) throws Exception {
-        return mCraftingQueue.getEngram( position );
-    }
+    class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener {
+        private final String TAG = ViewHolder.class.getSimpleName();
 
-    public void increaseQuantity( Context context, int position ) throws Exception {
-        mCraftingQueue.increaseQuantity( context, position );
-    }
+        private ImageView mImageView;
+        private TextView mName;
+        private TextView mQuantity;
 
-    public void increaseQuantity( Context context, long engramId ) throws Exception {
-        mCraftingQueue.increaseQuantity( context, engramId );
-    }
+        ViewHolder( View view ) {
+            super( view );
 
-    public void ClearQueue( Context context ) throws Exception {
-        mCraftingQueue.ClearContents( context );
-    }
+            mImageView = ( ImageView ) view.findViewById( R.id.list_item_engram_thumbnail_image_view );
+            mName = ( TextView ) view.findViewById( R.id.list_item_engram_thumbnail_name_text_view );
+            mQuantity = ( TextView ) view.findViewById( R.id.list_item_engram_thumbnail_quantity_text_view );
 
-    public void Delete( Context context, long engramId ) throws Exception {
-        mCraftingQueue.Delete( context, engramId );
-    }
+            view.setOnClickListener( this );
+            view.setOnLongClickListener( this );
+        }
 
-    public void setQuantity( Context context, long engramId, int quantity ) throws Exception {
-        mCraftingQueue.setQuantity( context, engramId, quantity );
-    }
+        ImageView getImageView() {
+            return mImageView;
+        }
 
-    private Context getContext() {
-        return mContext;
+        public TextView getName() {
+            return mName;
+        }
+
+        public TextView getQuantity() {
+            return mQuantity;
+        }
+
+        @Override
+        public void onClick( View view ) {
+            mCallback.requestIncreaseQuantity( view.getContext(), getAdapterPosition() );
+        }
+
+        @Override
+        public boolean onLongClick( View view ) {
+            return false;
+        }
     }
 }

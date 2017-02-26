@@ -22,17 +22,21 @@ public class Station {
     // String literal of Crafting Station taken verbatim from in-game
     private String mName;
 
-    // String literal of Resource Drawable to use for thumbnail
-    private String mDrawable;
+    // String literal of Station's image folder location
+    private String mFolder;
+
+    // String literal of Station's image filename
+    private String mFile;
 
     // Foreign Key that references the DLC this Station belongs to
     private long mDLCId;
 
-    public Station( long _id, String name, String drawable, long dlc_id ) {
-        this.mId = _id;
-        this.mName = name;
-        this.mDLCId = dlc_id;
-        this.mDrawable = drawable;
+    public Station( long _id, String name, String folder, String file, long dlc_id ) {
+        mId = _id;
+        mName = name;
+        mFolder = folder;
+        mFile = file;
+        mDLCId = dlc_id;
     }
 
     public long getId() {
@@ -43,8 +47,16 @@ public class Station {
         return mName;
     }
 
-    public String getDrawable() {
-        return mDrawable;
+    public String getFolder() {
+        return mFolder;
+    }
+
+    public String getFile() {
+        return mFile;
+    }
+
+    public String getImagePath() {
+        return getFolder() + getFile();
     }
 
     public long getDLCId() {
@@ -53,6 +65,6 @@ public class Station {
 
     @Override
     public String toString() {
-        return "mId=" + mId + ", mName=" + mName + ", mDrawable=" + mDrawable + ", mDLCId=" + mDLCId;
+        return "mEngramId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile + ", mDLCId=" + mDLCId;
     }
 }

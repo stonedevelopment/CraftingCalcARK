@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="arc.resource.calculator">
 
+    <uses-permission android:name="com.android.vending.BILLING"/>
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -11,6 +13,7 @@
 
         <activity
             android:name=".LoadScreenActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
 
             <intent-filter>
@@ -42,12 +45,14 @@
             android:name=".MainActivity"
             android:label="@string/app_name_full"
             android:largeHeap="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden">
 
@@ -61,6 +66,7 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Settings">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -72,6 +78,7 @@
         <activity
             android:name=".UpdateJSONActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
 
         <provider
@@ -83,11 +90,6 @@
         <service
             android:name=".service.InitializationService"
             android:exported="false"/>
-
-        <service
-            android:name=".service.ProviderService"
-            android:exported="false"/>
-
     </application>
 
 </manifest>

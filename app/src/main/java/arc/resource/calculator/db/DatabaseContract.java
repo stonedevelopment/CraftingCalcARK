@@ -42,7 +42,6 @@ public class DatabaseContract {
     public static final String PATH_QUEUE = "queue";
     public static final String PATH_RESOURCE = "resource";
     public static final String PATH_STATION = "station";
-    public static final String PATH_QUANTITY = "quantity";
 
     // Inner class that defines the table contents of the engram table
     public static final class EngramEntry implements BaseColumns {
@@ -61,7 +60,13 @@ public class DatabaseContract {
         public static final String COLUMN_DESCRIPTION = "description";
 
         // String value that Android Studio uses as its Drawable resource
-        public static final String COLUMN_DRAWABLE = "drawable";
+//        public static final String COLUMN_DRAWABLE = "drawable";
+
+        // String value of the location of image used to resemble Engram
+        public static final String COLUMN_IMAGE_FOLDER = "image_folder";
+
+        // String value of the location of image used to resemble Engram
+        public static final String COLUMN_IMAGE_FILE = "image_file";
 
         // Integer value that describes the yield per engram crafted
         public static final String COLUMN_YIELD = "yield";
@@ -81,7 +86,9 @@ public class DatabaseContract {
         // SQL column helpers
         public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
         public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
-        public static final String SQL_COLUMN_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE;
+        //        public static final String SQL_COLUMN_DRAWABLE = TABLE_NAME + "." + COLUMN_DRAWABLE;
+        public static final String SQL_COLUMN_IMAGE_FOLDER = TABLE_NAME + "." + COLUMN_IMAGE_FOLDER;
+        public static final String SQL_COLUMN_IMAGE_FILE = TABLE_NAME + "." + COLUMN_IMAGE_FILE;
         public static final String SQL_COLUMN_YIELD = TABLE_NAME + "." + COLUMN_YIELD;
         public static final String SQL_COLUMN_LEVEL = TABLE_NAME + "." + COLUMN_LEVEL;
         public static final String SQL_COLUMN_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY;
@@ -90,7 +97,7 @@ public class DatabaseContract {
 
         // SQL query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
-        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
+        //        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
         public static final String SQL_QUERY_WITH_LEVEL = SQL_COLUMN_LEVEL + " <= ?";
         public static final String SQL_QUERY_WITH_CATEGORY_KEY = SQL_COLUMN_CATEGORY_KEY + " = ?";
         public static final String SQL_QUERY_WITH_DLC_KEY = SQL_COLUMN_DLC_KEY + " = ?";
@@ -176,12 +183,12 @@ public class DatabaseContract {
         }
 
         // Returns /engram/drawable/*/dlc/#, used during initialization to check composition
-        public static Uri buildUriWithDrawable( String drawable, long dlc_id ) {
-            return CONTENT_URI.buildUpon()
-                    .appendPath( PATH_DRAWABLE ).appendPath( drawable )
-                    .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) )
-                    .build();
-        }
+//        public static Uri buildUriWithDrawable( String drawable, long dlc_id ) {
+//            return CONTENT_URI.buildUpon()
+//                    .appendPath( PATH_DRAWABLE ).appendPath( drawable )
+//                    .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) )
+//                    .build();
+//        }
 
         public static long getCategoryIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getPathSegments().get( 2 ) );
@@ -248,6 +255,12 @@ public class DatabaseContract {
         // String value that Android Studio uses as its Drawable resource
         public static final String COLUMN_DRAWABLE = "drawable";
 
+        // String value of the folder location of image used to resemble Resource
+        public static final String COLUMN_IMAGE_FOLDER = "image_folder";
+
+        // String value of the filename of image used to resemble Resource
+        public static final String COLUMN_IMAGE_FILE = "image_file";
+
         // Foreign key from Game DLC table
         public static final String COLUMN_DLC_KEY = "dlc_id";
 
@@ -274,12 +287,12 @@ public class DatabaseContract {
         }
 
         // Returns /resource/drawable/*/dlc/#
-        public static Uri buildUriWithDrawable( String drawable, long dlc_id ) {
-            return CONTENT_URI.buildUpon()
-                    .appendPath( PATH_DRAWABLE ).appendPath( drawable )
-                    .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) )
-                    .build();
-        }
+//        public static Uri buildUriWithDrawable( String drawable, long dlc_id ) {
+//            return CONTENT_URI.buildUpon()
+//                    .appendPath( PATH_DRAWABLE ).appendPath( drawable )
+//                    .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) )
+//                    .build();
+//        }
 
         public static long getIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getPathSegments().get( 1 ) );
@@ -428,6 +441,12 @@ public class DatabaseContract {
         // String value that Android Studio uses as its Drawable resource
         public static final String COLUMN_DRAWABLE = "drawable";
 
+        // String value of the folder location of image used to resemble Station
+        public static final String COLUMN_IMAGE_FOLDER = "image_folder";
+
+        // String value of the filename of image used to resemble Station
+        public static final String COLUMN_IMAGE_FILE = "image_file";
+
         // Foreign key from Game DLC table
         public static final String COLUMN_DLC_KEY = "dlc_id";
 
@@ -439,7 +458,7 @@ public class DatabaseContract {
 
         // Query helpers
         public static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
-        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
+        //        public static final String SQL_QUERY_WITH_DRAWABLE = SQL_COLUMN_DRAWABLE + " = ?";
         public static final String SQL_QUERY_WITH_DLC_KEY = SQL_COLUMN_DLC_KEY + " = ?";
 
         // SQL sort helpers
@@ -587,12 +606,12 @@ public class DatabaseContract {
         public static final String SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION =
                 SQL_COLUMN_ENGRAM_KEY + " = " + EngramEntry.SQL_COLUMN_ID +
                         " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-        public static final String SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME = EngramEntry.SQL_COLUMN_NAME + " ASC";
 
         public static final String[] SQL_PROJECTION = new String[]{
                 EngramEntry.SQL_COLUMN_ID,
                 EngramEntry.SQL_COLUMN_NAME,
-                EngramEntry.SQL_COLUMN_DRAWABLE,
+                EngramEntry.SQL_COLUMN_IMAGE_FOLDER,
+                EngramEntry.SQL_COLUMN_IMAGE_FILE,
                 EngramEntry.SQL_COLUMN_YIELD,
                 EngramEntry.SQL_COLUMN_DLC_KEY,
                 SQL_COLUMN_QUANTITY
@@ -613,7 +632,7 @@ public class DatabaseContract {
                     .build();
         }
 
-        static long getEngramIdFromUri( Uri uri ) {
+        public static long getEngramIdFromUri( Uri uri ) {
             return Long.parseLong( uri.getLastPathSegment() );
         }
 
@@ -626,7 +645,7 @@ public class DatabaseContract {
         return ContentUris.withAppendedId( uri, _id );
     }
 
-    static long getIdFromUri( Uri uri ) {
+    public static long getIdFromUri( Uri uri ) {
         return ContentUris.parseId( uri );
     }
 }

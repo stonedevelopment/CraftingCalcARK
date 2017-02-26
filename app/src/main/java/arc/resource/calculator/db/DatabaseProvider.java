@@ -21,6 +21,7 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
@@ -30,8 +31,6 @@ import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
-import arc.resource.calculator.model.Queue;
-import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.ExceptionUtil.URIUnknownException;
 
 public class DatabaseProvider extends ContentProvider {
@@ -39,12 +38,13 @@ public class DatabaseProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private DatabaseHelper mOpenHelper;
+    private ListenerUtil mCallback;
 
     static final int ENGRAM = 100;
     static final int ENGRAM_ID_WITH_DLC = 101;
     static final int ENGRAM_WITH_CATEGORY = 102;
     static final int ENGRAM_WITH_CATEGORY_AND_STATION = 103;
-    static final int ENGRAM_WITH_DRAWABLE = 104;
+    //    static final int ENGRAM_WITH_DRAWABLE = 104;
     static final int ENGRAM_WITH_DLC = 105;
     static final int ENGRAM_WITH_STATION = 106;
     static final int ENGRAM_WITH_LEVEL = 107;
@@ -54,7 +54,7 @@ public class DatabaseProvider extends ContentProvider {
 
     static final int RESOURCE = 200;
     static final int RESOURCE_ID_WITH_DLC = 201;
-    static final int RESOURCE_WITH_DRAWABLE = 202;
+//    static final int RESOURCE_WITH_DRAWABLE = 202;
 
     static final int COMPLEX_RESOURCE = 300;
     static final int COMPLEX_RESOURCE_ID = 301;
@@ -84,6 +84,7 @@ public class DatabaseProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = new DatabaseHelper( getContext() );
+        mCallback = ListenerUtil.getInstance();
         return true;
     }
 
@@ -131,10 +132,10 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_DLC + "/#",
                 ENGRAM_WITH_DLC );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
-                        DatabaseContract.PATH_DRAWABLE + "/*/" +
-                        DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_DRAWABLE );
+//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+//                        DatabaseContract.PATH_DRAWABLE + "/*/" +
+//                        DatabaseContract.PATH_DLC + "/#",
+//                ENGRAM_WITH_DRAWABLE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_CATEGORY + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
@@ -186,10 +187,10 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
                 RESOURCE_ID_WITH_DLC );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" +
-                        DatabaseContract.PATH_DRAWABLE + "/*/" +
-                        DatabaseContract.PATH_DLC + "/#",
-                RESOURCE_WITH_DRAWABLE );
+//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" +
+//                        DatabaseContract.PATH_DRAWABLE + "/*/" +
+//                        DatabaseContract.PATH_DLC + "/#",
+//                RESOURCE_WITH_DRAWABLE );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC,
                 DLC );
@@ -226,7 +227,7 @@ public class DatabaseProvider extends ContentProvider {
                     return EngramEntry.CONTENT_DIR_TYPE;
 
                 case RESOURCE:
-                case RESOURCE_WITH_DRAWABLE:
+//                case RESOURCE_WITH_DRAWABLE:
                     return ResourceEntry.CONTENT_DIR_TYPE;
 
                 case COMPLEX_RESOURCE:
@@ -252,7 +253,7 @@ public class DatabaseProvider extends ContentProvider {
                     return StationEntry.CONTENT_DIR_TYPE;
 
                 case ENGRAM_ID_WITH_DLC:
-                case ENGRAM_WITH_DRAWABLE:
+//                case ENGRAM_WITH_DRAWABLE:
                     return EngramEntry.CONTENT_ITEM_TYPE;
 
                 case RESOURCE_ID_WITH_DLC:
@@ -283,7 +284,7 @@ public class DatabaseProvider extends ContentProvider {
                     throw new URIUnknownException( uri );
             }
         } catch ( URIUnknownException e ) {
-            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         }
 
         return null;
@@ -547,29 +548,30 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( QueueEntry.getDLCIdFromUri( uri ) )
                     };
-                    sortOrder = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SORT_ORDER_BY_NAME;
+                    sortOrder = EngramEntry.SQL_COLUMN_NAME + " ASC";
+                    ;
                     tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
                     break;
 
-                case ENGRAM_WITH_DRAWABLE:
-                    projection = new String[]{ EngramEntry.COLUMN_NAME };
-                    selection = EngramEntry.SQL_QUERY_WITH_DRAWABLE +
-                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-                    selectionArgs = new String[]{
-                            EngramEntry.getDrawableFromUri( uri ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) ) };
-                    tableName = EngramEntry.TABLE_NAME;
-                    break;
+//                case ENGRAM_WITH_DRAWABLE:
+//                    projection = new String[]{ EngramEntry.COLUMN_NAME };
+//                    selection = EngramEntry.SQL_QUERY_WITH_DRAWABLE +
+//                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+//                    selectionArgs = new String[]{
+//                            EngramEntry.getDrawableFromUri( uri ),
+//                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) ) };
+//                    tableName = EngramEntry.TABLE_NAME;
+//                    break;
 
-                case RESOURCE_WITH_DRAWABLE:
-                    projection = new String[]{ ResourceEntry._ID };
-                    selection = ResourceEntry.SQL_QUERY_WITH_DRAWABLE +
-                            " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
-                    selectionArgs = new String[]{
-                            ResourceEntry.getDrawableFromUri( uri ),
-                            Long.toString( ResourceEntry.getDLCIdFromUri( uri ) ) };
-                    tableName = ResourceEntry.TABLE_NAME;
-                    break;
+//                case RESOURCE_WITH_DRAWABLE:
+//                    projection = new String[]{ ResourceEntry._ID };
+//                    selection = ResourceEntry.SQL_QUERY_WITH_DRAWABLE +
+//                            " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
+//                    selectionArgs = new String[]{
+//                            ResourceEntry.getDrawableFromUri( uri ),
+//                            Long.toString( ResourceEntry.getDLCIdFromUri( uri ) ) };
+//                    tableName = ResourceEntry.TABLE_NAME;
+//                    break;
 
                 case STATION_ID_WITH_DLC:
                     selection = StationEntry.SQL_QUERY_WITH_ID +
@@ -605,7 +607,7 @@ public class DatabaseProvider extends ContentProvider {
 
             cursor.setNotificationUri( getContext().getContentResolver(), uri );
         } catch ( Exception e ) {
-            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         }
 
         return cursor;
@@ -613,23 +615,22 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public Uri insert( @NonNull Uri uri, ContentValues values ) {
-        Uri returnUri = null;
-
         try {
             long _id = mOpenHelper.getWritableDatabase()
                     .insert( getTableNameFromUriMatch( uri ), null, values );
 
             if ( _id >= 0 ) {
-                returnUri = DatabaseContract.buildUriWithId( uri, _id );
                 getContext().getContentResolver().notifyChange( uri, null );
+
+                return DatabaseContract.buildUriWithId( uri, _id );
             } else {
                 throw new SQLiteException();
             }
         } catch ( Exception e ) {
-            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         }
 
-        return returnUri;
+        return null;
     }
 
     @Override
@@ -641,17 +642,25 @@ public class DatabaseProvider extends ContentProvider {
 
             switch ( sUriMatcher.match( uri ) ) {
                 case QUEUE:
-                    tableName = QueueEntry.TABLE_NAME;
                     selection = "1";
                     break;
 
                 case QUEUE_ID:
-                    tableName = QueueEntry.TABLE_NAME;
                     selection = QueueEntry.SQL_QUERY_WITH_ID;
                     selectionArgs = new String[]{
                             Long.toString( DatabaseContract.getIdFromUri( uri ) )
                     };
                     break;
+
+                case QUEUE_WITH_ENGRAM_ID:
+                    selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString( QueueEntry.getEngramIdFromUri( uri ) )
+                    };
+                    break;
+
+                default:
+                    throw new URIUnknownException( uri );
             }
 
             rowsDeleted = mOpenHelper.getWritableDatabase()
@@ -660,8 +669,9 @@ public class DatabaseProvider extends ContentProvider {
             if ( rowsDeleted > 0 )
                 getContext().getContentResolver().notifyChange( uri, null );
         } catch ( URIUnknownException e ) {
-            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         }
+
         return rowsDeleted;
     }
 
@@ -678,7 +688,7 @@ public class DatabaseProvider extends ContentProvider {
             if ( rowsUpdated > 0 )
                 getContext().getContentResolver().notifyChange( uri, null );
         } catch ( URIUnknownException e ) {
-            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         }
 
         return rowsUpdated;
@@ -705,7 +715,7 @@ public class DatabaseProvider extends ContentProvider {
 
             db.setTransactionSuccessful();
         } catch ( URIUnknownException | SQLiteException e ) {
-            ExceptionUtil.SendErrorReport( getContext(), TAG, e );
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         } finally {
             db.endTransaction();
         }
@@ -733,6 +743,7 @@ public class DatabaseProvider extends ContentProvider {
 
             case QUEUE:
             case QUEUE_ID:
+            case QUEUE_WITH_ENGRAM_ID:
                 return QueueEntry.TABLE_NAME;
 
             case DLC:

@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/craftable_engram_grid_view_holder_size"
+                android:layout_height="@dimen/craftable_engram_grid_view_holder_size"
                 android:padding="@dimen/craftable_engram_grid_view_holder_padding">
 
     <ImageView
         android:id="@+id/list_item_engram_thumbnail_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/frame_engram_crafting_queue"
-        tools:src="@drawable/structures_stone_stone_wall"/>
+        android:adjustViewBounds="true"
+        android:background="@drawable/frame_engram_crafting_queue"/>
 
     <TextView
         android:id="@+id/list_item_engram_thumbnail_name_text_view"
-        style="@style/AppTheme.Text.Engram.Name"
+        style="@style/AppTheme.Text.Engram.Queue.Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -23,7 +22,7 @@
 
     <TextView
         android:id="@+id/list_item_engram_thumbnail_quantity_text_view"
-        style="@style/AppTheme.Text.Engram.Quantity"
+        style="@style/AppTheme.Text.Engram.Queue.Quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

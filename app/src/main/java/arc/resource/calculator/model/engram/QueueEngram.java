@@ -19,14 +19,22 @@ public class QueueEngram extends Engram {
     // Quantity used to keep track of how many Engrams in CraftingQueue
     private int mQuantity;
 
-    public QueueEngram( long id, String name, String drawable, int yield, int quantity ) {
-        super( id, name, drawable, yield );
+    public QueueEngram( long id, String name, String folder, String file, int yield, int quantity ) {
+        super( id, name, folder, file, yield );
 
-        this.mQuantity = quantity;
+        mQuantity = quantity;
     }
 
     public Integer getQuantity() {
         return mQuantity;
+    }
+
+    public void setQuantity( int quantity ) {
+        mQuantity = quantity;
+    }
+
+    public Integer getQuantityWithYield() {
+        return mQuantity * getYield();
     }
 
     @Override

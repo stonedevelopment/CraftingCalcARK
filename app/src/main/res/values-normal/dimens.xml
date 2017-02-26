@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="dimens">normal</string>
+
     <!-- DisplayCase: Text Sizes -->
     <dimen name="display_case_hierarchy_text_size">16sp</dimen>
 

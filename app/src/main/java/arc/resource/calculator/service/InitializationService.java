@@ -49,7 +49,7 @@ public class InitializationService extends IntentService {
         // Send an update to LoadActivity to tell user that initialization has started!
         sendStatusUpdate( STATUS_STARTED );
 
-        // Delete all records from database
+        // removeQueueById all records from database
         deleteAllRecordsFromProvider();
 
         // Read local json file into a string
@@ -161,7 +161,8 @@ public class InitializationService extends IntentService {
 
             long _id = jsonObject.getLong( DatabaseContract.ResourceEntry._ID );
             String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
-            String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
+            String imageFolder = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FOLDER );
+            String imageFile = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FILE );
             JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
 
             for ( int d = 0; d < dlc_ids.length(); d++ ) {
@@ -170,7 +171,8 @@ public class InitializationService extends IntentService {
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.ResourceEntry._ID, _id );
                 values.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
-                values.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, drawable );
+                values.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FOLDER, imageFolder );
+                values.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FILE, imageFile );
                 values.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, dlc_id );
 
                 vector.add( values );
@@ -188,7 +190,9 @@ public class InitializationService extends IntentService {
 
             long _id = jsonObject.getLong( DatabaseContract.StationEntry._ID );
             String name = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_NAME );
-            String drawable = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_DRAWABLE );
+//            String drawable = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_DRAWABLE );
+            String imageFolder = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER );
+            String imageFile = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE );
             JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.StationEntry.COLUMN_DLC_KEY );
 
             for ( int d = 0; d < dlc_ids.length(); d++ ) {
@@ -197,7 +201,9 @@ public class InitializationService extends IntentService {
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.StationEntry._ID, _id );
                 values.put( DatabaseContract.StationEntry.COLUMN_NAME, name );
-                values.put( DatabaseContract.StationEntry.COLUMN_DRAWABLE, drawable );
+                values.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER, imageFolder );
+                values.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE, imageFile );
+//                values.put( DatabaseContract.StationEntry.COLUMN_DRAWABLE, drawable );
                 values.put( DatabaseContract.StationEntry.COLUMN_DLC_KEY, dlc_id );
 
                 vector.add( values );
@@ -252,8 +258,6 @@ public class InitializationService extends IntentService {
                         values.put( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY, dlc_id );
 
                         vector.add( values );
-                    } else {
-                        //Log.e( TAG, "   -! moveToFirst() did not fire! (possibly because it wasn't added with proper dlc_id)" );
                     }
 
                     cursor.close();
@@ -274,7 +278,9 @@ public class InitializationService extends IntentService {
             long _id = jsonObject.getLong( DatabaseContract.EngramEntry._ID );
             String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
             String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
-            String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
+//            String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
+            String imageFolder = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER );
+            String imageFile = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE );
             int yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
             int level = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_LEVEL );
             long category_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
@@ -304,7 +310,9 @@ public class InitializationService extends IntentService {
                         values.put( DatabaseContract.EngramEntry._ID, _id );
                         values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
                         values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, drawable );
+//                        values.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, drawable );
+                        values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER, imageFolder );
+                        values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE, imageFile );
                         values.put( DatabaseContract.EngramEntry.COLUMN_YIELD, yield );
                         values.put( DatabaseContract.EngramEntry.COLUMN_LEVEL, level );
                         values.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, station_id );

@@ -13,29 +13,29 @@
 package arc.resource.calculator.model.resource;
 
 /**
- * Resource object that contains the quantity used to compose an Engram.Composition
+ * Resource object that contains the mQuantity used to compose an Engram.Composition
  */
 public class CompositeResource extends Resource {
-    // Quantity taken on a per Engram basis, used in conjunction with QueueResource to compute an actual quantity later.
-    private int quantity;
+    // Quantity taken on a per Engram basis, used in conjunction with QueueResource to compute an actual mQuantity later.
+    private int mQuantity;
 
-    public CompositeResource( long id, String name, String drawable, int quantity ) {
-        super( id, name, drawable );
+    public CompositeResource( long id, String name, String folder, String file, int quantity ) {
+        super( id, name, folder, file );
 
-        this.quantity = quantity;
+        mQuantity = quantity;
     }
 
     public int getQuantity() {
-        return quantity;
+        return mQuantity;
     }
 
     public void increaseQuantity( int amount ) {
-        this.quantity += amount;
+        mQuantity += amount;
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", quantity=" + getQuantity();
+        return super.toString() + ", mQuantity=" + getQuantity();
     }
 }
 

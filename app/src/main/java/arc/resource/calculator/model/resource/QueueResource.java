@@ -17,24 +17,24 @@ package arc.resource.calculator.model.resource;
  */
 public class QueueResource extends CompositeResource {
     // External quantity used to compute the 'actual' quantity per Engram's Composition
-    private int queueQuantity;
+    private int mQueueQuantity;
 
-    public QueueResource( long id, String name, String drawable, int quantity, int queueQuantity ) {
-        super( id, name, drawable, quantity );
+    public QueueResource( long id, String name, String folder, String file, int quantity, int queueQuantity ) {
+        super( id, name, folder, file, quantity );
 
-        this.queueQuantity = queueQuantity;
+        mQueueQuantity = queueQuantity;
     }
 
     public int getQueueQuantity() {
-        return queueQuantity;
+        return mQueueQuantity;
     }
 
     public void setQueueQuantity( int quantity ) {
-        this.queueQuantity = quantity;
+        mQueueQuantity = quantity;
     }
 
     public void increaseQueueQuantity( int amount ) {
-        this.queueQuantity += amount;
+        mQueueQuantity += amount;
     }
 
     public int getProductOfQuantities() {
@@ -43,7 +43,7 @@ public class QueueResource extends CompositeResource {
 
     @Override
     public String toString() {
-        return super.toString() + ", queueQuantity=" + getQueueQuantity();
+        return super.toString() + ", mQueueQuantity=" + getQueueQuantity();
     }
 }
 

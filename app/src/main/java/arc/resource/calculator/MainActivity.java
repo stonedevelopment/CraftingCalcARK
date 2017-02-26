@@ -1,32 +1,32 @@
 package arc.resource.calculator;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import arc.resource.calculator.adapters.CraftableEngramListAdapter;
-import arc.resource.calculator.adapters.CraftableResourceListAdapter;
-import arc.resource.calculator.adapters.DisplayCaseListAdapter;
 import arc.resource.calculator.db.DatabaseHelper;
+import arc.resource.calculator.listeners.MainActivityListener;
+import arc.resource.calculator.listeners.SendErrorReportListener;
+import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
-import arc.resource.calculator.util.DisplayUtil;
+import arc.resource.calculator.util.AlertUtil;
 import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.Helper;
-import arc.resource.calculator.util.PrefsUtil;
-import arc.resource.calculator.views.RecyclerTouchListener;
+import arc.resource.calculator.util.ListenerUtil;
+import arc.resource.calculator.util.Util;
+import arc.resource.calculator.views.DisplayCaseRecyclerView;
+import arc.resource.calculator.views.QueueCompositionRecyclerView;
+import arc.resource.calculator.views.QueueEngramRecyclerView;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -40,200 +40,69 @@ import arc.resource.calculator.views.RecyclerTouchListener;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements MainActivityListener, SendErrorReportListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private DisplayCaseListAdapter displayCaseListAdapter;
-    private CraftableEngramListAdapter craftableEngramListAdapter;
-    private CraftableResourceListAdapter craftableResourceListAdapter;
+    DisplayCaseRecyclerView mDisplayCaseRecyclerView;
+    QueueEngramRecyclerView mQueueEngramRecyclerView;
+    QueueCompositionRecyclerView mQueueCompositionRecyclerView;
+    Button mClearCraftingQueue;
+    TextView mCategoryHierarchyTextView;
 
-    private RecyclerView displayCaseEngramList;
-
-    public static float mEngramDimensions;
-    public static float mCraftableEngramDimensions;
+    private ListenerUtil mCallback;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
+
         setContentView( R.layout.activity_main );
 
-        try {
-            DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
-            mEngramDimensions = displayUtil.getDisplayCaseGridViewHolderDimensions();
-            mCraftableEngramDimensions = displayUtil.getCraftingQueueGridViewHolderDimensions();
+        mCallback = ListenerUtil.getInstance();
+        mCallback.setMainActivityListener( this );
+        mCallback.addSendErrorReportListener( this );
 
-            displayCaseEngramList = ( RecyclerView ) findViewById( R.id.display_case_engram_list );
-            RecyclerView craftingQueueEngramList = ( RecyclerView ) findViewById( R.id.crafting_queue_engram_list );
-            RecyclerView craftingQueueResourceList = ( RecyclerView ) findViewById( R.id.crafting_queue_resource_list );
+        // Check to see if database was updated
+        boolean didUpdate = getIntent().getBooleanExtra( getString( R.string.intent_key_did_update ), false );
 
-            if ( craftingQueueEngramList != null ) {
-                RecyclerTouchListener craftingQueueEngramTouchListener = new RecyclerTouchListener( this, craftingQueueEngramList,
-                        new RecyclerTouchListener.ClickListener() {
-                            @Override
-                            public void onClick( View view, int position ) {
-                                try {
-                                    if ( position >= 0 && position < craftableEngramListAdapter.getItemCount() ) {
-                                        craftableEngramListAdapter.increaseQuantity( getApplicationContext(), position );
+        mDisplayCaseRecyclerView = ( DisplayCaseRecyclerView ) findViewById( R.id.display_case_engram_list );
+        registerForContextMenu( mDisplayCaseRecyclerView );
 
-                                        RefreshViews( false );
-                                    }
-                                } catch ( Exception e ) {
-                                    SendErrorReport( e );
-                                }
-                            }
+        mQueueEngramRecyclerView = ( QueueEngramRecyclerView ) findViewById( R.id.crafting_queue_engram_list );
+        registerForContextMenu( mQueueEngramRecyclerView );
 
-                            @Override
-                            public void onLongClick( View view, int position ) {
-                                try {
-                                    if ( position >= 0 && position < craftableEngramListAdapter.getItemCount() ) {
-                                        Intent intent = new Intent( view.getContext(), DetailActivity.class );
-                                        intent.putExtra(
-                                                Helper.DETAIL_ID,
-                                                craftableEngramListAdapter.getEngram( position ).getId() );
+        mQueueCompositionRecyclerView = ( QueueCompositionRecyclerView ) findViewById( R.id.crafting_queue_resource_list );
+        registerForContextMenu( mQueueCompositionRecyclerView );
 
-                                        startActivityForResult( intent, Helper.REQUEST_CODE_DETAIL_ACTIVITY );
-                                    }
-                                } catch ( Exception e ) {
-                                    SendErrorReport( e );
-                                }
-                            }
-                        }
-                );
-
-                craftableEngramListAdapter = new CraftableEngramListAdapter( MainActivity.this );
-
-                craftingQueueEngramList.setLayoutManager(
-                        new GridLayoutManager( this, 1, GridLayoutManager.HORIZONTAL, false ) );
-                craftingQueueEngramList.addOnItemTouchListener( craftingQueueEngramTouchListener );
-                craftingQueueEngramList.setAdapter( craftableEngramListAdapter );
+        mClearCraftingQueue = ( Button ) findViewById( R.id.clear_queue_button );
+        mClearCraftingQueue.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                mCallback.requestRemoveAllFromQueue( getApplicationContext() );
             }
+        } );
 
-            if ( craftingQueueResourceList != null ) {
-                craftableResourceListAdapter = new CraftableResourceListAdapter( this );
+        mCategoryHierarchyTextView = ( TextView ) findViewById( R.id.hierarchy_text );
+        mCallback.requestCategoryHierarchy( this );
 
-                RecyclerView.LayoutManager craftableResourceLayoutManager =
-                        new LinearLayoutManager( this );
+        if ( didUpdate )
+            mCallback.requestRemoveAllFromQueue( getApplicationContext() );
 
-                craftingQueueResourceList.setLayoutManager( craftableResourceLayoutManager );
-                craftingQueueResourceList.setAdapter( craftableResourceListAdapter );
-            }
+        Toast.makeText( this, getString( R.string.dimens ), Toast.LENGTH_SHORT ).show();
 
-            if ( displayCaseEngramList != null ) {
-                RecyclerTouchListener displayCaseTouchListener = new RecyclerTouchListener( this, displayCaseEngramList,
-                        new RecyclerTouchListener.ClickListener() {
-                            @Override
-                            public void onClick( View view, int position ) {
-                                try {
-                                    if ( position > -1 && position < displayCaseListAdapter.getItemCount() ) {
-                                        if ( displayCaseListAdapter.isEngram( position ) ) {
-                                            boolean viewChanged =
-                                                    craftableEngramListAdapter.getItemCount() == 0;
+        UpdateContainerLayoutParams();
 
-                                            craftableEngramListAdapter.increaseQuantity(
-                                                    getApplicationContext(),
-                                                    displayCaseListAdapter.getEngram( position ).getId() );
+        AdUtil.loadAdView( this );
 
-                                            RefreshViews( viewChanged );
-
-                                            if ( viewChanged )
-                                                displayCaseEngramList.scrollToPosition( position );
-
-                                        } else if ( displayCaseListAdapter.isCategory( position ) ) {
-                                            displayCaseListAdapter.changeCategory( position );
-                                            RefreshDisplayCase();
-                                        } else if ( displayCaseListAdapter.isStation( position ) ) {
-                                            displayCaseListAdapter.changeStation( position );
-                                            RefreshDisplayCase();
-                                        } else {
-                                            throw new ArrayIndexOutOfBoundsException( position );
-                                        }
-                                    }
-                                } catch ( Exception e ) {
-                                    SendErrorReport( e );
-                                }
-                            }
-
-                            @Override
-                            public void onLongClick( View view, int position ) {
-                                try {
-                                    if ( position > -1 && position < displayCaseListAdapter.getItemCount() ) {
-                                        if ( displayCaseListAdapter.isEngram( position ) ) {
-                                            Intent intent = new Intent( view.getContext(), DetailActivity.class );
-                                            intent.putExtra(
-                                                    Helper.DETAIL_ID,
-                                                    displayCaseListAdapter.getEngram( position ).getId() );
-
-                                            startActivityForResult( intent, Helper.REQUEST_CODE_DETAIL_ACTIVITY );
-                                        } else if ( displayCaseListAdapter.isCategory( position ) ) {
-                                            displayCaseListAdapter.changeCategory( position );
-                                            RefreshDisplayCase();
-                                        } else if ( displayCaseListAdapter.isStation( position ) ) {
-                                            displayCaseListAdapter.changeStation( position );
-                                            RefreshDisplayCase();
-                                        } else {
-                                            throw new ArrayIndexOutOfBoundsException( position );
-                                        }
-                                    }
-                                } catch ( Exception e ) {
-                                    SendErrorReport( e );
-                                }
-                            }
-                        }
-                );
-
-                displayCaseEngramList.addOnItemTouchListener( displayCaseTouchListener );
-
-                displayCaseListAdapter = new DisplayCaseListAdapter( MainActivity.this );
-                displayCaseEngramList.setAdapter( displayCaseListAdapter );
-            }
-
-            Button buttonClearQueue = ( Button ) findViewById( R.id.clear_queue_button );
-            if ( buttonClearQueue != null ) {
-                buttonClearQueue.setOnClickListener( new View.OnClickListener() {
-                    @Override
-                    public void onClick( View v ) {
-                        // TODO: 12/24/2016 Don't like try catch inside try catch, custom onClickListener?
-                        try {
-                            ClearCraftingQueue();
-                            RefreshViews( true );
-                        } catch ( Exception e ) {
-                            SendErrorReport( e );
-                        }
-                    }
-                } );
-            }
-
-            AdUtil.loadAdView( this );
-
-            showChangeLog();
-
-            if ( getIntent().getBooleanExtra( getString( R.string.intent_key_did_update ), false ) ) {
-                ClearCraftingQueue();
-
-                getIntent().putExtra( getString( R.string.intent_key_did_update ), false );
-            }
-
-            RefreshViews( true );
-        } catch ( Exception e ) {
-            SendErrorReport( e );
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        SaveSettings();
+        showChangeLog();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        mCallback.removeSendErrorReportListener( this );
+        mCallback.requestSaveCategoryLevels( getApplicationContext() );
     }
 
     @Override
@@ -246,9 +115,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch ( item.getItemId() ) {
             case R.id.action_settings:
-                startActivityForResult(
-                        new Intent( this, SettingsActivity.class ),
-                        Helper.REQUEST_CODE_SETTINGS_ACTIVITY );
+                startActivityForResult( new Intent( this, SettingsActivity.class ),
+                        Util.REQUEST_CODE_SETTINGS_ACTIVITY );
                 return true;
 
             case R.id.action_show_changelog:
@@ -265,11 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 new AlertDialog.Builder( this )
                         .setTitle( getString( R.string.about_dialog_full_title ) )
                         .setIcon( R.drawable.wood_signs_wooden_sign )
-                        .setNegativeButton( getString( R.string.about_dialog_close_button ), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick( DialogInterface dialog, int which ) {
-                            }
-                        } )
                         .setMessage(
                                 "Passionately developed by Shane Stone.\n\n" +
                                         "Email:\n  jaredstone1982@gmail.com\n  stonedevs@gmail.com\n\n" +
@@ -288,131 +151,100 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onCreateContextMenu( ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo ) {
+        super.onCreateContextMenu( menu, v, menuInfo );
+        MenuInflater inflater = getMenuInflater();
+
+        switch ( v.getId() ) {
+            case R.id.crafting_queue_engram_list:
+                inflater.inflate( R.menu.craftable_in_queue_menu, menu );
+                break;
+
+            case R.id.display_case_engram_list:
+                inflater.inflate( R.menu.displaycase_menu, menu );
+                break;
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected( MenuItem item ) {
+        RecyclerContextMenuInfo menuInfo = ( RecyclerContextMenuInfo ) item.getMenuInfo();
+
+        switch ( item.getItemId() ) {
+            case R.id.floating_action_remove_from_queue:
+                mCallback.requestRemoveOneFromQueue( getApplicationContext(), menuInfo.getId() );
+                break;
+
+            case R.id.floating_action_edit_quantity:
+                AlertUtil.AlertDialogEditQuantity( MainActivity.this, menuInfo.getId() ).show();
+                break;
+
+            case R.id.floating_action_view_details:
+                StartDetailActivity( menuInfo.getId() );
+                break;
+        }
+
+        return super.onContextItemSelected( item );
+    }
+
+    @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
         super.onActivityResult( requestCode, resultCode, data );
 
-        try {
-            switch ( requestCode ) {
-                case Helper.REQUEST_CODE_DETAIL_ACTIVITY:
-                    if ( resultCode == RESULT_OK ) {
-                        Bundle extras = data.getExtras();
-                        long id = extras.getLong( Helper.DETAIL_ID );
-                        String result = extras.getString( Helper.RESULT_CODE_DETAIL_ACTIVITY );
+        switch ( requestCode ) {
+            case Util.REQUEST_CODE_DETAIL_ACTIVITY:
+                if ( resultCode == RESULT_OK ) {
+                    Bundle extras = data.getExtras();
 
-                        assert result != null;
-                        switch ( result ) {
-                            case Helper.DETAIL_REMOVE:
-                                if ( extras.getBoolean( result ) )
-                                    craftableEngramListAdapter.Delete(
-                                            getApplicationContext(),
-                                            id );
-                                break;
-                            case Helper.DETAIL_SAVE:
-                                craftableEngramListAdapter.setQuantity(
-                                        getApplicationContext(),
-                                        id,
-                                        extras.getInt( Helper.DETAIL_QUANTITY ) );
-                                break;
-                        }
+                    long _id = extras.getLong( Util.DETAIL_ID );
 
-                        RefreshViews( true );
+                    if ( extras.getBoolean( Util.DETAIL_REMOVE ) )
+                        mCallback.requestRemoveOneFromQueue( this, _id );
+
+                    int quantity = extras.getInt( Util.DETAIL_QUANTITY );
+                    if ( quantity > 0 )
+                        mCallback.requestUpdateQuantity( this, _id, quantity );
+                }
+                break;
+            case Util.REQUEST_CODE_SETTINGS_ACTIVITY:
+                if ( resultCode == RESULT_OK ) {
+                    Bundle extras = data.getExtras();
+
+                    boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
+                    boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
+                    boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
+                    boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
+                    boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
+                    boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
+
+                    // if any pref that deals with displaying engrams was changed, reset levels to root.
+                    if ( dlcValueChange || categoryPrefChange || stationPrefChange || levelPrefChange || levelValueChange ) {
+                        mCallback.requestResetCategoryLevels( this );
+
+                        // if dlc was changed, clear entire queue
+                        if ( dlcValueChange )
+                            mCallback.requestRemoveAllFromQueue( this );
+
+                        // settings were changed, let's update DisplayCase with new data
+                        mCallback.requestDisplayCaseDataSetChange( this );
                     }
-                    break;
-                case Helper.REQUEST_CODE_SETTINGS_ACTIVITY:
-                    if ( resultCode == RESULT_OK ) {
-                        Bundle extras = data.getExtras();
 
-                        boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
-                        boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
-                        boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
-                        boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
-                        boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
-                        boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
-
-                        if ( dlcValueChange || categoryPrefChange || stationPrefChange || levelPrefChange || levelValueChange ) {
-                            ResetSettings();
-                            SaveSettings();
-
-                            if ( dlcValueChange ) {
-                                ClearCraftingQueue();
-                            }
-                        }
-
-                        if ( refinedPrefChange )
-                            RefreshCraftingQueueResources();
-
-                        RefreshViews( true );
-                    }
-                    break;
-            }
-        } catch ( Exception e ) {
-            SendErrorReport( e );
-        }
-    }
-
-    private void ResetSettings() {
-        displayCaseListAdapter.resetLevels();
-    }
-
-    public void SaveSettings() {
-        PrefsUtil prefs = new PrefsUtil( getApplicationContext() );
-
-        if ( prefs.getCategoryFilterPreference() ) {
-            prefs.saveCategoryLevels(
-                    displayCaseListAdapter.getLevel(),
-                    displayCaseListAdapter.getParent()
-            );
+                    // if refined/raw was changed, let's update the composition data set to reflection such change
+                    if ( refinedPrefChange )
+                        mCallback.requestResourceDataSetChange( this );
+                }
+                break;
         }
 
-        if ( prefs.getStationFilterPreference() ) {
-            prefs.saveStationId( displayCaseListAdapter.getStationId() );
-        }
-
-        Log.d( TAG, "SaveSettings(): level: " + displayCaseListAdapter.getLevel() +
-                ", parent: " + displayCaseListAdapter.getParent() +
-                ", station: " + displayCaseListAdapter.getStationId()
-        );
     }
 
-    private void RefreshViews( boolean viewChanged ) {
-        try {
-            RefreshCraftingQueue();
-            RefreshDisplayCase();
+    private void StartDetailActivity( long _id ) {
+        mCallback.requestSaveCategoryLevels( this );
 
-            if ( viewChanged ) {
-                displayCaseEngramList.setLayoutManager( getAdjustedLayoutManager() );
-                displayCaseEngramList.setLayoutParams( getDisplayCaseLayoutParams() );
+        Intent intent = new Intent( this, DetailActivity.class );
+        intent.putExtra( Util.DETAIL_ID, _id );
 
-                FrameLayout topContainer = ( FrameLayout ) findViewById( R.id.content_main_top_container );
-                topContainer.setLayoutParams( getDisplayCaseContainerLayoutParams() );
-
-                FrameLayout bottomContainer = ( FrameLayout ) findViewById( R.id.content_main_bottom_container );
-                bottomContainer.setLayoutParams( getCraftingQueueContainerLayoutParams() );
-            }
-        } catch ( Exception e ) {
-            SendErrorReport( e );
-        }
-    }
-
-    private void RefreshDisplayCase() throws Exception {
-        displayCaseListAdapter.refreshData();
-
-        TextView categoryHierarchy = ( TextView ) findViewById( R.id.hierarchy_text );
-        categoryHierarchy.setText( displayCaseListAdapter.getHierarchicalText() );
-    }
-
-    private void RefreshCraftingQueue() {
-        craftableEngramListAdapter.NotifyDataChanged();
-        craftableResourceListAdapter.NotifyDataChanged();
-    }
-
-    private void RefreshCraftingQueueResources() throws Exception {
-        craftableResourceListAdapter.RefreshData();
-        craftableResourceListAdapter.NotifyDataChanged();
-    }
-
-    public void ClearCraftingQueue() throws Exception {
-        craftableEngramListAdapter.ClearQueue( getApplicationContext() );
+        startActivityForResult( intent, Util.REQUEST_CODE_DETAIL_ACTIVITY );
     }
 
     private void showChangeLog() {
@@ -423,95 +255,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private RecyclerView.LayoutManager getAdjustedLayoutManager() {
-        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
+    private void UpdateContainerLayoutParams() {
+        Log.d( TAG, "UpdateContainerLayoutParams()" );
 
-        int numCols = getResources().getInteger( R.integer.display_case_column_count );
-        if ( displayUtil.isLandscape() ) {
-            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-                numCols /= 2;
-            }
-        }
+        boolean isQueueEmpty = mQueueEngramRecyclerView.getAdapter().getItemCount() == 0;
 
-        return new GridLayoutManager( this, numCols );
+        setBottomContainerLayoutParams( isQueueEmpty );
     }
 
-    private LinearLayout.LayoutParams getCraftingQueueContainerLayoutParams() {
-        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
+    private void setBottomContainerLayoutParams( boolean isQueueEmpty ) {
+        LinearLayout.LayoutParams layoutParams;
 
-        mCraftableEngramDimensions = displayUtil.getCraftingQueueGridViewHolderDimensions();
-
-        if ( displayUtil.isPortrait() ) {
-            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f );
-            } else {
-                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0 );
-            }
+        if ( isQueueEmpty ) {
+            layoutParams = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0 );
         } else {
-            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f );
-            } else {
-                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT );
-            }
+            layoutParams = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1 );
         }
-    }
 
-    private LinearLayout.LayoutParams getDisplayCaseContainerLayoutParams() {
-        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
-
-        if ( displayUtil.isPortrait() ) {
-            if ( craftableEngramListAdapter.getItemCount() == 0 ) {
-                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f );
-            } else {
-                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
-            }
-        } else {
-            if ( craftableEngramListAdapter.getItemCount() == 0 ) {
-                return new LinearLayout.LayoutParams( 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f );
-            } else {
-                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT );
-            }
-        }
-    }
-
-    private LinearLayout.LayoutParams getDisplayCaseLayoutParams() {
-        DisplayUtil displayUtil = new DisplayUtil( getApplicationContext(), getWindowManager().getDefaultDisplay() );
-
-        mEngramDimensions = displayUtil.getDisplayCaseGridViewHolderDimensions();
-        mCraftableEngramDimensions = displayUtil.getCraftingQueueGridViewHolderDimensions();
-
-        if ( displayUtil.isPortrait() ) {
-            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-                int numRows = getResources().getInteger( R.integer.display_case_row_count );
-                float padding = getResources().getDimension( R.dimen.display_case_view_holder_padding );
-
-                // Padding * 2 for top and bottom or start and end
-                float containerPadding = ( padding * 2 );
-
-                return new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        ( int ) ( mEngramDimensions * numRows + containerPadding )
-                );
-            } else {
-                return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f );
-            }
-        } else {
-            // landscape
-            if ( craftableEngramListAdapter.getItemCount() > 0 ) {
-                int numCols = getResources().getInteger( R.integer.display_case_column_count );
-
-                return new LinearLayout.LayoutParams(
-                        ( int ) ( mEngramDimensions * ( numCols / 2 ) ),
-                        0,
-                        1f
-                );
-            } else {
-                return new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        0,
-                        1f );
-            }
-        }
+        View container = findViewById( R.id.content_main_bottom_container );
+        container.setLayoutParams( layoutParams );
     }
 
     private String getAppVersions() {
@@ -520,7 +282,26 @@ public class MainActivity extends AppCompatActivity {
                 "JSON File Version: " + getString( R.string.json_version ) + "\n";
     }
 
-    void SendErrorReport( Exception e ) {
-        ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, TAG, e );
+    @Override
+    public void onCategoryHierarchyResolved( String text ) {
+        mCategoryHierarchyTextView.setText( text );
+    }
+
+    @Override
+    public void onRequestLayoutUpdate() {
+        UpdateContainerLayoutParams();
+    }
+
+    @Override
+    public void onSendErrorReport( final String tag, final Exception e, boolean showAlertDialog ) {
+        if ( showAlertDialog )
+            runOnUiThread( new Runnable() {
+                @Override
+                public void run() {
+                    ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
+                }
+            } );
+        else
+            ExceptionUtil.SendErrorReport( MainActivity.this, tag, e );
     }
 }

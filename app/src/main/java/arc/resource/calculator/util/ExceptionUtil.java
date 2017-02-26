@@ -23,12 +23,12 @@ public class ExceptionUtil {
         FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle( context ).toString() );
         FirebaseCrash.logcat( Log.ERROR, tag, e.getMessage() );
         FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
-        FirebaseCrash.report( e );
+//        FirebaseCrash.report( e );
     }
 
     // if position of requested list is out of bounds, then throw this exception
-    public static class IndexOutOfBoundsException extends Exception {
-        public IndexOutOfBoundsException( int index, String contents ) {
+    public static class PositionOutOfBoundsException extends Exception {
+        public PositionOutOfBoundsException( int index, String contents ) {
             super( BuildExceptionMessageBundle( index, contents ).toString() );
         }
     }

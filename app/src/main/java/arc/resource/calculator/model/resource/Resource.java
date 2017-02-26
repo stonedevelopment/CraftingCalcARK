@@ -17,35 +17,47 @@ package arc.resource.calculator.model.resource;
  */
 public class Resource {
     // Primary Key created by Database used to track its row location
-    private long id;
+    private long mId;
 
-    // String literal name taken verbatim from in-game
-    private String name;
+    // String literal of Resource's name taken verbatim in-game
+    private String mName;
 
-    // Filename for drawable resource
-    private String drawable;
+    // String literal of Resource's image folder location
+    private String mFolder;
 
-    public Resource( long id, String name, String drawable ) {
-        this.id = id;
-        this.drawable = drawable;
-        this.name = name;
+    // String literal of Resource's image filename
+    private String mFile;
+
+    public Resource( long id, String name, String folder, String file ) {
+        mId = id;
+        mFolder = folder;
+        mFile = file;
+        mName = name;
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
-    public String getDrawable() {
-        return drawable;
+    public String getFolder() {
+        return mFolder;
+    }
+
+    public String getFile() {
+        return mFile;
+    }
+
+    public String getImagePath() {
+        return getFolder() + getFile();
     }
 
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", drawable=" + drawable;
+        return "mId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile;
     }
 }
 

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/detail_padding">
 
     <ImageView
         android:id="@+id/engram_detail_imageView"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/detail_thumbnail_size"
-        android:adjustViewBounds="true"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/structures_stone_stone_wall"/>
+        android:adjustViewBounds="true"/>
 
     <TextView
         android:id="@+id/engram_detail_nameText"
@@ -23,44 +23,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/frame"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/detail_padding">
 
         <TextView
             android:id="@+id/engram_detail_categoryText"
             style="@style/AppTheme.Text.Detail.Category"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/detail_padding"/>
 
-        <!--<TextView-->
-        <!--android:id="@+id/engram_detail_craftedInText"-->
-        <!--style="@style/AppTheme.Text.Detail.Station"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingBottom="@dimen/detail_padding"/>-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/engram_detail_levelText"-->
-        <!--style="@style/AppTheme.Text.Detail.Level"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingBottom="@dimen/detail_padding"/>-->
-
-        <ScrollView
+        <TextView
+            android:id="@+id/engram_detail_descriptionText"
+            style="@style/AppTheme.Text.Detail.Description"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="@dimen/detail_padding">
-
-            <TextView
-                android:id="@+id/engram_detail_descriptionText"
-                style="@style/AppTheme.Text.Detail.Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </ScrollView>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

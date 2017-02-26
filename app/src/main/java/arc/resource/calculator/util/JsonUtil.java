@@ -17,7 +17,7 @@ public class JsonUtil {
         BufferedReader fileReader = null;
 
         try {
-            InputStream fileStream = context.getResources().openRawResource( R.raw.jsonrawdata );
+            InputStream fileStream = context.getResources().openRawResource( R.raw.jsonrawdata_test );
             StringBuffer buffer = new StringBuffer();
 
             fileReader = new BufferedReader( new InputStreamReader( fileStream ) );

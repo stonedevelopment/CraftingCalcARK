@@ -107,7 +107,7 @@ public class CategoryContent {
 
         @Override
         public String toString() {
-            return "mId=" + mId + ", mName=" + mName + ", mParent=" + mParent + ", mDrawable=" + mDrawable;
+            return "mEngramId=" + mId + ", mName=" + mName + ", mParent=" + mParent + ", mDrawable=" + mDrawable;
         }
     }
 }
