@@ -48,11 +48,11 @@ public class Engram {
         return mName;
     }
 
-    private String getFolder() {
+    public String getFolder() {
         return mFolder;
     }
 
-    private String getFile() {
+    public String getFile() {
         return mFile;
     }
 

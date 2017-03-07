@@ -14,6 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.instabug.library.Instabug;
+import com.instabug.library.InstabugColorTheme;
+import com.instabug.library.invocation.InstabugInvocationEvent;
+
 import arc.resource.calculator.listeners.MainActivityListener;
 import arc.resource.calculator.listeners.SendErrorReportListener;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
@@ -92,6 +96,22 @@ public class MainActivity extends AppCompatActivity
 
         AdUtil.loadAdView( this );
 
+        new Instabug.Builder( getApplication(), BuildConfig.INSTABUG_API_KEY )
+                .setInvocationEvent( InstabugInvocationEvent.SHAKE )
+                .setTheme( InstabugColorTheme.InstabugColorThemeDark )
+                .setEmailFieldRequired( false )
+                .setCommentFieldRequired( true )
+                .build();
+
+//        Instabug.setBugCategories( new ArrayList<BugCategory>() {{
+//            add( BugCategory.getInstance()
+//                    .withLabel( "Engram/Resource" ) );
+//            add( BugCategory.getInstance()
+//                    .withLabel( "Look/Feel" ) );
+//            add( BugCategory.getInstance()
+//                    .withLabel( "Other" ) );
+//        }} );
+
         showChangeLog();
     }
 
@@ -112,6 +132,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch ( item.getItemId() ) {
+            case R.id.action_search:
+                DialogUtil.Search( MainActivity.this ).show();
+                break;
+
             case R.id.action_settings:
                 startActivityForResult( new Intent( this, SettingsActivity.class ),
                         Util.REQUEST_CODE_SETTINGS_ACTIVITY );

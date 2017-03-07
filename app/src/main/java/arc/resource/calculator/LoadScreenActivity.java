@@ -22,13 +22,11 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import arc.resource.calculator.listeners.SendErrorReportListener;
 import arc.resource.calculator.service.InitializationService;
 import arc.resource.calculator.service.ServiceReceiver;
 import arc.resource.calculator.util.AdUtil;
-import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.Util;
 import arc.resource.calculator.util.PrefsUtil;
+import arc.resource.calculator.util.Util;
 
 import static arc.resource.calculator.service.ServiceUtil.PARAM_MESSAGE;
 import static arc.resource.calculator.service.ServiceUtil.PARAM_RECEIVER;
@@ -39,7 +37,7 @@ import static arc.resource.calculator.service.ServiceUtil.STATUS_STARTED;
 import static arc.resource.calculator.service.ServiceUtil.STATUS_UPDATING;
 
 public class LoadScreenActivity extends AppCompatActivity
-        implements ServiceReceiver.Receiver, SendErrorReportListener {
+        implements ServiceReceiver.Receiver {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
     private boolean mIsActive;
@@ -157,13 +155,5 @@ public class LoadScreenActivity extends AppCompatActivity
         prefs.saveCategoryLevelsBackToDefault();
 
         startMainActivity( true );
-    }
-
-    @Override
-    public void onSendErrorReport( String tag, Exception e, boolean showAlertDialog ) {
-        if ( showAlertDialog )
-            ExceptionUtil.SendErrorReportWithAlertDialog( LoadScreenActivity.this, tag, e );
-        else
-            ExceptionUtil.SendErrorReport( LoadScreenActivity.this, tag, e );
     }
 }

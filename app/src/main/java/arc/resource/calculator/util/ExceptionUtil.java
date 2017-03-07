@@ -22,7 +22,10 @@ public class ExceptionUtil {
 
         FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle( context ).toString() );
         FirebaseCrash.logcat( Log.ERROR, tag, e.getMessage() );
-        FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
+//        FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
+
+        Log.e( tag, Arrays.toString( e.getStackTrace() ) );
+
 //        FirebaseCrash.report( e );
     }
 

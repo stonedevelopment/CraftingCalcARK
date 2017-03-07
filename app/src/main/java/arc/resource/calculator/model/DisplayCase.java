@@ -39,6 +39,7 @@ public class DisplayCase
     private static final String TAG = DisplayCase.class.getSimpleName();
     private static final long ROOT = 0;
     private static final long STATION_ROOT = -1;
+    private static final long SEARCH_ROOT = -2;
 
     private final int INVALID_ITEM_ID = -1;
     private final int INVALID_ITEM_POSITION = -1;
@@ -52,6 +53,8 @@ public class DisplayCase
 
     private ListenerUtil mCallback;
 
+    private String mSearchQuery;
+
     private static DisplayCase sInstance;
 
     public static DisplayCase getInstance( Context context, boolean didUpdate ) {
@@ -63,8 +66,6 @@ public class DisplayCase
     }
 
     private DisplayCase( Context context, boolean didUpdate ) {
-        Log.d( TAG, "new DisplayCase" );
-
         PrefsUtil prefs = new PrefsUtil( context );
 
         if ( didUpdate ) {
@@ -85,6 +86,8 @@ public class DisplayCase
         mCallback = ListenerUtil.getInstance();
         mCallback.addDisplayCaseListener( this );
         mCallback.addCraftingQueueListener( this );
+
+        mSearchQuery = null;
 
         mCallback.requestDisplayCaseDataSetChange( context );
     }
@@ -276,6 +279,8 @@ public class DisplayCase
         List<Long> keys = new ArrayList<>();
         List<DisplayEngram> values = new ArrayList<>();
 
+        long dlc_id = EngramEntry.getDLCIdFromUri( uri );
+
         try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
 
             if ( cursor == null )
@@ -285,6 +290,11 @@ public class DisplayCase
 
             while ( cursor.moveToNext() ) {
                 long _id = cursor.getLong( cursor.getColumnIndex( EngramEntry._ID ) );
+                String name = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_NAME ) );
+                String folder = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FOLDER ) );
+                String file = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FILE ) );
+                int yield = cursor.getInt( cursor.getColumnIndex( EngramEntry.COLUMN_YIELD ) );
+                long category_id = cursor.getLong( cursor.getColumnIndex( EngramEntry.COLUMN_CATEGORY_KEY ) );
 
                 if ( !keys.contains( _id ) ) {
                     int quantity = 0;
@@ -293,14 +303,7 @@ public class DisplayCase
                         quantity = queues.get( _id ).getQuantity();
 
                     keys.add( _id );
-                    values.add( new DisplayEngram(
-                            cursor.getLong( cursor.getColumnIndex( EngramEntry._ID ) ),
-                            cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_NAME ) ),
-                            cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FOLDER ) ),
-                            cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FILE ) ),
-                            cursor.getInt( cursor.getColumnIndex( EngramEntry.COLUMN_YIELD ) ),
-                            cursor.getLong( cursor.getColumnIndex( EngramEntry.COLUMN_CATEGORY_KEY ) ),
-                            quantity ) );
+                    values.add( new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
                 }
             }
         } catch ( Exception e ) {
@@ -308,6 +311,64 @@ public class DisplayCase
         }
 
         return values;
+    }
+
+    private List<DisplayEngram> querySearchForEngrams( Context context, Uri uri ) {
+        List<Long> keys = new ArrayList<>();
+        List<DisplayEngram> values = new ArrayList<>();
+
+        long dlc_id = EngramEntry.getDLCIdFromUri( uri );
+
+        try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
+
+            if ( cursor == null )
+                return new ArrayList<>();
+
+            LongSparseArray<Queue> queues = queryForQueues( context );
+
+            while ( cursor.moveToNext() ) {
+                long _id = cursor.getLong( cursor.getColumnIndex( EngramEntry._ID ) );
+                String name = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_NAME ) );
+                String folder = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FOLDER ) );
+                String file = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FILE ) );
+                int yield = cursor.getInt( cursor.getColumnIndex( EngramEntry.COLUMN_YIELD ) );
+                long category_id = cursor.getLong( cursor.getColumnIndex( EngramEntry.COLUMN_CATEGORY_KEY ) );
+
+                if ( !keys.contains( _id ) ) {
+                    int quantity = 0;
+
+                    if ( queues.indexOfKey( _id ) > INVALID_ITEM_POSITION )
+                        quantity = queues.get( _id ).getQuantity();
+
+                    keys.add( _id );
+                    values.add( new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
+                }
+            }
+        } catch ( Exception e ) {
+            mCallback.emitSendErrorReport( TAG, e );
+        }
+
+        return values;
+    }
+
+    private DisplayEngram queryForEngram( Context context, Uri uri, int quantity ) {
+        try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
+
+            if ( cursor == null )
+                return null;
+
+            if ( !cursor.moveToFirst() )
+                return null;
+
+            long _id = cursor.getLong( cursor.getColumnIndex( EngramEntry._ID ) );
+            String name = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_NAME ) );
+            String folder = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FOLDER ) );
+            String file = cursor.getString( cursor.getColumnIndex( EngramEntry.COLUMN_IMAGE_FILE ) );
+            int yield = cursor.getInt( cursor.getColumnIndex( EngramEntry.COLUMN_YIELD ) );
+            long category_id = cursor.getLong( cursor.getColumnIndex( EngramEntry.COLUMN_CATEGORY_KEY ) );
+
+            return new DisplayEngram( _id, name, folder, file, yield, category_id, quantity );
+        }
     }
 
     /**
@@ -333,25 +394,30 @@ public class DisplayCase
 
         long dlc_id = new PrefsUtil( context ).getDLCPreference();
         if ( position == 0 ) {
-            if ( isCurrentCategoryLevelRoot() ) {
-                if ( isFilteredByStation( context ) ) {
-                    // Back button to station list
-                    setCurrentCategoryLevelsToStationRoot();
-                } else {
-                    // Normal Category object
-                    // Grabbing ID is the best way to track its location.
-                    setCurrentCategoryLevels( category.getId(), category.getParent() );
-                }
+            if ( category.getParent() == SEARCH_ROOT ) {
+                // backing out of search view
+                mSearchQuery = null;
             } else {
-                if ( isCurrentCategoryParentLevelRoot() ) {
-                    // Back button to category list
-                    setCurrentCategoryLevelsToRoot();
+                if ( isCurrentCategoryLevelRoot() ) {
+                    if ( isFilteredByStation( context ) ) {
+                        // Back button to station list
+                        setCurrentCategoryLevelsToStationRoot();
+                    } else {
+                        // Normal Category object
+                        // Grabbing ID is the best way to track its location.
+                        setCurrentCategoryLevels( category.getId(), category.getParent() );
+                    }
                 } else {
-                    // Normal Back Category object
-                    // Query for details via its Parent Level
-                    setCurrentCategoryLevels( category.getParent(),
-                            queryForCategory( context,
-                                    CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
+                    if ( isCurrentCategoryParentLevelRoot() ) {
+                        // Back button to category list
+                        setCurrentCategoryLevelsToRoot();
+                    } else {
+                        // Normal Back Category object
+                        // Query for details via its Parent Level
+                        setCurrentCategoryLevels( category.getParent(),
+                                queryForCategory( context,
+                                        CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
+                    }
                 }
             }
         } else {
@@ -470,6 +536,13 @@ public class DisplayCase
                 getCurrentStationId(),
                 context.getString( R.string.go_back_to_stations ),
                 STATION_ROOT );
+    }
+
+    private Category BuildBackCategoryOutOfSearch( Context context ) {
+        return new BackCategory(
+                SEARCH_ROOT,
+                context.getString( R.string.category_go_back ),
+                SEARCH_ROOT );
     }
 
     /**
@@ -647,6 +720,129 @@ public class DisplayCase
         return builder.toString();
     }
 
+    /**
+     *
+     */
+
+    private void RefreshData( Context context ) {
+        long dlc_id = new PrefsUtil( context ).getDLCPreference();
+
+        List<Station> stationMap = new ArrayList<>();
+        List<Category> categoryMap = new ArrayList<>();
+        List<DisplayEngram> engramMap = new ArrayList<>();
+
+        Uri engramUri;
+        if ( isFilteredByCategory( context ) ) {
+            if ( isFilteredByStation( context ) ) {
+                if ( isCurrentCategoryLevelStationRoot() ) {
+                    stationMap = queryForStations( context, StationEntry.buildUriWithDLCId( dlc_id ) );
+                } else {
+                    if ( isFilteredByLevel( context ) ) {
+                        engramUri = EngramEntry.buildUriWithCategoryIdStationIdAndLevel(
+                                dlc_id,
+                                getCurrentCategoryLevel(),
+                                getCurrentStationId(),
+                                getRequiredLevelPref( context ) );
+                    } else {
+                        engramUri = EngramEntry.buildUriWithCategoryIdAndStationId(
+                                dlc_id,
+                                getCurrentCategoryLevel(),
+                                getCurrentStationId() );
+                    }
+                    engramMap = queryForEngrams( context, engramUri );
+
+                    Uri categoryUri = CategoryEntry.buildUriWithStationId( dlc_id, getCurrentCategoryLevel(), getCurrentStationId() );
+                    categoryMap = queryForCategories( context, categoryUri );
+                }
+            } else {
+                if ( isFilteredByLevel( context ) ) {
+                    engramUri = EngramEntry.buildUriWithCategoryIdAndLevel(
+                            dlc_id,
+                            getCurrentCategoryLevel(),
+                            getRequiredLevelPref( context ) );
+                } else {
+                    engramUri = EngramEntry.buildUriWithCategoryId(
+                            dlc_id,
+                            getCurrentCategoryLevel() );
+                }
+                engramMap = queryForEngrams( context, engramUri );
+
+                Uri categoryUri = CategoryEntry.buildUriWithParentId( dlc_id, getCurrentCategoryLevel() );
+                categoryMap = queryForCategories( context, categoryUri );
+            }
+        } else {
+            if ( isFilteredByStation( context ) ) {
+                if ( isCurrentCategoryLevelStationRoot() ) {
+                    stationMap = queryForStations( context, StationEntry.buildUriWithDLCId( dlc_id ) );
+                } else {
+                    if ( isFilteredByLevel( context ) ) {
+                        engramUri = EngramEntry.buildUriWithStationIdAndLevel(
+                                dlc_id,
+                                getCurrentStationId(),
+                                getRequiredLevelPref( context ) );
+                    } else {
+                        engramUri = EngramEntry.buildUriWithStationId(
+                                dlc_id,
+                                getCurrentStationId() );
+                    }
+                    engramMap = queryForEngrams( context, engramUri );
+
+                    categoryMap.add( BuildBackCategoryToStationRoot( context ) );
+                }
+            } else {
+                if ( isFilteredByLevel( context ) ) {
+                    engramUri = EngramEntry.buildUriWithLevel( dlc_id, getRequiredLevelPref( context ) );
+                } else {
+                    engramUri = EngramEntry.buildUriWithDLCId( dlc_id );
+                }
+                engramMap = queryForEngrams( context, engramUri );
+            }
+        }
+
+        mKeys.clear();
+
+        for ( Station station : stationMap ) {
+            mKeys.add( station.getId() );
+        }
+
+        for ( Category category : categoryMap ) {
+            mKeys.add( category.getId() );
+        }
+
+        for ( DisplayEngram engram : engramMap ) {
+            mKeys.add( engram.getId() );
+        }
+
+        mValues.clear();
+        mValues.addAll( stationMap );
+        mValues.addAll( categoryMap );
+        mValues.addAll( engramMap );
+    }
+
+    private void SearchData( Context context ) {
+        long dlc_id = new PrefsUtil( context ).getDLCPreference();
+        Uri uri = EngramEntry.buildUriWithSearchQuery( dlc_id, mSearchQuery );
+
+        List<DisplayEngram> engramMap = querySearchForEngrams( context, uri );
+
+        List<Category> categoryMap = new ArrayList<>();
+        categoryMap.add( BuildBackCategoryOutOfSearch( context ) );
+
+        mKeys.clear();
+
+        for ( Category category : categoryMap ) {
+            mKeys.add( category.getId() );
+        }
+
+        for ( DisplayEngram engram : engramMap ) {
+            mKeys.add( engram.getId() );
+        }
+
+        mValues.clear();
+        mValues.addAll( categoryMap );
+        mValues.addAll( engramMap );
+    }
+
     @Override
     public void onRequestRemoveOneFromQueue( Context context, long engram_id ) {
 
@@ -727,8 +923,14 @@ public class DisplayCase
 
     @Override
     public void onRequestCategoryHierarchy( Context context ) {
-        Log.d( TAG, "onRequestCategoryHierarchy()" );
         mCallback.notifyCategoryHierarchyResolved( buildHierarchicalText( context ) );
+    }
+
+    @Override
+    public void onRequestSearch( Context context, String query ) {
+        mSearchQuery = query;
+
+        new QueryForDataTask( context ).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR );
     }
 
     @Override
@@ -743,7 +945,6 @@ public class DisplayCase
 
     @Override
     public void onDisplayCaseDataSetChanged( Context context ) {
-        Log.d( TAG, "onDisplayCaseDataSetChanged()" );
         mCallback.notifyCategoryHierarchyResolved( buildHierarchicalText( context ) );
     }
 
@@ -763,103 +964,11 @@ public class DisplayCase
 
         @Override
         protected Void doInBackground( Void... params ) {
-            QueryForData( mContext );
+            if ( mSearchQuery == null )
+                RefreshData( mContext );
+            else
+                SearchData( mContext );
             return null;
-        }
-
-        private void QueryForData( Context context ) {
-            long dlc_id = new PrefsUtil( context ).getDLCPreference();
-
-            List<Station> stationMap = new ArrayList<>();
-            List<Category> categoryMap = new ArrayList<>();
-            List<DisplayEngram> engramMap = new ArrayList<>();
-
-            Uri engramUri;
-            if ( isFilteredByCategory( context ) ) {
-                if ( isFilteredByStation( context ) ) {
-                    if ( isCurrentCategoryLevelStationRoot() ) {
-                        stationMap = queryForStations( context, StationEntry.buildUriWithDLCId( dlc_id ) );
-                    } else {
-                        if ( isFilteredByLevel( context ) ) {
-                            engramUri = EngramEntry.buildUriWithCategoryIdStationIdAndLevel(
-                                    dlc_id,
-                                    getCurrentCategoryLevel(),
-                                    getCurrentStationId(),
-                                    getRequiredLevelPref( context ) );
-                        } else {
-                            engramUri = EngramEntry.buildUriWithCategoryIdAndStationId(
-                                    dlc_id,
-                                    getCurrentCategoryLevel(),
-                                    getCurrentStationId() );
-                        }
-                        engramMap = queryForEngrams( context, engramUri );
-
-                        Uri categoryUri = CategoryEntry.buildUriWithStationId( dlc_id, getCurrentCategoryLevel(), getCurrentStationId() );
-                        categoryMap = queryForCategories( context, categoryUri );
-                    }
-                } else {
-                    if ( isFilteredByLevel( context ) ) {
-                        engramUri = EngramEntry.buildUriWithCategoryIdAndLevel(
-                                dlc_id,
-                                getCurrentCategoryLevel(),
-                                getRequiredLevelPref( context ) );
-                    } else {
-                        engramUri = EngramEntry.buildUriWithCategoryId(
-                                dlc_id,
-                                getCurrentCategoryLevel() );
-                    }
-                    engramMap = queryForEngrams( context, engramUri );
-
-                    Uri categoryUri = CategoryEntry.buildUriWithParentId( dlc_id, getCurrentCategoryLevel() );
-                    categoryMap = queryForCategories( context, categoryUri );
-                }
-            } else {
-                if ( isFilteredByStation( context ) ) {
-                    if ( isCurrentCategoryLevelStationRoot() ) {
-                        stationMap = queryForStations( context, StationEntry.buildUriWithDLCId( dlc_id ) );
-                    } else {
-                        if ( isFilteredByLevel( context ) ) {
-                            engramUri = EngramEntry.buildUriWithStationIdAndLevel(
-                                    dlc_id,
-                                    getCurrentStationId(),
-                                    getRequiredLevelPref( context ) );
-                        } else {
-                            engramUri = EngramEntry.buildUriWithStationId(
-                                    dlc_id,
-                                    getCurrentStationId() );
-                        }
-                        engramMap = queryForEngrams( context, engramUri );
-
-                        categoryMap.add( BuildBackCategoryToStationRoot( context ) );
-                    }
-                } else {
-                    if ( isFilteredByLevel( context ) ) {
-                        engramUri = EngramEntry.buildUriWithLevel( dlc_id, getRequiredLevelPref( context ) );
-                    } else {
-                        engramUri = EngramEntry.buildUriWithDLCId( dlc_id );
-                    }
-                    engramMap = queryForEngrams( context, engramUri );
-                }
-            }
-
-            mKeys.clear();
-
-            for ( Station station : stationMap ) {
-                mKeys.add( station.getId() );
-            }
-
-            for ( Category category : categoryMap ) {
-                mKeys.add( category.getId() );
-            }
-
-            for ( DisplayEngram engram : engramMap ) {
-                mKeys.add( engram.getId() );
-            }
-
-            mValues.clear();
-            mValues.addAll( stationMap );
-            mValues.addAll( categoryMap );
-            mValues.addAll( engramMap );
         }
     }
 }

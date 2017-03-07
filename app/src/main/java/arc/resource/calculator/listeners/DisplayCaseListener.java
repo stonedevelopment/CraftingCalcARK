@@ -9,6 +9,8 @@ public interface DisplayCaseListener {
 
     void onRequestCategoryHierarchy( Context context );
 
+    void onRequestSearch( Context context, String searchText );
+
     void onItemChanged( int position );
 
     void onRequestDisplayCaseDataSetChange( Context context );

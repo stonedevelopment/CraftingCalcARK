@@ -180,6 +180,11 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<DisplayCaseList
     }
 
     @Override
+    public void onRequestSearch( Context context, String searchText ) {
+
+    }
+
+    @Override
     public void onItemChanged( int position ) {
         notifyItemChanged( position );
     }

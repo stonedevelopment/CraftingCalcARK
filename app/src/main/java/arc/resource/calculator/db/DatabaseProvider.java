@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
@@ -32,6 +31,7 @@ import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
 import arc.resource.calculator.util.ExceptionUtil.URIUnknownException;
+import arc.resource.calculator.util.ListenerUtil;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
@@ -44,17 +44,16 @@ public class DatabaseProvider extends ContentProvider {
     static final int ENGRAM_ID_WITH_DLC = 101;
     static final int ENGRAM_WITH_CATEGORY = 102;
     static final int ENGRAM_WITH_CATEGORY_AND_STATION = 103;
-    //    static final int ENGRAM_WITH_DRAWABLE = 104;
     static final int ENGRAM_WITH_DLC = 105;
     static final int ENGRAM_WITH_STATION = 106;
     static final int ENGRAM_WITH_LEVEL = 107;
     static final int ENGRAM_WITH_LEVEL_AND_CATEGORY = 108;
     static final int ENGRAM_WITH_LEVEL_AND_STATION = 109;
     static final int ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION = 110;
+    static final int ENGRAM_WITH_SEARCH = 111;
 
     static final int RESOURCE = 200;
     static final int RESOURCE_ID_WITH_DLC = 201;
-//    static final int RESOURCE_WITH_DRAWABLE = 202;
 
     static final int COMPLEX_RESOURCE = 300;
     static final int COMPLEX_RESOURCE_ID = 301;
@@ -132,10 +131,6 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_DLC + "/#",
                 ENGRAM_WITH_DLC );
-//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
-//                        DatabaseContract.PATH_DRAWABLE + "/*/" +
-//                        DatabaseContract.PATH_DLC + "/#",
-//                ENGRAM_WITH_DRAWABLE );
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_CATEGORY + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
@@ -169,6 +164,10 @@ public class DatabaseProvider extends ContentProvider {
                         DatabaseContract.PATH_LEVEL + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
                 ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION );
+        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                        DatabaseContract.PATH_SEARCH + "/*/" +
+                        DatabaseContract.PATH_DLC + "/#",
+                ENGRAM_WITH_SEARCH );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE,
                 QUEUE );
@@ -187,10 +186,6 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
                 RESOURCE_ID_WITH_DLC );
-//        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/" +
-//                        DatabaseContract.PATH_DRAWABLE + "/*/" +
-//                        DatabaseContract.PATH_DLC + "/#",
-//                RESOURCE_WITH_DRAWABLE );
 
         uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC,
                 DLC );
@@ -223,11 +218,11 @@ public class DatabaseProvider extends ContentProvider {
                 case ENGRAM_WITH_LEVEL_AND_CATEGORY:
                 case ENGRAM_WITH_LEVEL_AND_STATION:
                 case ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION:
+                case ENGRAM_WITH_SEARCH:
                 case ENGRAM_WITH_STATION:
                     return EngramEntry.CONTENT_DIR_TYPE;
 
                 case RESOURCE:
-//                case RESOURCE_WITH_DRAWABLE:
                     return ResourceEntry.CONTENT_DIR_TYPE;
 
                 case COMPLEX_RESOURCE:
@@ -253,7 +248,6 @@ public class DatabaseProvider extends ContentProvider {
                     return StationEntry.CONTENT_DIR_TYPE;
 
                 case ENGRAM_ID_WITH_DLC:
-//                case ENGRAM_WITH_DRAWABLE:
                     return EngramEntry.CONTENT_ITEM_TYPE;
 
                 case RESOURCE_ID_WITH_DLC:
@@ -508,6 +502,17 @@ public class DatabaseProvider extends ContentProvider {
                     tableName = EngramEntry.TABLE_NAME;
                     break;
 
+                case ENGRAM_WITH_SEARCH:
+                    selection = EngramEntry.SQL_QUERY_WITH_SEARCH +
+                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            "%" + EngramEntry.getSearchQueryFromUri( uri ) + "%",
+                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                    };
+                    sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
+                    tableName = EngramEntry.TABLE_NAME;
+                    break;
+
                 case QUEUE_ID:
                     selection = QueueEntry.SQL_QUERY_WITH_ID;
                     selectionArgs = new String[]{
@@ -549,29 +554,8 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( QueueEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_COLUMN_NAME + " ASC";
-                    ;
                     tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
                     break;
-
-//                case ENGRAM_WITH_DRAWABLE:
-//                    projection = new String[]{ EngramEntry.COLUMN_NAME };
-//                    selection = EngramEntry.SQL_QUERY_WITH_DRAWABLE +
-//                            " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
-//                    selectionArgs = new String[]{
-//                            EngramEntry.getDrawableFromUri( uri ),
-//                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) ) };
-//                    tableName = EngramEntry.TABLE_NAME;
-//                    break;
-
-//                case RESOURCE_WITH_DRAWABLE:
-//                    projection = new String[]{ ResourceEntry._ID };
-//                    selection = ResourceEntry.SQL_QUERY_WITH_DRAWABLE +
-//                            " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
-//                    selectionArgs = new String[]{
-//                            ResourceEntry.getDrawableFromUri( uri ),
-//                            Long.toString( ResourceEntry.getDLCIdFromUri( uri ) ) };
-//                    tableName = ResourceEntry.TABLE_NAME;
-//                    break;
 
                 case STATION_ID_WITH_DLC:
                     selection = StationEntry.SQL_QUERY_WITH_ID +
@@ -619,7 +603,7 @@ public class DatabaseProvider extends ContentProvider {
             long _id = mOpenHelper.getWritableDatabase()
                     .insert( getTableNameFromUriMatch( uri ), null, values );
 
-            if ( _id >= 0 ) {
+            if ( _id > -1 ) {
                 getContext().getContentResolver().notifyChange( uri, null );
 
                 return DatabaseContract.buildUriWithId( uri, _id );
@@ -658,9 +642,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( QueueEntry.getEngramIdFromUri( uri ) )
                     };
                     break;
-
-                default:
-                    throw new URIUnknownException( uri );
             }
 
             rowsDeleted = mOpenHelper.getWritableDatabase()

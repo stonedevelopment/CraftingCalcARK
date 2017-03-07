@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.util.LongSparseArray;
+import android.util.SparseArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.Vector;
 
+import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.util.JsonUtil;
 
@@ -32,7 +34,8 @@ public class InitializationService extends IntentService {
     private Bundle mBundle;
     private ResultReceiver mReceiver;
 
-    private LongSparseArray<LongSparseArray<Long>> mTotalConversionMap;
+    private LongSparseArray<TotalConversion> mTotalConversion;
+    private SparseArray<Long> mDlcIds = new SparseArray<>();
 
     public InitializationService() {
         super( TAG );
@@ -52,17 +55,19 @@ public class InitializationService extends IntentService {
         // removeQueueById all records from database
         deleteAllRecordsFromProvider();
 
-        // Read local json file into a string
-        String jsonString = JsonUtil.readRawJsonFileToJsonString( this );
-
-        // Attempt to parse json string
         try {
+            // Read local json file into a string
+            String jsonString = JsonUtil.readRawJsonFileToJsonString( this, R.raw.data_finalized );
+
             // Tell user that database initialization is in progress
             sendStatusUpdate( STATUS_UPDATING );
 
             JSONObject jsonObject = new JSONObject( jsonString );
 
-            mTotalConversionMap = convertTotalConversionJsonArrayToSparseArray( jsonObject.getJSONArray( "total_conversion" ) );
+            mTotalConversion = mapTotalConversion( jsonObject.getJSONArray( DatabaseContract.TotalConversionEntry.TABLE_NAME ) );
+
+            // ids are added in insertDLC method
+            mDlcIds = new SparseArray<>();
 
             insertDLC( jsonObject.getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
             insertStations( jsonObject.getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) );
@@ -76,9 +81,11 @@ public class InitializationService extends IntentService {
         }
 
         // If error, send error signal, stop service
-        catch ( JSONException e ) {
+        catch ( Exception e ) {
             mBundle.putString( PARAM_MESSAGE, e.getLocalizedMessage() );
             sendStatusUpdate( STATUS_ERROR );
+
+            e.printStackTrace();
         }
 
         stopSelf();
@@ -100,7 +107,8 @@ public class InitializationService extends IntentService {
     }
 
     void delete( Uri uri ) {
-        getContentResolver().delete( uri, null, null );
+        int rows = getContentResolver().delete( uri, null, null );
+        Log.d( TAG, rows + "" );
     }
 
     void bulkInsertWithUri( Uri insertUri, Vector<ContentValues> vector ) {
@@ -120,13 +128,9 @@ public class InitializationService extends IntentService {
             long resource_id = jsonObject.getLong( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY );
             long engram_id = jsonObject.getLong( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY );
 
-            //Log.d( TAG, "-- insertComplexResources > resource_id: " + resource_id + ", engram_id: " + engram_id );
-
             ContentValues values = new ContentValues();
             values.put( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY, resource_id );
             values.put( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY, engram_id );
-
-            //Log.d( TAG, "   ++ insertComplexResources Success!" );
 
             vector.add( values );
         }
@@ -147,6 +151,8 @@ public class InitializationService extends IntentService {
             values.put( DatabaseContract.DLCEntry._ID, _id );
             values.put( DatabaseContract.DLCEntry.COLUMN_NAME, name );
 
+            mDlcIds.put( mDlcIds.size(), _id );
+
             vector.add( values );
         }
 
@@ -165,8 +171,8 @@ public class InitializationService extends IntentService {
             String imageFile = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FILE );
             JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
 
-            for ( int d = 0; d < dlc_ids.length(); d++ ) {
-                long dlc_id = dlc_ids.getLong( d );
+            for ( int j = 0; j < dlc_ids.length(); j++ ) {
+                long dlc_id = dlc_ids.getLong( j );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.ResourceEntry._ID, _id );
@@ -190,20 +196,18 @@ public class InitializationService extends IntentService {
 
             long _id = jsonObject.getLong( DatabaseContract.StationEntry._ID );
             String name = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_NAME );
-//            String drawable = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_DRAWABLE );
             String imageFolder = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER );
             String imageFile = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE );
             JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.StationEntry.COLUMN_DLC_KEY );
 
-            for ( int d = 0; d < dlc_ids.length(); d++ ) {
-                long dlc_id = dlc_ids.getLong( d );
+            for ( int j = 0; j < dlc_ids.length(); j++ ) {
+                long dlc_id = dlc_ids.getLong( j );
 
                 ContentValues values = new ContentValues();
                 values.put( DatabaseContract.StationEntry._ID, _id );
                 values.put( DatabaseContract.StationEntry.COLUMN_NAME, name );
                 values.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER, imageFolder );
                 values.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE, imageFile );
-//                values.put( DatabaseContract.StationEntry.COLUMN_DRAWABLE, drawable );
                 values.put( DatabaseContract.StationEntry.COLUMN_DLC_KEY, dlc_id );
 
                 vector.add( values );
@@ -225,17 +229,13 @@ public class InitializationService extends IntentService {
             JSONArray station_ids = jsonObject.getJSONArray( DatabaseContract.CategoryEntry.COLUMN_STATION_KEY );
             JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.CategoryEntry.COLUMN_DLC_KEY );
 
-            //Log.d( TAG, "-- insertCategories > _id: " + _id + ", name: " + name + ", parent_id: " + parent_id );
+            // first check dlc_id
+            for ( int j = 0; j < dlc_ids.length(); j++ ) {
+                long dlc_id = dlc_ids.getLong( j );
 
-            // first go through dlc_ids...
-            for ( int d = 0; d < dlc_ids.length(); d++ ) {
-                long dlc_id = dlc_ids.getLong( d );
-
-                // ...while going through station_ids
+                // against station_ids
                 for ( int s = 0; s < station_ids.length(); s++ ) {
                     long station_id = station_ids.getLong( s );
-
-                    //Log.d( TAG, "   -? dlc_id: " + dlc_id + ", station_id: " + station_id );
 
                     // check if dlc_id and station_id's dlc_id match
                     Cursor cursor = getContentResolver().query(
@@ -243,10 +243,8 @@ public class InitializationService extends IntentService {
                             null, null, null, null );
 
                     // no match found, try next station_id
-                    if ( cursor == null ) {
-                        //Log.e( TAG, "   -! cursor == null! (possibly because it wasn't added with proper dlc_id)" );
+                    if ( cursor == null )
                         continue;
-                    }
 
                     // match found, adding values into vector
                     if ( cursor.moveToFirst() ) {
@@ -278,7 +276,6 @@ public class InitializationService extends IntentService {
             long _id = jsonObject.getLong( DatabaseContract.EngramEntry._ID );
             String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
             String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
-//            String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
             String imageFolder = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER );
             String imageFile = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE );
             int yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
@@ -287,11 +284,11 @@ public class InitializationService extends IntentService {
             JSONArray station_ids = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_STATION_KEY );
             JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
 
-            // first go through dlc_ids...
-            for ( int d = 0; d < dlc_ids.length(); d++ ) {
-                long dlc_id = dlc_ids.getLong( d );
+            // first check dlc_id
+            for ( int j = 0; j < dlc_ids.length(); j++ ) {
+                long dlc_id = dlc_ids.getLong( j );
 
-                // ...while going through station_ids
+                // against station_ids
                 for ( int s = 0; s < station_ids.length(); s++ ) {
                     long station_id = station_ids.getLong( s );
 
@@ -310,7 +307,6 @@ public class InitializationService extends IntentService {
                         values.put( DatabaseContract.EngramEntry._ID, _id );
                         values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
                         values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
-//                        values.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, drawable );
                         values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER, imageFolder );
                         values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE, imageFile );
                         values.put( DatabaseContract.EngramEntry.COLUMN_YIELD, yield );
@@ -342,8 +338,9 @@ public class InitializationService extends IntentService {
             long resource_id = jsonObject.getLong( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY );
             int quantity = jsonObject.getInt( DatabaseContract.CompositionEntry.COLUMN_QUANTITY );
 
+            // convert resource id if specific dlc version calls for it
             if ( hasConversion( dlc_id, resource_id ) )
-                resource_id = getConvertedId( dlc_id, resource_id );
+                resource_id = getConversion( dlc_id, resource_id );
 
             ContentValues values = new ContentValues();
             values.put( DatabaseContract.CompositionEntry.COLUMN_ENGRAM_KEY, engram_id );
@@ -357,41 +354,57 @@ public class InitializationService extends IntentService {
         return vector;
     }
 
-    LongSparseArray<LongSparseArray<Long>> convertTotalConversionJsonArrayToSparseArray( JSONArray jsonArray ) throws JSONException {
-        LongSparseArray<LongSparseArray<Long>> map = new LongSparseArray<>();
+    boolean hasConversion( long dlc_id, long resource_id ) {
+        return mTotalConversion.get( dlc_id ) != null &&
+                mTotalConversion.get( dlc_id ).resources.get( resource_id ) != null;
+    }
+
+    long getConversion( long dlc_id, long resource_id ) {
+        return mTotalConversion.get( dlc_id ).resources.get( resource_id );
+    }
+
+    LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray ) throws JSONException {
+        LongSparseArray<TotalConversion> map = new LongSparseArray<>();
 
         for ( int i = 0; i < jsonArray.length(); i++ ) {
             JSONObject jsonObject = jsonArray.getJSONObject( i );
 
-            long dlc_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
+            long dlc_id = jsonObject.getLong( DatabaseContract.TotalConversionEntry.COLUMN_DLC_KEY );
+            JSONArray resourceArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME );
+//            JSONArray engramArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME );
 
-            LongSparseArray<Long> ids = new LongSparseArray<>();
+            TotalConversion totalConversion = new TotalConversion();
+            for ( int j = 0; j < resourceArray.length(); j++ ) {
+                JSONObject object = resourceArray.getJSONObject( j );
 
-            JSONArray jsonArray_resources = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME );
-            for ( int j = 0; j < jsonArray_resources.length(); j++ ) {
-                JSONObject resourceObject = jsonArray_resources.getJSONObject( j );
+                long from = object.getLong( DatabaseContract.TotalConversionEntry.COLUMN_FROM );
+                long to = object.getLong( DatabaseContract.TotalConversionEntry.COLUMN_TO );
 
-                long _id = resourceObject.getLong( DatabaseContract.ResourceEntry._ID );
-                long converted_id = resourceObject.getLong( "converted_id" );
-
-                ids.put( _id, converted_id );
+                totalConversion.resources.put( from, to );
             }
 
-            map.put( dlc_id, ids );
+//            for ( int j = 0; j < engramArray.length(); j++ ) {
+//                JSONObject object = engramArray.getJSONObject( j );
+//
+//                long from = object.getLong( DatabaseContract.TotalConversionEntry.COLUMN_FROM );
+//                long to = object.getLong( DatabaseContract.TotalConversionEntry.COLUMN_TO );
+//
+//                totalConversion.engrams.put( from, to );
+//            }
+
+            map.put( dlc_id, totalConversion );
         }
 
         return map;
     }
 
-    boolean hasConversion( long dlc_id, long _id ) {
-        try {
-            return mTotalConversionMap.get( dlc_id ).indexOfKey( _id ) >= 0;
-        } catch ( Exception e ) {
-            return false;
-        }
-    }
+    class TotalConversion {
+        //        LongSparseArray<Long> engrams;
+        LongSparseArray<Long> resources;
 
-    long getConvertedId( long dlc_id, long _id ) {
-        return mTotalConversionMap.get( dlc_id ).get( _id );
+        TotalConversion() {
+//            engrams = new LongSparseArray<>();
+            resources = new LongSparseArray<>();
+        }
     }
 }

@@ -52,6 +52,65 @@ public class DialogUtil {
         return builder.create();
     }
 
+    public static AlertDialog Search( final Context context ) {
+        final EditText editText = new EditText( context );
+        editText.setTextColor( context.getResources().getColor( R.color.colorWhite ) );
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( context, R.style.AlertDialogCustom ) );
+        builder.setTitle( context.getString( R.string.search_dialog_full_title ) )
+                .setIcon( android.R.drawable.ic_menu_search )
+                .setView( editText )
+                .setNegativeButton( context.getString( R.string.search_dialog_negative_button ), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which ) {
+
+                    }
+                } )
+                .setPositiveButton( context.getString( R.string.search_dialog_positive_button ), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which ) {
+                        if ( !editText.getText().toString().equals( "" ) ) {
+                            String searchText = editText.getText().toString();
+
+                            ListenerUtil.getInstance().requestSearch( context, searchText );
+                        }
+                    }
+                } );
+
+        return builder.create();
+    }
+
+    public static AlertDialog ReportEngram( final Context context, final long _id ) {
+        final EditText editText = new EditText( context );
+        editText.setTextColor( context.getResources().getColor( R.color.colorWhite ) );
+        editText.setInputType( InputType.TYPE_CLASS_NUMBER );
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( context, R.style.AlertDialogCustom ) );
+        builder.setTitle( context.getString( R.string.quantity_dialog_full_title ) )
+                .setIcon( android.R.drawable.ic_menu_edit )
+                .setMessage( "Enter new quantity" )
+                .setView( editText )
+                .setNegativeButton( context.getString( R.string.quantity_dialog_negative_button ), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which ) {
+
+                    }
+                } )
+                .setPositiveButton( context.getString( R.string.quantity_dialog_positive_button ), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which ) {
+                        if ( !editText.getText().toString().equals( "" ) ) {
+                            int quantity = Integer.parseInt( editText.getText().toString() );
+
+                            if ( quantity > 0 )
+                                ListenerUtil.getInstance().requestUpdateQuantity( context, _id, quantity );
+                        }
+                    }
+                } );
+
+        return builder.create();
+    }
+
     public static AlertDialog About( Context context ) {
         AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( context, R.style.AlertDialogCustom ) );
         builder.setTitle( context.getString( R.string.about_dialog_full_title ) )

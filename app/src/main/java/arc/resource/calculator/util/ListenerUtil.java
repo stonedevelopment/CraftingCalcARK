@@ -104,6 +104,12 @@ public class ListenerUtil {
         }
     }
 
+    public void requestSearch( Context context, String searchText ) {
+        for ( DisplayCaseListener listener : mDisplayCaseListeners ) {
+            listener.onRequestSearch( context, searchText );
+        }
+    }
+
     public void notifyItemChanged( int position ) {
         for ( DisplayCaseListener listener : mDisplayCaseListeners ) {
             listener.onItemChanged( position );

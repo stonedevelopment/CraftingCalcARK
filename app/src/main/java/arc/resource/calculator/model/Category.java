@@ -53,6 +53,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "mEngramId=" + mId + ", mName=" + mName + ", mParent=" + mParent;
+        return "mId=" + mId + ", mName=" + mName + ", mParent=" + mParent;
     }
 }

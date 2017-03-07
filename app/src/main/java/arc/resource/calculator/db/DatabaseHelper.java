@@ -55,7 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 EngramEntry._ID + " INTEGER NOT NULL, " +
                 EngramEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
-//                EngramEntry.COLUMN_DRAWABLE + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_IMAGE_FOLDER + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_IMAGE_FILE + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_YIELD + " INTEGER NOT NULL, " +
@@ -82,7 +81,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_RESOURCE_TABLE = "CREATE TABLE " + ResourceEntry.TABLE_NAME + " (" +
                 ResourceEntry._ID + " INTEGER NOT NULL, " +
                 ResourceEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-//                ResourceEntry.COLUMN_DRAWABLE + " TEXT NOT NULL, " +
                 ResourceEntry.COLUMN_IMAGE_FOLDER + " TEXT NOT NULL, " +
                 ResourceEntry.COLUMN_IMAGE_FILE + " TEXT NOT NULL, " +
                 ResourceEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +
@@ -122,7 +120,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_STATION_TABLE = "CREATE TABLE " + StationEntry.TABLE_NAME + " (" +
                 StationEntry._ID + " INTEGER NOT NULL, " +
                 StationEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-//                StationEntry.COLUMN_DRAWABLE + " TEXT NOT NULL, " +
                 StationEntry.COLUMN_IMAGE_FOLDER + " TEXT NOT NULL, " +
                 StationEntry.COLUMN_IMAGE_FILE + " TEXT NOT NULL, " +
                 StationEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +

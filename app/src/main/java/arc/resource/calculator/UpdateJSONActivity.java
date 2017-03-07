@@ -1,12 +1,11 @@
 package arc.resource.calculator;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.LongSparseArray;
 import android.util.SparseArray;
 import android.widget.TextView;
 
@@ -14,41 +13,71 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.model.Category;
-import arc.resource.calculator.model.DisplayCase;
-import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
+import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
+import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
+import arc.resource.calculator.db.DatabaseContract.DLCEntry;
+import arc.resource.calculator.db.DatabaseContract.EngramEntry;
+import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
+import arc.resource.calculator.db.DatabaseContract.StationEntry;
+import arc.resource.calculator.db.DatabaseContract.TotalConversionEntry;
+import arc.resource.calculator.util.JsonUtil;
+
+/**
+ * -    Read JSON file
+ * -    Convert all jsonArrays to LongSparseArrays
+ * -    Create dlc object that will hold its own maps
+ * -    Convert all LongSparseArrays to HashMaps<Name, Object>
+ * -    Convert HashMaps to jsonArrays
+ * -    Write new JSON file
+ */
 
 public class UpdateJSONActivity extends AppCompatActivity {
     private static final String TAG = UpdateJSONActivity.class.getSimpleName();
 
-    JSONArray mUpdatedJsonArray = new JSONArray();
-    JSONArray mResourceJsonArray = new JSONArray();
-    JSONArray mEngramJsonArray = new JSONArray();
-    JSONArray mComplexResourceJsonArray = new JSONArray();
-    JSONArray mConversionJsonArray = new JSONArray();
+    final String _ID = EngramEntry._ID;
+    final String COLUMN_CATEGORY_KEY = EngramEntry.COLUMN_CATEGORY_KEY;
+    final String COLUMN_DESCRIPTION = EngramEntry.COLUMN_DESCRIPTION;
+    final String COLUMN_DLC_KEY = EngramEntry.COLUMN_DLC_KEY;
+    final String COLUMN_ENGRAM_KEY = CompositionEntry.COLUMN_ENGRAM_KEY;
+    final String COLUMN_FROM = TotalConversionEntry.COLUMN_FROM;
+    final String COLUMN_IMAGE_FILE = EngramEntry.COLUMN_IMAGE_FILE;
+    final String COLUMN_IMAGE_FOLDER = EngramEntry.COLUMN_IMAGE_FOLDER;
+    final String COLUMN_LEVEL = EngramEntry.COLUMN_LEVEL;
+    final String COLUMN_NAME = EngramEntry.COLUMN_NAME;
+    final String COLUMN_PARENT_KEY = CategoryEntry.COLUMN_PARENT_KEY;
+    final String COLUMN_QUANTITY = CompositionEntry.COLUMN_QUANTITY;
+    final String COLUMN_RESOURCE_KEY = CompositionEntry.COLUMN_RESOURCE_KEY;
+    final String COLUMN_STATION_KEY = EngramEntry.COLUMN_STATION_KEY;
+    final String COLUMN_TO = TotalConversionEntry.COLUMN_TO;
+    final String COLUMN_YIELD = EngramEntry.COLUMN_YIELD;
 
-    SparseArray<Resource> mResourceMap = new SparseArray<>();
-    SparseArray<Engram> mEngramMap = new SparseArray<>();
-    SparseArray<Engram> mIncompleteEngramMap = new SparseArray<>();
+    LongSparseArray<ComplexMap> mComplexMap = new LongSparseArray<>();
 
-    DisplayCase mDisplayCase;
+    LongSparseArray<Map> mEngramIdsByName = new LongSparseArray<>();
+    LongSparseArray<Map> mResourceIdsByName = new LongSparseArray<>();
+    LongSparseArray<Map> mStationIdsByName = new LongSparseArray<>();
+
+    LongSparseArray<String> mResourceNamesById = new LongSparseArray<>();
+    LongSparseArray<String> mStationNamesById = new LongSparseArray<>();
+
+    LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>();
+
+    SparseArray<Long> mDlcIds = new SparseArray<>();
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_update_json );
-
-        mDisplayCase = DisplayCase.getInstance( getApplicationContext(), false );
 
         updateConsole( "App started, executing task..." );
 
@@ -67,6 +96,10 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
         ParseConvertTask( Context context ) {
             this.mContext = context;
+        }
+
+        Context getContext() {
+            return mContext;
         }
 
         @Override
@@ -88,89 +121,669 @@ public class UpdateJSONActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground( Void... params ) {
             try {
-                String jsonString =
-                        readJSONFileToString();
+                // first, let's read our json file to a string
+                publishProgress( "Reading JSON from file..." );
+                String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_editable );
 
-                JSONObject jsonObject =
-                        parseStringToJSONObject( jsonString );
+                // parse json string into a json object
+                publishProgress( "Parsing JSON string into object..." );
+                JSONObject oldObject = new JSONObject( jsonString );
 
-                publishProgress( "Writing JSON to file..." );
-                File path = getContext().getExternalFilesDir( null );
-                File file = new File( path, "jsonExport.txt" );
+                /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
 
-                try ( FileOutputStream fileOutputStream = new FileOutputStream( file ) ) {
-                    fileOutputStream.write( jsonObject.toString().getBytes() );
-                } catch ( IOException e ) {
-                    e.printStackTrace();
-                }
-            } catch ( JSONException e ) {
-                e.printStackTrace();
+                publishProgress( "** Beginning conversion..." );
+
+                // convert json into new json layout
+                JSONObject newObject = convertJSONObjectToIds( oldObject );
+
+                publishProgress( "** Conversion complete!..." );
+
+                /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
+
+                // finally, write new json object to file
+                publishProgress( "Writing new JSON object to file..." );
+                writeJSONObjectToFile( newObject );
+            } catch ( Exception e ) {
+                publishException( e );
             }
+
             return null;
         }
 
-        String readJSONFileToString() {
-            publishProgress( "Reading JSON file..." );
+        void publishException( Exception e ) {
+            Log.e( TAG, "Error: ", e );
+            Log.e( TAG, Arrays.toString( e.getStackTrace() ) );
+            publishProgress( "Error: " + e.getMessage() );
+        }
 
-            BufferedReader fileReader = null;
-            String jsonString;
+        void writeJSONObjectToFile( JSONObject object ) throws IOException {
 
-            try {
-                InputStream fileStream = getContext().getResources().openRawResource( R.raw.jsonrawdata );
-                StringBuffer buffer = new StringBuffer();
+            File path = getContext().getExternalFilesDir( null );
+            File file = new File( path, "jsonExport.txt" );
 
-                fileReader = new BufferedReader( new InputStreamReader( fileStream ) );
+            FileOutputStream fileOutputStream = new FileOutputStream( file );
+            fileOutputStream.write( object.toString().getBytes() );
+        }
 
-                String line;
-                while ( ( line = fileReader.readLine() ) != null ) {
-                    buffer.append( line + "\n" );
+        /**
+         * Convert editable json object into json data object
+         *
+         * @param inObject editable json object with names
+         * @return new json object with ids as names
+         * @throws JSONException
+         */
+        JSONObject convertJSONObjectToIds( JSONObject inObject ) throws Exception {
+            JSONObject outObject = new JSONObject();
+
+            // insert old dlc json data, no need to convert at this time
+            publishProgress( "Inserting DLC values..." );
+            outObject.put( DLCEntry.TABLE_NAME,
+                    inObject.getJSONArray( DLCEntry.TABLE_NAME ) );
+
+            mDlcIds = mapDLCJSONArray( inObject.getJSONArray( DLCEntry.TABLE_NAME ) );
+            mTotalConversion = mapTotalConversion( inObject.getJSONArray( TotalConversionEntry.TABLE_NAME ) );
+
+            // convert, then insert new station json data
+            publishProgress( "Converting station values..." );
+            outObject.put( StationEntry.TABLE_NAME,
+                    convertStationJSONArrayToIds( inObject.getJSONArray( StationEntry.TABLE_NAME ) ) );
+
+            // convert, then insert new category json data
+            publishProgress( "Converting category values..." );
+            outObject.put( CategoryEntry.TABLE_NAME,
+                    convertCategoryJSONArrayToIds( inObject.getJSONArray( CategoryEntry.TABLE_NAME ) ) );
+
+            // convert, then insert new resource json data
+            publishProgress( "Converting resource values..." );
+            outObject.put( ResourceEntry.TABLE_NAME,
+                    convertResourceJSONArrayToIds( inObject.getJSONArray( ResourceEntry.TABLE_NAME ) ) );
+
+            // convert, then insert new engram json data
+            publishProgress( "Converting engram values..." );
+            outObject.put( EngramEntry.TABLE_NAME,
+                    convertEngramJSONArrayToIds( inObject.getJSONArray( EngramEntry.TABLE_NAME ) ) );
+
+            // convert, then insert new complex resource json data
+            publishProgress( "Converting complex resource values..." );
+            outObject.put( ComplexResourceEntry.TABLE_NAME,
+                    convertComplexResourceMapIdsToJSONArray() );
+
+            // convert, then insert new total conversion json data
+            publishProgress( "Converting total conversion values..." );
+            outObject.put( TotalConversionEntry.TABLE_NAME,
+                    convertTotalConversionJSONArrayToIds( inObject.getJSONArray( TotalConversionEntry.TABLE_NAME ) ) );
+
+            return outObject;
+        }
+
+        SparseArray<Long> mapDLCJSONArray( JSONArray inArray ) throws JSONException {
+            SparseArray<Long> map = new SparseArray<>();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                long _id = object.getLong( _ID );
+                String name = object.getString( COLUMN_NAME );
+
+                map.put( map.size(), _id );
+            }
+
+            return map;
+        }
+
+        JSONArray convertStationJSONArrayToIds( JSONArray inArray ) throws Exception {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                String name = object.getString( COLUMN_NAME );
+                String imageFolder = object.getString( COLUMN_IMAGE_FOLDER );
+                String imageFile = object.getString( COLUMN_IMAGE_FILE );
+                long dlc_id = object.getInt( COLUMN_DLC_KEY );
+
+                // let's, first, create an array of qualified dlc versions, minus total conversions
+                List<Long> dlc_ids = new ArrayList<>();
+                if ( dlc_id == mDlcIds.valueAt( 0 ) ) {
+                    for ( int j = 0; j < mDlcIds.size(); j++ )
+                        dlc_ids.add( mDlcIds.valueAt( j ) );
+                } else {
+                    dlc_ids.add( dlc_id );
                 }
 
-                // If empty string, no need to parse.
-                if ( buffer.length() == 0 ) {
-                    return null;
+                // next, let's create an id based on counter variable, i
+                long _id = i;
+
+                // insert its id into a map for other methods to use later
+                addStationIdByName( dlc_id, name, _id );
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( _ID, _id );
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+                convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+                convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertCategoryJSONArrayToIds( JSONArray inArray ) throws Exception {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                long _id = object.getLong( _ID );
+                String name = object.getString( COLUMN_NAME );
+                long parent_id = object.getLong( COLUMN_PARENT_KEY );
+                JSONArray stationArray = object.getJSONArray( StationEntry.TABLE_NAME );
+                long dlc_id = object.getInt( COLUMN_DLC_KEY );
+
+                // let's, first, create an array of qualified dlc versions, minus total conversions
+                List<Long> dlc_ids = new ArrayList<>();
+                if ( dlc_id == mDlcIds.valueAt( 0 ) ) {
+                    for ( int j = 0; j < mDlcIds.size(); j++ )
+                        dlc_ids.add( mDlcIds.valueAt( j ) );
+                } else {
+                    dlc_ids.add( dlc_id );
                 }
 
-                jsonString = buffer.toString();
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
 
-            } catch ( IOException e ) {
-                Log.e( TAG, "Error: ", e );
-                publishProgress( "Error: " + e.getMessage() );
-                return null;
-            } finally {
-                if ( fileReader != null ) {
-                    try {
-                        fileReader.close();
-                    } catch ( IOException e ) {
-                        Log.e( TAG, "Error closing stream: ", e );
-                        return null;
+                // insert standardized data
+                convertedObject.put( _ID, _id );
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_PARENT_KEY, parent_id );
+                convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
+
+                // convert station object array from ids to names
+                List<Long> stations = mapLocalStationIds( stationArray );
+
+                // insert converted station array into engram json object
+                convertedObject.put( CategoryEntry.COLUMN_STATION_KEY, new JSONArray( stations.toArray() ) );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertResourceJSONArrayToIds( JSONArray inArray ) throws Exception {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                String name = object.getString( COLUMN_NAME );
+                String imageFolder = object.getString( COLUMN_IMAGE_FOLDER );
+                String imageFile = object.getString( COLUMN_IMAGE_FILE );
+                long dlc_id = object.getInt( COLUMN_DLC_KEY );
+                boolean hasComplexity = object.getBoolean( ComplexResourceEntry.TABLE_NAME );
+
+                // let's, first, create an array of qualified dlc versions, minus total conversions
+                List<Long> dlc_ids = new ArrayList<>();
+                if ( dlc_id == mDlcIds.valueAt( 0 ) ) {
+                    for ( int j = 0; j < mDlcIds.size(); j++ ) {
+                        long _id = mDlcIds.valueAt( j );
+                        if ( mTotalConversion.get( _id ) == null )
+                            dlc_ids.add( _id );
+                        else if ( mTotalConversion.get( _id ).resources.get( name ) == null )
+                            dlc_ids.add( _id );
                     }
+                } else {
+                    dlc_ids.add( dlc_id );
+                }
+
+                // let's, first, create an id based on counter variable, i
+                long _id = i;
+
+                // insert its id into a map for other methods to use later
+                addResourceIdByName( dlc_id, name, _id );
+
+                // check if resource has complexity
+                if ( hasComplexity )
+                    addComplexResourceIdByName( dlc_id, name, _id );
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( _ID, _id );
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+                convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+                convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertEngramJSONArrayToIds( JSONArray inArray ) throws Exception {
+            JSONArray outArray = new JSONArray();
+
+            // TODO: 3/5/2017 Check Engram names based off of dlc_id (ex: Broth of Enlightenment)
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                String name = object.getString( COLUMN_NAME );
+                String description = object.getString( COLUMN_DESCRIPTION );
+                String imageFolder = object.getString( COLUMN_IMAGE_FOLDER );
+                String imageFile = object.getString( COLUMN_IMAGE_FILE );
+                Integer yield = object.getInt( COLUMN_YIELD );
+                Integer level = object.getInt( COLUMN_LEVEL );
+                Integer category_id = object.getInt( COLUMN_CATEGORY_KEY );
+                JSONArray compositionArray = object.getJSONArray( CompositionEntry.TABLE_NAME );
+                JSONArray stationArray = object.getJSONArray( StationEntry.TABLE_NAME );
+                long dlc_id = object.getInt( COLUMN_DLC_KEY );
+
+                // let's, first, create an array of qualified dlc versions, minus total conversions
+                List<Long> dlc_ids = new ArrayList<>();
+                if ( dlc_id == mDlcIds.valueAt( 0 ) ) {
+                    for ( int j = 0; j < mDlcIds.size(); j++ ) {
+                        long _id = mDlcIds.valueAt( j );
+                        if ( mTotalConversion.get( _id ) == null )
+                            dlc_ids.add( _id );
+                        else if ( !mTotalConversion.get( _id ).engrams.contains( name ) )
+                            dlc_ids.add( _id );
+                    }
+                } else {
+                    dlc_ids.add( dlc_id );
+                }
+
+                // next, let's create an id based on counter variable, i
+                long _id = i;
+
+                // insert its id into a map for other methods to use later
+                addEngramIdByName( dlc_id, name, _id );
+
+                // check if complex by finding its name in the complex resource map for its dlc version
+                if ( mComplexMap.get( dlc_id ).contains( name ) )
+                    // add if not already added
+                    addComplexEngramIdByName( dlc_id, name, _id );
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( _ID, _id );
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_DESCRIPTION, description );
+                convertedObject.put( COLUMN_YIELD, yield );
+                convertedObject.put( COLUMN_LEVEL, level );
+                convertedObject.put( COLUMN_CATEGORY_KEY, category_id );
+                convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+                convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+                convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
+
+                // convert composition object array from names to ids
+                JSONArray convertedComposition = new JSONArray();
+                for ( int j = 0; j < compositionArray.length(); j++ ) {
+                    JSONObject oldObject = compositionArray.getJSONObject( j );
+
+                    String resource_name = oldObject.getString( COLUMN_RESOURCE_KEY );
+                    int quantity = oldObject.getInt( COLUMN_QUANTITY );
+
+                    // attempt to grab id of resource from previously mapped list
+                    long resource_id = getResourceIdByName( dlc_id, resource_name );
+
+                    // if invalid (which should never happen) continue to next resource
+                    if ( resource_id == -1 )
+                        continue;
+
+                    // build new json object with its matched name and quantity
+                    JSONObject newObject = new JSONObject();
+                    newObject.put( COLUMN_RESOURCE_KEY, resource_id );
+                    newObject.put( COLUMN_QUANTITY, quantity );
+
+                    // insert object into composition
+                    convertedComposition.put( newObject );
+                }
+
+                // insert converted composition array into engram json object
+                convertedObject.put( CompositionEntry.TABLE_NAME, convertedComposition );
+
+                // convert station object array from ids to names
+                List<Long> stations = mapLocalStationIds( stationArray );
+
+                // insert converted station array into engram json object
+                convertedObject.put( EngramEntry.COLUMN_STATION_KEY, new JSONArray( stations.toArray() ) );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertTotalConversionJSONArrayToIds( JSONArray inArray ) throws Exception {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                long dlc_id = object.getInt( COLUMN_DLC_KEY );
+                JSONArray resourceArray = object.getJSONArray( ResourceEntry.TABLE_NAME );
+//                JSONArray engramArray = object.getJSONArray( EngramEntry.TABLE_NAME );
+
+                JSONArray convertedResourceArray = new JSONArray();
+                for ( int j = 0; j < resourceArray.length(); j++ ) {
+                    JSONObject oldObject = resourceArray.getJSONObject( j );
+
+                    String name = oldObject.getString( COLUMN_FROM );
+                    String converted_name = oldObject.getString( COLUMN_TO );
+
+                    // attempt to grab ids from previously mapped list
+                    long _id = getResourceIdByName( dlc_id, name );
+                    long converted_id = getResourceIdByName( dlc_id, converted_name );
+
+                    // if invalid (which should never happen) continue to next json object
+                    if ( _id == -1 || converted_id == -1 )
+                        continue;
+
+                    // build new json object with its matched ids
+                    JSONObject newObject = new JSONObject();
+                    newObject.put( COLUMN_FROM, _id );
+                    newObject.put( COLUMN_TO, converted_id );
+
+                    // insert new object into json array
+                    convertedResourceArray.put( newObject );
+                }
+
+//                JSONArray convertedEngramArray = new JSONArray();
+//                for ( int j = 0; j < engramArray.length(); j++ ) {
+//                    JSONObject oldObject = engramArray.getJSONObject( j );
+//
+//                    String name = oldObject.getString( COLUMN_FROM );
+//                    String converted_name = oldObject.getString( COLUMN_TO );
+//
+//                    // attempt to grab ids from previously mapped list
+//                    long _id = getEngramIdByName( dlc_id, name );
+//                    long converted_id = getEngramIdByName( dlc_id, converted_name );
+//
+//                    // if invalid (which should never happen) continue to next json object
+//                    if ( _id == -1 || converted_id == -1 )
+//                        continue;
+//
+//                    // build new json object with its matched ids
+//                    JSONObject newObject = new JSONObject();
+//                    newObject.put( COLUMN_FROM, _id );
+//                    newObject.put( COLUMN_TO, converted_id );
+//
+//                    // insert new object into json array
+//                    convertedEngramArray.put( newObject );
+//                }
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( COLUMN_DLC_KEY, dlc_id );
+                convertedObject.put( ResourceEntry.TABLE_NAME, convertedResourceArray );
+//                convertedObject.put( EngramEntry.TABLE_NAME, convertedEngramArray );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertComplexResourceMapIdsToJSONArray() throws JSONException {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < mComplexMap.size(); i++ ) {
+                ComplexMap complexMap = mComplexMap.valueAt( i );
+
+                for ( String name : complexMap.resources.keySet() ) {
+                    long resource_id = complexMap.getResourceId( name );
+                    long engram_id = complexMap.getEngramId( name );
+
+                    JSONObject object = new JSONObject();
+
+                    // insert standardized data
+                    object.put( COLUMN_RESOURCE_KEY, resource_id );
+                    object.put( COLUMN_ENGRAM_KEY, engram_id );
+
+                    // insert converted object into converted array
+                    outArray.put( object );
                 }
             }
 
-            return jsonString;
+            return outArray;
         }
 
-        JSONObject parseStringToJSONObject( String jsonString ) throws JSONException {
-            publishProgress( "Parsing JSON String into Objects..." );
+        /**
+         * Convert old json object into new version of json object
+         *
+         * @param inObject old json object with ids
+         * @return new json object with names as ids
+         * @throws JSONException
+         */
+        JSONObject convertJSONObjectToNames( JSONObject inObject ) throws JSONException {
+            JSONObject outObject = new JSONObject();
 
-            JSONObject jsonObject = new JSONObject( jsonString );
+            // insert old dlc json data, no need to convert at this time
+            publishProgress( "Inserting DLC values..." );
+            outObject.put( DLCEntry.TABLE_NAME,
+                    inObject.getJSONArray( DLCEntry.TABLE_NAME ) );
 
-            // Pull conversion table from file
-//            mConversionJsonArray = jsonObject.getJSONArray( "conversion" );
+            // convert, then insert new station json data
+            publishProgress( "Converting station values..." );
+            outObject.put( StationEntry.TABLE_NAME,
+                    convertStationJSONArrayToNames( inObject.getJSONArray( StationEntry.TABLE_NAME ) ) );
 
-            // Place what tables to update here
-            jsonObject.put(
-                    DatabaseContract.ResourceEntry.TABLE_NAME,
-                    updateResourceJSONArray( jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) ) );
-            jsonObject.put(
-                    DatabaseContract.StationEntry.TABLE_NAME,
-                    updateStationJSONArray( jsonObject.getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) ) );
-            jsonObject.put(
-                    DatabaseContract.EngramEntry.TABLE_NAME,
-                    updateEngramJSONArray( jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) ) );
+            // convert, then insert new category json data
+            publishProgress( "Converting category values..." );
+            outObject.put( CategoryEntry.TABLE_NAME,
+                    convertCategoryJSONArrayToNames( inObject.getJSONArray( CategoryEntry.TABLE_NAME ) ) );
 
-            return jsonObject;
+            // convert, then insert new resource json data
+            publishProgress( "Converting resource values..." );
+            outObject.put( ResourceEntry.TABLE_NAME,
+                    convertResourceJSONArrayToNames( inObject.getJSONArray( ResourceEntry.TABLE_NAME ) ) );
+
+            // convert, then insert new engram json data
+            publishProgress( "Converting engram values..." );
+            outObject.put( EngramEntry.TABLE_NAME,
+                    convertEngramJSONArrayToNames( inObject.getJSONArray( EngramEntry.TABLE_NAME ) ) );
+
+            // TODO: 3/1/2017 Don't forget to manually add total_conversion
+
+            return outObject;
+        }
+
+        JSONArray convertStationJSONArrayToNames( JSONArray inArray ) throws JSONException {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                long _id = object.getLong( _ID );
+                String name = object.getString( COLUMN_NAME );
+                String imageFolder = object.getString( COLUMN_IMAGE_FOLDER );
+                String imageFile = object.getString( COLUMN_IMAGE_FILE );
+                JSONArray dlcArray = object.getJSONArray( COLUMN_DLC_KEY );
+
+                // let's, first, insert its name into a map for other methods to use later
+                mStationNamesById.put( _id, name );
+
+                // grab id of root dlc version to use in querying for names
+                long dlc_id = dlcArray.getLong( 0 );
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+                convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+                convertedObject.put( COLUMN_DLC_KEY, dlc_id );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertCategoryJSONArrayToNames( JSONArray inArray ) throws JSONException {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                long _id = object.getLong( _ID );
+                String name = object.getString( COLUMN_NAME );
+                JSONArray dlcArray = object.getJSONArray( COLUMN_DLC_KEY );
+                JSONArray stationArray = object.getJSONArray( COLUMN_STATION_KEY );
+
+                // grab id of root dlc version to use in querying for names
+                long dlc_id = dlcArray.getLong( 0 );
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( _ID, _id );
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_DLC_KEY, dlc_id );
+
+                // convert station object array from ids to names
+                String[] stations = mapLocalStationNames( stationArray );
+
+                // insert converted station array into engram json object
+                convertedObject.put( StationEntry.TABLE_NAME, new JSONArray( stations ) );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertResourceJSONArrayToNames( JSONArray inArray ) throws JSONException {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                long _id = object.getLong( _ID );
+                String name = object.getString( COLUMN_NAME );
+                String imageFolder = object.getString( COLUMN_IMAGE_FOLDER );
+                String imageFile = object.getString( COLUMN_IMAGE_FILE );
+                JSONArray dlcArray = object.getJSONArray( COLUMN_DLC_KEY );
+
+                // let's, first, insert its name into a map for other methods to use later
+                mResourceNamesById.put( _id, name );
+
+                // grab id of root dlc version
+                long dlc_id = dlcArray.getLong( 0 );
+
+                // check if resource has complexity
+                boolean hasComplexity = mComplexMap.get( _id ) != null;
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+                convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+                convertedObject.put( COLUMN_DLC_KEY, dlc_id );
+                convertedObject.put( ComplexResourceEntry.TABLE_NAME, hasComplexity );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
+        }
+
+        JSONArray convertEngramJSONArrayToNames( JSONArray inArray ) throws JSONException {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                long _id = object.getLong( _ID );
+                String name = object.getString( COLUMN_NAME );
+                String description = object.getString( COLUMN_DESCRIPTION );
+                String imageFolder = object.getString( COLUMN_IMAGE_FOLDER );
+                String imageFile = object.getString( COLUMN_IMAGE_FILE );
+                Integer yield = object.getInt( COLUMN_YIELD );
+                Integer level = object.getInt( COLUMN_LEVEL );
+                Integer category_id = object.getInt( COLUMN_CATEGORY_KEY );
+                JSONArray compositionArray = object.getJSONArray( CompositionEntry.TABLE_NAME );
+                JSONArray dlcArray = object.getJSONArray( COLUMN_DLC_KEY );
+                JSONArray stationArray = object.getJSONArray( COLUMN_STATION_KEY );
+
+                // grab id of root dlc version to use in querying for names
+                long dlc_id = dlcArray.getLong( 0 );
+
+                // instantiate a new json object used to be converted into new layout
+                JSONObject convertedObject = new JSONObject();
+
+                // insert standardized data
+                convertedObject.put( COLUMN_NAME, name );
+                convertedObject.put( COLUMN_DESCRIPTION, description );
+                convertedObject.put( COLUMN_YIELD, yield );
+                convertedObject.put( COLUMN_LEVEL, level );
+                convertedObject.put( COLUMN_CATEGORY_KEY, category_id );
+                convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+                convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+                convertedObject.put( COLUMN_DLC_KEY, dlc_id );
+
+                // convert composition object array from ids to names
+                JSONArray convertedComposition = new JSONArray();
+                for ( int j = 0; j < compositionArray.length(); j++ ) {
+                    JSONObject oldObject = compositionArray.getJSONObject( j );
+
+                    long resource_id = oldObject.getInt( COLUMN_RESOURCE_KEY );
+                    int quantity = oldObject.getInt( COLUMN_QUANTITY );
+
+                    // attempt to grab name of resource from previously mapped list
+                    String resource_name = getResourceNameById( resource_id );
+
+                    // if null (which should never happen) continue to next resource
+                    if ( resource_name == null )
+                        continue;
+
+                    // build new json object with its matched name and quantity
+                    JSONObject newObject = new JSONObject();
+                    newObject.put( COLUMN_RESOURCE_KEY, resource_name );
+                    newObject.put( COLUMN_QUANTITY, quantity );
+
+                    // insert object into composition
+                    convertedComposition.put( newObject );
+                }
+
+                // insert converted composition array into engram json object
+                convertedObject.put( CompositionEntry.TABLE_NAME, convertedComposition );
+
+                // convert station object array from ids to names
+                String[] stations = mapLocalStationNames( stationArray );
+
+                // insert converted station array into engram json object
+                convertedObject.put( StationEntry.TABLE_NAME, new JSONArray( stations ) );
+
+                // insert converted object into converted array
+                outArray.put( convertedObject );
+            }
+
+            return outArray;
         }
 
         String trimChars( String incoming ) {
@@ -183,547 +796,311 @@ public class UpdateJSONActivity extends AppCompatActivity {
                     + ".png";
         }
 
-        JSONArray updateResourceJSONArray( JSONArray jsonArray ) throws JSONException {
-            publishProgress( " - Parsing JSONObjects into SparseArray.." );
+        String getResourceNameById( long _id ) {
+            String name = mResourceNamesById.get( _id );
 
-            JSONArray updatedJsonArray = new JSONArray();
-            for ( int i = 0; i < jsonArray.length(); i++ ) {
-                JSONObject jsonObject = jsonArray.getJSONObject( i );
+            if ( name == null )
+                publishException( new Exception( "Resource name is null for _id: " + _id ) );
 
-                long _id = jsonObject.getLong( DatabaseContract.ResourceEntry._ID );
-                String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
-                String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
-                JSONArray dlcJsonArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
+            return name;
+        }
 
-                int dlc_id;
-                if ( dlcJsonArray.length() > 1 ) {
-                    dlc_id = 1;
-                } else {
-                    dlc_id = dlcJsonArray.getInt( 0 );
-                }
-
-                String dlc_name = null;
-                switch ( dlc_id ) {
-                    case 1:
-                        dlc_name = "Vanilla";
-                        break;
-                    case 2:
-                        dlc_name = "Primitive Plus";
-                        break;
-                    case 3:
-                        dlc_name = "Scorched Earth";
-                        break;
-                }
-
-                String imageFolder = dlc_name + "/Resources/";
-                String imageFile = trimChars( name );
-
-                Log.d( TAG, imageFolder + imageFile );
-
-                JSONObject newJsonObject = new JSONObject();
-                newJsonObject.put( DatabaseContract.ResourceEntry._ID, _id );
-                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_NAME, name );
-                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FOLDER, imageFolder );
-                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FILE, imageFile );
-                newJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, dlcJsonArray );
-
-                updatedJsonArray.put( newJsonObject );
+        long getStationIdByName( String name ) throws Exception {
+            for ( int i = 0; i < mStationIdsByName.size(); i++ ) {
+                if ( mStationIdsByName.valueAt( i ).contains( name ) )
+                    return mStationIdsByName.valueAt( i ).get( name );
             }
 
-//                SparseArray<Resource> resources = new SparseArray<>();
+            throw new Exception( "getStationIdByName() didn't find name: " + name );
+        }
+
+        long getResourceIdByName( long dlc_id, String name ) throws Exception {
+            try {
+                return mResourceIdsByName.get( dlc_id ).get( name );
+            } catch ( Exception e ) {
+                return mResourceIdsByName.get( mDlcIds.valueAt( 0 ) ).get( name );
+            }
+        }
+
+        long getEngramIdByName( long dlc_id, String name ) throws Exception {
+            try {
+                return mEngramIdsByName.get( dlc_id ).get( name );
+            } catch ( Exception e ) {
+                return mEngramIdsByName.get( mDlcIds.valueAt( 0 ) ).get( name );
+            }
+        }
+
+        void addComplexEngramIdByName( long dlc_id, String name, long _id ) throws Exception {
+            if ( mComplexMap.indexOfKey( dlc_id ) < 0 )
+                mComplexMap.put( dlc_id, new ComplexMap() );
+
+            mComplexMap.get( dlc_id ).addEngram( name, _id );
+        }
+
+        void addComplexResourceIdByName( long dlc_id, String name, long _id ) throws Exception {
+            if ( mComplexMap.indexOfKey( dlc_id ) < 0 )
+                mComplexMap.put( dlc_id, new ComplexMap() );
+
+            mComplexMap.get( dlc_id ).addResource( name, _id );
+        }
+
+        void addStationIdByName( long dlc_id, String name, long _id ) throws Exception {
+            if ( mStationIdsByName.get( dlc_id ) == null )
+                mStationIdsByName.put( dlc_id, new Map() );
+
+            mStationIdsByName.get( dlc_id ).add( name, _id );
+        }
+
+        void addResourceIdByName( long dlc_id, String name, long _id ) throws Exception {
+            if ( mResourceIdsByName.get( dlc_id ) == null )
+                mResourceIdsByName.put( dlc_id, new Map() );
+
+            mResourceIdsByName.get( dlc_id ).add( name, _id );
+        }
+
+        void addEngramIdByName( long dlc_id, String name, long _id ) throws Exception {
+            if ( mEngramIdsByName.get( dlc_id ) == null )
+                mEngramIdsByName.put( dlc_id, new Map() );
+
+//            for ( int i = 0; i < mDlcIds.size(); i++ ) {
+//                long d = mDlcIds.valueAt( i );
 //
-//            // Fill Resource SparseArray with JSONArray data
-//            for ( int i = 0; i < jsonArray.length(); i++ ) {
-//                JSONObject jsonObject = jsonArray.getJSONObject( i );
+//                if ( mEngramIdsByName.get( d ) == null )
+//                    continue;
 //
-//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_IMAGE_FOLDER, "" );
+//                if ( !mEngramIdsByName.get( d ).contains( name ) )
+//                    continue;
 //
-//                String name = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_NAME );
-//                String drawable = jsonObject.getString( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE );
-//                JSONArray dlcJsonArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY );
-//
-//                int[] dlc_ids = new int[dlcJsonArray.length()];
-//                for ( int j = 0; j < dlcJsonArray.length(); j++ ) {
-//                    dlc_ids[j] = dlcJsonArray.getInt( j );
-//                }
-//
-//                resources.put(
-//                        resources.size(),
-//                        new Resource( name, drawable, dlc_ids )
-//                );
-//            }
-//
-//            // Sort Resource SparseArray by its name
-//            publishProgress( " - Sorting Resource SparseArray.." );
-//            resources = sortResourcesByName( resources.clone() );
-//
-//            // Create new JSONArray, add _id element
-//            publishProgress( " - Converting SparseArray into JSONArray.." );
-//            JSONArray updatedJsonArray = new JSONArray();
-//            for ( int i = 0; i < resources.size(); i++ ) {
-//                Resource resource = resources.valueAt( i );
-//
-//                JSONObject jsonObject = new JSONObject();
-//                jsonObject.put( DatabaseContract.ResourceEntry._ID, i );
-//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_NAME, resource.name );
-//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, resource.drawable );
-//                jsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, new JSONArray( resource.dlc_ids ) );
-//
-//                publishProgress( "  - " + jsonObject.toString() );
-//                updatedJsonArray.put( jsonObject );
-//
-//                mResourceMap.put( i, resource );
+//                Log.d( TAG, d + ", " + _id + ", " + name );
 //            }
 
-            publishProgress( "Updating complete!" );
-            return updatedJsonArray;
+            mEngramIdsByName.get( dlc_id ).add( name, _id );
         }
 
-        JSONArray updateStationJSONArray( JSONArray jsonArray ) throws JSONException {
-            publishProgress( " - Parsing JSONObjects into SparseArray.." );
+        String[] mapLocalStationNames( JSONArray inArray ) throws JSONException {
+            String[] names = new String[inArray.length()];
 
-            JSONArray updatedJsonArray = new JSONArray();
-            for ( int i = 0; i < jsonArray.length(); i++ ) {
-                JSONObject jsonObject = jsonArray.getJSONObject( i );
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                long _id = inArray.getInt( i );
 
-                long _id = jsonObject.getLong( DatabaseContract.StationEntry._ID );
-                String drawable = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_DRAWABLE );
-                String name = jsonObject.getString( DatabaseContract.StationEntry.COLUMN_NAME );
-                JSONArray dlcJsonArray = jsonObject.getJSONArray( DatabaseContract.StationEntry.COLUMN_DLC_KEY );
+                String name = mStationNamesById.get( _id );
 
-                int dlc_id;
-                if ( dlcJsonArray.length() > 1 ) {
-                    dlc_id = 1;
+                if ( name != null ) {
+                    names[i] = name;
                 } else {
-                    dlc_id = dlcJsonArray.getInt( 0 );
-                }
-
-                String dlc_name = null;
-                switch ( dlc_id ) {
-                    case 1:
-                        dlc_name = "Vanilla";
-                        break;
-                    case 2:
-                        dlc_name = "Primitive Plus";
-                        break;
-                    case 3:
-                        dlc_name = "Scorched Earth";
-                        break;
-                }
-
-                String imageFolder = dlc_name + "/Stations/";
-                String imageFile = trimChars( name );
-
-                Log.d( TAG, imageFolder + imageFile );
-
-                JSONObject newJsonObject = new JSONObject();
-                newJsonObject.put( DatabaseContract.StationEntry._ID, _id );
-                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_NAME, name );
-                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER, imageFolder );
-                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE, imageFile );
-                newJsonObject.put( DatabaseContract.StationEntry.COLUMN_DLC_KEY, dlcJsonArray );
-
-                updatedJsonArray.put( newJsonObject );
-            }
-
-            publishProgress( "Updating complete!" );
-            return updatedJsonArray;
-        }
-
-        SparseArray<Resource> sortResourcesByName( SparseArray<Resource> resources ) {
-            boolean swapped = true;
-            while ( swapped ) {
-                swapped = false;
-                for ( int i = 0; i < resources.size() - 1; i++ ) {
-                    String first = resources.valueAt( i ).name;
-                    String second = resources.valueAt( i + 1 ).name;
-                    if ( first.compareTo( second ) > 0 ) {
-                        Resource tempResource = resources.valueAt( i + 1 );
-                        resources.put( i + 1, resources.valueAt( i ) );
-                        resources.put( i, tempResource );
-                        swapped = true;
-                    }
+                    publishException( new Exception( "Station name is null for _id: " + _id ) );
                 }
             }
 
-            return resources;
+            return names;
         }
 
-        private int getResourceId( String drawable, int[] dlc_ids ) {
-            boolean breakLoop = false;
+        /**
+         * Maps all station ids within incoming json array by sifting through all dlc ids
+         *
+         * @param inArray json array containing a list of station names
+         * @return id of matched station, in all dlc ids
+         */
+        List<Long> mapLocalStationIds( JSONArray inArray ) throws Exception {
+            List<Long> ids = new ArrayList<>();
 
-            for ( int i = 0; i < mResourceMap.size(); i++ ) {
-                Resource resource = mResourceMap.valueAt( i );
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                String name = inArray.getString( i );
+                long station_id = getStationIdByName( name );
 
-                if ( drawable.equals( resource.drawable ) ) {
-                    for ( int dlc_id : dlc_ids ) {
-                        for ( int k = 0; k < resource.dlc_ids.length; k++ ) {
-                            if ( dlc_id == resource.dlc_ids[k] ) {
-                                return i;
-                            } else if ( resource.dlc_ids.length > 1 ) {
-                                breakLoop = false;
-                            } else {
-                                breakLoop = true;
-                                break;
-                            }
-                        }
-
-                        if ( breakLoop ) {
-                            break;
-                        }
-                    }
-                }
+                ids.add( station_id );
             }
 
-            return -1;
-        }
-
-        private boolean isRoot( long level ) {
-            return level == 0;
-        }
-
-        public String getCategoryHierarchicalText( Uri uri ) throws Exception {
-            Category category = getCategory( uri );
-
-            StringBuilder builder = new StringBuilder( category.getName() ).append( "/" );
-
-            while ( !isRoot( category.getParent() ) ) {
-                category = getCategory(
-                        DatabaseContract.CategoryEntry.buildUriWithId(
-                                DatabaseContract.CategoryEntry.getDLCIdFromUri( uri ), category.getParent() ) );
-
-                builder.insert( 0, category.getName() + "/" );
-            }
-
-            return builder.toString();
-        }
-
-        private Category getCategory( Uri uri ) throws ExceptionUtil.CursorNullException,
-                ExceptionUtil.CursorEmptyException {
-            Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null );
-
-            if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
-
-            if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
-
-            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
-            long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
-
-            Category category = new Category(
-                    DatabaseContract.CategoryEntry.getIdFromUri( uri ),
-                    name,
-                    parent_id );
-
-            cursor.close();
-            return category;
-        }
-
-        JSONArray updateEngramJSONArray( JSONArray jsonArray ) throws JSONException {
-            publishProgress( " - Parsing JSONObjects into SparseArray.." );
-
-            JSONArray updatedJsonArray = new JSONArray();
-            for ( int i = 0; i < jsonArray.length(); i++ ) {
-                JSONObject jsonObject = jsonArray.getJSONObject( i );
-
-                long _id = jsonObject.getLong( DatabaseContract.ResourceEntry._ID );
-                String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
-//                String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
-                String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
-                Integer yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
-                Integer level = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_LEVEL );
-                Integer category_id = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
-                JSONArray dJsonArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
-                JSONArray sJsonArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_STATION_KEY );
-                JSONArray cJsonArray = jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME );
-
-                int dlc_id;
-                if ( dJsonArray.length() > 1 ) {
-                    dlc_id = 1;
-                } else {
-                    dlc_id = dJsonArray.getInt( 0 );
-                }
-
-                String dlc_name = null;
-                switch ( dlc_id ) {
-                    case 1:
-                        dlc_name = "Vanilla";
-                        break;
-                    case 2:
-                        dlc_name = "Primitive Plus";
-                        break;
-                    case 3:
-                        dlc_name = "Scorched Earth";
-                        break;
-                }
-
-                String imageFolder = dlc_name + "/Engrams/";
-
-                try {
-                    imageFolder += getCategoryHierarchicalText( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, category_id ) );
-                } catch ( Exception e ) {
-                    e.printStackTrace();
-                }
-
-                String imageFile = trimChars( name );
-
-                Log.d( TAG, imageFolder + imageFile );
-
-                JSONObject newJsonObject = new JSONObject();
-
-                newJsonObject.put( DatabaseContract.EngramEntry._ID, _id );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_YIELD, yield );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_LEVEL, level );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER, imageFolder );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE, imageFile );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dJsonArray );
-                newJsonObject.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, sJsonArray );
-                newJsonObject.put( DatabaseContract.CompositionEntry.TABLE_NAME, cJsonArray );
-
-                updatedJsonArray.put( newJsonObject );
-            }
-
-//            SparseArray<Engram> engrams = new SparseArray<>();
-//
-//            // Fill Engram SparseArray with JSONArray data
-//            for ( int i = 0; i < jsonArray.length(); i++ ) {
-//                JSONObject jsonObject = jsonArray.getJSONObject( i );
-//
-//                String name = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_NAME );
-//                String drawable = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DRAWABLE );
-//                String description = jsonObject.getString( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION );
-//                Integer yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
-//                Integer level = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_LEVEL );
-//                Integer category_id = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
-//                JSONArray dJsonArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
-//                JSONArray sJsonArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_STATION_KEY );
-//                JSONArray cJsonArray = jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME );
-//
-//                int[] dlc_ids = new int[dJsonArray.length()];
-//                for ( int j = 0; j < dJsonArray.length(); j++ ) {
-//                    dlc_ids[j] = dJsonArray.getInt( j );
-//                }
-//
-//                int[] station_ids = new int[sJsonArray.length()];
-//                for ( int j = 0; j < sJsonArray.length(); j++ ) {
-//                    station_ids[j] = sJsonArray.getInt( j );
-//                }
-//
-//                HashMap<String, Integer> composition = new HashMap<>();
-//                for ( int j = 0; j < cJsonArray.length(); j++ ) {
-//                    JSONObject compositionJsonObject = cJsonArray.getJSONObject( j );
-//                    int cQuantity = compositionJsonObject.getInt( DatabaseContract.CompositionEntry.COLUMN_QUANTITY );
-//                    String cDrawable = compositionJsonObject.getString( DatabaseContract.CompositionEntry.COLUMN_DRAWABLE );
-//
-//                    composition.put( cDrawable, cQuantity );
-//                }
-//
-//                engrams.put(
-//                        engrams.size(),
-//                        new Engram( name, description, drawable, yield, level, composition,
-//                                category_id, station_ids, dlc_ids )
-//                );
-//            }
-//
-//            // Sort Engram SparseArray by its name
-//            publishProgress( " - Sorting SparseArray.." );
-//            mEngramMap = sortEngramsByName( engrams.clone() );
-//
-//            // Create new JSONArray, add _id element
-//            publishProgress( " - Converting SparseArray into JSONArray.." );
-//            JSONArray updatedJsonArray = convertEngramSparseArray( mEngramMap );
-
-            publishProgress( "Updating complete!" );
-            Log.d( TAG, "Updating complete!" );
-            return updatedJsonArray;
-        }
-
-        JSONArray convertEngramSparseArray( SparseArray<Engram> engrams ) throws JSONException {
-            mIncompleteEngramMap = new SparseArray<>();
-
-            JSONArray updatedJsonArray = new JSONArray();
-            for ( int i = 0; i < engrams.size(); i++ ) {
-                int _id = engrams.keyAt( i );
-                Engram engram = engrams.valueAt( i );
-
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put( DatabaseContract.EngramEntry._ID, _id );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_NAME, engram.name );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, engram.description );
-//                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_DRAWABLE, engram.drawable );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_YIELD, engram.yield );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_LEVEL, engram.level );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, engram.category_id );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, new JSONArray( engram.dlc_ids ) );
-                jsonObject.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, new JSONArray( engram.station_ids ) );
-
-                JSONArray cJsonArray = new JSONArray();
-                for ( String drawable : engram.composition.keySet() ) {
-                    int quantity = engram.composition.get( drawable );
-
-                    String resource_drawable = drawable;
-                    int resource_id = getResourceId( drawable, engram.dlc_ids );
-                    if ( resource_id < 0 ) {
-                        Log.w( TAG, "Resource not found, checking " + drawable + " from Engram: " + engram.name );
-                        int engram_id = getEngramId( drawable, engram.dlc_ids );
-                        if ( engram_id < 0 ) {
-                            publishProgress( "Incomplete Composition for Engram: " + engram.name + ", culprit: " + drawable );
-                            Log.e( TAG, "Incomplete Composition for Engram: " + engram.name + ", culprit: " + drawable );
-                            break;
-                        }
-
-                        resource_id = mResourceMap.size();
-
-                        Engram cEngram = mEngramMap.get( engram_id );
-
-                        resource_drawable = cEngram.drawable;
-
-                        // create new resource, add it to resource jsonarray and resource map
-                        JSONObject rJsonObject = new JSONObject();
-                        rJsonObject.put( DatabaseContract.ResourceEntry._ID, resource_id );
-                        rJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_NAME, cEngram.name );
-                        rJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, cEngram.drawable );
-                        rJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DLC_KEY, new JSONArray( cEngram.dlc_ids ) );
-                        mResourceJsonArray.put( rJsonObject );
-
-                        publishProgress( "- Adding New Complex Resource! _id: " + resource_id + ", name: " + cEngram.name );
-
-                        JSONObject crJsonObject = new JSONObject();
-                        crJsonObject.put( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY, resource_id );
-                        crJsonObject.put( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY, engram_id );
-                        mComplexResourceJsonArray.put( crJsonObject );
-
-                        mResourceMap.put( resource_id, new Resource( cEngram.name, cEngram.drawable, cEngram.dlc_ids ) );
-                    }
-
-                    JSONObject cJsonObject = new JSONObject();
-//                    cJsonObject.put( DatabaseContract.ResourceEntry.COLUMN_DRAWABLE, resource_drawable );
-                    cJsonObject.put( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY, resource_id );
-                    cJsonObject.put( DatabaseContract.CompositionEntry.COLUMN_QUANTITY, quantity );
-
-                    cJsonArray.put( cJsonObject );
-                }
-                jsonObject.put( DatabaseContract.CompositionEntry.TABLE_NAME, cJsonArray );
-
-                publishProgress( "  - " + jsonObject.toString() );
-                updatedJsonArray.put( jsonObject );
-            }
-
-            return updatedJsonArray;
-        }
-
-        SparseArray<Engram> sortEngramsByName( SparseArray<Engram> engrams ) {
-            boolean swapped = true;
-            while ( swapped ) {
-                swapped = false;
-                for ( int i = 0; i < engrams.size() - 1; i++ ) {
-                    String first = engrams.valueAt( i ).name;
-                    String second = engrams.valueAt( i + 1 ).name;
-                    if ( first.compareTo( second ) > 0 ) {
-                        Engram tempEngram = engrams.valueAt( i + 1 );
-                        engrams.put( i + 1, engrams.valueAt( i ) );
-                        engrams.put( i, tempEngram );
-                        swapped = true;
-                    }
-                }
-            }
-
-            return engrams;
-        }
-
-        // FIXME: Needs to match all dlc_ids, create separate Engram entries to match exact dlc_ids
-        private int getEngramId( String drawable, int[] dlc_ids ) {
-            Log.d( TAG, "** Incoming check: " + drawable + ", " + Arrays.toString( dlc_ids ) );
-
-            boolean breakLoop = false;
-            for ( int i = 0; i < mEngramMap.size(); i++ ) {
-                Engram engram = mEngramMap.valueAt( i );
-
-                if ( drawable.equals( engram.drawable ) ) {
-                    Log.d( TAG, "  - Checking " + engram.drawable + " from Engram: " + engram.name );
-                    for ( int dlc_id : dlc_ids ) {
-                        for ( int k = 0; k < engram.dlc_ids.length; k++ ) {
-                            Log.d( TAG, "    - drawable: " + drawable + ", dlc_id: " + dlc_id + ", dlc_ids: " + Arrays.toString( dlc_ids ) + ", engram.dlc_id: " + engram.dlc_ids[k] + ", engram.dlc_ids: " + Arrays.toString( engram.dlc_ids ) );
-                            if ( dlc_id == engram.dlc_ids[k] ) {
-                                Log.d( TAG, "    ** FOUND " + engram.name + ", " + Arrays.toString( engram.dlc_ids ) );
-                                return i;
-                            } else if ( engram.dlc_ids.length > 1 ) {
-                                Log.e( TAG, "     - Not found, checking next engram.dlc_id since there's more than 1 available." );
-                                breakLoop = false;
-                            } else {
-                                Log.e( TAG, "    - Not found, breaking.." );
-                                breakLoop = true;
-                                break;
-                            }
-                        }
-
-                        if ( breakLoop ) {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return -1;
-        }
-
-        Context getContext() {
-            return mContext;
+            return ids;
         }
     }
 
-    class Resource {
-        String name;
-        String drawable;
-        int[] dlc_ids;
+    LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray ) throws JSONException {
+        LongSparseArray<TotalConversion> map = new LongSparseArray<>();
 
-        public Resource( String name, String drawable, int[] dlc_ids ) {
+        for ( int i = 0; i < jsonArray.length(); i++ ) {
+            JSONObject jsonObject = jsonArray.getJSONObject( i );
+
+            long dlc_id = jsonObject.getLong( DatabaseContract.TotalConversionEntry.COLUMN_DLC_KEY );
+            JSONArray resourceArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME );
+            JSONArray engramArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME );
+
+            TotalConversion totalConversion = new TotalConversion();
+            for ( int j = 0; j < resourceArray.length(); j++ ) {
+                JSONObject object = resourceArray.getJSONObject( j );
+
+                String from = object.getString( DatabaseContract.TotalConversionEntry.COLUMN_FROM );
+                String to = object.getString( DatabaseContract.TotalConversionEntry.COLUMN_TO );
+
+                totalConversion.resources.put( from, to );
+            }
+
+            for ( int j = 0; j < engramArray.length(); j++ )
+                totalConversion.engrams.add( engramArray.getString( j ) );
+
+            map.put( dlc_id, totalConversion );
+        }
+
+        return map;
+    }
+
+    class TotalConversion {
+        List<String> engrams;
+        HashMap<String, String> resources;
+
+        TotalConversion() {
+            engrams = new ArrayList<>();
+            resources = new HashMap<>();
+        }
+    }
+
+    class ComplexMap {
+        private HashMap<String, Long> resources;
+        private HashMap<String, Long> engrams;
+
+        ComplexMap() {
+            this.resources = new HashMap<>();
+            this.engrams = new HashMap<>();
+        }
+
+        long getEngramId( String name ) {
+            return engrams.get( name );
+        }
+
+        long getResourceId( String name ) {
+            return resources.get( name );
+        }
+
+        boolean contains( String name ) {
+            return containsResource( name );
+        }
+
+        boolean containsEngram( String name ) {
+            return engrams.containsKey( name );
+        }
+
+        boolean containsResource( String name ) {
+            return resources.containsKey( name );
+        }
+
+        void addEngram( String name, long _id ) throws Exception {
+            if ( containsEngram( name ) )
+                throw new Exception( "Found duplicate complex engram name for " + name + ", id: " + _id );
+            else
+                engrams.put( name, _id );
+        }
+
+        void addResource( String name, long _id ) throws Exception {
+            if ( containsResource( name ) )
+                throw new Exception( "Found duplicate complex resource name for " + name + ", id: " + _id );
+            else
+                resources.put( name, _id );
+        }
+    }
+
+    class Map {
+        private HashMap<String, Long> map;
+
+        Map() {
+            this.map = new HashMap<>();
+        }
+
+        boolean contains( String name ) {
+            return map.containsKey( name );
+        }
+
+        void add( String name, long _id ) throws Exception {
+            if ( contains( name ) )
+                throw new Exception( "Found duplicate name for " + name + ", id: " + _id );
+            else
+                map.put( name, _id );
+        }
+
+        long get( String name ) throws Exception {
+            if ( contains( name ) )
+                return map.get( name );
+            else
+                throw new Exception( "_id is null for name: " + name );
+        }
+    }
+
+    class Category {
+        String imageFile;
+        String imageFolder;
+        String name;
+        String parent;
+
+        int[] dlc_ids;
+        int[] station_ids;
+
+        Category( String name, String parent, String imageFolder, String imageFile,
+                  int[] station_ids, int[] dlc_ids ) {
             this.name = name;
-            this.drawable = drawable;
-            this.dlc_ids = dlc_ids.clone();
+            this.parent = parent;
+            this.imageFolder = imageFolder;
+            this.imageFile = imageFile;
+            this.dlc_ids = dlc_ids;
         }
     }
 
     class Engram {
-        String name;
+        String category;
         String description;
-        String drawable;
-        Integer yield;
+        String imageFile;
+        String imageFolder;
+        String name;
+
         Integer level;
-        HashMap<String, Integer> composition;
+        Integer yield;
 
-        Integer category_id;
-        int[] station_ids;
+        LongSparseArray<Integer> composition;
+
         int[] dlc_ids;
+        int[] station_ids;
 
-        public Engram(
-                String name,
-                String description,
-                String drawable,
-                int yield,
-                int level,
-                HashMap<String, Integer> composition,
-                int category_id,
-                int[] station_ids,
-                int[] dlc_ids ) {
+        Engram( String name, String description, String imageFolder, String imageFile,
+                int yield, int level, String category, LongSparseArray<Integer> composition,
+                int[] station_ids, int[] dlc_ids ) {
             this.name = name;
             this.description = description;
-            this.drawable = drawable;
+            this.imageFolder = imageFolder;
+            this.imageFile = imageFile;
             this.yield = yield;
             this.level = level;
+            this.category = category;
             this.composition = composition;
-            this.category_id = category_id;
             this.station_ids = station_ids;
             this.dlc_ids = dlc_ids;
         }
+    }
 
-        @Override
-        public String toString() {
-            return name + ", " + drawable + ", " + Arrays.toString( dlc_ids );
+    class Resource {
+        String imageFile;
+        String imageFolder;
+        String name;
+
+        int[] dlc_ids;
+
+        Resource( String name, String imageFolder, String imageFile, int[] dlc_ids ) {
+            this.name = name;
+            this.imageFolder = imageFolder;
+            this.imageFile = imageFile;
+            this.dlc_ids = dlc_ids;
+        }
+    }
+
+    class Station {
+        String imageFile;
+        String imageFolder;
+        String name;
+
+        int[] dlc_ids;
+
+        Station( String name, String imageFolder, String imageFile, int[] dlc_ids ) {
+            this.name = name;
+            this.imageFolder = imageFolder;
+            this.imageFile = imageFile;
+            this.dlc_ids = dlc_ids;
         }
     }
 }
