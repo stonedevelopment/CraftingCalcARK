@@ -944,7 +944,7 @@ public class DisplayCase
 
     @Override
     public void onRequestDisplayCaseDataSetChange( Context context ) {
-        new QueryForDataTask( context ).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR );
+        new QueryForDataTask( context ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR );
     }
 
     @Override

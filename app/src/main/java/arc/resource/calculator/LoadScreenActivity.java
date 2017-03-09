@@ -44,15 +44,12 @@ public class LoadScreenActivity extends AppCompatActivity
         implements SendErrorReportListener {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
-    private static final int STATUS_ERROR = -2;
-    private static final int STATUS_ERROR_WITH_MESSAGE = -1;
-    private static final int STATUS_STARTED = 0;
-    private static final int STATUS_UPDATING = 1;
-    private static final int STATUS_UPDATING_WITH_MESSAGE = 2;
-    private static final int STATUS_FINISHED = 3;
-
-    private static final String STATUS_ERROR_KEY = "STATUS_ERROR";
-    private static final String STATUS_MESSAGE_KEY = "STATUS_MESSAGE";
+    private static final String STATUS_ERROR = "STATUS_ERROR";
+    private static final String STATUS_ERROR_WITH_MESSAGE = "STATUS_ERROR_WITH_MESSAGE";
+    private static final String STATUS_STARTED = "STATUS_STARTED";
+    private static final String STATUS_UPDATING = "STATUS_UPDATING";
+    private static final String STATUS_UPDATING_WITH_MESSAGE = "STATUS_UPDATING_WITH_MESSAGE";
+    private static final String STATUS_FINISHED = "STATUS_FINISHED";
 
     private ListenerUtil mCallback;
 
@@ -118,26 +115,24 @@ public class LoadScreenActivity extends AppCompatActivity
             ExceptionUtil.SendErrorReport( LoadScreenActivity.this, tag, e );
     }
 
-    private class InitializationTask extends AsyncTask<Void, Integer, Void> {
+    private class InitializationTask extends AsyncTask<Void, String, Void> {
 
         private LongSparseArray<TotalConversion> mTotalConversion;
         private SparseArray<Long> mDlcIds;
 
-        private Bundle mBundle;
-
-        private boolean mErrorHandled;
+        private boolean mHandledError;
 
         InitializationTask() {
             mTotalConversion = new LongSparseArray<>();
             mDlcIds = new SparseArray<>();
-            mBundle = new Bundle();
 
-            mErrorHandled = false;
+            mHandledError = false;
         }
 
         @Override
-        protected void onProgressUpdate( Integer... values ) {
-            int progressCode = values[0];
+        protected void onProgressUpdate( String... values ) {
+            String progressCode = values[0];
+            String messageExtra = values.length > 1 ? values[1] : null;
 
             String message;
             switch ( progressCode ) {
@@ -150,7 +145,7 @@ public class LoadScreenActivity extends AppCompatActivity
                     break;
 
                 case STATUS_UPDATING_WITH_MESSAGE:
-                    message = mBundle.getString( STATUS_MESSAGE_KEY );
+                    message = messageExtra;
                     break;
 
                 case STATUS_FINISHED:
@@ -163,12 +158,12 @@ public class LoadScreenActivity extends AppCompatActivity
 
                 case STATUS_ERROR_WITH_MESSAGE:
                     message = String.format(
-                            getString( R.string.load_activity_status_message_error_format ), mBundle.getString( STATUS_ERROR_KEY ) );
+                            getString( R.string.load_activity_status_message_error_format ), messageExtra );
                     break;
 
                 default:
                     message = String.format(
-                            getString( R.string.load_activity_status_message_unknown_format ), String.valueOf( progressCode ) );
+                            getString( R.string.load_activity_status_message_unknown_format ), progressCode );
             }
 
             UpdateStatusText( message );
@@ -176,7 +171,7 @@ public class LoadScreenActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute( Void aVoid ) {
-            if ( !mErrorHandled ) {
+            if ( !mHandledError ) {
                 new Timer( TAG ).schedule(
                         new TimerTask() {
                             @Override
@@ -213,12 +208,12 @@ public class LoadScreenActivity extends AppCompatActivity
                 insertComplexResources( jsonObject.getJSONArray( DatabaseContract.ComplexResourceEntry.TABLE_NAME ) );
 
                 // Tell user that database initialization has completed.
-                publishProgress( STATUS_FINISHED );
+                sendStatusUpdate( STATUS_FINISHED );
             }
 
             // If error, send error signal, stop service
             catch ( Exception e ) {
-                mErrorHandled = true;
+                mHandledError = true;
 
                 sendStatusErrorWithMessage( e );
                 sendStatusError();
@@ -234,17 +229,19 @@ public class LoadScreenActivity extends AppCompatActivity
         }
 
         private void sendStatusErrorWithMessage( Exception e ) {
-            mBundle.putString( STATUS_ERROR_KEY, e.getLocalizedMessage() );
-            sendStatusUpdate( STATUS_ERROR_WITH_MESSAGE );
+            sendStatusUpdate( STATUS_ERROR_WITH_MESSAGE, e.getLocalizedMessage() );
         }
 
-        private void sendStatusUpdateWithMessage( String message ) {
-            mBundle.putString( STATUS_MESSAGE_KEY, message );
-            sendStatusUpdate( STATUS_UPDATING_WITH_MESSAGE );
+        private void sendStatusUpdateWithMessage( String messageExtra ) {
+            sendStatusUpdate( STATUS_UPDATING_WITH_MESSAGE, messageExtra );
         }
 
-        private void sendStatusUpdate( int statusCode ) {
+        private void sendStatusUpdate( String statusCode ) {
             publishProgress( statusCode );
+        }
+
+        private void sendStatusUpdate( String statusCode, String messageExtra ) {
+            publishProgress( statusCode, messageExtra );
         }
 
         private int delete( Uri uri ) {
@@ -516,6 +513,8 @@ public class LoadScreenActivity extends AppCompatActivity
         }
 
         private LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray ) throws JSONException {
+            sendStatusUpdateWithMessage( "Mapping Total Conversion entries.." );
+
             LongSparseArray<TotalConversion> map = new LongSparseArray<>();
 
             for ( int i = 0; i < jsonArray.length(); i++ ) {
@@ -523,7 +522,6 @@ public class LoadScreenActivity extends AppCompatActivity
 
                 long dlc_id = jsonObject.getLong( DatabaseContract.TotalConversionEntry.COLUMN_DLC_KEY );
                 JSONArray resourceArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME );
-//            JSONArray engramArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME );
 
                 TotalConversion totalConversion = new TotalConversion();
                 for ( int j = 0; j < resourceArray.length(); j++ ) {
@@ -534,15 +532,6 @@ public class LoadScreenActivity extends AppCompatActivity
 
                     totalConversion.conversionIds.put( from, to );
                 }
-
-//            for ( int j = 0; j < engramArray.length(); j++ ) {
-//                JSONObject object = engramArray.getJSONObject( j );
-//
-//                long from = object.getLong( DatabaseContract.TotalConversionEntry.COLUMN_FROM );
-//                long to = object.getLong( DatabaseContract.TotalConversionEntry.COLUMN_TO );
-//
-//                totalConversion.engrams.put( from, to );
-//            }
 
                 map.put( dlc_id, totalConversion );
             }

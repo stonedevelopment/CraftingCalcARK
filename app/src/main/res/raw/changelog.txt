@@ -19,6 +19,14 @@
     </style>
   </head>
   <body>
+    $ 1.1.6
+      % Version 1.1.6
+      _ 03/09/2016
+      * Amazing support for beta testing, just wanted to say thanks for the support!!
+      * BUGFIX: Large queues caused folder navigation to be delayed, hopefully fixed.
+      * BUGFIX: Initialization status messages were being overridden if previous task length was less than it took to display message. Fixed.
+      ! Integrated Instabug for all of you to send feedback quickly, but since I can't disable the 30 day trial of premium features -- these may interfere until it expires.
+
     $ 1.1.5
       % Version 1.1.5
       _ 03/08/2016
