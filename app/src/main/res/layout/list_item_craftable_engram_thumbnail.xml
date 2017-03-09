@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="@dimen/craftable_engram_grid_view_holder_size"
-                android:layout_height="@dimen/craftable_engram_grid_view_holder_size"
-                android:padding="@dimen/craftable_engram_grid_view_holder_padding">
+                android:layout_width="@dimen/crafting_queue_grid_view_holder_size"
+                android:layout_height="@dimen/crafting_queue_grid_view_holder_size"
+                android:padding="@dimen/crafting_queue_grid_view_holder_padding">
 
     <ImageView
         android:id="@+id/list_item_engram_thumbnail_image_view"

@@ -22,7 +22,7 @@
     <style name="AppTheme.Text.DisplayCase"/>
 
     <style name="AppTheme.Text.DisplayCase.Hierarchy">
-        <item name="android:textSize">@dimen/engram_grid_view_holder_name_text_size</item>
+        <item name="android:textSize">@dimen/display_case_hierarchy_text_size</item>
     </style>
 
     <style name="AppTheme.Text.Engram"/>
@@ -30,14 +30,14 @@
     <style name="AppTheme.Text.Engram.Name">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fontFamily">sans-serif-smallcaps</item>
-        <item name="android:textSize">@dimen/engram_grid_view_holder_name_text_size</item>
+        <item name="android:textSize">@dimen/display_case_grid_view_holder_name_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/content_detail_mock_text_name</item>
     </style>
 
     <style name="AppTheme.Text.Engram.Quantity">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/engram_grid_view_holder_quantity_text_size</item>
+        <item name="android:textSize">@dimen/display_case_grid_view_holder_quantity_text_size</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/content_detail_mock_text_quantity</item>
@@ -49,14 +49,14 @@
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:fontFamily">sans-serif-smallcaps</item>
-        <item name="android:textSize">@dimen/queue_engram_grid_view_holder_name_text_size</item>
+        <item name="android:textSize">@dimen/crafting_queue_grid_view_holder_name_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/content_detail_mock_text_name</item>
     </style>
 
     <style name="AppTheme.Text.Engram.Queue.Quantity">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/queue_engram_grid_view_holder_quantity_text_size</item>
+        <item name="android:textSize">@dimen/crafting_queue_grid_view_holder_quantity_text_size</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/content_detail_mock_text_quantity</item>

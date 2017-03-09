@@ -105,6 +105,12 @@
       "dlc_id": 1
     },
     {
+      "name": "Tek Replicator",
+      "image_folder": "Vanilla\/Stations\/",
+      "image_file": "tek_replicator.png",
+      "dlc_id": 1
+    },
+    {
       "name": "Obelisk",
       "image_folder": "Vanilla\/Stations\/",
       "image_file": "obelisk.png",
@@ -236,7 +242,8 @@
         "Self",
         "Fabricator",
         "Smithy",
-        "Construction Table"
+        "Construction Table",
+        "Tek Replicator"
       ]
     },
     {
@@ -320,7 +327,8 @@
         "Self",
         "Smithy",
         "Fabricator",
-        "Construction Table"
+        "Construction Table",
+        "Tek Replicator"
       ]
     },
     {
@@ -330,7 +338,8 @@
       "dlc_id": 1,
       "station": [
         "Self",
-        "Smithy"
+        "Smithy",
+        "Tek Replicator"
       ]
     },
     {
@@ -611,6 +620,15 @@
       ]
     },
     {
+      "_id": 229,
+      "name": "Tek",
+      "parent_id": 200,
+      "dlc_id": 1,
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "_id": 300,
       "name": "Weapons",
       "parent_id": 0,
@@ -620,7 +638,8 @@
         "Smithy",
         "Fabricator",
         "Grindstone",
-        "Catapult Turret"
+        "Catapult Turret",
+        "Tek Replicator"
       ]
     },
     {
@@ -631,19 +650,17 @@
       "station": [
         "Self",
         "Smithy",
-        "Fabricator",
         "Grindstone"
       ]
     },
     {
       "_id": 3011,
       "name": "Melee",
-      "parent_id": 300,
+      "parent_id": 301,
       "dlc_id": 1,
       "station": [
         "Self",
         "Smithy",
-        "Fabricator",
         "Grindstone"
       ]
     },
@@ -696,7 +713,17 @@
       "dlc_id": 1,
       "station": [
         "Smithy",
-        "Fabricator"
+        "Fabricator",
+        "Tek Replicator"
+      ]
+    },
+    {
+      "_id": 3051,
+      "name": "Tek",
+      "parent_id": 305,
+      "dlc_id": 1,
+      "station": [
+        "Tek Replicator"
       ]
     },
     {
@@ -705,7 +732,9 @@
       "parent_id": 300,
       "dlc_id": 1,
       "station": [
+        "Self",
         "Smithy",
+        "Fabricator",
         "Grindstone"
       ]
     },
@@ -730,12 +759,12 @@
       ]
     },
     {
-      "_id": 309,
-      "name": "Melee",
+      "_id": 310,
+      "name": "Misc",
       "parent_id": 300,
-      "dlc_id": 2,
+      "dlc_id": 1,
       "station": [
-        "Self"
+        "Smithy"
       ]
     },
     {
@@ -746,7 +775,8 @@
       "station": [
         "Self",
         "Smithy",
-        "Fabricator"
+        "Fabricator",
+        "Tek Replicator"
       ]
     },
     {
@@ -852,13 +882,32 @@
       ]
     },
     {
+      "_id": 412,
+      "name": "Tek",
+      "parent_id": 400,
+      "dlc_id": 1,
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "_id": 500,
       "name": "Saddles",
       "parent_id": 0,
       "dlc_id": 1,
       "station": [
         "Self",
-        "Smithy"
+        "Smithy",
+        "Tek Replicator"
+      ]
+    },
+    {
+      "_id": 5001,
+      "name": "Tek",
+      "parent_id": 500,
+      "dlc_id": 1,
+      "station": [
+        "Tek Replicator"
       ]
     },
     {
@@ -1060,12 +1109,76 @@
     },
     {
       "_id": 1501,
-      "name": "Fear Evolved 2",
+      "name": "Fear Evolved",
       "parent_id": 1500,
       "dlc_id": 1,
       "station": [
         "Cooking Pot",
         "Industrial Cooker"
+      ]
+    },
+    {
+      "_id": 1502,
+      "name": "Eggcellent Adventure",
+      "parent_id": 1500,
+      "dlc_id": 1,
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker"
+      ]
+    },
+    {
+      "_id": 1600,
+      "name": "Boss Arenas",
+      "parent_id": 0,
+      "dlc_id": 1,
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "_id": 1601,
+      "name": "Broodmother Arena",
+      "parent_id": 1600,
+      "dlc_id": 1,
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "_id": 1602,
+      "name": "Megapithecus Arena",
+      "parent_id": 1600,
+      "dlc_id": 1,
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "_id": 1603,
+      "name": "Dragon Arena",
+      "parent_id": 1600,
+      "dlc_id": 1,
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "_id": 1604,
+      "name": "The Center Arena",
+      "parent_id": 1600,
+      "dlc_id": 1,
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "_id": 1605,
+      "name": "Manticore Arena",
+      "parent_id": 1600,
+      "dlc_id": 3,
+      "station": [
+        "Obelisk"
       ]
     }
   ],
@@ -1130,6 +1243,13 @@
       "name": "Bronto Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "bronto_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Bunny Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "bunny_egg.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -1313,6 +1433,13 @@
       "image_folder": "Primitive Plus\/Resources\/",
       "image_file": "drone_bee.png",
       "dlc_id": 2,
+      "complex_resource": false
+    },
+    {
+      "name": "Element",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "element.png",
+      "dlc_id": 1,
       "complex_resource": false
     },
     {
@@ -1662,6 +1789,13 @@
       "name": "Raw Meat",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "raw_meat.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Raw Mutton",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "raw_mutton.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2266,6 +2400,160 @@
       "image_file": "simple_rifle_ammo.png",
       "dlc_id": 1,
       "complex_resource": true
+    },
+    {
+      "name": "Megalodon Tooth",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "megalodon_tooth.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Tyrannosaurus Arm",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "tyrannosaurus_arm.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Argentavis Talon",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "argentavis_talon.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Sauropod Vertebra",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "sauropod_vertebra.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Tusoteuthis Tentacle",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "tusoteuthis_tentacle.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Hunter",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_hunter.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Pack",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_pack.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Massive",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_massive.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Devious",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_devious.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Clever",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_clever.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Skylord",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_skylord.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Devourer",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_devourer.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Immune",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_immune.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Strong",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_strong.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Cunning",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_cunning.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Brute",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_brute.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Gatekeeper",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "artifact_of_the_gatekeeper.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Crag",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "artifact_of_the_crag.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Destroyer",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "artifact_of_the_destroyer.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Fire Talon",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "fire_talon.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Lightning Talon",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "lightning_talon.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Poison Talon",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "poison_talon.png",
+      "dlc_id": 3,
+      "complex_resource": false
     }
   ],
   "engram": [
@@ -3637,6 +3925,60 @@
       ]
     },
     {
+      "name": "Baryonyx Saddle",
+      "description": "Equip a Baryonyx with this to ride it.",
+      "yield": 1,
+      "level": 45,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "baryonyx_saddle.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Basilosaurus Saddle",
+      "description": "Equip a Basilosaurus with this to ride it.",
+      "yield": 1,
+      "level": 55,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "basilosaurus_saddle.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 55
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
       "name": "Battle Tartare",
       "description": "Only eat this dish when you intend to go into a brawl. It causes pain and stress to your body, but grants you almost supernatural strength, speed, and resilience. Warning: This concoction can be habit forming.",
       "yield": 1,
@@ -4019,6 +4361,64 @@
       ],
       "station": [
         "Smithy"
+      ]
+    },
+    {
+      "name": "Behemoth Tek Gate",
+      "description": "A large composite Tek gate that can be used with a Behemoth Gateway to allow even the largest creatures in or out.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "behemoth_tek_gate.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 1500
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 350
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Behemoth Tek Gateway",
+      "description": "A large composite Tek gateway, reinforced with obsidian polymer, that can be used with a Behemoth Gate to allow even the largest creatures in or out.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "behemoth_tek_gateway.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2200
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
       ]
     },
     {
@@ -4852,6 +5252,26 @@
       ],
       "station": [
         "Fabricator"
+      ]
+    },
+    {
+      "name": "Bunny Ears Skin",
+      "description": "You can use this to skin the appearance of a helmet or hat. Provides a eggecellent [sic] look.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1502,
+      "image_folder": "Vanilla\/Engrams\/Events\/Eggcellent Adventure\/",
+      "image_file": "bunny_ears_skin.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Bunny Egg",
+          "quantity": 50
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker"
       ]
     },
     {
@@ -6466,6 +6886,29 @@
       ]
     },
     {
+      "name": "Cooked Lamb Chop",
+      "description": "Sates your hunger, and provides health while being digested. More effective than prime meat. Wild carnivores LOVE this meat!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1002,
+      "image_folder": "Vanilla\/Engrams\/Consumables\/Food\/",
+      "image_file": "cooked_lamb_chop.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Raw Mutton",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Campfire",
+        "Industrial Grill",
+        "Big Campfire",
+        "Candles",
+        "Big Bonfire"
+      ]
+    },
+    {
       "name": "Cooked Meat",
       "description": "Sates your hunger and provides health while being digested. Wild carnivores will eat it, but prefer raw meat.",
       "yield": 1,
@@ -6660,6 +7103,29 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Cooking Station",
+      "description": "Used to convert raw resources into bakeable items!",
+      "yield": 1,
+      "level": 25,
+      "category_id": 204,
+      "image_folder": "Primitive Plus\/Engrams\/Structures\/Cooking\/",
+      "image_file": "cooking_station.png",
+      "dlc_id": 2,
+      "composition": [
+        {
+          "resource_id": "Wood",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Construction Table"
       ]
     },
     {
@@ -7129,6 +7595,26 @@
         "Cooking Pot",
         "Industrial Cooker",
         "Cauldron"
+      ]
+    },
+    {
+      "name": "Dino Bunny Ears Skin",
+      "description": "You can use this to skin the appearance of a Saddle. Make your mount look eggcellent!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1502,
+      "image_folder": "Vanilla\/Engrams\/Events\/Eggcellent Adventure\/",
+      "image_file": "dino_bunny_ears_skin.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Bunny Egg",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker"
       ]
     },
     {
@@ -10434,6 +10920,45 @@
       ],
       "station": [
         "Fabricator"
+      ]
+    },
+    {
+      "name": "Lance",
+      "description": "Knock your foes off their mounts! Can only be utilized when riding a mount.",
+      "yield": 1,
+      "level": 35,
+      "category_id": 306,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Melee\/",
+      "image_file": "lance.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Flint",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 70
+        },
+        {
+          "resource_id": "Pelt",
+          "quantity": 70
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 260
+        }
+      ],
+      "station": [
+        "Smithy"
       ]
     },
     {
@@ -14423,6 +14948,26 @@
       ]
     },
     {
+      "name": "Procoptodon Bunny Costume",
+      "description": "This costume can be used to make your Procoptodon look eggcellent!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1502,
+      "image_folder": "Vanilla\/Engrams\/Events\/Eggcellent Adventure\/",
+      "image_file": "procoptodon_bunny_costume.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Bunny Egg",
+          "quantity": 200
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker"
+      ]
+    },
+    {
       "name": "Procoptodon Saddle",
       "description": "Equip a Procoptodon with this to ride it.",
       "yield": 1,
@@ -15261,6 +15806,41 @@
       ]
     },
     {
+      "name": "Rex Tek Saddle",
+      "description": "Equip a Rex with this to ride it. Using requires learning the Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 5001,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/Tek\/",
+      "image_file": "rex_tek_saddle.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 1800
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 350
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "name": "Right-Sloped Lumber Wall",
       "description": "A sturdy lumber sloped wall that insulates the inside from the outside, seprarates [sic] rooms, and provides structural integrity. Used in conjunction with the roof.",
       "yield": 1,
@@ -16042,6 +16622,33 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Scissors",
+      "description": "Used for cutting hair & other materials!",
+      "yield": 1,
+      "level": 25,
+      "category_id": 310,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Misc\/",
+      "image_file": "scissors.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Flint",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 5
+        }
+      ],
+      "station": [
+        "Smithy"
       ]
     },
     {
@@ -16984,6 +17591,75 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Sloped Tek Roof",
+      "description": "An inclined tek roof. Slightly different angle than the ramp.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "sloped_tek_roof.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 35
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Sloped Tek Wall Left",
+      "description": "A composite Tek sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "sloped_tek_wall_left.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Sloped Tek Wall Right",
+      "description": "A composite Tek sloped wall that insulates the inside from the outside, separates rooms, and provides structural integrity. Used in conjunction with the roof.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "sloped_tek_wall_right.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Tek Replicator"
       ]
     },
     {
@@ -18077,7 +18753,7 @@
       "description": "Used for gaining extra hide.",
       "yield": 1,
       "level": 8,
-      "category_id": 309,
+      "category_id": 306,
       "image_folder": "Primitive Plus\/Engrams\/Weapons\/Melee\/",
       "image_file": "stone_hunting_knife.png",
       "dlc_id": 2,
@@ -18669,6 +19345,595 @@
       ]
     },
     {
+      "name": "Tek Boots",
+      "description": "Highly advanced boots capable of absorbing the impact of falling from high distances. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 412,
+      "image_folder": "Vanilla\/Engrams\/Armor\/Tek\/",
+      "image_file": "tek_boots.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Catwalk",
+      "description": "A thin walkway for bridging areas together. Made from advanced Tek materials.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_catwalk.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 72
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 40
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Ceiling",
+      "description": "An incredibly durable composite Tek ceiling that provides insulation, and doubles as a floor for higher levels.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_ceiling.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Chestpiece",
+      "description": "Highly advanced chestpiece with an integrated jetpack. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 412,
+      "image_folder": "Vanilla\/Engrams\/Armor\/Tek\/",
+      "image_file": "tek_chestpiece.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Dinosaur Gate",
+      "description": "A large composite Tek gate that can be used with a Gateway to keep most dinosaurs in or out.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_dinosaur_gate.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Dinosaur Gateway",
+      "description": "A large composite Tek gateway that can be used with a Gate to keep most dinosaurs in or out.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_dinosaur_gateway.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 50
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Door",
+      "description": "A stable composite Tek door that provides entrance to structures. Can be locked for security.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_door.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 40
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Doorframe",
+      "description": "A composite Tek wall that provides entrance to a structure.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_doorframe.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Fence Foundation",
+      "description": "This composite Tek foundation is used to build walls around an area.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_fence_foundation.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 5
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Forcefield",
+      "description": "Generates an impenetrable, expandable spherical shield to keep out enemies. Requires Element to run, and Tek Engram to use.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 207,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Misc\/",
+      "image_file": "tek_forcefield.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 75
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 5000
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 600
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 800
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Foundation",
+      "description": "A foundation is required to build structures in an area. This is made from sturdy composite Tek materials.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_foundation.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 45
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Gauntlets",
+      "description": "Highly advanced gauntlets that allow the wearer to perform devastating punches. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 412,
+      "image_folder": "Vanilla\/Engrams\/Armor\/Tek\/",
+      "image_file": "tek_gauntlets.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Hatchframe",
+      "description": "This composite Tek ceiling has a hole in it for trapdoors.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_hatchframe.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Helmet",
+      "description": "Never get lost again with the Tek Helmets night vision and GPS. Also provides a targeting mode that reveals other characters' positions, and infinite oxygen while underwater. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 412,
+      "image_folder": "Vanilla\/Engrams\/Armor\/Tek\/",
+      "image_file": "tek_helmet.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Ladder",
+      "description": "A composite Tek ladder used to climb up or down tall structures. Can also be used to extend existing ladders.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_ladder.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 28
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Leggings",
+      "description": "Highly advanced leggings that allow for powerful forward movement. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 412,
+      "image_folder": "Vanilla\/Engrams\/Armor\/Tek\/",
+      "image_file": "tek_leggings.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Pillar",
+      "description": "This composite Tek pillar adds structural integrity to the area it is build under. Can also act as stilts for buildings on inclines.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_pillar.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 14
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Railing",
+      "description": "A composite Tek railing that acts as a simple barrier to prevent people from falling.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_railing.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 12
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Ramp",
+      "description": "An inclined composite Tek floor for travelling up or down levels. Can also be used to make an angled roof.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_ramp.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 70
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "name": "Tek Replicator",
       "description": "Replicate items here. Requires Element to be activated.",
       "yield": 1,
@@ -18701,6 +19966,215 @@
       ],
       "station": [
         "Obelisk"
+      ]
+    },
+    {
+      "name": "Tek Rifle",
+      "description": "The fastest way to fill a target with holes. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 3051,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Firearms\/Tek\/",
+      "image_file": "tek_rifle.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Staircase",
+      "description": "A composite Tek spiral staircase, useful in constructing multi-level buildings.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_staircase.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 125
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Transmitter",
+      "description": "Transmits items, Survivors, and creatures to other ARKs! Requires Tek Engram to use.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 206,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Crafting\/",
+      "image_file": "tek_transmitter.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 320
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Trapdoor",
+      "description": "This composite Tek slab can be used to secure hatches.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_trapdoor.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 16
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Wall",
+      "description": "A composite Tek wall that insulates the inside from the outside and separates rooms.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_wall.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Window",
+      "description": "Tek plates that cover windows to provide protection from projectiles and spying.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_window.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 16
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Windowframe",
+      "description": "A composite Tek wall, with a hole for a window.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_windowframe.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Tek Replicator"
       ]
     },
     {
@@ -19033,6 +20507,33 @@
         {
           "resource_id": "Metal Ingot",
           "quantity": 35
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Thylacoleo Saddle",
+      "description": "Equip a Thylacoleo with this to ride it.",
+      "yield": 1,
+      "level": 50,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "thylacoleo_saddle.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 155
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
         }
       ],
       "station": [
@@ -21252,6 +22753,677 @@
         "Cooking Pot",
         "Industrial Cooker",
         "Cauldron"
+      ]
+    },
+    {
+      "name": "Broodmother Portal (Easy)",
+      "description": "Use this to generate a portal [to] the Broodmother (Easy).",
+      "yield": 1,
+      "level": 30,
+      "category_id": 1601,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "broodmother_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Broodmother Portal (Medium)",
+      "description": "Use this to generate a portal [to] the Broodmother (Medium).",
+      "yield": 1,
+      "level": 50,
+      "category_id": 1601,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "broodmother_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 32
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Broodmother Portal (Hard)",
+      "description": "Use this to generate a portal [to] the Broodmother (Hard).",
+      "yield": 1,
+      "level": 70,
+      "category_id": 1601,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "broodmother_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 64
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 32
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 32
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Megapithecus Portal (Easy)",
+      "description": "Use this to generate a portal to the Megapithecus (Easy).",
+      "yield": 1,
+      "level": 45,
+      "category_id": 1602,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "megapithecus_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Megapithecus Portal (Medium)",
+      "description": "Use this to generate a portal to the Megapithecus (Medium).",
+      "yield": 1,
+      "level": 65,
+      "category_id": 1602,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "megapithecus_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Megapithecus Portal (Hard)",
+      "description": "Use this to generate a portal to the Megapithecus (Hard.",
+      "yield": 1,
+      "level": 85,
+      "category_id": 1602,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "megapithecus_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 32
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Immune",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Dragon Portal (Easy)",
+      "description": "Use this to generate a portal to the Dragon (Easy).",
+      "yield": 1,
+      "level": 55,
+      "category_id": 1603,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "dragon_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Immune",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Strong",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Dragon Portal (Medium)",
+      "description": "Use this to generate a portal to the Dragon (Medium).",
+      "yield": 1,
+      "level": 75,
+      "category_id": 1603,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "dragon_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Immune",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Strong",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Brute",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Dragon Portal (Hard)",
+      "description": "Use this to generate a portal to the Dragon (Hard).",
+      "yield": 1,
+      "level": 100,
+      "category_id": 1603,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "dragon_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 24
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 12
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Immune",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Strong",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Cunning",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Brute",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "The Center Portal",
+      "description": "Use this to generate a portal to The Center's Ultimate Life Forms.",
+      "yield": 1,
+      "level": 80,
+      "category_id": 1604,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "the_center_portal.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devious",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Immune",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Strong",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Manticore Portal (Easy)",
+      "description": "Use this to generate a portal to the Manticore (Easy).",
+      "yield": 1,
+      "level": 55,
+      "category_id": 1605,
+      "image_folder": "Scorched Earth\/Engrams\/Boss Arenas\/",
+      "image_file": "manticore_portal.png",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fire Talon",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Lightning Talon",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Poison Talon",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Artifact of the Gatekeeper",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Crag",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Destroyer",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Manticore Portal (Medium)",
+      "description": "Use this to generate a portal to the Manticore (Medium).",
+      "yield": 1,
+      "level": 70,
+      "category_id": 1605,
+      "image_folder": "Scorched Earth\/Engrams\/Boss Arenas\/",
+      "image_file": "manticore_portal.png",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fire Talon",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Lightning Talon",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Poison Talon",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Artifact of the Gatekeeper",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Crag",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Destroyer",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Manticore Portal (Hard)",
+      "description": "Use this to generate a portal to the Manticore (Hard).",
+      "yield": 1,
+      "level": 95,
+      "category_id": 1605,
+      "image_folder": "Scorched Earth\/Engrams\/Boss Arenas\/",
+      "image_file": "manticore_portal.png",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fire Talon",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Lightning Talon",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Poison Talon",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Artifact of the Gatekeeper",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Crag",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Destroyer",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
       ]
     }
   ],

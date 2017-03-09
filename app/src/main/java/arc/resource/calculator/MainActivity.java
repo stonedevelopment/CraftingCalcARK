@@ -3,7 +3,6 @@ package arc.resource.calculator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity
 
         mCallback = ListenerUtil.getInstance();
         mCallback.setMainActivityListener( this );
-        mCallback.addSendErrorReportListener( this );
+        mCallback.setSendErrorReportListener( this );
 
         // Check to see if database was updated
         boolean didUpdate = getIntent().getBooleanExtra( getString( R.string.intent_key_did_update ), false );
@@ -119,7 +118,6 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
 
-        mCallback.removeSendErrorReportListener( this );
         mCallback.requestSaveCategoryLevels( getApplicationContext() );
     }
 
@@ -268,8 +266,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateContainerLayoutParams() {
-        Log.d( TAG, "updateContainerLayoutParams()" );
-
         boolean isQueueEmpty = mQueueEngramRecyclerView.getAdapter().getItemCount() == 0;
 
         LinearLayout.LayoutParams layoutParams;

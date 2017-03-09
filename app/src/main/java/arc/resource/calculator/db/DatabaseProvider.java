@@ -572,6 +572,7 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( StationEntry.getDLCIdFromUri( uri ) )
                     };
+                    sortOrder = StationEntry.SQL_COLUMN_NAME + " ASC";
                     tableName = StationEntry.TABLE_NAME;
                     break;
 

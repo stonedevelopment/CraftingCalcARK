@@ -19,6 +19,15 @@
     </style>
   </head>
   <body>
+    $ 1.1.5
+      % Version 1.1.5
+      _ 03/08/2016
+      * Includes all Engrams up to PC version 255.0!
+      * -> Also added Boss Portals for easier tracking of artifacts.
+      * Added search functionality!!
+      * Revamped database/UI communication, now much faster and smoother.
+      * Updated phone size layouts, if it looks weird on your end, please let us know!
+
     $ 1.1.4
       % Version 1.1.4
       _ 01/08/2016

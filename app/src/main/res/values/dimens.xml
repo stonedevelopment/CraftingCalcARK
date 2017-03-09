@@ -1,19 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="dimens">base</string>
 
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">4dp</dimen>
-
-    <!-- DisplayCase: Padding -->
-    <dimen name="grid_layout_padding">4dp</dimen>
-    <dimen name="grid_layout_corner_radius">8dp</dimen>
-    <dimen name="crafting_grid_layout_padding">2dp</dimen>
-
     <!-- DisplayCase: Grid Columns/Rows -->
     <integer name="display_case_column_count">5</integer>
-    <integer name="display_case_row_count">3</integer>
+
+    <!-- DisplayCase: Padding -->
+    <dimen name="display_case_container_layout_padding">4dp</dimen>
+    <dimen name="display_case_container_layout_corner_radius">8dp</dimen>
 
     <!-- DisplayCase: Hierarchy -->
     <dimen name="display_case_hierarchy_indention">8dp</dimen>
@@ -21,20 +16,20 @@
 
     <!-- DisplayCase: ViewHolders -->
     <dimen name="display_case_view_holder_padding">4dp</dimen>
-    <dimen name="engram_grid_view_holder_corner_radius">8dp</dimen>
+    <dimen name="display_case_view_holder_corner_radius">8dp</dimen>
 
     <!-- DisplayCase: ViewHolders: Text Sizes -->
-    <dimen name="engram_grid_view_holder_quantity_text_size">24sp</dimen>
-    <dimen name="engram_grid_view_holder_name_text_size">12sp</dimen>
+    <dimen name="display_case_grid_view_holder_quantity_text_size">24sp</dimen>
+    <dimen name="display_case_grid_view_holder_name_text_size">12sp</dimen>
 
     <!-- CraftingQueue: ViewHolders -->
-    <dimen name="craftable_engram_grid_view_holder_size">72dp</dimen>
-    <dimen name="craftable_engram_grid_view_holder_padding">4dp</dimen>
-    <dimen name="craftable_engram_grid_view_holder_corner_radius">8dp</dimen>
+    <dimen name="crafting_queue_grid_view_holder_size">72dp</dimen>
+    <dimen name="crafting_queue_grid_view_holder_padding">4dp</dimen>
+    <dimen name="crafting_queue_grid_view_holder_corner_radius">8dp</dimen>
 
     <!-- CraftingQueue: ViewHolders: Text Sizes -->
-    <dimen name="queue_engram_grid_view_holder_quantity_text_size">20sp</dimen>
-    <dimen name="queue_engram_grid_view_holder_name_text_size">10sp</dimen>
+    <dimen name="crafting_queue_grid_view_holder_quantity_text_size">20sp</dimen>
+    <dimen name="crafting_queue_grid_view_holder_name_text_size">12sp</dimen>
 
     <!-- ViewHolder for Resources -->
     <dimen name="resource_view_holder_padding">4dp</dimen>
@@ -47,17 +42,7 @@
 
     <dimen name="detail_name_text_size">24sp</dimen>
     <dimen name="detail_category_text_size">12sp</dimen>
-    <dimen name="detail_description_text_size">14sp</dimen>
-    <dimen name="detail_number_picker_text_size">20sp</dimen>
-
-    <!-- LoadActivity -->
-    <dimen name="progress_detail_text_indention">8dp</dimen>
-
-    <!-- Ads -->
-    <dimen name="ads_padding">4dp</dimen>
-    <dimen name="ads_height">50dp</dimen>
-
-    <!-- ActionBar -->
-    <dimen name="action_bar_height">48dp</dimen>
+    <dimen name="detail_description_text_size">16sp</dimen>
+    <dimen name="detail_number_picker_text_size">16sp</dimen>
 
 </resources>

@@ -10,17 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/frame"
-        android:padding="@dimen/craftable_engram_grid_view_holder_padding"/>
+        android:padding="@dimen/crafting_queue_grid_view_holder_padding"/>
 
     <arc.resource.calculator.views.QueueCompositionRecyclerView
         android:id="@+id/crafting_queue_resource_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginBottom="@dimen/grid_layout_padding"
-        android:layout_marginTop="@dimen/grid_layout_padding"
+        android:layout_marginBottom="@dimen/display_case_container_layout_padding"
+        android:layout_marginTop="@dimen/display_case_container_layout_padding"
         android:background="@drawable/frame"
-        android:padding="@dimen/grid_layout_padding"/>
+        android:padding="@dimen/display_case_container_layout_padding"/>
 
     <Button
         android:id="@+id/clear_queue_button"

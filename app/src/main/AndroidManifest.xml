@@ -38,7 +38,6 @@
                 <!--<data-->
                 <!--android:host="gizmos"-->
                 <!--android:scheme="arc"/>-->
-
             </intent-filter>
         </activity>
 
@@ -88,9 +87,6 @@
             android:enabled="true"
             android:exported="false"/>
 
-        <service
-            android:name=".service.InitializationService"
-            android:exported="false"/>
     </application>
 
 </manifest>

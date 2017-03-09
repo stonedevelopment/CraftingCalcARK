@@ -16,8 +16,8 @@ android {
         applicationId 'arc.resource.calculator'
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 39
-        versionName '1.1.4'
+        versionCode 40
+        versionName '1.1.5'
         signingConfig signingConfigs.config
         vectorDrawables.useSupportLibrary = true
     }
@@ -28,9 +28,10 @@ android {
             debuggable true
         }
     }
-
     buildTypes.each {
         it.buildConfigField 'String', 'INSTABUG_API_KEY', INSTABUG_API_KEY
+    }
+    productFlavors {
     }
 }
 

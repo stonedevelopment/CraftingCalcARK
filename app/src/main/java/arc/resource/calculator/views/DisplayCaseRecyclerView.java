@@ -20,6 +20,7 @@ public class DisplayCaseRecyclerView extends RecyclerViewWithContextMenu {
         public void onChanged() {
             super.onChanged();
             Log.d( TAG, "onChanged()" );
+            scrollToPosition( 1 );
         }
 
         @Override

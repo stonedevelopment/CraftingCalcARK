@@ -689,8 +689,6 @@ public class CraftingQueue
 
         @Override
         protected Void doInBackground( Void... params ) {
-            int size = mEngrams.size();
-
             if ( mUri == QueueEntry.CONTENT_URI )
                 mPositionStart = 0;
             else
@@ -700,8 +698,6 @@ public class CraftingQueue
             mItemCount = Delete( mContext, mUri );
 
             mIsQueueEmpty = mEngrams.size() == 0;
-
-            Log.d( TAG, mPositionStart + ", " + mItemCount + ", " + mIsQueueEmpty + ", engrams: " + mEngrams );
             return null;
         }
     }

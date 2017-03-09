@@ -677,27 +677,31 @@ public class DisplayCase
         long dlc_id = new PrefsUtil( context ).getDLCPreference();
 
         StringBuilder builder = new StringBuilder();
-        if ( isFilteredByStation( context ) ) {
-            builder.append( "Crafting Stations/" );
+        if (mSearchQuery == null) {
+            if ( isFilteredByStation( context ) ) {
+                builder.append( "Crafting Stations/" );
 
-            if ( !isCurrentCategoryLevelStationRoot() ) {
-                builder.append( queryForStation( context, StationEntry.buildUriWithId( dlc_id, getCurrentStationId() ) )
-                        .getName() ).append( "/" );
-                if ( isFilteredByCategory( context ) ) {
-                    if ( !isCurrentCategoryLevelRoot() )
-                        builder.append( buildCategoryHierarchicalText(
-                                context,
-                                CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) );
+                if ( !isCurrentCategoryLevelStationRoot() ) {
+                    builder.append( queryForStation( context, StationEntry.buildUriWithId( dlc_id, getCurrentStationId() ) )
+                            .getName() ).append( "/" );
+                    if ( isFilteredByCategory( context ) ) {
+                        if ( !isCurrentCategoryLevelRoot() )
+                            builder.append( buildCategoryHierarchicalText(
+                                    context,
+                                    CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) );
+                    }
                 }
+            } else if ( isFilteredByCategory( context ) ) {
+                builder.append( "Folders/" );
+                if ( !isCurrentCategoryLevelRoot() )
+                    builder.append( buildCategoryHierarchicalText(
+                            context,
+                            CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) );
+            } else {
+                builder.append( "Engrams/" );
             }
-        } else if ( isFilteredByCategory( context ) ) {
-            builder.append( "Folders/" );
-            if ( !isCurrentCategoryLevelRoot() )
-                builder.append( buildCategoryHierarchicalText(
-                        context,
-                        CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) );
         } else {
-            builder.append( "Engrams/" );
+            builder.append( String.format( context.getString( R.string.format_search_results ), mSearchQuery ) );
         }
 
         return builder.toString();

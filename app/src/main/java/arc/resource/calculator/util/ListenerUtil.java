@@ -20,6 +20,8 @@ public class ListenerUtil {
     private static ListenerUtil sInstance;
 
     private MainActivityListener mMainActivityListener;
+    private SendErrorReportListener mSendErrorReportListener;
+
     private List<DisplayCaseListener> mDisplayCaseListeners;
     private List<CraftingQueueListener> mCraftingQueueListeners;
     private List<QueueEngramListener> mQueueEngramListeners;
@@ -42,8 +44,12 @@ public class ListenerUtil {
         mSendErrorReportListeners = new ArrayList<>();
     }
 
-    public void setMainActivityListener( MainActivityListener newListener ) {
-        mMainActivityListener = newListener;
+    public void setMainActivityListener( MainActivityListener listener ) {
+        mMainActivityListener = listener;
+    }
+
+    public void setSendErrorReportListener( SendErrorReportListener listener ) {
+        mSendErrorReportListener = listener;
     }
 
     public void addDisplayCaseListener( DisplayCaseListener newListener ) {
@@ -60,14 +66,6 @@ public class ListenerUtil {
 
     public void addCraftingQueueResourceListener( QueueResourceListener newListener ) {
         mQueueResourceListeners.add( newListener );
-    }
-
-    public void addSendErrorReportListener( SendErrorReportListener newListener ) {
-        mSendErrorReportListeners.add( newListener );
-    }
-
-    public void removeSendErrorReportListener( SendErrorReportListener oldListener ) {
-        mSendErrorReportListeners.remove( oldListener );
     }
 
     /**

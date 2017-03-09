@@ -3,6 +3,7 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    255.0   Added all Engrams up to PC v255, including Boss Portals and Eggcellent Adventures
     253.4   Fixed various file/folder errors
     253.3   Database upgrade, replaced drawable for file/folder
     253.2   Updated Total Conversion table with Fresh Meat and Rotten Meat (oops!)
@@ -24,7 +25,7 @@
     247.1   Updated Categories to Primitive+
 
     -->
-    <string name="json_version">253.4</string>
+    <string name="json_version">255.0</string>
 
     <string name="intent_key_did_update">did_update</string>
 
@@ -38,11 +39,9 @@
     <string name="load_activity_status_message_started">New version found! Starting initialization..</string>
     <string name="load_activity_status_message_updating">Database initialization in progress..</string>
     <string name="load_activity_status_message_finished">Initialization complete! Starting app..</string>
-    <string name="load_activity_status_message_error_format">
-        Oops! Look like we found an error:\n
-        <x:g id="error_message">%1$s</x:g>\n
-        Try restarting app?
-    </string>
+    <string name="load_activity_status_message_error">Shutting down initialization..</string>
+    <string name="load_activity_status_message_error_format">Error: <x:g id="error_message">%1$s</x:g></string>
+    <string name="load_activity_status_message_unknown_format">Unknown message code: <x:g id="unknown_message_code">%1$s</x:g></string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
@@ -87,7 +86,7 @@
     <string name="quantity_dialog_negative_button">Cancel</string>
 
     <!-- String used with the Search Dialog -->
-    <string name="search_dialog_full_title">Edit Quantity</string>
+    <string name="search_dialog_full_title">Search</string>
     <string name="search_dialog_positive_button">Search</string>
     <string name="search_dialog_negative_button">Cancel</string>
 
@@ -116,8 +115,10 @@
     <string name="format_station_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
 
     <!-- Strings related to Required Level -->
-    <string name="level_max_value">100</string>
+    <string name="level_max_value">105</string>
     <string name="level_min_value">1</string>
+
+    <string name="format_search_results">Results for: *<xliff:g>%1$s</xliff:g>*</string>
 
     <!-- Strings related to Settings -->
 
@@ -145,7 +146,7 @@
     <!-- Strings related to DLC settings -->
 
     <!-- Title for DLC Version preference, used by SettingsActivity -->
-    <string name="pref_dlc_title">DLC</string>
+    <string name="pref_dlc_title">Change DLC</string>
 
     <!-- Description for DLC Version preference, used by SettingsActivity -->
     <string name="pref_dlc_description">Choose which DLC you are playing! (Currently set to <xliff:g>%1$s</xliff:g>)</string>
@@ -254,7 +255,7 @@
     <string name="ad_error_reported_title">Oops! An error just occurred.</string>
     <string name="ad_error_reported_message">
         But don\'t you worry, we caught the error and sent a report for it to be fixed in a future
-        version. Until then, a work-around could be to reset your settings or, if the problem continues,
+        version. Until then, a work-around could be to reset your settings or, if the problem persists,
         reinstall the app.\n
         \n
         Sorry for any inconvenience,\n

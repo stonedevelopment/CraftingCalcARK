@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:ads="http://schemas.android.com/apk/res-auto"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
@@ -25,19 +24,22 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="@dimen/grid_layout_padding">
+        android:padding="@dimen/display_case_container_layout_padding"
+        android:scrollbars="vertical">
 
         <include
             layout="@layout/content_main_bottom"/>
 
     </android.support.v4.widget.NestedScrollView>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/banner_ad"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"/>
+        android:layout_height="wrap_content">
+
+        <include
+            layout="@layout/content_ads"/>
+
+    </FrameLayout>
 
 </LinearLayout>
 

@@ -16,10 +16,10 @@
         android:id="@+id/resourceList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/grid_layout_padding"
-        android:layout_marginTop="@dimen/grid_layout_padding"
+        android:layout_marginBottom="@dimen/display_case_container_layout_padding"
+        android:layout_marginTop="@dimen/display_case_container_layout_padding"
         android:background="@drawable/frame"
-        android:padding="@dimen/grid_layout_padding"/>
+        android:padding="@dimen/display_case_container_layout_padding"/>
 
     <include
         android:id="@+id/saveRemoveButtonContainer"
