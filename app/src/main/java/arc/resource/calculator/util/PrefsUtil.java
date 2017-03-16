@@ -156,4 +156,15 @@ public class PrefsUtil {
                 Long.parseLong( mContext.getString( R.string.pref_station_id_default_value ) )
         );
     }
+
+    public boolean getPurchasePref( String sku ) {
+        return mSharedPreferences.getBoolean( sku, false );
+    }
+
+    public void setPurchasePref( String sku, boolean value ) {
+        mSharedPreferences
+                .edit()
+                .putBoolean( sku, value )
+                .apply();
+    }
 }

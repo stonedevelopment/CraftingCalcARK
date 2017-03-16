@@ -41,6 +41,8 @@ public class DetailActivity extends AppCompatActivity
 
     private ShowcaseResourceListAdapter mShowcaseResourceListAdapter;
 
+    private AdUtil mAdUtil;
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
@@ -171,10 +173,32 @@ public class DetailActivity extends AppCompatActivity
             resourceList.setLayoutManager( new LinearLayoutManager( this ) );
             resourceList.setAdapter( mShowcaseResourceListAdapter );
 
-            AdUtil.loadAdView( this );
+            mAdUtil = new AdUtil( this, R.id.content_detail );
+            mAdUtil.init();
         } catch ( Exception e ) {
             ListenerUtil.getInstance().emitSendErrorReportWithAlertDialog( TAG, e );
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mAdUtil.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mAdUtil.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mAdUtil.destroy();
     }
 
     void UpdateQuantityText() {

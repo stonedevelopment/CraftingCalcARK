@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="dimens">normal</string>
+    <string name="dimens">normal-hdpi</string>
 
     <dimen name="text_size_extra_small">10sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_medium">14sp</dimen>
-    <dimen name="text_size_large">20sp</dimen>
-    <dimen name="text_size_extra_large">24sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_extra_large">20sp</dimen>
 
     <integer name="weight_top_container">40</integer>
     <integer name="weight_bottom_container">60</integer>
@@ -17,14 +17,14 @@
 
     <!-- DisplayCase: Padding -->
     <dimen name="display_case_container_layout_padding">4dp</dimen>
-    <dimen name="display_case_container_layout_corner_radius">8dp</dimen>
+    <dimen name="display_case_container_layout_corner_radius">4dp</dimen>
 
     <!-- DisplayCase: Hierarchy -->
     <dimen name="display_case_hierarchy_indention">8dp</dimen>
     <!--<dimen name="display_case_hierarchy_text_size">12sp</dimen>-->
 
     <!-- DisplayCase: ViewHolders -->
-    <dimen name="display_case_view_holder_padding">4dp</dimen>
+    <dimen name="display_case_view_holder_padding">2dp</dimen>
     <dimen name="display_case_view_holder_corner_radius">4dp</dimen>
 
     <!-- DisplayCase: ViewHolders: Text Sizes -->
@@ -32,8 +32,8 @@
     <!--<dimen name="display_case_grid_view_holder_name_text_size">12sp</dimen>-->
 
     <!-- CraftingQueue: ViewHolders -->
-    <dimen name="crafting_queue_grid_view_holder_size">72dp</dimen>
-    <dimen name="crafting_queue_grid_view_holder_padding">4dp</dimen>
+    <dimen name="crafting_queue_grid_view_holder_size">60dp</dimen>
+    <dimen name="crafting_queue_grid_view_holder_padding">2dp</dimen>
     <dimen name="crafting_queue_grid_view_holder_corner_radius">4dp</dimen>
 
     <!-- CraftingQueue: ViewHolders: Text Sizes -->
@@ -42,12 +42,12 @@
 
     <!-- ViewHolder for Resources -->
     <dimen name="resource_view_holder_padding">4dp</dimen>
-    <dimen name="resource_view_holder_thumbnail_size">24dp</dimen>
+    <dimen name="resource_view_holder_thumbnail_size">20dp</dimen>
     <!--<dimen name="resource_view_holder_text_size">16sp</dimen>-->
 
     <!-- DetailActivity -->
     <dimen name="detail_padding">4dp</dimen>
-    <dimen name="detail_thumbnail_size">128dp</dimen>
+    <dimen name="detail_thumbnail_size">104dp</dimen>
 
     <!--<dimen name="detail_name_text_size">24sp</dimen>-->
     <!--<dimen name="detail_category_text_size">12sp</dimen>-->

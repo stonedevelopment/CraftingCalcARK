@@ -2,23 +2,80 @@ package arc.resource.calculator.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import arc.resource.calculator.R;
 
 public class AdUtil {
+    private static final String TAG = AdUtil.class.getSimpleName();
 
-    public static void loadAdView( Activity activity ) {
-        Context context = activity.getApplicationContext();
+    private Activity mActivity;
+    private int mLayoutId;
+    private AdView mAdView;
 
-        MobileAds.initialize( context, context.getString( R.string.banner_ad_app_id ) );
+    public AdUtil( Activity activity, int layoutId ) {
+        mAdView = new AdView( activity );
 
-        AdView adView = ( AdView ) activity.findViewById( R.id.banner_ad );
+        mActivity = activity;
+        mLayoutId = layoutId;
+    }
+
+    public void init() {
+        loadAdView();
+//        if ( !new PrefsUtil( mActivity.getApplicationContext() ).getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS ) ) {
+//            loadAdView();
+//        }
+    }
+
+    public void resume() {
+        if ( mAdView != null )
+            mAdView.resume();
+    }
+
+    public void pause() {
+        if ( mAdView != null )
+            mAdView.pause();
+    }
+
+    public void destroy() {
+        if ( mAdView != null )
+            mAdView.destroy();
+    }
+
+    private void loadAdView() {
+        Context context = mActivity.getApplicationContext();
+
+        String adAppId = context.getString( R.string.banner_ad_app_id );
+        String adUnitId = context.getString( R.string.banner_ad_unit_id );
+
+        MobileAds.initialize( context, adAppId );
+
+        if ( mAdView.getAdSize() == null )
+            mAdView.setAdSize( AdSize.SMART_BANNER );
+
+        if ( mAdView.getAdUnitId() == null )
+            mAdView.setAdUnitId( adUnitId );
+
+        ViewGroup layout = ( ViewGroup ) mActivity.findViewById( mLayoutId );
+        layout.addView( mAdView );
+
         AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd( adRequest );
+    }
 
-        adView.loadAd( adRequest );
+    public void reloadAdView() {
+        loadAdView();
+    }
+
+    public void unloadAdView() {
+        ViewGroup layout = ( ViewGroup ) mActivity.findViewById( mLayoutId );
+        layout.removeView( mAdView );
+
+        destroy();
     }
 }

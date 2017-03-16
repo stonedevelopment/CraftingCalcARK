@@ -32,4 +32,19 @@ public class QueueEngramRecyclerView extends RecyclerViewWithContextMenu {
         setAdapter( CraftableEngramListAdapter.getInstance( context ) );
         setLayoutManager( new GridLayoutManager( context, 1, GridLayoutManager.HORIZONTAL, false ) );
     }
+
+    private class Manager extends GridLayoutManager {
+
+        public Manager( Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes ) {
+            super( context, attrs, defStyleAttr, defStyleRes );
+        }
+
+        public Manager( Context context, int spanCount ) {
+            super( context, spanCount );
+        }
+
+        public Manager( Context context, int spanCount, int orientation, boolean reverseLayout ) {
+            super( context, spanCount, orientation, reverseLayout );
+        }
+    }
 }

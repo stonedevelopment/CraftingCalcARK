@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="arc.resource.calculator">
 
     <uses-permission android:name="com.android.vending.BILLING"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove"/>
 
     <application
         android:allowBackup="true"
@@ -14,6 +18,7 @@
 
         <activity
             android:name=".LoadScreenActivity"
+            android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
 
@@ -79,7 +84,15 @@
             android:name=".UpdateJSONActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO" />
+                <data android:scheme="mailto" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
 
         <provider
             android:name=".db.DatabaseProvider"

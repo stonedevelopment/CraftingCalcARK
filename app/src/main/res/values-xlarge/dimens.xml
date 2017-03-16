@@ -3,12 +3,21 @@
 
     <string name="dimens">xlarge</string>
 
+    <dimen name="text_size_extra_small">20sp</dimen>
+    <dimen name="text_size_small">20sp</dimen>
+    <dimen name="text_size_medium">26sp</dimen>
+    <dimen name="text_size_large">30sp</dimen>
+    <dimen name="text_size_extra_large">34sp</dimen>
+
+    <integer name="weight_top_container">50</integer>
+    <integer name="weight_bottom_container">50</integer>
+
     <!-- DisplayCase: Grid Columns/Rows -->
     <integer name="display_case_column_count">5</integer>
 
     <!-- DisplayCase: Hierarchy -->
     <dimen name="display_case_hierarchy_indention">8dp</dimen>
-    <dimen name="display_case_hierarchy_text_size">20sp</dimen>
+    <!--<dimen name="display_case_hierarchy_text_size">20sp</dimen>-->
 
     <!-- DisplayCase: Padding -->
     <dimen name="display_case_container_layout_padding">4dp</dimen>
@@ -19,8 +28,8 @@
     <dimen name="display_case_view_holder_corner_radius">8dp</dimen>
 
     <!-- DisplayCase: ViewHolders: Text Sizes -->
-    <dimen name="display_case_grid_view_holder_quantity_text_size">40sp</dimen>
-    <dimen name="display_case_grid_view_holder_name_text_size">22sp</dimen>
+    <!--<dimen name="display_case_grid_view_holder_quantity_text_size">40sp</dimen>-->
+    <!--<dimen name="display_case_grid_view_holder_name_text_size">22sp</dimen>-->
 
     <!-- CraftingQueue: ViewHolders -->
     <dimen name="crafting_queue_grid_view_holder_size">120dp</dimen>
@@ -28,21 +37,21 @@
     <dimen name="crafting_queue_grid_view_holder_corner_radius">8dp</dimen>
 
     <!-- CraftingQueue: ViewHolders: Text Sizes -->
-    <dimen name="crafting_queue_grid_view_holder_quantity_text_size">36sp</dimen>
-    <dimen name="crafting_queue_grid_view_holder_name_text_size">20sp</dimen>
+    <!--<dimen name="crafting_queue_grid_view_holder_quantity_text_size">36sp</dimen>-->
+    <!--<dimen name="crafting_queue_grid_view_holder_name_text_size">20sp</dimen>-->
 
     <!-- ViewHolder for Resources -->
     <dimen name="resource_view_holder_padding">8dp</dimen>
     <dimen name="resource_view_holder_thumbnail_size">40dp</dimen>
-    <dimen name="resource_view_holder_text_size">24sp</dimen>
+    <!--<dimen name="resource_view_holder_text_size">24sp</dimen>-->
 
     <!-- DetailActivity -->
     <dimen name="detail_padding">8dp</dimen>
     <dimen name="detail_thumbnail_size">256dp</dimen>
 
-    <dimen name="detail_name_text_size">40sp</dimen>
-    <dimen name="detail_category_text_size">20sp</dimen>
-    <dimen name="detail_description_text_size">24sp</dimen>
-    <dimen name="detail_number_picker_text_size">24sp</dimen>
+    <!--<dimen name="detail_name_text_size">40sp</dimen>-->
+    <!--<dimen name="detail_category_text_size">20sp</dimen>-->
+    <!--<dimen name="detail_description_text_size">24sp</dimen>-->
+    <!--<dimen name="detail_number_picker_text_size">24sp</dimen>-->
 
 </resources>

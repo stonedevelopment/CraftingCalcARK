@@ -1191,6 +1191,13 @@
       "complex_resource": false
     },
     {
+      "name": "Ammonite Bile",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "ammonite_bile.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Angler Gel",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "angler_gel.png",
@@ -1219,6 +1226,111 @@
       "complex_resource": false
     },
     {
+      "name": "Argentavis Talon",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "argentavis_talon.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Hunter",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_hunter.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Pack",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_pack.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Massive",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_massive.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Devious",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_devious.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Clever",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_clever.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Skylord",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_skylord.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Devourer",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_devourer.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Immune",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_immune.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Strong",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_strong.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Cunning",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_cunning.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Brute",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "artifact_of_the_brute.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Gatekeeper",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "artifact_of_the_gatekeeper.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Crag",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "artifact_of_the_crag.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Destroyer",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "artifact_of_the_destroyer.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
       "name": "Azulberry",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "azulberry.png",
@@ -1229,6 +1341,13 @@
       "name": "Berries (Any Kind)",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "berries_any_kind.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Bio Toxin",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "bio_toxin.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -1464,6 +1583,13 @@
       "complex_resource": false
     },
     {
+      "name": "Fire Talon",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "fire_talon.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
       "name": "Flint",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "flint.png",
@@ -1618,6 +1744,13 @@
       "complex_resource": false
     },
     {
+      "name": "Lightning Talon",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "lightning_talon.png",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
       "name": "Limestone",
       "image_folder": "Primitive Plus\/Resources\/",
       "image_file": "limestone.png",
@@ -1649,6 +1782,13 @@
       "name": "Mejoberry",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "mejoberry.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Megalodon Tooth",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "megalodon_tooth.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -1720,6 +1860,13 @@
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "pelt.png",
       "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Poison Talon",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "poison_talon.png",
+      "dlc_id": 3,
       "complex_resource": false
     },
     {
@@ -1856,6 +2003,13 @@
       "complex_resource": false
     },
     {
+      "name": "Sauropod Vertebra",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "sauropod_vertebra.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Savoroot",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "savoroot.png",
@@ -1985,6 +2139,20 @@
       "name": "Trike Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "trike_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Tusoteuthis Tentacle",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "tusoteuthis_tentacle.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Tyrannosaurus Arm",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "tyrannosaurus_arm.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2402,158 +2570,11 @@
       "complex_resource": true
     },
     {
-      "name": "Megalodon Tooth",
+      "name": "Tranquilizer Dart",
       "image_folder": "Vanilla\/Resources\/",
-      "image_file": "megalodon_tooth.png",
+      "image_file": "tranquilizer_dart.png",
       "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Tyrannosaurus Arm",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "tyrannosaurus_arm.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Argentavis Talon",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "argentavis_talon.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Sauropod Vertebra",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "sauropod_vertebra.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Tusoteuthis Tentacle",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "tusoteuthis_tentacle.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Hunter",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_hunter.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Pack",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_pack.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Massive",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_massive.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Devious",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_devious.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Clever",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_clever.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Skylord",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_skylord.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Devourer",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_devourer.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Immune",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_immune.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Strong",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_strong.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Cunning",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_cunning.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Brute",
-      "image_folder": "Vanilla\/Resources\/",
-      "image_file": "artifact_of_the_brute.png",
-      "dlc_id": 1,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Gatekeeper",
-      "image_folder": "Scorched Earth\/Resources\/",
-      "image_file": "artifact_of_the_gatekeeper.png",
-      "dlc_id": 3,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Crag",
-      "image_folder": "Scorched Earth\/Resources\/",
-      "image_file": "artifact_of_the_crag.png",
-      "dlc_id": 3,
-      "complex_resource": false
-    },
-    {
-      "name": "Artifact of the Destroyer",
-      "image_folder": "Scorched Earth\/Resources\/",
-      "image_file": "artifact_of_the_destroyer.png",
-      "dlc_id": 3,
-      "complex_resource": false
-    },
-    {
-      "name": "Fire Talon",
-      "image_folder": "Scorched Earth\/Resources\/",
-      "image_file": "fire_talon.png",
-      "dlc_id": 3,
-      "complex_resource": false
-    },
-    {
-      "name": "Lightning Talon",
-      "image_folder": "Scorched Earth\/Resources\/",
-      "image_file": "lightning_talon.png",
-      "dlc_id": 3,
-      "complex_resource": false
-    },
-    {
-      "name": "Poison Talon",
-      "image_folder": "Scorched Earth\/Resources\/",
-      "image_file": "poison_talon.png",
-      "dlc_id": 3,
-      "complex_resource": false
+      "complex_resource": true
     }
   ],
   "engram": [
@@ -14484,6 +14505,33 @@
       ]
     },
     {
+      "name": "Pheromone Dart",
+      "description": "A dart full of refined Ammonite chemicals, inject on a target to enrage nearby wild creatures. For use in a Longneck Rifle. Can not be used with attachments.",
+      "yield": 1,
+      "level": 95,
+      "category_id": 302,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Ammo\/",
+      "image_file": "pheromone_dart.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Tranquilizer Dart",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Ammonite Bile",
+          "quantity": 3
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
       "name": "Phiomia Saddle",
       "description": "Equip a Phiomia with this to ride it.",
       "yield": 1,
@@ -16721,6 +16769,33 @@
         "Cooking Pot",
         "Industrial Cooker",
         "Cauldron"
+      ]
+    },
+    {
+      "name": "Shocking Tranquilizer Dart",
+      "description": "A doubly potent dart full of refined Cnidaria toxin, which also shocks humans. For use in a Longneck Rifle. Can not be used with attachments.",
+      "yield": 1,
+      "level": 85,
+      "category_id": 302,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Ammo\/",
+      "image_file": "shocking_tranquilizer_dart.png",
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Tranquilizer Dart",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Bio Toxin",
+          "quantity": 3
+        }
+      ],
+      "station": [
+        "Fabricator"
       ]
     },
     {

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.InstabugColorTheme;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -45,18 +46,22 @@ public class MainActivity extends AppCompatActivity
         implements MainActivityListener, SendErrorReportListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
+
     DisplayCaseRecyclerView mDisplayCaseRecyclerView;
     QueueEngramRecyclerView mQueueEngramRecyclerView;
     QueueCompositionRecyclerView mQueueCompositionRecyclerView;
     Button mClearCraftingQueue;
     TextView mCategoryHierarchyTextView;
 
+    //    private PurchaseUtil mPurchaseUtil;
+    private AdUtil mAdUtil;
+
     private ListenerUtil mCallback;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
-
         setContentView( R.layout.activity_main );
 
         mCallback = ListenerUtil.getInstance();
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         mCallback.setSendErrorReportListener( this );
 
         // Check to see if database was updated
-        boolean didUpdate = getIntent().getBooleanExtra( getString( R.string.intent_key_did_update ), false );
+        boolean didUpdate = getIntent().getBooleanExtra( INTENT_KEY_DID_UPDATE, false );
 
         mDisplayCaseRecyclerView = ( DisplayCaseRecyclerView ) findViewById( R.id.display_case_engram_list );
         registerForContextMenu( mDisplayCaseRecyclerView );
@@ -86,45 +91,66 @@ public class MainActivity extends AppCompatActivity
         mCategoryHierarchyTextView = ( TextView ) findViewById( R.id.hierarchy_text );
         mCallback.requestCategoryHierarchy( this );
 
-        if ( didUpdate )
-            mCallback.requestRemoveAllFromQueue( getApplicationContext() );
-
-        Toast.makeText( this, getString( R.string.dimens ), Toast.LENGTH_SHORT ).show();
-
         updateContainerLayoutParams();
-
-        AdUtil.loadAdView( this );
 
         new Instabug.Builder( getApplication(), BuildConfig.INSTABUG_API_KEY )
                 .setInvocationEvent( InstabugInvocationEvent.SHAKE )
                 .setTheme( InstabugColorTheme.InstabugColorThemeDark )
                 .setEmailFieldRequired( false )
                 .setCommentFieldRequired( true )
+                .setCrashReportingState( Feature.State.DISABLED )
+                .setSurveysState( Feature.State.DISABLED )
+                .setInAppMessagingState( Feature.State.DISABLED )
                 .build();
 
-//        Instabug.setBugCategories( new ArrayList<BugCategory>() {{
-//            add( BugCategory.getInstance()
-//                    .withLabel( "Engram/Resource" ) );
-//            add( BugCategory.getInstance()
-//                    .withLabel( "Look/Feel" ) );
-//            add( BugCategory.getInstance()
-//                    .withLabel( "Other" ) );
-//        }} );
+//        mPurchaseUtil = new PurchaseUtil( this );
+
+        mAdUtil = new AdUtil( this, R.id.content_main );
+        mAdUtil.init();
 
         showChangeLog();
+
+//        Toast.makeText( this, getString( R.string.dimens ), Toast.LENGTH_SHORT ).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mAdUtil.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
+        mAdUtil.pause();
         mCallback.requestSaveCategoryLevels( getApplicationContext() );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+//        mPurchaseUtil.stop();
+        mAdUtil.destroy();
     }
 
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
         getMenuInflater().inflate( R.menu.menu_main, menu );
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu( Menu menu ) {
+        final boolean show = super.onPrepareOptionsMenu( menu );
+
+        // set up menu to enable/disable remove ads button
+//        menu.findItem( R.id.action_remove_ads ).setEnabled(
+//                !new PrefsUtil( getApplicationContext() ).getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS ) );
+
+        return show;
     }
 
     @Override
@@ -151,6 +177,53 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.action_about:
                 DialogUtil.About( MainActivity.this ).show();
+                break;
+
+            case R.id.action_remove_ads:
+                // purchase
+                // refund
+
+//                PrefsUtil prefs = new PrefsUtil( this );
+//                boolean removeAds = prefs.getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS );
+//
+//                if ( removeAds )
+//                    mAdUtil.reloadAdView();
+//                else
+//                    mAdUtil.unloadAdView();
+//
+//                prefs.setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, !removeAds );
+
+//                mPurchaseUtil.start();
+//                mPurchaseUtil.purchaseSku( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, new EmptyRequestListener<Purchase>() {
+//                    @Override
+//                    public void onSuccess( @Nonnull Purchase result ) {
+//                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).show();
+//
+//                        switch ( result.sku ) {
+//                            case PurchaseUtil.SKU_FEATURE_DISABLE_ADS:
+//                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).show();
+//
+//                                mAdUtil.unloadAdView();
+//
+//                                new PrefsUtil( getApplicationContext() )
+//                                        .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, true );
+//                        }
+//
+//                        mPurchaseUtil.stop();
+//                    }
+//
+//                    @Override
+//                    public void onError( int response, @Nonnull Exception e ) {
+//                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).show();
+//
+//                        Log.e( TAG, "Purchase failed.", e );
+//
+//                        new PrefsUtil( getApplicationContext() )
+//                                .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, false );
+//
+//                        mPurchaseUtil.stop();
+//                    }
+//                } );
                 break;
 
             default:
@@ -273,7 +346,9 @@ public class MainActivity extends AppCompatActivity
         if ( isQueueEmpty ) {
             layoutParams = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0 );
         } else {
-            layoutParams = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0, 1 );
+            layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0, getResources().getInteger( R.integer.weight_bottom_container ) );
         }
 
         View container = findViewById( R.id.content_main_bottom_container );

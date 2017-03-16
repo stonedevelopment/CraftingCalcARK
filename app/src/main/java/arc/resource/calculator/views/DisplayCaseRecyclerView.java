@@ -9,6 +9,7 @@ import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
+import arc.resource.calculator.util.ListenerUtil;
 
 public class DisplayCaseRecyclerView extends RecyclerViewWithContextMenu {
     private static final String TAG = DisplayCaseRecyclerView.class.getSimpleName();
@@ -68,5 +69,25 @@ public class DisplayCaseRecyclerView extends RecyclerViewWithContextMenu {
 
         int numCols = getResources().getInteger( R.integer.display_case_column_count );
         setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
+    }
+
+    private class Manager extends GridLayoutManager {
+
+        @Override
+        public boolean supportsPredictiveItemAnimations() {
+            return false;
+        }
+
+        public Manager( Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes ) {
+            super( context, attrs, defStyleAttr, defStyleRes );
+        }
+
+        public Manager( Context context, int spanCount ) {
+            super( context, spanCount );
+        }
+
+        public Manager( Context context, int spanCount, int orientation, boolean reverseLayout ) {
+            super( context, spanCount, orientation, reverseLayout );
+        }
     }
 }

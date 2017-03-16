@@ -29,4 +29,10 @@
         android:title="@string/action_title_about"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_remove_ads"
+        android:enabled="false"
+        android:title="@string/action_title_remove_ads"
+        app:showAsAction="never"/>
+
 </menu>

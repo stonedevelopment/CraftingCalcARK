@@ -1,6 +1,8 @@
 package arc.resource.calculator;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,6 +95,10 @@ public class UpdateJSONActivity extends AppCompatActivity {
     private class ParseConvertTask extends AsyncTask<Void, String, Void> {
         private final String TAG = ParseConvertTask.class.getSimpleName();
 
+        private JSONObject mObject;
+
+        private Uri mAttachmentUri;
+
         private Context mContext;
 
         ParseConvertTask( Context context ) {
@@ -114,6 +121,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute( Void aVoid ) {
             super.onPostExecute( aVoid );
+
+            emailJSONObject( mObject );
 
             updateConsole( "Execution complete!" );
         }
@@ -141,8 +150,9 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
 
                 // finally, write new json object to file
-                publishProgress( "Writing new JSON object to file..." );
                 writeJSONObjectToFile( newObject );
+
+                mObject = newObject;
             } catch ( Exception e ) {
                 publishException( e );
             }
@@ -156,13 +166,43 @@ public class UpdateJSONActivity extends AppCompatActivity {
             publishProgress( "Error: " + e.getMessage() );
         }
 
+        void emailJSONObject( JSONObject object ) {
+            publishProgress( "Emailing new JSON Object..." );
+
+            Log.i( TAG, "Send email" );
+            String[] TO = { "jaredstone1982@gmail.com" };
+            String[] CC = { "" };
+            Intent emailIntent = new Intent( Intent.ACTION_SEND );
+
+            emailIntent.setData( Uri.parse( "mailto:" ) );
+            emailIntent.setType( "text/plain" );
+            emailIntent.putExtra( Intent.EXTRA_EMAIL, TO );
+            emailIntent.putExtra( Intent.EXTRA_CC, CC );
+            emailIntent.putExtra( Intent.EXTRA_SUBJECT, "New JSON Update" );
+            emailIntent.putExtra( Intent.EXTRA_TEXT, "New JSON Update" );
+            emailIntent.putExtra( Intent.EXTRA_STREAM, mAttachmentUri );
+
+            try {
+                startActivity( Intent.createChooser( emailIntent, "Send mail..." ) );
+                finish();
+                Log.i( TAG, "Finished sending email..." );
+            } catch ( android.content.ActivityNotFoundException ex ) {
+                Toast.makeText( UpdateJSONActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT ).show();
+            }
+        }
+
         void writeJSONObjectToFile( JSONObject object ) throws IOException {
+            publishProgress( "Writing new JSON object to file..." );
 
             File path = getContext().getExternalFilesDir( null );
             File file = new File( path, "jsonExport.txt" );
 
             FileOutputStream fileOutputStream = new FileOutputStream( file );
             fileOutputStream.write( object.toString().getBytes() );
+
+            mAttachmentUri = Uri.parse( "file:///" + file.getPath() );
+
+            Log.d( TAG, mAttachmentUri.toString() );
         }
 
         /**

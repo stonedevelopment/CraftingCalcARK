@@ -122,6 +122,15 @@ public class CraftingQueue
 
     // -- PUBLIC DATABASE METHODS --
 
+    /**
+     * Click to "increase quantity" of _id by n
+     * Trigger request event to listener
+     * Catch request event from listener
+     * Get object from List
+     * If not exists, create object with query, set quantity to n
+     * If exists, increase quantity by n
+     */
+
     private void increaseQuantity( Context context, int position ) {
         QueueEngram engram = getEngramByPosition( position );
         long _id = engram.getId();
@@ -147,14 +156,17 @@ public class CraftingQueue
     }
 
     private void insertQueueById( Context context, long engramId ) {
+        Log.d( TAG, "insertQueueById(): " + engramId );
         new InsertRowTask( context, engramId, 1 ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR );
     }
 
     private void insertQueueById( Context context, long engramId, int quantity ) {
+        Log.d( TAG, "insertQueueById(int quantity): " + engramId + ", " + quantity );
         new InsertRowTask( context, engramId, quantity ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR );
     }
 
     private void updateQueueById( Context context, long engramId, int quantity ) {
+        Log.d( TAG, "updateQueueById(int quantity): " + engramId + ", " + quantity );
         new UpdateRowTask( context, engramId, quantity ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR );
     }
 

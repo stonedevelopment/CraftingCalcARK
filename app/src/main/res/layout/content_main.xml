@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/content_main"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
@@ -11,7 +12,7 @@
         android:id="@+id/content_main_top_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="@integer/weight_top_container"
         android:background="@color/colorPrimaryDark">
 
         <include
@@ -19,25 +20,15 @@
 
     </FrameLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <FrameLayout
         android:id="@+id/content_main_bottom_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/display_case_container_layout_padding"
-        android:scrollbars="vertical">
+        android:layout_weight="@integer/weight_bottom_container"
+        android:padding="@dimen/display_case_container_layout_padding">
 
         <include
             layout="@layout/content_main_bottom"/>
-
-    </android.support.v4.widget.NestedScrollView>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include
-            layout="@layout/content_ads"/>
 
     </FrameLayout>
 

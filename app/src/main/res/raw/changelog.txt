@@ -19,6 +19,14 @@
     </style>
   </head>
   <body>
+    $ 1.1.7
+      % Version 1.1.7
+      _ 03/16/2016
+      * Added overlooked Engrams: Pheromone Dart and Shocking Tranquilizer Dart
+      * Added overlooked Resources: Ammonite Bile and Bio Toxin
+      * Reworked how text sizes were established and shared, please let us know if sizes are off on your phone, thanks!
+      ! Integrated Instabug for to send feedback easily, if this becomes a problem with our app, let us know. Thanks!
+
     $ 1.1.6
       % Version 1.1.6
       _ 03/09/2016

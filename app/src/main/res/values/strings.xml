@@ -3,6 +3,7 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    255.1   Added new darts (and forgotten old one, oops!) Also Bio Toxin and Ammonite Bile
     255.0   Added all Engrams up to PC v255, including Boss Portals and Eggcellent Adventures
     253.4   Fixed various file/folder errors
     253.3   Database upgrade, replaced drawable for file/folder
@@ -27,21 +28,42 @@
     -->
     <string name="json_version">255.1</string>
 
-    <string name="intent_key_did_update">did_update</string>
-
     <!-- LoadActivity -->
-    <string name="key_timer">loadactivity_timer</string>
 
     <!-- LoadActivity: Status Messages -->
-    <string name="load_activity_status_message_format">
-        [Updating Database]\n<x:g id="message">%1$s</x:g>\nElapsed time: <x:g id="time">%2$s</x:g>
-    </string>
-    <string name="load_activity_status_message_started">New version found! Starting initialization..</string>
-    <string name="load_activity_status_message_updating">Database initialization in progress..</string>
-    <string name="load_activity_status_message_finished">Initialization complete! Starting app..</string>
-    <string name="load_activity_status_message_error">Shutting down initialization..</string>
-    <string name="load_activity_status_message_error_format">Error: <x:g id="error_message">%1$s</x:g></string>
-    <string name="load_activity_status_message_unknown_format">Unknown message code: <x:g id="unknown_message_code">%1$s</x:g></string>
+    <string name="load_activity_status_message_error_with_message">Oops! We have uncovered an error!\n (<x:g id="error_message">%1$s</x:g>)</string>
+    <string name="load_activity_status_message_send_error_report">Sending error report..</string>
+    <string name="load_activity_status_message_closing_app">Closing app, sorry for any inconvenience.</string>
+    <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
+
+    <string name="load_activity_status_message_format_with_elapsed_time"><x:g id="message">%1$s</x:g> (<x:g id="elapsed">%2$s</x:g>)</string>
+    <string name="load_activity_status_message_format_with_prefix"><x:g id="prefix">%1$s</x:g> <x:g id="message">%2$s</x:g></string>
+
+    <string name="load_activity_status_message_prefix_unknown">[?]</string>
+    <string name="load_activity_status_message_prefix_app">[app]</string>
+    <string name="load_activity_status_message_prefix_db">[db]</string>
+    <string name="load_activity_status_message_prefix_purchase">[in-app]</string>
+    <string name="load_activity_status_message_prefix_preferences">[prefs]</string>
+
+    <!-- LoadActivity: Events: -->
+    <string name="initialization_init_event">Greetings Survivor!</string>
+
+    <!-- LoadActivity: Events: Database Initialization -->
+    <string name="initialization_db_event_init">Checking for new data..</string>
+    <string name="initialization_db_event_started">New items found! Initializing database with new stuff and things..</string>
+    <string name="initialization_db_event_error">Initialization failed.</string>
+    <string name="initialization_db_event_finished_with_update">Initialization has finished, new data was added successfully; you\'re welcome!</string>
+    <string name="initialization_db_event_finished_without_update">No new items found. :(</string>
+
+    <!-- LoadActivity: Events: Preferences -->
+    <string name="initialization_pref_event_init">Saving preferences..</string>
+    <string name="initialization_pref_event_finished">Preferences saved!</string>
+
+    <!-- LoadActivity: Events: Purchases -->
+    <string name="initialization_purchase_event_init">Checking for in-app purchases..</string>
+    <string name="initialization_purchase_event_error">In-app purchase check failed.</string>
+    <string name="initialization_purchase_event_finished_with_purchase">Check complete, thanks for your purchase!</string>
+    <string name="initialization_purchase_event_finished_without_purchase">Check complete.</string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
@@ -280,5 +302,15 @@
     <string name="context_menu_view_details">View Details</string>
     <string name="context_menu_edit_quantity">Edit Quantity</string>
     <string name="context_menu_remove_from_queue">Remove From Queue</string>
+
+    <!-- In-App Purchases Strings -->
+    <string name="base64EncodedPublicKey">
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlIx82dz7dSxB87L5Y03Bx3p73BuCGIhAkdAloX3KifAGKTM
+        wfVytLNW7xyI6TFGraEPB5DX6D9tW7EQsdOZfTiQ/HCajZITLU0Lqe95SZC22GmI9GinuA21H1/7xJhAeszZmV5j4+U
+        cP1vNte4ePYH2e9Ti6czLCuWbo4OWfVYOGBS44lClwgQig4+HZbx2YmgW7mNplDNkAMTifpRNvOEEmovcjrILS8WO9d
+        9NdkDMz7QMYkPwoOl2xIZp9ia+hiC+NBVPeYIemnp9Gad+6F32oMukWLEJGApbaVSYJfWWJkCUk/2XB3Fn1BMQjVYbV
+        bszLFzSLIWagLfsHjX9KxQIDAQAB
+    </string>
+    <string name="action_title_remove_ads">Remove Ads</string>
 
 </resources>
