@@ -264,7 +264,7 @@ public class DisplayCase
      */
 
     public boolean isEngram( int position ) {
-        return mValues.get( position ) instanceof DisplayEngram;
+        return position > INVALID_ITEM_POSITION && mValues.get( position ) instanceof DisplayEngram;
     }
 
     private boolean isEngram( Object o ) {
@@ -376,7 +376,7 @@ public class DisplayCase
      */
 
     public boolean isCategory( int position ) {
-        return mValues.get( position ) instanceof Category;
+        return position > INVALID_ITEM_POSITION && mValues.get( position ) instanceof Category;
     }
 
     private boolean isCategory( Object o ) {
@@ -550,7 +550,7 @@ public class DisplayCase
      */
 
     public boolean isStation( int position ) {
-        return mValues.get( position ) instanceof Station;
+        return position > INVALID_ITEM_POSITION && mValues.get( position ) instanceof Station;
     }
 
     private boolean isStation( Object o ) {
@@ -677,7 +677,7 @@ public class DisplayCase
         long dlc_id = new PrefsUtil( context ).getDLCPreference();
 
         StringBuilder builder = new StringBuilder();
-        if (mSearchQuery == null) {
+        if ( mSearchQuery == null ) {
             if ( isFilteredByStation( context ) ) {
                 builder.append( "Crafting Stations/" );
 
@@ -877,11 +877,9 @@ public class DisplayCase
                                boolean wasQueueEmpty ) {
         int position = mKeys.indexOf( engramId );
 
-        if ( position > INVALID_ITEM_POSITION ) {
-            if ( isEngram( position ) ) {
-                getEngram( position ).setQuantity( quantity );
-                mCallback.notifyItemChanged( position );
-            }
+        if ( isEngram( position ) ) {
+            getEngram( position ).setQuantity( quantity );
+            mCallback.notifyItemChanged( position );
         }
     }
 
@@ -889,11 +887,9 @@ public class DisplayCase
     public void onRowUpdated( Context context, long queueId, long engramId, int quantity ) {
         int position = mKeys.indexOf( engramId );
 
-        if ( position > INVALID_ITEM_POSITION ) {
-            if ( isEngram( position ) ) {
-                getEngram( position ).setQuantity( quantity );
-                mCallback.notifyItemChanged( position );
-            }
+        if ( isEngram( position ) ) {
+            getEngram( position ).setQuantity( quantity );
+            mCallback.notifyItemChanged( position );
         }
     }
 
@@ -905,11 +901,9 @@ public class DisplayCase
             long engramId = QueueEntry.getEngramIdFromUri( uri );
             int position = mKeys.indexOf( engramId );
 
-            if ( position > INVALID_ITEM_POSITION ) {
-                if ( isEngram( position ) ) {
-                    getEngram( position ).resetQuantity();
-                    mCallback.notifyItemChanged( position );
-                }
+            if ( isEngram( position ) ) {
+                getEngram( position ).resetQuantity();
+                mCallback.notifyItemChanged( position );
             }
         }
     }

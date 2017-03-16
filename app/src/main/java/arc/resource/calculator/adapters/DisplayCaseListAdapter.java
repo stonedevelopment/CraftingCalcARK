@@ -3,7 +3,6 @@ package arc.resource.calculator.adapters;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,7 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.DisplayCaseListener;
 import arc.resource.calculator.model.DisplayCase;
 import arc.resource.calculator.model.engram.DisplayEngram;
-import arc.resource.calculator.util.DisplayUtil;
 import arc.resource.calculator.util.ListenerUtil;
-
-import static android.view.View.MeasureSpec.UNSPECIFIED;
 
 /**
  * Copyright (C) 2016, Jared Stone
