@@ -11,12 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.instabug.library.Feature;
-import com.instabug.library.Instabug;
-import com.instabug.library.InstabugColorTheme;
-import com.instabug.library.invocation.InstabugInvocationEvent;
 
 import arc.resource.calculator.listeners.MainActivityListener;
 import arc.resource.calculator.listeners.SendErrorReportListener;
@@ -93,15 +87,15 @@ public class MainActivity extends AppCompatActivity
 
         updateContainerLayoutParams();
 
-        new Instabug.Builder( getApplication(), BuildConfig.INSTABUG_API_KEY )
-                .setInvocationEvent( InstabugInvocationEvent.SHAKE )
-                .setTheme( InstabugColorTheme.InstabugColorThemeDark )
-                .setEmailFieldRequired( false )
-                .setCommentFieldRequired( true )
-                .setCrashReportingState( Feature.State.DISABLED )
-                .setSurveysState( Feature.State.DISABLED )
-                .setInAppMessagingState( Feature.State.DISABLED )
-                .build();
+//        new Instabug.Builder( getApplication(), BuildConfig.INSTABUG_API_KEY )
+//                .setInvocationEvent( InstabugInvocationEvent.SHAKE )
+//                .setTheme( InstabugColorTheme.InstabugColorThemeDark )
+//                .setEmailFieldRequired( false )
+//                .setCommentFieldRequired( true )
+//                .setCrashReportingState( Feature.State.DISABLED )
+//                .setSurveysState( Feature.State.DISABLED )
+//                .setInAppMessagingState( Feature.State.DISABLED )
+//                .build();
 
 //        mPurchaseUtil = new PurchaseUtil( this );
 

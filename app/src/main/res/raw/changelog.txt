@@ -19,10 +19,17 @@
     </style>
   </head>
   <body>
+    $ 1.2.0
+      % Version 1.2.0
+      _ 03/17/2016
+      * First public release in months! I'm still around, I promise!
+      * Bugfix: Crafting Queue update display issue
+      * Removed Instabug feedback helper due to permissions
+
     $ 1.1.8
       % Version 1.1.8
       _ 03/16/2016
-      * Bugfixes
+      * Various Bugfixes
 
     $ 1.1.7
       % Version 1.1.7
@@ -30,7 +37,6 @@
       * Added overlooked Engrams: Pheromone Dart and Shocking Tranquilizer Dart
       * Added overlooked Resources: Ammonite Bile and Bio Toxin
       * Reworked how text sizes were established and shared, please let us know if sizes are off on your phone, thanks!
-      ! Integrated Instabug for to send feedback easily, if this becomes a problem with our app, let us know. Thanks!
 
     $ 1.1.6
       % Version 1.1.6

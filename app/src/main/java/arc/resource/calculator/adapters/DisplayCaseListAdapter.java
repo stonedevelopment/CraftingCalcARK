@@ -249,7 +249,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<DisplayCaseList
                 } else if ( isStation( position ) ) {
                     changeStation( context, position );
                 } else {
-                    throw new ArrayIndexOutOfBoundsException( position );
+                    mCallback.emitSendErrorReport( TAG, new ArrayIndexOutOfBoundsException( position ) );
                 }
             }
         }

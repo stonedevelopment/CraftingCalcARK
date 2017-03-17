@@ -132,9 +132,9 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<CraftableEn
     public void onRowInserted( Context context, long queueId, long engramId, int quantity, boolean wasQueueEmpty ) {
         int position = mCraftingQueue.getPositionByEngramId( engramId );
 
-        if ( position != INVALID_ITEM_POSITION )
-            notifyItemInserted( position );
-        else
+//        if ( position != INVALID_ITEM_POSITION )
+//            notifyItemInserted( position );
+//        else
             notifyDataSetChanged();
 
         if ( wasQueueEmpty )
@@ -155,6 +155,7 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<CraftableEn
     public void onRowDeleted( Context context, Uri uri, int positionStart, int itemCount, boolean isQueueEmpty ) {
         Log.d( TAG, "onRowDeleted(): " + uri + ", " + positionStart + ", " + itemCount + ", " + isQueueEmpty );
         notifyItemRangeRemoved( positionStart, itemCount );
+//        notifyDataSetChanged();
 
         if ( isQueueEmpty )
             mCallback.requestLayoutUpdate();
