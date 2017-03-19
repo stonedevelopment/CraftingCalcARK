@@ -201,7 +201,7 @@ public class DetailActivity extends AppCompatActivity
         mAdUtil.destroy();
     }
 
-    void UpdateQuantityText() {
+    private void UpdateQuantityText() {
         TextView quantityEditText = ( TextView ) findViewById( R.id.quantityEditText );
         quantityEditText.setText( mShowcase.getQuantityText() );
     }

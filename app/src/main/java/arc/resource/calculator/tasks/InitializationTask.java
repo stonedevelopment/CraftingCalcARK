@@ -24,10 +24,10 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG = InitializationTask.class.getSimpleName();
 
     private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>();
-    private SparseArray<Long> mDlcIds = new SparseArray<>();
+    private final SparseArray<Long> mDlcIds = new SparseArray<>();
 
-    private Listener mListener;
-    private Context mContext;
+    private final Listener mListener;
+    private final Context mContext;
 
     // caught exception
     private Exception mException;
@@ -56,9 +56,16 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground( Void... params ) {
         try {
-            // first, let's check if we even need to update.
-            if ( !isNewVersion() )
+            // read the local converted json file into a string
+            String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_finalized );
+
+            // build a json object based on the read json string
+            JSONObject jsonObject = new JSONObject( jsonString );
+
+            // now, let's check if we even need to update.
+            if ( !isNewVersion( jsonObject.getJSONObject( "json" ) ) ) {
                 return false;
+            }
 
             // new version! let's get cracking!
             // let user know that we've begun the process.
@@ -66,12 +73,6 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
 
             // first, let's remove all records from database
             deleteAllRecordsFromProvider();
-
-            // read the local converted json file into a string
-            String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_finalized );
-
-            // build a json object based on the read json string
-            JSONObject jsonObject = new JSONObject( jsonString );
 
             // map "total conversion" ids to assist methods with injecting converted ids
             mTotalConversion = mapTotalConversion( jsonObject.getJSONArray( DatabaseContract.TotalConversionEntry.TABLE_NAME ) );
@@ -110,6 +111,13 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     private boolean isNewVersion() {
         String oldVersion = new PrefsUtil( getContext() ).getJSONVersion();
         String newVersion = getContext().getString( R.string.json_version );
+
+        return !Objects.equals( oldVersion, newVersion );
+    }
+
+    private boolean isNewVersion( JSONObject object ) throws JSONException {
+        String oldVersion = new PrefsUtil( getContext() ).getJSONVersion();
+        String newVersion = object.getString( "version" );
 
         return !Objects.equals( oldVersion, newVersion );
     }
@@ -423,7 +431,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private class TotalConversion {
-        LongSparseArray<Long> conversionIds;
+        final LongSparseArray<Long> conversionIds;
 
         TotalConversion() {
             conversionIds = new LongSparseArray<>();

@@ -71,7 +71,7 @@ public class ParseJsonTask extends AsyncTask<Void, Void, Vector<Vector<ContentVa
         String jsonString;
 
         try {
-            InputStream fileStream = getContext().getResources().openRawResource( R.raw.jsonrawdata );
+            InputStream fileStream = null;
             StringBuffer buffer = new StringBuffer();
 
             fileReader = new BufferedReader( new InputStreamReader( fileStream ) );
@@ -174,16 +174,16 @@ public class ParseJsonTask extends AsyncTask<Void, Void, Vector<Vector<ContentVa
 
             String name = jsonObject.getString( EngramEntry.COLUMN_NAME );
             String description = jsonObject.getString( EngramEntry.COLUMN_DESCRIPTION );
-            String drawable = jsonObject.getString( EngramEntry.COLUMN_DRAWABLE );
+//            String drawable = jsonObject.getString( EngramEntry.COLUMN_DRAWABLE );
             long category_id = jsonObject.getLong( EngramEntry.COLUMN_CATEGORY_KEY );
 
             ContentValues values = new ContentValues();
             values.put( EngramEntry.COLUMN_NAME, name );
             values.put( EngramEntry.COLUMN_DESCRIPTION, description );
-            values.put( EngramEntry.COLUMN_DRAWABLE, drawable );
+//            values.put( EngramEntry.COLUMN_DRAWABLE, drawable );
             values.put( EngramEntry.COLUMN_CATEGORY_KEY, category_id );
 
-            parseJsonToComposition( drawable, jsonObject.getJSONArray( CompositionEntry.TABLE_NAME ) );
+//            parseJsonToComposition( drawable, jsonObject.getJSONArray( CompositionEntry.TABLE_NAME ) );
 
             cVector.add( values );
         }

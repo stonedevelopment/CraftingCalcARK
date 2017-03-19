@@ -7,9 +7,7 @@ import android.util.Log;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.model.Category;
 
-import static java.security.AccessController.getContext;
-
-public class DbUtil {
+class DbUtil {
     private static final String TAG = DbUtil.class.getSimpleName();
 
     public static Category QueryForCategoryDetails( Context context, long _id ) {

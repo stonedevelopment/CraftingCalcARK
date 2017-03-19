@@ -32,7 +32,7 @@ import arc.resource.calculator.model.resource.QueueResource;
 public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseResourceListAdapter.ViewHolder> {
     private static final String TAG = ShowcaseResourceListAdapter.class.getSimpleName();
 
-    private Showcase mShowcase;
+    private final Showcase mShowcase;
 
     public ShowcaseResourceListAdapter( Showcase showcase ) {
         mShowcase = showcase;
@@ -76,11 +76,11 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseRe
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private View mView;
+        private final View mView;
 
-        private ImageView mThumbnail;
-        private TextView mName;
-        private TextView mQuantity;
+        private final ImageView mThumbnail;
+        private final TextView mName;
+        private final TextView mQuantity;
 
         public ViewHolder( View view ) {
             super( view );

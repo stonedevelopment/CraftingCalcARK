@@ -21,8 +21,8 @@ import arc.resource.calculator.R;
 public class PrefsUtil {
     private static final String TAG = PrefsUtil.class.getSimpleName();
 
-    private SharedPreferences mSharedPreferences;
-    private Context mContext;
+    private final SharedPreferences mSharedPreferences;
+    private final Context mContext;
 
     public PrefsUtil( Context context ) {
         mContext = context;

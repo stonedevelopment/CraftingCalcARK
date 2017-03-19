@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -60,7 +59,7 @@ public class ChangeLog {
      * @param context
      * @param sp      the shared preferences to store the last version name into
      */
-    public ChangeLog( Context context, SharedPreferences sp ) {
+    private ChangeLog( Context context, SharedPreferences sp ) {
         this.context = context;
 
         // get version numbers
@@ -105,7 +104,7 @@ public class ChangeLog {
      * @return <code>true</code> if your app including ChangeLog is started the first time ever.
      * Also <code>true</code> if your app was deinstalled and installed again.
      */
-    public boolean firstRunEver() {
+    private boolean firstRunEver() {
         return NO_VERSION.equals( this.lastVersion );
     }
 
@@ -125,7 +124,7 @@ public class ChangeLog {
         return this.getDialog( true );
     }
 
-    protected AlertDialog getDialog( boolean full ) {
+    private AlertDialog getDialog( boolean full ) {
         WebView wv = new WebView( this.context );
 
         wv.setBackgroundColor( ContextCompat.getColor( this.context, android.R.color.black ) );
@@ -158,7 +157,7 @@ public class ChangeLog {
         return builder.create();
     }
 
-    protected void updateVersionInPreferences() {
+    private void updateVersionInPreferences() {
         // save new version number to preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences( context );
         SharedPreferences.Editor editor = sp.edit();
@@ -198,7 +197,7 @@ public class ChangeLog {
     private StringBuffer sb = null;
     private static final String EOCL = "END_OF_CHANGE_LOG";
 
-    protected String getLog( boolean full ) {
+    private String getLog( boolean full ) {
         // read changelog.txt file
         sb = new StringBuffer();
         try {
@@ -266,7 +265,7 @@ public class ChangeLog {
         return sb.toString();
     }
 
-    protected void openList( Listmode listMode ) {
+    private void openList( Listmode listMode ) {
         if ( this.listMode != listMode ) {
             closeList();
             if ( listMode == Listmode.ORDERED ) {
@@ -278,7 +277,7 @@ public class ChangeLog {
         }
     }
 
-    protected void closeList() {
+    private void closeList() {
         if ( this.listMode == Listmode.ORDERED ) {
             sb.append( "</ol></div>\n" );
         } else if ( this.listMode == Listmode.UNORDERED ) {

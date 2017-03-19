@@ -2,7 +2,6 @@ package arc.resource.calculator.util;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +21,11 @@ public class ListenerUtil {
     private MainActivityListener mMainActivityListener;
     private SendErrorReportListener mSendErrorReportListener;
 
-    private List<DisplayCaseListener> mDisplayCaseListeners;
-    private List<CraftingQueueListener> mCraftingQueueListeners;
-    private List<QueueEngramListener> mQueueEngramListeners;
-    private List<QueueResourceListener> mQueueResourceListeners;
-    private List<SendErrorReportListener> mSendErrorReportListeners;
+    private final List<DisplayCaseListener> mDisplayCaseListeners;
+    private final List<CraftingQueueListener> mCraftingQueueListeners;
+    private final List<QueueEngramListener> mQueueEngramListeners;
+    private final List<QueueResourceListener> mQueueResourceListeners;
+    private final List<SendErrorReportListener> mSendErrorReportListeners;
 
     public static ListenerUtil getInstance() {
         if ( sInstance == null ) {

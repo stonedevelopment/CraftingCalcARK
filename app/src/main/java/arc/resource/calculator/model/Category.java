@@ -17,16 +17,16 @@ package arc.resource.calculator.model;
  */
 public class Category {
     // Primary Key used to track hierarchy when filtering folders
-    private long mId;
+    private final long mId;
 
     // String literal of Category's taken verbatim from in-game
-    private String mName;
+    private final String mName;
 
     // Foreign Key that references a Category's Primary Key used to track hierarchy when filtering folders
-    private long mParent;
+    private final long mParent;
 
     // String literal of Resource Drawable to use for icon
-    private String mFile;
+    private final String mFile;
 
     public Category( long _id, String name, long parent ) {
         mId = _id;

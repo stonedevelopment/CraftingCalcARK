@@ -30,15 +30,15 @@ import arc.resource.calculator.util.Util;
 public class Showcase {
     private static final String TAG = Showcase.class.getSimpleName();
 
-    private long mId;
+    private final long mId;
     private String mName;
     private String mDescription;
     private String mImagePath;
     private long mCategoryId;
-    private List<Long> mStationIds;
+    private final List<Long> mStationIds;
     private long mStationId;
     private int mRequiredLevel;
-    private long mDLCId;
+    private final long mDLCId;
 
     // TODO: 1/22/2017 SparseLongArray
     private SparseArray<CompositeResource> mComposition;
@@ -84,7 +84,7 @@ public class Showcase {
         return mQuantity;
     }
 
-    public int getQuantityWithYield() {
+    private int getQuantityWithYield() {
         return mQuantity * mYield;
     }
 
@@ -105,7 +105,7 @@ public class Showcase {
         return mComposition;
     }
 
-    public SparseArray<QueueResource> getQuantifiableComposition() {
+    private SparseArray<QueueResource> getQuantifiableComposition() {
         SparseArray<QueueResource> returnableComposition = new SparseArray<>();
 
         SparseArray<CompositeResource> baseComposition = getComposition();
@@ -171,7 +171,7 @@ public class Showcase {
         return names.toString();
     }
 
-    public long getDLCId() {
+    private long getDLCId() {
         return mDLCId;
     }
 

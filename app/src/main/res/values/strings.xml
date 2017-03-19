@@ -3,6 +3,7 @@
     <!--
     Version of JSON data file. Used to update contents of file to database.
 
+    255.2   Updated some Engram compositions, added item id's, xp, and engram points
     255.1   Added new darts (and forgotten old one, oops!) Also Bio Toxin and Ammonite Bile
     255.0   Added all Engrams up to PC v255, including Boss Portals and Eggcellent Adventures
     253.4   Fixed various file/folder errors
@@ -26,7 +27,7 @@
     247.1   Updated Categories to Primitive+
 
     -->
-    <string name="json_version">255.1</string>
+    <string name="json_version">255.2</string>
 
     <!-- LoadActivity -->
 
@@ -37,7 +38,6 @@
     <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
 
     <string name="load_activity_status_message_format_with_elapsed_time"><x:g id="message">%1$s</x:g> (<x:g id="elapsed">%2$s</x:g>)</string>
-    <string name="load_activity_status_message_format_with_prefix"><x:g id="prefix">%1$s</x:g> <x:g id="message">%2$s</x:g></string>
 
     <string name="load_activity_status_message_prefix_unknown">[?]</string>
     <string name="load_activity_status_message_prefix_app">[app]</string>
@@ -60,10 +60,6 @@
     <string name="initialization_pref_event_finished">Preferences saved!</string>
 
     <!-- LoadActivity: Events: Purchases -->
-    <string name="initialization_purchase_event_init">Checking for in-app purchases..</string>
-    <string name="initialization_purchase_event_error">In-app purchase check failed.</string>
-    <string name="initialization_purchase_event_finished_with_purchase">Check complete, thanks for your purchase!</string>
-    <string name="initialization_purchase_event_finished_without_purchase">Check complete.</string>
 
     <!-- Default app/activity details. Also used with ActionBar titles. -->
     <string name="app_name">A:RC</string>
@@ -100,7 +96,6 @@
 
     <!-- Strings used with the About Dialog -->
     <string name="about_dialog_full_title">About ARK:Resource Calculator</string>
-    <string name="about_dialog_close_button">Close</string>
 
     <!-- String used with the QuantityChooser Dialog -->
     <string name="quantity_dialog_full_title">Edit Quantity</string>
@@ -121,24 +116,20 @@
     <string name="changelog_title">What\'s New</string>
     <string name="changelog_ok_button">OK</string>
     <string name="changelog_show_full">More…</string>
-    <string name="background_color">black</string>
 
     <!-- Strings related to Go Back -->
     <string name="go_back">Go back</string>
     <string name="go_back_to_stations">Go back to Crafting Stations</string>
-    <string name="format_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
 
     <!-- Strings related to Categories -->
     <string name="category_go_back">Go back</string>
     <string name="format_category_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
 
     <!-- Strings related to Stations -->
-    <string name="station_go_back">Go back</string>
     <string name="format_station_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
 
     <!-- Strings related to Required Level -->
     <string name="level_max_value">105</string>
-    <string name="level_min_value">1</string>
 
     <string name="format_search_results">Results for: *<xliff:g>%1$s</xliff:g>*</string>
 
@@ -186,7 +177,6 @@
     <string name="pref_dlc_label_scorched_earth">ARK:Survival Evolved: Scorched Earth</string>
 
     <!-- Label for the DLC Version: Vanilla preference -->
-    <string name="pref_dlc_label_default">@string/pref_dlc_label_vanilla</string>
 
     <!-- Value in SharedPreferences for DLC Version: Vanilla -->
     <string name="pref_dlc_value_vanilla">1</string>
@@ -285,32 +275,18 @@
     </string>
 
     <!-- Exceptions -->
-    <string name="exception_unknown_uri">Unknown uri: <x:g>%1$s</x:g></string>
     <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>
-    <string name="exception_array_out_of_bounds">
-        Position: <x:g>%1d</x:g>\n
-        Categories.size: <x:g>%2d</x:g>
-        Categories: <x:g>%3$s</x:g>
-    </string>
 
     <!-- Strings related to MobAds -->
     <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
     <string name="banner_ad_app_id">ca-app-pub-8859801923918627~2903432190</string>
 
     <!-- Strings related to Context Menu labels -->
-    <string name="context_menu_report_engram">Report Engram Correction</string>
     <string name="context_menu_view_details">View Details</string>
     <string name="context_menu_edit_quantity">Edit Quantity</string>
     <string name="context_menu_remove_from_queue">Remove From Queue</string>
 
     <!-- In-App Purchases Strings -->
-    <string name="base64EncodedPublicKey">
-        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlIx82dz7dSxB87L5Y03Bx3p73BuCGIhAkdAloX3KifAGKTM
-        wfVytLNW7xyI6TFGraEPB5DX6D9tW7EQsdOZfTiQ/HCajZITLU0Lqe95SZC22GmI9GinuA21H1/7xJhAeszZmV5j4+U
-        cP1vNte4ePYH2e9Ti6czLCuWbo4OWfVYOGBS44lClwgQig4+HZbx2YmgW7mNplDNkAMTifpRNvOEEmovcjrILS8WO9d
-        9NdkDMz7QMYkPwoOl2xIZp9ia+hiC+NBVPeYIemnp9Gad+6F32oMukWLEJGApbaVSYJfWWJkCUk/2XB3Fn1BMQjVYbV
-        bszLFzSLIWagLfsHjX9KxQIDAQAB
-    </string>
     <string name="action_title_remove_ads">Remove Ads</string>
 
 </resources>

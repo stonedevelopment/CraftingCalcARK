@@ -38,9 +38,9 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter<Craftable
 
     private static CraftableResourceListAdapter sInstance;
 
-    private CraftingQueue mCraftingQueue;
+    private final CraftingQueue mCraftingQueue;
 
-    private ListenerUtil mCallback;
+    private final ListenerUtil mCallback;
 
     public static CraftableResourceListAdapter getInstance( Context context ) {
         if ( sInstance == null ) {
@@ -142,11 +142,11 @@ public class CraftableResourceListAdapter extends RecyclerView.Adapter<Craftable
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private View mView;
+        private final View mView;
 
-        private ImageView mThumbnail;
-        private TextView mName;
-        private TextView mQuantity;
+        private final ImageView mThumbnail;
+        private final TextView mName;
+        private final TextView mQuantity;
 
         public ViewHolder( View view ) {
             super( view );

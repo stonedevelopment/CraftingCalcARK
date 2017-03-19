@@ -1,6 +1,6 @@
 package arc.resource.calculator.util;
 
-public class PurchaseUtil {
+class PurchaseUtil {
 //    private final static String TAG = PurchaseUtil.class.getSimpleName();
 //
 //    public static final String SKU_FEATURE_DISABLE_ADS = "feature.disable.ads";

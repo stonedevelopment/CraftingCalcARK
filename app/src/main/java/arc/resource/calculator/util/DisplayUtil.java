@@ -8,7 +8,7 @@ public class DisplayUtil {
 
     private static DisplayUtil sInstance;
 
-    private int mOrientation;
+    private final int mOrientation;
 
 //    private float mImageSize;
 //    private boolean mImageSizeResolved;
@@ -43,7 +43,7 @@ public class DisplayUtil {
         return getOrientation() == Configuration.ORIENTATION_PORTRAIT;
     }
 
-    public int getOrientation() {
+    private int getOrientation() {
         return mOrientation;
     }
 }

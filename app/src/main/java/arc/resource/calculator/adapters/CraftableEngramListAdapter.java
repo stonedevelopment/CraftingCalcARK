@@ -42,8 +42,8 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<CraftableEn
 
     private static CraftableEngramListAdapter sInstance;
 
-    private CraftingQueue mCraftingQueue;
-    private ListenerUtil mCallback;
+    private final CraftingQueue mCraftingQueue;
+    private final ListenerUtil mCallback;
 
     public static CraftableEngramListAdapter getInstance( Context context ) {
         if ( sInstance == null ) {
@@ -178,9 +178,9 @@ public class CraftableEngramListAdapter extends RecyclerView.Adapter<CraftableEn
             implements View.OnClickListener, View.OnLongClickListener {
         private final String TAG = ViewHolder.class.getSimpleName();
 
-        private ImageView mImageView;
-        private TextView mName;
-        private TextView mQuantity;
+        private final ImageView mImageView;
+        private final TextView mName;
+        private final TextView mQuantity;
 
         ViewHolder( View view ) {
             super( view );

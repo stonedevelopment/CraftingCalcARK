@@ -28,7 +28,7 @@ public class ExceptionUtil {
     }
 
     // if position of requested list is out of bounds, then throw this exception
-    public static class PositionOutOfBoundsException extends Exception {
+    private static class PositionOutOfBoundsException extends Exception {
         public PositionOutOfBoundsException( int index, String contents ) {
             super( BuildExceptionMessageBundle( index, contents ).toString() );
         }

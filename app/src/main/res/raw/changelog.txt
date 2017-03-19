@@ -19,6 +19,12 @@
     </style>
   </head>
   <body>
+    $ 1.2.1
+      % Version 1.2.1
+      _ 03/19/2016
+      * Updated a few Engram compositions
+      ! If you happen to notice an Engram with incorrect resources and/or amounts, please email or tweet us, thanks!
+
     $ 1.2.0
       % Version 1.2.0
       _ 03/17/2016

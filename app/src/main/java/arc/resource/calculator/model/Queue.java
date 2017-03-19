@@ -12,12 +12,12 @@ package arc.resource.calculator.model;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class Queue {
+class Queue {
     // Primary Key created by Database used to track its Row
-    private long id;
+    private final long id;
 
     // Foreign Key that references an Engram's Primary Key created by Database to track its row location
-    private long engramId;
+    private final long engramId;
 
     // Quantity adjusted per User
     private int quantity;

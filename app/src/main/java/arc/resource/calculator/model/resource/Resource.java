@@ -17,16 +17,16 @@ package arc.resource.calculator.model.resource;
  */
 public class Resource {
     // Primary Key created by Database used to track its row location
-    private long mId;
+    private final long mId;
 
     // String literal of Resource's name taken verbatim in-game
-    private String mName;
+    private final String mName;
 
     // String literal of Resource's image folder location
-    private String mFolder;
+    private final String mFolder;
 
     // String literal of Resource's image filename
-    private String mFile;
+    private final String mFile;
 
     public Resource( long id, String name, String folder, String file ) {
         mId = id;

@@ -2,15 +2,11 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
 
 public class RecyclerViewWithContextMenu extends RecyclerView {

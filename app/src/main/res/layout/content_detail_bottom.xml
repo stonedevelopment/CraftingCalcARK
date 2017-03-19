@@ -6,7 +6,6 @@
               android:paddingTop="@dimen/detail_padding">
 
     <include
-        android:id="@+id/numberPickerContainer"
         layout="@layout/content_detail_number_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -22,7 +21,6 @@
         android:padding="@dimen/display_case_container_layout_padding"/>
 
     <include
-        android:id="@+id/saveRemoveButtonContainer"
         layout="@layout/content_detail_save_remove_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

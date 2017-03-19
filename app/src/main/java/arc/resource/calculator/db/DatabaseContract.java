@@ -71,6 +71,18 @@ public class DatabaseContract {
         // Integer value indicating required level to craft
         public static final String COLUMN_LEVEL = "level";
 
+        // Integer value indicating required engram points
+        public static final String COLUMN_POINTS = "points";
+
+        // Integer value indicating gained crafting xp
+        public static final String COLUMN_XP = "xp";
+
+        // Integer value indicating Steam item ID
+        public static final String COLUMN_STEAM_ID = "steam_id";
+
+        // Integer value indicating Steam item ID
+        public static final String COLUMN_CONSOLE_ID = "console_id";
+
         // Foreign key from Crafting Station table
         public static final String COLUMN_STATION_KEY = "station_id";
 

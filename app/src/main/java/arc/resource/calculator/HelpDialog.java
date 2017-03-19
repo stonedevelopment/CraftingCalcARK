@@ -35,7 +35,7 @@ public class HelpDialog {
         this.context = context;
     }
 
-    protected AlertDialog getDialog() {
+    AlertDialog getDialog() {
         WebView wv = new WebView( this.context );
 
         wv.setBackgroundColor( ContextCompat.getColor( this.context, android.R.color.black ) );
@@ -66,7 +66,7 @@ public class HelpDialog {
     private Listmode listMode = Listmode.NONE;
     private StringBuffer sb = null;
 
-    protected String getLog() {
+    private String getLog() {
         // read changelog.txt file
         sb = new StringBuffer();
         try {
@@ -127,7 +127,7 @@ public class HelpDialog {
         return sb.toString();
     }
 
-    protected void openList( Listmode listMode ) {
+    private void openList( Listmode listMode ) {
         if ( this.listMode != listMode ) {
             closeList();
             if ( listMode == Listmode.ORDERED ) {
@@ -139,7 +139,7 @@ public class HelpDialog {
         }
     }
 
-    protected void closeList() {
+    private void closeList() {
         if ( this.listMode == Listmode.ORDERED ) {
             sb.append( "</ol></div>\n" );
         } else if ( this.listMode == Listmode.UNORDERED ) {

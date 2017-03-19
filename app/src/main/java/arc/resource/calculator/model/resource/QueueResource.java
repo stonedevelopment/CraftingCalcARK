@@ -25,7 +25,7 @@ public class QueueResource extends CompositeResource {
         mQueueQuantity = queueQuantity;
     }
 
-    public int getQueueQuantity() {
+    private int getQueueQuantity() {
         return mQueueQuantity;
     }
 

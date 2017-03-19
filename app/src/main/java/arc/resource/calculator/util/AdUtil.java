@@ -14,9 +14,9 @@ import arc.resource.calculator.R;
 public class AdUtil {
     private static final String TAG = AdUtil.class.getSimpleName();
 
-    private Activity mActivity;
-    private int mLayoutId;
-    private AdView mAdView;
+    private final Activity mActivity;
+    private final int mLayoutId;
+    private final AdView mAdView;
 
     public AdUtil( Activity activity, int layoutId ) {
         mAdView = new AdView( activity );

@@ -9,12 +9,11 @@ import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.DisplayCaseListAdapter;
-import arc.resource.calculator.util.ListenerUtil;
 
 public class DisplayCaseRecyclerView extends RecyclerViewWithContextMenu {
     private static final String TAG = DisplayCaseRecyclerView.class.getSimpleName();
 
-    final RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
+    private final RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
         private final String TAG = "AdapterDataObserver";
 
         @Override
@@ -46,24 +45,18 @@ public class DisplayCaseRecyclerView extends RecyclerViewWithContextMenu {
 
     public DisplayCaseRecyclerView( Context context ) throws Exception {
         super( context );
-
-        init( context );
     }
 
     public DisplayCaseRecyclerView( Context context, @Nullable AttributeSet attrs ) throws Exception {
         super( context, attrs );
-
-        init( context );
     }
 
     public DisplayCaseRecyclerView( Context context, @Nullable AttributeSet attrs, int defStyle ) throws Exception {
         super( context, attrs, defStyle );
-
-        init( context );
     }
 
-    private void init( Context context ) {
-        DisplayCaseListAdapter adapter = DisplayCaseListAdapter.getInstance( context, false );
+    public void init( Context context, boolean didUpdate ) {
+        DisplayCaseListAdapter adapter = DisplayCaseListAdapter.getInstance( context, didUpdate );
         adapter.registerAdapterDataObserver( dataObserver );
         setAdapter( adapter );
 

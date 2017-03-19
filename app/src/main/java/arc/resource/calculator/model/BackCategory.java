@@ -16,7 +16,7 @@ package arc.resource.calculator.model;
  * Base Category object
  */
 public class BackCategory extends Category {
-    private String mFile;
+    private final String mFile;
 
     public BackCategory( long _id, String name, long parent ) {
         super( _id, name, parent );

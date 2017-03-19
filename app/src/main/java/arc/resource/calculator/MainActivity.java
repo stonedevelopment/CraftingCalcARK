@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity
 
     public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
 
-    DisplayCaseRecyclerView mDisplayCaseRecyclerView;
-    QueueEngramRecyclerView mQueueEngramRecyclerView;
-    QueueCompositionRecyclerView mQueueCompositionRecyclerView;
-    Button mClearCraftingQueue;
-    TextView mCategoryHierarchyTextView;
+    private DisplayCaseRecyclerView mDisplayCaseRecyclerView;
+    private QueueEngramRecyclerView mQueueEngramRecyclerView;
+    private QueueCompositionRecyclerView mQueueCompositionRecyclerView;
+    private Button mClearCraftingQueue;
+    private TextView mCategoryHierarchyTextView;
 
     //    private PurchaseUtil mPurchaseUtil;
     private AdUtil mAdUtil;
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity
         boolean didUpdate = getIntent().getBooleanExtra( INTENT_KEY_DID_UPDATE, false );
 
         mDisplayCaseRecyclerView = ( DisplayCaseRecyclerView ) findViewById( R.id.display_case_engram_list );
+        mDisplayCaseRecyclerView.init( getApplicationContext(), didUpdate );
         registerForContextMenu( mDisplayCaseRecyclerView );
 
         mQueueEngramRecyclerView = ( QueueEngramRecyclerView ) findViewById( R.id.crafting_queue_engram_list );
@@ -225,6 +226,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected( item );
+
     }
 
     @Override

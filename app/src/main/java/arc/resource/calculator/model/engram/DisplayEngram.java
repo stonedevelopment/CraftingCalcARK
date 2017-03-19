@@ -16,7 +16,7 @@ package arc.resource.calculator.model.engram;
  * Engram object that holds the id of the category (level) it lies on
  */
 public class DisplayEngram extends Engram {
-    private long mCategoryId;
+    private final long mCategoryId;
     private int mQuantity;
 
     public DisplayEngram( long id, String name, String folder, String file, int yield, long categoryId, int quantity ) {
@@ -26,11 +26,11 @@ public class DisplayEngram extends Engram {
         mQuantity = quantity;
     }
 
-    public long getCategoryId() {
+    private long getCategoryId() {
         return mCategoryId;
     }
 
-    public int getQuantity() {
+    private int getQuantity() {
         return mQuantity;
     }
 

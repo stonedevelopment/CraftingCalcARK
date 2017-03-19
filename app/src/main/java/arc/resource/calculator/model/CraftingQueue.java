@@ -49,7 +49,7 @@ public class CraftingQueue
 
     private static CraftingQueue sInstance;
 
-    private ListenerUtil mCallback;
+    private final ListenerUtil mCallback;
 
     public static CraftingQueue getInstance( Context context ) {
         if ( sInstance == null )
@@ -599,11 +599,11 @@ public class CraftingQueue
     private class UpdateRowTask extends AsyncTask<Void, Void, Void> {
         private final String TAG = UpdateRowTask.class.getSimpleName();
 
-        private Context mContext;
+        private final Context mContext;
 
         private long mId;
-        private long mEngramId;
-        private int mQuantity;
+        private final long mEngramId;
+        private final int mQuantity;
 
         private boolean mWasUpdated;
 
@@ -642,13 +642,13 @@ public class CraftingQueue
     private class InsertRowTask extends AsyncTask<Void, Void, Void> {
         private final String TAG = InsertRowTask.class.getSimpleName();
 
-        private Context mContext;
+        private final Context mContext;
 
         private long mId;
-        private long mEngramId;
-        private int mQuantity;
+        private final long mEngramId;
+        private final int mQuantity;
 
-        private boolean mIsQueueEmpty;
+        private final boolean mIsQueueEmpty;
 
         InsertRowTask( Context context, long engram_id, int quantity ) {
             mContext = context;
@@ -680,8 +680,8 @@ public class CraftingQueue
     private class DeleteRowTask extends AsyncTask<Void, Void, Void> {
         private final String TAG = DeleteRowTask.class.getSimpleName();
 
-        private Context mContext;
-        private Uri mUri;
+        private final Context mContext;
+        private final Uri mUri;
 
         private int mPositionStart;
         private int mItemCount;
@@ -717,7 +717,7 @@ public class CraftingQueue
     private class QueryForEngramsTask extends AsyncTask<Void, Void, Void> {
         private final String TAG = QueryForEngramsTask.class.getSimpleName();
 
-        Context mContext;
+        final Context mContext;
 
         boolean mIsQueueEmpty;
 
@@ -742,7 +742,7 @@ public class CraftingQueue
     private class QueryForResourcesTask extends AsyncTask<Void, Void, Void> {
         private final String TAG = QueryForResourcesTask.class.getSimpleName();
 
-        Context mContext;
+        final Context mContext;
 
         QueryForResourcesTask( Context context ) {
             mContext = context;

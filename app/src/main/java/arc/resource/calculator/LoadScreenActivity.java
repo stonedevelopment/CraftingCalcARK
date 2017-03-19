@@ -43,7 +43,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 
     private static final long DELAY_MILLIS = 3000;
 
-    private List<String> mStatusMessages = new ArrayList<>();
+    private final List<String> mStatusMessages = new ArrayList<>();
 
     private TextView mTextView;
 

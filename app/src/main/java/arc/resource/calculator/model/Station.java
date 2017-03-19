@@ -15,21 +15,21 @@ package arc.resource.calculator.model;
 /**
  * Base Station object
  */
-public class Station {
+class Station {
     // Primary Key used to track hierarchy when filtering folders
-    private long mId;
+    private final long mId;
 
     // String literal of Crafting Station taken verbatim from in-game
-    private String mName;
+    private final String mName;
 
     // String literal of Station's image folder location
-    private String mFolder;
+    private final String mFolder;
 
     // String literal of Station's image filename
-    private String mFile;
+    private final String mFile;
 
     // Foreign Key that references the DLC this Station belongs to
-    private long mDLCId;
+    private final long mDLCId;
 
     public Station( long _id, String name, String folder, String file, long dlc_id ) {
         mId = _id;
@@ -47,11 +47,11 @@ public class Station {
         return mName;
     }
 
-    public String getFolder() {
+    private String getFolder() {
         return mFolder;
     }
 
-    public String getFile() {
+    private String getFile() {
         return mFile;
     }
 

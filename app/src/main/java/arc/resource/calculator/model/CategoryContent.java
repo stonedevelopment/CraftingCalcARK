@@ -77,10 +77,10 @@ public class CategoryContent {
 
     public class CategoryItem {
 
-        private long mId;
-        private String mName;
-        private long mParent;
-        private String mDrawable;
+        private final long mId;
+        private final String mName;
+        private final long mParent;
+        private final String mDrawable;
 
         public CategoryItem( long _id, String name, long parent ) {
             this.mId = _id;

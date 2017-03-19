@@ -40,9 +40,9 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<DisplayCaseList
 
     private static DisplayCaseListAdapter sInstance;
 
-    private DisplayCase mDisplayCase;
+    private final DisplayCase mDisplayCase;
 
-    private ListenerUtil mCallback;
+    private final ListenerUtil mCallback;
 
 //    private boolean mImageSizeResolved;
 
@@ -209,9 +209,9 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<DisplayCaseList
             implements View.OnClickListener, View.OnLongClickListener {
         private final String TAG = ViewHolder.class.getSimpleName();
 
-        private ImageView mImageView;
-        private TextView mName;
-        private TextView mQuantity;
+        private final ImageView mImageView;
+        private final TextView mName;
+        private final TextView mQuantity;
 
         ViewHolder( View view ) {
             super( view );

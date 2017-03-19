@@ -18,21 +18,21 @@ package arc.resource.calculator.model.engram;
  */
 public class Engram {
     // Primary Key created by Database to track its row location.
-    private long mId;
+    private final long mId;
 
     // String literal of an Engram's name verbatim from in-game
-    private String mName;
+    private final String mName;
 
     // String literal of Engram's image folder
-    private String mFolder;
+    private final String mFolder;
 
     // String literal of Engram's image filename
-    private String mFile;
+    private final String mFile;
 
     // Yield per crafted item
-    private int mYield;
+    private final int mYield;
 
-    public Engram( long id, String name, String folder, String file, int yield ) {
+    Engram( long id, String name, String folder, String file, int yield ) {
         mId = id;
         mName = name;
         mFolder = folder;
@@ -48,11 +48,11 @@ public class Engram {
         return mName;
     }
 
-    public String getFolder() {
+    private String getFolder() {
         return mFolder;
     }
 
-    public String getFile() {
+    private String getFile() {
         return mFile;
     }
 
@@ -60,8 +60,14 @@ public class Engram {
         return getFolder() + getFile();
     }
 
-    public int getYield() {
+    int getYield() {
         return mYield;
+    }
+
+    private void itemQuality () {
+        //  IV*(1 + MS*(DM + RM*X))
+        float initialValue;
+
     }
 
     @Override

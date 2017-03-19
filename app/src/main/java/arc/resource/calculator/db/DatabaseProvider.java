@@ -40,45 +40,45 @@ public class DatabaseProvider extends ContentProvider {
     private DatabaseHelper mOpenHelper;
     private ListenerUtil mCallback;
 
-    static final int ENGRAM = 100;
-    static final int ENGRAM_ID_WITH_DLC = 101;
-    static final int ENGRAM_WITH_CATEGORY = 102;
-    static final int ENGRAM_WITH_CATEGORY_AND_STATION = 103;
-    static final int ENGRAM_WITH_DLC = 105;
-    static final int ENGRAM_WITH_STATION = 106;
-    static final int ENGRAM_WITH_LEVEL = 107;
-    static final int ENGRAM_WITH_LEVEL_AND_CATEGORY = 108;
-    static final int ENGRAM_WITH_LEVEL_AND_STATION = 109;
-    static final int ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION = 110;
-    static final int ENGRAM_WITH_SEARCH = 111;
+    private static final int ENGRAM = 100;
+    private static final int ENGRAM_ID_WITH_DLC = 101;
+    private static final int ENGRAM_WITH_CATEGORY = 102;
+    private static final int ENGRAM_WITH_CATEGORY_AND_STATION = 103;
+    private static final int ENGRAM_WITH_DLC = 105;
+    private static final int ENGRAM_WITH_STATION = 106;
+    private static final int ENGRAM_WITH_LEVEL = 107;
+    private static final int ENGRAM_WITH_LEVEL_AND_CATEGORY = 108;
+    private static final int ENGRAM_WITH_LEVEL_AND_STATION = 109;
+    private static final int ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION = 110;
+    private static final int ENGRAM_WITH_SEARCH = 111;
 
-    static final int RESOURCE = 200;
-    static final int RESOURCE_ID_WITH_DLC = 201;
+    private static final int RESOURCE = 200;
+    private static final int RESOURCE_ID_WITH_DLC = 201;
 
-    static final int COMPLEX_RESOURCE = 300;
-    static final int COMPLEX_RESOURCE_ID = 301;
-    static final int COMPLEX_RESOURCE_WITH_RESOURCE = 302;
+    private static final int COMPLEX_RESOURCE = 300;
+    private static final int COMPLEX_RESOURCE_ID = 301;
+    private static final int COMPLEX_RESOURCE_WITH_RESOURCE = 302;
 
-    static final int CATEGORY = 400;
-    static final int CATEGORY_ID_WITH_DLC = 401;
-    static final int CATEGORY_WITH_PARENT = 402;
-    static final int CATEGORY_WITH_PARENT_AND_STATION = 403;
+    private static final int CATEGORY = 400;
+    private static final int CATEGORY_ID_WITH_DLC = 401;
+    private static final int CATEGORY_WITH_PARENT = 402;
+    private static final int CATEGORY_WITH_PARENT_AND_STATION = 403;
 
-    static final int COMPOSITION = 500;
-    static final int COMPOSITION_ID = 501;
-    static final int COMPOSITION_WITH_ENGRAM = 502;
+    private static final int COMPOSITION = 500;
+    private static final int COMPOSITION_ID = 501;
+    private static final int COMPOSITION_WITH_ENGRAM = 502;
 
-    static final int QUEUE = 600;
-    static final int QUEUE_ID = 601;
-    static final int QUEUE_WITH_ENGRAM_TABLE = 602;
-    static final int QUEUE_WITH_ENGRAM_ID = 603;
+    private static final int QUEUE = 600;
+    private static final int QUEUE_ID = 601;
+    private static final int QUEUE_WITH_ENGRAM_TABLE = 602;
+    private static final int QUEUE_WITH_ENGRAM_ID = 603;
 
-    static final int DLC = 700;
-    static final int DLC_ID = 701;
+    private static final int DLC = 700;
+    private static final int DLC_ID = 701;
 
-    static final int STATION = 800;
-    static final int STATION_ID_WITH_DLC = 801;
-    static final int STATION_WITH_DLC = 802;
+    private static final int STATION = 800;
+    private static final int STATION_ID_WITH_DLC = 801;
+    private static final int STATION_WITH_DLC = 802;
 
     @Override
     public boolean onCreate() {
@@ -87,7 +87,7 @@ public class DatabaseProvider extends ContentProvider {
         return true;
     }
 
-    static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher() {
         final UriMatcher uriMatcher = new UriMatcher( UriMatcher.NO_MATCH );
         final String contentAuthority = DatabaseContract.CONTENT_AUTHORITY;
 
@@ -706,7 +706,7 @@ public class DatabaseProvider extends ContentProvider {
         return rowsInserted;
     }
 
-    String getTableNameFromUriMatch( @NonNull Uri uri ) throws URIUnknownException {
+    private String getTableNameFromUriMatch( @NonNull Uri uri ) throws URIUnknownException {
         switch ( sUriMatcher.match( uri ) ) {
             case ENGRAM:
                 return EngramEntry.TABLE_NAME;

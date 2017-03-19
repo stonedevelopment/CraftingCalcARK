@@ -6,7 +6,6 @@
                 tools:context=".LoadScreenActivity">
 
     <ProgressBar
-        android:id="@+id/content_init_progress_bar"
         style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

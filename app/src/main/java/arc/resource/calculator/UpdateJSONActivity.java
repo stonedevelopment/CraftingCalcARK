@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
@@ -47,35 +46,51 @@ import arc.resource.calculator.util.JsonUtil;
 public class UpdateJSONActivity extends AppCompatActivity {
     private static final String TAG = UpdateJSONActivity.class.getSimpleName();
 
-    final String _ID = EngramEntry._ID;
-    final String COLUMN_CATEGORY_KEY = EngramEntry.COLUMN_CATEGORY_KEY;
-    final String COLUMN_DESCRIPTION = EngramEntry.COLUMN_DESCRIPTION;
-    final String COLUMN_DLC_KEY = EngramEntry.COLUMN_DLC_KEY;
-    final String COLUMN_ENGRAM_KEY = CompositionEntry.COLUMN_ENGRAM_KEY;
-    final String COLUMN_FROM = TotalConversionEntry.COLUMN_FROM;
-    final String COLUMN_IMAGE_FILE = EngramEntry.COLUMN_IMAGE_FILE;
-    final String COLUMN_IMAGE_FOLDER = EngramEntry.COLUMN_IMAGE_FOLDER;
-    final String COLUMN_LEVEL = EngramEntry.COLUMN_LEVEL;
-    final String COLUMN_NAME = EngramEntry.COLUMN_NAME;
-    final String COLUMN_PARENT_KEY = CategoryEntry.COLUMN_PARENT_KEY;
-    final String COLUMN_QUANTITY = CompositionEntry.COLUMN_QUANTITY;
-    final String COLUMN_RESOURCE_KEY = CompositionEntry.COLUMN_RESOURCE_KEY;
-    final String COLUMN_STATION_KEY = EngramEntry.COLUMN_STATION_KEY;
-    final String COLUMN_TO = TotalConversionEntry.COLUMN_TO;
-    final String COLUMN_YIELD = EngramEntry.COLUMN_YIELD;
+    private final String _ID = EngramEntry._ID;
 
-    LongSparseArray<ComplexMap> mComplexMap = new LongSparseArray<>();
+    // column names
+    private final String COLUMN_CATEGORY_KEY = EngramEntry.COLUMN_CATEGORY_KEY;
+    private final String COLUMN_CONSOLE_ID = EngramEntry.COLUMN_CONSOLE_ID;
+    private final String COLUMN_DESCRIPTION = EngramEntry.COLUMN_DESCRIPTION;
+    private final String COLUMN_DLC_KEY = EngramEntry.COLUMN_DLC_KEY;
+    private final String COLUMN_ENGRAM_KEY = CompositionEntry.COLUMN_ENGRAM_KEY;
+    private final String COLUMN_FROM = TotalConversionEntry.COLUMN_FROM;
+    private final String COLUMN_IMAGE_FILE = EngramEntry.COLUMN_IMAGE_FILE;
+    private final String COLUMN_IMAGE_FOLDER = EngramEntry.COLUMN_IMAGE_FOLDER;
+    private final String COLUMN_LEVEL = EngramEntry.COLUMN_LEVEL;
+    private final String COLUMN_NAME = EngramEntry.COLUMN_NAME;
+    private final String COLUMN_PARENT_KEY = CategoryEntry.COLUMN_PARENT_KEY;
+    private final String COLUMN_POINTS = EngramEntry.COLUMN_POINTS;
+    private final String COLUMN_QUANTITY = CompositionEntry.COLUMN_QUANTITY;
+    private final String COLUMN_RESOURCE_KEY = CompositionEntry.COLUMN_RESOURCE_KEY;
+    private final String COLUMN_STATION_KEY = EngramEntry.COLUMN_STATION_KEY;
+    private final String COLUMN_STEAM_ID = EngramEntry.COLUMN_STEAM_ID;
+    private final String COLUMN_TO = TotalConversionEntry.COLUMN_TO;
+    private final String COLUMN_YIELD = EngramEntry.COLUMN_YIELD;
+    private final String COLUMN_XP = EngramEntry.COLUMN_XP;
 
-    LongSparseArray<Map> mEngramIdsByName = new LongSparseArray<>();
-    LongSparseArray<Map> mResourceIdsByName = new LongSparseArray<>();
-    LongSparseArray<Map> mStationIdsByName = new LongSparseArray<>();
+    // table names
+    private final String JSON = "json";
+    private final String DLC = DLCEntry.TABLE_NAME;
+    private final String STATION = StationEntry.TABLE_NAME;
+    private final String CATEGORY = CategoryEntry.TABLE_NAME;
+    private final String RESOURCE = ResourceEntry.TABLE_NAME;
+    private final String ENGRAM = EngramEntry.TABLE_NAME;
+    private final String COMPOSITION = CompositionEntry.TABLE_NAME;
+    private final String TOTAL_CONVERSION = TotalConversionEntry.TABLE_NAME;
 
-    LongSparseArray<String> mResourceNamesById = new LongSparseArray<>();
-    LongSparseArray<String> mStationNamesById = new LongSparseArray<>();
+    private final LongSparseArray<ComplexMap> mComplexMap = new LongSparseArray<>();
 
-    LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>();
+    private final LongSparseArray<Map> mEngramIdsByName = new LongSparseArray<>();
+    private final LongSparseArray<Map> mResourceIdsByName = new LongSparseArray<>();
+    private final LongSparseArray<Map> mStationIdsByName = new LongSparseArray<>();
 
-    SparseArray<Long> mDlcIds = new SparseArray<>();
+    private final LongSparseArray<String> mResourceNamesById = new LongSparseArray<>();
+    private final LongSparseArray<String> mStationNamesById = new LongSparseArray<>();
+
+    private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>();
+
+    private SparseArray<Long> mDlcIds = new SparseArray<>();
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -87,7 +102,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
         new ParseConvertTask( this ).execute();
     }
 
-    void updateConsole( String text ) {
+    private void updateConsole( String text ) {
         TextView console = ( TextView ) findViewById( R.id.console );
         console.append( text + "\n" );
     }
@@ -98,8 +113,9 @@ public class UpdateJSONActivity extends AppCompatActivity {
         private JSONObject mObject;
 
         private Uri mAttachmentUri;
+        private String mVersion;
 
-        private Context mContext;
+        private final Context mContext;
 
         ParseConvertTask( Context context ) {
             this.mContext = context;
@@ -122,7 +138,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
         protected void onPostExecute( Void aVoid ) {
             super.onPostExecute( aVoid );
 
-            emailJSONObject( mObject );
+            emailJSONFile();
 
             updateConsole( "Execution complete!" );
         }
@@ -138,16 +154,19 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 publishProgress( "Parsing JSON string into object..." );
                 JSONObject oldObject = new JSONObject( jsonString );
 
-                /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
-
                 publishProgress( "** Beginning conversion..." );
+
+                /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
 
                 // convert json into new json layout
                 JSONObject newObject = convertJSONObjectToIds( oldObject );
 
-                publishProgress( "** Conversion complete!..." );
+//                // update editable json with new table elements
+//                JSONObject newObject = updateJSONObject( oldObject );
 
                 /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
+
+                publishProgress( "** Conversion complete!..." );
 
                 // finally, write new json object to file
                 writeJSONObjectToFile( newObject );
@@ -166,7 +185,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
             publishProgress( "Error: " + e.getMessage() );
         }
 
-        void emailJSONObject( JSONObject object ) {
+        void emailJSONFile() {
             publishProgress( "Emailing new JSON Object..." );
 
             Log.i( TAG, "Send email" );
@@ -178,8 +197,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
             emailIntent.setType( "text/plain" );
             emailIntent.putExtra( Intent.EXTRA_EMAIL, TO );
             emailIntent.putExtra( Intent.EXTRA_CC, CC );
-            emailIntent.putExtra( Intent.EXTRA_SUBJECT, "New JSON Update" );
-            emailIntent.putExtra( Intent.EXTRA_TEXT, "New JSON Update" );
+            emailIntent.putExtra( Intent.EXTRA_SUBJECT, "New JSON Update " + mVersion );
+            emailIntent.putExtra( Intent.EXTRA_TEXT, "New JSON Update " + mVersion );
             emailIntent.putExtra( Intent.EXTRA_STREAM, mAttachmentUri );
 
             try {
@@ -195,7 +214,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
             publishProgress( "Writing new JSON object to file..." );
 
             File path = getContext().getExternalFilesDir( null );
-            File file = new File( path, "jsonExport.txt" );
+            File file = new File( path, mVersion + ".json" );
 
             FileOutputStream fileOutputStream = new FileOutputStream( file );
             fileOutputStream.write( object.toString().getBytes() );
@@ -203,6 +222,87 @@ public class UpdateJSONActivity extends AppCompatActivity {
             mAttachmentUri = Uri.parse( "file:///" + file.getPath() );
 
             Log.d( TAG, mAttachmentUri.toString() );
+        }
+
+        /**
+         * Updates the editable json file with new table elements
+         *
+         * @param inObject json object of entire file
+         * @return new json object with updated table elements
+         * @throws JSONException
+         */
+        JSONObject updateJSONObject( JSONObject inObject ) throws Exception {
+            JSONObject outObject = new JSONObject();
+
+            JSONObject json = inObject.getJSONObject( JSON );
+            JSONArray dlcs = inObject.getJSONArray( DLC );
+            JSONArray stations = inObject.getJSONArray( STATION );
+            JSONArray categories = inObject.getJSONArray( CATEGORY );
+            JSONArray resources = inObject.getJSONArray( RESOURCE );
+            JSONArray engrams = inObject.getJSONArray( ENGRAM );
+            JSONArray totalConversion = inObject.getJSONArray( TOTAL_CONVERSION );
+
+            /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
+
+            outObject.put( JSON, json );
+            outObject.put( DLC, dlcs );
+            outObject.put( STATION, stations );
+            outObject.put( CATEGORY, categories );
+            outObject.put( RESOURCE, resources );
+            outObject.put( ENGRAM, updateEngramJSONArray( engrams ) );
+            outObject.put( TOTAL_CONVERSION, totalConversion );
+
+            /***** EDIT JSON FILE CHANGES BETWEEN THESE COMMENTS *****/
+
+            return outObject;
+        }
+
+
+        JSONArray updateEngramJSONArray( JSONArray inArray ) throws Exception {
+            JSONArray outArray = new JSONArray();
+
+            for ( int i = 0; i < inArray.length(); i++ ) {
+                JSONObject object = inArray.getJSONObject( i );
+
+                String name = object.getString( COLUMN_NAME );
+                String description = object.getString( COLUMN_DESCRIPTION );
+                String imageFolder = object.getString( COLUMN_IMAGE_FOLDER );
+                String imageFile = object.getString( COLUMN_IMAGE_FILE );
+                Integer yield = object.getInt( COLUMN_YIELD );
+                Integer level = object.getInt( COLUMN_LEVEL );
+//                Integer points = object.getInt( COLUMN_POINTS );
+//                Integer xp = object.getInt( COLUMN_XP );
+//                Integer steam_id = object.getInt( COLUMN_STEAM_ID );
+//                Integer console_id = object.getInt( COLUMN_CONSOLE_ID );
+                Integer category_id = object.getInt( COLUMN_CATEGORY_KEY );
+                JSONArray compositionArray = object.getJSONArray( COMPOSITION );
+                JSONArray stationArray = object.getJSONArray( STATION );
+                long dlc_id = object.getInt( COLUMN_DLC_KEY );
+
+                // instantiate a new json object used to be updated
+                JSONObject updateObject = new JSONObject();
+
+                // insert standardized data
+                updateObject.put( COLUMN_NAME, name );
+                updateObject.put( COLUMN_DESCRIPTION, description );
+                updateObject.put( COLUMN_YIELD, yield );
+                updateObject.put( COLUMN_LEVEL, level );
+                updateObject.put( COLUMN_CATEGORY_KEY, category_id );
+                updateObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+                updateObject.put( COLUMN_IMAGE_FILE, imageFile );
+                updateObject.put( COLUMN_POINTS, 0 );
+                updateObject.put( COLUMN_XP, 0 );
+                updateObject.put( COLUMN_STEAM_ID, 0 );
+                updateObject.put( COLUMN_CONSOLE_ID, 0 );
+                updateObject.put( COLUMN_DLC_KEY, dlc_id );
+                updateObject.put( COMPOSITION, compositionArray );
+                updateObject.put( STATION, stationArray );
+
+                // insert updated object into array
+                outArray.put( updateObject );
+            }
+
+            return outArray;
         }
 
         /**
@@ -215,33 +315,37 @@ public class UpdateJSONActivity extends AppCompatActivity {
         JSONObject convertJSONObjectToIds( JSONObject inObject ) throws Exception {
             JSONObject outObject = new JSONObject();
 
+            // insert json data with updated versioning
+            mVersion = inObject.getJSONObject( JSON ).getString( "version" );
+            outObject.put( JSON, inObject.getJSONObject( JSON ) );
+
             // insert old dlc json data, no need to convert at this time
             publishProgress( "Inserting DLC values..." );
-            outObject.put( DLCEntry.TABLE_NAME,
-                    inObject.getJSONArray( DLCEntry.TABLE_NAME ) );
+            outObject.put( DLC,
+                    inObject.getJSONArray( DLC ) );
 
-            mDlcIds = mapDLCJSONArray( inObject.getJSONArray( DLCEntry.TABLE_NAME ) );
-            mTotalConversion = mapTotalConversion( inObject.getJSONArray( TotalConversionEntry.TABLE_NAME ) );
+            mDlcIds = mapDLCJSONArray( inObject.getJSONArray( DLC ) );
+            mTotalConversion = mapTotalConversion( inObject.getJSONArray( TOTAL_CONVERSION ) );
 
             // convert, then insert new station json data
             publishProgress( "Converting station values..." );
-            outObject.put( StationEntry.TABLE_NAME,
-                    convertStationJSONArrayToIds( inObject.getJSONArray( StationEntry.TABLE_NAME ) ) );
+            outObject.put( STATION,
+                    convertStationJSONArrayToIds( inObject.getJSONArray( STATION ) ) );
 
             // convert, then insert new category json data
             publishProgress( "Converting category values..." );
-            outObject.put( CategoryEntry.TABLE_NAME,
-                    convertCategoryJSONArrayToIds( inObject.getJSONArray( CategoryEntry.TABLE_NAME ) ) );
+            outObject.put( CATEGORY,
+                    convertCategoryJSONArrayToIds( inObject.getJSONArray( CATEGORY ) ) );
 
             // convert, then insert new resource json data
             publishProgress( "Converting resource values..." );
-            outObject.put( ResourceEntry.TABLE_NAME,
-                    convertResourceJSONArrayToIds( inObject.getJSONArray( ResourceEntry.TABLE_NAME ) ) );
+            outObject.put( RESOURCE,
+                    convertResourceJSONArrayToIds( inObject.getJSONArray( RESOURCE ) ) );
 
             // convert, then insert new engram json data
             publishProgress( "Converting engram values..." );
-            outObject.put( EngramEntry.TABLE_NAME,
-                    convertEngramJSONArrayToIds( inObject.getJSONArray( EngramEntry.TABLE_NAME ) ) );
+            outObject.put( ENGRAM,
+                    convertEngramJSONArrayToIds( inObject.getJSONArray( ENGRAM ) ) );
 
             // convert, then insert new complex resource json data
             publishProgress( "Converting complex resource values..." );
@@ -250,8 +354,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
             // convert, then insert new total conversion json data
             publishProgress( "Converting total conversion values..." );
-            outObject.put( TotalConversionEntry.TABLE_NAME,
-                    convertTotalConversionJSONArrayToIds( inObject.getJSONArray( TotalConversionEntry.TABLE_NAME ) ) );
+            outObject.put( TOTAL_CONVERSION,
+                    convertTotalConversionJSONArrayToIds( inObject.getJSONArray( TOTAL_CONVERSION ) ) );
 
             return outObject;
         }
@@ -323,7 +427,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 long _id = object.getLong( _ID );
                 String name = object.getString( COLUMN_NAME );
                 long parent_id = object.getLong( COLUMN_PARENT_KEY );
-                JSONArray stationArray = object.getJSONArray( StationEntry.TABLE_NAME );
+                JSONArray stationArray = object.getJSONArray( STATION );
                 long dlc_id = object.getInt( COLUMN_DLC_KEY );
 
                 // let's, first, create an array of qualified dlc versions, minus total conversions
@@ -413,8 +517,6 @@ public class UpdateJSONActivity extends AppCompatActivity {
         JSONArray convertEngramJSONArrayToIds( JSONArray inArray ) throws Exception {
             JSONArray outArray = new JSONArray();
 
-            // TODO: 3/5/2017 Check Engram names based off of dlc_id (ex: Broth of Enlightenment)
-
             for ( int i = 0; i < inArray.length(); i++ ) {
                 JSONObject object = inArray.getJSONObject( i );
 
@@ -424,9 +526,13 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 String imageFile = object.getString( COLUMN_IMAGE_FILE );
                 Integer yield = object.getInt( COLUMN_YIELD );
                 Integer level = object.getInt( COLUMN_LEVEL );
+                Integer points = object.getInt( COLUMN_POINTS );
+                Integer xp = object.getInt( COLUMN_XP );
+                Integer steam_id = object.getInt( COLUMN_STEAM_ID );
+                Integer console_id = object.getInt( COLUMN_CONSOLE_ID );
                 Integer category_id = object.getInt( COLUMN_CATEGORY_KEY );
-                JSONArray compositionArray = object.getJSONArray( CompositionEntry.TABLE_NAME );
-                JSONArray stationArray = object.getJSONArray( StationEntry.TABLE_NAME );
+                JSONArray compositionArray = object.getJSONArray( COMPOSITION );
+                JSONArray stationArray = object.getJSONArray( STATION );
                 long dlc_id = object.getInt( COLUMN_DLC_KEY );
 
                 // let's, first, create an array of qualified dlc versions, minus total conversions
@@ -466,6 +572,10 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 convertedObject.put( COLUMN_CATEGORY_KEY, category_id );
                 convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
                 convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+                convertedObject.put( COLUMN_POINTS, points );
+                convertedObject.put( COLUMN_XP, xp );
+                convertedObject.put( COLUMN_STEAM_ID, steam_id );
+                convertedObject.put( COLUMN_CONSOLE_ID, console_id );
                 convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
 
                 // convert composition object array from names to ids
@@ -493,7 +603,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 }
 
                 // insert converted composition array into engram json object
-                convertedObject.put( CompositionEntry.TABLE_NAME, convertedComposition );
+                convertedObject.put( COMPOSITION, convertedComposition );
 
                 // convert station object array from ids to names
                 List<Long> stations = mapLocalStationIds( stationArray );
@@ -515,8 +625,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 JSONObject object = inArray.getJSONObject( i );
 
                 long dlc_id = object.getInt( COLUMN_DLC_KEY );
-                JSONArray resourceArray = object.getJSONArray( ResourceEntry.TABLE_NAME );
-//                JSONArray engramArray = object.getJSONArray( EngramEntry.TABLE_NAME );
+                JSONArray resourceArray = object.getJSONArray( RESOURCE );
+//                JSONArray engramArray = object.getJSONArray( ENGRAM );
 
                 JSONArray convertedResourceArray = new JSONArray();
                 for ( int j = 0; j < resourceArray.length(); j++ ) {
@@ -571,8 +681,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
                 // insert standardized data
                 convertedObject.put( COLUMN_DLC_KEY, dlc_id );
-                convertedObject.put( ResourceEntry.TABLE_NAME, convertedResourceArray );
-//                convertedObject.put( EngramEntry.TABLE_NAME, convertedEngramArray );
+                convertedObject.put( RESOURCE, convertedResourceArray );
+//                convertedObject.put( ENGRAM, convertedEngramArray );
 
                 // insert converted object into converted array
                 outArray.put( convertedObject );
@@ -617,28 +727,28 @@ public class UpdateJSONActivity extends AppCompatActivity {
 
             // insert old dlc json data, no need to convert at this time
             publishProgress( "Inserting DLC values..." );
-            outObject.put( DLCEntry.TABLE_NAME,
-                    inObject.getJSONArray( DLCEntry.TABLE_NAME ) );
+            outObject.put( DLC,
+                    inObject.getJSONArray( DLC ) );
 
             // convert, then insert new station json data
             publishProgress( "Converting station values..." );
-            outObject.put( StationEntry.TABLE_NAME,
-                    convertStationJSONArrayToNames( inObject.getJSONArray( StationEntry.TABLE_NAME ) ) );
+            outObject.put( STATION,
+                    convertStationJSONArrayToNames( inObject.getJSONArray( STATION ) ) );
 
             // convert, then insert new category json data
             publishProgress( "Converting category values..." );
-            outObject.put( CategoryEntry.TABLE_NAME,
-                    convertCategoryJSONArrayToNames( inObject.getJSONArray( CategoryEntry.TABLE_NAME ) ) );
+            outObject.put( CATEGORY,
+                    convertCategoryJSONArrayToNames( inObject.getJSONArray( CATEGORY ) ) );
 
             // convert, then insert new resource json data
             publishProgress( "Converting resource values..." );
-            outObject.put( ResourceEntry.TABLE_NAME,
-                    convertResourceJSONArrayToNames( inObject.getJSONArray( ResourceEntry.TABLE_NAME ) ) );
+            outObject.put( RESOURCE,
+                    convertResourceJSONArrayToNames( inObject.getJSONArray( RESOURCE ) ) );
 
             // convert, then insert new engram json data
             publishProgress( "Converting engram values..." );
-            outObject.put( EngramEntry.TABLE_NAME,
-                    convertEngramJSONArrayToNames( inObject.getJSONArray( EngramEntry.TABLE_NAME ) ) );
+            outObject.put( ENGRAM,
+                    convertEngramJSONArrayToNames( inObject.getJSONArray( ENGRAM ) ) );
 
             // TODO: 3/1/2017 Don't forget to manually add total_conversion
 
@@ -705,7 +815,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 String[] stations = mapLocalStationNames( stationArray );
 
                 // insert converted station array into engram json object
-                convertedObject.put( StationEntry.TABLE_NAME, new JSONArray( stations ) );
+                convertedObject.put( STATION, new JSONArray( stations ) );
 
                 // insert converted object into converted array
                 outArray.put( convertedObject );
@@ -766,7 +876,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 Integer yield = object.getInt( COLUMN_YIELD );
                 Integer level = object.getInt( COLUMN_LEVEL );
                 Integer category_id = object.getInt( COLUMN_CATEGORY_KEY );
-                JSONArray compositionArray = object.getJSONArray( CompositionEntry.TABLE_NAME );
+                JSONArray compositionArray = object.getJSONArray( COMPOSITION );
                 JSONArray dlcArray = object.getJSONArray( COLUMN_DLC_KEY );
                 JSONArray stationArray = object.getJSONArray( COLUMN_STATION_KEY );
 
@@ -811,13 +921,13 @@ public class UpdateJSONActivity extends AppCompatActivity {
                 }
 
                 // insert converted composition array into engram json object
-                convertedObject.put( CompositionEntry.TABLE_NAME, convertedComposition );
+                convertedObject.put( COMPOSITION, convertedComposition );
 
                 // convert station object array from ids to names
                 String[] stations = mapLocalStationNames( stationArray );
 
                 // insert converted station array into engram json object
-                convertedObject.put( StationEntry.TABLE_NAME, new JSONArray( stations ) );
+                convertedObject.put( STATION, new JSONArray( stations ) );
 
                 // insert converted object into converted array
                 outArray.put( convertedObject );
@@ -902,18 +1012,6 @@ public class UpdateJSONActivity extends AppCompatActivity {
             if ( mEngramIdsByName.get( dlc_id ) == null )
                 mEngramIdsByName.put( dlc_id, new Map() );
 
-//            for ( int i = 0; i < mDlcIds.size(); i++ ) {
-//                long d = mDlcIds.valueAt( i );
-//
-//                if ( mEngramIdsByName.get( d ) == null )
-//                    continue;
-//
-//                if ( !mEngramIdsByName.get( d ).contains( name ) )
-//                    continue;
-//
-//                Log.d( TAG, d + ", " + _id + ", " + name );
-//            }
-
             mEngramIdsByName.get( dlc_id ).add( name, _id );
         }
 
@@ -955,22 +1053,22 @@ public class UpdateJSONActivity extends AppCompatActivity {
         }
     }
 
-    LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray ) throws JSONException {
+    private LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray ) throws JSONException {
         LongSparseArray<TotalConversion> map = new LongSparseArray<>();
 
         for ( int i = 0; i < jsonArray.length(); i++ ) {
             JSONObject jsonObject = jsonArray.getJSONObject( i );
 
-            long dlc_id = jsonObject.getLong( DatabaseContract.TotalConversionEntry.COLUMN_DLC_KEY );
-            JSONArray resourceArray = jsonObject.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME );
-            JSONArray engramArray = jsonObject.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME );
+            long dlc_id = jsonObject.getLong( COLUMN_DLC_KEY );
+            JSONArray resourceArray = jsonObject.getJSONArray( RESOURCE );
+            JSONArray engramArray = jsonObject.getJSONArray( ENGRAM );
 
             TotalConversion totalConversion = new TotalConversion();
             for ( int j = 0; j < resourceArray.length(); j++ ) {
                 JSONObject object = resourceArray.getJSONObject( j );
 
-                String from = object.getString( DatabaseContract.TotalConversionEntry.COLUMN_FROM );
-                String to = object.getString( DatabaseContract.TotalConversionEntry.COLUMN_TO );
+                String from = object.getString( COLUMN_FROM );
+                String to = object.getString( COLUMN_TO );
 
                 totalConversion.resources.put( from, to );
             }
@@ -984,9 +1082,9 @@ public class UpdateJSONActivity extends AppCompatActivity {
         return map;
     }
 
-    class TotalConversion {
-        List<String> engrams;
-        HashMap<String, String> resources;
+    private class TotalConversion {
+        final List<String> engrams;
+        final HashMap<String, String> resources;
 
         TotalConversion() {
             engrams = new ArrayList<>();
@@ -994,9 +1092,9 @@ public class UpdateJSONActivity extends AppCompatActivity {
         }
     }
 
-    class ComplexMap {
-        private HashMap<String, Long> resources;
-        private HashMap<String, Long> engrams;
+    private class ComplexMap {
+        private final HashMap<String, Long> resources;
+        private final HashMap<String, Long> engrams;
 
         ComplexMap() {
             this.resources = new HashMap<>();
@@ -1038,8 +1136,8 @@ public class UpdateJSONActivity extends AppCompatActivity {
         }
     }
 
-    class Map {
-        private HashMap<String, Long> map;
+    private class Map {
+        private final HashMap<String, Long> map;
 
         Map() {
             this.map = new HashMap<>();
@@ -1065,12 +1163,12 @@ public class UpdateJSONActivity extends AppCompatActivity {
     }
 
     class Category {
-        String imageFile;
-        String imageFolder;
-        String name;
-        String parent;
+        final String imageFile;
+        final String imageFolder;
+        final String name;
+        final String parent;
 
-        int[] dlc_ids;
+        final int[] dlc_ids;
         int[] station_ids;
 
         Category( String name, String parent, String imageFolder, String imageFile,
@@ -1084,19 +1182,19 @@ public class UpdateJSONActivity extends AppCompatActivity {
     }
 
     class Engram {
-        String category;
-        String description;
-        String imageFile;
-        String imageFolder;
-        String name;
+        final String category;
+        final String description;
+        final String imageFile;
+        final String imageFolder;
+        final String name;
 
-        Integer level;
-        Integer yield;
+        final Integer level;
+        final Integer yield;
 
-        LongSparseArray<Integer> composition;
+        final LongSparseArray<Integer> composition;
 
-        int[] dlc_ids;
-        int[] station_ids;
+        final int[] dlc_ids;
+        final int[] station_ids;
 
         Engram( String name, String description, String imageFolder, String imageFile,
                 int yield, int level, String category, LongSparseArray<Integer> composition,
@@ -1115,11 +1213,11 @@ public class UpdateJSONActivity extends AppCompatActivity {
     }
 
     class Resource {
-        String imageFile;
-        String imageFolder;
-        String name;
+        final String imageFile;
+        final String imageFolder;
+        final String name;
 
-        int[] dlc_ids;
+        final int[] dlc_ids;
 
         Resource( String name, String imageFolder, String imageFile, int[] dlc_ids ) {
             this.name = name;
@@ -1130,11 +1228,11 @@ public class UpdateJSONActivity extends AppCompatActivity {
     }
 
     class Station {
-        String imageFile;
-        String imageFolder;
-        String name;
+        final String imageFile;
+        final String imageFolder;
+        final String name;
 
-        int[] dlc_ids;
+        final int[] dlc_ids;
 
         Station( String name, String imageFolder, String imageFile, int[] dlc_ids ) {
             this.name = name;
