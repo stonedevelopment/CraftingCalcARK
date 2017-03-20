@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import arc.resource.calculator.tasks.InitializationTask;
@@ -52,6 +53,8 @@ public class LoadScreenActivity extends AppCompatActivity {
     private Listener mListener;
 
     private int mCurrentEvent;
+
+    private String mNewVersion;
 
     private boolean mDidUpdate = false;
 
@@ -134,6 +137,16 @@ public class LoadScreenActivity extends AppCompatActivity {
                             }
 
                             @Override
+                            public void onNewVersion( String oldVersion, String newVersion ) {
+                                // alert status window of new version
+                                updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE,
+                                        String.format( getString( R.string.initialization_db_event_new_version ),
+                                                oldVersion, newVersion ) ) );
+
+                                mNewVersion = newVersion;
+                            }
+
+                            @Override
                             public void onStart() {
                                 // alert status window that database initialization has begun
                                 updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE, getString( R.string.initialization_db_event_started ) ) );
@@ -213,7 +226,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 
                             PrefsUtil prefs = new PrefsUtil( getApplicationContext() );
 
-                            prefs.updateJSONVersion( getString( R.string.json_version ) );
+                            prefs.updateJSONVersion( mNewVersion );
                             prefs.saveStationIdBackToDefault();
                             prefs.saveCategoryLevelsBackToDefault();
 
@@ -225,7 +238,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 
                     default:
                         // say goodbye to user, trigger onFinish()
-                        updateStatusMessages( formatMessageWithElapsedTime( "Starting app! Craft efficiently, my friend." ) );
+                        updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_finish_event ) ) );
                         mListener.onFinish();
                         break;
                 }
@@ -263,7 +276,13 @@ public class LoadScreenActivity extends AppCompatActivity {
         ExceptionUtil.SendErrorReport( this, TAG, e );
     }
 
+    private void displayStatusMessage( String message ) {
+        mTextView.append( message.concat( "\n" ) );
+    }
+
     private void displayStatusMessages() {
+        Iterator<String> iterator = mStatusMessages.iterator();
+
         StringBuilder builder = new StringBuilder();
         for ( String statusMessage : mStatusMessages ) {
             builder.append( statusMessage ).append( '\n' );
@@ -272,16 +291,16 @@ public class LoadScreenActivity extends AppCompatActivity {
         mTextView.setText( builder.toString() );
     }
 
-    private void updateStatusMessages( String message ) {
-        if ( mStatusMessages.size() > MAX_LINES )
-            mStatusMessages.remove( 0 );
+    private void updateStatusMessages( final String message ) {
+//        if ( mStatusMessages.size() > MAX_LINES )
+//            mStatusMessages.remove( 0 );
 
         mStatusMessages.add( message );
 
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                displayStatusMessages();
+                displayStatusMessage( message );
             }
         } );
     }

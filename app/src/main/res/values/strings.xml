@@ -47,10 +47,12 @@
 
     <!-- LoadActivity: Events: -->
     <string name="initialization_init_event">Greetings Survivor!</string>
+    <string name="initialization_finish_event">Starting app!\n\nCraft efficiently, my friend.</string>
 
     <!-- LoadActivity: Events: Database Initialization -->
     <string name="initialization_db_event_init">Checking for new data..</string>
-    <string name="initialization_db_event_started">New items found! Initializing database with new stuff and things..</string>
+    <string name="initialization_db_event_new_version">New items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
+    <string name="initialization_db_event_started">Initializing database with new stuff and things..</string>
     <string name="initialization_db_event_error">Initialization failed.</string>
     <string name="initialization_db_event_finished_with_update">Initialization has finished, new data was added successfully; you\'re welcome!</string>
     <string name="initialization_db_event_finished_without_update">No new items found. :(</string>

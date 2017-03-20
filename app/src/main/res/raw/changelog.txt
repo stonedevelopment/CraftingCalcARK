@@ -19,6 +19,12 @@
     </style>
   </head>
   <body>
+    $ 1.2.2
+      % Version 1.2.2
+      _ 03/20/2016
+      * Various bugfixes.
+      * Fixed error reporting, now you should see a pop up window upon catching new bug. Any new bugs caught will be easier to fix now that this works again.
+
     $ 1.2.1
       % Version 1.2.1
       _ 03/19/2016

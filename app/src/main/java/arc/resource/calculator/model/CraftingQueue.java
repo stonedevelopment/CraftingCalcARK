@@ -67,7 +67,7 @@ public class CraftingQueue
         mCallback.addCraftingQueueEngramListener( this );
         mCallback.addCraftingQueueResourceListener( this );
 
-        mCallback.requestQueueEngramDataSetChange( context );
+        onEngramDataSetChangeRequest( context );
     }
 
     // -- PUBLIC GETTER METHODS --

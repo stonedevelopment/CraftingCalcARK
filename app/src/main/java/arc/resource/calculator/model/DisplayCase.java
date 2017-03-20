@@ -30,6 +30,7 @@ import arc.resource.calculator.db.DatabaseContract.StationEntry;
 import arc.resource.calculator.listeners.CraftingQueueListener;
 import arc.resource.calculator.listeners.DisplayCaseListener;
 import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.model.engram.Engram;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.util.PrefsUtil;
@@ -375,6 +376,21 @@ public class DisplayCase
      * CATEGORY METHODS
      */
 
+    private String getType( int position ) {
+        Object o = mValues.get( position );
+
+        if ( o instanceof Category )
+            return CategoryEntry.TABLE_NAME;
+
+        if ( o instanceof Station )
+            return StationEntry.TABLE_NAME;
+
+        if ( o instanceof Engram )
+            return EngramEntry.TABLE_NAME;
+
+        return null;
+    }
+
     public boolean isCategory( int position ) {
         return position > INVALID_ITEM_POSITION && mValues.get( position ) instanceof Category;
     }
@@ -389,45 +405,50 @@ public class DisplayCase
 
     public void changeCategory( Context context, int position ) {
         try {
-            Category category = getCategory( position );
+            if ( isCategory( position ) ) {
+                Category category = getCategory( position );
 
-            Log.d( TAG, "Changing category to [" + position + "] " + category.toString() );
+                Log.d( TAG, "Changing category to [" + position + "] " + category.toString() );
 
-            long dlc_id = new PrefsUtil( context ).getDLCPreference();
-            if ( position == 0 ) {
-                if ( category.getParent() == SEARCH_ROOT ) {
-                    // backing out of search view
-                    mSearchQuery = null;
-                } else {
-                    if ( isCurrentCategoryLevelRoot() ) {
-                        if ( isFilteredByStation( context ) ) {
-                            // Back button to station list
-                            setCurrentCategoryLevelsToStationRoot();
-                        } else {
-                            // Normal Category object
-                            // Grabbing ID is the best way to track its location.
-                            setCurrentCategoryLevels( category.getId(), category.getParent() );
-                        }
+                long dlc_id = new PrefsUtil( context ).getDLCPreference();
+                if ( position == 0 ) {
+                    if ( category.getParent() == SEARCH_ROOT ) {
+                        // backing out of search view
+                        mSearchQuery = null;
                     } else {
-                        if ( isCurrentCategoryParentLevelRoot() ) {
-                            // Back button to category list
-                            setCurrentCategoryLevelsToRoot();
+                        if ( isCurrentCategoryLevelRoot() ) {
+                            if ( isFilteredByStation( context ) ) {
+                                // Back button to station list
+                                setCurrentCategoryLevelsToStationRoot();
+                            } else {
+                                // Normal Category object
+                                // Grabbing ID is the best way to track its location.
+                                setCurrentCategoryLevels( category.getId(), category.getParent() );
+                            }
                         } else {
-                            // Normal Back Category object
-                            // Query for details via its Parent Level
-                            setCurrentCategoryLevels( category.getParent(),
-                                    queryForCategory( context,
-                                            CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
+                            if ( isCurrentCategoryParentLevelRoot() ) {
+                                // Back button to category list
+                                setCurrentCategoryLevelsToRoot();
+                            } else {
+                                // Normal Back Category object
+                                // Query for details via its Parent Level
+                                setCurrentCategoryLevels( category.getParent(),
+                                        queryForCategory( context,
+                                                CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
+                            }
                         }
                     }
+                } else {
+                    // Normal Category object
+                    // Grabbing ID is the best way to track its location.
+                    setCurrentCategoryLevels( category.getId(), category.getParent() );
                 }
-            } else {
-                // Normal Category object
-                // Grabbing ID is the best way to track its location.
-                setCurrentCategoryLevels( category.getId(), category.getParent() );
-            }
 
-            mCallback.requestDisplayCaseDataSetChange( context );
+                mCallback.requestDisplayCaseDataSetChange( context );
+            } else {
+                throw new Exception(
+                        "changeCategory(): position is not a Category object: " + position + ", typeof: " + getType( position ) );
+            }
         } catch ( Exception e ) {
             mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         }
@@ -566,14 +587,23 @@ public class DisplayCase
     }
 
     public void changeStation( Context context, int position ) {
-        Station station = getStation( position );
+        try {
+            if ( isStation( position ) ) {
+                Station station = getStation( position );
 
-        Log.d( TAG, "Changing station to [" + position + "] " + station.toString() );
+                Log.d( TAG, "Changing station to [" + position + "] " + station.toString() );
 
-        setCurrentStationId( station.getId() );
-        setCurrentCategoryLevelsToRoot();
+                setCurrentStationId( station.getId() );
+                setCurrentCategoryLevelsToRoot();
 
-        mCallback.requestDisplayCaseDataSetChange( context );
+                mCallback.requestDisplayCaseDataSetChange( context );
+            } else {
+                throw new Exception(
+                        "changeStation(): position is not a Station object: " + position + ", typeof: " + getType( position ) );
+            }
+        } catch ( Exception e ) {
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
+        }
     }
 
     private Station queryForStation( Context context, Uri uri ) {

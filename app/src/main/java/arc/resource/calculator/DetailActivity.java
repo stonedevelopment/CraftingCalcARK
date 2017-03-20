@@ -43,15 +43,21 @@ public class DetailActivity extends AppCompatActivity
 
     private AdUtil mAdUtil;
 
+    private ListenerUtil mCallback;
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_detail );
-        getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
+        mCallback = ListenerUtil.getInstance();
+        mCallback.setSendErrorReportListener( this );
 
         try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
             long _id = getIntent().getExtras().getLong( Util.DETAIL_ID );
-            int quantity = getIntent().getExtras().getInt( Util.DETAIL_QUANTITY );
+//            int quantity = getIntent().getExtras().getInt( Util.DETAIL_QUANTITY );
             mShowcase = new Showcase( this, _id );
 
             ImageView imageView = ( ImageView ) findViewById( R.id.engram_detail_imageView );
@@ -176,7 +182,7 @@ public class DetailActivity extends AppCompatActivity
             mAdUtil = new AdUtil( this, R.id.content_detail );
             mAdUtil.init();
         } catch ( Exception e ) {
-            ListenerUtil.getInstance().emitSendErrorReportWithAlertDialog( TAG, e );
+            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
         }
     }
 

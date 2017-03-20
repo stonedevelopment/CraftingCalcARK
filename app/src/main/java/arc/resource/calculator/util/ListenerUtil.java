@@ -25,7 +25,6 @@ public class ListenerUtil {
     private final List<CraftingQueueListener> mCraftingQueueListeners;
     private final List<QueueEngramListener> mQueueEngramListeners;
     private final List<QueueResourceListener> mQueueResourceListeners;
-    private final List<SendErrorReportListener> mSendErrorReportListeners;
 
     public static ListenerUtil getInstance() {
         if ( sInstance == null ) {
@@ -40,7 +39,6 @@ public class ListenerUtil {
         mCraftingQueueListeners = new ArrayList<>();
         mQueueEngramListeners = new ArrayList<>();
         mQueueResourceListeners = new ArrayList<>();
-        mSendErrorReportListeners = new ArrayList<>();
     }
 
     public void setMainActivityListener( MainActivityListener listener ) {
@@ -214,14 +212,10 @@ public class ListenerUtil {
      */
 
     public void emitSendErrorReportWithAlertDialog( String tag, Exception e ) {
-        for ( SendErrorReportListener listener : mSendErrorReportListeners ) {
-            listener.onSendErrorReport( tag, e, true );
-        }
+        mSendErrorReportListener.onSendErrorReport( tag, e, true );
     }
 
     public void emitSendErrorReport( String tag, Exception e ) {
-        for ( SendErrorReportListener listener : mSendErrorReportListeners ) {
-            listener.onSendErrorReport( tag, e, false );
-        }
+        mSendErrorReportListener.onSendErrorReport( tag, e, false );
     }
 }
