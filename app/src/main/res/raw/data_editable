@@ -1,6 +1,6 @@
 {
   "json": {
-    "version": "255.3",
+    "version": "999.0",
     "changelog": {
       "255.3": "Removed Preserving Bin from Refined category.",
       "255.2": "Updated some Engram compositions, added item id's, xp, and engram points",
@@ -24,7 +24,8 @@
       "247.4": "Added all (hopefully!) Engrams from Primitive+",
       "247.3": "Updated Refined Engrams to Primitive+, added Yield to Engrams",
       "247.2": "Updated Resources to Primitive+, added DLC table",
-      "247.1": "Updated Categories to Primitive+"
+      "247.1": "Updated Categories to Primitive+",
+      "999.x": "Testing versions"
     }
   },
   "dlc": [

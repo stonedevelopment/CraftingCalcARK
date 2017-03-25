@@ -264,8 +264,12 @@ public class DisplayCase
      * ENGRAM METHODS
      */
 
+    private boolean isValidPosition( int position ) {
+        return position > INVALID_ITEM_POSITION && position < mValues.size();
+    }
+
     public boolean isEngram( int position ) {
-        return position > INVALID_ITEM_POSITION && mValues.get( position ) instanceof DisplayEngram;
+        return isValidPosition( position ) && mValues.get( position ) instanceof DisplayEngram;
     }
 
     private boolean isEngram( Object o ) {
@@ -392,7 +396,7 @@ public class DisplayCase
     }
 
     public boolean isCategory( int position ) {
-        return position > INVALID_ITEM_POSITION && mValues.get( position ) instanceof Category;
+        return isValidPosition( position ) && mValues.get( position ) instanceof Category;
     }
 
     private boolean isCategory( Object o ) {
@@ -575,7 +579,7 @@ public class DisplayCase
      */
 
     public boolean isStation( int position ) {
-        return position > INVALID_ITEM_POSITION && mValues.get( position ) instanceof Station;
+        return isValidPosition( position ) && mValues.get( position ) instanceof Station;
     }
 
     private boolean isStation( Object o ) {
@@ -962,7 +966,7 @@ public class DisplayCase
     public void onRequestSearch( Context context, String query ) {
         mSearchQuery = query;
 
-        new QueryForDataTask( context ).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR );
+        new QueryForDataTask( context ).execute();
     }
 
     @Override
@@ -972,7 +976,7 @@ public class DisplayCase
 
     @Override
     public void onRequestDisplayCaseDataSetChange( Context context ) {
-        new QueryForDataTask( context ).executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR );
+        new QueryForDataTask( context ).execute();
     }
 
     @Override

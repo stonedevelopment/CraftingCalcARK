@@ -40,11 +40,15 @@ public class DialogUtil {
                 .setPositiveButton( context.getString( R.string.quantity_dialog_positive_button ), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick( DialogInterface dialog, int which ) {
-                        if ( !editText.getText().toString().equals( "" ) ) {
-                            int quantity = Integer.parseInt( editText.getText().toString() );
+                        String quantityText = editText.getText().toString();
 
-                            if ( quantity > 0 )
-                                ListenerUtil.getInstance().requestUpdateQuantity( context, _id, quantity );
+                        if ( !quantityText.equals( "" ) ) {
+                            if ( quantityText.length() < 5 ) {
+                                int quantity = Integer.parseInt( quantityText );
+
+                                if ( quantity > 0 )
+                                    ListenerUtil.getInstance().requestUpdateQuantity( context, _id, quantity );
+                            }
                         }
                     }
                 } );

@@ -85,7 +85,6 @@ public class PrefsUtil {
                     Long.parseLong( mContext.getString( R.string.pref_category_default_value_with_stations ) )
             );
         } else {
-//            return 0;
             return mSharedPreferences.getLong(
                     mContext.getString( R.string.pref_category_level ),
                     Long.parseLong( mContext.getString( R.string.pref_category_default_value ) )
@@ -104,7 +103,6 @@ public class PrefsUtil {
                     mContext.getString( R.string.pref_category_parent ),
                     Long.parseLong( mContext.getString( R.string.pref_category_default_value ) )
             );
-//            return 0;
         }
     }
 
@@ -130,7 +128,27 @@ public class PrefsUtil {
                 .apply();
     }
 
-    public void saveCategoryLevelsBackToDefault() {
+    public void saveRequiredLevel( int level ) {
+        mSharedPreferences
+                .edit()
+                .putLong( mContext.getString( R.string.pref_filter_level_value_default ), level )
+                .apply();
+    }
+
+    public void saveStationId( long station_id ) {
+        mSharedPreferences
+                .edit()
+                .putLong( mContext.getString( R.string.pref_station_id ), station_id )
+                .apply();
+    }
+
+    public void saveDefaults() {
+        saveStationIdBackToDefault();
+        saveCategoryLevelsBackToDefault();
+//        saveRequiredLevelBackToDefault();
+    }
+
+    private void saveCategoryLevelsBackToDefault() {
         if ( getStationFilterPreference() ) {
             saveCategoryLevels(
                     Long.parseLong( mContext.getString( R.string.pref_category_default_value_with_stations ) ),
@@ -144,17 +162,12 @@ public class PrefsUtil {
         }
     }
 
-    public void saveStationId( long station_id ) {
-        mSharedPreferences
-                .edit()
-                .putLong( mContext.getString( R.string.pref_station_id ), station_id )
-                .apply();
+    private void saveStationIdBackToDefault() {
+        saveStationId( Long.parseLong( mContext.getString( R.string.pref_station_id_default_value ) ) );
     }
 
-    public void saveStationIdBackToDefault() {
-        saveStationId(
-                Long.parseLong( mContext.getString( R.string.pref_station_id_default_value ) )
-        );
+    private void saveRequiredLevelBackToDefault() {
+        saveRequiredLevel( Integer.parseInt( mContext.getString( R.string.pref_filter_level_value_default ) ) );
     }
 
     public boolean getPurchasePref( String sku ) {

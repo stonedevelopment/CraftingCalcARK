@@ -133,6 +133,7 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<DisplayCaseList
 
     private boolean isEngram( int position ) {
         return mDisplayCase.isEngram( position );
+
     }
 
     public long getLevel() {
@@ -241,16 +242,14 @@ public class DisplayCaseListAdapter extends RecyclerView.Adapter<DisplayCaseList
             int position = getAdapterPosition();
             Context context = view.getContext();
 
-            if ( position < getItemCount() ) {
-                if ( isEngram( position ) ) {
-                    mCallback.requestIncreaseQuantity( context, mDisplayCase.getIdByPosition( position ) );
-                } else if ( isCategory( position ) ) {
-                    changeCategory( context, position );
-                } else if ( isStation( position ) ) {
-                    changeStation( context, position );
-                } else {
-                    mCallback.emitSendErrorReport( TAG, new ArrayIndexOutOfBoundsException( position ) );
-                }
+            if ( isEngram( position ) ) {
+                mCallback.requestIncreaseQuantity( context, mDisplayCase.getIdByPosition( position ) );
+            } else if ( isCategory( position ) ) {
+                changeCategory( context, position );
+            } else if ( isStation( position ) ) {
+                changeStation( context, position );
+            } else {
+                mCallback.emitSendErrorReport( TAG, new ArrayIndexOutOfBoundsException( position ) );
             }
         }
 

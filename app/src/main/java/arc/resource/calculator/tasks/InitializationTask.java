@@ -12,13 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
 import java.util.Vector;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.util.JsonUtil;
-import arc.resource.calculator.util.PrefsUtil;
 
 public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG = InitializationTask.class.getSimpleName();
@@ -26,8 +22,9 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>();
     private final SparseArray<Long> mDlcIds = new SparseArray<>();
 
-    private final Listener mListener;
-    private final Context mContext;
+    private Listener mListener;
+    private JSONObject mJSONObject;
+    private Context mContext;
 
     // caught exception
     private Exception mException;
@@ -37,8 +34,6 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
 
         void onInit();
 
-        void onNewVersion( String oldVersion, String newVersion );
-
         void onStart();
 
         void onUpdate( String message );
@@ -46,53 +41,70 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         void onFinish( boolean didUpdate );
     }
 
-    public InitializationTask( Context context, Listener listener ) {
+    public InitializationTask( Context context, JSONObject object, Listener listener ) {
+        setContext( context );
+        setJSONObject( object );
+        setListener( listener );
+    }
+
+    private void setContext( Context context ) {
         mContext = context;
-        mListener = listener;
     }
 
     private Context getContext() {
         return mContext;
     }
 
+    private void setJSONObject( JSONObject object ) {
+        mJSONObject = object;
+    }
+
+    JSONObject getJSONObject() {
+        return mJSONObject;
+    }
+
+    private void setListener( Listener listener ) {
+        mListener = listener;
+    }
+
+    private Listener getListener() {
+        return mListener;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        getListener().onInit();
+    }
+
+    @Override
+    protected void onPostExecute( Boolean didUpdate ) {
+        if ( mException == null )
+            getListener().onFinish( didUpdate );
+        else
+            getListener().onError( mException );
+    }
+
     @Override
     protected Boolean doInBackground( Void... params ) {
         try {
-            // read the local converted json file into a string
-            String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_finalized );
-
-            // build a json object based on the read json string
-            JSONObject object = new JSONObject( jsonString );
-
-            JSONObject json = object.getJSONObject( "json" );
-            String oldVersion = new PrefsUtil( getContext() ).getJSONVersion();
-            String newVersion = json.getString( "version" );
-
-            // now, let's check if we even need to update.
-            if ( !isNewVersion( oldVersion, newVersion ) ) {
-                return false;
-            }
-
-            // emit new version event
-            mListener.onNewVersion( oldVersion, newVersion );
-
-            // new version! let's get cracking!
             // let user know that we've begun the process.
-            mListener.onStart();
+            getListener().onStart();
 
             // first, let's remove all records from database
             deleteAllRecordsFromProvider();
 
             // map "total conversion" ids to assist methods with injecting converted ids
-            mTotalConversion = mapTotalConversion( object.getJSONArray( DatabaseContract.TotalConversionEntry.TABLE_NAME ) );
+            mTotalConversion = mapTotalConversion( getJSONObject().getJSONArray( DatabaseContract.TotalConversionEntry.TABLE_NAME ) );
 
             // finally, let's start inserting some json data into our database!
-            insertDLC( object.getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
-            insertStations( object.getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) );
-            insertCategories( object.getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) );
-            insertResources( object.getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) );
-            insertEngrams( object.getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) );
-            insertComplexResources( object.getJSONArray( DatabaseContract.ComplexResourceEntry.TABLE_NAME ) );
+            insertDLC( getJSONObject().getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
+            insertStations( getJSONObject().getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) );
+            insertCategories( getJSONObject().getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) );
+            insertResources( getJSONObject().getJSONArray( DatabaseContract.ResourceEntry.TABLE_NAME ) );
+            insertEngrams( getJSONObject().getJSONArray( DatabaseContract.EngramEntry.TABLE_NAME ) );
+            insertComplexResources( getJSONObject().getJSONArray( DatabaseContract.ComplexResourceEntry.TABLE_NAME ) );
+
+            return true;
         }
 
         // If error, send error signal, stop service
@@ -100,32 +112,10 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             mException = e;
             return false;
         }
-
-        return true;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        mListener.onInit();
-    }
-
-    @Override
-    protected void onPostExecute( Boolean didUpdate ) {
-        if ( mException == null )
-            mListener.onFinish( didUpdate );
-        else
-            mListener.onError( mException );
-    }
-
-    private boolean isNewVersion( String oldVersion, String newVersion ) {
-//        String oldVersion = new PrefsUtil( getContext() ).getJSONVersion();
-//        String newVersion = getContext().getString( R.string.json_version );
-
-        return !Objects.equals( oldVersion, newVersion );
     }
 
     private void updateStatus( String statusMessage ) {
-        mListener.onUpdate( statusMessage );
+        getListener().onUpdate( statusMessage );
     }
 
     private int delete( Uri uri ) {

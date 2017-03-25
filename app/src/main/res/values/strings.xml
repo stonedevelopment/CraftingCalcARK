@@ -48,17 +48,21 @@
     <!-- LoadActivity: Events: -->
     <string name="initialization_init_event">Greetings Survivor!</string>
     <string name="initialization_finish_event">Starting app!\n\nCraft efficiently, my friend.</string>
+    <string name="initialization_error_event">Initialization failed.</string>
 
     <!-- LoadActivity: Events: Database Initialization -->
-    <string name="initialization_db_event_init">Checking for new data..</string>
-    <string name="initialization_db_event_new_version">New items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
+    <string name="initialization_json_event_init">Checking for new data..</string>
+    <string name="initialization_json_event_new_version">New items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
+    <string name="initialization_json_event_started">Converting new items..</string>
+    <string name="initialization_json_event_finished_with_update">Conversion complete!</string>
+    <string name="initialization_json_event_finished_without_update">No new items found. :(</string>
+
+    <!-- LoadActivity: Events: Database Initialization -->
     <string name="initialization_db_event_started">Initializing database with new stuff and things..</string>
-    <string name="initialization_db_event_error">Initialization failed.</string>
-    <string name="initialization_db_event_finished_with_update">Initialization has finished, new data was added successfully; you\'re welcome!</string>
-    <string name="initialization_db_event_finished_without_update">No new items found. :(</string>
+    <string name="initialization_db_event_finished">Initialization has finished, new data was added successfully; you\'re welcome!</string>
 
     <!-- LoadActivity: Events: Preferences -->
-    <string name="initialization_pref_event_init">Saving preferences..</string>
+    <string name="initialization_pref_event_started">Saving preferences..</string>
     <string name="initialization_pref_event_finished">Preferences saved!</string>
 
     <!-- LoadActivity: Events: Purchases -->

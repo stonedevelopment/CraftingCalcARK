@@ -17,15 +17,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import arc.resource.calculator.tasks.InitializationTask;
+import arc.resource.calculator.tasks.ParseConvertTask;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
+
+import static arc.resource.calculator.LoadScreenActivity.EVENT.INIT;
 
 public class LoadScreenActivity extends AppCompatActivity {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
@@ -36,13 +41,18 @@ public class LoadScreenActivity extends AppCompatActivity {
     private static final int TYPE_PREFERENCES = 3;
 
     private static final int EVENT_INIT = 0;
-    private static final int EVENT_DATABASE = 1;
-    private static final int EVENT_PURCHASE = 2;
-    private static final int EVENT_PREFERENCES = 3;
+    private static final int EVENT_JSON = 1;
+    private static final int EVENT_DATABASE = 2;
+    private static final int EVENT_PURCHASE = 3;
+    private static final int EVENT_PREFERENCES = 4;
 
-    private static final int MAX_LINES = 10;
+    enum EVENT {
+        INIT, JSON, DATABASE, PURCHASE, PREFERENCES
+    }
 
-    private static final long DELAY_MILLIS = 3000;
+//    private static final int MAX_LINES = 10;
+
+    private static final long DELAY_MILLIS = 1500;
 
     private final List<String> mStatusMessages = new ArrayList<>();
 
@@ -52,29 +62,29 @@ public class LoadScreenActivity extends AppCompatActivity {
 
     private Listener mListener;
 
-    private int mCurrentEvent;
-
     private String mNewVersion;
 
+    private boolean mHasUpdate = false;
     private boolean mDidUpdate = false;
+    private JSONObject mJSONObject;
 
 //    private PurchaseUtil mPurchaseUtil;
 
     private interface Listener {
         // triggers upon any error found, alerts user via status screen, sends report, closes app
-        void onError( Exception e );
+        void onError( EVENT event, Exception e );
 
         // sets current event id, triggers first event
         void onInit();
 
         // start current event, triggers end event
-        void onStartEvent();
+        void onStartEvent( EVENT event );
 
         // triggers next event
-        void onEndEvent();
+        void onEndEvent( EVENT event );
 
         // triggers start event
-        void onNextEvent();
+        void onNextEvent( EVENT event );
 
         // triggers app to start main activity
         void onFinish();
@@ -91,57 +101,55 @@ public class LoadScreenActivity extends AppCompatActivity {
 
         mListener = new Listener() {
             @Override
-            public void onError( Exception e ) {
+            public void onError( EVENT event, Exception e ) {
                 // alert user of error, send error report, close app
-                updateStatusMessages( formatMessageWithPrefix( TYPE_APP,
-                        String.format( getString( R.string.load_activity_status_message_error_with_message ), e.getLocalizedMessage() ) ) );
+                updateStatusMessages( String.format( getString( R.string.load_activity_status_message_error_with_message ), e.getLocalizedMessage() ) );
 
                 // send error report
-                updateStatusMessages( formatMessageWithPrefix( TYPE_APP, getString( R.string.load_activity_status_message_send_error_report ) ) );
+                updateStatusMessages( getString( R.string.load_activity_status_message_send_error_report ) );
                 sendErrorReport( e );
 
                 // closing app
-                updateStatusMessages( formatMessageWithPrefix( TYPE_APP, getString( R.string.load_activity_status_message_closing_app ) ) );
+                updateStatusMessages( getString( R.string.load_activity_status_message_closing_app ) );
                 finishActivityWithError();
             }
 
             @Override
             public void onInit() {
-                mCurrentEvent = EVENT_INIT;
-                mListener.onStartEvent();
+                mListener.onStartEvent( INIT );
             }
 
             @Override
-            public void onStartEvent() {
-                switch ( mCurrentEvent ) {
-                    case EVENT_INIT:
+            public void onStartEvent( final EVENT event ) {
+                Log.d( TAG, "onStartEvent(): " + event );
+
+                switch ( event ) {
+                    case INIT:
                         updateStatusMessages( getString( R.string.initialization_init_event ) );
-                        mListener.onEndEvent();
+                        mListener.onEndEvent( event );
                         break;
 
-                    case EVENT_DATABASE:
-                        new InitializationTask( getApplicationContext(), new InitializationTask.Listener() {
+                    case JSON:
+                        new ParseConvertTask( getApplicationContext(), new ParseConvertTask.Listener() {
                             @Override
                             public void onError( Exception e ) {
                                 // alert status window of error
-                                updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE, getString( R.string.initialization_db_event_error ) ) );
+                                updateStatusMessages( getString( R.string.initialization_error_event ) );
 
                                 // trigger activity error event handler
-                                mListener.onError( e );
+                                mListener.onError( event, e );
                             }
 
                             @Override
                             public void onInit() {
                                 // alert status window that database initialization is initializing
-                                updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE, getString( R.string.initialization_db_event_init ) ) );
+                                updateStatusMessages( getString( R.string.initialization_json_event_init ) );
                             }
 
                             @Override
                             public void onNewVersion( String oldVersion, String newVersion ) {
                                 // alert status window of new version
-                                updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE,
-                                        String.format( getString( R.string.initialization_db_event_new_version ),
-                                                oldVersion, newVersion ) ) );
+                                updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version ), oldVersion, newVersion ) );
 
                                 mNewVersion = newVersion;
                             }
@@ -149,34 +157,92 @@ public class LoadScreenActivity extends AppCompatActivity {
                             @Override
                             public void onStart() {
                                 // alert status window that database initialization has begun
-                                updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE, getString( R.string.initialization_db_event_started ) ) );
+                                updateStatusMessages( getString( R.string.initialization_json_event_started ) );
                             }
 
                             @Override
                             public void onUpdate( String message ) {
                                 // alert status window with a new message
-                                updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE, message ) );
+                                updateStatusMessages( message );
                             }
 
                             @Override
-                            public void onFinish( boolean didUpdate ) {
-                                // alert status window that database initialization has finished, with or without an error
-                                if ( didUpdate ) {
-                                    updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE, formatMessageWithElapsedTime( getString( R.string.initialization_db_event_finished_with_update ) ) ) );
-                                } else {
-                                    updateStatusMessages( formatMessageWithPrefix( TYPE_DATABASE, getString( R.string.initialization_db_event_finished_without_update ) ) );
-                                }
+                            public void onFinish() {
+                                // alert status window that database initialization has finished, no new update
+                                updateStatusMessages( getString( R.string.initialization_json_event_finished_without_update ) );
 
-                                // set global boolean to notify mainactivity
-                                mDidUpdate = didUpdate;
+                                // trigger next event (database initialization)
+                                mListener.onEndEvent( event );
+                            }
 
-                                // trigger next event (in-app purchases?)
-                                mListener.onEndEvent();
+                            @Override
+                            public void onFinish( JSONObject newObject ) {
+                                // alert status window that database initialization has finished, with update
+                                updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_json_event_finished_with_update ) ) );
+
+                                // set global boolean to notify initialization task
+                                mHasUpdate = true;
+
+                                // set global json object for use in initialization task
+                                mJSONObject = newObject;
+
+                                // trigger next event (database initialization)
+                                mListener.onEndEvent( event );
                             }
                         } ).execute();
                         break;
 
-                    case EVENT_PURCHASE:
+                    case DATABASE:
+                        if ( mHasUpdate ) {
+                            new InitializationTask( getApplicationContext(), mJSONObject, new InitializationTask.Listener() {
+                                @Override
+                                public void onError( Exception e ) {
+                                    // alert status window of error
+                                    updateStatusMessages( getString( R.string.initialization_error_event ) );
+
+                                    // trigger activity error event handler
+                                    mListener.onError( event, e );
+                                }
+
+                                @Override
+                                public void onInit() {
+                                    // alert status window that database initialization is initializing
+//                                updateStatusMessages( getString( R.string.initialization_db_event_init ) );
+                                }
+
+                                @Override
+                                public void onStart() {
+                                    // alert status window that database initialization has begun
+                                    updateStatusMessages( getString( R.string.initialization_db_event_started ) );
+                                }
+
+                                @Override
+                                public void onUpdate( String message ) {
+                                    // alert status window with a new message
+                                    updateStatusMessages( message );
+                                }
+
+                                @Override
+                                public void onFinish( boolean didUpdate ) {
+                                    // alert status window that database initialization has finished, with or without an error
+                                    if ( didUpdate ) {
+                                        updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_db_event_finished ) ) );
+
+                                        // set global boolean used to notify main activity when called
+                                        mDidUpdate = true;
+                                    }
+
+                                    // trigger next event (in-app purchases?)
+                                    mListener.onEndEvent( event );
+                                }
+                            } ).execute();
+                        } else {
+                            // trigger next event (in-app purchases?)
+                            mListener.onEndEvent( event );
+                        }
+                        break;
+
+                    case PURCHASE:
                         // alert status window that initializing has begun
 //                        updateStatusMessages( formatMessageWithPrefix( TYPE_PURCHASE, getString( R.string.initialization_purchase_event_init ) ) );
 //
@@ -216,48 +282,61 @@ public class LoadScreenActivity extends AppCompatActivity {
 //
 //                            }
 //                        } );
-                        mListener.onEndEvent();
+
+                        // trigger next event (preferences?)
+                        mListener.onEndEvent( event );
                         break;
 
-                    case EVENT_PREFERENCES:
+                    case PREFERENCES:
                         // if database updated, save new version to preferences, reset categories back to default
-                        if ( mDidUpdate ) {
-                            updateStatusMessages( formatMessageWithPrefix( TYPE_PREFERENCES, getString( R.string.initialization_pref_event_init ) ) );
+                        if ( mHasUpdate ) {
+                            updateStatusMessages( getString( R.string.initialization_pref_event_started ) );
 
                             PrefsUtil prefs = new PrefsUtil( getApplicationContext() );
 
                             prefs.updateJSONVersion( mNewVersion );
-                            prefs.saveStationIdBackToDefault();
-                            prefs.saveCategoryLevelsBackToDefault();
+                            prefs.saveDefaults();
 
-                            updateStatusMessages( formatMessageWithPrefix( TYPE_PREFERENCES, getString( R.string.initialization_pref_event_finished ) ) );
+                            updateStatusMessages( getString( R.string.initialization_pref_event_finished ) );
                         }
 
-                        mListener.onEndEvent();
+                        // trigger next event (end of events?)
+                        mListener.onEndEvent( event );
                         break;
 
                     default:
-                        // say goodbye to user, trigger onFinish()
-                        updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_finish_event ) ) );
-                        mListener.onFinish();
+                        Log.e( TAG, "Incorrect Event Type: " + event );
                         break;
                 }
             }
 
             @Override
-            public void onEndEvent() {
-                mListener.onNextEvent();
+            public void onEndEvent( EVENT event ) {
+                mListener.onNextEvent( event );
             }
 
             @Override
-            public void onNextEvent() {
-                mCurrentEvent++;
+            public void onNextEvent( EVENT event ) {
+                int index = event.ordinal();
 
-                mListener.onStartEvent();
+                index++;
+
+                EVENT[] events = EVENT.values();
+
+                if ( index < events.length ) {
+                    EVENT nextEvent = events[index];
+
+                    Log.d( TAG, "onNextEvent(): " + nextEvent + ", " + index );
+                    mListener.onStartEvent( nextEvent );
+                } else
+                    mListener.onFinish();
             }
 
             @Override
             public void onFinish() {
+                // say goodbye to user, start app
+                updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_finish_event ) ) );
+
                 finishActivity();
             }
         };
@@ -277,59 +356,34 @@ public class LoadScreenActivity extends AppCompatActivity {
     }
 
     private void displayStatusMessage( String message ) {
+        Log.d( TAG, "displayStatusMessage(): " + message );
         mTextView.append( message.concat( "\n" ) );
     }
 
     private void displayStatusMessages() {
-        Iterator<String> iterator = mStatusMessages.iterator();
-
-        StringBuilder builder = new StringBuilder();
-        for ( String statusMessage : mStatusMessages ) {
-            builder.append( statusMessage ).append( '\n' );
-        }
-
-        mTextView.setText( builder.toString() );
+//        Iterator<String> iterator = mStatusMessages.iterator();
+//
+//        StringBuilder builder = new StringBuilder();
+//        for ( String statusMessage : mStatusMessages ) {
+//            builder.append( statusMessage ).append( '\n' );
+//        }
+//
+//        mTextView.setText( builder.toString() );
     }
 
     private void updateStatusMessages( final String message ) {
 //        if ( mStatusMessages.size() > MAX_LINES )
 //            mStatusMessages.remove( 0 );
 
-        mStatusMessages.add( message );
+//        mStatusMessages.add( message );
 
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
+//                displayStatusMessages( );
                 displayStatusMessage( message );
             }
         } );
-    }
-
-    private String formatMessageWithPrefix( int type, String message ) {
-        String prefix;
-        switch ( type ) {
-            case TYPE_APP:
-                prefix = getString( R.string.load_activity_status_message_prefix_app );
-                break;
-
-            case TYPE_DATABASE:
-                prefix = getString( R.string.load_activity_status_message_prefix_db );
-                break;
-
-            case TYPE_PURCHASE:
-                prefix = getString( R.string.load_activity_status_message_prefix_purchase );
-                break;
-
-            case TYPE_PREFERENCES:
-                prefix = getString( R.string.load_activity_status_message_prefix_preferences );
-                break;
-
-            default:
-                prefix = getString( R.string.load_activity_status_message_prefix_unknown );
-        }
-
-//        return String.format( getString( R.string.load_activity_status_message_format_with_prefix ), prefix, message );
-        return message;
     }
 
     // http://stackoverflow.com/questions/15248891/how-to-measure-elapsed-time
@@ -348,7 +402,7 @@ public class LoadScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent( getApplicationContext(), MainActivity.class );
-                intent.putExtra( MainActivity.INTENT_KEY_DID_UPDATE, mDidUpdate );
+                intent.putExtra( MainActivity.INTENT_KEY_DID_UPDATE, mHasUpdate );
 
                 startActivity( intent );
 

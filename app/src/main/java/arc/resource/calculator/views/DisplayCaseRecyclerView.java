@@ -65,12 +65,6 @@ public class DisplayCaseRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     private class Manager extends GridLayoutManager {
-
-        @Override
-        public boolean supportsPredictiveItemAnimations() {
-            return false;
-        }
-
         public Manager( Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes ) {
             super( context, attrs, defStyleAttr, defStyleRes );
         }
