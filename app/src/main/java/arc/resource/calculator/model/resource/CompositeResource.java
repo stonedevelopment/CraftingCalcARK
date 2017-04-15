@@ -22,6 +22,16 @@ public class CompositeResource extends Resource {
     public CompositeResource( long id, String name, String folder, String file, int quantity ) {
         super( id, name, folder, file );
 
+        setQuantity( quantity );
+    }
+
+    public CompositeResource( Resource resource, int quantity ) {
+        super( resource.getId(), resource.getName(), resource.getFolder(), resource.getFile() );
+
+        setQuantity( quantity );
+    }
+
+    public void setQuantity( int quantity ) {
         mQuantity = quantity;
     }
 

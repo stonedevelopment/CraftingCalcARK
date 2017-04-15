@@ -3,6 +3,7 @@ package arc.resource.calculator.tasks;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.LongSparseArray;
@@ -19,8 +20,8 @@ import arc.resource.calculator.db.DatabaseContract;
 public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG = InitializationTask.class.getSimpleName();
 
-    private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>();
-    private final SparseArray<Long> mDlcIds = new SparseArray<>();
+    private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>( 0 );
+    private final SparseArray<Long> mDlcIds = new SparseArray<>( 0 );
 
     private Listener mListener;
     private JSONObject mJSONObject;
@@ -59,7 +60,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         mJSONObject = object;
     }
 
-    JSONObject getJSONObject() {
+    private JSONObject getJSONObject() {
         return mJSONObject;
     }
 
@@ -96,7 +97,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             // map "total conversion" ids to assist methods with injecting converted ids
             mTotalConversion = mapTotalConversion( getJSONObject().getJSONArray( DatabaseContract.TotalConversionEntry.TABLE_NAME ) );
 
-            // finally, let's start inserting some json data into our database!
+            // finally, let's setup inserting some json data into our database!
             insertDLC( getJSONObject().getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
             insertStations( getJSONObject().getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) );
             insertCategories( getJSONObject().getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) );
@@ -107,7 +108,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             return true;
         }
 
-        // If error, send error signal, stop service
+        // If error, send error signal, shutDown service
         catch ( Exception e ) {
             mException = e;
             return false;
@@ -119,7 +120,12 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private int delete( Uri uri ) {
-        return getContext().getContentResolver().delete( uri, null, null );
+        int rowsDeleted = getContext().getContentResolver().delete( uri, null, null );
+
+        if ( rowsDeleted == -1 )
+            throw new SQLiteException( uri.toString() );
+
+        return rowsDeleted;
     }
 
     private void deleteAllRecordsFromProvider() {
@@ -130,17 +136,19 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         delete( DatabaseContract.CategoryEntry.CONTENT_URI );
         delete( DatabaseContract.StationEntry.CONTENT_URI );
         delete( DatabaseContract.EngramEntry.CONTENT_URI );
-        delete( DatabaseContract.QueueEntry.CONTENT_URI );
     }
 
-    private void bulkInsertWithUri( Uri insertUri, Vector<ContentValues> vector ) {
+    private void bulkInsertWithUri( Uri uri, Vector<ContentValues> vector ) {
         ContentValues[] contentValues = new ContentValues[vector.size()];
 
-        getContext().getContentResolver().bulkInsert( insertUri, vector.toArray( contentValues ) );
+        int rowsInserted = getContext().getContentResolver().bulkInsert( uri, vector.toArray( contentValues ) );
+
+        if ( rowsInserted == -1 )
+            throw new SQLiteException( uri.toString() );
     }
 
     private void insertComplexResources( JSONArray jsonArray ) throws JSONException {
-        updateStatus( "Inserting " + jsonArray.length() + " Complex Resources.." );
+        updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
@@ -161,7 +169,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void insertDLC( JSONArray jsonArray ) throws JSONException {
-        updateStatus( "Inserting " + jsonArray.length() + " DLC Versions.." );
+        updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
@@ -184,7 +192,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void insertResources( JSONArray jsonArray ) throws JSONException {
-        updateStatus( "Inserting " + jsonArray.length() + " Resources.." );
+        updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
@@ -215,7 +223,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void insertStations( JSONArray jsonArray ) throws JSONException {
-        updateStatus( "Inserting " + jsonArray.length() + " Stations.." );
+        updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
@@ -246,7 +254,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void insertCategories( JSONArray jsonArray ) throws JSONException {
-        updateStatus( "Inserting " + jsonArray.length() + " Categories.." );
+        updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
@@ -297,7 +305,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void insertEngrams( JSONArray jsonArray ) throws JSONException {
-        updateStatus( "Inserting " + jsonArray.length() + " Engrams.." );
+        updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
         Vector<ContentValues> compositionVector = new Vector<>();
@@ -387,7 +395,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray ) throws JSONException {
-        updateStatus( "Mapping Total Conversion entries.." );
+        updateStatus( "." );
 
         LongSparseArray<TotalConversion> map = new LongSparseArray<>();
 

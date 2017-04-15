@@ -15,40 +15,25 @@ package arc.resource.calculator.model.engram;
 /**
  * Engram object that holds the id of the category (level) it lies on
  */
-public class DisplayEngram extends Engram {
-    private final long mCategoryId;
-    private int mQuantity;
+public class DisplayEngram extends QueueEngram {
+    private long mCategoryId;
 
     public DisplayEngram( long id, String name, String folder, String file, int yield, long categoryId, int quantity ) {
-        super( id, name, folder, file, yield );
+        super( id, name, folder, file, yield, quantity );
 
-        mCategoryId = categoryId;
-        mQuantity = quantity;
+        setCategoryId( categoryId );
     }
 
-    private long getCategoryId() {
+    public void setCategoryId( long category_id ) {
+        this.mCategoryId = category_id;
+    }
+
+    public long getCategoryId() {
         return mCategoryId;
-    }
-
-    private int getQuantity() {
-        return mQuantity;
-    }
-
-    public void setQuantity( int quantity ) {
-        mQuantity = quantity;
-    }
-
-    public void resetQuantity() {
-        mQuantity = 0;
-    }
-
-    public int getQuantityWithYield() {
-        return mQuantity * getYield();
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", mCategoryId=" + getCategoryId() + ", mQuantity=" + getQuantity() +
-                ", getQuantityWithYield=" + getQuantityWithYield();
+        return super.toString() + ", mCategoryId=" + getCategoryId();
     }
 }

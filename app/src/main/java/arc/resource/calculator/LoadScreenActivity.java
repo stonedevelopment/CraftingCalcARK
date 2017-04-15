@@ -22,71 +22,52 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import arc.resource.calculator.listeners.ErrorReporter;
 import arc.resource.calculator.tasks.InitializationTask;
 import arc.resource.calculator.tasks.ParseConvertTask;
+import arc.resource.calculator.util.DisplayUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
 import static arc.resource.calculator.LoadScreenActivity.EVENT.INIT;
 
-public class LoadScreenActivity extends AppCompatActivity {
+public class LoadScreenActivity extends AppCompatActivity implements ErrorReporter.Listener {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
-    private static final int TYPE_APP = 0;
-    private static final int TYPE_DATABASE = 1;
-    private static final int TYPE_PURCHASE = 2;
-    private static final int TYPE_PREFERENCES = 3;
-
-    private static final int EVENT_INIT = 0;
-    private static final int EVENT_JSON = 1;
-    private static final int EVENT_DATABASE = 2;
-    private static final int EVENT_PURCHASE = 3;
-    private static final int EVENT_PREFERENCES = 4;
-
     enum EVENT {
-        INIT, JSON, DATABASE, PURCHASE, PREFERENCES
+        INIT, JSON, DATABASE, PURCHASE, PREFERENCES, PREPARATION
     }
-
-//    private static final int MAX_LINES = 10;
 
     private static final long DELAY_MILLIS = 1500;
 
-    private final List<String> mStatusMessages = new ArrayList<>();
-
-    private TextView mTextView;
-
-    private long mStartElapsedTime;
-
+    private JSONObject mJSONObject;
     private Listener mListener;
-
     private String mNewVersion;
+    private long mStartElapsedTime;
+    private TextView mTextView;
 
     private boolean mHasUpdate = false;
     private boolean mDidUpdate = false;
-    private JSONObject mJSONObject;
 
-//    private PurchaseUtil mPurchaseUtil;
+    private EVENT mCurrentEvent;
 
     private interface Listener {
         // triggers upon any error found, alerts user via status screen, sends report, closes app
-        void onError( EVENT event, Exception e );
+        void onError( Exception e );
 
         // sets current event id, triggers first event
         void onInit();
 
-        // start current event, triggers end event
-        void onStartEvent( EVENT event );
+        // setup current event, triggers end event
+        void onStartEvent();
 
         // triggers next event
-        void onEndEvent( EVENT event );
+        void onEndEvent();
 
-        // triggers start event
-        void onNextEvent( EVENT event );
+        // triggers setup event
+        void onNextEvent();
 
-        // triggers app to start main activity
+        // triggers app to setup main activity
         void onFinish();
     }
 
@@ -101,32 +82,31 @@ public class LoadScreenActivity extends AppCompatActivity {
 
         mListener = new Listener() {
             @Override
-            public void onError( EVENT event, Exception e ) {
-                // alert user of error, send error report, close app
-                updateStatusMessages( String.format( getString( R.string.load_activity_status_message_error_with_message ), e.getLocalizedMessage() ) );
-
+            public void onError( Exception e ) {
                 // send error report
-                updateStatusMessages( getString( R.string.load_activity_status_message_send_error_report ) );
                 sendErrorReport( e );
 
-                // closing app
-                updateStatusMessages( getString( R.string.load_activity_status_message_closing_app ) );
-                finishActivityWithError();
+                // alert user of error
+                updateStatusMessages( getString( R.string.load_activity_status_message_error_with_message ) );
             }
 
             @Override
             public void onInit() {
-                mListener.onStartEvent( INIT );
+                mCurrentEvent = INIT;
+                mListener.onStartEvent();
             }
 
             @Override
-            public void onStartEvent( final EVENT event ) {
-                Log.d( TAG, "onStartEvent(): " + event );
+            public void onStartEvent() {
+                Log.d( TAG, "onStartEvent(): " + mCurrentEvent );
 
-                switch ( event ) {
+                switch ( mCurrentEvent ) {
                     case INIT:
                         updateStatusMessages( getString( R.string.initialization_init_event ) );
-                        mListener.onEndEvent( event );
+
+                        PrefsUtil.createInstance( getApplicationContext() );
+
+                        mListener.onEndEvent();
                         break;
 
                     case JSON:
@@ -137,7 +117,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                                 updateStatusMessages( getString( R.string.initialization_error_event ) );
 
                                 // trigger activity error event handler
-                                mListener.onError( event, e );
+                                mListener.onError( e );
                             }
 
                             @Override
@@ -149,7 +129,12 @@ public class LoadScreenActivity extends AppCompatActivity {
                             @Override
                             public void onNewVersion( String oldVersion, String newVersion ) {
                                 // alert status window of new version
-                                updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version ), oldVersion, newVersion ) );
+                                if ( oldVersion == null )
+                                    // first install
+                                    updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version_first_install ), newVersion ) );
+                                else
+                                    // updated install
+                                    updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version ), oldVersion, newVersion ) );
 
                                 mNewVersion = newVersion;
                             }
@@ -172,7 +157,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                                 updateStatusMessages( getString( R.string.initialization_json_event_finished_without_update ) );
 
                                 // trigger next event (database initialization)
-                                mListener.onEndEvent( event );
+                                mListener.onEndEvent();
                             }
 
                             @Override
@@ -187,7 +172,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                                 mJSONObject = newObject;
 
                                 // trigger next event (database initialization)
-                                mListener.onEndEvent( event );
+                                mListener.onEndEvent();
                             }
                         } ).execute();
                         break;
@@ -201,7 +186,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                                     updateStatusMessages( getString( R.string.initialization_error_event ) );
 
                                     // trigger activity error event handler
-                                    mListener.onError( event, e );
+                                    mListener.onError( e );
                                 }
 
                                 @Override
@@ -233,12 +218,12 @@ public class LoadScreenActivity extends AppCompatActivity {
                                     }
 
                                     // trigger next event (in-app purchases?)
-                                    mListener.onEndEvent( event );
+                                    mListener.onEndEvent();
                                 }
                             } ).execute();
                         } else {
                             // trigger next event (in-app purchases?)
-                            mListener.onEndEvent( event );
+                            mListener.onEndEvent();
                         }
                         break;
 
@@ -248,7 +233,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 //
 //                        // begin in-app purchase communication
 //                        mPurchaseUtil = new PurchaseUtil( LoadScreenActivity.this );
-//                        mPurchaseUtil.start();
+//                        mPurchaseUtil.setup();
 //                        mPurchaseUtil.loadInventory( new Inventory.Callback() {
 //                            @Override
 //                            public void onLoaded( @Nonnull Inventory.Products products ) {
@@ -284,7 +269,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 //                        } );
 
                         // trigger next event (preferences?)
-                        mListener.onEndEvent( event );
+                        mListener.onEndEvent();
                         break;
 
                     case PREFERENCES:
@@ -292,49 +277,60 @@ public class LoadScreenActivity extends AppCompatActivity {
                         if ( mHasUpdate ) {
                             updateStatusMessages( getString( R.string.initialization_pref_event_started ) );
 
-                            PrefsUtil prefs = new PrefsUtil( getApplicationContext() );
-
-                            prefs.updateJSONVersion( mNewVersion );
-                            prefs.saveDefaults();
+                            PrefsUtil.getInstance().updateJSONVersion( mNewVersion );
+                            PrefsUtil.getInstance().saveToDefault();
 
                             updateStatusMessages( getString( R.string.initialization_pref_event_finished ) );
                         }
 
                         // trigger next event (end of events?)
-                        mListener.onEndEvent( event );
+                        mListener.onEndEvent();
+                        break;
+
+                    case PREPARATION:
+                        // create instances of DisplayCase and CraftingQueue
+                        updateStatusMessages( getString( R.string.initialization_app_init_event_started ) );
+
+                        int width = getResources().getDisplayMetrics().widthPixels;
+                        int numCols = getResources().getInteger( R.integer.gridview_column_count );
+
+                        DisplayUtil.getInstance().setImageSize( width / numCols );
+
+                        // trigger next event (end of events?)
+                        mListener.onEndEvent();
                         break;
 
                     default:
-                        Log.e( TAG, "Incorrect Event Type: " + event );
+                        Log.e( TAG, "Incorrect Event Type: " + mCurrentEvent );
                         break;
                 }
             }
 
             @Override
-            public void onEndEvent( EVENT event ) {
-                mListener.onNextEvent( event );
+            public void onEndEvent() {
+                mListener.onNextEvent();
             }
 
             @Override
-            public void onNextEvent( EVENT event ) {
-                int index = event.ordinal();
+            public void onNextEvent() {
+                int index = mCurrentEvent.ordinal();
 
                 index++;
 
                 EVENT[] events = EVENT.values();
 
                 if ( index < events.length ) {
-                    EVENT nextEvent = events[index];
+                    mCurrentEvent = events[index];
 
-                    Log.d( TAG, "onNextEvent(): " + nextEvent + ", " + index );
-                    mListener.onStartEvent( nextEvent );
+                    Log.d( TAG, "onNextEvent(): " + mCurrentEvent + ", " + index );
+                    mListener.onStartEvent();
                 } else
                     mListener.onFinish();
             }
 
             @Override
             public void onFinish() {
-                // say goodbye to user, start app
+                // say goodbye to user, setup app
                 updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_finish_event ) ) );
 
                 finishActivity();
@@ -345,42 +341,39 @@ public class LoadScreenActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        ErrorReporter.getInstance().registerListener( this );
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        ErrorReporter.getInstance().unregisterListener( this );
+
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
-//        mPurchaseUtil.stop();
+        ErrorReporter.getInstance().unregisterListener( this );
 
         super.onDestroy();
     }
 
     private void sendErrorReport( Exception e ) {
-        ExceptionUtil.SendErrorReport( this, TAG, e );
+        ExceptionUtil.SendErrorReport( TAG, e );
     }
 
     private void displayStatusMessage( String message ) {
         Log.d( TAG, "displayStatusMessage(): " + message );
-        mTextView.append( message.concat( "\n" ) );
-    }
-
-    private void displayStatusMessages() {
-//        Iterator<String> iterator = mStatusMessages.iterator();
-//
-//        StringBuilder builder = new StringBuilder();
-//        for ( String statusMessage : mStatusMessages ) {
-//            builder.append( statusMessage ).append( '\n' );
-//        }
-//
-//        mTextView.setText( builder.toString() );
+        mTextView.append( message );
     }
 
     private void updateStatusMessages( final String message ) {
-//        if ( mStatusMessages.size() > MAX_LINES )
-//            mStatusMessages.remove( 0 );
-
-//        mStatusMessages.add( message );
-
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-//                displayStatusMessages( );
                 displayStatusMessage( message );
             }
         } );
@@ -402,7 +395,7 @@ public class LoadScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent( getApplicationContext(), MainActivity.class );
-                intent.putExtra( MainActivity.INTENT_KEY_DID_UPDATE, mHasUpdate );
+                intent.putExtra( MainActivity.INTENT_KEY_DID_UPDATE, mDidUpdate );
 
                 startActivity( intent );
 
@@ -411,16 +404,17 @@ public class LoadScreenActivity extends AppCompatActivity {
         } );
     }
 
-    private void finishActivityWithError() {
-        finishWithDelay( new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        } );
-    }
-
     private void finishWithDelay( Runnable runnable ) {
         new Handler().postDelayed( runnable, DELAY_MILLIS );
+    }
+
+    @Override
+    public void onSendErrorReport( String tag, Exception e ) {
+        mListener.onError( e );
+    }
+
+    @Override
+    public void onSendErrorReportWithAlertDialog( String tag, Exception e ) {
+        mListener.onError( e );
     }
 }

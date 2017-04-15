@@ -10,7 +10,8 @@
         android:layout_width="@dimen/detail_thumbnail_size"
         android:layout_height="@dimen/detail_thumbnail_size"
         android:layout_gravity="center_horizontal"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:src="@drawable/placeholder_empty"/>
 
     <TextView
         android:id="@+id/engram_detail_nameText"
@@ -39,8 +40,22 @@
             style="@style/AppTheme.Text.Detail.Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/detail_padding"
-            android:paddingStart="@dimen/detail_padding"/>
+            android:padding="@dimen/detail_padding"/>
+
+        <TextView
+            android:id="@+id/engram_detail_stationText"
+            style="@style/AppTheme.Text.Detail.Station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/detail_padding"/>
+
+        <TextView
+            android:id="@+id/engram_detail_dlcText"
+            style="@style/AppTheme.Text.Detail.DLC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/detail_padding"
+            android:textAlignment="textEnd"/>
 
     </LinearLayout>
 

@@ -3,21 +3,22 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
+              android:padding="@dimen/display_case_container_layout_padding"
               tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/hierarchy_text"
+        android:id="@+id/textview_navigation_hierarchy"
         style="@style/AppTheme.Text.DisplayCase.Hierarchy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/display_case_hierarchy_indention"
-        android:layout_marginTop="@dimen/display_case_view_holder_padding"/>
+        android:layout_marginTop="@dimen/gridview_item_padding"/>
 
-    <arc.resource.calculator.views.DisplayCaseRecyclerView
-        android:id="@+id/display_case_engram_list"
+    <arc.resource.calculator.views.CraftableRecyclerView
+        android:id="@+id/gridview_craftables"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="@dimen/display_case_view_holder_padding"/>
+        android:padding="@dimen/gridview_item_padding"/>
 
 </LinearLayout>

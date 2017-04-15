@@ -93,15 +93,15 @@ public class DatabaseContract {
         public static final String COLUMN_DLC_KEY = "dlc_id";
 
         // SQL column helpers
-        static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
-        static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
-        static final String SQL_COLUMN_IMAGE_FOLDER = TABLE_NAME + "." + COLUMN_IMAGE_FOLDER;
-        static final String SQL_COLUMN_IMAGE_FILE = TABLE_NAME + "." + COLUMN_IMAGE_FILE;
-        static final String SQL_COLUMN_YIELD = TABLE_NAME + "." + COLUMN_YIELD;
-        static final String SQL_COLUMN_LEVEL = TABLE_NAME + "." + COLUMN_LEVEL;
-        static final String SQL_COLUMN_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY;
-        static final String SQL_COLUMN_DLC_KEY = TABLE_NAME + "." + COLUMN_DLC_KEY;
-        static final String SQL_COLUMN_STATION_KEY = TABLE_NAME + "." + COLUMN_STATION_KEY;
+        public static final String SQL_COLUMN_ID = TABLE_NAME + "." + _ID;
+        public static final String SQL_COLUMN_NAME = TABLE_NAME + "." + COLUMN_NAME;
+        public static final String SQL_COLUMN_IMAGE_FOLDER = TABLE_NAME + "." + COLUMN_IMAGE_FOLDER;
+        public static final String SQL_COLUMN_IMAGE_FILE = TABLE_NAME + "." + COLUMN_IMAGE_FILE;
+        public static final String SQL_COLUMN_YIELD = TABLE_NAME + "." + COLUMN_YIELD;
+        public static final String SQL_COLUMN_LEVEL = TABLE_NAME + "." + COLUMN_LEVEL;
+        public static final String SQL_COLUMN_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY;
+        public static final String SQL_COLUMN_DLC_KEY = TABLE_NAME + "." + COLUMN_DLC_KEY;
+        public static final String SQL_COLUMN_STATION_KEY = TABLE_NAME + "." + COLUMN_STATION_KEY;
 
         // SQL query helpers
         static final String SQL_QUERY_WITH_ID = SQL_COLUMN_ID + " = ?";
@@ -612,13 +612,14 @@ public class DatabaseContract {
                         " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
 
         public static final String[] SQL_PROJECTION = new String[]{
-                EngramEntry.SQL_COLUMN_ID,
+                EngramEntry.SQL_COLUMN_ID + " AS engram_id",
                 EngramEntry.SQL_COLUMN_NAME,
                 EngramEntry.SQL_COLUMN_IMAGE_FOLDER,
                 EngramEntry.SQL_COLUMN_IMAGE_FILE,
                 EngramEntry.SQL_COLUMN_YIELD,
                 EngramEntry.SQL_COLUMN_DLC_KEY,
-                SQL_COLUMN_QUANTITY
+                SQL_COLUMN_ID + " AS queue_id",
+                SQL_COLUMN_QUANTITY + " AS queue_quantity"
         };
 
         // Returns /queue/engram/dlc/#

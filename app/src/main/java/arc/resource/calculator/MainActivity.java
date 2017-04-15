@@ -9,20 +9,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import arc.resource.calculator.listeners.MainActivityListener;
-import arc.resource.calculator.listeners.SendErrorReportListener;
+import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.util.Util;
-import arc.resource.calculator.views.DisplayCaseRecyclerView;
-import arc.resource.calculator.views.QueueCompositionRecyclerView;
-import arc.resource.calculator.views.QueueEngramRecyclerView;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -37,80 +31,46 @@ import arc.resource.calculator.views.QueueEngramRecyclerView;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class MainActivity extends AppCompatActivity
-        implements MainActivityListener, SendErrorReportListener {
+        implements ErrorReporter.Listener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
 
-    private DisplayCaseRecyclerView mDisplayCaseRecyclerView;
-    private QueueEngramRecyclerView mQueueEngramRecyclerView;
-    private QueueCompositionRecyclerView mQueueCompositionRecyclerView;
-    private Button mClearCraftingQueue;
-    private TextView mCategoryHierarchyTextView;
-
-    //    private PurchaseUtil mPurchaseUtil;
     private AdUtil mAdUtil;
-
-    private ListenerUtil mCallback;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-        mCallback = ListenerUtil.getInstance();
-        mCallback.setMainActivityListener( this );
-        mCallback.setSendErrorReportListener( this );
-
         // Check to see if database was updated
         boolean didUpdate = getIntent().getBooleanExtra( INTENT_KEY_DID_UPDATE, false );
 
-        mDisplayCaseRecyclerView = ( DisplayCaseRecyclerView ) findViewById( R.id.display_case_engram_list );
-        mDisplayCaseRecyclerView.init( getApplicationContext(), didUpdate );
-        registerForContextMenu( mDisplayCaseRecyclerView );
+//        registerForContextMenu( findViewById( R.id.gridview_craftables ) );
+//        registerForContextMenu( findViewById( R.id.gridview_inventory ) );
+//        registerForContextMenu( findViewById( R.id.gridview_queue ) );
 
-        mQueueEngramRecyclerView = ( QueueEngramRecyclerView ) findViewById( R.id.crafting_queue_engram_list );
-        registerForContextMenu( mQueueEngramRecyclerView );
-
-        mQueueCompositionRecyclerView = ( QueueCompositionRecyclerView ) findViewById( R.id.crafting_queue_resource_list );
-        registerForContextMenu( mQueueCompositionRecyclerView );
-
-        mClearCraftingQueue = ( Button ) findViewById( R.id.clear_queue_button );
-        mClearCraftingQueue.setOnClickListener( new View.OnClickListener() {
+        // TODO: 4/13/2017 We need a notifier for the Clear Queue button, to enable and disable it
+        Button clearQueueButton = ( Button ) findViewById( R.id.button_clear_queue );
+//        clearQueueButton.setEnabled( !CraftingQueue.getInstance().isQueueEmpty() );
+        clearQueueButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                mCallback.requestRemoveAllFromQueue( getApplicationContext() );
+                CraftingQueue.getInstance().clearQueue();
             }
         } );
-
-        mCategoryHierarchyTextView = ( TextView ) findViewById( R.id.hierarchy_text );
-        mCallback.requestCategoryHierarchy( this );
-
-        updateContainerLayoutParams();
-
-//        new Instabug.Builder( getApplication(), BuildConfig.INSTABUG_API_KEY )
-//                .setInvocationEvent( InstabugInvocationEvent.SHAKE )
-//                .setTheme( InstabugColorTheme.InstabugColorThemeDark )
-//                .setEmailFieldRequired( false )
-//                .setCommentFieldRequired( true )
-//                .setCrashReportingState( Feature.State.DISABLED )
-//                .setSurveysState( Feature.State.DISABLED )
-//                .setInAppMessagingState( Feature.State.DISABLED )
-//                .build();
-
-//        mPurchaseUtil = new PurchaseUtil( this );
 
         mAdUtil = new AdUtil( this, R.id.content_main );
         mAdUtil.init();
 
         showChangeLog();
-
-//        Toast.makeText( this, getString( R.string.dimens ), Toast.LENGTH_SHORT ).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        ErrorReporter.getInstance().registerListener( this );
 
         mAdUtil.resume();
     }
@@ -119,15 +79,18 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
 
+        ErrorReporter.getInstance().unregisterListener( this );
+
+        savePreferences();
+
         mAdUtil.pause();
-        mCallback.requestSaveCategoryLevels( getApplicationContext() );
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-//        mPurchaseUtil.stop();
+//        mPurchaseUtil.shutDown();
         mAdUtil.destroy();
     }
 
@@ -152,7 +115,15 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch ( item.getItemId() ) {
             case R.id.action_search:
-                DialogUtil.Search( MainActivity.this ).show();
+                DialogUtil.Search( MainActivity.this, new DialogUtil.Callback() {
+                    @Override
+                    public void onResult( Object result ) {
+                        // TODO: 4/10/2017 Search window while on inventory screen?
+                        // TODO: 4/13/2017 Emit trigger to query for search data
+                        String searchQuery = ( String ) result;
+//                        DisplayCase.getInstance().searchData( getApplicationContext(), searchQuery );
+                    }
+                } ).show();
                 break;
 
             case R.id.action_settings:
@@ -188,15 +159,15 @@ public class MainActivity extends AppCompatActivity
 //
 //                prefs.setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, !removeAds );
 
-//                mPurchaseUtil.start();
+//                mPurchaseUtil.setup();
 //                mPurchaseUtil.purchaseSku( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, new EmptyRequestListener<Purchase>() {
 //                    @Override
 //                    public void onSuccess( @Nonnull Purchase result ) {
-//                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).show();
+//                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).setup();
 //
 //                        switch ( result.sku ) {
 //                            case PurchaseUtil.SKU_FEATURE_DISABLE_ADS:
-//                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).show();
+//                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).setup();
 //
 //                                mAdUtil.unloadAdView();
 //
@@ -204,19 +175,19 @@ public class MainActivity extends AppCompatActivity
 //                                        .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, true );
 //                        }
 //
-//                        mPurchaseUtil.stop();
+//                        mPurchaseUtil.shutDown();
 //                    }
 //
 //                    @Override
 //                    public void onError( int response, @Nonnull Exception e ) {
-//                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).show();
+//                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).setup();
 //
 //                        Log.e( TAG, "Purchase failed.", e );
 //
 //                        new PrefsUtil( getApplicationContext() )
 //                                .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, false );
 //
-//                        mPurchaseUtil.stop();
+//                        mPurchaseUtil.shutDown();
 //                    }
 //                } );
                 break;
@@ -235,11 +206,11 @@ public class MainActivity extends AppCompatActivity
         MenuInflater inflater = getMenuInflater();
 
         switch ( v.getId() ) {
-            case R.id.crafting_queue_engram_list:
+            case R.id.gridview_queue:
                 inflater.inflate( R.menu.craftable_in_queue_menu, menu );
                 break;
 
-            case R.id.display_case_engram_list:
+            case R.id.gridview_craftables:
                 inflater.inflate( R.menu.displaycase_menu, menu );
                 break;
         }
@@ -249,17 +220,27 @@ public class MainActivity extends AppCompatActivity
     public boolean onContextItemSelected( MenuItem item ) {
         RecyclerContextMenuInfo menuInfo = ( RecyclerContextMenuInfo ) item.getMenuInfo();
 
+        final long id = menuInfo.getId();
+
         switch ( item.getItemId() ) {
             case R.id.floating_action_remove_from_queue:
-                mCallback.requestRemoveOneFromQueue( getApplicationContext(), menuInfo.getId() );
+                CraftingQueue.getInstance().delete( id );
                 break;
 
             case R.id.floating_action_edit_quantity:
-                DialogUtil.EditQuantity( MainActivity.this, menuInfo.getId() ).show();
+                String name = CraftingQueue.getInstance().getCraftable( id ).getName();
+
+                DialogUtil.EditQuantity( MainActivity.this, name, new DialogUtil.Callback() {
+                    @Override
+                    public void onResult( Object result ) {
+                        int quantity = ( int ) result;
+                        CraftingQueue.getInstance().setQuantity( getApplicationContext(), id, quantity );
+                    }
+                } ).show();
                 break;
 
             case R.id.floating_action_view_details:
-                startDetailActivity( menuInfo.getId() );
+                startDetailActivity( id );
                 break;
         }
 
@@ -275,19 +256,17 @@ public class MainActivity extends AppCompatActivity
                 if ( resultCode == RESULT_OK ) {
                     Bundle extras = data.getExtras();
 
-                    long _id = extras.getLong( Util.DETAIL_ID );
-
-                    if ( extras.getBoolean( Util.DETAIL_REMOVE ) )
-                        mCallback.requestRemoveOneFromQueue( this, _id );
+                    long craftableId = extras.getLong( Util.DETAIL_ID );
 
                     int quantity = extras.getInt( Util.DETAIL_QUANTITY );
-                    if ( quantity > 0 )
-                        mCallback.requestUpdateQuantity( this, _id, quantity );
+                    CraftingQueue.getInstance().setQuantity( this, craftableId, quantity );
                 }
                 break;
             case Util.REQUEST_CODE_SETTINGS_ACTIVITY:
                 if ( resultCode == RESULT_OK ) {
                     Bundle extras = data.getExtras();
+
+                    // TODO: 4/10/2017 create preferencelistener in listadapter?
 
                     boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
                     boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
@@ -298,32 +277,35 @@ public class MainActivity extends AppCompatActivity
 
                     // if any pref that deals with displaying engrams was changed, reset levels to root.
                     if ( dlcValueChange || categoryPrefChange || stationPrefChange || levelPrefChange || levelValueChange ) {
-                        mCallback.requestResetCategoryLevels( this );
+//                        DisplayCase.getInstance().setCategoryLevelsToRoot();
 
                         // if dlc was changed, clear entire queue
                         if ( dlcValueChange )
-                            mCallback.requestRemoveAllFromQueue( this );
+                            CraftingQueue.getInstance().clearQueue();
 
                         // settings were changed, let's update DisplayCase with new data
-                        mCallback.requestDisplayCaseDataSetChange( this );
+//                        DisplayCase.getInstance().refreshData( getApplicationContext() );
                     }
-
-                    // if refined/raw was changed, let's update the composition data set to reflection such change
-                    if ( refinedPrefChange )
-                        mCallback.requestResourceDataSetChange( this );
                 }
                 break;
         }
-
     }
 
     private void startDetailActivity( long _id ) {
-        mCallback.requestSaveCategoryLevels( this );
+        savePreferences();
 
         Intent intent = new Intent( this, DetailActivity.class );
         intent.putExtra( Util.DETAIL_ID, _id );
 
         startActivityForResult( intent, Util.REQUEST_CODE_DETAIL_ACTIVITY );
+    }
+
+    private void savePreferences() {
+        // save category levels
+        // write queue to database, if need be
+        // TODO: 4/13/2017 save category levels from outside of craftable adapter
+//        DisplayCase.getInstance().saveCategoryLevelsToPref();
+        CraftingQueue.getInstance().saveQueueToPrefs();
     }
 
     private void showChangeLog() {
@@ -334,43 +316,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateContainerLayoutParams() {
-        boolean isQueueEmpty = mQueueEngramRecyclerView.getAdapter().getItemCount() == 0;
-
-        LinearLayout.LayoutParams layoutParams;
-
-        if ( isQueueEmpty ) {
-            layoutParams = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, 0 );
-        } else {
-            layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    0, getResources().getInteger( R.integer.weight_bottom_container ) );
-        }
-
-        View container = findViewById( R.id.content_main_bottom_container );
-        container.setLayoutParams( layoutParams );
+    @Override
+    public void onSendErrorReport( String tag, Exception e ) {
+        ExceptionUtil.SendErrorReport( tag, e );
     }
 
     @Override
-    public void onCategoryHierarchyResolved( String text ) {
-        mCategoryHierarchyTextView.setText( text );
-    }
-
-    @Override
-    public void onRequestLayoutUpdate() {
-        updateContainerLayoutParams();
-    }
-
-    @Override
-    public void onSendErrorReport( final String tag, final Exception e, boolean showAlertDialog ) {
-        if ( showAlertDialog )
-            runOnUiThread( new Runnable() {
-                @Override
-                public void run() {
-                    ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
-                }
-            } );
-        else
-            ExceptionUtil.SendErrorReport( MainActivity.this, tag, e );
+    public void onSendErrorReportWithAlertDialog( String tag, Exception e ) {
+        ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
     }
 }

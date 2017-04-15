@@ -11,26 +11,26 @@ import java.util.Arrays;
 
 public class ExceptionUtil {
     public static void SendErrorReportWithAlertDialog( Context context, String tag, Exception e ) {
-        SendErrorReport( context, tag, e );
+        SendErrorReport( tag, e );
 
         DialogUtil.Error( context ).show();
     }
 
-    public static void SendErrorReport( Context context, String tag, Exception e ) {
+    public static void SendErrorReport( String tag, Exception e ) {
         if ( e.getCause() != null )
             FirebaseCrash.logcat( Log.ERROR, tag, e.getCause().toString() );
 
-        FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle( context ).toString() );
+        FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle( ).toString() );
         FirebaseCrash.logcat( Log.ERROR, tag, e.getMessage() );
         FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
 
-        FirebaseCrash.report( e );
+//        FirebaseCrash.report( e );
     }
 
     // if position of requested list is out of bounds, then throw this exception
-    private static class PositionOutOfBoundsException extends Exception {
-        public PositionOutOfBoundsException( int index, String contents ) {
-            super( BuildExceptionMessageBundle( index, contents ).toString() );
+    public static class PositionOutOfBoundsException extends Exception {
+        public PositionOutOfBoundsException( int index, int size, String contents ) {
+            super( BuildExceptionMessageBundle( index, size, contents ).toString() );
         }
     }
 
@@ -48,7 +48,7 @@ public class ExceptionUtil {
         }
     }
 
-    // Cursor returned null, show requested _id
+    // Cursor returned null, setup requested _id
     public static class CursorNullException extends Exception {
 
         public CursorNullException( Uri uri ) {
@@ -60,7 +60,7 @@ public class ExceptionUtil {
         }
     }
 
-    // Cursor returned null, show requested _id
+    // Cursor returned null, setup requested _id
     public static class CursorEmptyException extends Exception {
         public CursorEmptyException( Uri uri ) {
             super( uri.toString() );
@@ -77,8 +77,18 @@ public class ExceptionUtil {
         return bundle;
     }
 
-    private static Bundle BuildErrorReportPreferencesBundle( Context context ) {
-        PrefsUtil prefs = new PrefsUtil( context );
+    private static Bundle BuildExceptionMessageBundle( int index, int size, String contents ) {
+        Bundle bundle = new Bundle();
+
+        bundle.putInt( "array_index", index );
+        bundle.putInt( "array_size", size );
+        bundle.putString( "array_contents", contents );
+
+        return bundle;
+    }
+
+    private static Bundle BuildErrorReportPreferencesBundle(  ) {
+        PrefsUtil prefs = PrefsUtil.getInstance(  );
 
         Bundle bundle = new Bundle();
         bundle.putBoolean( "filter_by_category", prefs.getCategoryFilterPreference() );

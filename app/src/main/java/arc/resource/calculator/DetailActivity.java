@@ -1,7 +1,6 @@
 package arc.resource.calculator;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
+import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
-import arc.resource.calculator.listeners.SendErrorReportListener;
+import arc.resource.calculator.listeners.ErrorReporter;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.util.Util;
 
 /**
@@ -34,48 +32,44 @@ import arc.resource.calculator.util.Util;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class DetailActivity extends AppCompatActivity
-        implements SendErrorReportListener {
+        implements ErrorReporter.Listener {
     private static final String TAG = DetailActivity.class.getSimpleName();
+
+    private static final int DECREMENT = 10;
+    private static final int INCREMENT = 10;
 
     private Showcase mShowcase;
 
-    private ShowcaseResourceListAdapter mShowcaseResourceListAdapter;
+    private ShowcaseResourceListAdapter mAdapter;
 
     private AdUtil mAdUtil;
 
-    private ListenerUtil mCallback;
+    // TODO: 4/7/2017 remove from queue non responder
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_detail );
-
-        mCallback = ListenerUtil.getInstance();
-        mCallback.setSendErrorReportListener( this );
+        getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
         try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-
             long _id = getIntent().getExtras().getLong( Util.DETAIL_ID );
-//            int quantity = getIntent().getExtras().getInt( Util.DETAIL_QUANTITY );
-            mShowcase = new Showcase( this, _id );
+            setShowcase( new Showcase( getApplicationContext(), _id ) );
 
             ImageView imageView = ( ImageView ) findViewById( R.id.engram_detail_imageView );
-            String imagePath = mShowcase.getImagePath();
-            InputStream stream = getAssets().open( imagePath );
-            imageView.setImageBitmap( BitmapFactory.decodeStream( stream ) );
+            imageView.setContentDescription( "Image of " + getShowcase().getName() );
+
+            String imagePath = "file:///android_asset/" + getShowcase().getImagePath();
+            Picasso.with( getApplicationContext() ).load( imagePath ).into( imageView );
 
             TextView nameText = ( TextView ) findViewById( R.id.engram_detail_nameText );
-            nameText.setText( mShowcase.getName() );
+            nameText.setText( getShowcase().getName() );
 
             Button decreaseButtonBy10 = ( Button ) findViewById( R.id.decreaseButtonBy10 );
             decreaseButtonBy10.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick( View v ) {
-                    mShowcase.decreaseQuantity( 10 );
-                    mShowcaseResourceListAdapter.notifyDataSetChanged();
-
-                    UpdateQuantityText();
+                    decreaseQuantity( DECREMENT );
                 }
             } );
 
@@ -83,10 +77,7 @@ public class DetailActivity extends AppCompatActivity
             decreaseButton.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick( View v ) {
-                    mShowcase.decreaseQuantity();
-                    mShowcaseResourceListAdapter.notifyDataSetChanged();
-
-                    UpdateQuantityText();
+                    decreaseQuantity();
                 }
             } );
 
@@ -94,10 +85,7 @@ public class DetailActivity extends AppCompatActivity
             increaseButton.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick( View v ) {
-                    mShowcase.increaseQuantity();
-                    mShowcaseResourceListAdapter.notifyDataSetChanged();
-
-                    UpdateQuantityText();
+                    increaseQuantity();
                 }
             } );
 
@@ -105,90 +93,69 @@ public class DetailActivity extends AppCompatActivity
             increaseButtonBy10.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick( View v ) {
-                    mShowcase.increaseQuantity( 10 );
-                    mShowcaseResourceListAdapter.notifyDataSetChanged();
-
-                    UpdateQuantityText();
+                    increaseQuantity( INCREMENT );
                 }
             } );
 
             Button saveButton = ( Button ) findViewById( R.id.saveButton );
-            saveButton.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick( View v ) {
-                    if ( mShowcase.getQuantity() > 0 )
-                        FinishActivityWithResult( false );
-                    else
-                        FinishActivityWithResult( true );
-                }
-            } );
-
             Button removeButton = ( Button ) findViewById( R.id.removeButton );
-            removeButton.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick( View v ) {
-                    FinishActivityWithResult( true );
-                }
-            } );
 
-            if ( mShowcase.getQuantity() == 0 ) {
-                mShowcase.setQuantity( 1 );
+            if ( getShowcase().getQuantity() == 0 ) {
+                getShowcase().increaseQuantity();
 
                 removeButton.setEnabled( false );
-                saveButton.setText( "Add to Queue" ); // TODO: 1/22/2017 Extract string resource
+                saveButton.setText( R.string.detail_content_save_button_add_to_queue );
             } else {
-                saveButton.setText( "Update Queue" ); // TODO: 1/22/2017 Extract string resource
+                saveButton.setText( R.string.detail_content_save_button_update_queue );
             }
 
             TextView categoryText = ( TextView ) findViewById( R.id.engram_detail_categoryText );
-            categoryText.setText( mShowcase.getCategoryHierarchy( getApplicationContext() ) );
+            categoryText.setText( getShowcase().getCategoryHierarchy( getApplicationContext() ) );
 
             String craftedIn;
-            if ( mShowcase.getStationId() == 0 ) {
-                craftedIn = String.format(
-                        getString( R.string.content_detail_crafted_in_no_station ),
-                        mShowcase.getName()
-                );
-            } else {
-                craftedIn = String.format(
-                        getString( R.string.content_detail_crafted_in_format ),
-                        mShowcase.getName(),
-                        mShowcase.getStationName( getApplicationContext() )
-                );
-            }
+            if ( getShowcase().getShowcaseEntry().getStations().size() == 1
+                    && getShowcase().getShowcaseEntry().getStations().keyAt( 0 ) == 0 )
+                craftedIn = getString( R.string.content_detail_crafted_in_no_station );
+            else
+                craftedIn = String.format( getString( R.string.content_detail_crafted_in_format ),
+                        getShowcase().getStationNameArrayAsText() );
 
             String level;
-            if ( mShowcase.getRequiredLevel() == 1 ) {
+            if ( getShowcase().getRequiredLevel() == 1 )
                 level = getString( R.string.content_detail_required_level_any_level );
-            } else {
-                level = String.format(
-                        getString( R.string.content_detail_required_level_format ),
-                        Integer.toString( mShowcase.getRequiredLevel() )
-                );
-            }
+            else
+                level = String.format( getString( R.string.content_detail_required_level_format ),
+                        getShowcase().getRequiredLevel() );
 
             TextView descriptionText = ( TextView ) findViewById( R.id.engram_detail_descriptionText );
-            descriptionText.setText( mShowcase.getDescription() + "\n\n" + craftedIn + level );
+            descriptionText.setText( getShowcase().getDescription() );
 
-            TextView quantityEditText = ( TextView ) findViewById( R.id.quantityEditText );
-            quantityEditText.setText( mShowcase.getQuantityText() );
+            TextView stationText = ( TextView ) findViewById( R.id.engram_detail_stationText );
+            stationText.setText( String.format( getString( R.string.content_detail_station_and_level_format ),
+                    getShowcase().getName(), craftedIn, level ) );
 
-            mShowcaseResourceListAdapter = new ShowcaseResourceListAdapter( mShowcase );
+            TextView dlcText = ( TextView ) findViewById( R.id.engram_detail_dlcText );
+            dlcText.setText( getShowcase().getDLCName() );
 
-            RecyclerView resourceList = ( RecyclerView ) findViewById( R.id.resourceList );
-            resourceList.setLayoutManager( new LinearLayoutManager( this ) );
-            resourceList.setAdapter( mShowcaseResourceListAdapter );
+            updateQuantityText();
+
+            setAdapter( new ShowcaseResourceListAdapter( getShowcase() ) );
+
+            RecyclerView recyclerView = ( RecyclerView ) findViewById( R.id.resourceList );
+            recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
+            recyclerView.setAdapter( getAdapter() );
 
             mAdUtil = new AdUtil( this, R.id.content_detail );
             mAdUtil.init();
         } catch ( Exception e ) {
-            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
+            ErrorReporter.getInstance().emitSendErrorReportWithAlertDialog( TAG, e );
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        ErrorReporter.getInstance().registerListener( this );
 
         mAdUtil.resume();
     }
@@ -196,6 +163,7 @@ public class DetailActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+        ErrorReporter.getInstance().unregisterListener( this );
 
         mAdUtil.pause();
     }
@@ -203,23 +171,76 @@ public class DetailActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ErrorReporter.getInstance().unregisterListener( this );
 
         mAdUtil.destroy();
     }
 
-    private void UpdateQuantityText() {
-        TextView quantityEditText = ( TextView ) findViewById( R.id.quantityEditText );
-        quantityEditText.setText( mShowcase.getQuantityText() );
+    private void setShowcase( Showcase showcase ) {
+        this.mShowcase = showcase;
     }
 
-    private void FinishActivityWithResult( boolean removeFromQueue ) {
+    private Showcase getShowcase() {
+        return mShowcase;
+    }
+
+    private void setAdapter( ShowcaseResourceListAdapter adapter ) {
+        this.mAdapter = adapter;
+    }
+
+    private ShowcaseResourceListAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void increaseQuantity() {
+        getShowcase().increaseQuantity();
+        notifyAndUpdate();
+    }
+
+    public void increaseQuantity( int increment ) {
+        getShowcase().increaseQuantity( increment );
+        notifyAndUpdate();
+    }
+
+    public void decreaseQuantity() {
+        getShowcase().decreaseQuantity();
+        notifyAndUpdate();
+    }
+
+    public void decreaseQuantity( int decrement ) {
+        getShowcase().decreaseQuantity( decrement );
+        notifyAndUpdate();
+    }
+
+    private void notifyAndUpdate() {
+        getShowcase().updateQuantifiableComposition();
+        notifyDataSetChanged();
+        updateQuantityText();
+    }
+
+    private void notifyDataSetChanged() {
+        getAdapter().notifyDataSetChanged();
+    }
+
+    private void updateQuantityText() {
+        TextView quantityEditText = ( TextView ) findViewById( R.id.quantityEditText );
+        quantityEditText.setText( getShowcase().getQuantityText() );
+    }
+
+    public void RemoveAndFinish( View view ) {
+        getShowcase().getShowcaseEntry().getCraftable().resetQuantity();
+
+        FinishActivityWithResult();
+    }
+
+    public void SaveAndFinish( View view ) {
+        FinishActivityWithResult();
+    }
+
+    private void FinishActivityWithResult() {
         Intent returnIntent = getIntent();
 
-        if ( removeFromQueue ) {
-            returnIntent.putExtra( Util.DETAIL_REMOVE, true );
-        } else {
-            returnIntent.putExtra( Util.DETAIL_QUANTITY, mShowcase.getQuantity() );
-        }
+        returnIntent.putExtra( Util.DETAIL_QUANTITY, getShowcase().getQuantity() );
 
         setResult( RESULT_OK, returnIntent );
 
@@ -227,10 +248,12 @@ public class DetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSendErrorReport( String tag, Exception e, boolean showAlertDialog ) {
-        if ( showAlertDialog )
-            ExceptionUtil.SendErrorReportWithAlertDialog( DetailActivity.this, tag, e );
-        else
-            ExceptionUtil.SendErrorReport( DetailActivity.this, tag, e );
+    public void onSendErrorReport( String tag, Exception e ) {
+        ExceptionUtil.SendErrorReport( tag, e );
+    }
+
+    @Override
+    public void onSendErrorReportWithAlertDialog( String tag, Exception e ) {
+        ExceptionUtil.SendErrorReportWithAlertDialog( DetailActivity.this, tag, e );
     }
 }

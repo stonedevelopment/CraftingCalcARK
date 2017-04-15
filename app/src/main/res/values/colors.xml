@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#002e35</color>
     <color name="colorAccent">#0dfdf2</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="displaycase_engram_background">#740000</color>
-    <color name="crafting_queue_background">#969696</color>
+    <color name="backgroundCraftable">#383838</color>
+    <color name="backgroundInventory">#383838</color>
+    <color name="backgroundQueue">#969696</color>
+    <color name="backgroundTranslucent">#00000000</color>
 </resources>

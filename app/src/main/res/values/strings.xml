@@ -1,40 +1,14 @@
 <resources xmlns:x="urn:oasis:names:tc:xliff:document:1.2" xmlns:xliff="http://schemas.android.com/tools">
-
-    <!--
-    Version of JSON data file. Used to update contents of file to database.
-
-    255.2   Updated some Engram compositions, added item id's, xp, and engram points
-    255.1   Added new darts (and forgotten old one, oops!) Also Bio Toxin and Ammonite Bile
-    255.0   Added all Engrams up to PC v255, including Boss Portals and Eggcellent Adventures
-    253.4   Fixed various file/folder errors
-    253.3   Database upgrade, replaced drawable for file/folder
-    253.2   Updated Total Conversion table with Fresh Meat and Rotten Meat (oops!)
-    253.1   Updated Dyes with yields of 5, Misc category (for Camera) added Smithy to station_id's
-    253.0   Added Camera, Tusoteuthis Saddle, Therizinosaurus Saddle
-    252.1   Added total_conversion table, to allow for easy resource conversions in the future
-    252.0   Added Megalosaurus and Pachyrhinosaurus saddles
-    250.1   Migrated Resources and Engrams to include custom _ids
-    250.0   Added Stations and Levels
-    249.2   Fixed Crops category to Primitive+
-    249.1   Updated C4 Charge with correct composition
-    249.0   Added Clown Mask Skin and its resources for Fear Evolved 2
-    248.0   Added Chalicotherium Saddle and Kaprosuchus Saddle
-    247.6   Added all Engrams from Scorch Earth!!!
-    247.5   Removed Refined Engrams from Resources, added Cooked Meats to Engrams
-    247.4   Added all (hopefully!) Engrams from Primitive+
-    247.3   Updated Refined Engrams to Primitive+, added Yield to Engrams
-    247.2   Updated Resources to Primitive+, added DLC table
-    247.1   Updated Categories to Primitive+
-
-    -->
-    <string name="json_version">255.2</string>
-
     <!-- LoadActivity -->
 
     <!-- LoadActivity: Status Messages -->
-    <string name="load_activity_status_message_error_with_message">Oops! We have uncovered an error!\n (<x:g id="error_message">%1$s</x:g>)</string>
-    <string name="load_activity_status_message_send_error_report">Sending error report..</string>
-    <string name="load_activity_status_message_closing_app">Closing app, sorry for any inconvenience.</string>
+    <string name="load_activity_status_message_error_with_message">
+        \nOh noes! Looks like we\'re being attacked by a Meganeura!
+        \n\nOh, nevermind.. that\'s the wrong kind of bug.
+        \nBut good news! We\'ve caught it and are sending it off to be examined.
+        \n\nWhile we work on a fix, a workaround could simply be to restart the app or, if the problem persists, reinstall it.
+        \n\nWe truly apologize for any inconvenience caused, but rest assured a fix will be on the way. -Shane
+    </string>
     <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
 
     <string name="load_activity_status_message_format_with_elapsed_time"><x:g id="message">%1$s</x:g> (<x:g id="elapsed">%2$s</x:g>)</string>
@@ -47,23 +21,29 @@
 
     <!-- LoadActivity: Events: -->
     <string name="initialization_init_event">Greetings Survivor!</string>
-    <string name="initialization_finish_event">Starting app!\n\nCraft efficiently, my friend.</string>
-    <string name="initialization_error_event">Initialization failed.</string>
+    <string name="initialization_finish_event">\nStarting app!\n\nCraft efficiently, my friend.</string>
+    <string name="initialization_error_event">\nInitialization failed.</string>
 
     <!-- LoadActivity: Events: Database Initialization -->
-    <string name="initialization_json_event_init">Checking for new data..</string>
-    <string name="initialization_json_event_new_version">New items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
-    <string name="initialization_json_event_started">Converting new items..</string>
-    <string name="initialization_json_event_finished_with_update">Conversion complete!</string>
-    <string name="initialization_json_event_finished_without_update">No new items found. :(</string>
+    <string name="initialization_json_event_init">\nChecking for new data..</string>
+    <string name="initialization_json_event_new_version">\nNew items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
+    <string name="initialization_json_event_new_version_first_install">\nNew items found! Upgrading to v<x:g>%1$s</x:g>!</string>
+    <string name="initialization_json_event_started">\nConverting new items..</string>
+    <string name="initialization_json_event_finished_with_update">.done!</string>
+    <string name="initialization_json_event_finished_without_update">.no new items found. :(</string>
 
     <!-- LoadActivity: Events: Database Initialization -->
-    <string name="initialization_db_event_started">Initializing database with new stuff and things..</string>
-    <string name="initialization_db_event_finished">Initialization has finished, new data was added successfully; you\'re welcome!</string>
+    <string name="initialization_db_event_started">\nInitializing database with new stuff and things..</string>
+    <string name="initialization_db_event_finished">.done!</string>
 
     <!-- LoadActivity: Events: Preferences -->
-    <string name="initialization_pref_event_started">Saving preferences..</string>
-    <string name="initialization_pref_event_finished">Preferences saved!</string>
+    <string name="initialization_pref_event_started">\nChecking preferences..</string>
+    <string name="initialization_pref_event_finished">.done!</string>
+
+    <!-- LoadActivity: Events: Model Preparation phase -->
+    <string name="initialization_app_init_event_started">\nPreparing initial app data..</string>
+    <string name="initialization_app_init_event_finished">.done!</string>
+    <string name="initialization_app_init_event_error">.failed!</string>
 
     <!-- LoadActivity: Events: Purchases -->
 
@@ -72,6 +52,7 @@
     <string name="app_name_full">ARK:Resource Calculator</string>
 
     <string name="title_activity_detail">Engram Details</string>
+    <string name="title_activity_resources">Calculated Resources</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Menu titles -->
@@ -83,22 +64,33 @@
 
     <!-- Strings used with the MainActivity layout -->
     <string name="content_main_clear_queue">Clear Queue</string>
+    <string name="content_main_calculate_resources">Calculate</string>
 
     <!-- Strings used with the DetailActivity layout -->
     <string name="content_detail_save_button">Save and Close</string>
     <string name="content_detail_remove_button">Remove From Queue</string>
-    <string name="content_detail_crafted_in_format"><xliff:g>%1$s</xliff:g> can be crafted at the <xliff:g>%2$s</xliff:g></string>
-    <string name="content_detail_crafted_in_no_station"><xliff:g>%1$s</xliff:g> can be crafted without a station</string>
-    <string name="content_detail_required_level_any_level">, and can be crafted at any level.</string>
-    <string name="content_detail_required_level_format">, but requires level <xliff:g>%1$s</xliff:g> to craft.</string>
+    <string name="content_detail_station_and_level_format">
+        <x:g name="name" example="Stone Wall">%1$s</x:g>
+        <x:g name="crafted_in" example="can be crafted without a station">%2$s</x:g>,
+        <x:g name="required_level" example="and can be crafted at any level">%3$s</x:g>.
+    </string>
+    <string name="content_detail_crafted_in_format">can be crafted at the <x:g name="name">%1$s</x:g></string>
+    <string name="content_detail_crafted_in_no_station">can be crafted without a station</string>
+    <string name="content_detail_crafted_in_double_format"><x:g name="first">%1$s</x:g> and the <x:g name="second">%2$s</x:g></string>
+    <string name="content_detail_crafted_in_multiple_format">, <x:g>%1$s</x:g></string>
+    <string name="content_detail_crafted_in_multiple_last_format">, and the <x:g>%1$s</x:g></string>
+    <string name="content_detail_required_level_any_level">and can be crafted at any level</string>
+    <string name="content_detail_required_level_format">but requires level <x:g>%1$d</x:g> to craft</string>
     <string name="content_detail_number_picker_decrease">-1</string>
     <string name="content_detail_number_picker_decrease_by_10">-10</string>
     <string name="content_detail_number_picker_increase">+1</string>
     <string name="content_detail_number_picker_increase_by_10">+10</string>
     <string name="content_detail_mock_text_quantity">x0</string>
     <string name="content_detail_mock_text_name">Stone Wall</string>
+    <string name="content_detail_mock_text_dlc">ARK:Survival Evolved: Scorched Earth</string>
     <string name="content_detail_mock_text_category">Structures/Stone</string>
     <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and separates rooms.</string>
+    <string name="content_detail_mock_text_station_and_level">Stone Wall can be crafted without a station, and can be crafted at any level.</string>
 
     <!-- Strings used with the About Dialog -->
     <string name="about_dialog_full_title">About ARK:Resource Calculator</string>
@@ -129,26 +121,37 @@
 
     <!-- Strings related to Categories -->
     <string name="category_go_back">Go back</string>
-    <string name="format_category_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
+    <string name="category_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
 
     <!-- Strings related to Stations -->
-    <string name="format_station_go_back">Go back to <xliff:g>%1$s</xliff:g></string>
+    <string name="station_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
 
     <!-- Strings related to Required Level -->
     <string name="level_max_value">105</string>
 
-    <string name="format_search_results">Results for: *<xliff:g>%1$s</xliff:g>*</string>
+    <!-- Strings related to Display Case's Hierarchy Text -->
+    <string name="display_case_hierarchy_text_showing_format">Showing <x:g>%1$s</x:g></string>
+    <string name="display_case_hierarchy_text_all_stations">all Crafting Stations..</string>
+    <string name="display_case_hierarchy_text_all_categories">all Folders..</string>
+    <string name="display_case_hierarchy_text_all_engrams">all Engrams..</string>
+    <string name="display_case_hierarchy_text_search_results_format">search results for: *<xliff:g>%1$s</xliff:g>*</string>
 
     <!-- Strings related to Settings -->
 
     <!-- Key name for JSON version preference, holds latest version of raw json file -->
-    <string name="pref_json_version">pref_json_version</string>
+    <string name="pref_json_version_key">json_version</string>
+
+    <!-- Key name for JSON encoded crafting queue -->
+    <string name="pref_crafting_queue_key">crafting_queue</string>
+
+    <!-- Key name for JSON encoded crafting queue -->
+    <string name="pref_craftable_image_size_key">craftable_image_size</string>
 
     <!-- Key name for Category Level preference, holds last viewed Category's _id. -->
-    <string name="pref_category_level">category_level</string>
+    <string name="pref_category_level_key">category_level</string>
 
     <!-- Key name for Category Parent Level preference, holds last viewed Category's parent_id. -->
-    <string name="pref_category_parent">category_parent</string>
+    <string name="pref_category_parent_key">category_parent</string>
 
     <!-- Default value for Category Level preference, aka ROOT -->
     <string name="pref_category_default_value">0</string>
@@ -157,7 +160,7 @@
     <string name="pref_category_default_value_with_stations">-1</string>
 
     <!-- Key name for Crafting Station preference, holds last viewed Station's _id. -->
-    <string name="pref_station_id">station_id</string>
+    <string name="pref_station_id_key">station_id</string>
 
     <!-- Default value for Crafting Station preference, no stations selected -->
     <string name="pref_station_id_default_value">-1</string>
@@ -270,18 +273,16 @@
     <string name="pref_filter_refined_value_default">false</string>
 
     <!-- AlertDialogs -->
-    <string name="ad_error_reported_title">Oops! An error just occurred.</string>
+    <string name="ad_error_reported_title">Oh noes! Looks like we\'re being attacked by Meganeura!</string>
     <string name="ad_error_reported_message">
-        But don\'t you worry, we caught the error and sent a report for it to be fixed in a future
-        version. Until then, a work-around could be to reset your settings or, if the problem persists,
-        reinstall the app.\n
-        \n
-        Sorry for any inconvenience,\n
-        Shane.
+        Oh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
+        \n\nWhile we work on a fix, a workaround could simply be to restart the app or, if the problem persists, reinstall it.
+        \n\nWe truly apologize for any inconvenience caused, but rest assured a fix will be on the way. -Shane
     </string>
 
     <!-- Exceptions -->
     <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>
+    <string name="exception_indexoutofbounds">position %1$d of %2$d is out of bounds, data: %3$s</string>
 
     <!-- Strings related to MobAds -->
     <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
@@ -294,5 +295,7 @@
 
     <!-- In-App Purchases Strings -->
     <string name="action_title_remove_ads">Remove Ads</string>
+    <string name="detail_content_save_button_add_to_queue">Add to Queue</string>
+    <string name="detail_content_save_button_update_queue">Update Queue</string>
 
 </resources>

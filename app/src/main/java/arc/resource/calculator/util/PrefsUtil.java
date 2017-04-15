@@ -18,166 +18,256 @@ import arc.resource.calculator.R;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
+
+// TODO: 4/5/2017 Make PrefsUtil listen for changes in prefs, allow for variable access to replace preference access
+// TODO: 4/6/2017 Make SharedPrefs take in Long, Int, Float instead of converting to String everytime.
 public class PrefsUtil {
     private static final String TAG = PrefsUtil.class.getSimpleName();
 
-    private final SharedPreferences mSharedPreferences;
-    private final Context mContext;
+    private static PrefsUtil sInstance;
 
-    public PrefsUtil( Context context ) {
-        mContext = context;
+    private final SharedPreferences mSharedPreferences;
+
+    private String DLCIdKey;
+    private long DLCIdDefaultValue;
+
+    private String RefinedFilterKey;
+    private boolean RefinedFilterDefaultValue;
+
+    private String CategoryFilterKey;
+    private boolean CategoryFilterDefaultValue;
+
+    private String StationFilterKey;
+    private boolean StationFilterDefaultValue;
+
+    private String RequiredLevelFilterKey;
+    private boolean RequiredLevelFilterDefaultValue;
+
+    private String RequiredLevelKey;
+    private int RequiredLevelDefaultValue;
+
+    private static String JSONVersionKey;
+
+    private String LastCategoryLevelKey;
+    private String LastCategoryParentKey;
+    private long LastCategoryLevelDefaultValue;
+
+    private String LastStationIdKey;
+    private long LastStationIdDefaultValue;
+
+    private String CraftingQueueKey;
+
+    private String CraftableThumbnailImageSizeKey;
+
+    public static void createInstance( Context context ) {
+        sInstance = new PrefsUtil( context );
+    }
+
+    public static PrefsUtil getInstance() {
+        return sInstance;
+    }
+
+    private PrefsUtil( Context context ) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences( context );
+
+        DLCIdKey = context.getString( R.string.pref_dlc_key );
+        DLCIdDefaultValue = Long.parseLong( context.getString( R.string.pref_dlc_value_default ) );
+
+        RefinedFilterKey = context.getString( R.string.pref_filter_refined_key );
+        RefinedFilterDefaultValue = Boolean.parseBoolean( context.getString( R.string.pref_filter_refined_value_default ) );
+
+        CategoryFilterKey = context.getString( R.string.pref_filter_category_key );
+        CategoryFilterDefaultValue = Boolean.parseBoolean( context.getString( R.string.pref_filter_category_value_default ) );
+
+        StationFilterKey = context.getString( R.string.pref_filter_station_key );
+        StationFilterDefaultValue = Boolean.parseBoolean( context.getString( R.string.pref_filter_station_value_default ) );
+
+        RequiredLevelFilterKey = context.getString( R.string.pref_filter_level_key );
+        RequiredLevelFilterDefaultValue = Boolean.parseBoolean( context.getString( R.string.pref_filter_level_value_default ) );
+
+        JSONVersionKey = context.getString( R.string.pref_json_version_key );
+
+        LastCategoryLevelKey = context.getString( R.string.pref_category_level_key );
+        LastCategoryParentKey = context.getString( R.string.pref_category_parent_key );
+        LastCategoryLevelDefaultValue = Long.parseLong( context.getString( R.string.pref_category_default_value ) );
+
+        LastStationIdKey = context.getString( R.string.pref_station_id_key );
+        LastStationIdDefaultValue = Long.parseLong( context.getString( R.string.pref_station_id_default_value ) );
+
+        RequiredLevelKey = context.getString( R.string.pref_edit_text_level_key );
+        RequiredLevelDefaultValue = Integer.parseInt( context.getString( R.string.pref_edit_text_level_value_default ) );
+
+        CraftingQueueKey = context.getString( R.string.pref_crafting_queue_key );
+
+        CraftableThumbnailImageSizeKey = context.getString( R.string.pref_craftable_image_size_key );
+    }
+
+    private String getPreference( String key, String defaultValue ) {
+        return mSharedPreferences.getString( key, defaultValue );
+    }
+
+    private long getPreference( String key, long defaultValue ) {
+        return Long.parseLong( getPreference( key, String.valueOf( defaultValue ) ) );
+    }
+
+    private int getPreference( String key, int defaultValue ) {
+        return Integer.parseInt( getPreference( key, String.valueOf( defaultValue ) ) );
+    }
+
+    private boolean getPreference( String key, boolean defaultValue ) {
+        return mSharedPreferences.getBoolean( key, defaultValue );
+    }
+
+    private float getPreference( String key, float defaultValue ) {
+        return Float.parseFloat( getPreference( key, String.valueOf( defaultValue ) ) );
+    }
+
+    private void editPreference( String key, String value ) {
+        mSharedPreferences.edit().putString( key, value ).apply();
+    }
+
+    private void editPreference( String key, long value ) {
+        editPreference( key, String.valueOf( value ) );
+    }
+
+    private void editPreference( String key, int value ) {
+        editPreference( key, String.valueOf( value ) );
+    }
+
+    private void editPreference( String key, boolean value ) {
+        mSharedPreferences.edit().putBoolean( key, value ).apply();
+    }
+
+    private void editPreference( String key, float value ) {
+        editPreference( key, String.valueOf( value ) );
     }
 
     public long getDLCPreference() {
-        return Long.parseLong( mSharedPreferences.getString(
-                mContext.getString( R.string.pref_dlc_key ),
-                mContext.getString( R.string.pref_dlc_value_default ) )
-        );
+        return getPreference( DLCIdKey, DLCIdDefaultValue );
     }
 
     public boolean getRefinedFilterPreference() {
-        return mSharedPreferences.getBoolean(
-                mContext.getString( R.string.pref_filter_refined_key ),
-                Boolean.parseBoolean( mContext.getString( R.string.pref_filter_refined_value_default ) )
-        );
+        return getPreference( RefinedFilterKey, RefinedFilterDefaultValue );
     }
 
     public boolean getCategoryFilterPreference() {
-        return mSharedPreferences.getBoolean(
-                mContext.getString( R.string.pref_filter_category_key ),
-                Boolean.parseBoolean( mContext.getString( R.string.pref_filter_category_value_default ) )
-        );
+        return getPreference( CategoryFilterKey, CategoryFilterDefaultValue );
     }
 
     public boolean getStationFilterPreference() {
-        return mSharedPreferences.getBoolean(
-                mContext.getString( R.string.pref_filter_station_key ),
-                Boolean.parseBoolean( mContext.getString( R.string.pref_filter_station_value_default ) )
-        );
+        return getPreference( StationFilterKey, StationFilterDefaultValue );
     }
 
     public boolean getLevelFilterPreference() {
-        return mSharedPreferences.getBoolean(
-                mContext.getString( R.string.pref_filter_level_key ),
-                Boolean.parseBoolean( mContext.getString( R.string.pref_filter_level_value_default ) )
-        );
+        return getPreference( RequiredLevelFilterKey, RequiredLevelFilterDefaultValue );
     }
 
     public String getJSONVersion() {
-        return mSharedPreferences.getString(
-                mContext.getString( R.string.pref_json_version ),
-                null
-        );
+        return getPreference( JSONVersionKey, null );
     }
 
     public void updateJSONVersion( String value ) {
-        mSharedPreferences
-                .edit()
-                .putString( mContext.getString( R.string.pref_json_version ), value )
-                .apply();
+        editPreference( JSONVersionKey, value );
+    }
+
+    public String getCraftingQueueJSONString() {
+        return getPreference( CraftingQueueKey, null );
+    }
+
+    public void saveCraftingQueueJSONString( String jsonString ) {
+        editPreference( CraftingQueueKey, jsonString );
     }
 
     public long getLastCategoryLevel() {
-        if ( getStationFilterPreference() ) {
-            return mSharedPreferences.getLong(
-                    mContext.getString( R.string.pref_category_level ),
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value_with_stations ) )
-            );
-        } else {
-            return mSharedPreferences.getLong(
-                    mContext.getString( R.string.pref_category_level ),
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value ) )
-            );
-        }
+        if ( getStationFilterPreference() )
+            return getPreference( LastCategoryLevelKey, LastStationIdDefaultValue );
+        else
+            return getPreference( LastCategoryLevelKey, LastCategoryLevelDefaultValue );
     }
 
     public long getLastCategoryParent() {
-        if ( getStationFilterPreference() ) {
-            return mSharedPreferences.getLong(
-                    mContext.getString( R.string.pref_category_parent ),
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value_with_stations ) )
-            );
-        } else {
-            return mSharedPreferences.getLong(
-                    mContext.getString( R.string.pref_category_parent ),
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value ) )
-            );
-        }
+        if ( getStationFilterPreference() )
+            return getPreference( LastCategoryParentKey, LastStationIdDefaultValue );
+        else
+            return getPreference( LastCategoryParentKey, LastCategoryLevelDefaultValue );
     }
 
     public long getLastStationId() {
-        return mSharedPreferences.getLong(
-                mContext.getString( R.string.pref_station_id ),
-                Long.parseLong( mContext.getString( R.string.pref_station_id_default_value ) )
-        );
+        return getPreference( LastStationIdKey, LastStationIdDefaultValue );
     }
 
     public int getRequiredLevel() {
-        return Integer.parseInt( mSharedPreferences.getString(
-                mContext.getString( R.string.pref_edit_text_level_key ),
-                mContext.getString( R.string.pref_edit_text_level_value_default ) )
-        );
+        return getPreference( RequiredLevelKey, RequiredLevelDefaultValue );
+    }
+
+    public int getCraftableThumbnailImageSize() {
+        return getPreference( CraftableThumbnailImageSizeKey, Util.NO_SIZE );
+    }
+
+    public void saveCraftableThumbnailImageSize( int size ) {
+        editPreference( CraftableThumbnailImageSizeKey, size );
     }
 
     public void saveCategoryLevels( long level, long parent ) {
-        mSharedPreferences
-                .edit()
-                .putLong( mContext.getString( R.string.pref_category_level ), level )
-                .putLong( mContext.getString( R.string.pref_category_parent ), parent )
-                .apply();
+        editPreference( LastCategoryLevelKey, level );
+        editPreference( LastCategoryParentKey, parent );
     }
 
     public void saveRequiredLevel( int level ) {
-        mSharedPreferences
-                .edit()
-                .putLong( mContext.getString( R.string.pref_filter_level_value_default ), level )
-                .apply();
+        editPreference( RequiredLevelFilterKey, level );
     }
 
     public void saveStationId( long station_id ) {
-        mSharedPreferences
-                .edit()
-                .putLong( mContext.getString( R.string.pref_station_id ), station_id )
-                .apply();
+        editPreference( LastStationIdKey, station_id );
     }
 
-    public void saveDefaults() {
+    private void saveDLCId( long dlc_id ) {
+        editPreference( DLCIdKey, dlc_id );
+    }
+
+    public void saveToDefault() {
         saveStationIdBackToDefault();
         saveCategoryLevelsBackToDefault();
-//        saveRequiredLevelBackToDefault();
+    }
+
+    public void saveToDefaultFullReset() {
+        clearPreferences();
+
+        saveFiltersBackToDefault();
+
+        saveDLCIdBackToDefault();
+        saveStationIdBackToDefault();
+        saveCategoryLevelsBackToDefault();
+        saveRequiredLevelBackToDefault();
+    }
+
+    private void saveDLCIdBackToDefault() {
+        saveDLCId( DLCIdDefaultValue );
+    }
+
+    private void saveFiltersBackToDefault() {
+        editPreference( StationFilterKey, StationFilterDefaultValue );
+        editPreference( CategoryFilterKey, CategoryFilterDefaultValue );
+        editPreference( RequiredLevelFilterKey, RequiredLevelFilterDefaultValue );
+        editPreference( RefinedFilterKey, RefinedFilterDefaultValue );
     }
 
     private void saveCategoryLevelsBackToDefault() {
-        if ( getStationFilterPreference() ) {
-            saveCategoryLevels(
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value_with_stations ) ),
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value_with_stations ) )
-            );
-        } else {
-            saveCategoryLevels(
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value ) ),
-                    Long.parseLong( mContext.getString( R.string.pref_category_default_value ) )
-            );
-        }
+        if ( getStationFilterPreference() )
+            saveCategoryLevels( LastStationIdDefaultValue, LastStationIdDefaultValue );
+        else
+            saveCategoryLevels( LastCategoryLevelDefaultValue, LastCategoryLevelDefaultValue );
     }
 
     private void saveStationIdBackToDefault() {
-        saveStationId( Long.parseLong( mContext.getString( R.string.pref_station_id_default_value ) ) );
+        saveStationId( LastStationIdDefaultValue );
     }
 
     private void saveRequiredLevelBackToDefault() {
-        saveRequiredLevel( Integer.parseInt( mContext.getString( R.string.pref_filter_level_value_default ) ) );
+        saveRequiredLevel( RequiredLevelDefaultValue );
     }
 
-    public boolean getPurchasePref( String sku ) {
-        return mSharedPreferences.getBoolean( sku, false );
-    }
-
-    public void setPurchasePref( String sku, boolean value ) {
-        mSharedPreferences
-                .edit()
-                .putBoolean( sku, value )
-                .apply();
+    private void clearPreferences() {
+        mSharedPreferences.edit().clear().apply();
     }
 }

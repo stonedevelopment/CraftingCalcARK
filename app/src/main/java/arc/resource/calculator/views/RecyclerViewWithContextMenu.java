@@ -8,19 +8,20 @@ import android.view.ContextMenu;
 import android.view.View;
 
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
+import arc.resource.calculator.util.Util;
 
 public class RecyclerViewWithContextMenu extends RecyclerView {
     private RecyclerContextMenuInfo mContextMenuInfo;
 
-    public RecyclerViewWithContextMenu( Context context ) throws Exception {
+    public RecyclerViewWithContextMenu( Context context ) {
         super( context );
     }
 
-    public RecyclerViewWithContextMenu( Context context, @Nullable AttributeSet attrs ) throws Exception {
+    public RecyclerViewWithContextMenu( Context context, @Nullable AttributeSet attrs ) {
         super( context, attrs );
     }
 
-    public RecyclerViewWithContextMenu( Context context, @Nullable AttributeSet attrs, int defStyle ) throws Exception {
+    public RecyclerViewWithContextMenu( Context context, @Nullable AttributeSet attrs, int defStyle ) {
         super( context, attrs, defStyle );
     }
 
@@ -28,7 +29,7 @@ public class RecyclerViewWithContextMenu extends RecyclerView {
     public boolean showContextMenuForChild( View originalView ) {
         int position = getChildAdapterPosition( originalView );
 
-        if ( position != NO_POSITION ) {
+        if ( Util.isValidPosition( position, getAdapter().getItemCount() ) ) {
             mContextMenuInfo = new RecyclerContextMenuInfo( originalView,
                     position, getAdapter().getItemId( position ) );
 

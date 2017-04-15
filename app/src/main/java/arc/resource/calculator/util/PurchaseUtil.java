@@ -19,12 +19,12 @@ class PurchaseUtil {
 //        mCheckout = Checkout.forActivity( activity, MyApplication.get().getBilling() );
 //    }
 //
-//    public void start() {
-//        mCheckout.start();
+//    public void setup() {
+//        mCheckout.setup();
 //    }
 //
-//    public void stop() {
-//        mCheckout.stop();
+//    public void shutDown() {
+//        mCheckout.shutDown();
 //    }
 //
 //    public void loadInventory( Inventory.Callback callback ) {

@@ -1,49 +1,29 @@
 package arc.resource.calculator.util;
 
-import android.content.Context;
-import android.content.res.Configuration;
+import android.view.ViewGroup;
 
 public class DisplayUtil {
     private static final String TAG = DisplayUtil.class.getSimpleName();
 
     private static DisplayUtil sInstance;
 
-    private final int mOrientation;
+    private int mViewSize = Util.NO_SIZE;
 
-//    private float mImageSize;
-//    private boolean mImageSizeResolved;
-
-    public static DisplayUtil getInstance( Context context ) {
+    public static DisplayUtil getInstance() {
         if ( sInstance == null )
-            sInstance = new DisplayUtil( context );
+            sInstance = new DisplayUtil();
 
         return sInstance;
     }
 
-    private DisplayUtil( Context context ) {
-        mOrientation = context.getResources().getConfiguration().orientation;
-//        mImageSize = -1;
-//        mImageSizeResolved = false;
+    private DisplayUtil() {
     }
 
-//    public void setImageSize( float size ) {
-//        mImageSize = size;
-//        mImageSizeResolved = true;
-//    }
-//
-//    public float getImageSize() {
-//        return mImageSize;
-//    }
-
-    public boolean isLandscape() {
-        return getOrientation() == Configuration.ORIENTATION_LANDSCAPE;
+    public void setImageSize( int size ) {
+        mViewSize = size;
     }
 
-    public boolean isPortrait() {
-        return getOrientation() == Configuration.ORIENTATION_PORTRAIT;
-    }
-
-    private int getOrientation() {
-        return mOrientation;
+    public ViewGroup.LayoutParams getParams() {
+        return new ViewGroup.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, mViewSize );
     }
 }

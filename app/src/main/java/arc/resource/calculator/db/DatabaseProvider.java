@@ -17,11 +17,10 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
@@ -30,15 +29,17 @@ import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
+import arc.resource.calculator.listeners.ErrorReporter;
 import arc.resource.calculator.util.ExceptionUtil.URIUnknownException;
-import arc.resource.calculator.util.ListenerUtil;
+
+import static arc.resource.calculator.util.Util.NO_ID;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private DatabaseHelper mOpenHelper;
-    private ListenerUtil mCallback;
+    private ErrorReporter mErrorReporter;
 
     private static final int ENGRAM = 100;
     private static final int ENGRAM_ID_WITH_DLC = 101;
@@ -83,7 +84,7 @@ public class DatabaseProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = new DatabaseHelper( getContext() );
-        mCallback = ListenerUtil.getInstance();
+        mErrorReporter = ErrorReporter.getInstance();
         return true;
     }
 
@@ -204,12 +205,18 @@ public class DatabaseProvider extends ContentProvider {
         return uriMatcher;
     }
 
+    private SQLiteDatabase getWritableDatabase() {
+        return mOpenHelper.getWritableDatabase();
+    }
+
+    private SQLiteDatabase getReadableDatabase() {
+        return mOpenHelper.getReadableDatabase();
+    }
+
     @Override
     public String getType( @NonNull Uri uri ) {
-        final int match = sUriMatcher.match( uri );
-
         try {
-            switch ( match ) {
+            switch ( sUriMatcher.match( uri ) ) {
                 case ENGRAM:
                 case ENGRAM_WITH_CATEGORY:
                 case ENGRAM_WITH_CATEGORY_AND_STATION:
@@ -278,54 +285,51 @@ public class DatabaseProvider extends ContentProvider {
                     throw new URIUnknownException( uri );
             }
         } catch ( URIUnknownException e ) {
-            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
-        }
+            mErrorReporter.emitSendErrorReport( TAG, e );
 
+            return null;
+        }
+    }
+
+    @Nullable
+    @Override
+    public Uri insert( @NonNull Uri uri, @Nullable ContentValues values ) {
         return null;
     }
 
     @Override
     public Cursor query( @NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder ) {
-        Cursor cursor = null;
 
         try {
-            String tableName;
+            String tableName = getTableNameFromUriMatch( uri );
             switch ( sUriMatcher.match( uri ) ) {
                 case CATEGORY:
                     sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = CategoryEntry.TABLE_NAME;
                     break;
 
                 case COMPLEX_RESOURCE:
-                    tableName = ComplexResourceEntry.TABLE_NAME;
                     break;
 
                 case COMPOSITION:
-                    tableName = CompositionEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM:
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case QUEUE:
-                    tableName = QueueEntry.TABLE_NAME;
                     break;
 
                 case RESOURCE:
                     sortOrder = ResourceEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = ResourceEntry.TABLE_NAME;
                     break;
 
                 case DLC:
                     sortOrder = DLCEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = DLCEntry.TABLE_NAME;
                     break;
 
                 case STATION:
                     sortOrder = StationEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = StationEntry.TABLE_NAME;
                     break;
 
                 case DLC_ID:
@@ -333,7 +337,6 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( DatabaseContract.getIdFromUri( uri ) )
                     };
-                    tableName = DLCEntry.TABLE_NAME;
                     break;
 
                 case CATEGORY_ID_WITH_DLC:
@@ -343,7 +346,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( CategoryEntry.getIdFromUri( uri ) ),
                             Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
                     };
-                    tableName = CategoryEntry.TABLE_NAME;
                     break;
 
                 case CATEGORY_WITH_PARENT:
@@ -354,7 +356,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = CategoryEntry.TABLE_NAME;
                     break;
 
                 case CATEGORY_WITH_PARENT_AND_STATION:
@@ -367,7 +368,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = CategoryEntry.TABLE_NAME;
                     break;
 
                 case COMPLEX_RESOURCE_ID:
@@ -375,7 +375,6 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( DatabaseContract.getIdFromUri( uri ) )
                     };
-                    tableName = ComplexResourceEntry.TABLE_NAME;
                     break;
 
                 case COMPOSITION_ID:
@@ -383,7 +382,6 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( DatabaseContract.getIdFromUri( uri ) )
                     };
-                    tableName = CompositionEntry.TABLE_NAME;
                     break;
 
                 case COMPOSITION_WITH_ENGRAM:
@@ -393,7 +391,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( CompositionEntry.getEngramIdFromUri( uri ) ),
                             Long.toString( CompositionEntry.getDLCIdFromUri( uri ) )
                     };
-                    tableName = CompositionEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_ID_WITH_DLC:
@@ -403,7 +400,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getIdFromUri( uri ) ),
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_CATEGORY:
@@ -414,7 +410,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_CATEGORY_AND_STATION:
@@ -427,7 +422,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_DLC:
@@ -436,7 +430,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_STATION:
@@ -447,7 +440,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_LEVEL:
@@ -458,7 +450,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_LEVEL_AND_CATEGORY:
@@ -471,7 +462,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_LEVEL_AND_STATION:
@@ -484,7 +474,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION:
@@ -499,7 +488,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case ENGRAM_WITH_SEARCH:
@@ -510,7 +498,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
-                    tableName = EngramEntry.TABLE_NAME;
                     break;
 
                 case QUEUE_ID:
@@ -518,7 +505,6 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( DatabaseContract.getIdFromUri( uri ) )
                     };
-                    tableName = QueueEntry.TABLE_NAME;
                     break;
 
                 case QUEUE_WITH_ENGRAM_ID:
@@ -526,7 +512,6 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( QueueEntry.getEngramIdFromUri( uri ) )
                     };
-                    tableName = QueueEntry.TABLE_NAME;
                     break;
 
                 case RESOURCE_ID_WITH_DLC:
@@ -536,7 +521,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( ResourceEntry.getIdFromUri( uri ) ),
                             Long.toString( ResourceEntry.getDLCIdFromUri( uri ) )
                     };
-                    tableName = ResourceEntry.TABLE_NAME;
                     break;
 
                 case COMPLEX_RESOURCE_WITH_RESOURCE:
@@ -544,7 +528,6 @@ public class DatabaseProvider extends ContentProvider {
                     selectionArgs = new String[]{
                             Long.toString( ComplexResourceEntry.getResourceIdFromUri( uri ) )
                     };
-                    tableName = ComplexResourceEntry.TABLE_NAME;
                     break;
 
                 case QUEUE_WITH_ENGRAM_TABLE:
@@ -554,7 +537,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( QueueEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = EngramEntry.SQL_COLUMN_NAME + " ASC";
-                    tableName = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE;
                     break;
 
                 case STATION_ID_WITH_DLC:
@@ -564,7 +546,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( StationEntry.getIdFromUri( uri ) ),
                             Long.toString( StationEntry.getDLCIdFromUri( uri ) )
                     };
-                    tableName = StationEntry.TABLE_NAME;
                     break;
 
                 case STATION_WITH_DLC:
@@ -573,7 +554,6 @@ public class DatabaseProvider extends ContentProvider {
                             Long.toString( StationEntry.getDLCIdFromUri( uri ) )
                     };
                     sortOrder = StationEntry.SQL_COLUMN_NAME + " ASC";
-                    tableName = StationEntry.TABLE_NAME;
                     break;
 
                 default:
@@ -581,157 +561,124 @@ public class DatabaseProvider extends ContentProvider {
             }
 
             // Query database with provided args, null or not.
-            cursor = mOpenHelper.getReadableDatabase().query(
-                    tableName,
-                    projection,
-                    selection,
-                    selectionArgs,
-                    null, null,
-                    sortOrder
-            );
+            Cursor cursor = getReadableDatabase().query(
+                    tableName, projection, selection, selectionArgs, null, null, sortOrder );
 
             cursor.setNotificationUri( getContext().getContentResolver(), uri );
-        } catch ( Exception e ) {
-            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
+
+            return cursor;
+        } catch ( URIUnknownException e ) {
+            mErrorReporter.emitSendErrorReport( TAG, e );
+
+            return null;
         }
 
-        return cursor;
-    }
-
-    @Override
-    public Uri insert( @NonNull Uri uri, ContentValues values ) {
-        try {
-            long _id = mOpenHelper.getWritableDatabase()
-                    .insert( getTableNameFromUriMatch( uri ), null, values );
-
-            if ( _id > -1 ) {
-                getContext().getContentResolver().notifyChange( uri, null );
-
-                return DatabaseContract.buildUriWithId( uri, _id );
-            } else {
-                throw new SQLiteException();
-            }
-        } catch ( Exception e ) {
-            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
-        }
-
-        return null;
     }
 
     @Override
     public int delete( @NonNull Uri uri, String selection, String[] selectionArgs ) {
-        int rowsDeleted = 0;
 
         try {
             String tableName = getTableNameFromUriMatch( uri );
-
-            switch ( sUriMatcher.match( uri ) ) {
-                case QUEUE:
-                    selection = "1";
-                    break;
-
-                case QUEUE_ID:
-                    selection = QueueEntry.SQL_QUERY_WITH_ID;
-                    selectionArgs = new String[]{
-                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
-                    };
-                    break;
-
-                case QUEUE_WITH_ENGRAM_ID:
-                    selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_KEY;
-                    selectionArgs = new String[]{
-                            Long.toString( QueueEntry.getEngramIdFromUri( uri ) )
-                    };
-                    break;
-            }
-
-            rowsDeleted = mOpenHelper.getWritableDatabase()
-                    .delete( tableName, selection, selectionArgs );
+            int rowsDeleted = getWritableDatabase().delete( tableName, selection, selectionArgs );
 
             if ( rowsDeleted > 0 )
                 getContext().getContentResolver().notifyChange( uri, null );
-        } catch ( URIUnknownException e ) {
-            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
+
+            return rowsDeleted;
+        } catch ( Exception e ) {
+            mErrorReporter.emitSendErrorReport( TAG, e );
+
+            return 0;
         }
 
-        return rowsDeleted;
     }
 
     @Override
-    public int update( @NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs ) {
-        int rowsUpdated = 0;
-
-        try {
-            if ( selection == null )
-                selection = "1";
-
-            rowsUpdated = mOpenHelper.getWritableDatabase()
-                    .update( getTableNameFromUriMatch( uri ), values, selection, selectionArgs );
-            if ( rowsUpdated > 0 )
-                getContext().getContentResolver().notifyChange( uri, null );
-        } catch ( URIUnknownException e ) {
-            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
-        }
-
-        return rowsUpdated;
+    public int update( @NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs ) {
+        return 0;
     }
 
     @Override
     public int bulkInsert( @NonNull Uri uri, @NonNull ContentValues[] values ) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        int rowsInserted = 0;
+        final SQLiteDatabase db = getWritableDatabase();
 
         try {
             db.beginTransaction();
 
+            int rowsInserted = 0;
             for ( ContentValues value : values ) {
                 long _id = db.insert( getTableNameFromUriMatch( uri ), null, value );
 
-                if ( _id > -1 ) rowsInserted++;
-                else
-                    throw new SQLiteException(
-                            String.format(
-                                    getContext().getString( R.string.exception_sql_insert ),
-                                    uri ) );
+                if ( _id == NO_ID )
+                    throw new Exception();
+
+                rowsInserted++;
             }
 
             db.setTransactionSuccessful();
-        } catch ( URIUnknownException | SQLiteException e ) {
-            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
+
+            getContext().getContentResolver().notifyChange( uri, null );
+
+            return rowsInserted;
+        } catch ( Exception e ) {
+            mErrorReporter.emitSendErrorReport( TAG, e );
+
+            return -1;
         } finally {
             db.endTransaction();
         }
 
-        getContext().getContentResolver().notifyChange( uri, null );
-        return rowsInserted;
     }
 
     private String getTableNameFromUriMatch( @NonNull Uri uri ) throws URIUnknownException {
         switch ( sUriMatcher.match( uri ) ) {
-            case ENGRAM:
-                return EngramEntry.TABLE_NAME;
-
-            case RESOURCE:
-                return ResourceEntry.TABLE_NAME;
-
             case CATEGORY:
+            case CATEGORY_ID_WITH_DLC:
+            case CATEGORY_WITH_PARENT:
+            case CATEGORY_WITH_PARENT_AND_STATION:
                 return CategoryEntry.TABLE_NAME;
 
+            case COMPLEX_RESOURCE:
+            case COMPLEX_RESOURCE_ID:
+            case COMPLEX_RESOURCE_WITH_RESOURCE:
+                return ComplexResourceEntry.TABLE_NAME;
+
             case COMPOSITION:
+            case COMPOSITION_ID:
+            case COMPOSITION_WITH_ENGRAM:
                 return CompositionEntry.TABLE_NAME;
 
-            case COMPLEX_RESOURCE:
-                return ComplexResourceEntry.TABLE_NAME;
+            case DLC:
+            case DLC_ID:
+                return DLCEntry.TABLE_NAME;
+
+            case ENGRAM:
+            case ENGRAM_ID_WITH_DLC:
+            case ENGRAM_WITH_CATEGORY:
+            case ENGRAM_WITH_CATEGORY_AND_STATION:
+            case ENGRAM_WITH_DLC:
+            case ENGRAM_WITH_LEVEL:
+            case ENGRAM_WITH_LEVEL_AND_CATEGORY:
+            case ENGRAM_WITH_LEVEL_AND_STATION:
+            case ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION:
+            case ENGRAM_WITH_SEARCH:
+            case ENGRAM_WITH_STATION:
+                return EngramEntry.TABLE_NAME;
 
             case QUEUE:
             case QUEUE_ID:
             case QUEUE_WITH_ENGRAM_ID:
+            case QUEUE_WITH_ENGRAM_TABLE:
                 return QueueEntry.TABLE_NAME;
 
-            case DLC:
-                return DLCEntry.TABLE_NAME;
+            case RESOURCE:
+            case RESOURCE_ID_WITH_DLC:
+                return ResourceEntry.TABLE_NAME;
 
             case STATION:
+            case STATION_ID_WITH_DLC:
+            case STATION_WITH_DLC:
                 return StationEntry.TABLE_NAME;
 
             default:

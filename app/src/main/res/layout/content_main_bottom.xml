@@ -1,33 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
+              android:padding="@dimen/display_case_container_layout_padding"
               tools:context=".MainActivity">
 
-    <arc.resource.calculator.views.QueueEngramRecyclerView
+    <arc.resource.calculator.views.QueueRecyclerView
         android:id="@+id/crafting_queue_engram_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/frame"
-        android:padding="@dimen/crafting_queue_grid_view_holder_padding"/>
-
-    <arc.resource.calculator.views.QueueCompositionRecyclerView
-        android:id="@+id/crafting_queue_resource_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="@dimen/display_case_container_layout_padding"
-        android:layout_marginTop="@dimen/display_case_container_layout_padding"
-        android:background="@drawable/frame"
-        android:padding="@dimen/display_case_container_layout_padding"/>
+        android:background="@drawable/frame"/>
 
     <Button
-        android:id="@+id/clear_queue_button"
-        style="?android:attr/buttonBarButtonStyle"
+        android:id="@+id/button_clear_queue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/frame"
         android:text="@string/content_main_clear_queue"/>
 
 </LinearLayout>

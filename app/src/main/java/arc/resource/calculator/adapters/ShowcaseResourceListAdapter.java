@@ -12,8 +12,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
-import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.R;
+import arc.resource.calculator.listeners.ErrorReporter;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.model.resource.QueueResource;
 
@@ -32,10 +32,10 @@ import arc.resource.calculator.model.resource.QueueResource;
 public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseResourceListAdapter.ViewHolder> {
     private static final String TAG = ShowcaseResourceListAdapter.class.getSimpleName();
 
-    private final Showcase mShowcase;
+    private Showcase mShowcase;
 
     public ShowcaseResourceListAdapter( Showcase showcase ) {
-        mShowcase = showcase;
+        setShowcase( showcase );
     }
 
     @Override
@@ -62,17 +62,25 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseRe
             int quantity = resource.getProductOfQuantities();
             holder.getQuantity().setText( String.format( Locale.US, "%1$d", quantity ) );
         } catch ( Exception e ) {
-            ListenerUtil.getInstance().emitSendErrorReportWithAlertDialog( TAG, e );
+            ErrorReporter.getInstance().emitSendErrorReportWithAlertDialog( TAG, e );
         }
     }
 
     @Override
     public int getItemCount() {
-        return mShowcase.getComposition().size();
+        return getShowcase().getShowcaseEntry().getQuantifiableComposition().size();
+    }
+
+    private void setShowcase( Showcase showcase ) {
+        this.mShowcase = showcase;
+    }
+
+    private Showcase getShowcase() {
+        return mShowcase;
     }
 
     private QueueResource getResource( int position ) throws Exception {
-        return mShowcase.getResource( position );
+        return getShowcase().getResource( position );
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

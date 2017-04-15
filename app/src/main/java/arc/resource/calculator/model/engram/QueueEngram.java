@@ -16,6 +16,7 @@ package arc.resource.calculator.model.engram;
  * Engram object that uses a yielded quantity for working with totals in the CraftingQueue
  */
 public class QueueEngram extends Engram {
+
     // Quantity used to keep track of how many Engrams in CraftingQueue
     private int mQuantity;
 
@@ -29,8 +30,47 @@ public class QueueEngram extends Engram {
         return mQuantity;
     }
 
+    public void increaseQuantity() {
+        mQuantity++;
+    }
+
+    public void increaseQuantity( int increment ) {
+        int amount = getQuantity() + increment;
+        int floor = amount / increment;
+
+        setQuantity( floor * increment );
+    }
+
+    public void decreaseQuantity() {
+        if ( getQuantity() > 0 )
+            mQuantity--;
+    }
+
+    public void decreaseQuantity( int decrement ) {
+        if ( getQuantity() >= decrement ) {
+            int amount;
+
+            if ( getQuantity() % decrement == 0 )
+                amount = getQuantity() - decrement;
+            else
+                amount = getQuantity();
+
+            int floor = amount / decrement;
+
+            setQuantity( floor * decrement );
+        } else {
+            if ( getQuantity() > 1 ) {
+                setQuantity( 1 );
+            }
+        }
+    }
+
     public void setQuantity( int quantity ) {
         mQuantity = quantity;
+    }
+
+    public void resetQuantity() {
+        mQuantity = 0;
     }
 
     public Integer getQuantityWithYield() {

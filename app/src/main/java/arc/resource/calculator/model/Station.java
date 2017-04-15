@@ -15,7 +15,7 @@ package arc.resource.calculator.model;
 /**
  * Base Station object
  */
-class Station {
+public class Station {
     // Primary Key used to track hierarchy when filtering folders
     private final long mId;
 
@@ -28,15 +28,11 @@ class Station {
     // String literal of Station's image filename
     private final String mFile;
 
-    // Foreign Key that references the DLC this Station belongs to
-    private final long mDLCId;
-
-    public Station( long _id, String name, String folder, String file, long dlc_id ) {
+    public Station( long _id, String name, String folder, String file ) {
         mId = _id;
         mName = name;
         mFolder = folder;
         mFile = file;
-        mDLCId = dlc_id;
     }
 
     public long getId() {
@@ -59,12 +55,8 @@ class Station {
         return getFolder() + getFile();
     }
 
-    public long getDLCId() {
-        return mDLCId;
-    }
-
     @Override
     public String toString() {
-        return "mEngramId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile + ", mDLCId=" + mDLCId;
+        return "mEngramId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile;
     }
 }

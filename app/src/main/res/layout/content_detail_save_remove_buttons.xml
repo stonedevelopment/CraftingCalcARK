@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:layout_marginEnd="@dimen/detail_padding"
         android:background="@drawable/frame"
+        android:onClick="RemoveAndFinish"
         android:text="@string/content_detail_remove_button"/>
 
     <Button
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginStart="@dimen/detail_padding"
+        android:onClick="SaveAndFinish"
         android:background="@drawable/frame"
         android:text="@string/content_detail_save_button"/>
 

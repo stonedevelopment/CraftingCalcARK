@@ -13,7 +13,7 @@
     <integer name="weight_bottom_container">55</integer>
 
     <!-- DisplayCase: Grid Columns/Rows -->
-    <integer name="display_case_column_count">5</integer>
+    <integer name="gridview_column_count">5</integer>
 
     <!-- DisplayCase: Hierarchy -->
     <dimen name="display_case_hierarchy_indention">8dp</dimen>
@@ -24,7 +24,7 @@
     <dimen name="display_case_container_layout_corner_radius">8dp</dimen>
 
     <!-- DisplayCase: ViewHolders -->
-    <dimen name="display_case_view_holder_padding">4dp</dimen>
+    <dimen name="gridview_item_padding">4dp</dimen>
     <dimen name="display_case_view_holder_corner_radius">8dp</dimen>
 
     <!-- DisplayCase: ViewHolders: Text Sizes -->

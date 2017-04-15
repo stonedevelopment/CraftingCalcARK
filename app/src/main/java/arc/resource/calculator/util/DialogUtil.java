@@ -1,8 +1,8 @@
 package arc.resource.calculator.util;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.ContextThemeWrapper;
 import android.widget.EditText;
@@ -12,22 +12,26 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseHelper;
 
 public class DialogUtil {
+    public interface Callback {
+        void onResult( Object result );
+    }
+
     public static AlertDialog Error( Context c ) {
         AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( c, R.style.AlertDialogCustom ) );
         builder.setTitle( c.getString( R.string.ad_error_reported_title ) )
-                .setIcon( android.R.drawable.stat_notify_error )
+                .setIcon( R.drawable.dialog_icons_error )
                 .setMessage( c.getString( R.string.ad_error_reported_message ) );
 
         return builder.create();
     }
 
-    public static AlertDialog EditQuantity( final Context context, final long _id ) {
+    public static AlertDialog EditQuantity( final Context context, String name, final Callback callback ) {
         final EditText editText = new EditText( context );
         editText.setTextColor( context.getResources().getColor( R.color.colorWhite ) );
         editText.setInputType( InputType.TYPE_CLASS_NUMBER );
 
         AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( context, R.style.AlertDialogCustom ) );
-        builder.setTitle( context.getString( R.string.quantity_dialog_full_title ) )
+        builder.setTitle( name )
                 .setIcon( android.R.drawable.ic_menu_edit )
                 .setMessage( "Enter new quantity" )
                 .setView( editText )
@@ -42,13 +46,11 @@ public class DialogUtil {
                     public void onClick( DialogInterface dialog, int which ) {
                         String quantityText = editText.getText().toString();
 
-                        if ( !quantityText.equals( "" ) ) {
-                            if ( quantityText.length() < 5 ) {
-                                int quantity = Integer.parseInt( quantityText );
+                        if ( !quantityText.equals( "" ) && quantityText.length() < 5 ) {
+                            int quantity = Integer.parseInt( quantityText );
 
-                                if ( quantity > 0 )
-                                    ListenerUtil.getInstance().requestUpdateQuantity( context, _id, quantity );
-                            }
+                            if ( quantity > 0 )
+                                callback.onResult( quantity );
                         }
                     }
                 } );
@@ -56,7 +58,7 @@ public class DialogUtil {
         return builder.create();
     }
 
-    public static AlertDialog Search( final Context context ) {
+    public static AlertDialog Search( final Context context, final Callback callback ) {
         final EditText editText = new EditText( context );
         editText.setTextColor( context.getResources().getColor( R.color.colorWhite ) );
 
@@ -73,41 +75,10 @@ public class DialogUtil {
                 .setPositiveButton( context.getString( R.string.search_dialog_positive_button ), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick( DialogInterface dialog, int which ) {
-                        if ( !editText.getText().toString().equals( "" ) ) {
-                            String searchText = editText.getText().toString();
+                        String searchText = editText.getText().toString();
 
-                            ListenerUtil.getInstance().requestSearch( context, searchText );
-                        }
-                    }
-                } );
-
-        return builder.create();
-    }
-
-    public static AlertDialog ReportEngram( final Context context, final long _id ) {
-        final EditText editText = new EditText( context );
-        editText.setTextColor( context.getResources().getColor( R.color.colorWhite ) );
-        editText.setInputType( InputType.TYPE_CLASS_NUMBER );
-
-        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( context, R.style.AlertDialogCustom ) );
-        builder.setTitle( context.getString( R.string.quantity_dialog_full_title ) )
-                .setIcon( android.R.drawable.ic_menu_edit )
-                .setMessage( "Enter new quantity" )
-                .setView( editText )
-                .setNegativeButton( context.getString( R.string.quantity_dialog_negative_button ), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick( DialogInterface dialog, int which ) {
-
-                    }
-                } )
-                .setPositiveButton( context.getString( R.string.quantity_dialog_positive_button ), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick( DialogInterface dialog, int which ) {
-                        if ( !editText.getText().toString().equals( "" ) ) {
-                            int quantity = Integer.parseInt( editText.getText().toString() );
-
-                            if ( quantity > 0 )
-                                ListenerUtil.getInstance().requestUpdateQuantity( context, _id, quantity );
+                        if ( !searchText.equals( "" ) ) {
+                            callback.onResult( searchText );
                         }
                     }
                 } );
@@ -127,8 +98,16 @@ public class DialogUtil {
                                 "Xbox Live:\n  MasterxOfxNone\n\n" +
                                 "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
                                 "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
-                                "JSON File Version: " + context.getString( R.string.json_version ) + "\n\n" +
+                                "JSON File Version: " + PrefsUtil.getInstance().getJSONVersion() + "\n\n" +
                                 "Screen Size: " + context.getString( R.string.dimens ) );
+
+        return builder.create();
+    }
+
+    public static AlertDialog Resources( Context context ) {
+        AlertDialog.Builder builder = new AlertDialog.Builder( context );
+
+        builder.setView( R.layout.activity_resource );
 
         return builder.create();
     }

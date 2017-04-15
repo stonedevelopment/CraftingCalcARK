@@ -2,15 +2,20 @@ package arc.resource.calculator.model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
-import android.util.SparseArray;
+import android.util.LongSparseArray;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
+import arc.resource.calculator.model.resource.Resource;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
@@ -30,109 +35,101 @@ import arc.resource.calculator.util.Util;
 public class Showcase {
     private static final String TAG = Showcase.class.getSimpleName();
 
-    private final long mId;
-    private String mName;
-    private String mDescription;
-    private String mImagePath;
-    private long mCategoryId;
-    private final List<Long> mStationIds;
-    private long mStationId;
-    private int mRequiredLevel;
-    private final long mDLCId;
+    private Context mContext;
 
-    // TODO: 1/22/2017 SparseLongArray
-    private SparseArray<CompositeResource> mComposition;
+    private ShowcaseEntry mShowcaseEntry;
 
-    private int mYield;
-    private int mQuantity;
+    private ErrorReporter mErrorReporter;
 
     public Showcase( Context context, long _id ) {
-        mId = _id;
-        mStationIds = new ArrayList<>();
-        mDLCId = new PrefsUtil( context ).getDLCPreference();
+        long dlc_id = PrefsUtil.getInstance().getDLCPreference();
 
-        mQuantity = 0;
+        mErrorReporter = ErrorReporter.getInstance();
 
-        QueryForEngramDetails( context );
+        setContext( context );
+        setShowcaseEntry( QueryForDetails( context, dlc_id, _id ) );
     }
 
-    public long getId() {
-        return mId;
+    private void setShowcaseEntry( ShowcaseEntry showcaseEntry ) {
+        if ( showcaseEntry == null )
+            Log.d( TAG, "showcaseEntry is null?" );
+
+        mShowcaseEntry = showcaseEntry;
     }
 
-    public String getName() {
-        return mName;
+    public ShowcaseEntry getShowcaseEntry() {
+        return mShowcaseEntry;
+    }
+
+    private void setContext( Context context ) {
+        this.mContext = context.getApplicationContext();
+    }
+
+    private Context getContext() {
+        return mContext;
     }
 
     public String getImagePath() {
-        return mImagePath;
+        return getShowcaseEntry().getCraftable().getImagePath();
     }
 
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public int getRequiredLevel() {
-        return mRequiredLevel;
-    }
-
-    public int getYield() {
-        return mYield;
-    }
-
-    public int getQuantity() {
-        return mQuantity;
-    }
-
-    private int getQuantityWithYield() {
-        return mQuantity * mYield;
-    }
-
-    public String getQuantityText() {
-        return String.valueOf( getQuantityWithYield() );
+    public String getName() {
+        return getShowcaseEntry().getCraftable().getName();
     }
 
     public QueueResource getResource( int position ) throws Exception {
-        QueueResource resource = getQuantifiableComposition().valueAt( position );
-
-        if ( resource == null )
-            throw new ExceptionUtil.ArrayElementNullException( position, mComposition.toString() );
-
-        return resource;
+        return getShowcaseEntry().getResource( position );
     }
 
-    public SparseArray<CompositeResource> getComposition() {
-        return mComposition;
+    public int getQuantity() {
+        return getShowcaseEntry().getCraftable().getQuantity();
     }
 
-    private SparseArray<QueueResource> getQuantifiableComposition() {
-        SparseArray<QueueResource> returnableComposition = new SparseArray<>();
+    public String getQuantityText() {
+        return String.valueOf( getShowcaseEntry().getCraftable().getQuantityWithYield() );
+    }
 
-        SparseArray<CompositeResource> baseComposition = getComposition();
+    public int getRequiredLevel() {
+        return getShowcaseEntry().getRequiredLevel();
+    }
 
-        for ( int i = 0; i < baseComposition.size(); i++ ) {
-            CompositeResource resource = baseComposition.valueAt( i );
+    public String getDLCName() {
+        return QueryForDLCName( getContext(), getShowcaseEntry().getDLCId() );
+    }
 
-            QueueResource queueResource = new QueueResource(
-                    resource.getId(),
-                    resource.getName(),
-                    resource.getFolder(),
-                    resource.getFile(),
-                    resource.getQuantity(),
-                    getQuantity()
-            );
-            returnableComposition.append( i, queueResource );
+    public String getDescription() {
+        return getShowcaseEntry().getDescription();
+    }
+
+    public String getStationNameArrayAsText() {
+        int size = getShowcaseEntry().getStations().size();
+
+        if ( size == 1 )
+            return getShowcaseEntry().getStations().valueAt( 0 ).getName();
+
+        if ( size == 2 )
+            return String.format( getContext().getString( R.string.content_detail_crafted_in_double_format ),
+                    getShowcaseEntry().getStations().valueAt( 0 ).getName(),
+                    getShowcaseEntry().getStations().valueAt( 1 ).getName() );
+
+        StringBuilder builder = new StringBuilder();
+        for ( int i = 0; i < size; i++ ) {
+            if ( i > 0 ) {
+                if ( i == size - 1 )
+                    builder.append( String.format( getContext().getString( R.string.content_detail_crafted_in_multiple_last_format ),
+                            getShowcaseEntry().getStations().valueAt( i ).getName() ) );
+                else
+                    builder.append( String.format( getContext().getString( R.string.content_detail_crafted_in_multiple_format ),
+                            getShowcaseEntry().getStations().valueAt( i ).getName() ) );
+            } else
+                builder.append( getShowcaseEntry().getStations().valueAt( i ).getName() );
         }
 
-        return Util.sortResourcesByName( returnableComposition );
-    }
-
-    public long getCategoryId() {
-        return mCategoryId;
+        return builder.toString();
     }
 
     public String getCategoryHierarchy( Context context ) {
-        Category category = QueryForCategoryDetails( context, mCategoryId );
+        Category category = QueryForCategoryDetails( context, getShowcaseEntry().getDLCId(), getShowcaseEntry().getCraftable().getCategoryId() );
 
         if ( category == null ) return null;
 
@@ -140,7 +137,7 @@ public class Showcase {
 
         StringBuilder builder = new StringBuilder( category.getName() );
         while ( parent_id > 0 ) {
-            category = QueryForCategoryDetails( context, parent_id );
+            category = QueryForCategoryDetails( context, getShowcaseEntry().getDLCId(), parent_id );
             if ( category == null ) break;
 
             parent_id = category.getParent();
@@ -151,231 +148,295 @@ public class Showcase {
         return builder.toString();
     }
 
-    public long getStationId() {
-        return mStationId;
-    }
-
-    public String getStationName( Context context ) {
-        return QueryForStationName( context, mStationId );
-    }
-
-    public String getStations( Context context ) {
-        List<String> names = new ArrayList<>();
-
-        for ( Long _id : mStationIds ) {
-            String name = QueryForStationName( context, _id );
-
-            names.add( name );
-        }
-
-        return names.toString();
-    }
-
-    private long getDLCId() {
-        return mDLCId;
+    public void updateQuantifiableComposition() {
+        getShowcaseEntry().setQuantifiableComposition();
     }
 
     public void setQuantity( int quantity ) {
-        mQuantity = quantity;
+        getShowcaseEntry().getCraftable().setQuantity( quantity );
     }
 
     public void increaseQuantity() {
-        mQuantity += 1;
+        getShowcaseEntry().getCraftable().increaseQuantity();
     }
 
     public void increaseQuantity( int increment ) {
-        int amount = getQuantity() + increment;
-        int floor = amount / increment;
-
-        setQuantity( floor * increment );
+        getShowcaseEntry().getCraftable().increaseQuantity( increment );
     }
 
     public void decreaseQuantity() {
-        if ( mQuantity > 1 ) {
-            mQuantity -= 1;
-        }
+        getShowcaseEntry().getCraftable().decreaseQuantity();
     }
 
     public void decreaseQuantity( int decrement ) {
-        if ( mQuantity >= decrement ) {
-            int amount;
-            if ( getQuantity() % decrement == 0 ) {
-                amount = getQuantity() - decrement;
-            } else {
-                amount = getQuantity();
-            }
-
-            int floor = amount / decrement;
-
-            setQuantity( floor * decrement );
-        } else {
-            if ( mQuantity > 1 ) {
-                mQuantity = 1;
-            }
-        }
+        getShowcaseEntry().getCraftable().decreaseQuantity( decrement );
     }
 
-    // Query Methods
-    private void QueryForEngramDetails( Context context ) {
-        // First, let's grab Engram full details.
-        Cursor cursor = context.getContentResolver().query(
-                DatabaseContract.EngramEntry.buildUriWithId( mDLCId, mId ),
-                null, null, null, null
-        );
+    private Cursor query( Context context, Uri uri ) {
+        return context.getContentResolver().query( uri, null, null, null, null );
+    }
 
-        if ( cursor == null ) {
-            Log.e( TAG, "QueryForEngramDetails(" + mId + ") returned null." );
-            return;
-        }
+    private ShowcaseEntry QueryForDetails( Context context, long dlc_id, long _id ) {
+        Uri uri = DatabaseContract.EngramEntry.buildUriWithId( dlc_id, _id );
 
-        if ( cursor.moveToFirst() ) {
-            mName = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
+        try ( Cursor cursor = query( context, uri ) ) {
+            if ( cursor == null )
+                throw new ExceptionUtil.CursorNullException( uri );
+
+            if ( !cursor.moveToFirst() )
+                throw new ExceptionUtil.CursorEmptyException( uri );
+
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
 
             String folder = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER ) );
             String file = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE ) );
-            mImagePath = folder + file;
 
-            mDescription = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION ) );
-            mYield = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) );
-            mCategoryId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) );
-            mStationId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_STATION_KEY ) );
-            mRequiredLevel = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_LEVEL ) );
+            String description = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION ) );
+            int yield = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) );
+            long categoryId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) );
+            int requiredLevel = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_LEVEL ) );
 
-            mStationIds.add( mStationId );
-            while ( cursor.moveToNext() ) {
-                mStationIds.add( cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_STATION_KEY ) ) );
-            }
+            List<Long> stationIds = new ArrayList<>( 0 );
+            stationIds.add( cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_STATION_KEY ) ) );
+            while ( cursor.moveToNext() )
+                stationIds.add( cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_STATION_KEY ) ) );
 
-            cursor.close();
-        } else {
-            // Engram does not exist!?
-            Log.e( TAG, "QueryForEngramDetails(" + mId + "): moveToFirst did not fire!" );
-            return;
+            // Next, let's grab station details from ids
+            LongSparseArray<Station> stations = QueryForStations( context, dlc_id, stationIds );
+
+            // Next, let's grab matching Queue details, if there are any.
+            int quantity;
+            if ( CraftingQueue.getInstance().contains( _id ) )
+                quantity = CraftingQueue.getInstance().getCraftable( _id ).getQuantity();
+            else
+                quantity = 1;
+
+            // Finally, let's grab Composition details.
+            LongSparseArray<CompositeResource> composition = QueryForComposition( context, dlc_id, _id );
+
+            DisplayEngram craftable = new DisplayEngram( _id, name, folder, file, yield, categoryId, quantity );
+
+            return new ShowcaseEntry( craftable, description, requiredLevel, dlc_id, composition, stations );
+        } catch ( Exception e ) {
+            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+
+            return null;
         }
-
-        // Next, let's grab matching Queue details, if there are any.
-        cursor = context.getContentResolver().query(
-                DatabaseContract.QueueEntry.buildUriWithEngramId( mId ),
-                null, null, null, null
-        );
-
-        if ( cursor != null && cursor.moveToFirst() ) {
-            mQuantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.QueueEntry.COLUMN_QUANTITY ) );
-
-            cursor.close();
-        }
-
-        // Finally, let's grab Engram Composition details.
-        cursor = context.getContentResolver().query(
-                DatabaseContract.CompositionEntry.buildUriWithEngramId( mDLCId, mId ),
-                null, null, null, null
-        );
-
-        if ( cursor == null ) {
-            Log.e( TAG, "QueryForEngramDetails(" + mId + "), Composition cursor returned null." );
-            return;
-        }
-
-        mComposition = new SparseArray<>();
-        List<Long> resourceIds = new ArrayList<>();
-        while ( cursor.moveToNext() ) {
-            long resourceId = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
-            int resourceQuantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
-
-            if ( !resourceIds.contains( resourceId ) ) {
-                Cursor resourceCursor = context.getContentResolver().query(
-                        DatabaseContract.ResourceEntry.buildUriWithId( mDLCId, resourceId ),
-                        null, null, null, null
-                );
-
-                if ( resourceCursor == null ) {
-                    Log.e( TAG, "QueryForEngramDetails(" + mId + "), Resource cursor returned null." );
-                    return;
-                }
-
-                if ( resourceCursor.moveToFirst() ) {
-                    resourceIds.add( resourceId );
-
-                    String resourceName = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
-                    String resourceFolder = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER ) );
-                    String resourceFile = resourceCursor.getString( resourceCursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE ) );
-
-                    CompositeResource resource = new CompositeResource( resourceId, resourceName, resourceFolder, resourceFile, resourceQuantity );
-                    mComposition.put( mComposition.size(), resource );
-
-                    Log.d( TAG, "QueryForEngramDetails, CompositeResource: " + resource.toString() );
-
-                    resourceCursor.close();
-                } else {
-                    Log.e( TAG, "QueryForEngramDetails(" + mId + "), Resource cursor.moveToFirst() did not fire!" );
-                    return;
-                }
-            }
-        }
-
-        cursor.close();
     }
 
-    private Category QueryForCategoryDetails( Context context, long _id ) {
-        Cursor cursor = context.getContentResolver().query(
-                DatabaseContract.CategoryEntry.buildUriWithId( mDLCId, _id ),
-                null, null, null, null
-        );
+    private LongSparseArray<Station> QueryForStations( Context context, long dlc_id, List<Long> ids ) {
+        LongSparseArray<Station> stations = new LongSparseArray<>( 0 );
 
-        if ( cursor != null && cursor.moveToFirst() ) {
+        for ( long _id : ids ) {
+            Uri uri = DatabaseContract.StationEntry.buildUriWithId( dlc_id, _id );
+
+            try ( Cursor cursor = query( context, uri ) ) {
+                if ( cursor == null )
+                    throw new ExceptionUtil.CursorNullException( uri );
+
+                if ( !cursor.moveToFirst() )
+                    throw new ExceptionUtil.CursorEmptyException( uri );
+
+                String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_NAME ) );
+                String file = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE ) );
+                String folder = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER ) );
+
+                stations.put( _id, new Station( _id, name, folder, file ) );
+            } catch ( Exception e ) {
+                mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+
+                return null;
+            }
+        }
+
+        return stations;
+    }
+
+    private LongSparseArray<CompositeResource> QueryForComposition( Context context, long dlc_id, long engram_id ) {
+        Uri uri = DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram_id );
+        try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
+            if ( cursor == null )
+                throw new ExceptionUtil.CursorNullException( uri );
+
+            LongSparseArray<CompositeResource> composition = new LongSparseArray<>( 0 );
+            while ( cursor.moveToNext() ) {
+                long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
+                int quantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
+
+                composition.put( _id, new CompositeResource( QueryForResource( context, dlc_id, _id ), quantity ) );
+            }
+
+            return composition;
+        } catch ( Exception e ) {
+            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+
+            return null;
+        }
+    }
+
+    private Resource QueryForResource( Context context, long dlc_id, long _id ) {
+        Uri uri = DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, _id );
+
+        try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
+            if ( cursor == null )
+                throw new ExceptionUtil.CursorNullException( uri );
+
+            if ( !cursor.moveToFirst() )
+                throw new ExceptionUtil.CursorEmptyException( uri );
+
+            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
+            String folder = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER ) );
+            String file = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE ) );
+
+            return new Resource( _id, name, folder, file );
+        } catch ( Exception e ) {
+            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+
+            return null;
+        }
+    }
+
+    private Category QueryForCategoryDetails( Context context, long dlc_id, long _id ) {
+        Uri uri = DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, _id );
+        try ( Cursor cursor = query( context, uri ) ) {
+            if ( cursor == null )
+                throw new ExceptionUtil.CursorNullException( uri );
+
+            if ( !cursor.moveToFirst() )
+                throw new ExceptionUtil.CursorEmptyException( uri );
+
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
             long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
 
-            cursor.close();
+            return new Category( _id, name, parent_id );
+        } catch ( Exception e ) {
+            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
 
-            return new Category(
-                    _id,
-                    name,
-                    parent_id
-            );
-        } else {
-            // Category does not exist!?
-            Log.e( TAG, "QueryForCategoryDetails(" + _id + ") returned null?" );
             return null;
         }
     }
 
-    private String QueryForStationName( Context context, long _id ) {
-        Cursor cursor = context.getContentResolver().query(
-                DatabaseContract.StationEntry.buildUriWithId( mDLCId, _id ),
-                null, null, null, null
-        );
+    private String QueryForDLCName( Context context, long dlc_id ) {
+        Uri uri = DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, dlc_id );
 
-        if ( cursor != null && cursor.moveToFirst() ) {
-            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_NAME ) );
+        try ( Cursor cursor = query( context, uri ) ) {
+            if ( cursor == null )
+                throw new ExceptionUtil.CursorNullException( uri );
 
-            cursor.close();
+            if ( !cursor.moveToFirst() )
+                throw new ExceptionUtil.CursorEmptyException( uri );
 
-            return name;
-        } else {
-            // Station does not exist!?
-            Log.e( TAG, "QueryForStationName(" + _id + ") returned null?" );
+            return cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
+        } catch ( Exception e ) {
+            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+
             return null;
         }
     }
 
-    private String QueryForDLCName( Context context ) {
-        long _id = getDLCId();
+    public class ShowcaseEntry {
+        private DisplayEngram mCraftable;
 
-        Cursor cursor = context.getContentResolver().query(
-                DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, _id ),
-                null, null, null, null
-        );
+        private String mDescription;
+        private int mRequiredLevel;
+        private long mDLCId;
 
-        if ( cursor != null && cursor.moveToFirst() ) {
-            String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
+        private LongSparseArray<CompositeResource> mComposition;
+        private LongSparseArray<QueueResource> mQuantifiableComposition;
+        private LongSparseArray<Station> mStations;
 
-            cursor.close();
-            return name;
-        } else {
-            // DLC does not exist!?
-            Log.e( TAG, "QueryForDLCName(" + _id + ") returned null?" );
-            return null;
+        public ShowcaseEntry( DisplayEngram craftable, String description, int requiredLevel, long dlc_id,
+                              LongSparseArray<CompositeResource> composition, LongSparseArray<Station> stations ) {
+            setCraftable( craftable );
+
+            setDescription( description );
+            setRequiredLevel( requiredLevel );
+            setDLCId( dlc_id );
+
+            setComposition( composition );
+            setQuantifiableComposition();
+
+            setStations( stations );
+        }
+
+        void setCraftable( DisplayEngram craftable ) {
+            this.mCraftable = craftable;
+        }
+
+        void setDescription( String description ) {
+            this.mDescription = description;
+        }
+
+        void setRequiredLevel( int requiredLevel ) {
+            this.mRequiredLevel = requiredLevel;
+        }
+
+        void setDLCId( long dlc_id ) {
+            this.mDLCId = dlc_id;
+        }
+
+        public void setComposition( LongSparseArray<CompositeResource> composition ) {
+            this.mComposition = composition;
+        }
+
+        private void setQuantifiableComposition() {
+            LongSparseArray<CompositeResource> baseComposition = getComposition();
+            int quantity = getCraftable().getQuantity();
+
+            LongSparseArray<QueueResource> returnableComposition = new LongSparseArray<>();
+            for ( int i = 0; i < baseComposition.size(); i++ ) {
+                CompositeResource resource = baseComposition.valueAt( i );
+
+                QueueResource queueResource = new QueueResource( resource, quantity );
+                returnableComposition.append( i, queueResource );
+            }
+
+            mQuantifiableComposition = Util.sortResourcesByName( returnableComposition );
+        }
+
+        public void setStations( LongSparseArray<Station> stations ) {
+            this.mStations = stations;
+        }
+
+        public DisplayEngram getCraftable() {
+            return mCraftable;
+        }
+
+        public String getDescription() {
+            return mDescription;
+        }
+
+        public int getRequiredLevel() {
+            return mRequiredLevel;
+        }
+
+        public long getDLCId() {
+            return mDLCId;
+        }
+
+        public LongSparseArray<CompositeResource> getComposition() {
+            return mComposition;
+        }
+
+        public LongSparseArray<QueueResource> getQuantifiableComposition() {
+            return mQuantifiableComposition;
+        }
+
+        public QueueResource getResource( int position ) throws Exception {
+            if ( Util.isValidPosition( position, getQuantifiableComposition().size() ) ) {
+                QueueResource resource = getQuantifiableComposition().valueAt( position );
+
+                if ( resource == null )
+                    throw new ExceptionUtil.ArrayElementNullException( position, getQuantifiableComposition().toString() );
+
+                return resource;
+            } else {
+                throw new ExceptionUtil.PositionOutOfBoundsException( position, getQuantifiableComposition().size(), getQuantifiableComposition().toString() );
+            }
+        }
+
+        public LongSparseArray<Station> getStations() {
+            return mStations;
         }
     }
 }

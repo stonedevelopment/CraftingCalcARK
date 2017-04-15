@@ -8,28 +8,104 @@
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
               tools:context=".MainActivity">
 
-    <FrameLayout
+    <arc.resource.calculator.views.MainSwitcher
+        android:id="@+id/switcher_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="@integer/weight_top_container"
-        android:background="@color/colorPrimaryDark">
+        android:layout_weight="1">
 
-        <include
-            layout="@layout/content_main_top"/>
+        <LinearLayout
+            android:id="@+id/layout_craftables"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </FrameLayout>
+            <Button
+                android:id="@+id/button_view_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Inventory"/>
 
-    <FrameLayout
-        android:id="@+id/content_main_bottom_container"
+            <TextView
+                android:id="@+id/textview_navigation_hierarchy"
+                style="@style/AppTheme.Text.DisplayCase.Hierarchy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/display_case_hierarchy_indention"
+                android:layout_marginTop="@dimen/gridview_item_padding"/>
+
+            <arc.resource.calculator.views.CraftableRecyclerView
+                android:id="@+id/gridview_craftables"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/frame_craftable_container"
+                android:padding="@dimen/gridview_item_padding"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_inventory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_view_craftables"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Back to Engrams"/>
+
+            <arc.resource.calculator.views.InventorySwitcher
+                android:id="@+id/switcher_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textview_inventory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"/>
+
+                <arc.resource.calculator.views.InventoryRecyclerView
+                    android:id="@+id/gridview_inventory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/frame_inventory_container"
+                    android:padding="@dimen/gridview_item_padding"/>
+
+            </arc.resource.calculator.views.InventorySwitcher>
+
+        </LinearLayout>
+
+    </arc.resource.calculator.views.MainSwitcher>
+
+    <arc.resource.calculator.views.QueueSwitcher
+        android:id="@+id/switcher_queue"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="@integer/weight_bottom_container"
-        android:padding="@dimen/display_case_container_layout_padding">
+        android:layout_height="wrap_content">
 
-        <include
-            layout="@layout/content_main_bottom"/>
+        <TextView
+            android:id="@+id/textview_queue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
 
-    </FrameLayout>
+        <arc.resource.calculator.views.QueueRecyclerView
+            android:id="@+id/gridview_queue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/frame_craftable_container"
+            android:padding="@dimen/gridview_item_padding"/>
+
+    </arc.resource.calculator.views.QueueSwitcher>
+
+    <Button
+        android:id="@+id/button_clear_queue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/content_main_clear_queue"/>
 
 </LinearLayout>
-

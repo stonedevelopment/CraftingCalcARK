@@ -22,10 +22,16 @@ public class QueueResource extends CompositeResource {
     public QueueResource( long id, String name, String folder, String file, int quantity, int queueQuantity ) {
         super( id, name, folder, file, quantity );
 
-        mQueueQuantity = queueQuantity;
+        setQueueQuantity( queueQuantity );
     }
 
-    private int getQueueQuantity() {
+    public QueueResource( CompositeResource resource, int queueQuantity ) {
+        super( resource.getId(), resource.getName(), resource.getFolder(), resource.getFile(), resource.getQuantity() );
+
+        setQueueQuantity( queueQuantity );
+    }
+
+    public int getQueueQuantity() {
         return mQueueQuantity;
     }
 

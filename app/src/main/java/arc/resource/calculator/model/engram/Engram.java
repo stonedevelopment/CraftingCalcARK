@@ -48,11 +48,11 @@ public class Engram {
         return mName;
     }
 
-    private String getFolder() {
+    public String getFolder() {
         return mFolder;
     }
 
-    private String getFile() {
+    public String getFile() {
         return mFile;
     }
 
@@ -62,12 +62,6 @@ public class Engram {
 
     int getYield() {
         return mYield;
-    }
-
-    private void itemQuality () {
-        //  IV*(1 + MS*(DM + RM*X))
-        float initialValue;
-
     }
 
     @Override

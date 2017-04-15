@@ -75,9 +75,19 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     private Exception mException;
 
     public interface Listener {
+
+        /**
+         * Event handler for caught exceptions
+         *
+         * @param e Caught exception
+         */
         void onError( Exception e );
 
+        /**
+         * Pre-initialization event, can be used to alert user of preparations
+         */
         void onInit();
+
 
         void onNewVersion( String oldVersion, String newVersion );
 
@@ -145,7 +155,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             JSONObject oldObject = new JSONObject( jsonString );
 
             JSONObject json = oldObject.getJSONObject( JSON );
-            String oldVersion = new PrefsUtil( getContext() ).getJSONVersion();
+            String oldVersion = PrefsUtil.getInstance().getJSONVersion();
             String newVersion = json.getString( COLUMN_VERSION );
 
             // now, let's check if we even need to update.
@@ -167,7 +177,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             return true;
         }
 
-        // If error, send error signal, stop service
+        // If error, send error signal, shutDown service
         catch ( Exception e ) {
             mException = e;
             return false;

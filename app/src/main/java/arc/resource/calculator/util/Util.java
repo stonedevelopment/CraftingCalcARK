@@ -33,6 +33,13 @@ public class Util {
     public static final String DETAIL_REMOVE = "DETAIL_REMOVE";
     public static final String DETAIL_SAVE = "DETAIL_SAVE";
 
+    public static final int NO_POSITION = -1;
+    public static final int NO_ID = -1;
+    public static final int NO_SIZE = -1;
+    public static final int NO_QUANTITY = 0;
+    public static final String NO_PATH = null;
+    public static final String NO_NAME = "ERROR";
+
     public static final int MIN = 0;
 
     public static void Log( String tag, String message ) {
@@ -43,10 +50,13 @@ public class Util {
         Log.d( tag, tag2 + "> " + message );
     }
 
-    public static SparseArray<QueueResource> sortResourcesByName( SparseArray<QueueResource> resources ) {
+    public static boolean isValidPosition( int position, int size ) {
+        return position > NO_POSITION && position < size;
+    }
+
+    public static LongSparseArray<QueueResource> sortResourcesByName( LongSparseArray<QueueResource> resources ) {
         boolean swapped = true;
         while ( swapped ) {
-
             swapped = false;
             for ( int i = 0; i < resources.size() - 1; i++ ) {
                 String first = resources.valueAt( i ).getName();
@@ -76,7 +86,7 @@ public class Util {
 //            for ( int i = 0; i < map.size() - 1; i++ ) {
 //                DisplayEngram first = map.get( keySet[i] );
 //                DisplayEngram second = map.get( keySet[i + 1] );
-//                if ( first.getName().compareTo( second.getName() ) > 0 ) {
+//                if ( first.getNameView().compareTo( second.getNameView() ) > 0 ) {
 //                    // swap
 //                    keyList.set( i + 1, first.getId() );
 //                    keyList.set( i, second.getId() );
@@ -102,7 +112,7 @@ public class Util {
 //            for ( int i = 0; i < engrams.size() - 1; i++ ) {
 //                DisplayEngram first = engramList.get( i );
 //                DisplayEngram second = engramList.get( i + 1 );
-//                if ( first.getName().compareTo( second.getName() ) > 0 ) {
+//                if ( first.getNameView().compareTo( second.getNameView() ) > 0 ) {
 //                    // swap
 //                    engramList.set( i + 1, first );
 //                    engramList.set( i, second );
@@ -123,7 +133,7 @@ public class Util {
 //            for ( int i = 0; i < engrams.size() - 1; i++ ) {
 //                DisplayEngram first = engrams.valueAt( i );
 //                DisplayEngram second = engrams.valueAt( i + 1 );
-//                if ( first.getName().compareTo( second.getName() ) > 0 ) {
+//                if ( first.getNameView().compareTo( second.getNameView() ) > 0 ) {
 //                    // swap
 //                    engrams.setValueAt( i + 1, first );
 //                    engrams.setValueAt( i, second );
