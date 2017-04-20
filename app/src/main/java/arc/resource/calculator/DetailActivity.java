@@ -253,7 +253,7 @@ public class DetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSendErrorReportWithAlertDialog( String tag, Exception e ) {
+    public void onFatalException( String tag, Exception e ) {
         ExceptionUtil.SendErrorReportWithAlertDialog( DetailActivity.this, tag, e );
     }
 }

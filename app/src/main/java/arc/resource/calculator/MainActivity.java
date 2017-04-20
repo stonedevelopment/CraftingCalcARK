@@ -316,6 +316,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onException( String tag, Exception e ) {
-        ExceptionUtil.SendErrorReportWithAlertDialog( this, tag, e );
+        ExceptionUtil.SendErrorReport( tag, e );
+    }
+
+    @Override
+    public void onFatalException( String tag, Exception e ) {
+        ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
     }
 }
