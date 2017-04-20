@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
-import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.tasks.InitializationTask;
 import arc.resource.calculator.tasks.ParseConvertTask;
 import arc.resource.calculator.util.DisplayUtil;
@@ -31,7 +31,7 @@ import arc.resource.calculator.util.PrefsUtil;
 
 import static arc.resource.calculator.LoadScreenActivity.EVENT.INIT;
 
-public class LoadScreenActivity extends AppCompatActivity implements ErrorReporter.Listener {
+public class LoadScreenActivity extends AppCompatActivity implements ExceptionObserver.Listener {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
     enum EVENT {
@@ -58,16 +58,16 @@ public class LoadScreenActivity extends AppCompatActivity implements ErrorReport
         // sets current event id, triggers first event
         void onInit();
 
-        // setup current event, triggers end event
+        // resume current event, triggers end event
         void onStartEvent();
 
         // triggers next event
         void onEndEvent();
 
-        // triggers setup event
+        // triggers resume event
         void onNextEvent();
 
-        // triggers app to setup main activity
+        // triggers app to resume main activity
         void onFinish();
     }
 
@@ -233,7 +233,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ErrorReport
 //
 //                        // begin in-app purchase communication
 //                        mPurchaseUtil = new PurchaseUtil( LoadScreenActivity.this );
-//                        mPurchaseUtil.setup();
+//                        mPurchaseUtil.resume();
 //                        mPurchaseUtil.loadInventory( new Inventory.Callback() {
 //                            @Override
 //                            public void onLoaded( @Nonnull Inventory.Products products ) {
@@ -330,7 +330,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ErrorReport
 
             @Override
             public void onFinish() {
-                // say goodbye to user, setup app
+                // say goodbye to user, resume app
                 updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_finish_event ) ) );
 
                 finishActivity();
@@ -342,21 +342,21 @@ public class LoadScreenActivity extends AppCompatActivity implements ErrorReport
 
     @Override
     protected void onResume() {
-        ErrorReporter.getInstance().registerListener( this );
-
         super.onResume();
+
+        ExceptionObserver.getInstance().registerListener( this );
     }
 
     @Override
     protected void onPause() {
-        ErrorReporter.getInstance().unregisterListener( this );
+        ExceptionObserver.getInstance().unregisterListener( this );
 
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        ErrorReporter.getInstance().unregisterListener( this );
+        ExceptionObserver.getInstance().unregisterListener( this );
 
         super.onDestroy();
     }
@@ -409,12 +409,12 @@ public class LoadScreenActivity extends AppCompatActivity implements ErrorReport
     }
 
     @Override
-    public void onSendErrorReport( String tag, Exception e ) {
+    public void onException( String tag, Exception e ) {
         mListener.onError( e );
     }
 
     @Override
-    public void onSendErrorReportWithAlertDialog( String tag, Exception e ) {
+    public void onFatalException( String tag, Exception e ) {
         mListener.onError( e );
     }
 }

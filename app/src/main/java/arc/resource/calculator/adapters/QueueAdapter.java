@@ -37,6 +37,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     private static QueueRecyclerView.Observer mViewObserver;
 
+    private boolean mDataSetEmpty;
+
     public class Observer extends QueueRecyclerView.Observer {
         @Override
         public void notifyExceptionCaught( Exception e ) {
@@ -50,6 +52,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         @Override
         public void notifyDataSetPopulated() {
+            mDataSetEmpty = false;
+
             notifyDataSetChanged();
 
             mViewObserver.notifyDataSetPopulated();
@@ -57,6 +61,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         @Override
         public void notifyDataSetEmpty() {
+            mDataSetEmpty = true;
+
             notifyDataSetChanged();
 
             mViewObserver.notifyDataSetEmpty();
@@ -64,14 +70,29 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         public void notifyItemChanged( int position ) {
             notifyItemRangeChanged( position, 1 );
+
+            if ( mDataSetEmpty ) {
+                mDataSetEmpty = false;
+                mViewObserver.notifyDataSetPopulated();
+            }
         }
 
         public void notifyItemInserted( int position ) {
             notifyItemRangeInserted( position, 1 );
+
+            if ( mDataSetEmpty ) {
+                mDataSetEmpty = false;
+                mViewObserver.notifyDataSetPopulated();
+            }
         }
 
         public void notifyItemRemoved( int position ) {
             notifyItemRangeRemoved( position, 1 );
+
+            if ( getItemCount() == 0 ) {
+                mDataSetEmpty = true;
+                mViewObserver.notifyDataSetEmpty();
+            }
         }
     }
 
@@ -87,12 +108,22 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
         this.mContext = context.getApplicationContext();
     }
 
-    public void setup( QueueRecyclerView.Observer observer ) {
-        Log.d( TAG, "setup()" );
+    public void create( QueueRecyclerView.Observer observer ) {
+        Log.d( TAG, "create()" );
 
         mViewObserver = observer;
 
         CraftingQueue.createInstance( getContext(), new Observer() );
+    }
+
+    public void resume() {
+        Log.d( TAG, "resume()" );
+        CraftingQueue.getInstance().resume();
+    }
+
+    public void pause() {
+        Log.d( TAG, "pause()" );
+        CraftingQueue.getInstance().pause();
     }
 
     @Override

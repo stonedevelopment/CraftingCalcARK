@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.listeners.ExceptionObserver;
 
 public class InventorySwitcher extends ViewSwitcher implements InventoryRecyclerView.Listener {
     private static final String TAG = InventorySwitcher.class.getSimpleName();
@@ -23,7 +23,7 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
 
         updateStatus( "An error occurred while fetching Inventory." );
 
-        ErrorReporter.getInstance().emitSendErrorReport( TAG, e );
+        ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
 
     @Override
@@ -52,22 +52,32 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
 
     public InventorySwitcher( Context context ) {
         super( context );
-        init();
     }
 
     public InventorySwitcher( Context context, AttributeSet attrs ) {
         super( context, attrs );
-        init();
     }
 
-    private void init() {
-        Log.d( TAG, "init()" );
+    public void init() {
+        Log.d( TAG, "onCreate()" );
 
         // instantiate our textview for status updates
         mTextView = ( TextView ) findViewById( R.id.textview_inventory );
 
         // instantiate recyclerView
         mRecyclerView = ( InventoryRecyclerView ) findViewById( R.id.gridview_inventory );
+    }
+
+    public void resume() {
+        // toggle to textview, for status updates
+        if ( !isTextViewShown() )
+            showNext();
+
+        mRecyclerView.resume( this );
+    }
+
+    public void pause() {
+        mRecyclerView.pause();
     }
 
     private void updateStatus( String text ) {
@@ -80,23 +90,5 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
 
     private boolean isRecyclerViewShown() {
         return getCurrentView().getId() == mRecyclerView.getId();
-    }
-
-    @Override
-    protected void onWindowVisibilityChanged( int visibility ) {
-        Log.d( TAG, "onWindowVisitibilityChanged()" );
-
-        // should trigger whenever this view is seen or hidden
-        // if seen, check recyclerview for data changed, if none, return quantity to see if inventory is empty
-
-        if ( visibility == VISIBLE ) {
-            // toggle to textview, for status updates
-            if ( !isTextViewShown() )
-                showNext();
-
-            mRecyclerView.startUp( this );
-        } else {
-            mRecyclerView.shutDown();
-        }
     }
 }

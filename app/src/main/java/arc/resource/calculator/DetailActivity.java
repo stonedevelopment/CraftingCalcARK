@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
-import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -32,7 +32,7 @@ import arc.resource.calculator.util.Util;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class DetailActivity extends AppCompatActivity
-        implements ErrorReporter.Listener {
+        implements ExceptionObserver.Listener {
     private static final String TAG = DetailActivity.class.getSimpleName();
 
     private static final int DECREMENT = 10;
@@ -148,14 +148,14 @@ public class DetailActivity extends AppCompatActivity
             mAdUtil = new AdUtil( this, R.id.content_detail );
             mAdUtil.init();
         } catch ( Exception e ) {
-            ErrorReporter.getInstance().emitSendErrorReportWithAlertDialog( TAG, e );
+            ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ErrorReporter.getInstance().registerListener( this );
+        ExceptionObserver.getInstance().registerListener( this );
 
         mAdUtil.resume();
     }
@@ -163,7 +163,7 @@ public class DetailActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        ErrorReporter.getInstance().unregisterListener( this );
+        ExceptionObserver.getInstance().unregisterListener( this );
 
         mAdUtil.pause();
     }
@@ -171,7 +171,7 @@ public class DetailActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ErrorReporter.getInstance().unregisterListener( this );
+        ExceptionObserver.getInstance().unregisterListener( this );
 
         mAdUtil.destroy();
     }
@@ -248,7 +248,7 @@ public class DetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSendErrorReport( String tag, Exception e ) {
+    public void onException( String tag, Exception e ) {
         ExceptionUtil.SendErrorReport( tag, e );
     }
 

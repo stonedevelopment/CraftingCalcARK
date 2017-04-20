@@ -66,12 +66,20 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
     /**
      * @param listener Listener of ViewSwitcher to understand when to switch TextView to RecyclerView and vice versa.
      */
-    public void setup( Listener listener ) {
+    public void create( Listener listener ) {
         // register listener from switcher
         mListener = listener;
 
-        // setup up adapter and register this observer
-        getAdapter().setup( new Observer() );
+        // resume up adapter and register this observer
+        getAdapter().create( new Observer() );
+    }
+
+    public void resume() {
+        getAdapter().resume();
+    }
+
+    public void pause() {
+        getAdapter().pause();
     }
 
     @Override

@@ -17,9 +17,12 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import java.util.Arrays;
 
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
@@ -29,17 +32,18 @@ import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
-import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.util.ExceptionUtil.URIUnknownException;
 
 import static arc.resource.calculator.util.Util.NO_ID;
+import static arc.resource.calculator.util.Util.NO_SIZE;
 
 public class DatabaseProvider extends ContentProvider {
     private static final String TAG = DatabaseProvider.class.getSimpleName();
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private DatabaseHelper mOpenHelper;
-    private ErrorReporter mErrorReporter;
+    private ExceptionObserver mExceptionObserver;
 
     private static final int ENGRAM = 100;
     private static final int ENGRAM_ID_WITH_DLC = 101;
@@ -84,7 +88,7 @@ public class DatabaseProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = new DatabaseHelper( getContext() );
-        mErrorReporter = ErrorReporter.getInstance();
+        mExceptionObserver = ExceptionObserver.getInstance();
         return true;
     }
 
@@ -285,7 +289,7 @@ public class DatabaseProvider extends ContentProvider {
                     throw new URIUnknownException( uri );
             }
         } catch ( URIUnknownException e ) {
-            mErrorReporter.emitSendErrorReport( TAG, e );
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }
@@ -568,7 +572,11 @@ public class DatabaseProvider extends ContentProvider {
 
             return cursor;
         } catch ( URIUnknownException e ) {
-            mErrorReporter.emitSendErrorReport( TAG, e );
+            mExceptionObserver.notifyExceptionCaught( TAG, e );
+
+            return null;
+        } catch ( NullPointerException | SQLiteException e ) {
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }
@@ -586,10 +594,14 @@ public class DatabaseProvider extends ContentProvider {
                 getContext().getContentResolver().notifyChange( uri, null );
 
             return rowsDeleted;
-        } catch ( Exception e ) {
-            mErrorReporter.emitSendErrorReport( TAG, e );
+        } catch ( URIUnknownException e ) {
+            mExceptionObserver.notifyExceptionCaught( TAG, e );
 
             return 0;
+        } catch ( NullPointerException | SQLiteException e ) {
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
+
+            return NO_SIZE;
         }
 
     }
@@ -611,7 +623,7 @@ public class DatabaseProvider extends ContentProvider {
                 long _id = db.insert( getTableNameFromUriMatch( uri ), null, value );
 
                 if ( _id == NO_ID )
-                    throw new Exception();
+                    throw new SQLiteException( "bulkInsert(): method db.insert() returned NO_ID (-1). uri:" + uri.toString() + ", value:" + value + ", values:" + Arrays.toString( values ) );
 
                 rowsInserted++;
             }
@@ -621,10 +633,14 @@ public class DatabaseProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange( uri, null );
 
             return rowsInserted;
-        } catch ( Exception e ) {
-            mErrorReporter.emitSendErrorReport( TAG, e );
+        } catch ( URIUnknownException e ) {
+            mExceptionObserver.notifyExceptionCaught( TAG, e );
 
-            return -1;
+            return NO_SIZE;
+        } catch ( NullPointerException | SQLiteException e ) {
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
+
+            return NO_SIZE;
         } finally {
             db.endTransaction();
         }

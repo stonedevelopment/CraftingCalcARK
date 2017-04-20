@@ -7,7 +7,7 @@
         \n\nOh, nevermind.. that\'s the wrong kind of bug.
         \nBut good news! We\'ve caught it and are sending it off to be examined.
         \n\nWhile we work on a fix, a workaround could simply be to restart the app or, if the problem persists, reinstall it.
-        \n\nWe truly apologize for any inconvenience caused, but rest assured a fix will be on the way. -Shane
+        \n\nWe truly apologize for any inconvenience caused, and rest assured a fix will be on the way. -Shane
     </string>
     <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
 
@@ -131,10 +131,12 @@
 
     <!-- Strings related to Display Case's Hierarchy Text -->
     <string name="display_case_hierarchy_text_showing_format">Showing <x:g>%1$s</x:g></string>
-    <string name="display_case_hierarchy_text_all_stations">all Crafting Stations..</string>
-    <string name="display_case_hierarchy_text_all_categories">all Folders..</string>
-    <string name="display_case_hierarchy_text_all_engrams">all Engrams..</string>
-    <string name="display_case_hierarchy_text_search_results_format">search results for: *<xliff:g>%1$s</xliff:g>*</string>
+    <string name="display_case_hierarchy_text_all_stations">Showing all Crafting Stations.</string>
+    <string name="display_case_hierarchy_text_contents_of_station">Showing contents of <x:g id="station_name">%1$s</x:g>.</string>
+    <string name="display_case_hierarchy_text_contents_of_station_in_folder">Showing contents of <x:g id="station_name">%1$s</x:g> in folder <x:g id="folder_name">%2$s</x:g>.</string>
+    <string name="display_case_hierarchy_text_all_categories">Showing all Folders.</string>
+    <string name="display_case_hierarchy_text_all_engrams">Showing all Engrams.</string>
+    <string name="display_case_hierarchy_text_search_results_format">Showing search results for: *<xliff:g>%1$s</xliff:g>*</string>
 
     <!-- Strings related to Settings -->
 
@@ -276,8 +278,11 @@
     <string name="ad_error_reported_title">Oh noes! Looks like we\'re being attacked by Meganeura!</string>
     <string name="ad_error_reported_message">
         Oh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
-        \n\nWhile we work on a fix, a workaround could simply be to restart the app or, if the problem persists, reinstall it.
-        \n\nWe truly apologize for any inconvenience caused, but rest assured a fix will be on the way. -Shane
+
+        \n\nWhile we work on a fix, a workaround could simply be to reset settings to default (below), restart the app or,
+        if the problem persists, reinstall it.
+
+        \n\nWe truly apologize for any inconvenience caused, and rest assured a fix will be on the way. -Shane
     </string>
 
     <!-- Exceptions -->

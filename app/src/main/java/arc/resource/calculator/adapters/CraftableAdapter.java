@@ -22,7 +22,9 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.NavigationObserver;
+import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.BackCategory;
 import arc.resource.calculator.model.Category;
@@ -52,7 +54,7 @@ import static arc.resource.calculator.util.Util.NO_QUANTITY;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.ViewHolder> implements QueueObserver.Listener {
+public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.ViewHolder> {
     private static final String TAG = CraftableAdapter.class.getSimpleName();
 
     private static final long ROOT = 0;
@@ -70,64 +72,62 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     private CraftableSparseArray mCraftables;
 
     private Context mContext;
-    private ErrorReporter mErrorReporter;
+    private ExceptionObserver mExceptionObserver;
 
     private Status mViewStatus;
-    private boolean mNeedsUpdate;
 
     enum Status {VISIBLE, HIDDEN}
 
-    // TODO: 4/12/2017 Update this adapter with a ViewSwitcher
-    // TODO: 4/12/2017 Converted keys/values lists to separate sparsearrays
-    // TODO: 4/12/2017 Still needs to mock other listadapters as far as communications and design
+    private PrefsObserver.Listener mPrefsListener = new PrefsObserver.Listener() {
+        @Override
+        public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
+            setCategoryLevelsToRoot();
+            refreshData();
+        }
 
-    @Override
-    public void onDataSetChanged() {
-        mNeedsUpdate = true;
+        @Override
+        public void onSavePreferencesRequested() {
+            saveCategoryLevelsToPref();
+        }
+    };
 
-        if ( mViewStatus == VISIBLE ) {
-            if ( updateQuantities() ) {
-                notifyDataSetChanged();
+    private QueueObserver.Listener mListener = new QueueObserver.Listener() {
+        public void onDataSetPopulated() {
+            if ( mViewStatus == VISIBLE ) {
+                updateQuantities();
             }
         }
-    }
 
-    @Override
-    public void onItemChanged( long craftableId, int quantity ) {
-        mNeedsUpdate = true;
-
-        if ( mViewStatus == VISIBLE ) {
-            if ( getCraftables().contains( craftableId ) ) {
-                int position = getCraftables().indexOfKey( craftableId );
-                getCraftable( position ).setQuantity( quantity );
-                notifyItemChanged( position );
+        @Override
+        public void onItemChanged( long craftableId, int quantity ) {
+            if ( mViewStatus == VISIBLE ) {
+                if ( getCraftables().contains( craftableId ) ) {
+                    int position = getCraftables().indexOfKey( craftableId );
+                    getCraftable( position ).setQuantity( quantity );
+                    notifyItemChanged( adjustPositionFromCraftable( position ) );
+                }
             }
         }
-    }
 
-    @Override
-    public void onItemRemoved( long craftableId ) {
-        mNeedsUpdate = true;
-
-        if ( mViewStatus == VISIBLE ) {
-            if ( getCraftables().contains( craftableId ) ) {
-                int position = getCraftables().indexOfKey( craftableId );
-                getCraftable( position ).resetQuantity();
-                notifyItemChanged( position );
+        @Override
+        public void onItemRemoved( long craftableId ) {
+            if ( mViewStatus == VISIBLE ) {
+                if ( getCraftables().contains( craftableId ) ) {
+                    int position = getCraftables().indexOfKey( craftableId );
+                    getCraftable( position ).resetQuantity();
+                    notifyItemChanged( adjustPositionFromCraftable( position ) );
+                }
             }
         }
-    }
 
-    @Override
-    public void onDataSetEmpty() {
-        mNeedsUpdate = true;
-
-        if ( mViewStatus == VISIBLE ) {
-            if ( clearQuantities() ) {
-                notifyDataSetChanged();
+        @Override
+        public void onDataSetEmpty() {
+            Log.d( TAG, "onDataSetEmpty: " );
+            if ( mViewStatus == VISIBLE ) {
+                clearQuantities();
             }
         }
-    }
+    };
 
     public CraftableAdapter( Context context ) {
         setContext( context );
@@ -142,6 +142,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             if ( !isFilteredByStation() ) {
                 if ( isCurrentCategoryLevelStationRoot() ) {
                     setCurrentCategoryLevelsToRoot();
+
+                    mExceptionObserver.notifyExceptionCaught( TAG, new Exception( "Category level is Station Root, but we're not filtering by Station." ) );
                 }
             }
         }
@@ -153,11 +155,9 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         setCategories( new CategorySparseArray() );
         setCraftables( new CraftableSparseArray() );
 
-        mErrorReporter = ErrorReporter.getInstance();
+        mExceptionObserver = ExceptionObserver.getInstance();
 
         mSearchQuery = null;
-
-        QueueObserver.getInstance().registerListener( this );
 
         refreshData();
     }
@@ -194,22 +194,28 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         this.mCraftables = craftables;
     }
 
-    public void start( RecyclerView.AdapterDataObserver observer ) {
-        Log.d( TAG, "setup()" );
+    public void resume( RecyclerView.AdapterDataObserver observer ) {
+        Log.d( TAG, "resume()" );
+
         registerAdapterDataObserver( observer );
+
+        QueueObserver.getInstance().registerListener( mListener );
+        PrefsObserver.getInstance().registerListener( mPrefsListener );
 
         mViewStatus = VISIBLE;
 
-        if ( mNeedsUpdate ) {
-            if ( updateQuantities() ) {
-                notifyDataSetChanged();
-            }
-        }
+        updateQuantities();
+
+        buildHierarchy();
     }
 
-    public void stop( RecyclerView.AdapterDataObserver observer ) {
-        Log.d( TAG, "shutDown()" );
+    public void pause( RecyclerView.AdapterDataObserver observer ) {
+        Log.d( TAG, "pause()" );
+
         unregisterAdapterDataObserver( observer );
+
+        QueueObserver.getInstance().unregisterListener( mListener );
+        PrefsObserver.getInstance().registerListener( mPrefsListener );
 
         mViewStatus = HIDDEN;
     }
@@ -318,14 +324,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 return getStation( position ).getId();
 
             if ( isCategory( position ) )
-                return getCategory( position ).getId();
+                return getCategory( adjustPositionForCategory( position ) ).getId();
 
             if ( isCraftable( position ) )
-                return getCraftable( position ).getId();
+                return getCraftable( adjustPositionForCraftable( position ) ).getId();
 
             throw new ExceptionUtil.PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
         } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
-            mErrorReporter.emitSendErrorReport( TAG, e );
+            mExceptionObserver.notifyExceptionCaught( TAG, e );
 
             return NO_ID;
         }
@@ -337,14 +343,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 return getStation( position ).getImagePath();
 
             if ( isCategory( position ) )
-                return getCategory( position ).getImagePath();
+                return getCategory( adjustPositionForCategory( position ) ).getImagePath();
 
             if ( isCraftable( position ) )
-                return getCraftable( position ).getImagePath();
+                return getCraftable( adjustPositionForCraftable( position ) ).getImagePath();
 
             throw new ExceptionUtil.PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
         } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
-            mErrorReporter.emitSendErrorReport( TAG, e );
+            mExceptionObserver.notifyExceptionCaught( TAG, e );
 
             return NO_PATH;
         }
@@ -356,14 +362,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 return getStation( position ).getName();
 
             if ( isCategory( position ) )
-                return getCategory( position ).getName();
+                return getCategory( adjustPositionForCategory( position ) ).getName();
 
             if ( isCraftable( position ) )
-                return getCraftable( position ).getName();
+                return getCraftable( adjustPositionForCraftable( position ) ).getName();
 
             throw new ExceptionUtil.PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
         } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
-            mErrorReporter.emitSendErrorReport( TAG, e );
+            mExceptionObserver.notifyExceptionCaught( TAG, e );
 
             return NO_NAME;
         }
@@ -371,7 +377,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private int getQuantityWithYieldByPosition( int position ) {
         try {
-            return getCraftable( position ).getQuantityWithYield();
+            return getCraftable( adjustPositionForCraftable( position ) ).getQuantityWithYield();
         } catch ( Exception e ) {
             return NO_QUANTITY;
         }
@@ -381,10 +387,16 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
      * CRAFTABLE METHODS
      */
 
-    private boolean isCraftable( int position ) {
-        position -= ( getStations().size() + getCategories().size() );
+    private int adjustPositionForCraftable( int position ) {
+        return position - ( getStations().size() + getCategories().size() );
+    }
 
-        return Util.isValidPosition( position, getCraftables().size() );
+    private int adjustPositionFromCraftable( int position ) {
+        return position + ( getStations().size() + getCategories().size() );
+    }
+
+    private boolean isCraftable( int position ) {
+        return Util.isValidPosition( adjustPositionForCraftable( position ), getCraftables().size() );
     }
 
     private DisplayEngram getCraftable( int position ) {
@@ -392,28 +404,36 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     public void increaseQuantity( int position ) {
-        CraftingQueue.getInstance().increaseQuantity( getCraftable( position ) );
+        CraftingQueue.getInstance().increaseQuantity( getCraftable( adjustPositionForCraftable( position ) ) );
     }
 
-    private boolean updateQuantities() {
-        boolean didUpdate = false;
-
+    private void updateQuantities() {
         for ( int i = 0; i < getCraftables().size(); i++ ) {
             DisplayEngram craftable = getCraftable( i );
 
-            if ( CraftingQueue.getInstance().contains( craftable.getId() ) ) {
-                craftable.setQuantity( CraftingQueue.getInstance().getCraftable( craftable.getId() ).getQuantity() );
+            long id = craftable.getId();
 
-                getCraftables().put( craftable.getId(), craftable );
+            // if queue contains this craftable's _id, check if quantity is different, if so, update
+            // if queue does not contain and if quantity is above 0, reset quantity back to 0, update
+            if ( CraftingQueue.getInstance().contains( id ) ) {
+                int quantity = CraftingQueue.getInstance().getCraftable( id ).getQuantity();
 
-                didUpdate = true;
+                if ( craftable.getQuantity() != quantity ) {
+                    craftable.setQuantity( quantity );
+
+                    getCraftables().setValueAt( i, craftable );
+
+                    notifyItemChanged( adjustPositionFromCraftable( i ) );
+                }
+            } else if ( craftable.getQuantity() > 0 ) {
+                craftable.resetQuantity();
+
+                notifyItemChanged( adjustPositionFromCraftable( i ) );
             }
         }
-
-        return didUpdate;
     }
 
-    private boolean clearQuantities() {
+    private void clearQuantities() {
         boolean didUpdate = false;
 
         for ( int i = 0; i < getCraftables().size(); i++ ) {
@@ -422,10 +442,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             didUpdate = true;
         }
 
-        return didUpdate;
+        if ( didUpdate )
+            notifyDataSetChanged();
     }
 
-    private CraftableSparseArray queryForEngrams( Uri uri ) throws Exception {
+    private CraftableSparseArray queryForEngrams( Uri uri ) {
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
                 return new CraftableSparseArray();
@@ -501,10 +522,12 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
      * CATEGORY METHODS
      */
 
-    private boolean isCategory( int position ) {
-        position -= getStations().size();
+    private int adjustPositionForCategory( int position ) {
+        return position - getStations().size();
+    }
 
-        return Util.isValidPosition( position, getCraftables().size() );
+    private boolean isCategory( int position ) {
+        return Util.isValidPosition( adjustPositionForCategory( position ), getCategories().size() );
     }
 
     private Category getCategory( int position ) {
@@ -575,7 +598,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     }
 
-    private CategorySparseArray queryForCategories( Uri uri ) throws Exception {
+    private CategorySparseArray queryForCategories( Uri uri )
+            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         if ( uri == null )
             return new CategorySparseArray();
 
@@ -743,42 +767,56 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     }
 
-    public String buildHierarchy() throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
-        long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+    public void buildHierarchy() {
+        Log.d( TAG, "buildHierarchy: " );
 
-        StringBuilder builder = new StringBuilder();
-        if ( mSearchQuery == null ) {
-            if ( isFilteredByStation() ) {
-                if ( isCurrentCategoryLevelStationRoot() ) {
-                    builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_stations ) );
-                } else {
-                    builder.append( queryForStation( DatabaseContract.StationEntry.buildUriWithId( dlc_id, getCurrentStationId() ) )
-                            .getName() ).append( "/" );
-                    if ( isFilteredByCategory() ) {
-                        if ( !isCurrentCategoryLevelRoot() )
-                            builder.append( buildCategoryHierarchy( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) );
+        try {
+            long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+
+            StringBuilder builder = new StringBuilder();
+            if ( mSearchQuery == null ) {
+                if ( isFilteredByStation() ) {
+                    if ( isCurrentCategoryLevelStationRoot() ) {
+                        builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_stations ) );
+                    } else {
+                        String name = queryForStation( DatabaseContract.StationEntry.buildUriWithId( dlc_id, getCurrentStationId() ) ).getName();
+                        if ( isFilteredByCategory() ) {
+                            if ( isCurrentCategoryLevelRoot() ) {
+                                builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_contents_of_station ), name ) );
+                            } else {
+                                builder.append(
+                                        String.format( getContext().getString( R.string.display_case_hierarchy_text_contents_of_station_in_folder ),
+                                                name, buildCategoryHierarchy( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) ) );
+                            }
+                        }
                     }
-                }
-            } else if ( isFilteredByCategory() ) {
-                if ( isCurrentCategoryLevelRoot() ) {
-                    builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_categories ) );
+                } else if ( isFilteredByCategory() ) {
+                    if ( isCurrentCategoryLevelRoot() ) {
+                        builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_categories ) );
+                    } else {
+                        builder.append( "/" ).append( buildCategoryHierarchy( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) );
+                    }
                 } else {
-                    builder.append( "/" ).append( buildCategoryHierarchy( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) );
+                    builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_engrams ) );
                 }
             } else {
-                builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_engrams ) );
+                builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_search_results_format ), mSearchQuery ) );
             }
-        } else {
-            builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_search_results_format ), mSearchQuery ) );
+
+//            NavigationObserver.getInstance().update( String.format( getContext().getString( R.string.display_case_hierarchy_text_showing_format ), builder.toString() ) );
+            NavigationObserver.getInstance().update( builder.toString() );
+        } catch ( ExceptionUtil.CursorNullException | ExceptionUtil.CursorEmptyException e ) {
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
         }
 
-        return String.format( getContext().getString( R.string.display_case_hierarchy_text_showing_format ), builder.toString() );
     }
 
-    private String buildCategoryHierarchy( Uri uri ) throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+    private String buildCategoryHierarchy( Uri uri )
+            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+
         Category category = queryForCategory( uri );
 
-        StringBuilder builder = new StringBuilder( category.getName() ).append( "/" );
+        StringBuilder builder = new StringBuilder( category.getName() );
 
         while ( !isRoot( category.getParent() ) ) {
             category = queryForCategory( DatabaseContract.CategoryEntry.buildUriWithId(
@@ -815,6 +853,10 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 setStations( mStationSparseArray );
                 setCategories( mCategorySparseArray );
                 setCraftables( mCraftableSparseArray );
+
+                notifyDataSetChanged();
+
+                buildHierarchy();
             }
         }
 
@@ -903,8 +945,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     mCraftableSparseArray = queryForEngrams( craftableUri );
 
                 return true;
-            } catch ( Exception e ) {
-                mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+            } catch ( ExceptionUtil.CursorNullException | ExceptionUtil.CursorEmptyException e ) {
+                mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
                 return false;
             }
@@ -925,6 +967,10 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             if ( querySuccessful ) {
                 setCategories( mCategorySparseArray );
                 setCraftables( mCraftableSparseArray );
+
+                notifyDataSetChanged();
+
+                buildHierarchy();
             }
         }
 
@@ -1033,11 +1079,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     changeCategory( position );
                 } else if ( isStation( position ) ) {
                     changeStation( position );
-                } else {
-                    throw new ExceptionUtil.PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
                 }
-            } catch ( ExceptionUtil.PositionOutOfBoundsException | ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e ) {
-                mErrorReporter.emitSendErrorReport( TAG, e );
+            } catch ( ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e ) {
+                mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
+            } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
+                mExceptionObserver.notifyExceptionCaught( TAG, e );
             }
         }
 

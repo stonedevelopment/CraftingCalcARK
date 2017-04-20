@@ -5,11 +5,14 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.ContextThemeWrapper;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseHelper;
+import arc.resource.calculator.model.engram.QueueEngram;
 
 public class DialogUtil {
     public interface Callback {
@@ -104,10 +107,18 @@ public class DialogUtil {
         return builder.create();
     }
 
-    public static AlertDialog Resources( Context context ) {
+    public static AlertDialog Details( Context context, QueueEngram craftable ) {
+        View view = View.inflate( context, R.layout.dialog_detail, null );
+
+        TextView name = ( TextView ) view.findViewById( R.id.name );
+        name.setText( craftable.getName() );
+
+        TextView description = ( TextView ) view.findViewById( R.id.description );
+        description.setText( "" );
+
         AlertDialog.Builder builder = new AlertDialog.Builder( context );
 
-        builder.setView( R.layout.activity_resource );
+        builder.setView( R.layout.dialog_detail );
 
         return builder.create();
     }

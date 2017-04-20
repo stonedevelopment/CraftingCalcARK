@@ -1,6 +1,7 @@
 package arc.resource.calculator.util;
 
-import android.view.ViewGroup;
+import android.util.Log;
+import android.widget.LinearLayout;
 
 public class DisplayUtil {
     private static final String TAG = DisplayUtil.class.getSimpleName();
@@ -20,10 +21,11 @@ public class DisplayUtil {
     }
 
     public void setImageSize( int size ) {
+        Log.d( TAG, "setImageSize(): " + size );
         mViewSize = size;
     }
 
-    public ViewGroup.LayoutParams getParams() {
-        return new ViewGroup.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, mViewSize );
+    public LinearLayout.LayoutParams getParams() {
+        return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, mViewSize );
     }
 }

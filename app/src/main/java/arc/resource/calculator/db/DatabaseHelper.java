@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     v4, Added Stations and Levels
     v3, Added Engram Yield column
     v2, Added Versioning (DLC)
-    v1, Initial setup
+    v1, Initial create
      */
     public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "database.db";

@@ -24,6 +24,7 @@ public class ExceptionUtil {
         FirebaseCrash.logcat( Log.ERROR, tag, e.getMessage() );
         FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
 
+        // TODO: 4/19/2017 Uncomment for production!!!!
 //        FirebaseCrash.report( e );
     }
 
@@ -48,7 +49,7 @@ public class ExceptionUtil {
         }
     }
 
-    // Cursor returned null, setup requested _id
+    // Cursor returned null, resume requested _id
     public static class CursorNullException extends Exception {
 
         public CursorNullException( Uri uri ) {
@@ -60,7 +61,7 @@ public class ExceptionUtil {
         }
     }
 
-    // Cursor returned null, setup requested _id
+    // Cursor returned null, resume requested _id
     public static class CursorEmptyException extends Exception {
         public CursorEmptyException( Uri uri ) {
             super( uri.toString() );

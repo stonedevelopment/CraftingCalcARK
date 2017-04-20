@@ -14,14 +14,22 @@ public class QueueObserver {
 
     private List<Listener> mListeners;
 
-    public interface Listener {
-        void onItemChanged( long craftableId, int quantity );
+    public static abstract class Listener {
+        public void onItemChanged( long craftableId, int quantity ) {
+            // do nothing
+        }
 
-        void onItemRemoved( long craftableId );
+        public void onItemRemoved( long craftableId ) {
+            // do nothing
+        }
 
-        void onDataSetChanged();
+        public void onDataSetPopulated() {
+            // do nothing
+        }
 
-        void onDataSetEmpty();
+        public void onDataSetEmpty() {
+            // do nothing
+        }
     }
 
     public static QueueObserver getInstance() {
@@ -61,9 +69,9 @@ public class QueueObserver {
         }
     }
 
-    public void notifyDataSetChanged() {
+    public void notifyDataSetPopulated() {
         for ( Listener listener : mListeners ) {
-            listener.onDataSetChanged();
+            listener.onDataSetPopulated();
         }
     }
 }

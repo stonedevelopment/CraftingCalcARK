@@ -58,7 +58,7 @@ public class InventoryRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     private void init() {
-        Log.d( TAG, "init()" );
+        Log.d( TAG, "onCreate()" );
 
         int numCols = getResources().getInteger( R.integer.gridview_column_count );
         setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
@@ -66,17 +66,17 @@ public class InventoryRecyclerView extends RecyclerViewWithContextMenu {
         setAdapter( new InventoryAdapter( getContext() ) );
     }
 
-    public void startUp( Listener listener ) {
+    public void resume( Listener listener ) {
         // register listener from switcher
         mListener = listener;
 
-        // setup up adapter and register this observer
-        getAdapter().start( new Observer() );
+        // resume up adapter and register this observer
+        getAdapter().resume( new Observer() );
     }
 
-    public void shutDown() {
-        // stop adapter and remove this observer
-        getAdapter().stop();
+    public void pause() {
+        // pause adapter and remove this observer
+        getAdapter().pause();
     }
 
     @Override

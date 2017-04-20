@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LongSparseArray;
 
 import org.json.JSONArray;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 
 import arc.resource.calculator.adapters.QueueAdapter;
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -38,6 +40,19 @@ public class CraftingQueue {
 
     private static QueueAdapter.Observer mViewObserver;
 
+    private PrefsObserver.Listener mPrefsListener = new PrefsObserver.Listener() {
+        @Override
+        public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
+            if ( dlcValueChange )
+                clearQueue();
+        }
+
+        @Override
+        public void onSavePreferencesRequested() {
+            Log.d( TAG, "onSavePreferencesRequested: " );
+            saveQueueToPrefs();
+        }
+    };
 
     private CraftingQueue( Context context ) {
         setQueue( new QueueSparseArray() );
@@ -57,6 +72,14 @@ public class CraftingQueue {
         return sInstance;
     }
 
+    public void resume() {
+        PrefsObserver.getInstance().registerListener( mPrefsListener );
+    }
+
+    public void pause() {
+        PrefsObserver.getInstance().unregisterListener( mPrefsListener );
+    }
+
     public QueueSparseArray getQueue() {
         return mQueue;
     }
@@ -71,6 +94,10 @@ public class CraftingQueue {
 
     public boolean contains( long id ) {
         return getQueue().contains( id );
+    }
+
+    public boolean isQueueEmpty() {
+        return getSize() == 0;
     }
 
     public QueueEngram getCraftable( int position ) {
@@ -322,8 +349,10 @@ public class CraftingQueue {
         protected void onPostExecute( Boolean querySuccessful ) {
             if ( querySuccessful ) {
                 if ( mArray.size() > 0 ) {
+                    setQueue( mArray );
+
                     mViewObserver.notifyDataSetPopulated();
-                    QueueObserver.getInstance().notifyDataSetChanged();
+                    QueueObserver.getInstance().notifyDataSetPopulated();
                 } else {
                     mViewObserver.notifyDataSetEmpty();
                 }

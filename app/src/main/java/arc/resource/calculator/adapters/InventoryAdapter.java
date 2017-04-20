@@ -43,8 +43,7 @@ import static arc.resource.calculator.adapters.InventoryAdapter.Status.VISIBLE;
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder>
-        implements QueueObserver.Listener {
+public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> {
     private static final String TAG = InventoryAdapter.class.getSimpleName();
 
     private Context mContext;
@@ -55,49 +54,37 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private LongSparseArray<QueueEngram> mQueue;
 
     private Status mViewStatus;
-    private boolean mNeedsUpdate;
 
     enum Status {VISIBLE, HIDDEN}
 
-    @Override
-    public void onDataSetChanged() {
-        mNeedsUpdate = true;
+    private QueueObserver.Listener mListener = new QueueObserver.Listener() {
+        public void onDataSetPopulated() {
+            if ( mViewStatus == VISIBLE )
+                fetchInventory();
+        }
 
-        if ( mViewStatus == VISIBLE )
-            fetchInventory();
-    }
+        @Override
+        public void onItemChanged( long craftableId, int quantity ) {
+            if ( mViewStatus == VISIBLE )
+                fetchInventory();
+        }
 
-    @Override
-    public void onItemChanged( long craftableId, int quantity ) {
-        mNeedsUpdate = true;
+        @Override
+        public void onItemRemoved( long craftableId ) {
+            if ( mViewStatus == VISIBLE )
+                fetchInventory();
+        }
 
-        if ( mViewStatus == VISIBLE )
-            fetchInventory();
-    }
-
-    @Override
-    public void onItemRemoved( long craftableId ) {
-        mNeedsUpdate = true;
-
-        if ( mViewStatus == VISIBLE )
-            fetchInventory();
-    }
-
-    @Override
-    public void onDataSetEmpty() {
-        mNeedsUpdate = true;
-
-        if ( mViewStatus == VISIBLE )
-            fetchInventory();
-    }
+        @Override
+        public void onDataSetEmpty() {
+            if ( mViewStatus == VISIBLE )
+                fetchInventory();
+        }
+    };
 
     public InventoryAdapter( Context context ) {
         setContext( context );
         setInventory( new InventorySparseArray() );
-
-        mNeedsUpdate = false;
-
-        QueueObserver.getInstance().registerListener( this );
     }
 
     private Context getContext() {
@@ -124,20 +111,22 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         this.mQueue = queue;
     }
 
-    public void start( InventoryRecyclerView.Observer observer ) {
-        Log.d( TAG, "setup()" );
+    public void resume( InventoryRecyclerView.Observer observer ) {
+        Log.d( TAG, "resume()" );
 
         mViewObserver = observer;
         mViewStatus = VISIBLE;
 
-        if ( mNeedsUpdate )
-            fetchInventory();
+        QueueObserver.getInstance().registerListener( mListener );
+
+        fetchInventory();
     }
 
-    public void stop() {
-        Log.d( TAG, "shutDown()" );
+    public void pause() {
+        Log.d( TAG, "pause()" );
 
-        mViewObserver = null;
+        QueueObserver.getInstance().unregisterListener( mListener );
+
         mViewStatus = HIDDEN;
     }
 
@@ -217,8 +206,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
                 notifyDataSetChanged();
 
-                mNeedsUpdate = false;
-
                 if ( mArray.size() > 0 ) {
                     mViewObserver.notifyDataSetPopulated();
                 } else {
@@ -233,7 +220,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             try {
                 long dlc_id = PrefsUtil.getInstance().getDLCPreference();
 
-                // TODO: 4/12/2017 How do we retrieve Queue data now that its hidden within its Adapter?
                 LongSparseArray<QueueEngram> craftables = CraftingQueue.getInstance().getQueue();
 
                 InventorySparseArray inventory = new InventorySparseArray();
@@ -294,7 +280,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 .into( holder.getImageView() );
 
         holder.getNameView().setText( resource.getName() );
-        holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", resource.getQuantity() ) );
+        holder.getQuantityView().setText( String.format( Locale.getDefault(), "%d", resource.getQuantity() ) );
     }
 
     @Override

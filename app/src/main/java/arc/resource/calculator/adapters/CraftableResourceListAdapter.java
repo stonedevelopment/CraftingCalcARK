@@ -118,7 +118,7 @@
 ////
 ////            return resourceMap;
 ////        } catch ( Exception e ) {
-////            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
+////            mCallback.notifyFatalExceptionCaught( TAG, e );
 ////            return null;
 ////        }
 ////    }
@@ -190,7 +190,7 @@
 ////
 ////            return resourceMap;
 ////        } catch ( Exception e ) {
-////            mCallback.emitSendErrorReportWithAlertDialog( TAG, e );
+////            mCallback.notifyFatalExceptionCaught( TAG, e );
 ////
 ////            return new LongSparseArray<>( 0 );
 ////        }
@@ -248,7 +248,7 @@
 ////
 ////        @Override
 ////        protected void onPostExecute( Void aVoid ) {
-////            notifyDataSetChanged();
+////            notifyDataSetPopulated();
 ////        }
 ////
 ////        @Override

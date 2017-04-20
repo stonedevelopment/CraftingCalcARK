@@ -11,7 +11,7 @@ import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.listeners.ErrorReporter;
+import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
@@ -39,12 +39,12 @@ public class Showcase {
 
     private ShowcaseEntry mShowcaseEntry;
 
-    private ErrorReporter mErrorReporter;
+    private ExceptionObserver mExceptionObserver;
 
     public Showcase( Context context, long _id ) {
         long dlc_id = PrefsUtil.getInstance().getDLCPreference();
 
-        mErrorReporter = ErrorReporter.getInstance();
+        mExceptionObserver = ExceptionObserver.getInstance();
 
         setContext( context );
         setShowcaseEntry( QueryForDetails( context, dlc_id, _id ) );
@@ -218,7 +218,7 @@ public class Showcase {
 
             return new ShowcaseEntry( craftable, description, requiredLevel, dlc_id, composition, stations );
         } catch ( Exception e ) {
-            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }
@@ -243,7 +243,7 @@ public class Showcase {
 
                 stations.put( _id, new Station( _id, name, folder, file ) );
             } catch ( Exception e ) {
-                mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+                mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
                 return null;
             }
@@ -268,7 +268,7 @@ public class Showcase {
 
             return composition;
         } catch ( Exception e ) {
-            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }
@@ -290,7 +290,7 @@ public class Showcase {
 
             return new Resource( _id, name, folder, file );
         } catch ( Exception e ) {
-            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }
@@ -310,7 +310,7 @@ public class Showcase {
 
             return new Category( _id, name, parent_id );
         } catch ( Exception e ) {
-            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }
@@ -328,7 +328,7 @@ public class Showcase {
 
             return cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
         } catch ( Exception e ) {
-            mErrorReporter.emitSendErrorReportWithAlertDialog( TAG, e );
+            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }

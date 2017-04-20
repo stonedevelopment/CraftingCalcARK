@@ -111,7 +111,7 @@ public class ChangeLog {
     /**
      * @return An AlertDialog displaying the changes since the previous installed version of your
      * app (what's new). But when this is the first run of your app including ChangeLog then
-     * the full log dialog is setup.
+     * the full log dialog is resume.
      */
     public AlertDialog getLogDialog() {
         return this.getDialog( this.firstRunEver() );
@@ -214,7 +214,7 @@ public class ChangeLog {
                     // begin of a version section
                     this.closeList();
                     String version = line.substring( 1 ).trim();
-                    // shutDown output?
+                    // pause output?
                     if ( !full ) {
                         if ( this.lastVersion.equals( version ) ) {
                             advanceToEOVS = true;
