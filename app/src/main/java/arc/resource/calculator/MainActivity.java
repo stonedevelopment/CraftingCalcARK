@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity
         // Check to see if database was updated
         boolean didUpdate = getIntent().getBooleanExtra( INTENT_KEY_DID_UPDATE, false );
 
+        ExceptionObserver.getInstance().registerListener( this );
+
         MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
         mainSwitcher.onCreate();
 
@@ -321,7 +323,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFatalException( String tag, Exception e ) {
-        ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
+    public void onFatalException( final String tag, final Exception e ) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
+            }
+        } );
     }
 }

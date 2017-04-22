@@ -3,6 +3,7 @@ package arc.resource.calculator.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.PrefsObserver;
@@ -116,7 +117,12 @@ public class PrefsUtil {
     }
 
     private boolean getPreference( String key, boolean defaultValue ) {
-        return mSharedPreferences.getBoolean( key, defaultValue );
+        try {
+            return mSharedPreferences.getBoolean( key, defaultValue );
+        } catch ( ClassCastException e ) {
+            Log.e( TAG, "getPreference: ClassCastException: " + defaultValue + " for " + mSharedPreferences.getString( key, String.valueOf( defaultValue ) ), e );
+            return Boolean.parseBoolean( mSharedPreferences.getString( key, String.valueOf( defaultValue ) ) );
+        }
     }
 
     private float getPreference( String key, float defaultValue ) {
@@ -141,6 +147,10 @@ public class PrefsUtil {
 
     private void editPreference( String key, float value ) {
         editPreference( key, String.valueOf( value ) );
+    }
+
+    private void removePreference( String key ) {
+        mSharedPreferences.edit().remove( key ).commit();
     }
 
     public long getDLCPreference() {
@@ -215,7 +225,7 @@ public class PrefsUtil {
     }
 
     public void saveRequiredLevel( int level ) {
-        editPreference( RequiredLevelFilterKey, level );
+        editPreference( RequiredLevelKey, level );
     }
 
     public void saveStationId( long station_id ) {
@@ -232,13 +242,19 @@ public class PrefsUtil {
     }
 
     public void saveToDefaultFullReset() {
-        clearPreferences();
+        resetFiltersBackToDefault();
 
-        saveFiltersBackToDefault();
-
+        removePreference( DLCIdKey );
         saveDLCIdBackToDefault();
+
+        removePreference( LastStationIdKey );
         saveStationIdBackToDefault();
+
+        removePreference( LastCategoryLevelKey );
+        removePreference( LastCategoryParentKey );
         saveCategoryLevelsBackToDefault();
+
+        removePreference( RequiredLevelKey );
         saveRequiredLevelBackToDefault();
 
         PrefsObserver.getInstance().notifyPreferencesChanged( true, true, true, true, true, true );
@@ -248,10 +264,17 @@ public class PrefsUtil {
         saveDLCId( DLCIdDefaultValue );
     }
 
-    private void saveFiltersBackToDefault() {
+    private void resetFiltersBackToDefault() {
+        removePreference( StationFilterKey );
         editPreference( StationFilterKey, StationFilterDefaultValue );
+
+        removePreference( CategoryFilterKey );
         editPreference( CategoryFilterKey, CategoryFilterDefaultValue );
+
+        removePreference( RequiredLevelFilterKey );
         editPreference( RequiredLevelFilterKey, RequiredLevelFilterDefaultValue );
+
+        removePreference( RefinedFilterKey );
         editPreference( RefinedFilterKey, RefinedFilterDefaultValue );
     }
 
@@ -268,9 +291,5 @@ public class PrefsUtil {
 
     private void saveRequiredLevelBackToDefault() {
         saveRequiredLevel( RequiredLevelDefaultValue );
-    }
-
-    private void clearPreferences() {
-        mSharedPreferences.edit().clear().apply();
     }
 }

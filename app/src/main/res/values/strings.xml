@@ -3,11 +3,10 @@
 
     <!-- LoadActivity: Status Messages -->
     <string name="load_activity_status_message_error_with_message">
-        \nOh noes! Looks like we\'re being attacked by a Meganeura!
-        \n\nOh, nevermind.. that\'s the wrong kind of bug.
-        \nBut good news! We\'ve caught it and are sending it off to be examined.
+        \nOh noes! It\'s a Meganeura!
+        \n\nOh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
         \n\nWhile we work on a fix, a workaround could simply be to restart the app or, if the problem persists, reinstall it.
-        \n\nWe truly apologize for any inconvenience caused, and rest assured a fix will be on the way. -Shane
+        \n\nWe truly apologize for any inconvenience caused. Rest assured a fix will be on the way. -Shane
     </string>
     <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
 
@@ -277,11 +276,10 @@
     <!-- AlertDialogs -->
 
     <!-- String used with the Send Error Dialog -->
-    <string name="dialog_error_title">Oh noes! Looks like we\'re being attacked by Meganeura!</string>
+    <string name="dialog_error_title">Oh noes! It\'s a Meganeura!</string>
     <string name="dialog_error_message">
         Oh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
-
-        \n\nWhile we work on a fix, a workaround could simply be to reset settings to default (below), restart the app or,
+        While we work on a fix, a workaround could simply be to reset settings to default (below), restart the app or,
         if the problem persists, reinstall it.
 
         \n\nWe truly apologize for any inconvenience caused. Rest assured that a fix will be on the way. -Shane

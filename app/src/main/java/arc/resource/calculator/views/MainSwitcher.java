@@ -60,7 +60,7 @@ public class MainSwitcher extends ViewSwitcher {
                 if ( !isInventoryCurrentView() ) {
                     showNext();
 
-                    mCraftableRecyclerView.pause();
+                    pauseCraftableRecyclerView();
                     mInventorySwitcher.resume();
                 }
             }
@@ -69,10 +69,7 @@ public class MainSwitcher extends ViewSwitcher {
 
     public void onPause() {
         if ( isCraftableCurrentView() ) {
-            NavigationTextView navigationTextView = ( NavigationTextView ) findViewById( R.id.textview_navigation_hierarchy );
-            navigationTextView.pause();
-
-            mCraftableRecyclerView.pause();
+            pauseCraftableRecyclerView();
         } else {
             mInventorySwitcher.pause();
         }
@@ -80,10 +77,7 @@ public class MainSwitcher extends ViewSwitcher {
 
     public void onResume() {
         if ( isCraftableCurrentView() ) {
-            NavigationTextView navigationTextView = ( NavigationTextView ) findViewById( R.id.textview_navigation_hierarchy );
-            navigationTextView.resume();
-
-            mCraftableRecyclerView.resume();
+            resumeCraftableRecyclerView();
         } else {
             mInventorySwitcher.resume();
         }
@@ -93,9 +87,26 @@ public class MainSwitcher extends ViewSwitcher {
         // toggle craftable recyclerView back if not current view, then execute search
         if ( !isCraftableCurrentView() ) {
             showNext();
+
+            mInventorySwitcher.pause();
+            resumeCraftableRecyclerView();
         }
 
         mCraftableRecyclerView.getAdapter().searchData( searchQuery );
+    }
+
+    private void resumeCraftableRecyclerView() {
+        NavigationTextView navigationTextView = ( NavigationTextView ) findViewById( R.id.textview_navigation_hierarchy );
+        navigationTextView.resume();
+
+        mCraftableRecyclerView.resume();
+    }
+
+    private void pauseCraftableRecyclerView() {
+        NavigationTextView navigationTextView = ( NavigationTextView ) findViewById( R.id.textview_navigation_hierarchy );
+        navigationTextView.pause();
+
+        mCraftableRecyclerView.pause();
     }
 
     private boolean isCraftableCurrentView() {

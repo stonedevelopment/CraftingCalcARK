@@ -6,6 +6,8 @@ import java.util.List;
 import arc.resource.calculator.util.ExceptionUtil;
 
 public class ExceptionObserver {
+    private static final String TAG = ExceptionObserver.class.getSimpleName();
+
     private static ExceptionObserver sInstance;
 
     private List<Listener> mListeners;
@@ -28,7 +30,8 @@ public class ExceptionObserver {
     }
 
     public void registerListener( Listener listener ) {
-        mListeners.add( listener );
+        if ( !mListeners.contains( listener ) )
+            mListeners.add( listener );
     }
 
     public void unregisterListener( Listener listener ) {
@@ -53,5 +56,13 @@ public class ExceptionObserver {
         } else {
             ExceptionUtil.SendErrorReport( tag, e );
         }
+    }
+
+    public void throwException() {
+        notifyExceptionCaught( TAG, new Exception( "Manually thrown exception." ) );
+    }
+
+    public void throwFatalException() {
+        notifyFatalExceptionCaught( TAG, new Exception( "Manually thrown exception." ) );
     }
 }

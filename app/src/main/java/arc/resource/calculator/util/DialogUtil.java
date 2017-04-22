@@ -35,16 +35,16 @@ public class DialogUtil {
         builder.setTitle( c.getString( R.string.dialog_error_title ) )
                 .setIcon( R.drawable.dialog_icons_error )
                 .setMessage( c.getString( R.string.dialog_error_message ) )
-                .setNegativeButton( c.getString( R.string.dialog_error_button_negative ), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick( DialogInterface dialog, int which ) {
-                        cb.onCancel();
-                    }
-                } )
                 .setPositiveButton( c.getString( R.string.dialog_error_button_positive ), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick( DialogInterface dialog, int which ) {
                         cb.onOk();
+                    }
+                } )
+                .setNegativeButton( c.getString( R.string.dialog_error_button_negative ), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which ) {
+                        cb.onCancel();
                     }
                 } );
 

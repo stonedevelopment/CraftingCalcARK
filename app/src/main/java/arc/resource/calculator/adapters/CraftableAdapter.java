@@ -949,6 +949,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
                 return false;
+            } catch ( RuntimeException e ) {
+                mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
+
+                return false;
+            } catch ( Exception e ) {
+                mExceptionObserver.notifyExceptionCaught( TAG, e );
+
+                return false;
             }
         }
     }
@@ -965,6 +973,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         @Override
         protected void onPostExecute( Boolean querySuccessful ) {
             if ( querySuccessful ) {
+                setStations( new StationSparseArray() );
                 setCategories( mCategorySparseArray );
                 setCraftables( mCraftableSparseArray );
 
