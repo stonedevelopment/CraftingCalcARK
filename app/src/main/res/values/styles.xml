@@ -4,8 +4,9 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/colorPrimaryDark</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
@@ -32,23 +33,25 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AppTheme.Text.Engram.Name"/>
+    <style name="AppTheme.Text.Engram.Name">
+        <item name="android:maxLines">3</item>
+    </style>
 
     <style name="AppTheme.Text.Engram.Quantity">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_extra_large</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Text.Engram.Queue"/>
 
     <style name="AppTheme.Text.Engram.Queue.Name">
-        <item name="android:maxLines">1</item>
+        <item name="android:maxLines">3</item>
     </style>
 
     <style name="AppTheme.Text.Engram.Queue.Quantity">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_extra_large</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
@@ -60,7 +63,7 @@
     </style>
 
     <style name="AppTheme.Text.Resource.Name">
-        <item name="android:maxLines">1</item>
+        <item name="android:maxLines">3</item>
     </style>
 
     <style name="AppTheme.Text.Resource.Quantity">

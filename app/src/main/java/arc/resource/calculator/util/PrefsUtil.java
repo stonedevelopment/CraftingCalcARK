@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.listeners.PrefsObserver;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -239,6 +240,8 @@ public class PrefsUtil {
         saveStationIdBackToDefault();
         saveCategoryLevelsBackToDefault();
         saveRequiredLevelBackToDefault();
+
+        PrefsObserver.getInstance().notifyPreferencesChanged( true, true, true, true, true, true );
     }
 
     private void saveDLCIdBackToDefault() {

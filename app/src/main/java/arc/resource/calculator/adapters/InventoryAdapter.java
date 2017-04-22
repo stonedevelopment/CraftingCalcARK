@@ -280,7 +280,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 .into( holder.getImageView() );
 
         holder.getNameView().setText( resource.getName() );
-        holder.getQuantityView().setText( String.format( Locale.getDefault(), "%d", resource.getQuantity() ) );
+        holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", resource.getQuantity() ) );
     }
 
     @Override

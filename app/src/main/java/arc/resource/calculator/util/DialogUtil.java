@@ -2,6 +2,7 @@ package arc.resource.calculator.util;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.ContextThemeWrapper;
@@ -15,15 +16,37 @@ import arc.resource.calculator.db.DatabaseHelper;
 import arc.resource.calculator.model.engram.QueueEngram;
 
 public class DialogUtil {
-    public interface Callback {
-        void onResult( Object result );
+    public abstract static class Callback {
+        public void onResult( @Nullable Object result ) {
+            // do nothing
+        }
+
+        public void onOk() {
+            // do nothing
+        }
+
+        public void onCancel() {
+            // do nothing
+        }
     }
 
-    public static AlertDialog Error( Context c ) {
+    public static AlertDialog Error( Context c, final Callback cb ) {
         AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( c, R.style.AlertDialogCustom ) );
-        builder.setTitle( c.getString( R.string.ad_error_reported_title ) )
+        builder.setTitle( c.getString( R.string.dialog_error_title ) )
                 .setIcon( R.drawable.dialog_icons_error )
-                .setMessage( c.getString( R.string.ad_error_reported_message ) );
+                .setMessage( c.getString( R.string.dialog_error_message ) )
+                .setNegativeButton( c.getString( R.string.dialog_error_button_negative ), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which ) {
+                        cb.onCancel();
+                    }
+                } )
+                .setPositiveButton( c.getString( R.string.dialog_error_button_positive ), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which ) {
+                        cb.onOk();
+                    }
+                } );
 
         return builder.create();
     }

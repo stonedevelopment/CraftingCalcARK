@@ -2,6 +2,7 @@ package arc.resource.calculator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_search:
                 DialogUtil.Search( MainActivity.this, new DialogUtil.Callback() {
                     @Override
-                    public void onResult( Object result ) {
+                    public void onResult( @Nullable Object result ) {
                         String searchQuery = ( String ) result;
 
                         if ( searchQuery != null ) {

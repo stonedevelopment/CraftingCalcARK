@@ -215,7 +215,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         unregisterAdapterDataObserver( observer );
 
         QueueObserver.getInstance().unregisterListener( mListener );
-        PrefsObserver.getInstance().registerListener( mPrefsListener );
+        PrefsObserver.getInstance().unregisterListener( mPrefsListener );
 
         mViewStatus = HIDDEN;
     }
@@ -1019,16 +1019,16 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             if ( quantity > 0 ) {
                 view.setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_queue_item ) );
                 holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", quantity ) );
-                holder.getNameView().setMaxLines( 1 );
+//                holder.getNameView().setMaxLines( 1 );
             } else {
                 view.setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_craftable_item ) );
                 holder.getQuantityView().setText( null );
-                holder.getNameView().setMaxLines( 3 );
+//                holder.getNameView().setMaxLines( 3 );
             }
         } else {
             view.setBackground( ContextCompat.getDrawable( getContext(), R.drawable.frame_craftable_folder ) );
             holder.getQuantityView().setText( null );
-            holder.getNameView().setMaxLines( 3 );
+//            holder.getNameView().setMaxLines( 3 );
         }
     }
 

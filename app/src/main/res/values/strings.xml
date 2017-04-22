@@ -275,15 +275,19 @@
     <string name="pref_filter_refined_value_default">false</string>
 
     <!-- AlertDialogs -->
-    <string name="ad_error_reported_title">Oh noes! Looks like we\'re being attacked by Meganeura!</string>
-    <string name="ad_error_reported_message">
+
+    <!-- String used with the Send Error Dialog -->
+    <string name="dialog_error_title">Oh noes! Looks like we\'re being attacked by Meganeura!</string>
+    <string name="dialog_error_message">
         Oh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
 
         \n\nWhile we work on a fix, a workaround could simply be to reset settings to default (below), restart the app or,
         if the problem persists, reinstall it.
 
-        \n\nWe truly apologize for any inconvenience caused, and rest assured a fix will be on the way. -Shane
+        \n\nWe truly apologize for any inconvenience caused. Rest assured that a fix will be on the way. -Shane
     </string>
+    <string name="dialog_error_button_positive">Reset To Defaults</string>
+    <string name="dialog_error_button_negative">Close</string>
 
     <!-- Exceptions -->
     <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>

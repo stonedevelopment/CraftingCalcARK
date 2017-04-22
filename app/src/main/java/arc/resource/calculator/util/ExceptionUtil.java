@@ -10,17 +10,30 @@ import com.google.firebase.crash.FirebaseCrash;
 import java.util.Arrays;
 
 public class ExceptionUtil {
-    public static void SendErrorReportWithAlertDialog( Context context, String tag, Exception e ) {
+
+    public static void SendErrorReportWithAlertDialog( Context context, String tag, final Exception e ) {
         SendErrorReport( tag, e );
 
-        DialogUtil.Error( context ).show();
+        DialogUtil.Error( context, new DialogUtil.Callback() {
+            @Override
+            public void onOk() {
+                // call reset to defaults!
+                PrefsUtil.getInstance().saveToDefaultFullReset();
+            }
+
+            @Override
+            public void onCancel() {
+                // forcily close app
+                throw new RuntimeException( "Force closing." );
+            }
+        } ).show();
     }
 
     public static void SendErrorReport( String tag, Exception e ) {
         if ( e.getCause() != null )
             FirebaseCrash.logcat( Log.ERROR, tag, e.getCause().toString() );
 
-        FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle( ).toString() );
+        FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle().toString() );
         FirebaseCrash.logcat( Log.ERROR, tag, e.getMessage() );
         FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
 
@@ -88,8 +101,8 @@ public class ExceptionUtil {
         return bundle;
     }
 
-    private static Bundle BuildErrorReportPreferencesBundle(  ) {
-        PrefsUtil prefs = PrefsUtil.getInstance(  );
+    private static Bundle BuildErrorReportPreferencesBundle() {
+        PrefsUtil prefs = PrefsUtil.getInstance();
 
         Bundle bundle = new Bundle();
         bundle.putBoolean( "filter_by_category", prefs.getCategoryFilterPreference() );

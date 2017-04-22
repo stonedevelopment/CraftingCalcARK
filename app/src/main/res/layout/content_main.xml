@@ -25,6 +25,7 @@
             <Button
                 android:id="@+id/button_view_inventory"
                 android:layout_width="match_parent"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_height="wrap_content"
                 android:text="View Inventory"/>
 
@@ -56,6 +57,7 @@
             <Button
                 android:id="@+id/button_view_craftables"
                 android:layout_width="match_parent"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_height="wrap_content"
                 android:text="Back to Engrams"/>
 
@@ -113,6 +115,7 @@
 
     <arc.resource.calculator.views.ClearQueueButton
         android:id="@+id/button_clear_queue"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
