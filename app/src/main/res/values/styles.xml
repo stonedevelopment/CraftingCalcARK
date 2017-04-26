@@ -47,12 +47,14 @@
 
     <style name="AppTheme.Text.Engram.Queue.Name">
         <item name="android:maxLines">3</item>
+        <item name="android:text">@string/content_detail_mock_text_name</item>
     </style>
 
     <style name="AppTheme.Text.Engram.Queue.Quantity">
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:text">@string/content_detail_mock_text_quantity</item>
     </style>
 
     <style name="AppTheme.Text.Resource">

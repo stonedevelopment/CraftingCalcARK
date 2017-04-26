@@ -43,7 +43,7 @@ public class MainSwitcher extends ViewSwitcher {
                     showNext();
 
                     mInventorySwitcher.pause();
-                    mCraftableRecyclerView.resume();
+                    resumeCraftableRecyclerView();
                 }
             }
         } );

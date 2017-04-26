@@ -25,6 +25,10 @@ public class DisplayUtil {
         mViewSize = size;
     }
 
+    public int getImageSize() {
+        return mViewSize;
+    }
+
     public LinearLayout.LayoutParams getParams() {
         return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, mViewSize );
     }
