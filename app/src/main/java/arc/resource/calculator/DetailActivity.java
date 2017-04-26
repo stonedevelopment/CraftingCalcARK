@@ -14,10 +14,10 @@ import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
 import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.Util;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -35,6 +35,18 @@ public class DetailActivity extends AppCompatActivity
         implements ExceptionObserver.Listener {
     private static final String TAG = DetailActivity.class.getSimpleName();
 
+    public static final int REQUEST_CODE = 1000;
+
+    public static final String REQUEST_ID = "ID";
+
+    public static final String RESULT_CODE = "CODE";
+    public static final String RESULT_EXTRA = "EXTRA";
+
+    public static final int ERROR = -1;
+    public static final int REMOVE = 0;
+    public static final int ADD = 1;
+    public static final int UPDATE = 2;
+
     private static final int DECREMENT = 10;
     private static final int INCREMENT = 10;
 
@@ -44,17 +56,18 @@ public class DetailActivity extends AppCompatActivity
 
     private AdUtil mAdUtil;
 
-    // TODO: 4/7/2017 remove from queue non responder
+    private boolean mIsInQueue;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_detail );
-        getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
         try {
-            long _id = getIntent().getExtras().getLong( Util.DETAIL_ID );
-            setShowcase( new Showcase( getApplicationContext(), _id ) );
+            setContentView( R.layout.activity_detail );
+            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
+            long id = getIntent().getExtras().getLong( REQUEST_ID );
+            setShowcase( new Showcase( getApplicationContext(), id ) );
 
             ImageView imageView = ( ImageView ) findViewById( R.id.engram_detail_imageView );
             imageView.setContentDescription( "Image of " + getShowcase().getName() );
@@ -100,13 +113,13 @@ public class DetailActivity extends AppCompatActivity
             Button saveButton = ( Button ) findViewById( R.id.saveButton );
             Button removeButton = ( Button ) findViewById( R.id.removeButton );
 
-            if ( getShowcase().getQuantity() == 0 ) {
-                getShowcase().increaseQuantity();
+            mIsInQueue = ( getShowcase().getQuantity() > 0 );
 
+            if ( mIsInQueue ) {
+                saveButton.setText( R.string.detail_content_save_button_update_queue );
+            } else {
                 removeButton.setEnabled( false );
                 saveButton.setText( R.string.detail_content_save_button_add_to_queue );
-            } else {
-                saveButton.setText( R.string.detail_content_save_button_update_queue );
             }
 
             TextView categoryText = ( TextView ) findViewById( R.id.engram_detail_categoryText );
@@ -145,35 +158,26 @@ public class DetailActivity extends AppCompatActivity
             recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
             recyclerView.setAdapter( getAdapter() );
 
+//            NestedScrollView scrollView = ( NestedScrollView ) findViewById( R.id.scrollView );
+//            scrollView.fullScroll( View.FOCUS_UP );
+
             mAdUtil = new AdUtil( this, R.id.content_detail );
             mAdUtil.init();
         } catch ( Exception e ) {
-            ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
+            FinishActivityWithError( e );
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ExceptionObserver.getInstance().registerListener( this );
-
         mAdUtil.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ExceptionObserver.getInstance().unregisterListener( this );
-
         mAdUtil.pause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ExceptionObserver.getInstance().unregisterListener( this );
-
-        mAdUtil.destroy();
     }
 
     private void setShowcase( Showcase showcase ) {
@@ -228,21 +232,50 @@ public class DetailActivity extends AppCompatActivity
     }
 
     public void RemoveAndFinish( View view ) {
-        getShowcase().getShowcaseEntry().getCraftable().resetQuantity();
-
-        FinishActivityWithResult();
+        FinishActivityWithResult( REMOVE );
     }
 
     public void SaveAndFinish( View view ) {
-        FinishActivityWithResult();
+        if ( mIsInQueue )
+            FinishActivityWithResult( UPDATE );
+        else
+            FinishActivityWithResult( ADD );
     }
 
-    private void FinishActivityWithResult() {
+    private void FinishActivityWithError( Exception e ) {
         Intent returnIntent = getIntent();
 
-        returnIntent.putExtra( Util.DETAIL_QUANTITY, getShowcase().getQuantity() );
+        returnIntent.putExtra( RESULT_CODE, ERROR );
+        returnIntent.putExtra( RESULT_EXTRA, e );
 
-        setResult( RESULT_OK, returnIntent );
+        setResult( RESULT_CANCELED, returnIntent );
+
+        finish();
+    }
+
+    private void FinishActivityWithResult( int resultCode ) {
+        Intent returnIntent = getIntent();
+
+        long id = getShowcase().getId();
+        int quantity = getShowcase().getQuantity();
+
+        returnIntent.putExtra( RESULT_CODE, resultCode );
+
+        switch ( resultCode ) {
+            case REMOVE:
+                CraftingQueue.getInstance().delete( id );
+                break;
+
+            case ADD:
+            case UPDATE:
+                if ( quantity == 0 && !mIsInQueue )
+                    quantity++;
+
+                CraftingQueue.getInstance().setQuantity( this, id, quantity );
+                break;
+        }
+
+        setResult( RESULT_OK, getIntent() );
 
         finish();
     }

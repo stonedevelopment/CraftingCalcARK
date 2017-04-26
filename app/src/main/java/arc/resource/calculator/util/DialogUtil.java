@@ -6,14 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.ContextThemeWrapper;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseHelper;
-import arc.resource.calculator.model.engram.QueueEngram;
 
 public class DialogUtil {
     public abstract static class Callback {
@@ -61,13 +58,13 @@ public class DialogUtil {
                 .setIcon( android.R.drawable.ic_menu_edit )
                 .setMessage( "Enter new quantity" )
                 .setView( editText )
-                .setNegativeButton( context.getString( R.string.quantity_dialog_negative_button ), new DialogInterface.OnClickListener() {
+                .setNegativeButton( context.getString( R.string.dialog_edit_quantity_negative_button ), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick( DialogInterface dialog, int which ) {
-
+                        callback.onCancel();
                     }
                 } )
-                .setPositiveButton( context.getString( R.string.quantity_dialog_positive_button ), new DialogInterface.OnClickListener() {
+                .setPositiveButton( context.getString( R.string.dialog_edit_quantity_positive_button ), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick( DialogInterface dialog, int which ) {
                         String quantityText = editText.getText().toString();
@@ -77,6 +74,10 @@ public class DialogUtil {
 
                             if ( quantity > 0 )
                                 callback.onResult( quantity );
+                            else
+                                callback.onCancel();
+                        } else {
+                            callback.onCancel();
                         }
                     }
                 } );
@@ -114,7 +115,7 @@ public class DialogUtil {
 
     public static AlertDialog About( Context context ) {
         AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( context, R.style.AlertDialogCustom ) );
-        builder.setTitle( context.getString( R.string.about_dialog_full_title ) )
+        builder.setTitle( context.getString( R.string.dialog_about_full_title ) )
                 .setIcon( R.drawable.dialog_icons_about )
                 .setMessage(
                         "Passionately developed by Shane Stone.\n\n" +
@@ -126,22 +127,6 @@ public class DialogUtil {
                                 "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
                                 "JSON File Version: " + PrefsUtil.getInstance().getJSONVersion() + "\n\n" +
                                 "Screen Size: " + context.getString( R.string.dimens ) );
-
-        return builder.create();
-    }
-
-    public static AlertDialog Details( Context context, QueueEngram craftable ) {
-        View view = View.inflate( context, R.layout.dialog_detail, null );
-
-        TextView name = ( TextView ) view.findViewById( R.id.name );
-        name.setText( craftable.getName() );
-
-        TextView description = ( TextView ) view.findViewById( R.id.description );
-        description.setText( "" );
-
-        AlertDialog.Builder builder = new AlertDialog.Builder( context );
-
-        builder.setView( R.layout.dialog_detail );
 
         return builder.create();
     }

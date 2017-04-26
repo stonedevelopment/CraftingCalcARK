@@ -3,7 +3,6 @@ package arc.resource.calculator.tasks;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.LongSparseArray;
@@ -16,6 +15,8 @@ import org.json.JSONObject;
 import java.util.Vector;
 
 import arc.resource.calculator.db.DatabaseContract;
+
+import static arc.resource.calculator.util.Util.NO_ID;
 
 public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG = InitializationTask.class.getSimpleName();
@@ -119,16 +120,16 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         getListener().onUpdate( statusMessage );
     }
 
-    private int delete( Uri uri ) {
+    private int delete( Uri uri ) throws Exception {
         int rowsDeleted = getContext().getContentResolver().delete( uri, null, null );
 
         if ( rowsDeleted == -1 )
-            throw new SQLiteException( uri.toString() );
+            throw new Exception( "delete failed! uri:" + uri.toString() );
 
         return rowsDeleted;
     }
 
-    private void deleteAllRecordsFromProvider() {
+    private void deleteAllRecordsFromProvider() throws Exception {
         delete( DatabaseContract.DLCEntry.CONTENT_URI );
         delete( DatabaseContract.ResourceEntry.CONTENT_URI );
         delete( DatabaseContract.ComplexResourceEntry.CONTENT_URI );
@@ -138,16 +139,17 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         delete( DatabaseContract.EngramEntry.CONTENT_URI );
     }
 
-    private void bulkInsertWithUri( Uri uri, Vector<ContentValues> vector ) {
+    private void bulkInsertWithUri( Uri uri, Vector<ContentValues> vector )
+            throws Exception {
         ContentValues[] contentValues = new ContentValues[vector.size()];
 
         int rowsInserted = getContext().getContentResolver().bulkInsert( uri, vector.toArray( contentValues ) );
 
-        if ( rowsInserted == -1 )
-            throw new SQLiteException( uri.toString() );
+        if ( rowsInserted == NO_ID )
+            throw new Exception( "bulkInsert failed! uri:" + uri.toString() + ", contents:" + vector.toString() );
     }
 
-    private void insertComplexResources( JSONArray jsonArray ) throws JSONException {
+    private void insertComplexResources( JSONArray jsonArray ) throws Exception {
         updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
@@ -168,7 +170,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri( DatabaseContract.ComplexResourceEntry.CONTENT_URI, vector );
     }
 
-    private void insertDLC( JSONArray jsonArray ) throws JSONException {
+    private void insertDLC( JSONArray jsonArray ) throws Exception {
         updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
@@ -191,7 +193,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri( DatabaseContract.DLCEntry.CONTENT_URI, vector );
     }
 
-    private void insertResources( JSONArray jsonArray ) throws JSONException {
+    private void insertResources( JSONArray jsonArray ) throws Exception {
         updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
@@ -222,7 +224,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri( DatabaseContract.ResourceEntry.CONTENT_URI, vector );
     }
 
-    private void insertStations( JSONArray jsonArray ) throws JSONException {
+    private void insertStations( JSONArray jsonArray ) throws Exception {
         updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
@@ -253,7 +255,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri( DatabaseContract.StationEntry.CONTENT_URI, vector );
     }
 
-    private void insertCategories( JSONArray jsonArray ) throws JSONException {
+    private void insertCategories( JSONArray jsonArray ) throws Exception {
         updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
@@ -304,7 +306,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri( DatabaseContract.CategoryEntry.CONTENT_URI, vector );
     }
 
-    private void insertEngrams( JSONArray jsonArray ) throws JSONException {
+    private void insertEngrams( JSONArray jsonArray ) throws Exception {
         updateStatus( "." );
 
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
@@ -369,7 +371,8 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri( DatabaseContract.CompositionEntry.CONTENT_URI, compositionVector );
     }
 
-    private Vector<ContentValues> insertComposition( long engram_id, long dlc_id, JSONArray jsonArray ) throws JSONException {
+    private Vector<ContentValues> insertComposition( long engram_id, long dlc_id, JSONArray jsonArray )
+            throws JSONException {
         Vector<ContentValues> vector = new Vector<>( jsonArray.length() );
 
         for ( int i = 0; i < jsonArray.length(); i++ ) {
@@ -394,7 +397,8 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         return vector;
     }
 
-    private LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray ) throws JSONException {
+    private LongSparseArray<TotalConversion> mapTotalConversion( JSONArray jsonArray )
+            throws JSONException {
         updateStatus( "." );
 
         LongSparseArray<TotalConversion> map = new LongSparseArray<>();

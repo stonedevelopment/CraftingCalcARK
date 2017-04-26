@@ -6,26 +6,28 @@
 
     <ImageView
         android:id="@+id/resource_list_imageView"
-        android:layout_width="@dimen/resource_view_holder_thumbnail_size"
-        android:layout_height="@dimen/resource_view_holder_thumbnail_size"
-        android:layout_marginEnd="@dimen/resource_view_holder_padding"
-        android:layout_marginStart="@dimen/resource_view_holder_padding"
-        android:adjustViewBounds="true"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:padding="@dimen/resource_view_holder_padding"/>
 
     <TextView
         android:id="@+id/resource_list_nameText"
-        style="@style/AppTheme.Text.Resource.Name"
+        style="@style/AppTheme.Text.Detail.Resource.Name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"/>
+        android:layout_marginStart="@dimen/resource_view_holder_padding"
+        android:layout_weight="7"/>
 
     <TextView
         android:id="@+id/resource_list_quantityText"
-        style="@style/AppTheme.Text.Resource.Quantity"
-        android:layout_width="wrap_content"
+        style="@style/AppTheme.Text.Detail.Resource.Quantity"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
-        android:layout_marginEnd="@dimen/resource_view_holder_padding"/>
+        android:layout_marginEnd="@dimen/resource_view_holder_padding"
+        android:layout_weight="2"/>
 
 </LinearLayout>

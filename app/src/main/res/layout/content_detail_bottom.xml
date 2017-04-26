@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/display_case_container_layout_padding"
         android:layout_marginTop="@dimen/display_case_container_layout_padding"
-        android:background="@drawable/frame"
+        android:background="@drawable/frame_switcher_main"
         android:padding="@dimen/display_case_container_layout_padding"/>
 
     <include

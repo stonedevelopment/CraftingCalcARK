@@ -156,6 +156,11 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     }
 
     @Override
+    public long getItemId( int position ) {
+        return CraftingQueue.getInstance().getCraftable( position ).getId();
+    }
+
+    @Override
     public int getItemCount() {
         return CraftingQueue.getInstance().getSize();
     }

@@ -22,8 +22,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.Arrays;
-
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.CompositionEntry;
@@ -571,12 +569,8 @@ public class DatabaseProvider extends ContentProvider {
             cursor.setNotificationUri( getContext().getContentResolver(), uri );
 
             return cursor;
-        } catch ( URIUnknownException e ) {
+        } catch ( Exception e ) {
             mExceptionObserver.notifyExceptionCaught( TAG, e );
-
-            return null;
-        } catch ( NullPointerException | SQLiteException e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
 
             return null;
         }
@@ -618,12 +612,14 @@ public class DatabaseProvider extends ContentProvider {
         try {
             db.beginTransaction();
 
+            String table = getTableNameFromUriMatch( uri );
+
             int rowsInserted = 0;
             for ( ContentValues value : values ) {
-                long _id = db.insert( getTableNameFromUriMatch( uri ), null, value );
+                long _id = db.insert( table, null, value );
 
                 if ( _id == NO_ID )
-                    throw new SQLiteException( "bulkInsert(): method db.insert() returned NO_ID (-1). uri:" + uri.toString() + ", value:" + value + ", values:" + Arrays.toString( values ) );
+                    throw new SQLiteException();
 
                 rowsInserted++;
             }
@@ -633,13 +629,7 @@ public class DatabaseProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange( uri, null );
 
             return rowsInserted;
-        } catch ( URIUnknownException e ) {
-            mExceptionObserver.notifyExceptionCaught( TAG, e );
-
-            return NO_SIZE;
-        } catch ( NullPointerException | SQLiteException e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
+        } catch ( Exception e ) {
             return NO_SIZE;
         } finally {
             db.endTransaction();

@@ -24,14 +24,6 @@ import arc.resource.calculator.model.resource.QueueResource;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class Util {
-    public static final int REQUEST_CODE_DETAIL_ACTIVITY = 1000;
-    public static final int REQUEST_CODE_SETTINGS_ACTIVITY = 2000;
-
-    public static final String DETAIL_RESULT_CODE = "detail";
-    public static final String DETAIL_ID = "DETAIL_ID";
-    public static final String DETAIL_QUANTITY = "DETAIL_QUANTITY";
-    public static final String DETAIL_REMOVE = "DETAIL_REMOVE";
-    public static final String DETAIL_SAVE = "DETAIL_SAVE";
 
     public static final int NO_POSITION = -1;
     public static final int NO_ID = -1;

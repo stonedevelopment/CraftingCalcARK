@@ -91,28 +91,67 @@
     <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and separates rooms.</string>
     <string name="content_detail_mock_text_station_and_level">Stone Wall can be crafted without a station, and can be crafted at any level.</string>
 
-    <!-- Strings used with the About Dialog -->
-    <string name="about_dialog_full_title">About ARK:Resource Calculator</string>
+    <!-- AlertDialog -->
 
-    <!-- String used with the QuantityChooser Dialog -->
-    <string name="quantity_dialog_full_title">Edit Quantity</string>
-    <string name="quantity_dialog_positive_button">Update</string>
-    <string name="quantity_dialog_negative_button">Cancel</string>
+    <!-- AlertDialog: Error -->
+    <string name="dialog_error_title">Oh noes! It\'s a Meganeura!</string>
+    <string name="dialog_error_message">
+        Oh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
+        While we work on a fix, a workaround could simply be to reset settings to default (below), restart the app or,
+        if the problem persists, reinstall it.
 
-    <!-- String used with the Search Dialog -->
+        \n\nWe truly apologize for any inconvenience caused. Rest assured that a fix will be on the way. -Shane
+    </string>
+    <string name="dialog_error_button_positive">Reset To Defaults</string>
+    <string name="dialog_error_button_negative">Close App</string>
+
+    <!-- AlertDialog: About -->
+    <string name="dialog_about_full_title">About ARK:Resource Calculator</string>
+
+    <!-- AlertDialog: Edit Quantity -->
+    <string name="dialog_edit_quantity_full_title">Edit Quantity</string>
+    <string name="dialog_edit_quantity_positive_button">Update</string>
+    <string name="dialog_edit_quantity_negative_button">Cancel</string>
+
+    <!-- AlertDialog: Search -->
     <string name="search_dialog_full_title">Search</string>
     <string name="search_dialog_positive_button">Search</string>
     <string name="search_dialog_negative_button">Cancel</string>
 
-    <!-- Strings used with the Help Dialog -->
+    <!-- AlertDialog: Help -->
     <string name="help_dialog_full_title">How to Use This App</string>
     <string name="help_dialog_ok_button">Close</string>
 
-    <!-- Strings used with the Changelog Dialog -->
+    <!-- AlertDialog: Changelog  -->
     <string name="changelog_full_title">Changelog</string>
     <string name="changelog_title">What\'s New</string>
     <string name="changelog_ok_button">OK</string>
     <string name="changelog_show_full">More…</string>
+
+    <!-- Toast Messages -->
+
+    <!-- Toast: Edit Quantity -->
+    <string name="toast_edit_quantity_success">Engram\'s quantity was updated.</string>
+    <string name="toast_edit_quantity_success_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
+    <string name="toast_edit_quantity_fail">Engram\'s quantity wasn\'t changed.</string>
+    <string name="toast_edit_quantity_fail_format"><x:g>%1$s</x:g>\'s quantity wasn\'t changed.</string>
+
+    <!-- Toast: Remove From Queue -->
+    <string name="toast_remove_from_queue_success">Engram was removed from Crafting Queue.</string>
+    <string name="toast_remove_from_queue_success_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
+    <string name="toast_remove_from_queue_fail">Engram was not removed from Crafting Queue.</string>
+    <string name="toast_remove_from_queue_fail_format"><x:g>%1$s</x:g> was not removed from Crafting Queue.</string>
+
+    <!-- Toast: Settings -->
+    <string name="toast_settings_success">Settings were changed.</string>
+    <string name="toast_settings_fail">No changes were made.</string>
+
+    <!-- Toast: Details -->
+    <string name="toast_details_error">Engram details closed with an error.</string>
+    <string name="toast_details_added">Engram was added to Crafting Queue.</string>
+    <string name="toast_details_removed">Engram was removed from Crafting Queue.</string>
+    <string name="toast_details_updated">Engram\'s quantity was updated.</string>
+    <string name="toast_details_no_change">No changes were made.</string>
 
     <!-- Strings related to Go Back -->
     <string name="go_back">Go back</string>
@@ -272,20 +311,6 @@
 
     <!-- Default value for Refined Filter preference in SharedPreferences -->
     <string name="pref_filter_refined_value_default">false</string>
-
-    <!-- AlertDialogs -->
-
-    <!-- String used with the Send Error Dialog -->
-    <string name="dialog_error_title">Oh noes! It\'s a Meganeura!</string>
-    <string name="dialog_error_message">
-        Oh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
-        While we work on a fix, a workaround could simply be to reset settings to default (below), restart the app or,
-        if the problem persists, reinstall it.
-
-        \n\nWe truly apologize for any inconvenience caused. Rest assured that a fix will be on the way. -Shane
-    </string>
-    <string name="dialog_error_button_positive">Reset To Defaults</string>
-    <string name="dialog_error_button_negative">Close</string>
 
     <!-- Exceptions -->
     <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>

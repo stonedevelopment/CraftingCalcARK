@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
@@ -18,10 +19,18 @@ import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.Util;
 import arc.resource.calculator.views.ClearQueueButton;
+import arc.resource.calculator.views.CraftableRecyclerView;
 import arc.resource.calculator.views.MainSwitcher;
+import arc.resource.calculator.views.QueueRecyclerView;
 import arc.resource.calculator.views.QueueSwitcher;
+
+import static arc.resource.calculator.DetailActivity.ADD;
+import static arc.resource.calculator.DetailActivity.ERROR;
+import static arc.resource.calculator.DetailActivity.REMOVE;
+import static arc.resource.calculator.DetailActivity.RESULT_CODE;
+import static arc.resource.calculator.DetailActivity.RESULT_EXTRA;
+import static arc.resource.calculator.DetailActivity.UPDATE;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -61,6 +70,12 @@ public class MainActivity extends AppCompatActivity
         QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
         queueSwitcher.onCreate();
 
+        CraftableRecyclerView craftableRecyclerView = ( CraftableRecyclerView ) findViewById( R.id.gridview_craftables );
+        registerForContextMenu( craftableRecyclerView );
+
+        QueueRecyclerView queueRecyclerView = ( QueueRecyclerView ) findViewById( R.id.gridview_queue );
+        registerForContextMenu( queueRecyclerView );
+
         // TODO: 4/16/2017 What if phone is without internet?
         mAdUtil = new AdUtil( this, R.id.content_main );
         mAdUtil.init();
@@ -70,8 +85,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        Log.d( TAG, "onResume: " );
         super.onResume();
+
+        Log.d( TAG, "onResume: " );
 
         ExceptionObserver.getInstance().registerListener( this );
 
@@ -91,6 +107,8 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
 
+        Log.d( TAG, "onPause: " );
+
         PrefsObserver.getInstance().requestPreferencesSave();
 
         MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
@@ -105,14 +123,6 @@ public class MainActivity extends AppCompatActivity
         mAdUtil.pause();
 
         ExceptionObserver.getInstance().unregisterListener( this );
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-//        mPurchaseUtil.pause();
-        mAdUtil.destroy();
     }
 
     @Override
@@ -150,8 +160,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.action_settings:
-                startActivityForResult( new Intent( this, SettingsActivity.class ),
-                        Util.REQUEST_CODE_SETTINGS_ACTIVITY );
+                startActivityForResult( new Intent( this, SettingsActivity.class ), SettingsActivity.REQUEST_CODE );
                 return true;
 
             case R.id.action_show_changelog:
@@ -244,19 +253,34 @@ public class MainActivity extends AppCompatActivity
 
         final long id = menuInfo.getId();
 
+        final String name;
+
         switch ( item.getItemId() ) {
             case R.id.floating_action_remove_from_queue:
+                name = CraftingQueue.getInstance().getCraftable( id ).getName();
+
                 CraftingQueue.getInstance().delete( id );
+
+                Toast.makeText( this, String.format( getString( R.string.toast_remove_from_queue_success_format ), name ), Toast.LENGTH_SHORT ).show();
                 break;
 
             case R.id.floating_action_edit_quantity:
-                String name = CraftingQueue.getInstance().getCraftable( id ).getName();
+                name = CraftingQueue.getInstance().getCraftable( id ).getName();
 
                 DialogUtil.EditQuantity( MainActivity.this, name, new DialogUtil.Callback() {
                     @Override
                     public void onResult( Object result ) {
                         int quantity = ( int ) result;
                         CraftingQueue.getInstance().setQuantity( getApplicationContext(), id, quantity );
+
+                        Toast.makeText( MainActivity.this,
+                                String.format( getString( R.string.toast_edit_quantity_success_format ), name ), Toast.LENGTH_SHORT ).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText( MainActivity.this,
+                                String.format( getString( R.string.toast_edit_quantity_fail_format ), name ), Toast.LENGTH_SHORT ).show();
                     }
                 } ).show();
                 break;
@@ -273,40 +297,66 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
         super.onActivityResult( requestCode, resultCode, data );
 
-        switch ( requestCode ) {
-            case Util.REQUEST_CODE_DETAIL_ACTIVITY:
-                if ( resultCode == RESULT_OK ) {
-                    Bundle extras = data.getExtras();
+        if ( data != null ) {
+            Bundle extras = data.getExtras();
+            switch ( requestCode ) {
+                case DetailActivity.REQUEST_CODE:
+                    if ( resultCode == RESULT_OK ) {
+                        switch ( extras.getInt( RESULT_CODE ) ) {
+                            case REMOVE:
+                                Toast.makeText( this, getString( R.string.toast_details_removed ), Toast.LENGTH_SHORT ).show();
+                                break;
 
-                    long craftableId = extras.getLong( Util.DETAIL_ID );
+                            case UPDATE:
+                                Toast.makeText( this, getString( R.string.toast_details_updated ), Toast.LENGTH_SHORT ).show();
+                                break;
 
-                    int quantity = extras.getInt( Util.DETAIL_QUANTITY );
-                    CraftingQueue.getInstance().setQuantity( this, craftableId, quantity );
-                }
-                break;
-            case Util.REQUEST_CODE_SETTINGS_ACTIVITY:
-                if ( resultCode == RESULT_OK ) {
-                    Bundle extras = data.getExtras();
+                            case ADD:
+                                Toast.makeText( this, getString( R.string.toast_details_added ), Toast.LENGTH_SHORT ).show();
+                                break;
+                        }
+                    } else {
+                        if ( extras.getInt( RESULT_CODE ) == ERROR ) {
+                            Exception e = ( Exception ) extras.get( RESULT_EXTRA );
 
-                    boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
-                    boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
-                    boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
-                    boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
-                    boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
-                    boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
+                            if ( e != null ) {
+                                Toast.makeText( this, getString( R.string.toast_details_error ), Toast.LENGTH_SHORT ).show();
 
-                    PrefsObserver.getInstance().notifyPreferencesChanged(
-                            dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
-                }
-                break;
+                                ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
+                            }
+                        } else {
+                            Toast.makeText( this, getString( R.string.toast_details_no_change ), Toast.LENGTH_SHORT ).show();
+                        }
+                    }
+                    break;
+
+                case SettingsActivity.REQUEST_CODE:
+                    if ( resultCode == RESULT_OK ) {
+                        boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
+                        boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
+                        boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
+                        boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
+                        boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
+                        boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
+
+                        Toast.makeText( this, getString( R.string.toast_settings_success ), Toast.LENGTH_SHORT ).show();
+
+                        PrefsObserver.getInstance().notifyPreferencesChanged(
+                                dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
+                    } else {
+                        Toast.makeText( this, getString( R.string.toast_settings_fail ), Toast.LENGTH_SHORT ).show();
+                    }
+                    break;
+            }
+        } else {
+            Toast.makeText( this, getString( R.string.toast_settings_fail ), Toast.LENGTH_SHORT ).show();
         }
     }
 
-    private void startDetailActivity( long _id ) {
+    private void startDetailActivity( long id ) {
         Intent intent = new Intent( this, DetailActivity.class );
-        intent.putExtra( Util.DETAIL_ID, _id );
-
-        startActivityForResult( intent, Util.REQUEST_CODE_DETAIL_ACTIVITY );
+        intent.putExtra( DetailActivity.REQUEST_ID, id );
+        startActivityForResult( intent, DetailActivity.REQUEST_CODE );
     }
 
     private void showChangeLog() {

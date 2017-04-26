@@ -11,7 +11,6 @@ import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
@@ -39,12 +38,8 @@ public class Showcase {
 
     private ShowcaseEntry mShowcaseEntry;
 
-    private ExceptionObserver mExceptionObserver;
-
-    public Showcase( Context context, long _id ) {
+    public Showcase( Context context, long _id ) throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         long dlc_id = PrefsUtil.getInstance().getDLCPreference();
-
-        mExceptionObserver = ExceptionObserver.getInstance();
 
         setContext( context );
         setShowcaseEntry( QueryForDetails( context, dlc_id, _id ) );
@@ -67,6 +62,10 @@ public class Showcase {
 
     private Context getContext() {
         return mContext;
+    }
+
+    public long getId() {
+        return getShowcaseEntry().getCraftable().getId();
     }
 
     public String getImagePath() {
@@ -93,7 +92,7 @@ public class Showcase {
         return getShowcaseEntry().getRequiredLevel();
     }
 
-    public String getDLCName() {
+    public String getDLCName() throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         return QueryForDLCName( getContext(), getShowcaseEntry().getDLCId() );
     }
 
@@ -102,6 +101,8 @@ public class Showcase {
     }
 
     public String getStationNameArrayAsText() {
+        Log.d( TAG, "getStationNameArrayAsText: " + getShowcaseEntry().getStations().toString() );
+
         int size = getShowcaseEntry().getStations().size();
 
         if ( size == 1 )
@@ -128,7 +129,8 @@ public class Showcase {
         return builder.toString();
     }
 
-    public String getCategoryHierarchy( Context context ) {
+    public String getCategoryHierarchy( Context context )
+            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         Category category = QueryForCategoryDetails( context, getShowcaseEntry().getDLCId(), getShowcaseEntry().getCraftable().getCategoryId() );
 
         if ( category == null ) return null;
@@ -176,7 +178,8 @@ public class Showcase {
         return context.getContentResolver().query( uri, null, null, null, null );
     }
 
-    private ShowcaseEntry QueryForDetails( Context context, long dlc_id, long _id ) {
+    private ShowcaseEntry QueryForDetails( Context context, long dlc_id, long _id )
+            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
         Uri uri = DatabaseContract.EngramEntry.buildUriWithId( dlc_id, _id );
 
         try ( Cursor cursor = query( context, uri ) ) {
@@ -205,11 +208,9 @@ public class Showcase {
             LongSparseArray<Station> stations = QueryForStations( context, dlc_id, stationIds );
 
             // Next, let's grab matching Queue details, if there are any.
-            int quantity;
+            int quantity = 0;
             if ( CraftingQueue.getInstance().contains( _id ) )
                 quantity = CraftingQueue.getInstance().getCraftable( _id ).getQuantity();
-            else
-                quantity = 1;
 
             // Finally, let's grab Composition details.
             LongSparseArray<CompositeResource> composition = QueryForComposition( context, dlc_id, _id );
@@ -217,14 +218,11 @@ public class Showcase {
             DisplayEngram craftable = new DisplayEngram( _id, name, folder, file, yield, categoryId, quantity );
 
             return new ShowcaseEntry( craftable, description, requiredLevel, dlc_id, composition, stations );
-        } catch ( Exception e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
-            return null;
         }
     }
 
-    private LongSparseArray<Station> QueryForStations( Context context, long dlc_id, List<Long> ids ) {
+    private LongSparseArray<Station> QueryForStations( Context context, long dlc_id, List<Long> ids )
+            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
         LongSparseArray<Station> stations = new LongSparseArray<>( 0 );
 
         for ( long _id : ids ) {
@@ -242,17 +240,14 @@ public class Showcase {
                 String folder = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER ) );
 
                 stations.put( _id, new Station( _id, name, folder, file ) );
-            } catch ( Exception e ) {
-                mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
-                return null;
             }
         }
 
         return stations;
     }
 
-    private LongSparseArray<CompositeResource> QueryForComposition( Context context, long dlc_id, long engram_id ) {
+    private LongSparseArray<CompositeResource> QueryForComposition( Context context, long dlc_id, long engram_id )
+            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
         Uri uri = DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram_id );
         try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
@@ -267,14 +262,11 @@ public class Showcase {
             }
 
             return composition;
-        } catch ( Exception e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
-            return null;
         }
     }
 
-    private Resource QueryForResource( Context context, long dlc_id, long _id ) {
+    private Resource QueryForResource( Context context, long dlc_id, long _id )
+            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
         Uri uri = DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, _id );
 
         try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
@@ -289,15 +281,13 @@ public class Showcase {
             String file = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE ) );
 
             return new Resource( _id, name, folder, file );
-        } catch ( Exception e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
-            return null;
         }
     }
 
-    private Category QueryForCategoryDetails( Context context, long dlc_id, long _id ) {
+    private Category QueryForCategoryDetails( Context context, long dlc_id, long _id )
+            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
         Uri uri = DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, _id );
+
         try ( Cursor cursor = query( context, uri ) ) {
             if ( cursor == null )
                 throw new ExceptionUtil.CursorNullException( uri );
@@ -309,14 +299,11 @@ public class Showcase {
             long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
 
             return new Category( _id, name, parent_id );
-        } catch ( Exception e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
-            return null;
         }
     }
 
-    private String QueryForDLCName( Context context, long dlc_id ) {
+    private String QueryForDLCName( Context context, long dlc_id )
+            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
         Uri uri = DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, dlc_id );
 
         try ( Cursor cursor = query( context, uri ) ) {
@@ -327,10 +314,6 @@ public class Showcase {
                 throw new ExceptionUtil.CursorEmptyException( uri );
 
             return cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
-        } catch ( Exception e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
-            return null;
         }
     }
 

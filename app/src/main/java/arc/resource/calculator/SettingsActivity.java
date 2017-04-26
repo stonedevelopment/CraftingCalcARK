@@ -23,6 +23,8 @@ import android.view.MenuItem;
 public class SettingsActivity extends AppCompatPreferenceActivity {
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
+    public static final int REQUEST_CODE = 2000;
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );

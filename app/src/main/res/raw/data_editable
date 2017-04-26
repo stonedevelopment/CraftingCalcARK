@@ -1,8 +1,8 @@
 {
   "json": {
-    "version": "255.5",
+    "version": "255.4",
     "changelog": {
-      "255.5": "Updated Charcoal to not be crafted at Industrial Grill",
+      "255.": "Updated Charcoal to not be crafted at Industrial Grill",
       "255.4": "Updated Compass to be crafted at Smithy as well as Self",
       "255.3": "Removed Preserving Bin from Refined category.",
       "255.2": "Updated some Engram compositions, added item id's, xp, and engram points",
@@ -1099,6 +1099,7 @@
         "Chemistry Bench",
         "Cooking Pot",
         "Industrial Forge",
+        "Industrial Grill",
         "Mortar and Pestle",
         "Refining Forge",
         "Compost Bin",

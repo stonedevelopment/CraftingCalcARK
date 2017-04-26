@@ -59,8 +59,10 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseRe
             String name = resource.getName();
             holder.getName().setText( name );
 
-            int quantity = resource.getProductOfQuantities();
-            holder.getQuantity().setText( String.format( Locale.US, "%1$d", quantity ) );
+            int productOfQuantities = resource.getProductOfQuantities();
+            int quantity = resource.getQuantity();
+
+            holder.getQuantity().setText( String.format( Locale.getDefault(), "%1$d (%2$d)", productOfQuantities, quantity ) );
         } catch ( Exception e ) {
             ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
         }

@@ -213,13 +213,15 @@ public class CraftingQueue {
 
         // notify list adapter of changes
 //        mViewObserver.notifyItemInserted( position );
-        mViewObserver.notifyDataSetPopulated( );
+        mViewObserver.notifyDataSetPopulated();
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
     }
 
     private void delete( int position ) {
+        long id = getCraftable( position ).getId();
+
         // remove craftable from list
         removeCraftable( position );
 
@@ -228,7 +230,7 @@ public class CraftingQueue {
             mViewObserver.notifyItemRemoved( position );
 
             // notify outside listeners of changes
-            QueueObserver.getInstance().notifyItemRemoved( getCraftable( position ).getId() );
+            QueueObserver.getInstance().notifyItemRemoved( id );
         } else {
             // notify ViewSwitcher of empty status
             mViewObserver.notifyDataSetEmpty();

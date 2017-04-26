@@ -69,7 +69,7 @@
     </style>
 
     <style name="AppTheme.Text.Resource.Quantity">
-        <item name="android:textAlignment">center</item>
+        <item name="android:textAlignment">textEnd</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
@@ -105,6 +105,20 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:text">@string/content_detail_mock_text_description</item>
     </style>
+
+    <style name="AppTheme.Text.Detail.Resource">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+    </style>
+
+    <style name="AppTheme.Text.Detail.Resource.Name"/>
+
+    <style name="AppTheme.Text.Detail.Resource.Quantity">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
 
     <style name="AppTheme.Text.Picker">
         <item name="android:textSize">@dimen/text_size_large</item>

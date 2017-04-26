@@ -83,52 +83,6 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     @Override
-    protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
-        return mContextMenuInfo;
-    }
-
-
-    /**
-     * Used to initialize before creating context menu and Bring up the context menu for this view.
-     *
-     * @param position for ContextMenuInfo
-     */
-    public void openContextMenu( int position ) {
-        if ( position >= 0 ) {
-            final long childId = getAdapter().getItemId( position );
-            mContextMenuInfo = createContextMenuInfo( position, childId );
-        }
-        showContextMenu();
-    }
-
-    ContextMenu.ContextMenuInfo createContextMenuInfo( int position, long id ) {
-        return new RecyclerContextMenuInfo( position, id );
-    }
-
-    /**
-     * Extra menu information provided to the {@link android.view.View
-     * .OnCreateContextMenuListener#onCreateContextMenu(android.view.ContextMenu, View,
-     * ContextMenuInfo) } callback when a context menu is brought up for this RecycleView.
-     */
-    private static class RecyclerContextMenuInfo implements ContextMenu.ContextMenuInfo {
-
-        /**
-         * The position in the adapter for which the context menu is being displayed.
-         */
-        public int position;
-
-        /**
-         * The row id of the item for which the context menu is being displayed.
-         */
-        public long id;
-
-        RecyclerContextMenuInfo( int position, long id ) {
-            this.position = position;
-            this.id = id;
-        }
-    }
-
-    @Override
     public QueueAdapter getAdapter() {
         return ( QueueAdapter ) super.getAdapter();
     }

@@ -58,6 +58,8 @@ public class ClearQueueButton extends AppCompatButton {
     }
 
     public void onResume() {
+        setEnabled( !CraftingQueue.getInstance().isQueueEmpty() );
+
         QueueObserver.getInstance().registerListener( mListener );
     }
 

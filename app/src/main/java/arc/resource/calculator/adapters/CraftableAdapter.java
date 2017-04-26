@@ -1042,6 +1042,20 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     @Override
+    public long getItemId( int position ) {
+        if ( isStation( position ) )
+            return getStation( position ).getId();
+
+        if ( isCategory( position ) )
+            return getCategory( position ).getId();
+
+        if ( isCraftable( position ) )
+            return getCraftable( adjustPositionForCraftable( position ) ).getId();
+
+        return super.getItemId( position );
+    }
+
+    @Override
     public int getItemCount() {
         return getSize();
     }
