@@ -212,7 +212,8 @@ public class CraftingQueue {
         int position = getPosition( craftable.getId() );
 
         // notify list adapter of changes
-        mViewObserver.notifyItemInserted( position );
+//        mViewObserver.notifyItemInserted( position );
+        mViewObserver.notifyDataSetPopulated( );
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );

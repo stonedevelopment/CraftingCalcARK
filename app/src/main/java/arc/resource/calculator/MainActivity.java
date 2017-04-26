@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity
 
     private AdUtil mAdUtil;
 
-    // TODO: 4/25/2017 Queue's data gets malformed somehow when adding engrams and sorting
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
