@@ -9,8 +9,7 @@
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:alpha="0.75"/>
+        android:adjustViewBounds="true"/>
 
     <TextView
         android:id="@+id/name_view"

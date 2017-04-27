@@ -278,6 +278,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                             updateStatusMessages( getString( R.string.initialization_pref_event_started ) );
 
                             PrefsUtil.getInstance().updateJSONVersion( mNewVersion );
+                            PrefsUtil.getInstance().saveCraftingQueueJSONString( null );
                             PrefsUtil.getInstance().saveToDefault();
 
                             updateStatusMessages( getString( R.string.initialization_pref_event_finished ) );
