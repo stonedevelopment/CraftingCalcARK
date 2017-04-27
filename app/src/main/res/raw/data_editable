@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "255.5",
+    "version": "256.0",
     "changelog": {
+      "256.0": "Added Engrams: Element, Element Shards, Saddles(Equus, Iquanodon, Mosasaur Tek), Kibble (Troodon, Pegomastax, Moschops, Allosaurus, Tapejara, Therizinosaurus) Structures (Tek Teleporter, Tek Generator, Vacuum Compartment/Moonpool) Added Resources: Element Shards, Eggs (Troodon, Pegomastax, Moschops, Allosaurus, Therizinosaurus, Iquanodon)",
       "255.5": "Updated Charcoal to not be crafted at Industrial Grill",
       "255.4": "Updated Compass to be crafted at Smithy as well as Self",
       "255.3": "Removed Preserving Bin from Refined category.",
@@ -1103,6 +1104,7 @@
         "Mortar and Pestle",
         "Refining Forge",
         "Compost Bin",
+        "Tek Replicator",
         "Apiary",
         "Big Campfire",
         "Cauldron",
@@ -1213,6 +1215,13 @@
     }
   ],
   "resource": [
+    {
+      "name": "Allosaurus Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "allosaurus_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
     {
       "name": "Amarberry",
       "image_folder": "Vanilla\/Resources\/",
@@ -1589,7 +1598,14 @@
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "element.png",
       "dlc_id": 1,
-      "complex_resource": false
+      "complex_resource": true
+    },
+    {
+      "name": "Element Shard",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "element_shard.png",
+      "dlc_id": 1,
+      "complex_resource": true
     },
     {
       "name": "Feathers",
@@ -1739,6 +1755,13 @@
       "complex_resource": false
     },
     {
+      "name": "Iguanodon Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "iguanodon_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Iron Ore",
       "image_folder": "Primitive Plus\/Resources\/",
       "image_file": "iron_ore.png",
@@ -1830,6 +1853,20 @@
       "complex_resource": false
     },
     {
+      "name": "Microraptor Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "microraptor_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Moschops Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "moschops_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Moth Egg",
       "image_folder": "Scorched Earth\/Resources\/",
       "image_file": "moth_egg.png",
@@ -1875,6 +1912,13 @@
       "name": "Parasaur Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "parasaur_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Pegomastax Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "pegomastax_egg.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -1980,6 +2024,13 @@
       "name": "Raw Prime Meat",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "raw_prime_meat.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Raw Prime Fish Meat",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "raw_prime_fish_meat.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2124,6 +2175,13 @@
       "complex_resource": false
     },
     {
+      "name": "Tapejara Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "tapejara_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Terror Bird Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "terror_bird_egg.png",
@@ -2134,6 +2192,13 @@
       "name": "Thatch",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "thatch.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Therizinosaurus Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "therizinosaurus_egg.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2169,6 +2234,13 @@
       "name": "Trike Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "trike_egg.png",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Troodon Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "troodon_egg.png",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -3502,6 +3574,51 @@
       ],
       "station": [
         "Fabricator"
+      ]
+    },
+    {
+      "name": "Allosaurus Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Prime Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Allosaurus Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
       ]
     },
     {
@@ -9016,6 +9133,52 @@
       ]
     },
     {
+      "name": "Element",
+      "description": "A strange, highly advanced material humming with energy. It dissolves when transferred across ARKs.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1300,
+      "image_folder": "Vanilla\/Engrams\/Refined\/",
+      "image_file": "element.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element Shard",
+          "quantity": 10
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Element Shard",
+      "description": "A small chunk of strange, highly advanced material. It dissolves when transferred across ARKs.",
+      "yield": 10,
+      "level": 1,
+      "category_id": 1300,
+      "image_folder": "Vanilla\/Engrams\/Refined\/",
+      "image_file": "element_shard.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "name": "Elevator Track",
       "description": "Attach an Elevator Platform to these to complete an elevator!",
       "yield": 1,
@@ -9126,6 +9289,41 @@
         "Cooking Pot",
         "Industrial Cooker",
         "Cauldron"
+      ]
+    },
+    {
+      "name": "Equus Saddle",
+      "description": "A saddle for your horse. Useful for crafting chemical supplies on the go!",
+      "yield": 1,
+      "level": 25,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "equus_saddle.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 160
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 240
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Smithy"
       ]
     },
     {
@@ -11720,6 +11918,37 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Iguanodon Saddle",
+      "description": "Equip an Iguanodon with this to ride it.",
+      "yield": 1,
+      "level": 50,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "iguanodon_saddle.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Smithy"
       ]
     },
     {
@@ -14702,6 +14931,51 @@
       ]
     },
     {
+      "name": "Microraptor Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Microraptor Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
       "name": "Mindwipe Tonic",
       "description": "When consumed, this tonic causes neural overload. Synapses fire off too quickly resulting in damage to the memory centers of the brain related to construction. Warning: this concoction may cause temporary memory loss, and resetting of Engrams.",
       "yield": 1,
@@ -15169,6 +15443,90 @@
       ],
       "station": [
         "Smithy"
+      ]
+    },
+    {
+      "name": "Mosasaur Tek Saddle",
+      "description": "Equip a Mosasaur with this to ride it. Using requires learning the Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 5001,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/Tek\/",
+      "image_file": "mosasaur_tek_saddle.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 370
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Moschops Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Moschops Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
       ]
     },
     {
@@ -16161,6 +16519,51 @@
         {
           "resource_id": "Amarberry",
           "quantity": 12
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Pegomastax Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Raw Prime Fish Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Pegomastax Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
         }
       ],
       "station": [
@@ -21779,6 +22182,51 @@
       ]
     },
     {
+      "name": "Tapejara Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Prime Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tapejara Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
       "name": "Tapejara Saddle",
       "description": "A saddle for your Tapejara. It has three seats! Bring your friends!",
       "yield": 1,
@@ -22265,6 +22713,45 @@
       ]
     },
     {
+      "name": "Tek Generator",
+      "description": "Powers Tek Structures and electrical structures wirelessly! Requires Element to run, and Tek Engram to use.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 207,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Misc\/",
+      "image_file": "tek_generator.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2400
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "name": "Tek Hatchframe",
       "description": "This composite Tek ceiling has a hole in it for trapdoors.",
       "yield": 1,
@@ -22608,6 +23095,45 @@
         {
           "resource_id": "Metal Ingot",
           "quantity": 125
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Teleporter",
+      "description": "Allows instantaneous traversal between Teleporters! Requires Tek Generator to power, and Element shards & Tek Engram to use.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 207,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Misc\/",
+      "image_file": "tek_teleporter.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 85
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 600
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 1200
         }
       ],
       "station": [
@@ -23045,6 +23571,51 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Therizinosaurus Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Angler Gel",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Therizinosaurus Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
       ]
     },
     {
@@ -23865,6 +24436,51 @@
       ]
     },
     {
+      "name": "Troodon Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Troodon Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
       "name": "Trophy Base",
       "description": "Provides the base upon which you can place a Trophy!",
       "yield": 1,
@@ -24001,6 +24617,84 @@
       ],
       "station": [
         "Smithy"
+      ]
+    },
+    {
+      "name": "Vacuum Compartment",
+      "description": "Place underwater, power with Tek Generator, and you can live and breath in it!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "vacuum_compartment.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 40
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Vacuum Compartment Moonpool",
+      "description": "Place underwater, power with Tek Generator, and you can live and breath in it! Has opening at the bottom for direct swimming access.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "vacuum_compartment_moonpool.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 40
+        }
+      ],
+      "station": [
+        "Tek Replicator"
       ]
     },
     {
