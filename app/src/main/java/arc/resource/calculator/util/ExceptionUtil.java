@@ -33,12 +33,12 @@ public class ExceptionUtil {
         if ( e.getCause() != null )
             FirebaseCrash.logcat( Log.ERROR, tag, e.getCause().toString() );
 
-        FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle().toString() );
+        FirebaseCrash.logcat( Log.ERROR, tag, e.toString() );
         FirebaseCrash.logcat( Log.ERROR, tag, e.getMessage() );
         FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
+        FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle().toString() );
 
-        // TODO: 4/19/2017 Uncomment for production!!!!
-//        FirebaseCrash.report( e );
+        FirebaseCrash.report( e );
     }
 
     // if position of requested list is out of bounds, then throw this exception
