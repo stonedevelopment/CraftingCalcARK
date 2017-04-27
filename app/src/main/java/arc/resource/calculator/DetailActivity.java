@@ -144,8 +144,7 @@ public class DetailActivity extends AppCompatActivity
             descriptionText.setText( getShowcase().getDescription() );
 
             TextView stationText = ( TextView ) findViewById( R.id.engram_detail_stationText );
-            stationText.setText( String.format( getString( R.string.content_detail_station_and_level_format ),
-                    getShowcase().getName(), craftedIn, level ) );
+            stationText.setText( String.format( getString( R.string.content_detail_station_and_level_format ), craftedIn, level ) );
 
             TextView dlcText = ( TextView ) findViewById( R.id.engram_detail_dlcText );
             dlcText.setText( getShowcase().getDLCName() );
@@ -260,6 +259,7 @@ public class DetailActivity extends AppCompatActivity
         int quantity = getShowcase().getQuantity();
 
         returnIntent.putExtra( RESULT_CODE, resultCode );
+        returnIntent.putExtra( RESULT_EXTRA, getShowcase().getName() );
 
         switch ( resultCode ) {
             case REMOVE:

@@ -96,7 +96,7 @@ public class DialogUtil {
                 .setNegativeButton( context.getString( R.string.search_dialog_negative_button ), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick( DialogInterface dialog, int which ) {
-
+                        callback.onCancel();
                     }
                 } )
                 .setPositiveButton( context.getString( R.string.search_dialog_positive_button ), new DialogInterface.OnClickListener() {
@@ -104,9 +104,7 @@ public class DialogUtil {
                     public void onClick( DialogInterface dialog, int which ) {
                         String searchText = editText.getText().toString();
 
-                        if ( !searchText.equals( "" ) ) {
-                            callback.onResult( searchText );
-                        }
+                        callback.onResult( searchText );
                     }
                 } );
 

@@ -69,9 +69,8 @@
     <string name="content_detail_save_button">Save and Close</string>
     <string name="content_detail_remove_button">Remove From Queue</string>
     <string name="content_detail_station_and_level_format">
-        <x:g name="name" example="Stone Wall">%1$s</x:g>
-        <x:g name="crafted_in" example="can be crafted without a station">%2$s</x:g>,
-        <x:g name="required_level" example="and can be crafted at any level">%3$s</x:g>.
+        This Engram <x:g name="crafted_in" example="can be crafted without a station">%1$s</x:g>,
+        <x:g name="required_level" example="and can be crafted at any level">%2$s</x:g>.
     </string>
     <string name="content_detail_crafted_in_format">can be crafted at the <x:g name="name">%1$s</x:g></string>
     <string name="content_detail_crafted_in_no_station">can be crafted without a station</string>
@@ -149,9 +148,15 @@
     <!-- Toast: Details -->
     <string name="toast_details_error">Engram details closed with an error.</string>
     <string name="toast_details_added">Engram was added to Crafting Queue.</string>
+    <string name="toast_details_added_format"><x:g>%1$s</x:g> was added to Crafting Queue.</string>
     <string name="toast_details_removed">Engram was removed from Crafting Queue.</string>
+    <string name="toast_details_removed_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
     <string name="toast_details_updated">Engram\'s quantity was updated.</string>
+    <string name="toast_details_updated_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
     <string name="toast_details_no_change">No changes were made.</string>
+
+    <!-- Toast: Search -->
+    <string name="toast_search_fail">Search cancelled.</string>
 
     <!-- Strings related to Go Back -->
     <string name="go_back">Go back</string>
@@ -174,7 +179,7 @@
     <string name="display_case_hierarchy_text_contents_of_station_in_folder">Showing contents of <x:g id="station_name">%1$s</x:g> in folder <x:g id="folder_name">%2$s</x:g>.</string>
     <string name="display_case_hierarchy_text_all_categories">Showing all Folders.</string>
     <string name="display_case_hierarchy_text_all_engrams">Showing all Engrams.</string>
-    <string name="display_case_hierarchy_text_search_results_format">Showing search results for: *<xliff:g>%1$s</xliff:g>*</string>
+    <string name="display_case_hierarchy_text_search_results_format">Showing <x:g>%1$d</x:g> search results for: \"*<xliff:g>%2$s</xliff:g>*\"</string>
 
     <!-- Strings related to Settings -->
 

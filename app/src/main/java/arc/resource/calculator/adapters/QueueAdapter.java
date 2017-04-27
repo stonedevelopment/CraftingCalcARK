@@ -142,8 +142,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     public void onBindViewHolder( ViewHolder holder, int position ) {
         QueueEngram craftable = CraftingQueue.getInstance().getCraftable( position );
 
-        holder.itemView.getLayoutParams().width = mViewSize;
-
         String imagePath = "file:///android_asset/" + craftable.getImagePath();
         Picasso.with( getContext() )
                 .load( imagePath )

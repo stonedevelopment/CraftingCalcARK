@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/gridview_item_padding"
-                android:background="@drawable/frame_queue_item">
+<arc.resource.calculator.views.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_margin="@dimen/gridview_item_padding"
+                                                    android:background="@drawable/frame_queue_item">
 
     <ImageView
         android:id="@+id/image_view"
@@ -25,8 +25,8 @@
         style="@style/AppTheme.Text.Engram.Queue.Quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:padding="@dimen/gridview_item_padding"/>
 
-</RelativeLayout>
+</arc.resource.calculator.views.SquareRelativeLayout>

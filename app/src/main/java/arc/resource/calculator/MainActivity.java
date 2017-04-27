@@ -3,6 +3,7 @@ package arc.resource.calculator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -10,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
@@ -151,10 +151,13 @@ public class MainActivity extends AppCompatActivity
                     public void onResult( @Nullable Object result ) {
                         String searchQuery = ( String ) result;
 
-                        if ( searchQuery != null ) {
-                            MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
-                            mainSwitcher.onSearch( searchQuery );
-                        }
+                        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
+                        mainSwitcher.onSearch( searchQuery );
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        showSnackBar( getString( R.string.toast_search_fail ) );
                     }
                 } ).show();
                 break;
@@ -261,7 +264,7 @@ public class MainActivity extends AppCompatActivity
 
                 CraftingQueue.getInstance().delete( id );
 
-                Toast.makeText( this, String.format( getString( R.string.toast_remove_from_queue_success_format ), name ), Toast.LENGTH_SHORT ).show();
+                showSnackBar( String.format( getString( R.string.toast_remove_from_queue_success_format ), name ) );
                 break;
 
             case R.id.floating_action_edit_quantity:
@@ -273,14 +276,12 @@ public class MainActivity extends AppCompatActivity
                         int quantity = ( int ) result;
                         CraftingQueue.getInstance().setQuantity( getApplicationContext(), id, quantity );
 
-                        Toast.makeText( MainActivity.this,
-                                String.format( getString( R.string.toast_edit_quantity_success_format ), name ), Toast.LENGTH_SHORT ).show();
+                        showSnackBar( String.format( getString( R.string.toast_edit_quantity_success_format ), name ) );
                     }
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText( MainActivity.this,
-                                String.format( getString( R.string.toast_edit_quantity_fail_format ), name ), Toast.LENGTH_SHORT ).show();
+                        showSnackBar( String.format( getString( R.string.toast_edit_quantity_fail_format ), name ) );
                     }
                 } ).show();
                 break;
@@ -299,20 +300,23 @@ public class MainActivity extends AppCompatActivity
 
         if ( data != null ) {
             Bundle extras = data.getExtras();
+
             switch ( requestCode ) {
                 case DetailActivity.REQUEST_CODE:
                     if ( resultCode == RESULT_OK ) {
+                        String name = ( String ) extras.get( RESULT_EXTRA );
+
                         switch ( extras.getInt( RESULT_CODE ) ) {
                             case REMOVE:
-                                Toast.makeText( this, getString( R.string.toast_details_removed ), Toast.LENGTH_SHORT ).show();
+                                showSnackBar( String.format( getString( R.string.toast_details_removed_format ), name ) );
                                 break;
 
                             case UPDATE:
-                                Toast.makeText( this, getString( R.string.toast_details_updated ), Toast.LENGTH_SHORT ).show();
+                                showSnackBar( String.format( getString( R.string.toast_details_updated_format ), name ) );
                                 break;
 
                             case ADD:
-                                Toast.makeText( this, getString( R.string.toast_details_added ), Toast.LENGTH_SHORT ).show();
+                                showSnackBar( String.format( getString( R.string.toast_details_added_format ), name ) );
                                 break;
                         }
                     } else {
@@ -320,12 +324,12 @@ public class MainActivity extends AppCompatActivity
                             Exception e = ( Exception ) extras.get( RESULT_EXTRA );
 
                             if ( e != null ) {
-                                Toast.makeText( this, getString( R.string.toast_details_error ), Toast.LENGTH_SHORT ).show();
+                                showSnackBar( getString( R.string.toast_details_error ) );
 
                                 ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
                             }
                         } else {
-                            Toast.makeText( this, getString( R.string.toast_details_no_change ), Toast.LENGTH_SHORT ).show();
+                            showSnackBar( getString( R.string.toast_details_no_change ) );
                         }
                     }
                     break;
@@ -339,17 +343,17 @@ public class MainActivity extends AppCompatActivity
                         boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
                         boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
 
-                        Toast.makeText( this, getString( R.string.toast_settings_success ), Toast.LENGTH_SHORT ).show();
+                        showSnackBar( getString( R.string.toast_settings_success ) );
 
                         PrefsObserver.getInstance().notifyPreferencesChanged(
                                 dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
                     } else {
-                        Toast.makeText( this, getString( R.string.toast_settings_fail ), Toast.LENGTH_SHORT ).show();
+                        showSnackBar( getString( R.string.toast_settings_fail ) );
                     }
                     break;
             }
         } else {
-            Toast.makeText( this, getString( R.string.toast_settings_fail ), Toast.LENGTH_SHORT ).show();
+            showSnackBar( getString( R.string.toast_settings_fail ) );
         }
     }
 
@@ -365,6 +369,10 @@ public class MainActivity extends AppCompatActivity
         if ( changeLog.firstRun() ) {
             changeLog.getLogDialog().show();
         }
+    }
+
+    private void showSnackBar( String text ) {
+        Snackbar.make( findViewById( R.id.content_main ), text, Snackbar.LENGTH_SHORT ).show();
     }
 
     @Override

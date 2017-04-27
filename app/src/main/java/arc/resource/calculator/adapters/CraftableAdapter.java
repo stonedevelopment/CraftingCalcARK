@@ -800,15 +800,13 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_engrams ) );
                 }
             } else {
-                builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_search_results_format ), mSearchQuery ) );
+                builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_search_results_format ), ( getItemCount() - 1 ), mSearchQuery ) );
             }
 
-//            NavigationObserver.getInstance().update( String.format( getContext().getString( R.string.display_case_hierarchy_text_showing_format ), builder.toString() ) );
             NavigationObserver.getInstance().update( builder.toString() );
         } catch ( ExceptionUtil.CursorNullException | ExceptionUtil.CursorEmptyException e ) {
             mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
         }
-
     }
 
     private String buildCategoryHierarchy( Uri uri )
@@ -985,17 +983,19 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         @Override
         protected Boolean doInBackground( Void... params ) {
-            if ( mSearchQuery == null )
-                return false;
-
             long dlc_id = PrefsUtil.getInstance().getDLCPreference();
-            Uri uri = DatabaseContract.EngramEntry.buildUriWithSearchQuery( dlc_id, mSearchQuery );
+
+            Uri searchUri;
+            if ( mSearchQuery == null || mSearchQuery.equals( "" ) )
+                searchUri = DatabaseContract.EngramEntry.buildUriWithDLCId( dlc_id );
+            else
+                searchUri = DatabaseContract.EngramEntry.buildUriWithSearchQuery( dlc_id, mSearchQuery );
 
             Category backCategory = BuildBackCategoryOutOfSearch();
             mCategorySparseArray = new CategorySparseArray( 1 );
             mCategorySparseArray.append( backCategory.getId(), backCategory );
 
-            mCraftableSparseArray = querySearchForEngrams( uri );
+            mCraftableSparseArray = querySearchForEngrams( searchUri );
 
             return true;
         }
