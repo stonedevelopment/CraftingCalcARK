@@ -62,7 +62,7 @@ public class ExceptionUtil {
         }
     }
 
-    // Cursor returned null, resume requested _id
+    // Cursor returned null, onResume requested _id
     public static class CursorNullException extends Exception {
 
         public CursorNullException( Uri uri ) {
@@ -74,7 +74,7 @@ public class ExceptionUtil {
         }
     }
 
-    // Cursor returned null, resume requested _id
+    // Cursor returned null, onResume requested _id
     public static class CursorEmptyException extends Exception {
         public CursorEmptyException( Uri uri ) {
             super( uri.toString() );

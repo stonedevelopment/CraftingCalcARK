@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity
         QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
         queueSwitcher.onCreate();
 
+        ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
+        button.onCreate();
+
         CraftableRecyclerView craftableRecyclerView = ( CraftableRecyclerView ) findViewById( R.id.gridview_craftables );
         registerForContextMenu( craftableRecyclerView );
 
@@ -105,8 +108,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onPause() {
-        super.onPause();
-
         Log.d( TAG, "onPause: " );
 
         PrefsObserver.getInstance().requestPreferencesSave();
@@ -123,6 +124,24 @@ public class MainActivity extends AppCompatActivity
         mAdUtil.pause();
 
         ExceptionObserver.getInstance().unregisterListener( this );
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d( TAG, "onDestroy: " );
+
+        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
+        mainSwitcher.onDestroy();
+
+        QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
+        queueSwitcher.onDestroy();
+
+        ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
+        button.onDestroy();
+
+        super.onDestroy();
     }
 
     @Override
@@ -194,15 +213,15 @@ public class MainActivity extends AppCompatActivity
 //
 //                prefs.setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, !removeAds );
 
-//                mPurchaseUtil.resume();
+//                mPurchaseUtil.onResume();
 //                mPurchaseUtil.purchaseSku( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, new EmptyRequestListener<Purchase>() {
 //                    @Override
 //                    public void onSuccess( @Nonnull Purchase result ) {
-//                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).resume();
+//                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).onResume();
 //
 //                        switch ( result.sku ) {
 //                            case PurchaseUtil.SKU_FEATURE_DISABLE_ADS:
-//                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).resume();
+//                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).onResume();
 //
 //                                mAdUtil.unloadAdView();
 //
@@ -210,19 +229,19 @@ public class MainActivity extends AppCompatActivity
 //                                        .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, true );
 //                        }
 //
-//                        mPurchaseUtil.pause();
+//                        mPurchaseUtil.onPause();
 //                    }
 //
 //                    @Override
 //                    public void onError( int response, @Nonnull Exception e ) {
-//                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).resume();
+//                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).onResume();
 //
 //                        Log.e( TAG, "Purchase failed.", e );
 //
 //                        new PrefsUtil( getApplicationContext() )
 //                                .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, false );
 //
-//                        mPurchaseUtil.pause();
+//                        mPurchaseUtil.onPause();
 //                    }
 //                } );
                 break;

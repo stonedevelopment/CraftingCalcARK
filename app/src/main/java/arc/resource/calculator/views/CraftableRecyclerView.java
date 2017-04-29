@@ -39,7 +39,6 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     public void create() {
-        Log.d( TAG, "onCreate: " );
         int numCols = getResources().getInteger( R.integer.gridview_column_count );
         setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
 
@@ -47,11 +46,17 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     public void resume() {
-        getAdapter().resume( mDataObserver );
+        getAdapter().registerAdapterDataObserver( mDataObserver );
+        getAdapter().resume();
     }
 
     public void pause() {
-        getAdapter().pause( mDataObserver );
+        getAdapter().unregisterAdapterDataObserver( mDataObserver );
+        getAdapter().pause();
+    }
+
+    public void destroy() {
+        getAdapter().destroy();
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.InventoryAdapter;
@@ -26,57 +25,60 @@ public class InventoryRecyclerView extends RecyclerViewWithContextMenu {
 
     public static class Observer {
         public void notifyExceptionCaught( Exception e ) {
-            mListener.onError( e );
+            getListener().onError( e );
         }
 
         public void notifyInitializing() {
-            mListener.onInit();
+            getListener().onInit();
         }
 
         public void notifyDataSetPopulated() {
-            mListener.onPopulated();
+            getListener().onPopulated();
         }
 
         public void notifyDataSetEmpty() {
-            mListener.onEmpty();
+            getListener().onEmpty();
         }
     }
 
     public InventoryRecyclerView( Context context ) {
         super( context );
-        init();
     }
 
     public InventoryRecyclerView( Context context, @Nullable AttributeSet attrs ) {
         super( context, attrs );
-        init();
     }
 
     public InventoryRecyclerView( Context context, @Nullable AttributeSet attrs, int defStyle ) {
         super( context, attrs, defStyle );
-        init();
     }
 
-    private void init() {
-        Log.d( TAG, "onCreate()" );
-
-        int numCols = getResources().getInteger( R.integer.gridview_column_count );
-        setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
-
-        setAdapter( new InventoryAdapter( getContext() ) );
+    private static Listener getListener() {
+        return mListener;
     }
 
-    public void resume( Listener listener ) {
-        // register listener from switcher
+    private void setListener( Listener listener ) {
         mListener = listener;
+    }
 
-        // resume up adapter and register this observer
-        getAdapter().resume( new Observer() );
+    public void create( Listener listener ) {
+        int numCols = getResources().getInteger( R.integer.gridview_column_count );
+
+        setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
+        setListener( listener );
+        setAdapter( new InventoryAdapter( getContext(), new Observer() ) );
+    }
+
+    public void resume() {
+        getAdapter().resume();
     }
 
     public void pause() {
-        // pause adapter and remove this observer
         getAdapter().pause();
+    }
+
+    public void destroy() {
+        getAdapter().destroy();
     }
 
     @Override

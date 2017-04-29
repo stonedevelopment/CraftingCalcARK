@@ -2,7 +2,6 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -17,11 +16,10 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
 
     @Override
     public void onError( Exception e ) {
-        // switch view to textview, display error message
         if ( !isTextViewShown() )
             showNext();
 
-        updateStatus( "An error occurred while fetching Inventory." );
+        onStatusUpdate( "An error occurred while fetching Inventory." );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
@@ -31,7 +29,7 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        updateStatus( "Fetching inventory.." );
+        onStatusUpdate( "Fetching inventory.." );
     }
 
     @Override
@@ -47,7 +45,7 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        updateStatus( "Inventory is empty." );
+        onStatusUpdate( "Inventory is empty." );
     }
 
     public InventorySwitcher( Context context ) {
@@ -58,29 +56,28 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         super( context, attrs );
     }
 
-    public void init() {
-        Log.d( TAG, "onCreate()" );
-
+    public void onCreate() {
         // instantiate our textview for status updates
         mTextView = ( TextView ) findViewById( R.id.textview_inventory );
 
         // instantiate recyclerView
         mRecyclerView = ( InventoryRecyclerView ) findViewById( R.id.gridview_inventory );
+        mRecyclerView.create( this );
     }
 
-    public void resume() {
-        // toggle to textview, for status updates
-        if ( !isTextViewShown() )
-            showNext();
-
-        mRecyclerView.resume( this );
+    public void onResume() {
+        mRecyclerView.resume();
     }
 
-    public void pause() {
+    public void onPause() {
         mRecyclerView.pause();
     }
 
-    private void updateStatus( String text ) {
+    public void onDestroy() {
+        mRecyclerView.destroy();
+    }
+
+    private void onStatusUpdate( String text ) {
         mTextView.setText( text );
     }
 

@@ -23,8 +23,8 @@ class PurchaseUtil {
 //        mCheckout.setup();
 //    }
 //
-//    public void pause() {
-//        mCheckout.pause();
+//    public void onPause() {
+//        mCheckout.onPause();
 //    }
 //
 //    public void loadInventory( Inventory.Callback callback ) {

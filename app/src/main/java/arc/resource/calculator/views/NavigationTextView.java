@@ -7,8 +7,9 @@ import android.util.AttributeSet;
 import arc.resource.calculator.listeners.NavigationObserver;
 
 public class NavigationTextView extends AppCompatTextView {
+    private static final String TAG = NavigationTextView.class.getSimpleName();
 
-    NavigationObserver.Listener mListener = new NavigationObserver.Listener() {
+    private NavigationObserver.Listener mListener = new NavigationObserver.Listener() {
         @Override
         public void onUpdate( String text ) {
             setText( text );
@@ -27,11 +28,17 @@ public class NavigationTextView extends AppCompatTextView {
         super( context, attrs, defStyleAttr );
     }
 
-    public void resume() {
+    public void create() {
         NavigationObserver.getInstance().registerListener( mListener );
     }
 
+    public void resume() {
+    }
+
     public void pause() {
+    }
+
+    public void destroy() {
         NavigationObserver.getInstance().unregisterListener( mListener );
     }
 }

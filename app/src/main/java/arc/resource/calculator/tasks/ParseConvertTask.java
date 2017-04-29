@@ -177,7 +177,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             return true;
         }
 
-        // If error, send error signal, pause service
+        // If error, send error signal, onPause service
         catch ( Exception e ) {
             mException = e;
             return false;

@@ -2,7 +2,6 @@ package arc.resource.calculator.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import java.util.Locale;
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.util.DisplayUtil;
 import arc.resource.calculator.views.QueueRecyclerView;
 
 /**
@@ -35,22 +33,19 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     private static final String TAG = QueueAdapter.class.getSimpleName();
 
     private Context mContext;
-
-    private static QueueRecyclerView.Observer mViewObserver;
-
+    private CraftingQueue mCraftingQueue;
+    private QueueRecyclerView.Observer mViewObserver;
     private boolean mDataSetEmpty;
-
-    private int mViewSize;
 
     public class Observer extends QueueRecyclerView.Observer {
         @Override
         public void notifyExceptionCaught( Exception e ) {
-            mViewObserver.notifyExceptionCaught( e );
+            getObserver().notifyExceptionCaught( e );
         }
 
         @Override
         public void notifyInitializing() {
-            mViewObserver.notifyInitializing();
+            getObserver().notifyInitializing();
         }
 
         @Override
@@ -59,7 +54,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             notifyDataSetChanged();
 
-            mViewObserver.notifyDataSetPopulated();
+            getObserver().notifyDataSetPopulated();
         }
 
         @Override
@@ -68,7 +63,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             notifyDataSetChanged();
 
-            mViewObserver.notifyDataSetEmpty();
+            getObserver().notifyDataSetEmpty();
         }
 
         public void notifyItemChanged( int position ) {
@@ -76,7 +71,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             if ( mDataSetEmpty ) {
                 mDataSetEmpty = false;
-                mViewObserver.notifyDataSetPopulated();
+                getObserver().notifyDataSetPopulated();
             }
         }
 
@@ -85,7 +80,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             if ( mDataSetEmpty ) {
                 mDataSetEmpty = false;
-                mViewObserver.notifyDataSetPopulated();
+                getObserver().notifyDataSetPopulated();
             }
         }
 
@@ -94,13 +89,15 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             if ( getItemCount() == 0 ) {
                 mDataSetEmpty = true;
-                mViewObserver.notifyDataSetEmpty();
+                getObserver().notifyDataSetEmpty();
             }
         }
     }
 
-    public QueueAdapter( Context context ) {
+    public QueueAdapter( Context context, QueueRecyclerView.Observer observer ) {
         setContext( context );
+        setObserver( observer );
+        setCraftingQueue( CraftingQueue.createInstance( getContext(), new Observer() ) );
     }
 
     private Context getContext() {
@@ -111,23 +108,32 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
         this.mContext = context.getApplicationContext();
     }
 
-    public void create( QueueRecyclerView.Observer observer ) {
-        Log.d( TAG, "create()" );
+    private CraftingQueue getCraftingQueue() {
+        return mCraftingQueue;
+    }
 
-        mViewObserver = observer;
-        mViewSize = DisplayUtil.getInstance().getImageSize();
+    private void setCraftingQueue( CraftingQueue craftingQueue ) {
+        this.mCraftingQueue = craftingQueue;
+    }
 
-        CraftingQueue.createInstance( getContext(), new Observer() );
+    private QueueRecyclerView.Observer getObserver() {
+        return mViewObserver;
+    }
+
+    private void setObserver( QueueRecyclerView.Observer observer ) {
+        this.mViewObserver = observer;
     }
 
     public void resume() {
-        Log.d( TAG, "resume()" );
-        CraftingQueue.getInstance().resume();
+        getCraftingQueue().resume();
     }
 
     public void pause() {
-        Log.d( TAG, "pause()" );
-        CraftingQueue.getInstance().pause();
+        getCraftingQueue().pause();
+    }
+
+    public void destroy() {
+        getCraftingQueue().destroy();
     }
 
     @Override
@@ -140,7 +146,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position ) {
-        QueueEngram craftable = CraftingQueue.getInstance().getCraftable( position );
+        QueueEngram craftable = getCraftingQueue().getCraftable( position );
 
         String imagePath = "file:///android_asset/" + craftable.getImagePath();
         Picasso.with( getContext() )
@@ -155,12 +161,12 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     @Override
     public long getItemId( int position ) {
-        return CraftingQueue.getInstance().getCraftable( position ).getId();
+        return getCraftingQueue().getCraftable( position ).getId();
     }
 
     @Override
     public int getItemCount() {
-        return CraftingQueue.getInstance().getSize();
+        return getCraftingQueue().getSize();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder
@@ -196,7 +202,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         @Override
         public void onClick( View view ) {
-            CraftingQueue.getInstance().increaseQuantity( getAdapterPosition() );
+            getCraftingQueue().increaseQuantity( getAdapterPosition() );
         }
 
         @Override

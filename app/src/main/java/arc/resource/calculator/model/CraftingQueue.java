@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.util.LongSparseArray;
 
 import org.json.JSONArray;
@@ -35,35 +34,32 @@ public class CraftingQueue {
     private static final String TAG = CraftingQueue.class.getSimpleName();
 
     private static CraftingQueue sInstance;
-
     private QueueSparseArray mQueue;
-
     private static QueueAdapter.Observer mViewObserver;
 
-    private PrefsObserver.Listener mPrefsListener = new PrefsObserver.Listener() {
-        @Override
-        public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
-            if ( dlcValueChange )
-                clearQueue();
-        }
-
-        @Override
-        public void onSavePreferencesRequested() {
-            Log.d( TAG, "onSavePreferencesRequested: " );
-            saveQueueToPrefs();
-        }
-    };
-
-    private CraftingQueue( Context context ) {
+    private CraftingQueue( Context context, QueueAdapter.Observer observer ) {
+        setObserver( observer );
         setQueue( new QueueSparseArray() );
+
+        PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
+            @Override
+            public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange,
+                                              boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
+                if ( dlcValueChange )
+                    clearQueue();
+            }
+
+            @Override
+            public void onSavePreferencesRequested() {
+                saveQueueToPrefs();
+            }
+        } );
 
         fetchData( context );
     }
 
     public static CraftingQueue createInstance( Context context, QueueAdapter.Observer viewObserver ) {
-        mViewObserver = viewObserver;
-
-        sInstance = new CraftingQueue( context.getApplicationContext() );
+        sInstance = new CraftingQueue( context.getApplicationContext(), viewObserver );
 
         return sInstance;
     }
@@ -73,11 +69,13 @@ public class CraftingQueue {
     }
 
     public void resume() {
-        PrefsObserver.getInstance().registerListener( mPrefsListener );
     }
 
     public void pause() {
-        PrefsObserver.getInstance().unregisterListener( mPrefsListener );
+    }
+
+    public void destroy() {
+        PrefsObserver.getInstance().unregisterListener( TAG );
     }
 
     public QueueSparseArray getQueue() {
@@ -86,6 +84,14 @@ public class CraftingQueue {
 
     private void setQueue( QueueSparseArray queue ) {
         this.mQueue = queue;
+    }
+
+    private static QueueAdapter.Observer getObserver() {
+        return mViewObserver;
+    }
+
+    private void setObserver( QueueAdapter.Observer observer ) {
+        mViewObserver = observer;
     }
 
     public int getSize() {
@@ -137,7 +143,7 @@ public class CraftingQueue {
         updateCraftable( position, craftable );
 
         // notify list adapter of changes
-        mViewObserver.notifyItemChanged( position );
+        getObserver().notifyItemChanged( position );
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
@@ -155,7 +161,7 @@ public class CraftingQueue {
             updateCraftable( position, craftable );
 
             // notify list adapter of changes
-            mViewObserver.notifyItemChanged( position );
+            getObserver().notifyItemChanged( position );
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
@@ -178,7 +184,7 @@ public class CraftingQueue {
                 updateCraftable( position, craftable );
 
                 // notify list adapter of changes
-                mViewObserver.notifyItemChanged( position );
+                getObserver().notifyItemChanged( position );
 
                 // notify outside listeners of changes
                 QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
@@ -197,7 +203,7 @@ public class CraftingQueue {
             insert( QueryForCraftable( context, id, quantity ) );
         } catch ( Exception e ) {
             // notify ViewSwitcher of error
-            mViewObserver.notifyExceptionCaught( e );
+            getObserver().notifyExceptionCaught( e );
         }
     }
 
@@ -212,8 +218,8 @@ public class CraftingQueue {
         int position = getPosition( craftable.getId() );
 
         // notify list adapter of changes
-//        mViewObserver.notifyItemInserted( position );
-        mViewObserver.notifyDataSetPopulated();
+//        getObserver().notifyItemInserted( position );
+        getObserver().notifyDataSetPopulated();
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
@@ -227,13 +233,13 @@ public class CraftingQueue {
 
         if ( getQueue().size() > 0 ) {
             // notify list adapter of changes
-            mViewObserver.notifyItemRemoved( position );
+            getObserver().notifyItemRemoved( position );
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyItemRemoved( id );
         } else {
             // notify ViewSwitcher of empty status
-            mViewObserver.notifyDataSetEmpty();
+            getObserver().notifyDataSetEmpty();
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyDataSetEmpty();
@@ -251,13 +257,13 @@ public class CraftingQueue {
         removeAllCraftables();
 
         // notify ViewSwitcher of empty status
-        mViewObserver.notifyDataSetEmpty();
+        getObserver().notifyDataSetEmpty();
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyDataSetEmpty();
     }
 
-    public void saveQueueToPrefs() {
+    private void saveQueueToPrefs() {
         PrefsUtil.getInstance().saveCraftingQueueJSONString( convertQueueToJSONString() );
     }
 
@@ -345,7 +351,7 @@ public class CraftingQueue {
 
         @Override
         protected void onPreExecute() {
-            mViewObserver.notifyInitializing();
+            getObserver().notifyInitializing();
         }
 
         @Override
@@ -354,10 +360,10 @@ public class CraftingQueue {
                 if ( mArray.size() > 0 ) {
                     setQueue( mArray );
 
-                    mViewObserver.notifyDataSetPopulated();
+                    getObserver().notifyDataSetPopulated();
                     QueueObserver.getInstance().notifyDataSetPopulated();
                 } else {
-                    mViewObserver.notifyDataSetEmpty();
+                    getObserver().notifyDataSetEmpty();
                 }
             }
         }
@@ -384,7 +390,7 @@ public class CraftingQueue {
 
                 return true;
             } catch ( Exception e ) {
-                mViewObserver.notifyExceptionCaught( e );
+                getObserver().notifyExceptionCaught( e );
 
                 return false;
             }
@@ -435,5 +441,4 @@ public class CraftingQueue {
             return !( indexOfKey( key ) < 0 );
         }
     }
-
 }

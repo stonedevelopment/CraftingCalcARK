@@ -58,16 +58,16 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         // sets current event id, triggers first event
         void onInit();
 
-        // resume current event, triggers end event
+        // onResume current event, triggers end event
         void onStartEvent();
 
         // triggers next event
         void onEndEvent();
 
-        // triggers resume event
+        // triggers onResume event
         void onNextEvent();
 
-        // triggers app to resume main activity
+        // triggers app to onResume main activity
         void onFinish();
     }
 
@@ -233,7 +233,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 //
 //                        // begin in-app purchase communication
 //                        mPurchaseUtil = new PurchaseUtil( LoadScreenActivity.this );
-//                        mPurchaseUtil.resume();
+//                        mPurchaseUtil.onResume();
 //                        mPurchaseUtil.loadInventory( new Inventory.Callback() {
 //                            @Override
 //                            public void onLoaded( @Nonnull Inventory.Products products ) {
@@ -331,7 +331,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
             @Override
             public void onFinish() {
-                // say goodbye to user, resume app
+                // say goodbye to user, onResume app
                 updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_finish_event ) ) );
 
                 finishActivity();

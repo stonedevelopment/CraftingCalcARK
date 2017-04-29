@@ -13,17 +13,16 @@
 package arc.resource.calculator.model;
 
 /**
- * Base Category object
+ * A helper Category object used to provide back category details, visual and functional
  */
 public class BackCategory extends Category {
-    private final String mFile;
-
-    public BackCategory( long _id, String name, long parent ) {
-        super( _id, name, parent );
-        mFile = "back_folder.png";
-    }
-
-    public String getImagePath() {
-        return mFile;
+    /**
+     * Constructor which instantiates a super object with custom variables: "back_folder.png"
+     *
+     * @param id     Id of requested category
+     * @param parent Parent id of requested category
+     */
+    public BackCategory( long id, long parent ) {
+        super( id, null, parent, "back_folder.png" );
     }
 }

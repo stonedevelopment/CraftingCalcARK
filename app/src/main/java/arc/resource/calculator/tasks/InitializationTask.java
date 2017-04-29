@@ -98,7 +98,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             // map "total conversion" ids to assist methods with injecting converted ids
             mTotalConversion = mapTotalConversion( getJSONObject().getJSONArray( DatabaseContract.TotalConversionEntry.TABLE_NAME ) );
 
-            // finally, let's resume inserting some json data into our database!
+            // finally, let's onResume inserting some json data into our database!
             insertDLC( getJSONObject().getJSONArray( DatabaseContract.DLCEntry.TABLE_NAME ) );
             insertStations( getJSONObject().getJSONArray( DatabaseContract.StationEntry.TABLE_NAME ) );
             insertCategories( getJSONObject().getJSONArray( DatabaseContract.CategoryEntry.TABLE_NAME ) );
@@ -109,7 +109,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             return true;
         }
 
-        // If error, send error signal, pause service
+        // If error, send error signal, onPause service
         catch ( Exception e ) {
             mException = e;
             return false;

@@ -12,6 +12,8 @@
  */
 package arc.resource.calculator.model;
 
+import android.support.annotation.Nullable;
+
 /**
  * Base Category object
  */
@@ -28,11 +30,18 @@ public class Category {
     // String literal of Resource Drawable to use for icon
     private final String mFile;
 
-    public Category( long _id, String name, long parent ) {
+    public Category( long _id, @Nullable String name, long parent ) {
         mId = _id;
         mName = name;
         mParent = parent;
         mFile = "folder.png";
+    }
+
+    public Category( long _id, @Nullable String name, long parent, String file ) {
+        mId = _id;
+        mName = name;
+        mParent = parent;
+        mFile = file;
     }
 
     public long getId() {

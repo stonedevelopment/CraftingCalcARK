@@ -1,7 +1,6 @@
 package arc.resource.calculator.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Observing class helper for CraftableAdapter and InventoryAdapter
@@ -12,7 +11,7 @@ import java.util.List;
 public class QueueObserver {
     private static QueueObserver sInstance;
 
-    private List<Listener> mListeners;
+    private HashMap<String, Listener> mListeners;
 
     public static abstract class Listener {
         public void onItemChanged( long craftableId, int quantity ) {
@@ -40,37 +39,37 @@ public class QueueObserver {
     }
 
     private QueueObserver() {
-        mListeners = new ArrayList<>();
+        mListeners = new HashMap<>();
     }
 
-    public void registerListener( Listener listener ) {
-        mListeners.add( listener );
+    public void registerListener( String key, Listener listener ) {
+        mListeners.put( key, listener );
     }
 
-    public void unregisterListener( Listener listener ) {
-        mListeners.remove( listener );
+    public void unregisterListener( String key ) {
+        mListeners.remove( key );
     }
 
     public void notifyItemChanged( long craftableId, int quantity ) {
-        for ( Listener listener : mListeners ) {
+        for ( Listener listener : mListeners.values() ) {
             listener.onItemChanged( craftableId, quantity );
         }
     }
 
     public void notifyItemRemoved( long craftableId ) {
-        for ( Listener listener : mListeners ) {
+        for ( Listener listener : mListeners.values() ) {
             listener.onItemRemoved( craftableId );
         }
     }
 
     public void notifyDataSetEmpty() {
-        for ( Listener listener : mListeners ) {
+        for ( Listener listener : mListeners.values() ) {
             listener.onDataSetEmpty();
         }
     }
 
     public void notifyDataSetPopulated() {
-        for ( Listener listener : mListeners ) {
+        for ( Listener listener : mListeners.values() ) {
             listener.onDataSetPopulated();
         }
     }

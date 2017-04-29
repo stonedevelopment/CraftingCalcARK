@@ -2,7 +2,6 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -22,38 +21,34 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         if ( !isTextViewShown() )
             showNext();
 
-        updateStatus( "An error occurred while fetching crafting queue." );
+        onStatusUpdate( "An error occurred while fetching crafting queue." );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
 
     @Override
     public void onInit() {
-        Log.d( TAG, "onInit: " );
-
+        // switch view to textview, display fetching message
         if ( !isTextViewShown() )
             showNext();
 
-        updateStatus( "Fetching crafting queue.." );
+        onStatusUpdate( "Fetching crafting queue.." );
     }
 
     @Override
     public void onPopulated() {
-        Log.d( TAG, "onPopulated: " );
-
-        // switch view to recycler
+        // data is ready for viewing, switch view to recycler
         if ( !isRecyclerViewShown() )
             showNext();
     }
 
     @Override
     public void onEmpty() {
-        Log.d( TAG, "onEmpty: " );
         // switch view to textview, display empty message
         if ( !isTextViewShown() )
             showNext();
 
-        updateStatus( "Crafting queue is empty." );
+        onStatusUpdate( "Crafting queue is empty." );
     }
 
     public QueueSwitcher( Context context ) {
@@ -65,8 +60,6 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
     }
 
     public void onCreate() {
-        Log.d( TAG, "onCreate()" );
-
         // set size (height) to that of 1/5 screen's width
         setLayoutParams( DisplayUtil.getInstance().getParams() );
 
@@ -76,7 +69,7 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         // instantiate recyclerView
         mRecyclerView = ( QueueRecyclerView ) findViewById( R.id.gridview_queue );
 
-        // resume view with switcher observer
+        // onResume view with switcher observer
         // set this as observer, initialize adapter, create crafting queue instance, query for saved data, if any.
         mRecyclerView.create( this );
     }
@@ -89,8 +82,11 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         mRecyclerView.pause();
     }
 
-    private void updateStatus( String text ) {
-        Log.d( TAG, "updateStatus: " + text );
+    public void onDestroy() {
+        mRecyclerView.destroy();
+    }
+
+    private void onStatusUpdate( String text ) {
         mTextView.setText( text );
     }
 

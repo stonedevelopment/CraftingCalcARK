@@ -4,14 +4,11 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
-import android.view.ContextMenu;
 
 import arc.resource.calculator.adapters.QueueAdapter;
 
 public class QueueRecyclerView extends RecyclerViewWithContextMenu {
     private static final String TAG = QueueRecyclerView.class.getSimpleName();
-
-    private ContextMenu.ContextMenuInfo mContextMenuInfo;
 
     private static Listener mListener;
 
@@ -27,51 +24,46 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
 
     public static class Observer {
         public void notifyExceptionCaught( Exception e ) {
-            mListener.onError( e );
+            getListener().onError( e );
         }
 
         public void notifyInitializing() {
-            mListener.onInit();
+            getListener().onInit();
         }
 
         public void notifyDataSetPopulated() {
-            mListener.onPopulated();
+            getListener().onPopulated();
         }
 
         public void notifyDataSetEmpty() {
-            mListener.onEmpty();
+            getListener().onEmpty();
         }
     }
 
     public QueueRecyclerView( Context context ) {
         super( context );
-        init();
     }
 
     public QueueRecyclerView( Context context, @Nullable AttributeSet attrs ) {
         super( context, attrs );
-        init();
     }
 
     public QueueRecyclerView( Context context, @Nullable AttributeSet attrs, int defStyle ) {
         super( context, attrs, defStyle );
-        init();
     }
 
-    private void init() {
-        setLayoutManager( new GridLayoutManager( getContext(), 1, GridLayoutManager.HORIZONTAL, false ) );
-        setAdapter( new QueueAdapter( getContext() ) );
+    private static Listener getListener() {
+        return mListener;
     }
 
-    /**
-     * @param listener Listener of ViewSwitcher to understand when to switch TextView to RecyclerView and vice versa.
-     */
-    public void create( Listener listener ) {
-        // register listener from switcher
+    private void setListener( Listener listener ) {
         mListener = listener;
+    }
 
-        // resume up adapter and register this observer
-        getAdapter().create( new Observer() );
+    public void create( Listener listener ) {
+        setLayoutManager( new GridLayoutManager( getContext(), 1, GridLayoutManager.HORIZONTAL, false ) );
+        setListener( listener );
+        setAdapter( new QueueAdapter( getContext(), new Observer() ) );
     }
 
     public void resume() {
@@ -80,6 +72,10 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
 
     public void pause() {
         getAdapter().pause();
+    }
+
+    public void destroy() {
+        getAdapter().destroy();
     }
 
     @Override

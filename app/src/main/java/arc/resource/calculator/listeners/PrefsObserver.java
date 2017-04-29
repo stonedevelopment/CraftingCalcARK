@@ -1,7 +1,6 @@
 package arc.resource.calculator.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Observing class helper for CraftableAdapter and CraftingQueue
@@ -12,7 +11,7 @@ import java.util.List;
 public class PrefsObserver {
     private static PrefsObserver sInstance;
 
-    private List<Listener> mListeners;
+    private HashMap<String, Listener> mListeners;
 
     public static abstract class Listener {
         public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
@@ -32,26 +31,26 @@ public class PrefsObserver {
     }
 
     private PrefsObserver() {
-        mListeners = new ArrayList<>();
+        mListeners = new HashMap<>();
     }
 
-    public void registerListener( Listener listener ) {
-        mListeners.add( listener );
+    public void registerListener( String key, Listener listener ) {
+        mListeners.put( key, listener );
     }
 
-    public void unregisterListener( Listener listener ) {
-        mListeners.remove( listener );
+    public void unregisterListener( String key ) {
+        mListeners.remove( key );
     }
 
     public void notifyPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange,
                                           boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
-        for ( Listener listener : mListeners ) {
+        for ( Listener listener : mListeners.values() ) {
             listener.onPreferencesChanged( dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
         }
     }
 
     public void requestPreferencesSave() {
-        for ( Listener listener : mListeners ) {
+        for ( Listener listener : mListeners.values() ) {
             listener.onSavePreferencesRequested();
         }
     }

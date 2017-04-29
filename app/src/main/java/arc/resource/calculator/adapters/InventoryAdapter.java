@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,40 +50,54 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private InventoryRecyclerView.Observer mViewObserver;
 
     private InventorySparseArray mInventory;
-    private LongSparseArray<QueueEngram> mQueue;
 
     private Status mViewStatus;
 
+    private boolean mNeedsUpdate;
+
     enum Status {VISIBLE, HIDDEN}
 
-    private QueueObserver.Listener mListener = new QueueObserver.Listener() {
-        public void onDataSetPopulated() {
-            if ( mViewStatus == VISIBLE )
-                fetchInventory();
-        }
-
-        @Override
-        public void onItemChanged( long craftableId, int quantity ) {
-            if ( mViewStatus == VISIBLE )
-                fetchInventory();
-        }
-
-        @Override
-        public void onItemRemoved( long craftableId ) {
-            if ( mViewStatus == VISIBLE )
-                fetchInventory();
-        }
-
-        @Override
-        public void onDataSetEmpty() {
-            if ( mViewStatus == VISIBLE )
-                fetchInventory();
-        }
-    };
-
-    public InventoryAdapter( Context context ) {
+    public InventoryAdapter( Context context, InventoryRecyclerView.Observer observer ) {
         setContext( context );
+        setObserver( observer );
         setInventory( new InventorySparseArray() );
+
+        QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
+            public void onDataSetPopulated() {
+                if ( mViewStatus == VISIBLE ) {
+                    fetchInventory();
+                } else {
+                    mNeedsUpdate = true;
+                }
+            }
+
+            @Override
+            public void onItemChanged( long craftableId, int quantity ) {
+                if ( mViewStatus == VISIBLE ) {
+                    fetchInventory();
+                } else {
+                    mNeedsUpdate = true;
+                }
+            }
+
+            @Override
+            public void onItemRemoved( long craftableId ) {
+                if ( mViewStatus == VISIBLE ) {
+                    fetchInventory();
+                } else {
+                    mNeedsUpdate = true;
+                }
+            }
+
+            @Override
+            public void onDataSetEmpty() {
+                if ( mViewStatus == VISIBLE ) {
+                    fetchInventory();
+                } else {
+                    mNeedsUpdate = true;
+                }
+            }
+        } );
     }
 
     private Context getContext() {
@@ -103,31 +116,27 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         this.mInventory = inventory;
     }
 
-    private LongSparseArray<QueueEngram> getQueue() {
-        return mQueue;
+    private InventoryRecyclerView.Observer getObserver() {
+        return mViewObserver;
     }
 
-    private void setQueue( LongSparseArray<QueueEngram> queue ) {
-        this.mQueue = queue;
-    }
-
-    public void resume( InventoryRecyclerView.Observer observer ) {
-        Log.d( TAG, "resume()" );
-
+    private void setObserver( InventoryRecyclerView.Observer observer ) {
         mViewObserver = observer;
+    }
+
+    public void resume() {
         mViewStatus = VISIBLE;
 
-        QueueObserver.getInstance().registerListener( mListener );
-
-        fetchInventory();
+        if ( mNeedsUpdate )
+            fetchInventory();
     }
 
     public void pause() {
-        Log.d( TAG, "pause()" );
-
-        QueueObserver.getInstance().unregisterListener( mListener );
-
         mViewStatus = HIDDEN;
+    }
+
+    public void destroy() {
+        QueueObserver.getInstance().unregisterListener( TAG );
     }
 
     private CompositeResource getResource( int position ) {
@@ -196,7 +205,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
         @Override
         protected void onPreExecute() {
-            mViewObserver.notifyInitializing();
+            getObserver().notifyInitializing();
         }
 
         @Override
@@ -206,10 +215,12 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
                 notifyDataSetChanged();
 
+                mNeedsUpdate = false;
+
                 if ( mArray.size() > 0 ) {
-                    mViewObserver.notifyDataSetPopulated();
+                    getObserver().notifyDataSetPopulated();
                 } else {
-                    mViewObserver.notifyDataSetEmpty();
+                    getObserver().notifyDataSetEmpty();
                 }
             }
         }
@@ -253,7 +264,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
                 return true;
             } catch ( Exception e ) {
-                mViewObserver.notifyExceptionCaught( e );
+                getObserver().notifyExceptionCaught( e );
 
                 return false;
             }
