@@ -476,6 +476,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 craftables.put( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
             }
 
+            craftables.sort();
+
             return craftables;
         }
     }
@@ -543,49 +545,45 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void changeCategory( int position )
-            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException, ExceptionUtil.PositionOutOfBoundsException {
-        if ( isCategory( position ) ) {
-            Category category = getCategory( position );
+            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+        Category category = getCategory( position );
 
-            Log.d( TAG, "Changing category to [" + position + "] " + category.toString() );
+        Log.d( TAG, "Changing category to [" + position + "] " + category.toString() );
 
-            long dlc_id = PrefsUtil.getInstance().getDLCPreference();
-            if ( position == 0 ) {
-                // position 0 will always be a back category to the previous level
-                long parent = category.getParent();
-                if ( isCategoryParentLevelSearchRoot( parent ) ) {
-                    // backing out of search view
-                    mSearchQuery = null;
+        long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+        if ( position == 0 ) {
+            // position 0 will always be a back category to the previous level
+            long parent = category.getParent();
+            if ( isCategoryParentLevelSearchRoot( parent ) ) {
+                // backing out of search view
+                mSearchQuery = null;
+            } else {
+                if ( isCategoryParentLevelStationRoot( parent ) ) {
+                    // Back button to station list
+                    setCurrentCategoryLevelsToStationRoot();
                 } else {
-                    if ( isCategoryParentLevelStationRoot( parent ) ) {
-                        // Back button to station list
-                        setCurrentCategoryLevelsToStationRoot();
+                    if ( isCurrentCategoryLevelRoot() ) {
+                        // Normal Category object
+                        // Grabbing ID is the best way to track its location.
+                        setCurrentCategoryLevels( category.getId(), category.getParent() );
                     } else if ( isCategoryParentLevelRoot( parent ) ) {
                         // Back button to category list
                         setCurrentCategoryLevelsToRoot();
                     } else {
-                        if ( isCurrentCategoryLevelRoot() ) {
-                            // Normal Category object
-                            // Grabbing ID is the best way to track its location.
-                            setCurrentCategoryLevels( category.getId(), category.getParent() );
-                        } else {
-                            // Normal Back Category object
-                            // Query for details via its Parent Level
-                            setCurrentCategoryLevels( category.getParent(),
-                                    queryForCategory( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
-                        }
+                        // Normal Back Category object
+                        // Query for details via its Parent Level
+                        setCurrentCategoryLevels( category.getParent(),
+                                queryForCategory( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
                     }
                 }
-            } else {
-                // Normal Category object
-                // Grabbing ID is the best way to track its location.
-                setCurrentCategoryLevels( category.getId(), category.getParent() );
             }
-
-            refreshData();
         } else {
-            throw new ExceptionUtil.PositionOutOfBoundsException( position, getCategories().size(), getCategories().toString() );
+            // Normal Category object
+            // Grabbing ID is the best way to track its location.
+            setCurrentCategoryLevels( category.getId(), category.getParent() );
         }
+
+        refreshData();
     }
 
     private Category queryForCategory( Uri uri )
@@ -711,12 +709,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 values.put( _id, new Station( _id, name, folder, file ) );
             }
 
+            values.sort();
+
             return values;
         }
 
     }
 
-    public void buildHierarchy() {
+    private void buildHierarchy() {
         Log.d( TAG, "buildHierarchy: " );
 
         try {
@@ -737,6 +737,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                                         String.format( getContext().getString( R.string.display_case_hierarchy_text_contents_of_station_in_folder ),
                                                 name, buildCategoryHierarchy( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, getCurrentCategoryLevel() ) ) ) );
                             }
+                        } else {
+                            builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_contents_of_station ), name ) );
                         }
                     }
                 } else if ( isFilteredByCategory() ) {
@@ -894,8 +896,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
                 mStationSparseArray = queryForStations( stationUri );
 
-                mCategorySparseArray.add( backCategory );
-                mCategorySparseArray.addAll( queryForCategories( categoryUri ) );
+                if ( backCategory != null ) {
+                    mCategorySparseArray.add( backCategory );
+                    mCategorySparseArray.addAll( queryForCategories( categoryUri ) );
+                    mCategorySparseArray.sort( 1 );
+                } else {
+                    mCategorySparseArray.addAll( queryForCategories( categoryUri ) );
+                    mCategorySparseArray.sort( 0 );
+                }
 
                 mCraftableSparseArray = queryForEngrams( craftableUri );
 
@@ -1089,6 +1097,27 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             super( size );
         }
 
+        /**
+         * Sorts objects by Name
+         */
+        void sort() {
+            boolean swapped = true;
+            while ( swapped ) {
+                swapped = false;
+                for ( int i = 0; i < size() - 1; i++ ) {
+                    String first = valueAt( i ).getName();
+                    String second = valueAt( i + 1 ).getName();
+                    if ( first.compareTo( second ) > 0 ) {
+                        // swap
+                        DisplayEngram temp = valueAt( i + 1 );
+                        setValueAt( i + 1, valueAt( i ) );
+                        setValueAt( i, temp );
+                        swapped = true;
+                    }
+                }
+            }
+        }
+
         boolean contains( long key ) {
             return !( indexOfKey( key ) < 0 );
         }
@@ -1112,6 +1141,27 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             super( size );
         }
 
+        /**
+         * Sorts objects by Name
+         */
+        void sort() {
+            boolean swapped = true;
+            while ( swapped ) {
+                swapped = false;
+                for ( int i = 0; i < size() - 1; i++ ) {
+                    String first = valueAt( i ).getName();
+                    String second = valueAt( i + 1 ).getName();
+                    if ( first.compareTo( second ) > 0 ) {
+                        // swap
+                        Station temp = valueAt( i + 1 );
+                        setValueAt( i + 1, valueAt( i ) );
+                        setValueAt( i, temp );
+                        swapped = true;
+                    }
+                }
+            }
+        }
+
         boolean contains( long key ) {
             return !( indexOfKey( key ) < 0 );
         }
@@ -1133,6 +1183,30 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
          */
         CategorySparseArray( int size ) {
             super( size );
+        }
+
+        /**
+         * Sorts objects by Name, given a particular index to start with.
+         *
+         * @param index position in array to begin sort. This can be staggered due to Back Category remaining at 0.
+         */
+        void sort( int index ) {
+            boolean swapped = true;
+            while ( swapped ) {
+                swapped = false;
+
+                for ( int i = index; i < size() - 1; i++ ) {
+                    String first = valueAt( i ).getName();
+                    String second = valueAt( i + 1 ).getName();
+                    if ( first.compareTo( second ) > 0 ) {
+                        // swap
+                        Category temp = valueAt( i + 1 );
+                        setValueAt( i + 1, valueAt( i ) );
+                        setValueAt( i, temp );
+                        swapped = true;
+                    }
+                }
+            }
         }
 
         boolean contains( long key ) {
