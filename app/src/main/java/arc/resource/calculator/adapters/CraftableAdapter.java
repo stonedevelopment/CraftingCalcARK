@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
@@ -29,13 +27,16 @@ import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.BackCategory;
 import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.model.SortableMap;
 import arc.resource.calculator.model.Station;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
+import arc.resource.calculator.views.CraftableRecyclerView;
 
 import static arc.resource.calculator.adapters.CraftableAdapter.Status.HIDDEN;
+import static arc.resource.calculator.adapters.CraftableAdapter.Status.INIT;
 import static arc.resource.calculator.adapters.CraftableAdapter.Status.VISIBLE;
 import static arc.resource.calculator.util.Util.NO_ID;
 import static arc.resource.calculator.util.Util.NO_NAME;
@@ -67,20 +68,25 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private String mSearchQuery;
 
-    private StationSparseArray mStations;
-    private CategorySparseArray mCategories;
-    private CraftableSparseArray mCraftables;
+    private StationMap mStationMap;
+    private CategoryMap mCategoryMap;
+    private CraftableMap mCraftableMap;
 
     private Context mContext;
+
+    private CraftableRecyclerView.Observer mViewObserver;
 
     private Status mViewStatus;
 
     private boolean mNeedsUpdate;
 
-    enum Status {VISIBLE, HIDDEN}
+    private boolean mNeedsFullUpdate;
 
-    public CraftableAdapter( Context context ) {
+    enum Status {INIT, VISIBLE, HIDDEN}
+
+    public CraftableAdapter( Context context, CraftableRecyclerView.Observer observer ) {
         setContext( context );
+        setObserver( observer );
 
         PrefsUtil prefs = PrefsUtil.getInstance();
 
@@ -88,15 +94,15 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         setCurrentCategoryLevels( prefs.getLastCategoryLevel(), prefs.getLastCategoryParent() );
 
         // Retrieve last viewed Station id
-        mStationId = prefs.getLastStationId();
+        setCurrentStationId( prefs.getLastStationId() );
 
         // Setup custom SparseArrays
-        setStations( new StationSparseArray() );
-        setCategories( new CategorySparseArray() );
-        setCraftables( new CraftableSparseArray() );
+        setStations( new StationMap() );
+        setCategories( new CategoryMap() );
+        setCraftables( new CraftableMap() );
 
         mSearchQuery = null;
-        mNeedsUpdate = true;
+        mNeedsUpdate = false;
 
         QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
             public void onDataSetPopulated() {
@@ -109,22 +115,26 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
             @Override
             public void onItemChanged( long craftableId, int quantity ) {
+                Log.d( TAG, "onItemChanged: " );
                 if ( mViewStatus == VISIBLE ) {
-                    if ( getCraftables().contains( craftableId ) ) {
-                        int position = getCraftables().indexOfKey( craftableId );
+                    Log.d( TAG, "onItemChanged: visible" );
+                    if ( getCraftableMap().contains( craftableId ) ) {
+                        int position = getCraftableMap().indexOfKey( craftableId );
                         getCraftable( position ).setQuantity( quantity );
                         notifyItemChanged( adjustPositionFromCraftable( position ) );
                     }
                 } else {
+                    Log.d( TAG, "onItemChanged: not visible: needs  updating" );
                     mNeedsUpdate = true;
                 }
             }
 
             @Override
             public void onItemRemoved( long craftableId ) {
+                Log.d( TAG, "onItemRemoved: " );
                 if ( mViewStatus == VISIBLE ) {
-                    if ( getCraftables().contains( craftableId ) ) {
-                        int position = getCraftables().indexOfKey( craftableId );
+                    if ( getCraftableMap().contains( craftableId ) ) {
+                        int position = getCraftableMap().indexOfKey( craftableId );
                         getCraftable( position ).resetQuantity();
                         notifyItemChanged( adjustPositionFromCraftable( position ) );
                     }
@@ -135,6 +145,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
             @Override
             public void onDataSetEmpty() {
+                Log.d( TAG, "onDataSetEmpty: " );
                 if ( mViewStatus == VISIBLE ) {
                     clearQuantities();
                 } else {
@@ -147,18 +158,24 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
                 setCategoryLevelsToRoot();
 
+                mSearchQuery = null;
+
                 if ( mViewStatus == VISIBLE ) {
                     refreshData();
                 } else {
-                    mNeedsUpdate = true;
+                    mNeedsFullUpdate = true;
                 }
             }
 
             @Override
             public void onSavePreferencesRequested() {
-                saveCategoryLevelsToPref();
+                savePrefs();
             }
         } );
+
+        mViewStatus = INIT;
+
+        refreshData();
     }
 
     private Context getContext() {
@@ -169,35 +186,47 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         this.mContext = context.getApplicationContext();
     }
 
-    private StationSparseArray getStations() {
-        return mStations;
+    private CraftableRecyclerView.Observer getObserver() {
+        return mViewObserver;
     }
 
-    private void setStations( StationSparseArray stations ) {
-        this.mStations = stations;
+    private void setObserver( CraftableRecyclerView.Observer observer ) {
+        mViewObserver = observer;
     }
 
-    private CategorySparseArray getCategories() {
-        return mCategories;
+    private StationMap getStationMap() {
+        return mStationMap;
     }
 
-    private void setCategories( CategorySparseArray categories ) {
-        this.mCategories = categories;
+    private void setStations( StationMap map ) {
+        this.mStationMap = map;
     }
 
-    private CraftableSparseArray getCraftables() {
-        return mCraftables;
+    private CategoryMap getCategoryMap() {
+        return mCategoryMap;
     }
 
-    private void setCraftables( CraftableSparseArray craftables ) {
-        this.mCraftables = craftables;
+    private void setCategories( CategoryMap map ) {
+        this.mCategoryMap = map;
+    }
+
+    private CraftableMap getCraftableMap() {
+        return mCraftableMap;
+    }
+
+    private void setCraftables( CraftableMap map ) {
+        this.mCraftableMap = map;
     }
 
     public void resume() {
-        mViewStatus = VISIBLE;
+        if ( mViewStatus != INIT ) {
+            mViewStatus = VISIBLE;
 
-        if ( mNeedsUpdate )
-            refreshData();
+            if ( mNeedsFullUpdate )
+                refreshData();
+            else if ( mNeedsUpdate )
+                updateQuantities();
+        }
     }
 
     public void pause() {
@@ -286,10 +315,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void setCurrentCategoryLevelsToStationRoot() {
+        setCurrentStationId( STATION_ROOT );
         setCurrentCategoryLevels( STATION_ROOT, STATION_ROOT );
     }
 
-    private void saveCategoryLevelsToPref() {
+    private void savePrefs() {
         PrefsUtil prefs = PrefsUtil.getInstance();
 
         if ( prefs.getCategoryFilterPreference() )
@@ -316,11 +346,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
      */
 
     private String getItemContents() {
-        return getStations().toString() + ", " + getCategories().toString() + ", " + getCraftables().toString();
+        return getStationMap().toString() + ", " + getCategoryMap().toString() + ", " + getCraftableMap().toString();
     }
 
     private int getSize() {
-        return ( getStations().size() + getCategories().size() + getCraftables().size() );
+        return ( getStationMap().size() + getCategoryMap().size() + getCraftableMap().size() );
     }
 
     private long getIdByPosition( int position ) {
@@ -393,19 +423,19 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
      */
 
     private int adjustPositionForCraftable( int position ) {
-        return position - ( getStations().size() + getCategories().size() );
+        return position - ( getStationMap().size() + getCategoryMap().size() );
     }
 
     private int adjustPositionFromCraftable( int position ) {
-        return position + ( getStations().size() + getCategories().size() );
+        return position + ( getStationMap().size() + getCategoryMap().size() );
     }
 
     private boolean isCraftable( int position ) {
-        return Util.isValidPosition( adjustPositionForCraftable( position ), getCraftables().size() );
+        return Util.isValidPosition( adjustPositionForCraftable( position ), getCraftableMap().size() );
     }
 
     private DisplayEngram getCraftable( int position ) {
-        return getCraftables().valueAt( position );
+        return getCraftableMap().valueAt( position );
     }
 
     public void increaseQuantity( int position ) {
@@ -413,35 +443,39 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void updateQuantities() {
-        for ( int i = 0; i < getCraftables().size(); i++ ) {
+        CraftingQueue craftingQueue = CraftingQueue.getInstance();
+
+        for ( int i = 0; i < getCraftableMap().size(); i++ ) {
             DisplayEngram craftable = getCraftable( i );
 
             long id = craftable.getId();
 
             // if queue contains this craftable's _id, check if quantity is different, if so, update
             // if queue does not contain and if quantity is above 0, reset quantity back to 0, update
-            if ( CraftingQueue.getInstance().contains( id ) ) {
-                int quantity = CraftingQueue.getInstance().getCraftable( id ).getQuantity();
+            if ( craftingQueue.contains( id ) ) {
+                int quantity = craftingQueue.getCraftable( id ).getQuantity();
 
                 if ( craftable.getQuantity() != quantity ) {
                     craftable.setQuantity( quantity );
 
-                    getCraftables().setValueAt( i, craftable );
-
-                    notifyItemChanged( adjustPositionFromCraftable( i ) );
+                    getCraftableMap().setValueAt( i, craftable );
                 }
             } else if ( craftable.getQuantity() > 0 ) {
                 craftable.resetQuantity();
 
-                notifyItemChanged( adjustPositionFromCraftable( i ) );
+                getCraftableMap().setValueAt( i, craftable );
             }
         }
+
+        notifyDataSetChanged();
+
+        mNeedsUpdate = false;
     }
 
     private void clearQuantities() {
         boolean didUpdate = false;
 
-        for ( int i = 0; i < getCraftables().size(); i++ ) {
+        for ( int i = 0; i < getCraftableMap().size(); i++ ) {
             getCraftable( i ).resetQuantity();
 
             didUpdate = true;
@@ -451,15 +485,17 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             notifyDataSetChanged();
     }
 
-    private CraftableSparseArray queryForEngrams( Uri uri ) {
+    private CraftableMap queryForEngrams( Uri uri ) {
         if ( uri == null )
-            return new CraftableSparseArray();
+            return new CraftableMap();
 
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                return new CraftableSparseArray();
+                return new CraftableMap();
 
-            CraftableSparseArray craftables = new CraftableSparseArray();
+            CraftingQueue craftingQueue = CraftingQueue.getInstance();
+
+            CraftableMap craftables = new CraftableMap();
             while ( cursor.moveToNext() ) {
                 long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) );
                 String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
@@ -470,24 +506,27 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
                 int quantity = 0;
 
-                if ( CraftingQueue.getInstance().contains( _id ) )
-                    quantity = CraftingQueue.getInstance().getCraftable( _id ).getQuantity();
+                if ( craftingQueue.contains( _id ) )
+                    quantity = craftingQueue.getCraftable( _id ).getQuantity();
 
-                craftables.put( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
+                craftables.add( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
             }
 
+            // TODO: 4/30/2017 What if we sorted as we inserted?
             craftables.sort();
 
             return craftables;
         }
     }
 
-    private CraftableSparseArray querySearchForEngrams( Uri uri ) {
+    private CraftableMap querySearchForEngrams( Uri uri ) {
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                return new CraftableSparseArray();
+                return new CraftableMap();
 
-            CraftableSparseArray craftables = new CraftableSparseArray();
+            CraftingQueue craftingQueue = CraftingQueue.getInstance();
+
+            CraftableMap craftables = new CraftableMap();
             while ( cursor.moveToNext() ) {
                 long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry._ID ) );
                 String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
@@ -498,11 +537,13 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
                 int quantity = 0;
 
-                if ( CraftingQueue.getInstance().contains( _id ) )
-                    quantity = CraftingQueue.getInstance().getCraftable( _id ).getQuantity();
+                if ( craftingQueue.contains( _id ) )
+                    quantity = craftingQueue.getCraftable( _id ).getQuantity();
 
-                craftables.put( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
+                craftables.add( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
             }
+
+            craftables.sort();
 
             return craftables;
         }
@@ -533,22 +574,20 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
      */
 
     private int adjustPositionForCategory( int position ) {
-        return position - getStations().size();
+        return position - getStationMap().size();
     }
 
     private boolean isCategory( int position ) {
-        return Util.isValidPosition( adjustPositionForCategory( position ), getCategories().size() );
+        return Util.isValidPosition( adjustPositionForCategory( position ), getCategoryMap().size() );
     }
 
     private Category getCategory( int position ) {
-        return getCategories().valueAt( position );
+        return getCategoryMap().valueAt( position );
     }
 
     private void changeCategory( int position )
             throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         Category category = getCategory( position );
-
-        Log.d( TAG, "Changing category to [" + position + "] " + category.toString() );
 
         long dlc_id = PrefsUtil.getInstance().getDLCPreference();
         if ( position == 0 ) {
@@ -604,39 +643,36 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     }
 
-    private CategorySparseArray queryForCategories( Uri uri )
+    private CategoryMap queryForCategories( Uri uri )
             throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         if ( uri == null )
-            return new CategorySparseArray();
-
-        CategorySparseArray categories = new CategorySparseArray();
+            return new CategoryMap();
 
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                return categories;
+                return new CategoryMap();
 
-            List<Long> keys = new ArrayList<>();
+            CategoryMap categoryMap = new CategoryMap();
             while ( cursor.moveToNext() ) {
                 long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry._ID ) );
                 String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
                 long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
 
-                if ( !keys.contains( _id ) ) {
-                    keys.add( _id );
-                    categories.append( _id, new Category( _id, name, parent_id ) );
-                }
+                categoryMap.add( _id, new Category( _id, name, parent_id ) );
             }
 
-            return categories;
+            categoryMap.sort();
+
+            return categoryMap;
         }
     }
 
     private Category BuildBackCategory() {
-        return new BackCategory( getCurrentCategoryLevel(), getCurrentCategoryParent() );
+        return new BackCategory( getCurrentCategoryParent(), getCurrentCategoryParent() );
     }
 
     private Category BuildBackCategoryToStationRoot() {
-        return new BackCategory( getCurrentStationId(), STATION_ROOT );
+        return new BackCategory( STATION_ROOT, STATION_ROOT );
     }
 
     private Category BuildBackCategoryOutOfSearch() {
@@ -648,11 +684,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
      */
 
     private boolean isStation( int position ) {
-        return Util.isValidPosition( position, getStations().size() );
+        return Util.isValidPosition( position, getStationMap().size() );
     }
 
     private Station getStation( int position ) {
-        return getStations().valueAt( position );
+        return getStationMap().valueAt( position );
     }
 
     private void changeStation( int position ) throws ExceptionUtil.PositionOutOfBoundsException {
@@ -666,7 +702,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
             refreshData();
         } else {
-            throw new ExceptionUtil.PositionOutOfBoundsException( position, getStations().size(), getStations().toString() );
+            throw new ExceptionUtil.PositionOutOfBoundsException( position, getStationMap().size(), getStationMap().toString() );
         }
     }
 
@@ -689,29 +725,29 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     }
 
-    private StationSparseArray queryForStations( Uri uri )
+    private StationMap queryForStations( Uri uri )
             throws ExceptionUtil.CursorNullException {
 
         if ( uri == null )
-            return new StationSparseArray();
+            return new StationMap();
 
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
                 throw new ExceptionUtil.CursorNullException( uri );
 
-            StationSparseArray values = new StationSparseArray();
+            StationMap stationMap = new StationMap();
             while ( cursor.moveToNext() ) {
                 long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.StationEntry._ID ) );
                 String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_NAME ) );
                 String folder = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER ) );
                 String file = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE ) );
 
-                values.put( _id, new Station( _id, name, folder, file ) );
+                stationMap.put( _id, new Station( _id, name, folder, file ) );
             }
 
-            values.sort();
+            stationMap.sort();
 
-            return values;
+            return stationMap;
         }
 
     }
@@ -778,6 +814,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void refreshData() {
+        Log.d( TAG, "refreshData: " );
         new QueryForDataTask().execute();
     }
 
@@ -789,25 +826,45 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     private class QueryForDataTask extends AsyncTask<Void, Void, Boolean> {
         private final String TAG = QueryForDataTask.class.getSimpleName();
 
-        private StationSparseArray mStationSparseArray;
-        private CategorySparseArray mCategorySparseArray;
-        private CraftableSparseArray mCraftableSparseArray;
+        private StationMap mTempStationMap;
+        private CategoryMap mTempCategoryMap;
+        private CraftableMap mTempCraftableMap;
+
+        private Exception mException;
 
         QueryForDataTask() {
         }
 
         @Override
+        protected void onPreExecute() {
+            getObserver().notifyInitializing();
+        }
+
+        @Override
         protected void onPostExecute( Boolean querySuccessful ) {
             if ( querySuccessful ) {
-                setStations( mStationSparseArray );
-                setCategories( mCategorySparseArray );
-                setCraftables( mCraftableSparseArray );
+                setStations( mTempStationMap );
+                setCategories( mTempCategoryMap );
+                setCraftables( mTempCraftableMap );
 
                 notifyDataSetChanged();
 
-                mNeedsUpdate = false;
+                getObserver().notifyDataSetPopulated();
+
+                mNeedsFullUpdate = false;
+
+                if ( mViewStatus == INIT ) {
+                    mViewStatus = VISIBLE;
+
+                    updateQuantities();
+                }
 
                 buildHierarchy();
+            } else {
+                if ( mException == null )
+                    mException = new Exception( "Nullified Exception caught." );
+
+                getObserver().notifyExceptionCaught( mException );
             }
         }
 
@@ -817,9 +874,9 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             try {
                 long dlc_id = PrefsUtil.getInstance().getDLCPreference();
 
-                mStationSparseArray = new StationSparseArray();
-                mCategorySparseArray = new CategorySparseArray();
-                mCraftableSparseArray = new CraftableSparseArray();
+                mTempStationMap = new StationMap();
+                mTempCategoryMap = new CategoryMap();
+                mTempCraftableMap = new CraftableMap();
 
                 Uri craftableUri = null;
                 Uri categoryUri = null;
@@ -894,27 +951,17 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     }
                 }
 
-                mStationSparseArray = queryForStations( stationUri );
+                mTempStationMap = queryForStations( stationUri );
 
-                if ( backCategory != null ) {
-                    mCategorySparseArray.add( backCategory );
-                    mCategorySparseArray.addAll( queryForCategories( categoryUri ) );
-                    mCategorySparseArray.sort( 1 );
-                } else {
-                    mCategorySparseArray.addAll( queryForCategories( categoryUri ) );
-                    mCategorySparseArray.sort( 0 );
-                }
+                if ( backCategory != null )
+                    mTempCategoryMap.add( backCategory.getId(), backCategory );
 
-                mCraftableSparseArray = queryForEngrams( craftableUri );
+                mTempCategoryMap.addAll( queryForCategories( categoryUri ) );
 
+                mTempCraftableMap = queryForEngrams( craftableUri );
                 return true;
-            } catch ( ExceptionUtil.CursorNullException | ExceptionUtil.CursorEmptyException | RuntimeException e ) {
-                ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
-
-                return false;
             } catch ( Exception e ) {
-                ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
-
+                mException = e;
                 return false;
             }
         }
@@ -923,44 +970,64 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     private class SearchDataTask extends AsyncTask<Void, Void, Boolean> {
         private final String TAG = SearchDataTask.class.getSimpleName();
 
-        private CategorySparseArray mCategorySparseArray;
-        private CraftableSparseArray mCraftableSparseArray;
+        private CategoryMap mTempCategoryMap;
+        private CraftableMap mTempCraftableMap;
+
+        private Exception mException;
 
         SearchDataTask() {
         }
 
         @Override
+        protected void onPreExecute() {
+            getObserver().notifyInitializing();
+        }
+
+        @Override
         protected void onPostExecute( Boolean querySuccessful ) {
             if ( querySuccessful ) {
-                setStations( new StationSparseArray() );
-                setCategories( mCategorySparseArray );
-                setCraftables( mCraftableSparseArray );
+                setStations( new StationMap() );
+                setCategories( mTempCategoryMap );
+                setCraftables( mTempCraftableMap );
 
                 notifyDataSetChanged();
 
                 mNeedsUpdate = false;
 
+                getObserver().notifyDataSetPopulated();
+
                 buildHierarchy();
+            } else {
+                if ( mException == null )
+                    mException = new Exception( "Nullified Exception caught." );
+
+                getObserver().notifyExceptionCaught( mException );
             }
         }
 
         @Override
         protected Boolean doInBackground( Void... params ) {
-            long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+            try {
+                long dlc_id = PrefsUtil.getInstance().getDLCPreference();
 
-            Uri searchUri;
-            if ( mSearchQuery == null || mSearchQuery.equals( "" ) )
-                searchUri = DatabaseContract.EngramEntry.buildUriWithDLCId( dlc_id );
-            else
-                searchUri = DatabaseContract.EngramEntry.buildUriWithSearchQuery( dlc_id, mSearchQuery );
+                Uri searchUri;
+                if ( mSearchQuery == null || mSearchQuery.equals( "" ) )
+                    searchUri = DatabaseContract.EngramEntry.buildUriWithDLCId( dlc_id );
+                else
+                    searchUri = DatabaseContract.EngramEntry.buildUriWithSearchQuery( dlc_id, mSearchQuery );
 
-            Category backCategory = BuildBackCategoryOutOfSearch();
-            mCategorySparseArray = new CategorySparseArray( 1 );
-            mCategorySparseArray.append( backCategory.getId(), backCategory );
+                mTempCategoryMap = new CategoryMap();
 
-            mCraftableSparseArray = querySearchForEngrams( searchUri );
+                Category backCategory = BuildBackCategoryOutOfSearch();
+                mTempCategoryMap.add( backCategory.getId(), backCategory );
 
-            return true;
+                mTempCraftableMap = querySearchForEngrams( searchUri );
+
+                return true;
+            } catch ( Exception e ) {
+                mException = e;
+                return false;
+            }
         }
     }
 
@@ -1076,6 +1143,48 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         @Override
         public boolean onLongClick( View view ) {
             return !isCraftable( getAdapterPosition() );
+        }
+    }
+
+    private class CraftableMap extends SortableMap {
+        CraftableMap() {
+            super();
+        }
+
+        @Override
+        public DisplayEngram valueAt( int position ) {
+            return ( DisplayEngram ) super.valueAt( position );
+        }
+
+        @Override
+        public Comparable getComparable( int position ) {
+            return valueAt( position ).getName();
+        }
+    }
+
+    private class StationMap extends SortableMap {
+
+        @Override
+        public Station valueAt( int position ) {
+            return ( Station ) super.valueAt( position );
+        }
+
+        @Override
+        public Comparable getComparable( int position ) {
+            return valueAt( position ).getName();
+        }
+    }
+
+    private class CategoryMap extends SortableMap {
+
+        @Override
+        public Category valueAt( int position ) {
+            return ( Category ) super.valueAt( position );
+        }
+
+        @Override
+        public Comparable getComparable( int position ) {
+            return valueAt( position ).getName();
         }
     }
 

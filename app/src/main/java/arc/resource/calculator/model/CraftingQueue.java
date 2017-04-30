@@ -34,12 +34,12 @@ public class CraftingQueue {
     private static final String TAG = CraftingQueue.class.getSimpleName();
 
     private static CraftingQueue sInstance;
-    private QueueSparseArray mQueue;
+    private QueueMap mQueue;
     private static QueueAdapter.Observer mViewObserver;
 
     private CraftingQueue( Context context, QueueAdapter.Observer observer ) {
         setObserver( observer );
-        setQueue( new QueueSparseArray() );
+        setQueue( new QueueMap() );
 
         PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
             @Override
@@ -78,11 +78,11 @@ public class CraftingQueue {
         PrefsObserver.getInstance().unregisterListener( TAG );
     }
 
-    public QueueSparseArray getQueue() {
+    private QueueMap getQueue() {
         return mQueue;
     }
 
-    private void setQueue( QueueSparseArray queue ) {
+    private void setQueue( QueueMap queue ) {
         this.mQueue = queue;
     }
 
@@ -119,7 +119,7 @@ public class CraftingQueue {
     }
 
     private void addCraftable( QueueEngram craftable ) {
-        getQueue().put( craftable.getId(), craftable );
+        getQueue().add( craftable.getId(), craftable );
     }
 
     private void removeCraftable( int position ) {
@@ -342,11 +342,11 @@ public class CraftingQueue {
         private final String TAG = FetchDataTask.class.getSimpleName();
 
         private Context mContext;
-        private QueueSparseArray mArray;
+        private QueueMap mTempQueueMap;
 
         FetchDataTask( Context context ) {
             this.mContext = context.getApplicationContext();
-            this.mArray = new QueueSparseArray();
+            this.mTempQueueMap = new QueueMap();
         }
 
         @Override
@@ -357,8 +357,8 @@ public class CraftingQueue {
         @Override
         protected void onPostExecute( Boolean querySuccessful ) {
             if ( querySuccessful ) {
-                if ( mArray.size() > 0 ) {
-                    setQueue( mArray );
+                if ( mTempQueueMap.size() > 0 ) {
+                    setQueue( mTempQueueMap );
 
                     getObserver().notifyDataSetPopulated();
                     QueueObserver.getInstance().notifyDataSetPopulated();
@@ -375,17 +375,14 @@ public class CraftingQueue {
                 LongSparseArray<Integer> savedQueue = convertJSONStringToQueue();
 
                 if ( savedQueue.size() > 0 ) {
-                    QueueSparseArray queue = new QueueSparseArray();
                     for ( int i = 0; i < savedQueue.size(); i++ ) {
                         long id = savedQueue.keyAt( i );
                         int quantity = savedQueue.valueAt( i );
 
                         QueueEngram craftable = QueryForCraftable( mContext, id, quantity );
 
-                        queue.put( id, craftable );
+                        mTempQueueMap.add( id, craftable );
                     }
-
-                    mArray = queue;
                 }
 
                 return true;
@@ -395,6 +392,27 @@ public class CraftingQueue {
                 return false;
             }
 
+        }
+    }
+
+    public class QueueMap extends SortableMap {
+        QueueMap() {
+            super();
+        }
+
+        @Override
+        public QueueEngram get( long key ) {
+            return ( QueueEngram ) super.get( key );
+        }
+
+        @Override
+        public QueueEngram valueAt( int position ) {
+            return ( QueueEngram ) super.valueAt( position );
+        }
+
+        @Override
+        public Comparable getComparable( int position ) {
+            return valueAt( position ).getName();
         }
     }
 

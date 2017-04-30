@@ -19,6 +19,13 @@
     </style>
   </head>
   <body>
+    $ 1.3.3
+      % Version 1.3.3
+      _ 04/30/2017
+      * More bug fixes!
+      * Various optimizations.
+      * Fixed Cannon Ball's composition! (oops!)
+
     $ 1.3.2
       % Version 1.3.2
       _ 04/29/2017

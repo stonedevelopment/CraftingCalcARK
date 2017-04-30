@@ -26,6 +26,36 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
         }
     };
 
+    private static Listener mListener;
+
+    interface Listener {
+        void onError( Exception e );
+
+        void onInit();
+
+        void onPopulated();
+
+        void onEmpty();
+    }
+
+    public static class Observer {
+        public void notifyExceptionCaught( Exception e ) {
+            getListener().onError( e );
+        }
+
+        public void notifyInitializing() {
+            getListener().onInit();
+        }
+
+        public void notifyDataSetPopulated() {
+            getListener().onPopulated();
+        }
+
+        public void notifyDataSetEmpty() {
+            getListener().onEmpty();
+        }
+    }
+
     public CraftableRecyclerView( Context context ) {
         super( context );
     }
@@ -38,11 +68,19 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
         super( context, attrs, defStyle );
     }
 
-    public void create() {
+    private static Listener getListener() {
+        return mListener;
+    }
+
+    private void setListener( Listener listener ) {
+        mListener = listener;
+    }
+
+    public void create( Listener listener ) {
         int numCols = getResources().getInteger( R.integer.gridview_column_count );
         setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
-
-        setAdapter( new CraftableAdapter( getContext() ) );
+        setListener( listener );
+        setAdapter( new CraftableAdapter( getContext(), new Observer() ) );
     }
 
     public void resume() {
@@ -57,6 +95,10 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
 
     public void destroy() {
         getAdapter().destroy();
+    }
+
+    public void search( String query ) {
+        getAdapter().searchData( query );
     }
 
     @Override

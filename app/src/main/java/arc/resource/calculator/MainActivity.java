@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity
 
         ExceptionObserver.getInstance().registerListener( this );
 
-        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
-        mainSwitcher.onCreate();
-
         QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
         queueSwitcher.onCreate();
+
+        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
+        mainSwitcher.onCreate();
 
         ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
         button.onCreate();

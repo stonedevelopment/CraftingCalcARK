@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "256.0",
+    "version": "256.1",
     "changelog": {
+      "256.1": "Updated Cannon Ball's composition.",
       "256.0": "Added Engrams: Element, Element Shards, Saddles(Equus, Iquanodon, Mosasaur Tek), Kibble (Troodon, Pegomastax, Moschops, Allosaurus, Tapejara, Therizinosaurus) Structures (Tek Teleporter, Tek Generator, Vacuum Compartment/Moonpool) Added Resources: Element Shards, Eggs (Troodon, Pegomastax, Moschops, Allosaurus, Therizinosaurus, Iquanodon)",
       "255.5": "Updated Charcoal to not be crafted at Industrial Grill",
       "255.4": "Updated Compass to be crafted at Smithy as well as Self",
@@ -6149,11 +6150,19 @@
       "composition": [
         {
           "resource_id": "Gunpowder",
-          "quantity": 3
+          "quantity": 30
         },
         {
           "resource_id": "Metal Ingot",
-          "quantity": 1
+          "quantity": 80
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 4
         }
       ],
       "station": [

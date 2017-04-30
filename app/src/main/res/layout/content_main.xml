@@ -29,13 +29,27 @@
                 android:layout_height="wrap_content"
                 android:text="View Inventory"/>
 
-            <arc.resource.calculator.views.CraftableRecyclerView
-                android:id="@+id/gridview_craftables"
+            <arc.resource.calculator.views.CraftableSwitcher
+                android:id="@+id/switcher_craftables"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/frame_craftable_container"
-                android:padding="@dimen/gridview_item_padding"/>
+                android:background="@drawable/frame_craftable_container">
+
+                <TextView
+                    android:id="@+id/textview_craftables"
+                    style="@style/AppTheme.Text.Status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+
+                <arc.resource.calculator.views.CraftableRecyclerView
+                    android:id="@+id/gridview_craftables"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/gridview_item_padding"/>
+
+            </arc.resource.calculator.views.CraftableSwitcher>
 
             <arc.resource.calculator.views.NavigationTextView
                 android:id="@+id/textview_navigation_hierarchy"

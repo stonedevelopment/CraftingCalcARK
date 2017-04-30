@@ -20,6 +20,7 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.model.SortableMap;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.Resource;
@@ -49,7 +50,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private InventoryRecyclerView.Observer mViewObserver;
 
-    private InventorySparseArray mInventory;
+    private InventoryMap mInventory;
 
     private Status mViewStatus;
 
@@ -60,7 +61,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     public InventoryAdapter( Context context, InventoryRecyclerView.Observer observer ) {
         setContext( context );
         setObserver( observer );
-        setInventory( new InventorySparseArray() );
+        setInventory( new InventoryMap() );
+
+        mNeedsUpdate = true;
 
         QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
             public void onDataSetPopulated() {
@@ -108,11 +111,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         this.mContext = context;
     }
 
-    private InventorySparseArray getInventory() {
+    private InventoryMap getInventory() {
         return mInventory;
     }
 
-    private void setInventory( InventorySparseArray inventory ) {
+    private void setInventory( InventoryMap inventory ) {
         this.mInventory = inventory;
     }
 
@@ -164,24 +167,24 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         }
     }
 
-    private LongSparseArray<CompositeResource> QueryForComposition( Uri uri ) throws Exception {
+    private InventoryMap QueryForComposition( Uri uri ) throws Exception {
         long dlc_id = DatabaseContract.CompositionEntry.getDLCIdFromUri( uri );
 
         try ( Cursor cursor = query( uri ) ) {
             if ( cursor == null )
                 throw new ExceptionUtil.CursorNullException( uri );
 
-            LongSparseArray<CompositeResource> resources = new LongSparseArray<>();
+            InventoryMap inventoryMap = new InventoryMap();
             while ( cursor.moveToNext() ) {
                 long resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
                 int quantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
-                resources.put( resource_id, new CompositeResource(
-                        QueryForResource( DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, resource_id ) ),
-                        quantity ) );
+                inventoryMap.add( resource_id,
+                        new CompositeResource( QueryForResource( DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, resource_id ) ),
+                                quantity ) );
             }
 
-            return resources;
+            return inventoryMap;
         }
     }
 
@@ -197,10 +200,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private class FetchInventoryTask extends AsyncTask<Void, Void, Boolean> {
         private final String TAG = FetchInventoryTask.class.getSimpleName();
 
-        private InventorySparseArray mArray;
+        private InventoryMap mTempInventoryMap;
+
+        private Exception mException;
 
         FetchInventoryTask() {
-            this.mArray = new InventorySparseArray();
+            this.mTempInventoryMap = new InventoryMap();
+            this.mException = null;
         }
 
         @Override
@@ -211,17 +217,22 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         @Override
         protected void onPostExecute( Boolean querySuccessful ) {
             if ( querySuccessful ) {
-                setInventory( mArray );
+                setInventory( mTempInventoryMap );
 
                 notifyDataSetChanged();
 
                 mNeedsUpdate = false;
 
-                if ( mArray.size() > 0 ) {
+                if ( mTempInventoryMap.size() > 0 ) {
                     getObserver().notifyDataSetPopulated();
                 } else {
                     getObserver().notifyDataSetEmpty();
                 }
+            } else {
+                if ( mException == null )
+                    mException = new Exception( "Nullified Exception caught." );
+
+                getObserver().notifyExceptionCaught( mException );
             }
         }
 
@@ -231,41 +242,36 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             try {
                 long dlc_id = PrefsUtil.getInstance().getDLCPreference();
 
-                LongSparseArray<QueueEngram> craftables = CraftingQueue.getInstance().getQueue();
+                CraftingQueue craftingQueue = CraftingQueue.getInstance();
 
-                InventorySparseArray inventory = new InventorySparseArray();
-                for ( int i = 0; i < craftables.size(); i++ ) {
-                    QueueEngram craftable = craftables.valueAt( i );
+                for ( int i = 0; i < craftingQueue.getSize(); i++ ) {
+                    QueueEngram queueEngram = craftingQueue.getCraftable( i );
 
-                    LongSparseArray<CompositeResource> composition =
-                            QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, craftable.getId() ) );
+                    InventoryMap composition =
+                            QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, queueEngram.getId() ) );
 
                     for ( int j = 0; j < composition.size(); j++ ) {
                         CompositeResource tempResource = composition.valueAt( j );
 
-                        CompositeResource resource = inventory.get( tempResource.getId() );
+                        CompositeResource resource = mTempInventoryMap.get( tempResource.getId() );
                         if ( resource == null )
                             resource = new CompositeResource(
                                     tempResource.getId(),
                                     tempResource.getName(),
                                     tempResource.getFolder(),
                                     tempResource.getFile(),
-                                    tempResource.getQuantity() * craftable.getQuantity() );
+                                    tempResource.getQuantity() * queueEngram.getQuantity() );
                         else
-                            resource.increaseQuantity( tempResource.getQuantity() * craftable.getQuantity() );
+                            resource.increaseQuantity( tempResource.getQuantity() * queueEngram.getQuantity() );
 
-                        inventory.put( resource.getId(), resource );
+                        mTempInventoryMap.put( resource.getId(), resource );
                     }
                 }
 
-                inventory.sort();
-
-                mArray = inventory;
-
+                mTempInventoryMap.sort();
                 return true;
             } catch ( Exception e ) {
-                getObserver().notifyExceptionCaught( e );
-
+                mException = e;
                 return false;
             }
         }
@@ -322,6 +328,28 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
         TextView getQuantityView() {
             return mQuantityView;
+        }
+    }
+
+    private class InventoryMap extends SortableMap {
+
+        InventoryMap() {
+            super();
+        }
+
+        @Override
+        public CompositeResource get( long key ) {
+            return ( CompositeResource ) super.get( key );
+        }
+
+        @Override
+        public CompositeResource valueAt( int position ) {
+            return ( CompositeResource ) super.valueAt( position );
+        }
+
+        @Override
+        public Comparable getComparable( int position ) {
+            return valueAt( position ).getName();
         }
     }
 

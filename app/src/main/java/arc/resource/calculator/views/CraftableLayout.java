@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import arc.resource.calculator.R;
 
 public class CraftableLayout extends LinearLayout {
-    CraftableRecyclerView mRecyclerView;
+    CraftableSwitcher mSwitcher;
     NavigationTextView mTextView;
 
     public CraftableLayout( Context context ) {
@@ -31,8 +31,8 @@ public class CraftableLayout extends LinearLayout {
     }
 
     public void onCreate() {
-        mRecyclerView = ( CraftableRecyclerView ) findViewById( R.id.gridview_craftables );
-        mRecyclerView.create();
+        mSwitcher = ( CraftableSwitcher ) findViewById( R.id.switcher_craftables );
+        mSwitcher.onCreate();
 
         mTextView = ( NavigationTextView ) findViewById( R.id.textview_navigation_hierarchy );
         mTextView.create();
@@ -40,20 +40,20 @@ public class CraftableLayout extends LinearLayout {
 
     public void onResume() {
         mTextView.resume();
-        mRecyclerView.resume();
+        mSwitcher.onResume();
     }
 
     public void onPause() {
         mTextView.pause();
-        mRecyclerView.pause();
+        mSwitcher.onPause();
     }
 
     public void onDestroy() {
         mTextView.destroy();
-        mRecyclerView.destroy();
+        mSwitcher.onDestroy();
     }
 
     public void onSearch( String query ) {
-        mRecyclerView.getAdapter().searchData( query );
+        mSwitcher.onSearch( query );
     }
 }
