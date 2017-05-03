@@ -29,6 +29,6 @@
     <dimen name="gridview_item_padding">2dp</dimen>
 
     <!-- GridView: Column/Row Counts -->
-    <integer name="gridview_column_count">5</integer>
+    <integer name="gridview_column_count">4</integer>
 
 </resources>
