@@ -9,8 +9,8 @@
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_padding"
         android:layout_weight="1"
-        android:layout_marginEnd="@dimen/detail_padding"
         android:background="@drawable/frame"
         android:onClick="RemoveAndFinish"
         android:text="@string/content_detail_remove_button"/>
@@ -20,10 +20,10 @@
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_padding"
         android:layout_weight="1"
-        android:layout_marginStart="@dimen/detail_padding"
-        android:onClick="SaveAndFinish"
         android:background="@drawable/frame"
+        android:onClick="SaveAndFinish"
         android:text="@string/content_detail_save_button"/>
 
 </LinearLayout>

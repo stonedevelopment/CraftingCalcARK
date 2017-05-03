@@ -11,12 +11,43 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="AppTheme.SettingsDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.Settings">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/colorWhite</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.NewSettings">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <!--<item name="android:textColorTertiary">@color/colorAccent</item>-->
+    </style>
+
+    <style name="AppTheme.NoActionBar.Splash">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay">
+    </style>
+
+    <style name="AppTheme.PopupOverlay">
+    </style>
+
     <style name="AppTheme.Text">
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
@@ -28,54 +59,41 @@
     <style name="AppTheme.Text.DisplayCase"/>
 
     <style name="AppTheme.Text.DisplayCase.Hierarchy">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <!--<item name="android:textSize">@dimen/text_size_small</item>-->
     </style>
 
     <style name="AppTheme.Text.Engram">
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fontFamily">sans-serif-smallcaps</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <!--<item name="android:textSize">@dimen/text_size_small</item>-->
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTheme.Text.Engram.Name">
+        <item name="android:ellipsize">marquee</item>
+        <!--<item name="android:background">@color/backgroundQueue_50</item>-->
         <item name="android:maxLines">3</item>
     </style>
 
     <style name="AppTheme.Text.Engram.Quantity">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <!--<item name="android:background">@color/backgroundQueue_50</item>-->
+        <!--<item name="android:textSize">@dimen/text_size_medium</item>-->
         <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.Text.Engram.Queue"/>
-
-    <style name="AppTheme.Text.Engram.Queue.Name">
-        <item name="android:maxLines">3</item>
-        <item name="android:text">@string/content_detail_mock_text_name</item>
-    </style>
-
-    <style name="AppTheme.Text.Engram.Queue.Quantity">
-        <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:text">@string/content_detail_mock_text_quantity</item>
     </style>
 
     <style name="AppTheme.Text.Resource">
-        <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fontFamily">sans-serif-smallcaps</item>
+        <!--<item name="android:textSize">@dimen/text_size_small</item>-->
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTheme.Text.Resource.Name">
+        <item name="android:ellipsize">marquee</item>
         <item name="android:maxLines">3</item>
     </style>
 
     <style name="AppTheme.Text.Resource.Quantity">
         <item name="android:textAlignment">textEnd</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:background">@color/backgroundQueue_50</item>
+        <!--<item name="android:textSize">@dimen/text_size_medium</item>-->
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
@@ -87,12 +105,12 @@
     </style>
 
     <style name="AppTheme.Text.Detail.Category">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <!--<item name="android:textSize">@dimen/text_size_small</item>-->
         <item name="android:text">@string/content_detail_mock_text_category</item>
     </style>
 
     <style name="AppTheme.Text.Detail.DLC">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <!--<item name="android:textSize">@dimen/text_size_small</item>-->
         <item name="android:text">@string/content_detail_mock_text_dlc</item>
     </style>
 
@@ -113,7 +131,6 @@
 
     <style name="AppTheme.Text.Detail.Resource">
         <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:fontFamily">sans-serif-smallcaps</item>
     </style>
 
     <style name="AppTheme.Text.Detail.Resource.Name"/>
@@ -124,30 +141,12 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-
     <style name="AppTheme.Text.Picker">
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
     <style name="AppTheme.Text.UpdateStatus">
-        <item name="android:textSize">@dimen/text_size_extra_small</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.Splash">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay">
-    </style>
-
-    <style name="AppTheme.PopupOverlay">
+        <!--<item name="android:textSize">@dimen/text_size_extra_small</item>-->
     </style>
 
     <style name="AlertDialogCustom" parent="@style/Theme.AppCompat.Dialog.Alert">

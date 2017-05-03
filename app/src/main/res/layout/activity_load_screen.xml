@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:max="1"
-        android:padding="@dimen/detail_padding"/>
+        android:padding="@dimen/layout_padding"/>
 
     <TextView
         android:id="@+id/content_init_status_text"
@@ -20,8 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="@dimen/detail_padding"
-        android:paddingEnd="@dimen/detail_padding"
-        android:paddingStart="@dimen/detail_padding"/>
+        android:padding="@dimen/layout_padding"/>
 
 </RelativeLayout>

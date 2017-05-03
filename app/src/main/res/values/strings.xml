@@ -64,6 +64,7 @@
     <!-- Strings used with the MainActivity layout -->
     <string name="content_main_clear_queue">Clear Queue</string>
     <string name="content_main_calculate_resources">Calculate</string>
+    <string name="content_main_button_view_craftables">Back to Engrams</string>
 
     <!-- Strings used with the DetailActivity layout -->
     <string name="content_detail_save_button">Save and Close</string>
@@ -334,5 +335,6 @@
     <string name="action_title_remove_ads">Remove Ads</string>
     <string name="detail_content_save_button_add_to_queue">Add to Queue</string>
     <string name="detail_content_save_button_update_queue">Update Queue</string>
+    <string name="content_main_button_view_inventory">View Inventory</string>
 
 </resources>

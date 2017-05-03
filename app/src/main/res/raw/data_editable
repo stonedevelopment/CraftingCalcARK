@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "256.1",
+    "version": "256.2",
     "changelog": {
+      "256.2": "Removed Refined from Industrial Grill.",
       "256.1": "Updated Cannon Ball's composition.",
       "256.0": "Added Engrams: Element, Element Shards, Saddles(Equus, Iquanodon, Mosasaur Tek), Kibble (Troodon, Pegomastax, Moschops, Allosaurus, Tapejara, Therizinosaurus) Structures (Tek Teleporter, Tek Generator, Vacuum Compartment/Moonpool) Added Resources: Element Shards, Eggs (Troodon, Pegomastax, Moschops, Allosaurus, Therizinosaurus, Iquanodon)",
       "255.5": "Updated Charcoal to not be crafted at Industrial Grill",
@@ -1101,7 +1102,6 @@
         "Chemistry Bench",
         "Cooking Pot",
         "Industrial Forge",
-        "Industrial Grill",
         "Mortar and Pestle",
         "Refining Forge",
         "Compost Bin",

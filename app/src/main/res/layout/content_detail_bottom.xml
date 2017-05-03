@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:paddingTop="@dimen/detail_padding">
+              android:paddingTop="@dimen/layout_padding">
 
     <include
         layout="@layout/content_detail_number_picker"
@@ -15,10 +15,8 @@
         android:id="@+id/resourceList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/display_case_container_layout_padding"
-        android:layout_marginTop="@dimen/display_case_container_layout_padding"
         android:background="@drawable/frame_switcher_main"
-        android:padding="@dimen/display_case_container_layout_padding"/>
+        android:padding="@dimen/layout_padding"/>
 
     <include
         layout="@layout/content_detail_save_remove_buttons"

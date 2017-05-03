@@ -3,55 +3,32 @@
 
     <string name="dimens">large</string>
 
-    <dimen name="text_size_extra_small">16sp</dimen>
-    <dimen name="text_size_small">18sp</dimen>
-    <dimen name="text_size_medium">20sp</dimen>
-    <dimen name="text_size_large">26sp</dimen>
-    <dimen name="text_size_extra_large">28sp</dimen>
+    <!-- General Layout -->
 
-    <integer name="weight_top_container">45</integer>
-    <integer name="weight_bottom_container">55</integer>
+    <!-- General Layout: Padding -->
+    <dimen name="layout_padding">2dp</dimen>
 
-    <!-- DisplayCase: Grid Columns/Rows -->
-    <integer name="gridview_column_count">5</integer>
+    <!-- General Layout: Text Sizes -->
+    <!--<dimen name="text_size_extra_small">14sp</dimen>-->
+    <!--<dimen name="text_size_small">16sp</dimen>-->
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="text_size_extra_large">26sp</dimen>
 
-    <!-- DisplayCase: Hierarchy -->
-    <dimen name="display_case_hierarchy_indention">8dp</dimen>
-    <!--<dimen name="display_case_hierarchy_text_size">16sp</dimen>-->
+    <!-- GridView -->
 
-    <!-- DisplayCase: Padding -->
-    <dimen name="display_case_container_layout_padding">4dp</dimen>
-    <dimen name="display_case_container_layout_corner_radius">8dp</dimen>
+    <!-- GridView: Container -->
 
-    <!-- DisplayCase: ViewHolders -->
-    <dimen name="gridview_item_padding">4dp</dimen>
-    <dimen name="display_case_view_holder_corner_radius">8dp</dimen>
+    <!-- GridView: Container: Padding -->
+    <dimen name="gridview_container_padding">2dp</dimen>
+    <dimen name="gridview_container_stroke_weight">2dp</dimen>
 
-    <!-- DisplayCase: ViewHolders: Text Sizes -->
-    <!--<dimen name="display_case_grid_view_holder_quantity_text_size">32sp</dimen>-->
-    <!--<dimen name="display_case_grid_view_holder_name_text_size">16sp</dimen>-->
+    <!-- GridView: Item -->
 
-    <!-- CraftingQueue: ViewHolders -->
-    <dimen name="crafting_queue_grid_view_holder_size">96dp</dimen>
-    <dimen name="crafting_queue_grid_view_holder_padding">4dp</dimen>
-    <dimen name="crafting_queue_grid_view_holder_corner_radius">8dp</dimen>
+    <!-- GridView: Item: Padding -->
+    <dimen name="gridview_item_padding">2dp</dimen>
 
-    <!-- CraftingQueue: ViewHolders: Text Sizes -->
-    <!--<dimen name="crafting_queue_grid_view_holder_quantity_text_size">32sp</dimen>-->
-    <!--<dimen name="crafting_queue_grid_view_holder_name_text_size">16sp</dimen>-->
-
-    <!-- ViewHolder for Resources -->
-    <dimen name="resource_view_holder_padding">8dp</dimen>
-    <dimen name="resource_view_holder_thumbnail_size">36dp</dimen>
-    <!--<dimen name="resource_view_holder_text_size">20sp</dimen>-->
-
-    <!-- DetailActivity -->
-    <dimen name="detail_padding">8dp</dimen>
-    <dimen name="detail_thumbnail_size">192dp</dimen>
-
-    <!--<dimen name="detail_name_text_size">32sp</dimen>-->
-    <!--<dimen name="detail_category_text_size">16sp</dimen>-->
-    <!--<dimen name="detail_description_text_size">20sp</dimen>-->
-    <!--<dimen name="detail_number_picker_text_size">20sp</dimen>-->
+    <!-- GridView: Column/Row Counts -->
+    <integer name="gridview_column_count">6</integer>
 
 </resources>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:adjustViewBounds="true"
-        android:padding="@dimen/resource_view_holder_padding"/>
+        android:padding="@dimen/gridview_item_padding"/>
 
     <TextView
         android:id="@+id/resource_list_nameText"
@@ -18,8 +18,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/resource_view_holder_padding"
-        android:layout_weight="7"/>
+        android:layout_marginStart="@dimen/gridview_item_padding"
+        android:layout_weight="6"/>
 
     <TextView
         android:id="@+id/resource_list_quantityText"
@@ -27,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
-        android:layout_marginEnd="@dimen/resource_view_holder_padding"
-        android:layout_weight="2"/>
+        android:layout_marginEnd="@dimen/gridview_item_padding"
+        android:layout_weight="3"/>
 
 </LinearLayout>

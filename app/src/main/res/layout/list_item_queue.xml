@@ -13,7 +13,7 @@
 
     <TextView
         android:id="@+id/name_view"
-        style="@style/AppTheme.Text.Engram.Queue.Name"
+        style="@style/AppTheme.Text.Engram.Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/quantity_view"
-        style="@style/AppTheme.Text.Engram.Queue.Quantity"
+        style="@style/AppTheme.Text.Engram.Quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

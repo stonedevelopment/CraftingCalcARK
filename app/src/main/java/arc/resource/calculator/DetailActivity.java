@@ -69,13 +69,13 @@ public class DetailActivity extends AppCompatActivity
             long id = getIntent().getExtras().getLong( REQUEST_ID );
             setShowcase( new Showcase( getApplicationContext(), id ) );
 
-            ImageView imageView = ( ImageView ) findViewById( R.id.engram_detail_imageView );
+            ImageView imageView = ( ImageView ) findViewById( R.id.imageView );
             imageView.setContentDescription( "Image of " + getShowcase().getName() );
 
             String imagePath = "file:///android_asset/" + getShowcase().getImagePath();
             Picasso.with( getApplicationContext() ).load( imagePath ).into( imageView );
 
-            TextView nameText = ( TextView ) findViewById( R.id.engram_detail_nameText );
+            TextView nameText = ( TextView ) findViewById( R.id.textView_name );
             nameText.setText( getShowcase().getName() );
 
             Button decreaseButtonBy10 = ( Button ) findViewById( R.id.decreaseButtonBy10 );
@@ -122,7 +122,7 @@ public class DetailActivity extends AppCompatActivity
                 saveButton.setText( R.string.detail_content_save_button_add_to_queue );
             }
 
-            TextView categoryText = ( TextView ) findViewById( R.id.engram_detail_categoryText );
+            TextView categoryText = ( TextView ) findViewById( R.id.textView_navigation );
             categoryText.setText( getShowcase().getCategoryHierarchy( getApplicationContext() ) );
 
             String craftedIn;
@@ -140,13 +140,13 @@ public class DetailActivity extends AppCompatActivity
                 level = String.format( getString( R.string.content_detail_required_level_format ),
                         getShowcase().getRequiredLevel() );
 
-            TextView descriptionText = ( TextView ) findViewById( R.id.engram_detail_descriptionText );
+            TextView descriptionText = ( TextView ) findViewById( R.id.textView_description );
             descriptionText.setText( getShowcase().getDescription() );
 
-            TextView stationText = ( TextView ) findViewById( R.id.engram_detail_stationText );
+            TextView stationText = ( TextView ) findViewById( R.id.textView_crafted_in );
             stationText.setText( String.format( getString( R.string.content_detail_station_and_level_format ), craftedIn, level ) );
 
-            TextView dlcText = ( TextView ) findViewById( R.id.engram_detail_dlcText );
+            TextView dlcText = ( TextView ) findViewById( R.id.textView_dlc_name );
             dlcText.setText( getShowcase().getDLCName() );
 
             updateQuantityText();

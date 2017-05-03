@@ -7,5 +7,6 @@
     <color name="backgroundCraftable">#383838</color>
     <color name="backgroundInventory">#383838</color>
     <color name="backgroundQueue">#969696</color>
+    <color name="backgroundQueue_50">#64002e35</color>
     <color name="backgroundTranslucent">#00000000</color>
 </resources>
