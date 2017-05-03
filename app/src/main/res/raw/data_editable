@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "256.2",
+    "version": "256.3",
     "changelog": {
+      "256.3": "Updated Vault with correct composition.",
       "256.2": "Removed Refined from Industrial Grill.",
       "256.1": "Updated Cannon Ball's composition.",
       "256.0": "Added Engrams: Element, Element Shards, Saddles(Equus, Iquanodon, Mosasaur Tek), Kibble (Troodon, Pegomastax, Moschops, Allosaurus, Tapejara, Therizinosaurus) Structures (Tek Teleporter, Tek Generator, Vacuum Compartment/Moonpool) Added Resources: Element Shards, Eggs (Troodon, Pegomastax, Moschops, Allosaurus, Therizinosaurus, Iquanodon)",
@@ -24722,19 +24723,19 @@
       "composition": [
         {
           "resource_id": "Oil",
-          "quantity": 30
+          "quantity": 70
         },
         {
           "resource_id": "Polymer",
-          "quantity": 60
+          "quantity": 90
         },
         {
           "resource_id": "Metal Ingot",
-          "quantity": 300
+          "quantity": 500
         },
         {
           "resource_id": "Cementing Paste",
-          "quantity": 60
+          "quantity": 100
         }
       ],
       "station": [

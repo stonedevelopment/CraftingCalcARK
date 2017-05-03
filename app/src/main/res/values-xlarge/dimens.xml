@@ -6,7 +6,7 @@
     <!-- General Layout -->
 
     <!-- General Layout: Padding -->
-    <dimen name="layout_padding">2dp</dimen>
+    <dimen name="layout_padding">4dp</dimen>
 
     <!-- General Layout: Text Sizes -->
     <!--<dimen name="text_size_extra_small">20sp</dimen>-->
@@ -20,15 +20,15 @@
     <!-- GridView: Container -->
 
     <!-- GridView: Container: Padding -->
-    <dimen name="gridview_container_padding">2dp</dimen>
+    <dimen name="gridview_container_padding">4dp</dimen>
     <dimen name="gridview_container_stroke_weight">2dp</dimen>
 
     <!-- GridView: Item -->
 
     <!-- GridView: Item: Padding -->
-    <dimen name="gridview_item_padding">2dp</dimen>
+    <dimen name="gridview_item_padding">4dp</dimen>
 
     <!-- GridView: Column/Row Counts -->
-    <integer name="gridview_column_count">5</integer>
+    <integer name="gridview_column_count">6</integer>
 
 </resources>
