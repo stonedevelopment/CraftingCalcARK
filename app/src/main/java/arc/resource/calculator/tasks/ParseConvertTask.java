@@ -155,7 +155,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             JSONObject oldObject = new JSONObject( jsonString );
 
             JSONObject json = oldObject.getJSONObject( JSON );
-            String oldVersion = PrefsUtil.getInstance().getJSONVersion();
+            String oldVersion = PrefsUtil.getInstance( mContext ).getJSONVersion();
             String newVersion = json.getString( COLUMN_VERSION );
 
             // now, let's check if we even need to update.

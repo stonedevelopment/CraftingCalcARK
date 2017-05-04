@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LongSparseArray;
 
 import org.json.JSONArray;
@@ -37,8 +38,7 @@ public class CraftingQueue {
     private QueueMap mQueue;
     private static QueueAdapter.Observer mViewObserver;
 
-    private CraftingQueue( Context context, QueueAdapter.Observer observer ) {
-        setObserver( observer );
+    private CraftingQueue() {
         setQueue( new QueueMap() );
 
         PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
@@ -48,30 +48,21 @@ public class CraftingQueue {
                 if ( dlcValueChange )
                     clearQueue();
             }
-
-            @Override
-            public void onSavePreferencesRequested() {
-                saveQueueToPrefs();
-            }
         } );
-
-        fetchData( context );
-    }
-
-    public static CraftingQueue createInstance( Context context, QueueAdapter.Observer viewObserver ) {
-        sInstance = new CraftingQueue( context.getApplicationContext(), viewObserver );
-
-        return sInstance;
     }
 
     public static CraftingQueue getInstance() {
+        if ( sInstance == null )
+            sInstance = new CraftingQueue();
+
         return sInstance;
     }
 
     public void resume() {
     }
 
-    public void pause() {
+    public void pause( Context context ) {
+        saveQueueToPrefs( context );
     }
 
     public void destroy() {
@@ -90,7 +81,7 @@ public class CraftingQueue {
         return mViewObserver;
     }
 
-    private void setObserver( QueueAdapter.Observer observer ) {
+    public void setObserver( QueueAdapter.Observer observer ) {
         mViewObserver = observer;
     }
 
@@ -143,7 +134,8 @@ public class CraftingQueue {
         updateCraftable( position, craftable );
 
         // notify list adapter of changes
-        getObserver().notifyItemChanged( position );
+        if ( getObserver() != null )
+            getObserver().notifyItemChanged( position );
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
@@ -161,7 +153,8 @@ public class CraftingQueue {
             updateCraftable( position, craftable );
 
             // notify list adapter of changes
-            getObserver().notifyItemChanged( position );
+            if ( getObserver() != null )
+                getObserver().notifyItemChanged( position );
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
@@ -184,7 +177,8 @@ public class CraftingQueue {
                 updateCraftable( position, craftable );
 
                 // notify list adapter of changes
-                getObserver().notifyItemChanged( position );
+                if ( getObserver() != null )
+                    getObserver().notifyItemChanged( position );
 
                 // notify outside listeners of changes
                 QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
@@ -203,7 +197,9 @@ public class CraftingQueue {
             insert( QueryForCraftable( context, id, quantity ) );
         } catch ( Exception e ) {
             // notify ViewSwitcher of error
-            getObserver().notifyExceptionCaught( e );
+            Log.e( TAG, "insert: ", e );
+            if ( getObserver() != null )
+                getObserver().notifyExceptionCaught( e );
         }
     }
 
@@ -215,11 +211,12 @@ public class CraftingQueue {
         getQueue().sort();
 
         // retrieve position, after sorted
-        int position = getPosition( craftable.getId() );
+//        int position = getPosition( craftable.getId() );
 
         // notify list adapter of changes
 //        getObserver().notifyItemInserted( position );
-        getObserver().notifyDataSetPopulated();
+        if ( getObserver() != null )
+            getObserver().notifyDataSetPopulated();
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
@@ -233,13 +230,15 @@ public class CraftingQueue {
 
         if ( getQueue().size() > 0 ) {
             // notify list adapter of changes
-            getObserver().notifyItemRemoved( position );
+            if ( getObserver() != null )
+                getObserver().notifyItemRemoved( position );
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyItemRemoved( id );
         } else {
             // notify ViewSwitcher of empty status
-            getObserver().notifyDataSetEmpty();
+            if ( getObserver() != null )
+                getObserver().notifyDataSetEmpty();
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyDataSetEmpty();
@@ -257,14 +256,15 @@ public class CraftingQueue {
         removeAllCraftables();
 
         // notify ViewSwitcher of empty status
-        getObserver().notifyDataSetEmpty();
+        if ( getObserver() != null )
+            getObserver().notifyDataSetEmpty();
 
         // notify outside listeners of changes
         QueueObserver.getInstance().notifyDataSetEmpty();
     }
 
-    private void saveQueueToPrefs() {
-        PrefsUtil.getInstance().saveCraftingQueueJSONString( convertQueueToJSONString() );
+    private void saveQueueToPrefs( Context context ) {
+        PrefsUtil.getInstance( context ).saveCraftingQueueJSONString( convertQueueToJSONString() );
     }
 
     private String convertQueueToJSONString() {
@@ -287,13 +287,13 @@ public class CraftingQueue {
         }
     }
 
-    private LongSparseArray<Integer> convertJSONStringToQueue() {
-        String jsonString = PrefsUtil.getInstance().getCraftingQueueJSONString();
-
-        if ( jsonString == null )
-            return new LongSparseArray<>( 0 );
-
+    private LongSparseArray<Integer> convertJSONStringToQueue( Context context ) {
         try {
+            String jsonString = PrefsUtil.getInstance( context ).getCraftingQueueJSONString();
+
+            if ( jsonString == null )
+                return new LongSparseArray<>( 0 );
+
             JSONArray json = new JSONArray( jsonString );
 
             LongSparseArray<Integer> convertedQueueArray = new LongSparseArray<>( json.length() );
@@ -307,13 +307,13 @@ public class CraftingQueue {
             }
 
             return convertedQueueArray;
-        } catch ( JSONException e ) {
+        } catch ( Exception e ) {
             return new LongSparseArray<>( 0 );
         }
     }
 
     private QueueEngram QueryForCraftable( Context context, long engramId, int quantity ) throws Exception {
-        long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+        long dlc_id = PrefsUtil.getInstance( context ).getDLCPreference();
         Uri uri = DatabaseContract.EngramEntry.buildUriWithId( dlc_id, engramId );
 
         try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
@@ -334,7 +334,7 @@ public class CraftingQueue {
         }
     }
 
-    private void fetchData( Context context ) {
+    public void fetch( Context context ) {
         new FetchDataTask( context ).execute();
     }
 
@@ -351,7 +351,8 @@ public class CraftingQueue {
 
         @Override
         protected void onPreExecute() {
-            getObserver().notifyInitializing();
+            if ( getObserver() != null )
+                getObserver().notifyInitializing();
         }
 
         @Override
@@ -360,10 +361,13 @@ public class CraftingQueue {
                 if ( mTempQueueMap.size() > 0 ) {
                     setQueue( mTempQueueMap );
 
-                    getObserver().notifyDataSetPopulated();
+                    if ( getObserver() != null )
+                        getObserver().notifyDataSetPopulated();
+
                     QueueObserver.getInstance().notifyDataSetPopulated();
                 } else {
-                    getObserver().notifyDataSetEmpty();
+                    if ( getObserver() != null )
+                        getObserver().notifyDataSetEmpty();
                 }
             }
         }
@@ -372,7 +376,7 @@ public class CraftingQueue {
         protected Boolean doInBackground( Void... params ) {
 
             try {
-                LongSparseArray<Integer> savedQueue = convertJSONStringToQueue();
+                LongSparseArray<Integer> savedQueue = convertJSONStringToQueue( mContext );
 
                 if ( savedQueue.size() > 0 ) {
                     for ( int i = 0; i < savedQueue.size(); i++ ) {
@@ -387,7 +391,8 @@ public class CraftingQueue {
 
                 return true;
             } catch ( Exception e ) {
-                getObserver().notifyExceptionCaught( e );
+                if ( getObserver() != null )
+                    getObserver().notifyExceptionCaught( e );
 
                 return false;
             }
@@ -395,7 +400,7 @@ public class CraftingQueue {
         }
     }
 
-    public class QueueMap extends SortableMap {
+    private class QueueMap extends SortableMap {
         QueueMap() {
             super();
         }
@@ -413,50 +418,6 @@ public class CraftingQueue {
         @Override
         public Comparable getComparable( int position ) {
             return valueAt( position ).getName();
-        }
-    }
-
-    private class QueueSparseArray extends LongSparseArray<QueueEngram> {
-
-        /**
-         * Constructor that, by default, will set its element size to 0.
-         */
-        QueueSparseArray() {
-            super( 0 );
-        }
-
-        /**
-         * Constructor that sets its element size per the supplied amount.
-         *
-         * @param size Amount of elements the array requires to allocate.
-         */
-        QueueSparseArray( int size ) {
-            super( size );
-        }
-
-        /**
-         * Sorts objects by Name
-         */
-        void sort() {
-            boolean swapped = true;
-            while ( swapped ) {
-                swapped = false;
-                for ( int i = 0; i < size() - 1; i++ ) {
-                    String first = valueAt( i ).getName();
-                    String second = valueAt( i + 1 ).getName();
-                    if ( first.compareTo( second ) > 0 ) {
-                        // swap
-                        QueueEngram temp = valueAt( i + 1 );
-                        setValueAt( i + 1, valueAt( i ) );
-                        setValueAt( i, temp );
-                        swapped = true;
-                    }
-                }
-            }
-        }
-
-        boolean contains( long key ) {
-            return !( indexOfKey( key ) < 0 );
         }
     }
 }

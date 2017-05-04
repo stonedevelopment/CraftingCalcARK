@@ -40,12 +40,14 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     public class Observer extends QueueRecyclerView.Observer {
         @Override
         public void notifyExceptionCaught( Exception e ) {
-            getObserver().notifyExceptionCaught( e );
+            if ( getObserver() != null )
+                getObserver().notifyExceptionCaught( e );
         }
 
         @Override
         public void notifyInitializing() {
-            getObserver().notifyInitializing();
+            if ( getObserver() != null )
+                getObserver().notifyInitializing();
         }
 
         @Override
@@ -54,7 +56,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             notifyDataSetChanged();
 
-            getObserver().notifyDataSetPopulated();
+            if ( getObserver() != null )
+                getObserver().notifyDataSetPopulated();
         }
 
         @Override
@@ -63,7 +66,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             notifyDataSetChanged();
 
-            getObserver().notifyDataSetEmpty();
+            if ( getObserver() != null )
+                getObserver().notifyDataSetEmpty();
         }
 
         public void notifyItemChanged( int position ) {
@@ -71,7 +75,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             if ( mDataSetEmpty ) {
                 mDataSetEmpty = false;
-                getObserver().notifyDataSetPopulated();
+                if ( getObserver() != null )
+                    getObserver().notifyDataSetPopulated();
             }
         }
 
@@ -80,7 +85,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             if ( mDataSetEmpty ) {
                 mDataSetEmpty = false;
-                getObserver().notifyDataSetPopulated();
+                if ( getObserver() != null )
+                    getObserver().notifyDataSetPopulated();
             }
         }
 
@@ -89,7 +95,9 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
             if ( getItemCount() == 0 ) {
                 mDataSetEmpty = true;
-                getObserver().notifyDataSetEmpty();
+
+                if ( getObserver() != null )
+                    getObserver().notifyDataSetEmpty();
             }
         }
     }
@@ -97,7 +105,10 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     public QueueAdapter( Context context, QueueRecyclerView.Observer observer ) {
         setContext( context );
         setObserver( observer );
-        setCraftingQueue( CraftingQueue.createInstance( getContext(), new Observer() ) );
+
+        setCraftingQueue( CraftingQueue.getInstance() );
+        getCraftingQueue().setObserver( new Observer() );
+        getCraftingQueue().fetch( context );
     }
 
     private Context getContext() {
@@ -129,7 +140,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     }
 
     public void pause() {
-        getCraftingQueue().pause();
+        getCraftingQueue().pause( getContext() );
     }
 
     public void destroy() {

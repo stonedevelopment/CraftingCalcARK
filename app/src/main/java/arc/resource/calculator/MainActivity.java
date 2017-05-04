@@ -110,8 +110,6 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         Log.d( TAG, "onPause: " );
 
-        PrefsObserver.getInstance().requestPreferencesSave();
-
         MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
         mainSwitcher.onPause();
 

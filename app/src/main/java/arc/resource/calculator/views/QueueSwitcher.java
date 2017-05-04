@@ -2,12 +2,13 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.util.DisplayUtil;
+import arc.resource.calculator.util.PrefsUtil;
 
 public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Listener {
     private static final String TAG = QueueSwitcher.class.getSimpleName();
@@ -61,7 +62,8 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
 
     public void onCreate() {
         // set size (height) to that of 1/5 screen's width
-        setLayoutParams( DisplayUtil.getInstance().getParams() );
+        int viewSize = PrefsUtil.getInstance( getContext() ).getCraftableViewSize();
+        setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, viewSize ) );
 
         // instantiate our textview for status updates
         mTextView = ( TextView ) findViewById( R.id.textview_queue );

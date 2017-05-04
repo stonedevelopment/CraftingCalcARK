@@ -88,7 +88,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         setContext( context );
         setObserver( observer );
 
-        PrefsUtil prefs = PrefsUtil.getInstance();
+        PrefsUtil prefs = PrefsUtil.getInstance( context );
 
         // Retrieve last viewed category level and parent from previous use
         setCurrentCategoryLevels( prefs.getLastCategoryLevel(), prefs.getLastCategoryParent() );
@@ -101,7 +101,9 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         setCategories( new CategoryMap() );
         setCraftables( new CraftableMap() );
 
-        mSearchQuery = null;
+        String searchQuery = PrefsUtil.getInstance( context ).getSearchQuery();
+        setSearchQuery( searchQuery );
+
         mNeedsUpdate = false;
 
         QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
@@ -153,12 +155,13 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 }
             }
         } );
+
         PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
             @Override
             public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
                 setCategoryLevelsToRoot();
 
-                mSearchQuery = null;
+                unsetSearchQuery();
 
                 if ( mViewStatus == VISIBLE ) {
                     refreshData();
@@ -166,16 +169,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     mNeedsFullUpdate = true;
                 }
             }
-
-            @Override
-            public void onSavePreferencesRequested() {
-                savePrefs();
-            }
         } );
 
         mViewStatus = INIT;
 
-        refreshData();
+        if ( getSearchQuery() == null )
+            refreshData();
+        else
+            searchData();
     }
 
     private Context getContext() {
@@ -192,6 +193,20 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private void setObserver( CraftableRecyclerView.Observer observer ) {
         mViewObserver = observer;
+    }
+
+    private String getSearchQuery() {
+        return mSearchQuery;
+    }
+
+    private void setSearchQuery( String query ) {
+        mSearchQuery = query;
+    }
+
+    private void unsetSearchQuery() {
+        setSearchQuery( null );
+
+        PrefsUtil.getInstance( getContext() ).saveSearchQuery( null );
     }
 
     private StationMap getStationMap() {
@@ -231,6 +246,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     public void pause() {
         mViewStatus = HIDDEN;
+        savePrefs();
     }
 
     public void destroy() {
@@ -239,15 +255,15 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private boolean isFilteredByCategory() {
-        return PrefsUtil.getInstance().getCategoryFilterPreference();
+        return PrefsUtil.getInstance( getContext() ).getCategoryFilterPreference();
     }
 
     private boolean isFilteredByStation() {
-        return PrefsUtil.getInstance().getStationFilterPreference();
+        return PrefsUtil.getInstance( getContext() ).getStationFilterPreference();
     }
 
     private boolean isFilteredByLevel() {
-        return PrefsUtil.getInstance().getLevelFilterPreference();
+        return PrefsUtil.getInstance( getContext() ).getLevelFilterPreference();
     }
 
     private boolean isCurrentCategoryLevelRoot() {
@@ -320,13 +336,15 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void savePrefs() {
-        PrefsUtil prefs = PrefsUtil.getInstance();
+        PrefsUtil prefs = PrefsUtil.getInstance( getContext() );
 
         if ( prefs.getCategoryFilterPreference() )
             prefs.saveCategoryLevels( getCurrentCategoryLevel(), getCurrentCategoryParent() );
 
         if ( prefs.getStationFilterPreference() )
             prefs.saveStationId( getCurrentStationId() );
+
+        prefs.saveSearchQuery( getSearchQuery() );
     }
 
     private long getCurrentStationId() {
@@ -338,7 +356,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private int getRequiredLevelPref() {
-        return PrefsUtil.getInstance().getRequiredLevel();
+        return PrefsUtil.getInstance( getContext() ).getRequiredLevel();
     }
 
     /**
@@ -589,13 +607,13 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         Category category = getCategory( position );
 
-        long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+        long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
         if ( position == 0 ) {
             // position 0 will always be a back category to the previous level
             long parent = category.getParent();
             if ( isCategoryParentLevelSearchRoot( parent ) ) {
                 // backing out of search view
-                mSearchQuery = null;
+                unsetSearchQuery();
             } else {
                 if ( isCategoryParentLevelStationRoot( parent ) ) {
                     // Back button to station list
@@ -756,7 +774,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         Log.d( TAG, "buildHierarchy: " );
 
         try {
-            long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+            long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
 
             StringBuilder builder = new StringBuilder();
             if ( mSearchQuery == null ) {
@@ -787,7 +805,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_engrams ) );
                 }
             } else {
-                builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_search_results_format ), ( getItemCount() - 1 ), mSearchQuery ) );
+                builder.append( String.format( getContext().getString( R.string.display_case_hierarchy_text_search_results_format ), ( getItemCount() - 1 ), getSearchQuery() ) );
             }
 
             NavigationObserver.getInstance().update( builder.toString() );
@@ -818,8 +836,12 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         new QueryForDataTask().execute();
     }
 
+    private void searchData() {
+        new SearchDataTask().execute();
+    }
+
     public void searchData( String searchQuery ) {
-        mSearchQuery = searchQuery;
+        setSearchQuery( searchQuery );
         new SearchDataTask().execute();
     }
 
@@ -837,7 +859,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         @Override
         protected void onPreExecute() {
-            getObserver().notifyInitializing();
+            if ( getObserver() != null )
+                getObserver().notifyInitializing();
         }
 
         @Override
@@ -849,7 +872,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
                 notifyDataSetChanged();
 
-                getObserver().notifyDataSetPopulated();
+                if ( getObserver() != null )
+                    getObserver().notifyDataSetPopulated();
 
                 mNeedsFullUpdate = false;
 
@@ -864,7 +888,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 if ( mException == null )
                     mException = new Exception( "Nullified Exception caught." );
 
-                getObserver().notifyExceptionCaught( mException );
+                if ( getObserver() != null )
+                    getObserver().notifyExceptionCaught( mException );
             }
         }
 
@@ -872,7 +897,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         protected Boolean doInBackground( Void... params ) {
 
             try {
-                long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+                long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
 
                 mTempStationMap = new StationMap();
                 mTempCategoryMap = new CategoryMap();
@@ -980,7 +1005,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         @Override
         protected void onPreExecute() {
-            getObserver().notifyInitializing();
+            if ( getObserver() != null )
+                getObserver().notifyInitializing();
         }
 
         @Override
@@ -994,27 +1020,29 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
                 mNeedsUpdate = false;
 
-                getObserver().notifyDataSetPopulated();
+                if ( getObserver() != null )
+                    getObserver().notifyDataSetPopulated();
 
                 buildHierarchy();
             } else {
                 if ( mException == null )
                     mException = new Exception( "Nullified Exception caught." );
 
-                getObserver().notifyExceptionCaught( mException );
+                if ( getObserver() != null )
+                    getObserver().notifyExceptionCaught( mException );
             }
         }
 
         @Override
         protected Boolean doInBackground( Void... params ) {
             try {
-                long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+                long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
 
                 Uri searchUri;
-                if ( mSearchQuery == null || mSearchQuery.equals( "" ) )
+                if ( getSearchQuery() == null || getSearchQuery().equals( "" ) )
                     searchUri = DatabaseContract.EngramEntry.buildUriWithDLCId( dlc_id );
                 else
-                    searchUri = DatabaseContract.EngramEntry.buildUriWithSearchQuery( dlc_id, mSearchQuery );
+                    searchUri = DatabaseContract.EngramEntry.buildUriWithSearchQuery( dlc_id, getSearchQuery() );
 
                 mTempCategoryMap = new CategoryMap();
 

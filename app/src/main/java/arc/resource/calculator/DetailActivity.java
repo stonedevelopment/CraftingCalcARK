@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
+import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.Showcase;
@@ -66,7 +67,12 @@ public class DetailActivity extends AppCompatActivity
             setContentView( R.layout.activity_detail );
             getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
+            // // FIXME: 5/4/2017 Quick workaround for phones that sleep in DetailActivity
+            if ( savedInstanceState != null )
+                FinishActivityWithoutResult();
+
             long id = getIntent().getExtras().getLong( REQUEST_ID );
+
             setShowcase( new Showcase( getApplicationContext(), id ) );
 
             ImageView imageView = ( ImageView ) findViewById( R.id.imageView );
@@ -157,9 +163,6 @@ public class DetailActivity extends AppCompatActivity
             recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
             recyclerView.setAdapter( getAdapter() );
 
-//            NestedScrollView scrollView = ( NestedScrollView ) findViewById( R.id.scrollView );
-//            scrollView.fullScroll( View.FOCUS_UP );
-
             mAdUtil = new AdUtil( this, R.id.content_detail );
             mAdUtil.init();
         } catch ( Exception e ) {
@@ -170,13 +173,23 @@ public class DetailActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
         mAdUtil.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
         mAdUtil.pause();
+    }
+
+    @Override
+    protected void onSaveInstanceState( Bundle outState ) {
+        outState.putLong( DatabaseContract.EngramEntry._ID, getShowcase().getId() );
+        outState.putInt( DatabaseContract.QueueEntry.COLUMN_QUANTITY, getShowcase().getQuantity() );
+
+        super.onSaveInstanceState( outState );
     }
 
     private void setShowcase( Showcase showcase ) {
@@ -275,8 +288,13 @@ public class DetailActivity extends AppCompatActivity
                 break;
         }
 
-        setResult( RESULT_OK, getIntent() );
+        setResult( RESULT_OK, returnIntent );
 
+        finish();
+    }
+
+    private void FinishActivityWithoutResult() {
+        setResult( RESULT_CANCELED, getIntent() );
         finish();
     }
 

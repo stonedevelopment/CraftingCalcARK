@@ -7,6 +7,7 @@ import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.PrefsObserver;
+import arc.resource.calculator.views.MainSwitcher;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -59,13 +60,15 @@ public class PrefsUtil {
 
     private String CraftingQueueKey;
 
-    private String CraftableThumbnailImageSizeKey;
+    private String CraftableViewSizeKey;
+    private String MainSwitcherScreenIdKey;
 
-    public static void createInstance( Context context ) {
-        sInstance = new PrefsUtil( context );
-    }
+    private String SearchQueryKey;
 
-    public static PrefsUtil getInstance() {
+    public static PrefsUtil getInstance( Context context ) {
+        if ( sInstance == null )
+            sInstance = new PrefsUtil( context );
+
         return sInstance;
     }
 
@@ -101,7 +104,11 @@ public class PrefsUtil {
 
         CraftingQueueKey = context.getString( R.string.pref_crafting_queue_key );
 
-        CraftableThumbnailImageSizeKey = context.getString( R.string.pref_craftable_image_size_key );
+        CraftableViewSizeKey = context.getString( R.string.pref_craftable_view_size_key );
+
+        MainSwitcherScreenIdKey = context.getString( R.string.pref_switcher_main_screen_id_key );
+
+        SearchQueryKey = context.getString( R.string.pref_search_query_key );
     }
 
     private String getPreference( String key, String defaultValue ) {
@@ -211,12 +218,20 @@ public class PrefsUtil {
         return getPreference( RequiredLevelKey, RequiredLevelDefaultValue );
     }
 
-    public int getCraftableThumbnailImageSize() {
-        return getPreference( CraftableThumbnailImageSizeKey, Util.NO_SIZE );
+    public int getCraftableViewSize() {
+        return getPreference( CraftableViewSizeKey, Util.NO_SIZE );
     }
 
-    public void saveCraftableThumbnailImageSize( int size ) {
-        editPreference( CraftableThumbnailImageSizeKey, size );
+    public int getMainSwitcherScreenId() {
+        return getPreference( MainSwitcherScreenIdKey, MainSwitcher.DEFAULT_SCREEN );
+    }
+
+    public String getSearchQuery() {
+        return getPreference( SearchQueryKey, null );
+    }
+
+    public void saveCraftableViewSize( int size ) {
+        editPreference( CraftableViewSizeKey, size );
     }
 
     public void saveCategoryLevels( long level, long parent ) {
@@ -291,5 +306,13 @@ public class PrefsUtil {
 
     private void saveRequiredLevelBackToDefault() {
         saveRequiredLevel( RequiredLevelDefaultValue );
+    }
+
+    public void saveMainSwitcherScreenId( int id ) {
+        editPreference( MainSwitcherScreenIdKey, id );
+    }
+
+    public void saveSearchQuery( String query ) {
+        editPreference( SearchQueryKey, query );
     }
 }

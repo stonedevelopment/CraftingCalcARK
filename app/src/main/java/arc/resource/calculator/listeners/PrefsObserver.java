@@ -14,11 +14,13 @@ public class PrefsObserver {
     private HashMap<String, Listener> mListeners;
 
     public static abstract class Listener {
-        public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
-            // do nothing
-        }
-
-        public void onSavePreferencesRequested() {
+        public void onPreferencesChanged(
+                boolean dlcValueChange,
+                boolean categoryPrefChange,
+                boolean stationPrefChange,
+                boolean levelPrefChange,
+                boolean levelValueChange,
+                boolean refinedPrefChange ) {
             // do nothing
         }
     }
@@ -46,12 +48,6 @@ public class PrefsObserver {
                                           boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
         for ( Listener listener : mListeners.values() ) {
             listener.onPreferencesChanged( dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
-        }
-    }
-
-    public void requestPreferencesSave() {
-        for ( Listener listener : mListeners.values() ) {
-            listener.onSavePreferencesRequested();
         }
     }
 }

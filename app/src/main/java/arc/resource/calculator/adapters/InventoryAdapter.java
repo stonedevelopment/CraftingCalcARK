@@ -240,7 +240,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         protected Boolean doInBackground( Void... params ) {
 
             try {
-                long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+                long dlc_id = PrefsUtil.getInstance(mContext).getDLCPreference();
 
                 CraftingQueue craftingQueue = CraftingQueue.getInstance();
 

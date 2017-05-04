@@ -25,7 +25,6 @@ import org.json.JSONObject;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.tasks.InitializationTask;
 import arc.resource.calculator.tasks.ParseConvertTask;
-import arc.resource.calculator.util.DisplayUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -104,7 +103,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                     case INIT:
                         updateStatusMessages( getString( R.string.initialization_init_event ) );
 
-                        PrefsUtil.createInstance( getApplicationContext() );
+                        PrefsUtil.getInstance( getApplicationContext() );
 
                         mListener.onEndEvent();
                         break;
@@ -277,9 +276,9 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         if ( mHasUpdate ) {
                             updateStatusMessages( getString( R.string.initialization_pref_event_started ) );
 
-                            PrefsUtil.getInstance().updateJSONVersion( mNewVersion );
-                            PrefsUtil.getInstance().saveCraftingQueueJSONString( null );
-                            PrefsUtil.getInstance().saveToDefault();
+                            PrefsUtil.getInstance( getApplicationContext() ).updateJSONVersion( mNewVersion );
+                            PrefsUtil.getInstance( getApplicationContext() ).saveCraftingQueueJSONString( null );
+                            PrefsUtil.getInstance( getApplicationContext() ).saveToDefault();
 
                             updateStatusMessages( getString( R.string.initialization_pref_event_finished ) );
                         }
@@ -295,7 +294,8 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         int width = getResources().getDisplayMetrics().widthPixels;
                         int numCols = getResources().getInteger( R.integer.gridview_column_count );
 
-                        DisplayUtil.getInstance().setImageSize( width / numCols );
+//                        DisplayUtil.getInstance().setImageSize( width / numCols );
+                        PrefsUtil.getInstance( getApplicationContext() ).saveCraftableViewSize( width / numCols );
 
                         // trigger next event (end of events?)
                         mListener.onEndEvent();

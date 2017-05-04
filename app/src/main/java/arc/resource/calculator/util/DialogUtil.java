@@ -123,7 +123,7 @@ public class DialogUtil {
                                 "Xbox Live:\n  MasterxOfxNone\n\n" +
                                 "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
                                 "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
-                                "JSON File Version: " + PrefsUtil.getInstance().getJSONVersion() + "\n\n" +
+                                "JSON File Version: " + PrefsUtil.getInstance( context ).getJSONVersion() + "\n\n" +
                                 "Screen Size: " + context.getString( R.string.dimens ) );
 
         return builder.create();

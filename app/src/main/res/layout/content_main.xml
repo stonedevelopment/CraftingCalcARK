@@ -61,7 +61,7 @@
 
         </arc.resource.calculator.views.CraftableLayout>
 
-        <LinearLayout
+        <arc.resource.calculator.views.InventoryLayout
             android:id="@+id/layout_inventory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -95,7 +95,7 @@
 
             </arc.resource.calculator.views.InventorySwitcher>
 
-        </LinearLayout>
+        </arc.resource.calculator.views.InventoryLayout>
 
     </arc.resource.calculator.views.MainSwitcher>
 

@@ -4,18 +4,20 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.util.PrefsUtil;
 
 public class MainSwitcher extends ViewSwitcher {
     private static final String TAG = MainSwitcher.class.getSimpleName();
 
-    CraftableLayout mCraftableLayout;
-    LinearLayout mInventoryLayout;
+    public static final int CRAFTABLE_SCREEN = 0;
+    public static final int INVENTORY_SCREEN = 1;
+    public static final int DEFAULT_SCREEN = CRAFTABLE_SCREEN;
 
-    InventorySwitcher mInventorySwitcher;
+    CraftableLayout mCraftableLayout;
+    InventoryLayout mInventoryLayout;
 
     public MainSwitcher( Context context ) {
         super( context );
@@ -33,43 +35,33 @@ public class MainSwitcher extends ViewSwitcher {
         viewCraftables.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick( View v ) {
-                // toggle view to craftables
-                showNext();
-
-                // onPause inventory view
-                mInventorySwitcher.onPause();
-
-                // onResume craftable view
-                mCraftableLayout.onResume();
+                showCraftableScreen();
             }
         } );
 
-        mInventoryLayout = ( LinearLayout ) findViewById( R.id.layout_inventory );
-
-        mInventorySwitcher = ( InventorySwitcher ) findViewById( R.id.switcher_inventory );
-        mInventorySwitcher.onCreate();
+        mInventoryLayout = ( InventoryLayout ) findViewById( R.id.layout_inventory );
+        mInventoryLayout.onCreate();
 
         Button viewInventory = ( Button ) findViewById( R.id.button_view_inventory );
         viewInventory.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick( View v ) {
-                // toggle view to inventory
-                showNext();
-
-                // onPause craftable view
-                mCraftableLayout.onPause();
-
-                // onResume inventory view
-                mInventorySwitcher.onResume();
+                showInventoryScreen();
             }
         } );
+
+        int screenId = PrefsUtil.getInstance( getContext() ).getMainSwitcherScreenId();
+
+        if ( screenId == INVENTORY_SCREEN ) {
+            showInventoryScreen();
+        }
     }
 
     public void onPause() {
         if ( isCurrentView( mCraftableLayout.getId() ) ) {
             mCraftableLayout.onPause();
         } else {
-            mInventorySwitcher.onPause();
+            mInventoryLayout.onPause();
         }
     }
 
@@ -77,28 +69,47 @@ public class MainSwitcher extends ViewSwitcher {
         if ( isCurrentView( mCraftableLayout.getId() ) ) {
             mCraftableLayout.onResume();
         } else {
-            mInventorySwitcher.onResume();
+            mInventoryLayout.onResume();
         }
     }
 
     public void onDestroy() {
         mCraftableLayout.onDestroy();
-        mInventorySwitcher.onDestroy();
+        mInventoryLayout.onDestroy();
     }
 
     public void onSearch( String searchQuery ) {
         // toggle craftable recyclerView back if not current view, then execute search
-        if ( !isCurrentView( mCraftableLayout.getId() ) ) {
-            showNext();
-
-            mInventorySwitcher.onPause();
-            mCraftableLayout.onResume();
-        }
+        showCraftableScreen();
 
         mCraftableLayout.onSearch( searchQuery );
     }
 
     private boolean isCurrentView( int id ) {
         return getCurrentView().getId() == id;
+    }
+
+    public void showInventoryScreen() {
+        // toggle view to inventory
+        if ( !isCurrentView( mInventoryLayout.getId() ) )
+            showNext();
+
+        // onPause craftable view
+        mCraftableLayout.onPause();
+
+        // onResume inventory view
+        mInventoryLayout.onResume();
+    }
+
+    public void showCraftableScreen() {
+        // toggle view to craftables
+        if ( !isCurrentView( mCraftableLayout.getId() ) )
+            showNext();
+
+        // onPause inventory view
+        mInventoryLayout.onPause();
+
+        // onResume craftable view
+        mCraftableLayout.onResume();
     }
 }

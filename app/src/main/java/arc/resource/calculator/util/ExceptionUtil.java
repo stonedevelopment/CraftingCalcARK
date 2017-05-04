@@ -11,14 +11,14 @@ import java.util.Arrays;
 
 public class ExceptionUtil {
 
-    public static void SendErrorReportWithAlertDialog( Context context, String tag, final Exception e ) {
+    public static void SendErrorReportWithAlertDialog( final Context context, String tag, final Exception e ) {
         SendErrorReport( tag, e );
 
         DialogUtil.Error( context, new DialogUtil.Callback() {
             @Override
             public void onOk() {
                 // call reset to defaults!
-                PrefsUtil.getInstance().saveToDefaultFullReset();
+                PrefsUtil.getInstance(context).saveToDefaultFullReset();
             }
 
             @Override
@@ -102,15 +102,19 @@ public class ExceptionUtil {
     }
 
     private static Bundle BuildErrorReportPreferencesBundle() {
-        PrefsUtil prefs = PrefsUtil.getInstance();
+        try {
+//            PrefsUtil prefs = PrefsUtil.getInstance();
 
-        Bundle bundle = new Bundle();
-        bundle.putBoolean( "filter_by_category", prefs.getCategoryFilterPreference() );
-        bundle.putBoolean( "filter_by_station", prefs.getStationFilterPreference() );
-        bundle.putBoolean( "filter_by_level", prefs.getLevelFilterPreference() );
-        bundle.putInt( "current_level", prefs.getRequiredLevel() );
-        bundle.putBoolean( "breakdown_resources", prefs.getRefinedFilterPreference() );
+            Bundle bundle = new Bundle();
+//            bundle.putBoolean( "filter_by_category", prefs.getCategoryFilterPreference() );
+//            bundle.putBoolean( "filter_by_station", prefs.getStationFilterPreference() );
+//            bundle.putBoolean( "filter_by_level", prefs.getLevelFilterPreference() );
+//            bundle.putInt( "current_level", prefs.getRequiredLevel() );
+//            bundle.putBoolean( "breakdown_resources", prefs.getRefinedFilterPreference() );
 
-        return bundle;
+            return bundle;
+        } catch ( Exception e ) {
+            return new Bundle();
+        }
     }
 }

@@ -19,6 +19,11 @@
     </style>
   </head>
   <body>
+    $ 1.3.6
+      % Version 1.3.6
+      _ 05/04/2017
+      * Fixed a fatal (yet common!) bug where if phone went to sleep. (Oops!)
+
     $ 1.3.5
       % Version 1.3.5
       _ 05/03/2017

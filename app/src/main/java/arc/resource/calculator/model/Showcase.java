@@ -39,7 +39,7 @@ public class Showcase {
     private ShowcaseEntry mShowcaseEntry;
 
     public Showcase( Context context, long _id ) throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
-        long dlc_id = PrefsUtil.getInstance().getDLCPreference();
+        long dlc_id = PrefsUtil.getInstance( context ).getDLCPreference();
 
         setContext( context );
         setShowcaseEntry( QueryForDetails( context, dlc_id, _id ) );

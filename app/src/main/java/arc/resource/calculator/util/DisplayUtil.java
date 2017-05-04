@@ -6,6 +6,8 @@ import android.widget.LinearLayout;
 public class DisplayUtil {
     private static final String TAG = DisplayUtil.class.getSimpleName();
 
+    public static final String BUNDLE_KEY = TAG;
+
     private static DisplayUtil sInstance;
 
     private int mViewSize = Util.NO_SIZE;
