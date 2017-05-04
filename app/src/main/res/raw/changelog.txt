@@ -22,7 +22,8 @@
     $ 1.3.6
       % Version 1.3.6
       _ 05/04/2017
-      * Fixed a fatal (yet common!) bug where if phone went to sleep. (Oops!)
+      * Fixed a fatal bug in some devices that crashed coming out of sleep mode.
+      ! May the 4th be with all of you. - Shane
 
     $ 1.3.5
       % Version 1.3.5
