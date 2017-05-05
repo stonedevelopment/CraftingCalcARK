@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -179,6 +178,24 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             searchData();
     }
 
+    @Override
+    public void registerAdapterDataObserver( RecyclerView.AdapterDataObserver observer ) {
+        try {
+            super.registerAdapterDataObserver( observer );
+        } catch ( IllegalStateException e ) {
+            // do nothing
+        }
+    }
+
+    @Override
+    public void unregisterAdapterDataObserver( RecyclerView.AdapterDataObserver observer ) {
+        try {
+            super.unregisterAdapterDataObserver( observer );
+        } catch ( IllegalStateException e ) {
+            // do nothing
+        }
+    }
+
     private Context getContext() {
         return mContext;
     }
@@ -320,10 +337,12 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void setCategoryLevelsToRoot() {
-        if ( isFilteredByStation() )
+        if ( isFilteredByStation() ) {
+            setCurrentStationId( STATION_ROOT );
             setCurrentCategoryLevelsToStationRoot();
-        else
+        } else {
             setCurrentCategoryLevelsToRoot();
+        }
     }
 
     private void setCurrentCategoryLevelsToRoot() {
@@ -331,7 +350,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void setCurrentCategoryLevelsToStationRoot() {
-        setCurrentStationId( STATION_ROOT );
         setCurrentCategoryLevels( STATION_ROOT, STATION_ROOT );
     }
 
@@ -456,7 +474,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         return getCraftableMap().valueAt( position );
     }
 
-    public void increaseQuantity( int position ) {
+    private void increaseQuantity( int position ) {
         CraftingQueue.getInstance().increaseQuantity( getCraftable( adjustPositionForCraftable( position ) ) );
     }
 
@@ -503,7 +521,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             notifyDataSetChanged();
     }
 
-    private CraftableMap queryForEngrams( Uri uri ) {
+    private CraftableMap queryForEngrams( Uri uri ) throws Exception {
         if ( uri == null )
             return new CraftableMap();
 
@@ -640,6 +658,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             setCurrentCategoryLevels( category.getId(), category.getParent() );
         }
 
+        savePrefs();
+
         refreshData();
     }
 
@@ -709,19 +729,15 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         return getStationMap().valueAt( position );
     }
 
-    private void changeStation( int position ) throws ExceptionUtil.PositionOutOfBoundsException {
-        if ( isStation( position ) ) {
-            Station station = getStation( position );
+    private void changeStation( int position ) {
+        Station station = getStation( position );
 
-            Log.d( TAG, "Changing station to [" + position + "] " + station.toString() );
+        setCurrentStationId( station.getId() );
+        setCurrentCategoryLevelsToRoot();
 
-            setCurrentStationId( station.getId() );
-            setCurrentCategoryLevelsToRoot();
+        savePrefs();
 
-            refreshData();
-        } else {
-            throw new ExceptionUtil.PositionOutOfBoundsException( position, getStationMap().size(), getStationMap().toString() );
-        }
+        refreshData();
     }
 
     private Station queryForStation( Uri uri )
@@ -771,15 +787,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void buildHierarchy() {
-        Log.d( TAG, "buildHierarchy: " );
 
         try {
             long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
 
             StringBuilder builder = new StringBuilder();
-            if ( mSearchQuery == null ) {
+            if ( getSearchQuery() == null ) {
                 if ( isFilteredByStation() ) {
-                    if ( isCurrentCategoryLevelStationRoot() ) {
+                    if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == STATION_ROOT ) {
                         builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_stations ) );
                     } else {
                         String name = queryForStation( DatabaseContract.StationEntry.buildUriWithId( dlc_id, getCurrentStationId() ) ).getName();
@@ -812,6 +827,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         } catch ( ExceptionUtil.CursorNullException | ExceptionUtil.CursorEmptyException e ) {
             ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
         }
+
     }
 
     private String buildCategoryHierarchy( Uri uri )
@@ -1163,8 +1179,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 }
             } catch ( ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e ) {
                 ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
-            } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
-                ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
             }
         }
 
@@ -1191,6 +1205,9 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private class StationMap extends SortableMap {
+        StationMap() {
+            super();
+        }
 
         @Override
         public Station valueAt( int position ) {
@@ -1204,6 +1221,9 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private class CategoryMap extends SortableMap {
+        CategoryMap() {
+            super();
+        }
 
         @Override
         public Category valueAt( int position ) {
@@ -1213,153 +1233,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         @Override
         public Comparable getComparable( int position ) {
             return valueAt( position ).getName();
-        }
-    }
-
-    private class CraftableSparseArray extends LongSparseArray<DisplayEngram> {
-
-        /**
-         * Constructor that, by default, will set its element size to 0.
-         */
-        CraftableSparseArray() {
-            super( 0 );
-        }
-
-        /**
-         * Constructor that sets its element size per the supplied amount.
-         *
-         * @param size Amount of elements the array requires to allocate.
-         */
-        CraftableSparseArray( int size ) {
-            super( size );
-        }
-
-        /**
-         * Sorts objects by Name
-         */
-        void sort() {
-            boolean swapped = true;
-            while ( swapped ) {
-                swapped = false;
-                for ( int i = 0; i < size() - 1; i++ ) {
-                    String first = valueAt( i ).getName();
-                    String second = valueAt( i + 1 ).getName();
-                    if ( first.compareTo( second ) > 0 ) {
-                        // swap
-                        DisplayEngram temp = valueAt( i + 1 );
-                        setValueAt( i + 1, valueAt( i ) );
-                        setValueAt( i, temp );
-                        swapped = true;
-                    }
-                }
-            }
-        }
-
-        boolean contains( long key ) {
-            return !( indexOfKey( key ) < 0 );
-        }
-    }
-
-    private class StationSparseArray extends LongSparseArray<Station> {
-
-        /**
-         * Constructor that, by default, will set its element size to 0.
-         */
-        StationSparseArray() {
-            super( 0 );
-        }
-
-        /**
-         * Constructor that sets its element size per the supplied amount.
-         *
-         * @param size Amount of elements the array requires to allocate.
-         */
-        StationSparseArray( int size ) {
-            super( size );
-        }
-
-        /**
-         * Sorts objects by Name
-         */
-        void sort() {
-            boolean swapped = true;
-            while ( swapped ) {
-                swapped = false;
-                for ( int i = 0; i < size() - 1; i++ ) {
-                    String first = valueAt( i ).getName();
-                    String second = valueAt( i + 1 ).getName();
-                    if ( first.compareTo( second ) > 0 ) {
-                        // swap
-                        Station temp = valueAt( i + 1 );
-                        setValueAt( i + 1, valueAt( i ) );
-                        setValueAt( i, temp );
-                        swapped = true;
-                    }
-                }
-            }
-        }
-
-        boolean contains( long key ) {
-            return !( indexOfKey( key ) < 0 );
-        }
-    }
-
-    private class CategorySparseArray extends LongSparseArray<Category> {
-
-        /**
-         * Constructor that, by default, will set its element size to 0.
-         */
-        CategorySparseArray() {
-            super( 0 );
-        }
-
-        /**
-         * Constructor that sets its element size per the supplied amount.
-         *
-         * @param size Amount of elements the array requires to allocate.
-         */
-        CategorySparseArray( int size ) {
-            super( size );
-        }
-
-        /**
-         * Sorts objects by Name, given a particular index to start with.
-         *
-         * @param index position in array to begin sort. This can be staggered due to Back Category remaining at 0.
-         */
-        void sort( int index ) {
-            boolean swapped = true;
-            while ( swapped ) {
-                swapped = false;
-
-                for ( int i = index; i < size() - 1; i++ ) {
-                    String first = valueAt( i ).getName();
-                    String second = valueAt( i + 1 ).getName();
-                    if ( first.compareTo( second ) > 0 ) {
-                        // swap
-                        Category temp = valueAt( i + 1 );
-                        setValueAt( i + 1, valueAt( i ) );
-                        setValueAt( i, temp );
-                        swapped = true;
-                    }
-                }
-            }
-        }
-
-        boolean contains( long key ) {
-            return !( indexOfKey( key ) < 0 );
-        }
-
-        void add( Category value ) {
-            if ( value != null )
-                append( value.getId(), value );
-        }
-
-        void addAll( CategorySparseArray array ) {
-            for ( int i = 0; i < array.size(); i++ ) {
-                Category value = array.valueAt( i );
-                add( value );
-            }
         }
     }
 }
