@@ -91,25 +91,27 @@ public class MainSwitcher extends ViewSwitcher {
 
     public void showInventoryScreen() {
         // toggle view to inventory
-        if ( !isCurrentView( mInventoryLayout.getId() ) )
+        if ( !isCurrentView( mInventoryLayout.getId() ) ) {
             showNext();
 
-        // onPause craftable view
-        mCraftableLayout.onPause();
+            // onPause craftable view
+            mCraftableLayout.onPause();
 
-        // onResume inventory view
-        mInventoryLayout.onResume();
+            // onResume inventory view
+            mInventoryLayout.onResume();
+        }
     }
 
     public void showCraftableScreen() {
         // toggle view to craftables
-        if ( !isCurrentView( mCraftableLayout.getId() ) )
+        if ( !isCurrentView( mCraftableLayout.getId() ) ) {
             showNext();
 
-        // onPause inventory view
-        mInventoryLayout.onPause();
+            // onPause inventory view
+            mInventoryLayout.onPause();
 
-        // onResume craftable view
-        mCraftableLayout.onResume();
+            // onResume craftable view
+            mCraftableLayout.onResume();
+        }
     }
 }

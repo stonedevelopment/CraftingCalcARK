@@ -19,6 +19,11 @@
     </style>
   </head>
   <body>
+    $ 1.3.7
+      % Version 1.3.7
+      _ 05/04/2017
+      * Fixed a fatal bug that occurred while searching. You can now search safely once again. :)
+
     $ 1.3.6
       % Version 1.3.6
       _ 05/04/2017
