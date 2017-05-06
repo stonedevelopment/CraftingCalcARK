@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "256.3",
+    "version": "257.0",
     "changelog": {
+      "257.0": "Added Cloning Chamber, Tek Turret, Tek Grenade, Megalodon Tek Saddle, Daeodon Saddle",
       "256.3": "Updated Vault with correct composition.",
       "256.2": "Removed Refined from Industrial Grill.",
       "256.1": "Updated Cannon Ball's composition.",
@@ -738,7 +739,8 @@
       "station": [
         "Self",
         "Smithy",
-        "Fabricator"
+        "Fabricator",
+        "Tek Replicator"
       ]
     },
     {
@@ -7095,6 +7097,45 @@
       ]
     },
     {
+      "name": "Cloning Chamber",
+      "description": "Enables you to generate clones of your creatures!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "cloning_chamber.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 5500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 550
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 800
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "name": "Cloth Boots",
       "description": "Hide-soled shoes provide some protection from the heat and cold, but only minimal protection from injuries.",
       "yield": 1,
@@ -8160,6 +8201,37 @@
         "Cooking Pot",
         "Industrial Cooker",
         "Cauldron"
+      ]
+    },
+    {
+      "name": "Daeodon Saddle",
+      "description": "Equip a Daeodon with this to ride it.",
+      "yield": 1,
+      "level": 59,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "daeodon_saddle.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 155
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Smithy"
       ]
     },
     {
@@ -13790,6 +13862,45 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Megalodon Tek Saddle",
+      "description": "Equip a Megalodon with this to ride it. Using requires learning the Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 5001,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/Tek\/",
+      "image_file": "megalodon_tek_saddle.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 370
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
       ]
     },
     {
@@ -22342,6 +22453,45 @@
       ]
     },
     {
+      "name": "Tek Turret",
+      "description": "Requires Tek Generator power. Consumes Element Shards while firing. Has a variety of smart-targeting configuration options.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_turret.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 50
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "name": "Tek Catwalk",
       "description": "A thin walkway for bridging areas together. Made from advanced Tek materials.",
       "yield": 1,
@@ -22755,6 +22905,49 @@
         {
           "resource_id": "Polymer",
           "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Grenade",
+      "description": "Sticks to targets with a powerful Tek Explosion after 5 seconds. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 304,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Explosive\/",
+      "image_file": "tek_grenade.png",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 60
         }
       ],
       "station": [

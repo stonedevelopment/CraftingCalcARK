@@ -58,7 +58,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     private static final String TAG = CraftableAdapter.class.getSimpleName();
 
     private static final long ROOT = 0;
-    private static final long STATION_ROOT = -1;
+    private static final long NO_STATION = -1;
     private static final long SEARCH_ROOT = -2;
 
     private long mLastCategoryLevel;
@@ -288,7 +288,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private boolean isCurrentCategoryLevelStationRoot() {
-        return getCurrentCategoryLevel() == STATION_ROOT;
+        return getCurrentCategoryLevel() == NO_STATION;
     }
 
     private boolean isCurrentCategoryParentLevelRoot() {
@@ -296,7 +296,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private boolean isCurrentCategoryParentLevelStationRoot() {
-        return getCurrentCategoryParent() == STATION_ROOT;
+        return getCurrentCategoryParent() == NO_STATION;
     }
 
     private boolean isCurrentCategoryParentLevelSearchRoot() {
@@ -308,7 +308,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private boolean isCategoryParentLevelStationRoot( long parent ) {
-        return parent == STATION_ROOT;
+        return parent == NO_STATION;
     }
 
     private boolean isCategoryParentLevelSearchRoot( long parent ) {
@@ -320,7 +320,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private boolean isStationRoot( long level ) {
-        return level == STATION_ROOT;
+        return level == NO_STATION;
     }
 
     private long getCurrentCategoryLevel() {
@@ -338,7 +338,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private void setCategoryLevelsToRoot() {
         if ( isFilteredByStation() ) {
-            setCurrentStationId( STATION_ROOT );
+            setCurrentStationId( NO_STATION );
             setCurrentCategoryLevelsToStationRoot();
         } else {
             setCurrentCategoryLevelsToRoot();
@@ -350,7 +350,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void setCurrentCategoryLevelsToStationRoot() {
-        setCurrentCategoryLevels( STATION_ROOT, STATION_ROOT );
+        setCurrentCategoryLevels( NO_STATION, NO_STATION );
     }
 
     private void savePrefs() {
@@ -635,6 +635,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             } else {
                 if ( isCategoryParentLevelStationRoot( parent ) ) {
                     // Back button to station list
+                    setCurrentStationId( NO_STATION );
                     setCurrentCategoryLevelsToStationRoot();
                 } else {
                     if ( isCurrentCategoryLevelRoot() ) {
@@ -710,7 +711,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private Category BuildBackCategoryToStationRoot() {
-        return new BackCategory( STATION_ROOT, STATION_ROOT );
+        return new BackCategory( NO_STATION, NO_STATION );
     }
 
     private Category BuildBackCategoryOutOfSearch() {
@@ -794,7 +795,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             StringBuilder builder = new StringBuilder();
             if ( getSearchQuery() == null ) {
                 if ( isFilteredByStation() ) {
-                    if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == STATION_ROOT ) {
+                    if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION ) {
                         builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_stations ) );
                     } else {
                         String name = queryForStation( DatabaseContract.StationEntry.buildUriWithId( dlc_id, getCurrentStationId() ) ).getName();
@@ -925,7 +926,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 Category backCategory = null;
                 if ( isFilteredByCategory() ) {
                     if ( isFilteredByStation() ) {
-                        if ( isCurrentCategoryLevelStationRoot() ) {
+                        if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION ) {
                             stationUri = DatabaseContract.StationEntry.buildUriWithDLCId( dlc_id );
                         } else {
                             if ( isFilteredByLevel() ) {

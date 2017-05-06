@@ -21,8 +21,14 @@
   <body>
     $ 1.3.8
       % Version 1.3.8
-      _ 05/05/2017
+      _ 05/06/2017
+      * Up to date with PC v257.0!
+      * Added Saddles: Daeodon Saddle
+      * Added Tek Saddles: Megalodon Tek Saddle (no image yet tho)
+      * Added Tek Structures: Cloning Chamber, Tek Turret
+      * Added Tek Ammo/Exposives: Tek Grenade
       * More bug fixes for yas.
+      ! Did I mention I'm on Discord? Find the invite link on Twitter, or just search for us (ARK:Resource Calculator), and join today! This will be THE easiest way to communicate, so do it already! :D
 
     $ 1.3.7
       % Version 1.3.7
