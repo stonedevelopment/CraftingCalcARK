@@ -60,6 +60,9 @@
     <string name="action_title_help">How to use this app</string>
     <string name="action_title_changelog">Changelog</string>
     <string name="action_title_about">About this app</string>
+    <string name="action_title_feedback">Contact us</string>
+    <string name="action_title_feedback_bug_report">Send bug report</string>
+    <string name="action_title_feedback_correction">Send correction</string>
 
     <!-- Strings used with the MainActivity layout -->
     <string name="content_main_clear_queue">Clear Queue</string>
@@ -128,6 +131,13 @@
     <string name="changelog_ok_button">OK</string>
     <string name="changelog_show_full">More…</string>
 
+    <!-- AlertDialog: Feedback -->
+
+    <!-- AlertDialog: Feedback: User Feedback -->
+    <string name="dialog_feedback_full_title">User Feedback</string>
+    <string name="dialog_feedback_positive_button">Send</string>
+    <string name="dialog_feedback_negative_button">Cancel</string>
+
     <!-- Toast Messages -->
 
     <!-- Toast: Edit Quantity -->
@@ -158,6 +168,9 @@
 
     <!-- Toast: Search -->
     <string name="toast_search_fail">Search cancelled.</string>
+
+    <!-- Toast: Feedback -->
+    <string name="toast_feedback_fail">Feedback not sent.</string>
 
     <!-- Strings related to Go Back -->
     <string name="go_back">Go back</string>

@@ -19,6 +19,7 @@ import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.util.FeedbackUtil;
 import arc.resource.calculator.views.ClearQueueButton;
 import arc.resource.calculator.views.CraftableRecyclerView;
 import arc.resource.calculator.views.MainSwitcher;
@@ -183,66 +184,74 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult( new Intent( this, SettingsActivity.class ), SettingsActivity.REQUEST_CODE );
                 return true;
 
-            case R.id.action_show_changelog:
-                ChangeLog changeLog = new ChangeLog( this );
-                changeLog.getFullLogDialog().show();
-                break;
+//            case R.id.action_show_changelog:
+//                ChangeLog changeLog = new ChangeLog( this );
+//                changeLog.getFullLogDialog().show();
+//                break;
 
-            case R.id.action_show_helpdialog:
-                HelpDialog helpDialog = new HelpDialog( this );
-                helpDialog.getDialog().show();
-                break;
+//            case R.id.action_show_helpdialog:
+//                HelpDialog helpDialog = new HelpDialog( this );
+//                helpDialog.getDialog().show();
+//                break;
 
             case R.id.action_about:
                 DialogUtil.About( MainActivity.this ).show();
                 break;
 
-            case R.id.action_remove_ads:
-                // purchase
-                // refund
-
-//                PrefsUtil prefs = new PrefsUtil( this );
-//                boolean removeAds = prefs.getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS );
-//
-//                if ( removeAds )
-//                    mAdUtil.reloadAdView();
-//                else
-//                    mAdUtil.unloadAdView();
-//
-//                prefs.setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, !removeAds );
-
-//                mPurchaseUtil.onResume();
-//                mPurchaseUtil.purchaseSku( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, new EmptyRequestListener<Purchase>() {
-//                    @Override
-//                    public void onSuccess( @Nonnull Purchase result ) {
-//                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).onResume();
-//
-//                        switch ( result.sku ) {
-//                            case PurchaseUtil.SKU_FEATURE_DISABLE_ADS:
-//                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).onResume();
-//
-//                                mAdUtil.unloadAdView();
-//
-//                                new PrefsUtil( getApplicationContext() )
-//                                        .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, true );
-//                        }
-//
-//                        mPurchaseUtil.onPause();
-//                    }
-//
-//                    @Override
-//                    public void onError( int response, @Nonnull Exception e ) {
-//                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).onResume();
-//
-//                        Log.e( TAG, "Purchase failed.", e );
-//
-//                        new PrefsUtil( getApplicationContext() )
-//                                .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, false );
-//
-//                        mPurchaseUtil.onPause();
-//                    }
-//                } );
+            case R.id.action_feedback:
+                FeedbackUtil.composeFeedbackEmail( this );
                 break;
+
+            case R.id.action_feedback_bug_report:
+                FeedbackUtil.composeBugReportEmail( this );
+                break;
+
+//            case R.id.action_remove_ads:
+//                // purchase
+//                // refund
+//
+////                PrefsUtil prefs = new PrefsUtil( this );
+////                boolean removeAds = prefs.getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS );
+////
+////                if ( removeAds )
+////                    mAdUtil.reloadAdView();
+////                else
+////                    mAdUtil.unloadAdView();
+////
+////                prefs.setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, !removeAds );
+//
+////                mPurchaseUtil.onResume();
+////                mPurchaseUtil.purchaseSku( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, new EmptyRequestListener<Purchase>() {
+////                    @Override
+////                    public void onSuccess( @Nonnull Purchase result ) {
+////                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).onResume();
+////
+////                        switch ( result.sku ) {
+////                            case PurchaseUtil.SKU_FEATURE_DISABLE_ADS:
+////                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).onResume();
+////
+////                                mAdUtil.unloadAdView();
+////
+////                                new PrefsUtil( getApplicationContext() )
+////                                        .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, true );
+////                        }
+////
+////                        mPurchaseUtil.onPause();
+////                    }
+////
+////                    @Override
+////                    public void onError( int response, @Nonnull Exception e ) {
+////                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).onResume();
+////
+////                        Log.e( TAG, "Purchase failed.", e );
+////
+////                        new PrefsUtil( getApplicationContext() )
+////                                .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, false );
+////
+////                        mPurchaseUtil.onPause();
+////                    }
+////                } );
+//                break;
 
             default:
                 break;

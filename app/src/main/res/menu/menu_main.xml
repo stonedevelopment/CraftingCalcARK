@@ -3,36 +3,58 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
 
-    <item
-        android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/action_title_search"
-        app:showAsAction="ifRoom"/>
+    <group
+        android:id="@+id/group_search">
+        <item
+            android:id="@+id/action_search"
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="@string/action_title_search"
+            app:showAsAction="ifRoom"/>
+    </group>
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_title_settings"
-        app:showAsAction="never"/>
+    <group
+        android:id="@+id/group_settings">
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_title_settings"
+            app:showAsAction="never"/>
+    </group>
 
-    <item
-        android:id="@+id/action_show_helpdialog"
-        android:title="@string/action_title_help"
-        app:showAsAction="never"/>
+    <!--<item-->
+    <!--android:id="@+id/action_show_helpdialog"-->
+    <!--android:title="@string/action_title_help"-->
+    <!--app:showAsAction="never"/>-->
 
-    <item
-        android:id="@+id/action_show_changelog"
-        android:title="@string/action_title_changelog"
-        app:showAsAction="never"/>
+    <!--<item-->
+    <!--android:id="@+id/action_show_changelog"-->
+    <!--android:title="@string/action_title_changelog"-->
+    <!--app:showAsAction="never"/>-->
 
-    <item
-        android:id="@+id/action_about"
-        android:title="@string/action_title_about"
-        app:showAsAction="never"/>
+    <group
+        android:id="@+id/group_feedback">
+        <item
+            android:id="@+id/action_feedback_bug_report"
+            android:title="@string/action_title_feedback_bug_report"
+            app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_remove_ads"
-        android:enabled="false"
-        android:title="@string/action_title_remove_ads"
-        app:showAsAction="never"/>
+        <item
+            android:id="@+id/action_feedback"
+            android:title="@string/action_title_feedback"
+            app:showAsAction="never"/>
+    </group>
+
+    <group
+        android:id="@+id/group_about">
+        <item
+            android:id="@+id/action_about"
+            android:title="@string/action_title_about"
+            app:showAsAction="never"/>
+    </group>
+
+    <!--<item-->
+    <!--android:id="@+id/action_remove_ads"-->
+    <!--android:enabled="false"-->
+    <!--android:title="@string/action_title_remove_ads"-->
+    <!--app:showAsAction="never"/>-->
 
 </menu>
