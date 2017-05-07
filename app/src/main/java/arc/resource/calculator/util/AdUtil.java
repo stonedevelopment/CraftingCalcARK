@@ -9,6 +9,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.R;
 
 public class AdUtil {
@@ -26,10 +27,8 @@ public class AdUtil {
     }
 
     public void init() {
-        loadAdView();
-//        if ( !new PrefsUtil( mActivity.getApplicationContext() ).getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS ) ) {
-//            loadAdView();
-//        }
+        if ( !BuildConfig.DEBUG )
+            loadAdView();
     }
 
     public void resume() {
