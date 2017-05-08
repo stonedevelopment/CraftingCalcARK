@@ -18,7 +18,10 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -76,6 +79,16 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         setContentView( R.layout.activity_load_screen );
 
         mStartElapsedTime = SystemClock.elapsedRealtime();
+
+        ImageView imageView = ( ImageView ) findViewById( R.id.content_init_image_view );
+
+        final String imagePath = "file:///android_asset/splash.png";
+        Picasso.with( this )
+                .load( imagePath )
+                .error( R.drawable.placeholder_empty )
+                .placeholder( R.drawable.placeholder_empty )
+                .into( imageView );
+
 
         mTextView = ( TextView ) findViewById( R.id.content_init_status_text );
 
@@ -325,8 +338,9 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
                     Log.d( TAG, "onNextEvent(): " + mCurrentEvent + ", " + index );
                     mListener.onStartEvent();
-                } else
+                } else {
                     mListener.onFinish();
+                }
             }
 
             @Override
