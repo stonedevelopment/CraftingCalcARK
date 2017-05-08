@@ -968,7 +968,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     }
                 } else {
                     if ( isFilteredByStation() ) {
-                        if ( isCurrentCategoryLevelStationRoot() ) {
+                        if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION  ) {
                             stationUri = DatabaseContract.StationEntry.buildUriWithDLCId( dlc_id );
                         } else {
                             if ( isFilteredByLevel() ) {
