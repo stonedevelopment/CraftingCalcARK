@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".DetailActivity">
+
+    <item
+        android:id="@+id/action_feedback_correction"
+        android:title="@string/action_title_feedback_correction"
+        app:showAsAction="never"/>
+
+</menu>

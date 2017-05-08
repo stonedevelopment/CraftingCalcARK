@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.util.FeedbackUtil;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -172,11 +174,22 @@ public class DetailActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu( Menu menu ) {
+        getMenuInflater().inflate( R.menu.menu_detail, menu );
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
-        int id = item.getItemId();
-        if ( id == android.R.id.home ) {
-            FinishActivityWithoutResult();
-            return true;
+
+        switch ( item.getItemId() ) {
+            case android.R.id.home:
+                FinishActivityWithoutResult();
+                return true;
+
+            case R.id.action_feedback_correction:
+                FeedbackUtil.composeCorrectionEmail( DetailActivity.this, getShowcase().getName() );
+                break;
         }
 
         return super.onOptionsItemSelected( item );
