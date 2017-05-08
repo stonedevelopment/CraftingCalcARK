@@ -21,10 +21,12 @@
   <body>
     $ 1.3.9
       % Version 1.3.9
-      _ 05/07/2017
+      _ 05/08/2017
+      * Added a quick, basic (very basic) user feedback system. New and improved system coming soon! :D
       * Added Send Bug Report menu option.
       * Added Send User Feedback menu option (renamed Contact Us).
       * Added Send Correction menu option to Engram Details screen. If there's an error in an Engram's image, description, composition, etc - use this to alert me of such.
+      * Megalodon Tek Saddle now has an image!
       * Minor bug fixes.
 
     $ 1.3.8
