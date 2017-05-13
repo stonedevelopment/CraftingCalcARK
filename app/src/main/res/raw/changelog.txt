@@ -19,6 +19,14 @@
     </style>
   </head>
   <body>
+    $ 1.3.10
+      % Version 1.3.10
+      _ 05/13/2017
+      * After many requests, you may now Remove Ads through the menu!!
+      * Update Engrams: Metal Spike Wall, Poison Grenade (thanks to those who used app to notify me!)
+      * Fixed a major bug with older phones that wouldn't allow app to open due to a bug per Android.
+      ! Lots of features/requests/changes coming in the next versions, keep an eye out! :)
+
     $ 1.3.9
       % Version 1.3.9
       _ 05/08/2017

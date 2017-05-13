@@ -2,7 +2,7 @@
   "json": {
     "version": "257.1",
     "changelog": {
-      "257.1": "Updated composition for Metal Spike Wall",
+      "257.1": "Updated composition for Metal Spike Wall, Poison Grenade",
       "257.0": "Added Cloning Chamber, Tek Turret, Tek Grenade, Megalodon Tek Saddle, Daeodon Saddle",
       "256.3": "Updated Vault with correct composition.",
       "256.2": "Removed Refined from Industrial Grill.",
@@ -17046,6 +17046,10 @@
         {
           "resource_id": "Sparkpowder",
           "quantity": 18
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 6
         }
       ],
       "station": [
