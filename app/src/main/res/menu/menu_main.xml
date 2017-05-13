@@ -51,10 +51,12 @@
             app:showAsAction="never"/>
     </group>
 
-    <!--<item-->
-    <!--android:id="@+id/action_remove_ads"-->
-    <!--android:enabled="false"-->
-    <!--android:title="@string/action_title_remove_ads"-->
-    <!--app:showAsAction="never"/>-->
+    <group
+        android:id="@+id/group_purchase">
+        <item
+            android:id="@+id/action_remove_ads"
+            android:title="@string/action_title_remove_ads"
+            app:showAsAction="never"/>
+    </group>
 
 </menu>

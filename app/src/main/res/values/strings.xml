@@ -9,21 +9,14 @@
         \n\nWe truly apologize for any inconvenience caused. Rest assured a fix will be on the way. -Shane
     </string>
     <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
-
     <string name="load_activity_status_message_format_with_elapsed_time"><x:g id="message">%1$s</x:g> (<x:g id="elapsed">%2$s</x:g>)</string>
-
-    <string name="load_activity_status_message_prefix_unknown">[?]</string>
-    <string name="load_activity_status_message_prefix_app">[app]</string>
-    <string name="load_activity_status_message_prefix_db">[db]</string>
-    <string name="load_activity_status_message_prefix_purchase">[in-app]</string>
-    <string name="load_activity_status_message_prefix_preferences">[prefs]</string>
 
     <!-- LoadActivity: Events: -->
     <string name="initialization_init_event">Greetings Survivor!</string>
     <string name="initialization_finish_event">\nStarting app!\n\nCraft efficiently, my friend.</string>
     <string name="initialization_error_event">\nInitialization failed.</string>
 
-    <!-- LoadActivity: Events: Database Initialization -->
+    <!-- LoadActivity: Events: JSON -->
     <string name="initialization_json_event_init">\nChecking for new data..</string>
     <string name="initialization_json_event_new_version">\nNew items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
     <string name="initialization_json_event_new_version_first_install">\nNew items found! Upgrading to v<x:g>%1$s</x:g>!</string>
@@ -34,6 +27,12 @@
     <!-- LoadActivity: Events: Database Initialization -->
     <string name="initialization_db_event_started">\nInitializing database with new stuff and things..</string>
     <string name="initialization_db_event_finished">.done!</string>
+
+    <!-- LoadActivity: Events: In-App Purchases -->
+    <string name="initialization_purchase_event_init">\nChecking Play Store for purchased items..</string>
+    <string name="initialization_purchase_event_success">.done!</string>
+    <string name="initialization_purchase_event_failure">.failed!</string>
+    <string name="initialization_purchase_event_error">.error!</string>
 
     <!-- LoadActivity: Events: Preferences -->
     <string name="initialization_pref_event_started">\nChecking preferences..</string>
@@ -336,6 +335,12 @@
 
     <!-- Key name for Search Query in SharedPreferences -->
     <string name="pref_search_query_key">search_query</string>
+
+    <!-- Key name for Purchasable: Remove Ads in SharedPreferences -->
+    <string name="pref_purchasable_remove_ads_key">remove_ads</string>
+
+    <!-- Key name for Purchasable: Remove Ads in SharedPreferences -->
+    <string name="pref_purchasable_remove_ads_value_default">false</string>
 
     <!-- Exceptions -->
     <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>

@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "257.0",
+    "version": "257.1",
     "changelog": {
+      "257.1": "Updated composition for Metal Spike Wall",
       "257.0": "Added Cloning Chamber, Tek Turret, Tek Grenade, Megalodon Tek Saddle, Daeodon Saddle",
       "256.3": "Updated Vault with correct composition.",
       "256.2": "Removed Refined from Industrial Grill.",
@@ -14793,11 +14794,15 @@
       "composition": [
         {
           "resource_id": "Metal Ingot",
-          "quantity": 12
+          "quantity": 25
         },
         {
-          "resource_id": "Cementing Paste",
-          "quantity": 3
+          "resource_id": "Hide",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 30
         }
       ],
       "station": [

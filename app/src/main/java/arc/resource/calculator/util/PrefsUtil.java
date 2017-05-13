@@ -65,6 +65,9 @@ public class PrefsUtil {
 
     private String SearchQueryKey;
 
+    private String PurchasableRemoveAdsKey;
+    private boolean PurchasableRemoveAdsDefaultValue;
+
     public static PrefsUtil getInstance( Context context ) {
         if ( sInstance == null )
             sInstance = new PrefsUtil( context );
@@ -109,6 +112,9 @@ public class PrefsUtil {
         MainSwitcherScreenIdKey = context.getString( R.string.pref_switcher_main_screen_id_key );
 
         SearchQueryKey = context.getString( R.string.pref_search_query_key );
+
+        PurchasableRemoveAdsKey = context.getString( R.string.pref_purchasable_remove_ads_key );
+        PurchasableRemoveAdsDefaultValue = Boolean.parseBoolean( context.getString( R.string.pref_purchasable_remove_ads_value_default ) );
     }
 
     private String getPreference( String key, String defaultValue ) {
@@ -230,6 +236,10 @@ public class PrefsUtil {
         return getPreference( SearchQueryKey, null );
     }
 
+    public boolean getPurchasableRemoveAds() {
+        return getPreference( PurchasableRemoveAdsKey, PurchasableRemoveAdsDefaultValue );
+    }
+
     public void saveCraftableViewSize( int size ) {
         editPreference( CraftableViewSizeKey, size );
     }
@@ -314,5 +324,9 @@ public class PrefsUtil {
 
     public void saveSearchQuery( String query ) {
         editPreference( SearchQueryKey, query );
+    }
+
+    public void savePurchasableRemoveAds( boolean removeAds ) {
+        editPreference( PurchasableRemoveAdsKey, removeAds );
     }
 }

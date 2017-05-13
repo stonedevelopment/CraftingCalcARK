@@ -167,10 +167,10 @@ public class DetailActivity extends AppCompatActivity
             recyclerView.setAdapter( getAdapter() );
 
             mAdUtil = new AdUtil( this, R.id.content_detail );
-            mAdUtil.init();
         } catch ( Exception e ) {
             FinishActivityWithError( e );
         }
+
     }
 
     @Override
@@ -212,6 +212,13 @@ public class DetailActivity extends AppCompatActivity
         super.onPause();
 
         mAdUtil.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mAdUtil.destroy();
     }
 
     @Override
