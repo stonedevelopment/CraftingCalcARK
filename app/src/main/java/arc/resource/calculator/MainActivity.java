@@ -366,10 +366,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showChangeLog() {
-        ChangeLog changeLog = new ChangeLog( this );
+        try {
+            ChangeLog changeLog = new ChangeLog( this );
 
-        if ( changeLog.firstRun() ) {
-            changeLog.getLogDialog().show();
+            if ( changeLog.firstRun() ) {
+                changeLog.getLogDialog().show();
+            }
+        } catch ( Exception e ) {
+            // do nothing
         }
     }
 
