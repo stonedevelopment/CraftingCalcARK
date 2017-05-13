@@ -36,8 +36,15 @@ import static arc.resource.calculator.LoadScreenActivity.EVENT.INIT;
 public class LoadScreenActivity extends AppCompatActivity implements ExceptionObserver.Listener {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
+    /**
+     * Events in order of execution.
+     */
     enum EVENT {
-        INIT, JSON, DATABASE, PURCHASE, PREFERENCES, PREPARATION
+        INIT,
+        JSON,
+        DATABASE,
+        PREFERENCES,
+        PREPARATION
     }
 
     private static final long DELAY_MILLIS = 1500;
@@ -88,7 +95,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                 .error( R.drawable.placeholder_empty )
                 .placeholder( R.drawable.placeholder_empty )
                 .into( imageView );
-
 
         mTextView = ( TextView ) findViewById( R.id.content_init_status_text );
 
@@ -237,51 +243,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                             // trigger next event (in-app purchases?)
                             mListener.onEndEvent();
                         }
-                        break;
-
-                    case PURCHASE:
-                        // alert status window that initializing has begun
-//                        updateStatusMessages( formatMessageWithPrefix( TYPE_PURCHASE, getString( R.string.initialization_purchase_event_init ) ) );
-//
-//                        // begin in-app purchase communication
-//                        mPurchaseUtil = new PurchaseUtil( LoadScreenActivity.this );
-//                        mPurchaseUtil.onResume();
-//                        mPurchaseUtil.loadInventory( new Inventory.Callback() {
-//                            @Override
-//                            public void onLoaded( @Nonnull Inventory.Products products ) {
-//                                Inventory.Product product = products.get( IN_APP );
-//
-//                                for ( Purchase purchase : product.getPurchases() ) {
-//                                    updateStatusMessages( formatMessageWithPrefix( TYPE_PURCHASE, purchase.sku ) );
-//                                }
-//
-//                                if ( product.supported ) {
-//                                    updateStatusMessages( "Supported" );
-//                                } else {
-//                                    updateStatusMessages( "Unsupported" );
-//                                }
-//
-//                                // set prefs per sku
-//                                PrefsUtil prefs = new PrefsUtil( getApplicationContext() );
-//                                for ( Sku sku : product.getSkus() ) {
-//                                    updateStatusMessages( formatMessageWithPrefix( TYPE_PURCHASE, sku.toString() ) );
-////                                    prefs.setPurchasePref( sku, product.isPurchased( sku ) );
-//                                }
-//
-//                                int purchases = product.getPurchases().size();
-//
-//                                // If purchases are greater than 0, welcome and thank customer, otherwise just welcome
-//                                String message = purchases > 0 ?
-//                                        getString( R.string.initialization_purchase_event_finished_with_purchase ) :
-//                                        getString( R.string.initialization_purchase_event_finished_without_purchase );
-//
-//                                updateStatusMessages( formatMessageWithPrefix( TYPE_PURCHASE, message ) );
-//
-//                            }
-//                        } );
-
-                        // trigger next event (preferences?)
-                        mListener.onEndEvent();
                         break;
 
                     case PREFERENCES:

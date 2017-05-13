@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="arc.resource.calculator">
 
-    <!-- <uses-permission android:name="com.android.vending.BILLING"/> -->
+    <uses-permission android:name="com.android.vending.BILLING"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -88,6 +89,7 @@
             android:authorities="${applicationId}.provider"
             android:enabled="true"
             android:exported="false"/>
+
     </application>
 
 </manifest>

@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity
 
     private AdUtil mAdUtil;
 
+    // Purchase flow -> disable menu option to disable ads
+    // CreateOptionsMenu -> disable menu option to disable ads if purchased
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
@@ -80,9 +83,7 @@ public class MainActivity extends AppCompatActivity
         QueueRecyclerView queueRecyclerView = ( QueueRecyclerView ) findViewById( R.id.gridview_queue );
         registerForContextMenu( queueRecyclerView );
 
-        // TODO: 4/16/2017 What if phone is without internet?
         mAdUtil = new AdUtil( this, R.id.content_main );
-        mAdUtil.init();
 
         showChangeLog();
     }
@@ -140,6 +141,8 @@ public class MainActivity extends AppCompatActivity
         ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
         button.onDestroy();
 
+        mAdUtil.destroy();
+
         super.onDestroy();
     }
 
@@ -154,8 +157,7 @@ public class MainActivity extends AppCompatActivity
         final boolean show = super.onPrepareOptionsMenu( menu );
 
         // set up menu to enable/disable remove ads button
-//        menu.findItem( R.id.action_remove_ads ).setEnabled(
-//                !new PrefsUtil( getApplicationContext() ).getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS ) );
+        menu.findItem( R.id.action_remove_ads ).setEnabled( !mAdUtil.mRemoveAds );
 
         return show;
     }
@@ -206,52 +208,9 @@ public class MainActivity extends AppCompatActivity
                 FeedbackUtil.composeBugReportEmail( this );
                 break;
 
-//            case R.id.action_remove_ads:
-//                // purchase
-//                // refund
-//
-////                PrefsUtil prefs = new PrefsUtil( this );
-////                boolean removeAds = prefs.getPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS );
-////
-////                if ( removeAds )
-////                    mAdUtil.reloadAdView();
-////                else
-////                    mAdUtil.unloadAdView();
-////
-////                prefs.setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, !removeAds );
-//
-////                mPurchaseUtil.onResume();
-////                mPurchaseUtil.purchaseSku( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, new EmptyRequestListener<Purchase>() {
-////                    @Override
-////                    public void onSuccess( @Nonnull Purchase result ) {
-////                        Toast.makeText( MainActivity.this, "Purchase successful.", Toast.LENGTH_SHORT ).onResume();
-////
-////                        switch ( result.sku ) {
-////                            case PurchaseUtil.SKU_FEATURE_DISABLE_ADS:
-////                                Toast.makeText( MainActivity.this, "Consider those ads tamed!!", Toast.LENGTH_LONG ).onResume();
-////
-////                                mAdUtil.unloadAdView();
-////
-////                                new PrefsUtil( getApplicationContext() )
-////                                        .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, true );
-////                        }
-////
-////                        mPurchaseUtil.onPause();
-////                    }
-////
-////                    @Override
-////                    public void onError( int response, @Nonnull Exception e ) {
-////                        Toast.makeText( MainActivity.this, "Purchase failed.", Toast.LENGTH_SHORT ).onResume();
-////
-////                        Log.e( TAG, "Purchase failed.", e );
-////
-////                        new PrefsUtil( getApplicationContext() )
-////                                .setPurchasePref( PurchaseUtil.SKU_FEATURE_DISABLE_ADS, false );
-////
-////                        mPurchaseUtil.onPause();
-////                    }
-////                } );
-//                break;
+            case R.id.action_remove_ads:
+                mAdUtil.beginPurchase();
+                break;
 
             default:
                 break;
@@ -324,63 +283,80 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
         super.onActivityResult( requestCode, resultCode, data );
 
-        if ( data != null ) {
-            Bundle extras = data.getExtras();
+        if ( !mAdUtil.onActivityResult( requestCode, resultCode, data ) ) {
+            if ( data != null ) {
+                Bundle extras = data.getExtras();
 
-            switch ( requestCode ) {
-                case DetailActivity.REQUEST_CODE:
-                    if ( resultCode == RESULT_OK ) {
-                        String name = ( String ) extras.get( RESULT_EXTRA );
+                switch ( requestCode ) {
+                    case DetailActivity.REQUEST_CODE:
+                        if ( resultCode == RESULT_OK ) {
+                            String name = ( String ) extras.get( RESULT_EXTRA );
 
-                        switch ( extras.getInt( RESULT_CODE ) ) {
-                            case REMOVE:
-                                showSnackBar( String.format( getString( R.string.toast_details_removed_format ), name ) );
-                                break;
+                            switch ( extras.getInt( RESULT_CODE ) ) {
+                                case REMOVE:
+                                    showSnackBar( String.format( getString( R.string.toast_details_removed_format ), name ) );
+                                    break;
 
-                            case UPDATE:
-                                showSnackBar( String.format( getString( R.string.toast_details_updated_format ), name ) );
-                                break;
+                                case UPDATE:
+                                    showSnackBar( String.format( getString( R.string.toast_details_updated_format ), name ) );
+                                    break;
 
-                            case ADD:
-                                showSnackBar( String.format( getString( R.string.toast_details_added_format ), name ) );
-                                break;
-                        }
-                    } else {
-                        if ( extras.getInt( RESULT_CODE ) == ERROR ) {
-                            Exception e = ( Exception ) extras.get( RESULT_EXTRA );
-
-                            if ( e != null ) {
-                                showSnackBar( getString( R.string.toast_details_error ) );
-
-                                ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
+                                case ADD:
+                                    showSnackBar( String.format( getString( R.string.toast_details_added_format ), name ) );
+                                    break;
                             }
                         } else {
-                            showSnackBar( getString( R.string.toast_details_no_change ) );
+                            if ( extras.getInt( RESULT_CODE ) == ERROR ) {
+                                Exception e = ( Exception ) extras.get( RESULT_EXTRA );
+
+                                if ( e != null ) {
+                                    showSnackBar( getString( R.string.toast_details_error ) );
+
+                                    ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
+                                }
+                            } else {
+                                showSnackBar( getString( R.string.toast_details_no_change ) );
+                            }
                         }
-                    }
-                    break;
+                        break;
 
-                case SettingsActivity.REQUEST_CODE:
-                    if ( resultCode == RESULT_OK ) {
-                        boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
-                        boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
-                        boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
-                        boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
-                        boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
-                        boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
+                    case SettingsActivity.REQUEST_CODE:
+                        if ( resultCode == RESULT_OK ) {
+                            boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
+                            boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
+                            boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
+                            boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
+                            boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
+                            boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
 
-                        showSnackBar( getString( R.string.toast_settings_success ) );
+                            showSnackBar( getString( R.string.toast_settings_success ) );
 
-                        PrefsObserver.getInstance().notifyPreferencesChanged(
-                                dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
-                    } else {
-                        showSnackBar( getString( R.string.toast_settings_fail ) );
-                    }
-                    break;
+                            PrefsObserver.getInstance().notifyPreferencesChanged(
+                                    dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
+                        } else {
+                            showSnackBar( getString( R.string.toast_settings_fail ) );
+                        }
+                        break;
+                }
+            } else {
+                showSnackBar( getString( R.string.toast_settings_fail ) );
             }
-        } else {
-            showSnackBar( getString( R.string.toast_settings_fail ) );
         }
+    }
+
+    @Override
+    public void onException( String tag, Exception e ) {
+        ExceptionUtil.SendErrorReport( tag, e );
+    }
+
+    @Override
+    public void onFatalException( final String tag, final Exception e ) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
+            }
+        } );
     }
 
     private void startDetailActivity( long id ) {
@@ -399,20 +375,5 @@ public class MainActivity extends AppCompatActivity
 
     private void showSnackBar( String text ) {
         Snackbar.make( findViewById( R.id.content_main ), text, Snackbar.LENGTH_SHORT ).show();
-    }
-
-    @Override
-    public void onException( String tag, Exception e ) {
-        ExceptionUtil.SendErrorReport( tag, e );
-    }
-
-    @Override
-    public void onFatalException( final String tag, final Exception e ) {
-        runOnUiThread( new Runnable() {
-            @Override
-            public void run() {
-                ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
-            }
-        } );
     }
 }
