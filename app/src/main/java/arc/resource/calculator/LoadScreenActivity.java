@@ -13,9 +13,11 @@
 package arc.resource.calculator;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -337,6 +339,20 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
+        super.onActivityResult( requestCode, resultCode, data );
+
+        if ( requestCode == FirstUseActivity.REQUEST_CODE ) {
+            if ( resultCode == RESULT_OK ) {
+//                SharedPreferences preferences = getSharedPreferences( PrefsUtil.FirstUseKey, MODE_PRIVATE );
+//                preferences.edit().putBoolean( PrefsUtil.FirstUseKey, false ).apply();
+            }
+        }
+
+        startMainActivity();
+    }
+
     private void sendErrorReport( Exception e ) {
         ExceptionUtil.SendErrorReport( TAG, e );
     }
@@ -366,22 +382,37 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         return String.format( getString( R.string.load_activity_status_message_format_with_elapsed_time ), message, elapsedMessage );
     }
 
+    private void finishWithDelay( Runnable runnable ) {
+        new Handler().postDelayed( runnable, DELAY_MILLIS );
+    }
+
     private void finishActivity() {
         finishWithDelay( new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent( getApplicationContext(), MainActivity.class );
-                intent.putExtra( MainActivity.INTENT_KEY_DID_UPDATE, mDidUpdate );
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
+                boolean isFirst = prefs.getBoolean( PrefsUtil.FirstUseKey, PrefsUtil.FirstUseDefaultValue );
 
-                startActivity( intent );
-
-                finish();
+                if ( isFirst )
+                    startFirstUseActivity();
+                else
+                    startMainActivity();
             }
         } );
     }
 
-    private void finishWithDelay( Runnable runnable ) {
-        new Handler().postDelayed( runnable, DELAY_MILLIS );
+    private void startMainActivity() {
+        Intent intent = new Intent( getApplicationContext(), MainActivity.class );
+        intent.putExtra( MainActivity.INTENT_KEY_DID_UPDATE, mDidUpdate );
+
+        startActivity( intent );
+
+        finish();
+    }
+
+    private void startFirstUseActivity() {
+        Intent intent = new Intent( getApplicationContext(), FirstUseActivity.class );
+        startActivityForResult( intent, FirstUseActivity.REQUEST_CODE );
     }
 
     @Override

@@ -256,7 +256,7 @@
 
     <!-- Strings related to Category Filter settings -->
     <!-- Title for Category Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_category_title">Enable filtering by Folder</string>
+    <string name="pref_filter_category_title">Categories/Folders</string>
 
     <!-- Description for Category Filter preference, used by SettingsActivity -->
     <string name="pref_filter_category_description">Filter Engrams by folders that match in-game
@@ -271,7 +271,7 @@
 
     <!-- Strings related to Station Filter settings -->
     <!-- Title for Station Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_station_title">Enable filtering by Crafting Stations</string>
+    <string name="pref_filter_station_title">Crafting Stations</string>
 
     <!-- Description for Station Filter preference, used by SettingsActivity -->
     <string name="pref_filter_station_description">Filter Engrams by Crafting Stations that match
@@ -286,7 +286,7 @@
 
     <!-- Strings related to Level Filter settings -->
     <!-- Title for Level Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_level_title">Enable filtering by Required Level</string>
+    <string name="pref_filter_level_title">Required Level</string>
 
     <!-- Description for Level Filter preference, used by SettingsActivity -->
     <string name="pref_filter_level_description">Filter Engrams by Required Level! Dependent upon
@@ -360,5 +360,19 @@
     <string name="detail_content_save_button_add_to_queue">Add to Queue</string>
     <string name="detail_content_save_button_update_queue">Update Queue</string>
     <string name="content_main_button_view_inventory">View Inventory</string>
+
+    <!-- First Use -->
+    <!-- First Use: Titles -->
+    <!-- First Use: Descriptions -->
+    <string name="content_first_use_description_first">
+        My name is BobOnTheCob and I made an app! Not just any app, mind you, but a crafting
+        calculator for the PC/Console game ARK:Survival Evolved! Let me show you how to use it.
+    </string>
+    <!--<string name="content_first_use_description_last">-->
+        <!--Well, that\'s the end of the tour. If you made it this far, you are one fine-tuned-->
+        <!--crafting machine! If you have any questions about the app, have any suggestions,-->
+        <!--or just want to chat it up, don't be afraid to reach out. Until then..-->
+        <!--Craft efficiently, my friends. *waves*-->
+    <!--</string>-->
 
 </resources>

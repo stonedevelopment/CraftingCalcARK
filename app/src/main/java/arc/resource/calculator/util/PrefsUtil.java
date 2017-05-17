@@ -22,8 +22,7 @@ import arc.resource.calculator.views.MainSwitcher;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 
-// TODO: 4/5/2017 Make PrefsUtil listen for changes in prefs, allow for variable access to replace preference access
-// TODO: 4/6/2017 Make SharedPrefs take in Long, Int, Float instead of converting to String everytime.
+// TODO: 5/16/2017 Why continue to use string resources instead of static constants?
 public class PrefsUtil {
     private static final String TAG = PrefsUtil.class.getSimpleName();
 
@@ -67,6 +66,9 @@ public class PrefsUtil {
 
     private String PurchasableRemoveAdsKey;
     private boolean PurchasableRemoveAdsDefaultValue;
+
+    public static String FirstUseKey = "first_use";
+    public static boolean FirstUseDefaultValue = true;
 
     public static PrefsUtil getInstance( Context context ) {
         if ( sInstance == null )

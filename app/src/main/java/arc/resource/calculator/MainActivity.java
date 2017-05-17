@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity
         final boolean show = super.onPrepareOptionsMenu( menu );
 
         // set up menu to enable/disable remove ads button
-        menu.findItem( R.id.action_remove_ads ).setEnabled( !mAdUtil.mRemoveAds );
+//        menu.findItem( R.id.action_remove_ads ).setEnabled( !mAdUtil.mRemoveAds );
 
         return show;
     }

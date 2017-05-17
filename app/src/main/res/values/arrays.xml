@@ -15,4 +15,7 @@
         <item>@string/pref_dlc_value_scorched_earth</item>
     </string-array>
 
+    <string-array name="content_first_use_descriptions">
+    </string-array>
+
 </resources>
