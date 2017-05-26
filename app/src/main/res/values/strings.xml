@@ -363,16 +363,68 @@
 
     <!-- First Use -->
     <!-- First Use: Titles -->
+    <string name="content_intro_title_first">Greetings Survivor!</string>
+    <string name="content_intro_title_crafting_stations">Crafting Stations</string>
+    <string name="content_intro_title_folders">Folders</string>
+    <string name="content_intro_title_engrams">Engrams</string>
+    <string name="content_intro_title_crafting_queue">Crafting Queue</string>
+    <string name="content_intro_title_crafting_queue_details">Crafting Queue Details</string>
+    <string name="content_intro_title_viewing_resources">Viewing Resources</string>
+    <string name="content_intro_title_inventory">Inventory</string>
+    <string name="content_intro_title_dlc" translatable="false">Primitive+/Scorched Earth</string>
+    <string name="content_intro_title_remove_ads">Remove Ads</string>
+    <string name="content_intro_title_last">Craft Efficiently, My Friends.</string>
+
     <!-- First Use: Descriptions -->
-    <string name="content_first_use_description_first">
-        My name is BobOnTheCob and I made an app! Not just any app, mind you, but a crafting
-        calculator for the PC/Console game ARK:Survival Evolved! Let me show you how to use it.
+    <string name="content_intro_description_first">
+        My name is BobOnTheCob and I made an app! Let me show you how to use it.
     </string>
-    <!--<string name="content_first_use_description_last">-->
-        <!--Well, that\'s the end of the tour. If you made it this far, you are one fine-tuned-->
-        <!--crafting machine! If you have any questions about the app, have any suggestions,-->
-        <!--or just want to chat it up, don't be afraid to reach out. Until then..-->
-        <!--Craft efficiently, my friends. *waves*-->
-    <!--</string>-->
+    <string name="content_intro_description_crafting_stations">
+        This will usually be the first screen you\'ll see, if filtering by \'Crafting Station\' is enabled.
+        All you have to do is choose which station by simply clicking on it. Easy!
+    </string>
+    <string name="content_intro_description_folders">
+        Hooray! Now that we\'ve chosen a Crafting Station, we can move through the folders
+        (matched up exactly with in-game folders), until you find the Engram you
+        wish to add to the Crafting Queue. Simple!
+    </string>
+    <string name="content_intro_description_engrams">
+        You\'re doing great so far! Now, when you find the Engram you want to \'craft\', simply
+        click on it to \'add\' it to the Crafting Queue. Once added, click on it
+        to increase its quantity. Magic!
+    </string>
+    <string name="content_intro_description_crafting_queue">
+        This is the Crafting Queue. Anything you click on above will go down here. Additionally,
+        you can click on any icon to increase its quantity or \'long press\' it
+        to see a menu that shows more options. If you wish to start over, click the \'Clear Queue\'
+        button at the bottom of the screen. Amazing!
+    </string>
+    <string name="content_intro_description_viewing_resources">
+        Ready to craft? Let\'s get started! Click the View Inventory button at the top and
+        you\'ll be taken to the Inventory screen, where you\'ll see all the Resources
+        needed to craft your newly added items. Woot!
+    </string>
+    <string name="content_intro_description_inventory">
+        You still there? Good! This is the newest feature to A:RC - the Inventory screen.
+        This allows you to see which Resources (materials) you need in order to craft
+        your \'Crafting Queue\'. Keeping with the theme of in-game UI, I wanted to
+        line up this feature for future changes. Big things are coming!
+    </string>
+    <string name="content_intro_description_dlc">
+        Did you know that A:RC allows you to change DLC versions? It\'s true! Just use the main menu
+        and click on Settings. Once in the Settings screen, simply click on Change DLC
+        and choose which version you\'re currently playing. Boom!
+    </string>
+    <string name="content_intro_description_remove_ads">
+        One last thing before I let you go. Nobody likes ads, I understand this, but they\'re
+        a great way for me to continue working on great projects such as A:RC without
+        asking you for moneys. With that said, if you do wish to contribute more,
+        the option is available to Remove Ads. Just saying. ;)
+    </string>
+    <string name="content_intro_description_last">
+        Well, that\'s the end of the tour. If you made it this far, you are one fine-tuned
+        crafting machine! If you have any questions, suggestions,
+        or just want to chat it up, don\'t be afraid to reach out. Thank you!!
+    </string>
 
 </resources>

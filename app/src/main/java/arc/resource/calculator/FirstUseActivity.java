@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
-import com.github.paolorotolo.appintro.AppIntroFragment;
 
 public class FirstUseActivity extends AppIntro {
 
@@ -14,61 +13,60 @@ public class FirstUseActivity extends AppIntro {
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
-        addSlide( SampleSlide.newInstance( R.layout.content_intro_first ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Crafting Stations",
-                "This will usually be the first screen you'll see, if filtering by Crafting Station is enabled. " +
-                        "All you have to do is choose wich station by simply clicking on it. Easy!",
-                R.drawable.scenary_island, getResources().getColor( R.color.colorPrimary ) ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Folders",
-                "Hooray! Now that we've chosen a Crafting Station, we can move through the folders " +
-                        "(matched up exactly with in-game folders), until you find the Engram you " +
-                        "wish to add to the Crafting Queue. Simple!",
-                R.drawable.prefs_icons_level, getResources().getColor( R.color.colorPrimary ) ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Engrams",
-                "You're doing great so far! Now, when you find the Engram you want to 'craft', simply " +
-                        "click on it to 'add' it to the Crafting Queue. Once added, click on it " +
-                        "to increase its quantity. Magic!",
-                R.drawable.prefs_icons_station, getResources().getColor( R.color.colorPrimary ) ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Crafting Queue",
-                "This is the Crafting Queue. Anything you click on above will go down here. As in the previous " +
-                        "page, you can click on any icon to increase its quantity or 'long press' it " +
-                        "to see a menu that shows more options. If you wish to start over, click the 'Clear Queue' " +
-                        "button at the bottom of the screen. Amazing!",
-                R.drawable.prefs_icons_folder, getResources().getColor( R.color.colorPrimary ) ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Viewing Resources (Inventory)",
-                "Ready to craft? Let's get started! Click the View Inventory button at the top and " +
-                        "you'll be taken to the Inventory screen, where you'll see all the Resources " +
-                        "needed to craft your newly added items. Woot!",
-                R.drawable.prefs_icons_level, getResources().getColor( R.color.colorPrimary ) ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Inventory",
-                "You still there? Good! This is the newest feature to A:RC - the Inventory screen. " +
-                        "This allows you to see which Resources (materials) you need in order to craft " +
-                        "your 'Crafting Queue'. Keeping with the theme of in-game UI, I wanted to " +
-                        "line up this feature for future changes. Big things are coming!",
-                R.drawable.prefs_icons_station, getResources().getColor( R.color.colorPrimary ) ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Primitive+ & Scorched Earth",
-                "Did you know that A:RC allows you to change DLC versions? It's true! Just use the main menu " +
-                        "and click on Settings. Once in the Settings screen, simply click on Change DLC " +
-                        "and choose which version you're currently playing. Boom!",
-                R.drawable.prefs_icons_folder, getResources().getColor( R.color.colorPrimary ) ) );
-        addSlide( AppIntroFragment.newInstance(
-                "Remove Ads",
-                "One last thing before I let you go. Nobody likes ads, I understand this, but they're " +
-                        "a great way for me to continue working on great projects such as A:RC without " +
-                        "asking you for moneys. With that said, if you do wish to contribute more, " +
-                        "the option is available to Remove Ads. Just saying. ;)",
-                R.drawable.prefs_icons_level, getResources().getColor( R.color.colorPrimary ) ) );
-//        addSlide( AppIntroFragment.newInstance(
-//                "That's All Folks!",
-//                getString( R.string.content_first_use_description_last ),
-//                R.drawable.prefs_icons_level, getResources().getColor( R.color.colorPrimary ) ) );
+        addSlide( SlideFragment.newInstance(
+                R.string.content_intro_title_first,
+                R.string.content_intro_description_first,
+                "scenary_island.jpg",
+                "selfie_looking_to_the_side.png",
+                R.layout.content_intro_last ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_crafting_stations,
+                R.string.content_intro_description_crafting_stations,
+                "screen_crafting_stations.jpg",
+                "selfie.png" ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_folders,
+                R.string.content_intro_description_folders,
+                "screen_folders.jpg",
+                "emote_wave.png",
+                R.layout.content_intro_left ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_engrams,
+                R.string.content_intro_description_engrams,
+                "screen_engrams.jpg",
+                "emote_cheer.png" ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_crafting_queue,
+                R.string.content_intro_description_crafting_queue,
+                "screen_crafting_queue.jpg",
+                "emote_heart_with_wink.png",
+                R.layout.content_intro_left ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_viewing_resources,
+                R.string.content_intro_description_viewing_resources,
+                "screen_view_inventory.jpg",
+                "emote_salute.png" ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_inventory,
+                R.string.content_intro_description_inventory,
+                "screen_inventory.jpg",
+                "emote_laugh.png" ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_dlc,
+                R.string.content_intro_description_dlc,
+                "screen_preferences.jpg",
+                "emote_heart.png" ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_remove_ads,
+                R.string.content_intro_description_remove_ads,
+                "screen_remove_ads.jpg",
+                "emote_evil.png" ) );
+
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_last,
+                R.string.content_intro_description_last,
+                "scenary_island.jpg",
+                "emote_thank.png",
+                R.layout.content_intro_last ) );
     }
 
     @Override

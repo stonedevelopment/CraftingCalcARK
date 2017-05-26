@@ -1,80 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/content_intro_first"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="@dimen/appIntroBottomBarHeight">
 
-
-    <!-- Bob selfie bottom left, stretched to 50% -->
-    <LinearLayout
-        android:id="@+id/underlay"
+    <TextView
+        android:id="@+id/title"
+        style="@style/AppTheme.Text.Intro.Heading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/appIntroBottomBarHeight"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:text="@string/content_intro_title_first"/>
 
-        <TextView
-            android:id="@+id/heading"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:gravity="center_vertical"
-            android:text="Greetings Survivors!"
-            android:textAlignment="center"
-            android:textSize="@dimen/text_size_extra_large"/>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/description_container"
+        android:layout_below="@+id/title"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/placeholder_empty"/>
+
+    <LinearLayout
+        android:id="@+id/selfie_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/description_container">
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
         <ImageView
-            android:id="@+id/scenary"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:scaleType="centerCrop"
-            android:background="@color/colorPrimaryDark"/>
+            android:id="@+id/selfie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/placeholder_empty"/>
 
-        <!-- TextView bottom right, stretched to 50% -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:padding="4dp">
-
-            <android.support.v4.widget.Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/content_first_use_description_first"
-                android:textAlignment="center"/>
-
-        </LinearLayout>
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
-    <!-- Bob selfie bottom left, stretched to 50% -->
     <LinearLayout
-        android:id="@+id/bob"
+        android:id="@+id/description_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
 
-        <ImageView
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/AppTheme.Text.Intro.Description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:src="@drawable/selfie_looking_to_the_side"/>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:padding="16dp"
+            android:text="@string/content_intro_description_first"/>
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
