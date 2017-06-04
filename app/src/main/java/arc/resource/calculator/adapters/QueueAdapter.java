@@ -2,6 +2,7 @@ package arc.resource.calculator.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     private static final String TAG = QueueAdapter.class.getSimpleName();
 
     private Context mContext;
-    private CraftingQueue mCraftingQueue;
+//    private CraftingQueue mCraftingQueue;
     private QueueRecyclerView.Observer mViewObserver;
     private boolean mDataSetEmpty;
 
@@ -103,10 +104,11 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     }
 
     public QueueAdapter( Context context, QueueRecyclerView.Observer observer ) {
+        Log.d( TAG, "QueueAdapter: " );
         setContext( context );
         setObserver( observer );
 
-        setCraftingQueue( CraftingQueue.getInstance() );
+//        setCraftingQueue( CraftingQueue.getInstance() );
         getCraftingQueue().setObserver( new Observer() );
         getCraftingQueue().fetch( context );
     }
@@ -120,12 +122,12 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     }
 
     private CraftingQueue getCraftingQueue() {
-        return mCraftingQueue;
+        return CraftingQueue.getInstance();
     }
 
-    private void setCraftingQueue( CraftingQueue craftingQueue ) {
-        this.mCraftingQueue = craftingQueue;
-    }
+//    private void setCraftingQueue( CraftingQueue craftingQueue ) {
+//        this.mCraftingQueue = craftingQueue;
+//    }
 
     private QueueRecyclerView.Observer getObserver() {
         return mViewObserver;

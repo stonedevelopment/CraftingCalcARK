@@ -8,6 +8,7 @@ import org.solovyev.android.checkout.PlayStoreListener;
 
 import javax.annotation.Nonnull;
 
+import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.Encryption;
 
 import static arc.resource.calculator.util.PurchaseUtil.buildPublicKey;
@@ -22,6 +23,8 @@ public class MainApplication extends Application {
             return Encryption.decrypt( buildPublicKey(), BuildConfig.APPLICATION_ID );
         }
     } );
+
+    private CraftingQueue mCraftingQueue = CraftingQueue.getInstance();
 
     public static MainApplication get( Activity activity ) {
         return ( MainApplication ) activity.getApplication();

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -205,6 +207,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+        CraftingQueue.getInstance().resume();
         mAdUtil.resume();
     }
 
@@ -212,6 +215,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
 
+        CraftingQueue.getInstance().pause( this );
         mAdUtil.pause();
     }
 
@@ -219,6 +223,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
+        CraftingQueue.getInstance().destroy();
         mAdUtil.destroy();
     }
 
@@ -306,12 +311,15 @@ public class DetailActivity extends AppCompatActivity
     private void FinishActivityWithResult( int resultCode ) {
         Intent returnIntent = getIntent();
 
+        Log.d( TAG, "FinishActivityWithResult: " + getShowcase().toString() );
+
         returnIntent.putExtra( RESULT_CODE, resultCode );
         returnIntent.putExtra( RESULT_EXTRA_NAME, getShowcase().getName() );
         returnIntent.putExtra( RESULT_EXTRA_ID, getShowcase().getId() );
 
         switch ( resultCode ) {
             case REMOVE:
+                CraftingQueue.getInstance().delete( getShowcase().getId() );
                 break;
 
             case ADD:
@@ -321,9 +329,13 @@ public class DetailActivity extends AppCompatActivity
                 if ( quantity == 0 && !mIsInQueue )
                     quantity++;
 
+                CraftingQueue.getInstance().setQuantity( this, getShowcase().getId(), quantity );
+
                 returnIntent.putExtra( RESULT_EXTRA_QUANTITY, quantity );
                 break;
         }
+
+        CraftingQueue.getInstance().pause( this );
 
         setResult( RESULT_OK, returnIntent );
 

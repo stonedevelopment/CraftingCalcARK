@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity
     // Purchase flow -> disable menu option to disable ads
     // CreateOptionsMenu -> disable menu option to disable ads if purchased
 
+    // TODO: 6/4/2017 LoadScreenActivity needs to show image properly on landscape
     // TODO: 5/27/2017 Error popup to have BobOnTheCob image
 
     @Override
@@ -299,18 +300,20 @@ public class MainActivity extends AppCompatActivity
 
                             switch ( extras.getInt( RESULT_CODE ) ) {
                                 case REMOVE:
-                                    CraftingQueue.getInstance().delete( id );
+//                                    CraftingQueue.getInstance().delete( id );
 
                                     showSnackBar( String.format( getString( R.string.toast_details_removed_format ), name ) );
                                     break;
 
                                 case UPDATE:
-                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
+//                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
+
                                     showSnackBar( String.format( getString( R.string.toast_details_updated_format ), name ) );
                                     break;
 
                                 case ADD:
-                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
+//                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
+
                                     showSnackBar( String.format( getString( R.string.toast_details_added_format ), name ) );
                                     break;
                             }

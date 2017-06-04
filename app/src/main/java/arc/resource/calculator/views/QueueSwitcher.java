@@ -2,6 +2,7 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -61,6 +62,7 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
     }
 
     public void onCreate() {
+        Log.d( TAG, "onCreate: " );
         // set size (height) to that of 1/5 screen's width
         int viewSize = PrefsUtil.getInstance( getContext() ).getCraftableViewSize();
         setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, viewSize ) );
@@ -81,10 +83,12 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
     }
 
     public void onPause() {
+        Log.d( TAG, "onPause: " );
         mRecyclerView.pause();
     }
 
     public void onDestroy() {
+        Log.d( TAG, "onDestroy: " );
         mRecyclerView.destroy();
     }
 

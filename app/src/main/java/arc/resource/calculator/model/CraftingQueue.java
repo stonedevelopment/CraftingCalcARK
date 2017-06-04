@@ -39,6 +39,8 @@ public class CraftingQueue {
     private static QueueAdapter.Observer mViewObserver;
 
     private CraftingQueue() {
+        Log.d( TAG, "CraftingQueue: new CraftingQueue" );
+
         setQueue( new QueueMap() );
 
         PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
@@ -193,6 +195,7 @@ public class CraftingQueue {
     }
 
     private void insert( Context context, long id, int quantity ) {
+        Log.d( TAG, "insert: " );
         try {
             insert( QueryForCraftable( context, id, quantity ) );
         } catch ( Exception e ) {
@@ -204,6 +207,7 @@ public class CraftingQueue {
     }
 
     private void insert( QueueEngram craftable ) {
+        Log.d( TAG, "insert: " + craftable.toString() );
         // add craftable to list
         addCraftable( craftable );
 
@@ -335,6 +339,7 @@ public class CraftingQueue {
     }
 
     public void fetch( Context context ) {
+        Log.d( TAG, "fetch: " );
         new FetchDataTask( context ).execute();
     }
 
@@ -343,6 +348,8 @@ public class CraftingQueue {
 
         private Context mContext;
         private QueueMap mTempQueueMap;
+
+        private Exception mException;
 
         FetchDataTask( Context context ) {
             this.mContext = context.getApplicationContext();
@@ -357,6 +364,7 @@ public class CraftingQueue {
 
         @Override
         protected void onPostExecute( Boolean querySuccessful ) {
+            Log.d( TAG, "onPostExecute: " + querySuccessful );
             if ( querySuccessful ) {
                 if ( mTempQueueMap.size() > 0 ) {
                     setQueue( mTempQueueMap );
@@ -369,6 +377,12 @@ public class CraftingQueue {
                     if ( getObserver() != null )
                         getObserver().notifyDataSetEmpty();
                 }
+            } else {
+                if ( mException == null )
+                    mException = new Exception( "Nullified Exception caught." );
+
+                if ( getObserver() != null )
+                    getObserver().notifyExceptionCaught( mException );
             }
         }
 
@@ -391,9 +405,7 @@ public class CraftingQueue {
 
                 return true;
             } catch ( Exception e ) {
-                if ( getObserver() != null )
-                    getObserver().notifyExceptionCaught( e );
-
+                mException = e;
                 return false;
             }
 
