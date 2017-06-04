@@ -345,8 +345,8 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
         if ( requestCode == FirstUseActivity.REQUEST_CODE ) {
             if ( resultCode == RESULT_OK ) {
-//                SharedPreferences preferences = getSharedPreferences( PrefsUtil.FirstUseKey, MODE_PRIVATE );
-//                preferences.edit().putBoolean( PrefsUtil.FirstUseKey, false ).apply();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences( this );
+                preferences.edit().putBoolean( PrefsUtil.FirstUseKey, false ).apply();
             }
         }
 

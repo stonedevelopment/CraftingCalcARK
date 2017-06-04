@@ -2,6 +2,7 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ViewSwitcher;
@@ -16,6 +17,8 @@ public class MainSwitcher extends ViewSwitcher {
     public static final int INVENTORY_SCREEN = 1;
     public static final int DEFAULT_SCREEN = CRAFTABLE_SCREEN;
 
+    private int mCurrentScreenId;
+
     CraftableLayout mCraftableLayout;
     InventoryLayout mInventoryLayout;
 
@@ -28,6 +31,7 @@ public class MainSwitcher extends ViewSwitcher {
     }
 
     public void onCreate() {
+        Log.d( TAG, "onCreate: " );
         mCraftableLayout = ( CraftableLayout ) findViewById( R.id.layout_craftables );
         mCraftableLayout.onCreate();
 
@@ -58,14 +62,18 @@ public class MainSwitcher extends ViewSwitcher {
     }
 
     public void onPause() {
+        Log.d( TAG, "onPause: " );
         if ( isCurrentView( mCraftableLayout.getId() ) ) {
             mCraftableLayout.onPause();
         } else {
             mInventoryLayout.onPause();
         }
+
+        PrefsUtil.getInstance( getContext() ).saveMainSwitcherScreenId( getCurrentScreenId() );
     }
 
     public void onResume() {
+        Log.d( TAG, "onResume: " );
         if ( isCurrentView( mCraftableLayout.getId() ) ) {
             mCraftableLayout.onResume();
         } else {
@@ -113,5 +121,9 @@ public class MainSwitcher extends ViewSwitcher {
             // onResume craftable view
             mCraftableLayout.onResume();
         }
+    }
+
+    private int getCurrentScreenId() {
+        return isCurrentView( mCraftableLayout.getId() ) ? CRAFTABLE_SCREEN : INVENTORY_SCREEN;
     }
 }

@@ -30,7 +30,9 @@ import static arc.resource.calculator.DetailActivity.ADD;
 import static arc.resource.calculator.DetailActivity.ERROR;
 import static arc.resource.calculator.DetailActivity.REMOVE;
 import static arc.resource.calculator.DetailActivity.RESULT_CODE;
-import static arc.resource.calculator.DetailActivity.RESULT_EXTRA;
+import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_ID;
+import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
+import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_QUANTITY;
 import static arc.resource.calculator.DetailActivity.UPDATE;
 
 /**
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity
 
     // Purchase flow -> disable menu option to disable ads
     // CreateOptionsMenu -> disable menu option to disable ads if purchased
+
+    // TODO: 5/27/2017 Error popup to have BobOnTheCob image
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -191,10 +195,9 @@ public class MainActivity extends AppCompatActivity
 //                changeLog.getFullLogDialog().show();
 //                break;
 
-//            case R.id.action_show_helpdialog:
-//                HelpDialog helpDialog = new HelpDialog( this );
-//                helpDialog.getDialog().show();
-//                break;
+            case R.id.action_show_tutorial:
+                startActivity( new Intent( this, FirstUseActivity.class ) );
+                break;
 
             case R.id.action_about:
                 DialogUtil.About( MainActivity.this ).show();
@@ -290,24 +293,30 @@ public class MainActivity extends AppCompatActivity
                 switch ( requestCode ) {
                     case DetailActivity.REQUEST_CODE:
                         if ( resultCode == RESULT_OK ) {
-                            String name = ( String ) extras.get( RESULT_EXTRA );
+                            String name = ( String ) extras.get( RESULT_EXTRA_NAME );
+                            long id = ( long ) extras.get( RESULT_EXTRA_ID );
+                            int quantity = ( int ) extras.get( RESULT_EXTRA_QUANTITY );
 
                             switch ( extras.getInt( RESULT_CODE ) ) {
                                 case REMOVE:
+                                    CraftingQueue.getInstance().delete( id );
+
                                     showSnackBar( String.format( getString( R.string.toast_details_removed_format ), name ) );
                                     break;
 
                                 case UPDATE:
+                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
                                     showSnackBar( String.format( getString( R.string.toast_details_updated_format ), name ) );
                                     break;
 
                                 case ADD:
+                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
                                     showSnackBar( String.format( getString( R.string.toast_details_added_format ), name ) );
                                     break;
                             }
                         } else {
                             if ( extras.getInt( RESULT_CODE ) == ERROR ) {
-                                Exception e = ( Exception ) extras.get( RESULT_EXTRA );
+                                Exception e = ( Exception ) extras.get( RESULT_EXTRA_NAME );
 
                                 if ( e != null ) {
                                     showSnackBar( getString( R.string.toast_details_error ) );

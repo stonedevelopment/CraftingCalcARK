@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -44,7 +43,9 @@ public class DetailActivity extends AppCompatActivity
     public static final String REQUEST_ID = "ID";
 
     public static final String RESULT_CODE = "CODE";
-    public static final String RESULT_EXTRA = "EXTRA";
+    public static final String RESULT_EXTRA_NAME = "EXTRA_NAME";
+    public static final String RESULT_EXTRA_ID = "EXTRA_ID";
+    public static final String RESULT_EXTRA_QUANTITY = "EXTRA_QUANTITY";
 
     public static final int ERROR = -1;
     public static final int REMOVE = 0;
@@ -71,8 +72,8 @@ public class DetailActivity extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
             // // FIXME: 5/4/2017 Quick workaround for phones that sleep in DetailActivity
-            if ( savedInstanceState != null )
-                FinishActivityWithoutResult();
+//            if ( savedInstanceState != null )
+//                FinishActivityWithoutResult();
 
             long id = getIntent().getExtras().getLong( REQUEST_ID );
 
@@ -295,7 +296,7 @@ public class DetailActivity extends AppCompatActivity
         Intent returnIntent = getIntent();
 
         returnIntent.putExtra( RESULT_CODE, ERROR );
-        returnIntent.putExtra( RESULT_EXTRA, e );
+        returnIntent.putExtra( RESULT_EXTRA_NAME, e );
 
         setResult( RESULT_CANCELED, returnIntent );
 
@@ -305,23 +306,22 @@ public class DetailActivity extends AppCompatActivity
     private void FinishActivityWithResult( int resultCode ) {
         Intent returnIntent = getIntent();
 
-        long id = getShowcase().getId();
-        int quantity = getShowcase().getQuantity();
-
         returnIntent.putExtra( RESULT_CODE, resultCode );
-        returnIntent.putExtra( RESULT_EXTRA, getShowcase().getName() );
+        returnIntent.putExtra( RESULT_EXTRA_NAME, getShowcase().getName() );
+        returnIntent.putExtra( RESULT_EXTRA_ID, getShowcase().getId() );
 
         switch ( resultCode ) {
             case REMOVE:
-                CraftingQueue.getInstance().delete( id );
                 break;
 
             case ADD:
             case UPDATE:
+                int quantity = getShowcase().getQuantity();
+
                 if ( quantity == 0 && !mIsInQueue )
                     quantity++;
 
-                CraftingQueue.getInstance().setQuantity( this, id, quantity );
+                returnIntent.putExtra( RESULT_EXTRA_QUANTITY, quantity );
                 break;
         }
 

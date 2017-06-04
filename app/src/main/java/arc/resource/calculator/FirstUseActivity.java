@@ -17,18 +17,18 @@ public class FirstUseActivity extends AppIntro {
                 R.string.content_intro_title_first,
                 R.string.content_intro_description_first,
                 "scenary_island.jpg",
-                "selfie_looking_to_the_side.png",
-                R.layout.content_intro_last ) );
+                "emote_wave.png",
+                R.layout.content_intro ) );
 
         addSlide( SlideFragment.newInstance( R.string.content_intro_title_crafting_stations,
                 R.string.content_intro_description_crafting_stations,
                 "screen_crafting_stations.jpg",
-                "selfie.png" ) );
+                "emote_heart_with_wink.png" ) );
 
         addSlide( SlideFragment.newInstance( R.string.content_intro_title_folders,
                 R.string.content_intro_description_folders,
                 "screen_folders.jpg",
-                "emote_wave.png",
+                "selfie.png",
                 R.layout.content_intro_left ) );
 
         addSlide( SlideFragment.newInstance( R.string.content_intro_title_engrams,
@@ -39,7 +39,7 @@ public class FirstUseActivity extends AppIntro {
         addSlide( SlideFragment.newInstance( R.string.content_intro_title_crafting_queue,
                 R.string.content_intro_description_crafting_queue,
                 "screen_crafting_queue.jpg",
-                "emote_heart_with_wink.png",
+                "selfie_looking_to_the_side.png",
                 R.layout.content_intro_left ) );
 
         addSlide( SlideFragment.newInstance( R.string.content_intro_title_viewing_resources,
@@ -66,7 +66,7 @@ public class FirstUseActivity extends AppIntro {
                 R.string.content_intro_description_last,
                 "scenary_island.jpg",
                 "emote_thank.png",
-                R.layout.content_intro_last ) );
+                R.layout.content_intro ) );
     }
 
     @Override
