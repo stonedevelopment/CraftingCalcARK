@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -14,8 +13,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:padding="4dp"
-        android:adjustViewBounds="true"
-        app:srcCompat="@drawable/screen_crafting_stations"/>
+        android:adjustViewBounds="true"/>
 
     <TextView
         android:id="@+id/title"

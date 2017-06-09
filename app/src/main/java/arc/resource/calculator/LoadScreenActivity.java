@@ -416,8 +416,8 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
             @Override
             public void run() {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
-//                boolean isFirst = prefs.getBoolean( PrefsUtil.FirstUseKey, PrefsUtil.FirstUseDefaultValue );
-                boolean isFirst = true;
+                boolean isFirst = prefs.getBoolean( PrefsUtil.FirstUseKey, PrefsUtil.FirstUseDefaultValue );
+//                boolean isFirst = true;
 
                 if ( isFirst )
                     startFirstUseActivity();
