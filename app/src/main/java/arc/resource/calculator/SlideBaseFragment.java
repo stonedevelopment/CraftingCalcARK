@@ -79,12 +79,14 @@ public abstract class SlideBaseFragment extends Fragment implements ISlideSelect
                     .into( i );
         }
 
-        ImageView s = ( ImageView ) v.findViewById( R.id.selfie );
-        Picasso.with( getContext() )
-                .load( buildImagePath( selfieImage ) )
-                .error( R.drawable.placeholder_empty )
-                .placeholder( R.drawable.placeholder_empty )
-                .into( s );
+        if ( selfieImage != null ) {
+            ImageView s = ( ImageView ) v.findViewById( R.id.selfie );
+            Picasso.with( getContext() )
+                    .load( buildImagePath( selfieImage ) )
+                    .error( R.drawable.placeholder_empty )
+                    .placeholder( R.drawable.placeholder_empty )
+                    .into( s );
+        }
 
         return v;
     }

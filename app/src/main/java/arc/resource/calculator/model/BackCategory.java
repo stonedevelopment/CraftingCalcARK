@@ -23,6 +23,6 @@ public class BackCategory extends Category {
      * @param parent Parent id of requested category
      */
     public BackCategory( long id, long parent ) {
-        super( id, null, parent, "back_folder.png" );
+        super( id, null, parent, "back_folder.webp" );
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="@dimen/appIntroBottomBarHeight">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:padding="4dp"
+        app:srcCompat="@drawable/screen_crafting_stations"/>
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/AppTheme.Text.Intro.Heading"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/appIntroBottomBarHeight"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/image"
+        android:gravity="center_vertical"
+        android:text="@string/content_intro_title_crafting_stations"/>
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/AppTheme.Text.Intro.Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/title"
+        android:layout_gravity="center_vertical"
+        android:layout_toEndOf="@+id/image"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:text="@string/content_intro_description_crafting_stations"/>
+
+    <!-- Bob selfie bottom left, stretched to 50% -->
+
+</RelativeLayout>

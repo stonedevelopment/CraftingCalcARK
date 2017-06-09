@@ -7,8 +7,22 @@ import android.support.annotation.StringRes;
 public final class SlideFragment extends SlideBaseFragment {
 
     public static SlideFragment newInstance( @StringRes int title, @StringRes int description,
-                                             String mainImage, String selfieImage ) {
-        return newInstance( title, description, mainImage, selfieImage, R.layout.content_intro_right );
+                                             String mainImage ) {
+        return newInstance( title, description, mainImage, R.layout.content_intro );
+    }
+
+    public static SlideFragment newInstance( @StringRes int title, @StringRes int description,
+                                             String mainImage, @LayoutRes int layout ) {
+        SlideFragment slide = new SlideFragment();
+        Bundle args = new Bundle();
+        args.putString( ARG_MAIN_IMAGE, mainImage );
+        args.putString( ARG_SELFIE_IMAGE, null );
+        args.putInt( ARG_TITLE, title );
+        args.putInt( ARG_DESC, description );
+        args.putInt( ARG_LAYOUT, layout );
+        slide.setArguments( args );
+
+        return slide;
     }
 
     public static SlideFragment newInstance( @StringRes int title, @StringRes int description,

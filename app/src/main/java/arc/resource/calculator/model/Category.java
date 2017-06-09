@@ -34,7 +34,7 @@ public class Category {
         mId = _id;
         mName = name;
         mParent = parent;
-        mFile = "folder.png";
+        mFile = "folder.webp";
     }
 
     public Category( long _id, @Nullable String name, long parent, String file ) {

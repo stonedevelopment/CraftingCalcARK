@@ -38,6 +38,10 @@ import static arc.resource.calculator.LoadScreenActivity.EVENT.INIT;
 public class LoadScreenActivity extends AppCompatActivity implements ExceptionObserver.Listener {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
+    private final String BUNDLE_EVENT = "EVENT";
+    private final String BUNDLE_TEXT = "TEXT";
+    private final String BUNDLE_TIME = "TIME";
+
     /**
      * Events in order of execution.
      */
@@ -60,7 +64,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     private boolean mHasUpdate = false;
     private boolean mDidUpdate = false;
 
-    private EVENT mCurrentEvent;
+    private EVENT mCurrentEvent = INIT;
 
     private interface Listener {
         // triggers upon any error found, alerts user via status screen, sends report, closes app
@@ -87,8 +91,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_load_screen );
 
-        mStartElapsedTime = SystemClock.elapsedRealtime();
-
         ImageView imageView = ( ImageView ) findViewById( R.id.content_init_image_view );
 
         final String imagePath = "file:///android_asset/splash.png";
@@ -99,6 +101,19 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                 .into( imageView );
 
         mTextView = ( TextView ) findViewById( R.id.content_init_status_text );
+
+        if ( savedInstanceState != null ) {
+            int eventOrdinal = ( int ) savedInstanceState.get( BUNDLE_EVENT );
+            mCurrentEvent = EVENT.values()[eventOrdinal];
+
+            mStartElapsedTime = ( long ) savedInstanceState.get( BUNDLE_TIME );
+
+            String text = ( String ) savedInstanceState.get( BUNDLE_TEXT );
+            mTextView.setText( text );
+        } else {
+            mCurrentEvent = INIT;
+            mStartElapsedTime = SystemClock.elapsedRealtime();
+        }
 
         mListener = new Listener() {
             @Override
@@ -112,8 +127,9 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
             @Override
             public void onInit() {
-                mCurrentEvent = INIT;
-                mListener.onStartEvent();
+                if ( mCurrentEvent == INIT ) {
+                    mListener.onStartEvent();
+                }
             }
 
             @Override
@@ -340,6 +356,15 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     }
 
     @Override
+    protected void onSaveInstanceState( Bundle outState ) {
+        outState.putInt( BUNDLE_EVENT, mCurrentEvent.ordinal() );
+        outState.putString( BUNDLE_TEXT, mTextView.getText().toString() );
+        outState.putLong( BUNDLE_TIME, mStartElapsedTime );
+
+        super.onSaveInstanceState( outState );
+    }
+
+    @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
         super.onActivityResult( requestCode, resultCode, data );
 
@@ -391,7 +416,8 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
             @Override
             public void run() {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
-                boolean isFirst = prefs.getBoolean( PrefsUtil.FirstUseKey, PrefsUtil.FirstUseDefaultValue );
+//                boolean isFirst = prefs.getBoolean( PrefsUtil.FirstUseKey, PrefsUtil.FirstUseDefaultValue );
+                boolean isFirst = true;
 
                 if ( isFirst )
                     startFirstUseActivity();

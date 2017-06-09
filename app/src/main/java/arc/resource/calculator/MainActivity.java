@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity
     // Purchase flow -> disable menu option to disable ads
     // CreateOptionsMenu -> disable menu option to disable ads if purchased
 
-    // TODO: 6/4/2017 LoadScreenActivity needs to show image properly on landscape
     // TODO: 5/27/2017 Error popup to have BobOnTheCob image
 
     @Override
