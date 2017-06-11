@@ -1897,7 +1897,7 @@
     {
       "name": "Megalania Egg",
       "image_folder": "Vanilla\/Resources\/",
-      "image_file": "baryonyx_egg.webp",
+      "image_file": "megalania_egg.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
