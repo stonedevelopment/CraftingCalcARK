@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "257.2",
+    "version": "258.0",
     "changelog": {
+      "258.0": "Added all Engrams up to PC v258.0!",
       "257.2": "Updated all images to reflect new .webP image conversion.",
       "257.1": "Updated composition for Metal Spike Wall, Poison Grenade",
       "257.0": "Added Cloning Chamber, Tek Turret, Tek Grenade, Megalodon Tek Saddle, Daeodon Saddle",
@@ -1227,6 +1228,76 @@
       "image_file": "allosaurus_egg.webp",
       "dlc_id": 1,
       "complex_resource": false
+    },
+    {
+      "name": "Golden Hesperonis Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "golden_hesperonis_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Baryonyx Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "baryonyx_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Megalania Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "baryonyx_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Hesperornis Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "hesperornis_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Kentrosaurus Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "kentrosaurus_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Yutyrannus Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "yutyrannus_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Fish Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "fish_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Ichthyornis Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "ichthyornis_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Giant Bee Honey",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "giant_bee_honey.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Spear Bolt",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "spear_bolt.webp",
+      "dlc_id": 1,
+      "complex_resource": true
     },
     {
       "name": "Amarberry",
@@ -11660,6 +11731,53 @@
       ]
     },
     {
+      "name": "Harpoon Launcher",
+      "description": "Has tremendous power and speed underwater, but ineffective range out of water. Uses Spear Bolts for ammunition.",
+      "yield": 1,
+      "level": 43,
+      "category_id": 407,
+      "image_folder": "Vanilla\/Engrams\/Armor\/Metal\/",
+      "image_file": "harpoon_launcher.webp",
+      "points": 38,
+      "xp": 18,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Wood",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
       "name": "Heavy Miner's Helmet",
       "description": "Provides heavy physical protection, but makes the elements harder to endure.",
       "yield": 1,
@@ -12448,6 +12566,186 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Baryonyx Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Raw Mutton",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Baryonyx Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Megalania Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Giant Bee Honey",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Chitin",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Megalania Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Kentrosaurus Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Ammonite Bile",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Golden Hesperonis Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Kentrosaurus Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Ichthyornis Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rare Flower",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Ichthyornis Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
       ]
     },
     {
@@ -20948,6 +21246,294 @@
       ],
       "station": [
         "Self"
+      ]
+    },
+    {
+      "name": "Spear Bolt",
+      "description": "A massive bolt with a cast iron arrowhead. Can only be used in a Ballista Turret or a Harpoon Gun. If it doesn't break, you can recover your ammo.",
+      "yield": 1,
+      "level": 29,
+      "category_id": 3011,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Primitive\/Melee\/",
+      "image_file": "spear_bolt.webp",
+      "points": 10,
+      "xp": 18.6,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 14
+        },
+        {
+          "resource_id": "Flint",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 14
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 2
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Tranq Spear Bolt",
+      "description": "A massive bolt with a tranq dart mounted on the front. Used as an underwater tranquilizer projectile with the Harpoon Gun. If it doesn't break, you can recover the spear bolt.",
+      "yield": 1,
+      "level": 72,
+      "category_id": 3011,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Primitive\/Melee\/",
+      "image_file": "tranq_spear_bolt.webp",
+      "points": 40,
+      "xp": 18.6,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Spear Bolt",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tranquilizer Dart",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Toilet",
+      "description": "Attach to water pipes, and sit on it when you hear the call of nature. Do your business, feel refreshed, and then flush for efficient waste disposal!",
+      "yield": 1,
+      "level": 32,
+      "category_id": 3011,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Primitive\/Melee\/",
+      "image_file": "toilet.webp",
+      "points": 35,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Stone",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 70
+        },
+        {
+          "resource_id": "Metal Ore",
+          "quantity": 180
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 40
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Motorboat",
+      "description": "A floating metal platform that you can pilot across the water, requires gasoline to power its motor. Can support the weight of structures and be built on.",
+      "yield": 1,
+      "level": 57,
+      "category_id": 3011,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Primitive\/Melee\/",
+      "image_file": "toilet.webp",
+      "points": 45,
+      "xp": 187.5,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Wood",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 1200
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 180
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 400
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 60
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Hyaenodon Meatpack",
+      "description": "Equip a Hyaenodon with this to give it increased meat carrying & preservation capability.",
+      "yield": 1,
+      "level": 19,
+      "category_id": 3011,
+      "image_folder": "Vanilla\/Engrams\/Weapons\/Primitive\/Melee\/",
+      "image_file": "hyaenodon_meatpack.webp",
+      "points": 14,
+      "xp": 125.6,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 155
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Megatherium Saddle",
+      "description": "Equip a Megatherium with this to ride it.",
+      "yield": 1,
+      "level": 52,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "megatherium_saddle.webp",
+      "points": 24,
+      "xp": 44.4,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 325
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 130
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Megalania Saddle",
+      "description": "Equip a Megalania with this to ride it.",
+      "yield": 1,
+      "level": 73,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "megalania_saddle.webp",
+      "points": 65,
+      "xp": 125.6,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 315
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 215
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Yutyrannus Saddle",
+      "description": "Equip a Yutyrannus with this to ride it.",
+      "yield": 1,
+      "level": 80,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "yutyrannus_saddle.webp",
+      "points": 50,
+      "xp": 172,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 135
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 425
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 125
+        }
+      ],
+      "station": [
+        "Smithy"
       ]
     },
     {
