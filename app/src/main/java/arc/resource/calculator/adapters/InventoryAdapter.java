@@ -54,6 +54,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private Status mViewStatus;
 
+    private FetchInventoryTask mTask;
+
     private boolean mNeedsUpdate;
 
     enum Status {VISIBLE, HIDDEN}
@@ -101,6 +103,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 }
             }
         } );
+
+        mTask = new FetchInventoryTask();
     }
 
     private Context getContext() {
@@ -189,7 +193,10 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     }
 
     private void fetchInventory() {
-        new FetchInventoryTask().execute();
+        mTask.cancel( true );
+
+        mTask = new FetchInventoryTask();
+        mTask.execute();
     }
 
     /**
@@ -229,10 +236,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     getObserver().notifyDataSetEmpty();
                 }
             } else {
-                if ( mException == null )
-                    mException = new Exception( "Nullified Exception caught." );
-
-                getObserver().notifyExceptionCaught( mException );
+                if ( mException != null )
+                    getObserver().notifyExceptionCaught( mException );
             }
         }
 
@@ -240,11 +245,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         protected Boolean doInBackground( Void... params ) {
 
             try {
-                long dlc_id = PrefsUtil.getInstance(mContext).getDLCPreference();
+                long dlc_id = PrefsUtil.getInstance( mContext ).getDLCPreference();
 
                 CraftingQueue craftingQueue = CraftingQueue.getInstance();
 
                 for ( int i = 0; i < craftingQueue.getSize(); i++ ) {
+                    if ( isCancelled() )
+                        return false;
+
                     QueueEngram queueEngram = craftingQueue.getCraftable( i );
 
                     InventoryMap composition =
