@@ -20,7 +20,6 @@ import org.solovyev.android.checkout.Purchase;
 
 import javax.annotation.Nonnull;
 
-import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.MainApplication;
 import arc.resource.calculator.R;
 
@@ -107,8 +106,7 @@ public class AdUtil {
     }
 
     private void showSnackBar( String message ) {
-        if ( BuildConfig.DEBUG )
-            Snackbar.make( mActivity.findViewById( mLayoutId ), message, Snackbar.LENGTH_SHORT ).show();
+        Snackbar.make( mActivity.findViewById( mLayoutId ), message, Snackbar.LENGTH_SHORT ).show();
     }
 
     private class InventoryCallback implements Inventory.Callback {
@@ -121,11 +119,11 @@ public class AdUtil {
                 return;
 
             if ( product.isPurchased( SKU_FEATURE_DISABLE_ADS ) ) {
-                showSnackBar( SKU_FEATURE_DISABLE_ADS + " was previously purchased." );
+//                showSnackBar( SKU_FEATURE_DISABLE_ADS + " was previously purchased." );
                 return;
             }
 
-            showSnackBar( SKU_FEATURE_DISABLE_ADS + " was not purchased." );
+//            showSnackBar( SKU_FEATURE_DISABLE_ADS + " was not purchased." );
             mRemoveAds = false;
             loadAdView();
         }
@@ -134,7 +132,8 @@ public class AdUtil {
     private class PurchaseListener extends EmptyRequestListener<Purchase> {
         @Override
         public void onSuccess( @Nonnull Purchase purchase ) {
-            showSnackBar( SKU_FEATURE_DISABLE_ADS + " was just purchased successfully." );
+//            showSnackBar( SKU_FEATURE_DISABLE_ADS + " was just purchased successfully." );
+            showSnackBar( "Consider those ads tamed! Thank you so much for your purchase!" );
             mRemoveAds = true;
             unloadAdView();
         }
