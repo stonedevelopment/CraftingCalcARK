@@ -292,12 +292,14 @@ public class MainActivity extends AppCompatActivity
 
                 switch ( requestCode ) {
                     case DetailActivity.REQUEST_CODE:
-                        if ( resultCode == RESULT_OK ) {
-                            String name = ( String ) extras.get( RESULT_EXTRA_NAME );
-                            long id = ( long ) extras.get( RESULT_EXTRA_ID );
-                            int quantity = ( int ) extras.get( RESULT_EXTRA_QUANTITY );
+                        int extraResultCode = extras.getInt( RESULT_CODE );
 
-                            switch ( extras.getInt( RESULT_CODE ) ) {
+                        if ( resultCode == RESULT_OK ) {
+                            String name = extras.getString( RESULT_EXTRA_NAME );
+//                            long id = extras.getLong( RESULT_EXTRA_ID );
+//                            int quantity = extras.getInt( RESULT_EXTRA_QUANTITY );
+
+                            switch ( extraResultCode ) {
                                 case REMOVE:
 //                                    CraftingQueue.getInstance().delete( id );
 
@@ -317,7 +319,7 @@ public class MainActivity extends AppCompatActivity
                                     break;
                             }
                         } else {
-                            if ( extras.getInt( RESULT_CODE ) == ERROR ) {
+                            if ( extraResultCode == ERROR ) {
                                 Exception e = ( Exception ) extras.get( RESULT_EXTRA_NAME );
 
                                 if ( e != null ) {

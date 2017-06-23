@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,13 +72,18 @@ public class DetailActivity extends AppCompatActivity
             setContentView( R.layout.activity_detail );
             getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
-            // // FIXME: 5/4/2017 Quick workaround for phones that sleep in DetailActivity
-//            if ( savedInstanceState != null )
-//                FinishActivityWithoutResult();
+            long id;
+            int quantity;
 
-            long id = getIntent().getExtras().getLong( REQUEST_ID );
+            if ( savedInstanceState != null ) {
+                id = savedInstanceState.getLong( DatabaseContract.EngramEntry._ID );
+                quantity = savedInstanceState.getInt( DatabaseContract.QueueEntry.COLUMN_QUANTITY );
+            } else {
+                id = getIntent().getExtras().getLong( REQUEST_ID );
+                quantity = 0;
+            }
 
-            setShowcase( new Showcase( getApplicationContext(), id ) );
+            setShowcase( new Showcase( getApplicationContext(), id, quantity ) );
 
             ImageView imageView = ( ImageView ) findViewById( R.id.imageView );
             imageView.setContentDescription( "Image of " + getShowcase().getName() );
@@ -311,8 +315,6 @@ public class DetailActivity extends AppCompatActivity
     private void FinishActivityWithResult( int resultCode ) {
         Intent returnIntent = getIntent();
 
-        Log.d( TAG, "FinishActivityWithResult: " + getShowcase().toString() );
-
         returnIntent.putExtra( RESULT_CODE, resultCode );
         returnIntent.putExtra( RESULT_EXTRA_NAME, getShowcase().getName() );
         returnIntent.putExtra( RESULT_EXTRA_ID, getShowcase().getId() );
@@ -335,10 +337,7 @@ public class DetailActivity extends AppCompatActivity
                 break;
         }
 
-        CraftingQueue.getInstance().pause( this );
-
         setResult( RESULT_OK, returnIntent );
-
         finish();
     }
 

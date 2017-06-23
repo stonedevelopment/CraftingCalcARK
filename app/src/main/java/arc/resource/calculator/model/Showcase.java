@@ -38,11 +38,12 @@ public class Showcase {
 
     private ShowcaseEntry mShowcaseEntry;
 
-    public Showcase( Context context, long _id ) throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+    public Showcase( Context context, long _id, int quantity )
+            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         long dlc_id = PrefsUtil.getInstance( context ).getDLCPreference();
 
         setContext( context );
-        setShowcaseEntry( QueryForDetails( context, dlc_id, _id ) );
+        setShowcaseEntry( QueryForDetails( context, dlc_id, _id, quantity ) );
     }
 
     private void setShowcaseEntry( ShowcaseEntry showcaseEntry ) {
@@ -178,7 +179,7 @@ public class Showcase {
         return context.getContentResolver().query( uri, null, null, null, null );
     }
 
-    private ShowcaseEntry QueryForDetails( Context context, long dlc_id, long _id )
+    private ShowcaseEntry QueryForDetails( Context context, long dlc_id, long _id, int quantity )
             throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
         Uri uri = DatabaseContract.EngramEntry.buildUriWithId( dlc_id, _id );
 
@@ -208,9 +209,9 @@ public class Showcase {
             LongSparseArray<Station> stations = QueryForStations( context, dlc_id, stationIds );
 
             // Next, let's grab matching Queue details, if there are any.
-            int quantity = 0;
-            if ( CraftingQueue.getInstance().contains( _id ) )
-                quantity = CraftingQueue.getInstance().getCraftable( _id ).getQuantity();
+            if ( quantity == 0 )
+                if ( CraftingQueue.getInstance().contains( _id ) )
+                    quantity = CraftingQueue.getInstance().getCraftable( _id ).getQuantity();
 
             // Finally, let's grab Composition details.
             LongSparseArray<CompositeResource> composition = QueryForComposition( context, dlc_id, _id );
