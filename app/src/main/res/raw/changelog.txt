@@ -25,6 +25,7 @@
       * Added new Tapejara Tek Saddle!
       * Updated all Engrams with new level requirements (finally, eh?)!
       * Fixed a bug (hopefully!) where Engram Detail screen would cause a crash.
+      * Coming soon: Translations, experience, engram points, and more!
       ! Thanks to all those who alerted me of level requirement changes! I owe you!
 
     $ 1.3.11

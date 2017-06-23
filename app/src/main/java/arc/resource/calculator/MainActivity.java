@@ -190,10 +190,10 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult( new Intent( this, SettingsActivity.class ), SettingsActivity.REQUEST_CODE );
                 return true;
 
-//            case R.id.action_show_changelog:
-//                ChangeLog changeLog = new ChangeLog( this );
-//                changeLog.getFullLogDialog().show();
-//                break;
+            case R.id.action_show_changelog:
+                ChangeLog changeLog = new ChangeLog( this );
+                changeLog.getFullLogDialog().show();
+                break;
 
             case R.id.action_show_tutorial:
                 startActivity( new Intent( this, FirstUseActivity.class ) );
