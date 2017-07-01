@@ -10,21 +10,21 @@
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-package arc.resource.calculator.model.engram;
+package arc.resource.calculator.model.recipe;
 
 /**
- * Engram object that holds the id of the category (level) it lies on
+ * Craftable object that holds the id of the category (level) it lies on
  */
-public class DisplayEngram extends QueueEngram {
+public class Displayable extends Queueable {
     private long mCategoryId;
 
-    public DisplayEngram( long id, String name, String folder, String file, int yield, long categoryId, int quantity ) {
+    public Displayable( long id, String name, String folder, String file, int yield, long categoryId, int quantity ) {
         super( id, name, folder, file, yield, quantity );
 
         setCategoryId( categoryId );
     }
 
-    public void setCategoryId( long category_id ) {
+    private void setCategoryId( long category_id ) {
         this.mCategoryId = category_id;
     }
 

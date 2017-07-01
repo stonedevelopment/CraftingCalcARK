@@ -19,7 +19,9 @@ public class CraftableSwitcher extends ViewSwitcher implements CraftableRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "An error occurred while fetching Engram data." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_error_format ),
+                getContext().getString( R.string.content_main_switcher_craftable ) ) );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
@@ -29,7 +31,9 @@ public class CraftableSwitcher extends ViewSwitcher implements CraftableRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Fetching Engram data.." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_fetch_format ),
+                getContext().getString( R.string.content_main_switcher_craftable ) ) );
     }
 
     @Override
@@ -45,7 +49,9 @@ public class CraftableSwitcher extends ViewSwitcher implements CraftableRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Engram data is empty." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_empty_format ),
+                getContext().getString( R.string.content_main_switcher_craftable ) ) );
     }
 
     public CraftableSwitcher( Context context ) {
@@ -78,7 +84,7 @@ public class CraftableSwitcher extends ViewSwitcher implements CraftableRecycler
     }
 
     public void onSearch( String query ) {
-        mRecyclerView.search(query);
+        mRecyclerView.search( query );
     }
 
     private void onStatusUpdate( String text ) {

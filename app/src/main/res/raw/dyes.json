@@ -1,0 +1,488 @@
+{
+  "name": "%1%s Coloring",
+  "description": "This substance can be used to color certain items and structures.",
+  "yield": 5,
+  "level": 1,
+  "category_id": 1100,
+  "image_folder": "Vanilla\/Engrams\/Dyes\/",
+  "dlc_id": 1,
+  "composition": [
+    {
+      "resource_id": "Water",
+      "quantity": 1
+    }
+  ],
+  "station": [
+    "Cooking Pot",
+    "Industrial Cooker",
+    "Cauldron"
+  ],
+  "recipes": [
+    {
+      "name": "Black",
+      "image_file": "black.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "name": "Blue",
+      "image_file": "blue.webp",
+      "composition": [
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 15
+        }
+      ]
+    },
+    {
+      "name": "Brick",
+      "image_file": "brick.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "name": "Brown",
+      "image_file": "brown.webp",
+      "composition": [
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 9
+        },
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "name": "Cantaloupe",
+      "image_file": "cantaloupe.webp",
+      "composition": [
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Stimberry",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "name": "Cyan",
+      "image_file": "cyan.webp",
+      "composition": [
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 12
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "name": "Forest",
+      "image_file": "forest.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "name": "Green",
+      "image_file": "green.webp",
+      "composition": [
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 9
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 9
+        }
+      ]
+    },
+    {
+      "name": "Magenta",
+      "image_file": "magenta.webp",
+      "composition": [
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 9
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 9
+        }
+      ]
+    },
+    {
+      "name": "Mud",
+      "image_file": "mud.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "name": "Navy",
+      "image_file": "navy.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "name": "Olive",
+      "image_file": "olive.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "name": "Orange",
+      "image_file": "orange.webp",
+      "composition": [
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 9
+        },
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 9
+        }
+      ]
+    },
+    {
+      "name": "Parchment",
+      "image_file": "parchment.webp",
+      "composition": [
+        {
+          "resource_id": "Stimberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "name": "Pink",
+      "image_file": "pink.webp",
+      "composition": [
+        {
+          "resource_id": "Stimberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "name": "Purple",
+      "image_file": "purple.webp",
+      "composition": [
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 9
+        },
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 9
+        }
+      ]
+    },
+    {
+      "name": "Red",
+      "image_file": "red.webp",
+      "composition": [
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "name": "Royalty",
+      "image_file": "royalty.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "name": "Silver",
+      "image_file": "silver.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Stimberry",
+          "quantity": 12
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Sky",
+      "image_file": "sky.webp",
+      "composition": [
+        {
+          "resource_id": "Stimberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "name": "Slate",
+      "image_file": "slate.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 12
+        },
+        {
+          "resource_id": "Stimberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Sparkpowder",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Tan",
+      "image_file": "tan.webp",
+      "composition": [
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Azulberry",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Stimberry",
+          "quantity": 6
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "name": "Tangerine",
+      "image_file": "tangerine.webp",
+      "composition": [
+        {
+          "resource_id": "Narcoberry",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "name": "White",
+      "image_file": "white.webp",
+      "composition": [
+        {
+          "resource_id": "Stimberry",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Charcoal",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "name": "Yellow",
+      "image_file": "yellow.webp",
+      "composition": [
+        {
+          "resource_id": "Charcoal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Amarberry",
+          "quantity": 15
+        }
+      ]
+    }
+  ]
+}

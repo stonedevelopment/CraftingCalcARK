@@ -1,0 +1,1083 @@
+{
+  "name": "Kibble (%1$s)",
+  "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+  "yield": 1,
+  "level": 1,
+  "category_id": 1200,
+  "image_folder": "Vanilla\/Engrams\/Kibble\/",
+  "image_file": "kibble.webp",
+  "dlc_id": 1,
+  "composition": [
+    {
+      "resource_id": "Mejoberry",
+      "quantity": 2
+    },
+    {
+      "resource_id": "Fiber",
+      "quantity": 3
+    },
+    {
+      "resource_id": "Water",
+      "quantity": 1
+    }
+  ],
+  "station": [
+    "Cooking Pot",
+    "Industrial Cooker",
+    "Cauldron"
+  ],
+  "recipes": [
+    {
+      "name": "Allosaurus Egg",
+      "favorite": [
+        "Tapejara",
+        "Griffin"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Prime Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Allosaurus Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Ankylo Egg",
+      "favorite": [
+        "Carno"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Ankylo Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Araneo Egg",
+      "favorite": [
+        ""
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Araneo Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Archaeopteryx Egg",
+      "favorite": [
+        "Diplocaulus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Fish Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Archaeopteryx Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Argentavis Egg",
+      "favorite": [
+        "Spino"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Argentavis Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Baryonyx Egg",
+      "favorite": [
+        "Megalania"
+      ],
+      "composition": [
+        {
+          "resource_id": "Raw Mutton",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Baryonyx Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Bronto Egg",
+      "favorite": [
+        "Sabertooth"
+      ],
+      "composition": [
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Bronto Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Camelsaurus Egg",
+      "dlc_id": 3,
+      "favorite": [
+        "Thorny Dragon"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Camelsaurus Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Chitin",
+          "quantity": 50
+        }
+      ]
+    },
+    {
+      "name": "Carbonemys Egg",
+      "favorite": [
+        "Bronto"
+      ],
+      "composition": [
+        {
+          "resource_id": "Carbonemys Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Carno Egg",
+      "favorite": [
+        "Trike",
+        "Direwolf",
+        "Direbear"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Carno Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Compy Egg",
+      "favorite": [
+        "Kentrosaurus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Fish Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Compy Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Dilo Egg",
+      "favorite": [
+        "Ankylo",
+        "Doedicurus",
+        "Pachy"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Dilo Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Dimetrodon Egg",
+      "favorite": [
+        "Gallimimus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Dimetrodon Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Dimorph Egg",
+      "favorite": [
+        "Megaloceros"
+      ],
+      "composition": [
+        {
+          "resource_id": "Dimorphodon Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat or Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Diplo Egg",
+      "favorite": [
+        "Allosaurus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rare Flower",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Diplodocus Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Dodo Egg",
+      "favorite": [
+        "Pteranodon",
+        "Ichthy",
+        "Mesopithecus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Cooked Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Dodo Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Gallimimus Egg",
+      "favorite": [
+        "Terror Bird",
+        "Castoroides"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Gallimimus Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Ichthyornis Egg",
+      "favorite": [
+        "Giant Bee"
+      ],
+      "composition": [
+        {
+          "resource_id": "Rare Flower",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Ichthyornis Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Iguanodon Egg",
+      "favorite": [
+        "Daeodon"
+      ],
+      "composition": [
+        {
+          "resource_id": "Rare Mushroom",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Iguanodon Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Kairuku Egg",
+      "favorite": [
+        "Angler"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Kairuku Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat or Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Kaprosuchus Egg",
+      "favorite": [
+        ""
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Kaprosuchus Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Kentrosaurus Egg",
+      "favorite": [
+        "Yutyrannus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Ammonite Bile",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Golden Hesperonis Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Kentrosaurus Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Lystrosaurus Egg",
+      "favorite": [
+        "Diplodocus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Cooked Prime Meat or Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Lystrosaurus Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Mantis Egg",
+      "dlc_id": 3,
+      "favorite": [
+        "Rock Elemental"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Mantis Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Megalania Egg",
+      "favorite": [
+        "Megatherium"
+      ],
+      "composition": [
+        {
+          "resource_id": "Giant Bee Honey",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Chitin",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Megalania Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Megalosaurus Egg",
+      "favorite": [
+        "Therizinosaurus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Megalosaurus Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Microraptor Egg",
+      "favorite": [
+        "Iguanodon"
+      ],
+      "composition": [
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Microraptor Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Moschops Egg",
+      "favorite": [
+        "Purlovia"
+      ],
+      "composition": [
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Moschops Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Moth Egg",
+      "dlc_id": 3,
+      "favorite": [
+        ""
+      ],
+      "composition": [
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Moth Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Oviraptor Egg",
+      "favorite": [
+        "Megalosaurus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Oviraptor Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Pachy Egg",
+      "favorite": [
+        "Paracer"
+      ],
+      "composition": [
+        {
+          "resource_id": "Pachy Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Pachyrhino Egg",
+      "favorite": [
+        "Baryonyx"
+      ],
+      "composition": [
+        {
+          "resource_id": "Pachyrhino Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Prime Fish Meat",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Parasaur Egg",
+      "favorite": [
+        "Raptor"
+      ],
+      "composition": [
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Parasaur Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat or Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Pegomastax Egg",
+      "favorite": [
+        "Ichthyornis",
+        "Pelagornis"
+      ],
+      "composition": [
+        {
+          "resource_id": "Raw Prime Fish Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Pegomastax Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Pelagornis Egg",
+      "favorite": [
+        "Archaeopteryx"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Pelagornis Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Chitin",
+          "quantity": 10
+        }
+      ]
+    },
+    {
+      "name": "Pteranodon Egg",
+      "favorite": [
+        "Carbonemys"
+      ],
+      "composition": [
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Pteranodon Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat or Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Pulmonoscorpius Egg",
+      "favorite": [
+        "Rex",
+        "Beelzebufo"
+      ],
+      "composition": [
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Pulmonoscorpius Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Quetzal Egg",
+      "favorite": [
+        "Mosasaurus",
+        "Giganotosaurus",
+        "Dimetrodon"
+      ],
+      "composition": [
+        {
+          "resource_id": "Quetzal Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "name": "Raptor Egg",
+      "favorite": [
+        "Mammoth"
+      ],
+      "composition": [
+        {
+          "resource_id": "Raptor Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Rex Egg",
+      "favorite": [
+        "Plesiosaur",
+        "Quetzal"
+      ],
+      "composition": [
+        {
+          "resource_id": "Rex Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Sarco Egg",
+      "favorite": [
+        "Stego"
+      ],
+      "composition": [
+        {
+          "resource_id": "Sarco Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Spino Egg",
+      "favorite": [
+        "Megalodon"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Spino Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Stego Egg",
+      "favorite": [
+        "Argentavis"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Stego Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Tapejara Egg",
+      "favorite": [
+        "Kaprosuchus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Prime Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tapejara Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Terror Bird Egg",
+      "favorite": [
+        "Woolly Rhino"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Terror Bird Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat or Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Therizinosaurus Egg",
+      "favorite": [
+        "Basilosaurus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Angler Gel",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Therizinosaurus Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Thorny Dragon Egg",
+      "dlc_id": 3,
+      "favorite": [
+        "Lymantria"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Thorny Dragon Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Titanoboa Egg",
+      "favorite": [
+        "Gigantopithecus",
+        "Dunkleosteus",
+        "Thylacoleo"
+      ],
+      "composition": [
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Titanoboa Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Trike Egg",
+      "favorite": [
+        "Sarco"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Trike Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Troodon Egg",
+      "favorite": [
+        "Equus"
+      ],
+      "composition": [
+        {
+          "resource_id": "Savoroot",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Troodon Egg",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Vulture Egg",
+      "dlc_id": 3,
+      "favorite": [
+        "Morellatops"
+      ],
+      "composition": [
+        {
+          "resource_id": "Longrass",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Vulture Egg",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}

@@ -21,7 +21,7 @@ import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.SortableMap;
-import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.model.recipe.Queueable;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.Resource;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -253,10 +253,10 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     if ( isCancelled() )
                         return false;
 
-                    QueueEngram queueEngram = craftingQueue.getCraftable( i );
+                    Queueable queueable = craftingQueue.getCraftable( i );
 
                     InventoryMap composition =
-                            QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, queueEngram.getId() ) );
+                            QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, queueable.getId() ) );
 
                     for ( int j = 0; j < composition.size(); j++ ) {
                         CompositeResource tempResource = composition.valueAt( j );
@@ -268,9 +268,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                                     tempResource.getName(),
                                     tempResource.getFolder(),
                                     tempResource.getFile(),
-                                    tempResource.getQuantity() * queueEngram.getQuantity() );
+                                    tempResource.getQuantity() * queueable.getQuantity() );
                         else
-                            resource.increaseQuantity( tempResource.getQuantity() * queueEngram.getQuantity() );
+                            resource.increaseQuantity( tempResource.getQuantity() * queueable.getQuantity() );
 
                         mTempInventoryMap.put( resource.getId(), resource );
                     }

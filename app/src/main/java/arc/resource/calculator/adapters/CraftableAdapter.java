@@ -28,7 +28,7 @@ import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.SortableMap;
 import arc.resource.calculator.model.Station;
-import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.model.recipe.Displayable;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
@@ -470,7 +470,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         return Util.isValidPosition( adjustPositionForCraftable( position ), getCraftableMap().size() );
     }
 
-    private DisplayEngram getCraftable( int position ) {
+    private Displayable getCraftable( int position ) {
         return getCraftableMap().valueAt( position );
     }
 
@@ -482,7 +482,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         CraftingQueue craftingQueue = CraftingQueue.getInstance();
 
         for ( int i = 0; i < getCraftableMap().size(); i++ ) {
-            DisplayEngram craftable = getCraftable( i );
+            Displayable craftable = getCraftable( i );
 
             long id = craftable.getId();
 
@@ -545,7 +545,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 if ( craftingQueue.contains( _id ) )
                     quantity = craftingQueue.getCraftable( _id ).getQuantity();
 
-                craftables.add( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
+                craftables.add( _id, new Displayable( _id, name, folder, file, yield, category_id, quantity ) );
             }
 
             // TODO: 4/30/2017 What if we sorted as we inserted?
@@ -576,7 +576,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 if ( craftingQueue.contains( _id ) )
                     quantity = craftingQueue.getCraftable( _id ).getQuantity();
 
-                craftables.add( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
+                craftables.add( _id, new Displayable( _id, name, folder, file, yield, category_id, quantity ) );
             }
 
             craftables.sort();
@@ -585,7 +585,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
     }
 
-    private DisplayEngram queryForEngram( Uri uri, int quantity ) {
+    private Displayable queryForEngram( Uri uri, int quantity ) {
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
 
             if ( cursor == null )
@@ -601,7 +601,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             int yield = cursor.getInt( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_YIELD ) );
             long category_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY ) );
 
-            return new DisplayEngram( _id, name, folder, file, yield, category_id, quantity );
+            return new Displayable( _id, name, folder, file, yield, category_id, quantity );
         }
     }
 
@@ -1195,8 +1195,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
 
         @Override
-        public DisplayEngram valueAt( int position ) {
-            return ( DisplayEngram ) super.valueAt( position );
+        public Displayable valueAt( int position ) {
+            return ( Displayable ) super.valueAt( position );
         }
 
         @Override

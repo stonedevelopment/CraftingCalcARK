@@ -19,7 +19,9 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "An error occurred while fetching Inventory." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_error_format ),
+                getContext().getString( R.string.content_main_switcher_inventory ) ) );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
@@ -29,7 +31,9 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Fetching inventory.." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_fetch_format ),
+                getContext().getString( R.string.content_main_switcher_inventory ) ) );
     }
 
     @Override
@@ -45,7 +49,9 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Inventory is empty." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_empty_format ),
+                getContext().getString( R.string.content_main_switcher_inventory ) ) );
     }
 
     public InventorySwitcher( Context context ) {

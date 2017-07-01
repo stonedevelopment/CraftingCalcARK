@@ -10,17 +10,17 @@
  * -
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
-package arc.resource.calculator.model.engram;
+package arc.resource.calculator.model.recipe;
 
 /**
- * Engram object that uses a yielded quantity for working with totals in the CraftingQueue
+ * Craftable object that uses a yielded quantity for working with totals in the CraftingQueue
  */
-public class QueueEngram extends Engram {
+public class Queueable extends Craftable {
 
     // Quantity used to keep track of how many Engrams in CraftingQueue
     private int mQuantity;
 
-    public QueueEngram( long id, String name, String folder, String file, int yield, int quantity ) {
+    public Queueable( long id, String name, String folder, String file, int yield, int quantity ) {
         super( id, name, folder, file, yield );
 
         mQuantity = quantity;

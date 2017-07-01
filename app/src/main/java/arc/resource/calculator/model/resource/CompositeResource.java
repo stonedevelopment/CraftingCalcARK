@@ -13,7 +13,7 @@
 package arc.resource.calculator.model.resource;
 
 /**
- * Resource object that contains the mQuantity used to compose an Engram.Composition
+ * Resource object that contains the mQuantity used to compose an Craftable.Composition
  */
 public class CompositeResource extends Resource {
     // Quantity taken on a per Engram basis, used in conjunction with QueueResource to compute an actual mQuantity later.

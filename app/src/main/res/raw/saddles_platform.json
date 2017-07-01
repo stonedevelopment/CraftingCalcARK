@@ -1,0 +1,186 @@
+{
+  "name": "%1$s Platform Saddle",
+  "description": "Equip %1$s %2$s with this to ride it. You can build structures on the large platform to make a mobile base.",
+  "category_id": 500,
+  "image_folder": "Vanilla\/Engrams\/Saddles\/",
+  "yield": 1,
+  "dlc_id": 1,
+  "recipes": [
+    {
+      "name": "Bronto",
+      "level": 82,
+      "image_file": "bronto_platform_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 325
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 550
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 125
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 90
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Mosasaur",
+      "level": 93,
+      "image_file": "mosasaurus_platform_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 720
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 960
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 180
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 320
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 1200
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Paraceratherium",
+      "level": 50,
+      "image_file": "paracer_platform_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 320
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 70
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Plesiosaur",
+      "level": 84,
+      "image_file": "plesiosaur_platform_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 405
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 680
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 155
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 112
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Quetzal",
+      "level": 97,
+      "image_file": "quetz_platform_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 400
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 620
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 220
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 180
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Titanosaur",
+      "level": 100,
+      "image_file": "titanosaur_platform_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 2000
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 4000
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 4000
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 1600
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    }
+  ]
+}

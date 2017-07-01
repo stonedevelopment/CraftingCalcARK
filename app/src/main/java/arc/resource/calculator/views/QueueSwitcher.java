@@ -23,7 +23,9 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "An error occurred while fetching crafting queue." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_error_format ),
+                getContext().getString( R.string.content_main_switcher_crafting_queue ) ) );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
@@ -34,7 +36,9 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Fetching crafting queue.." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_fetch_format ),
+                getContext().getString( R.string.content_main_switcher_crafting_queue ) ) );
     }
 
     @Override
@@ -50,7 +54,9 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Crafting queue is empty." );
+        onStatusUpdate( String.format(
+                getContext().getString( R.string.content_main_switcher_empty_format ),
+                getContext().getString( R.string.content_main_switcher_crafting_queue ) ) );
     }
 
     public QueueSwitcher( Context context ) {

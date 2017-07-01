@@ -15,7 +15,7 @@ import arc.resource.calculator.adapters.QueueAdapter;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.listeners.QueueObserver;
-import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.model.recipe.Queueable;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -99,19 +99,19 @@ public class CraftingQueue {
         return getSize() == 0;
     }
 
-    public QueueEngram getCraftable( int position ) {
+    public Queueable getCraftable( int position ) {
         return getQueue().valueAt( position );
     }
 
-    public QueueEngram getCraftable( long id ) {
+    public Queueable getCraftable( long id ) {
         return getQueue().get( id );
     }
 
-    private void updateCraftable( int position, QueueEngram craftable ) {
+    private void updateCraftable( int position, Queueable craftable ) {
         getQueue().setValueAt( position, craftable );
     }
 
-    private void addCraftable( QueueEngram craftable ) {
+    private void addCraftable( Queueable craftable ) {
         getQueue().add( craftable.getId(), craftable );
     }
 
@@ -128,7 +128,7 @@ public class CraftingQueue {
     }
 
     public void increaseQuantity( int position ) {
-        QueueEngram craftable = getCraftable( position );
+        Queueable craftable = getCraftable( position );
 
         craftable.increaseQuantity();
 
@@ -143,7 +143,7 @@ public class CraftingQueue {
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
     }
 
-    public void increaseQuantity( QueueEngram craftable ) {
+    public void increaseQuantity( Queueable craftable ) {
         long id = craftable.getId();
 
         craftable.increaseQuantity();
@@ -170,7 +170,7 @@ public class CraftingQueue {
             int position = getPosition( id );
             if ( quantity > 0 ) {
                 // get object from list
-                QueueEngram craftable = getCraftable( position );
+                Queueable craftable = getCraftable( position );
 
                 // update object's quantity
                 craftable.setQuantity( quantity );
@@ -206,7 +206,7 @@ public class CraftingQueue {
         }
     }
 
-    private void insert( QueueEngram craftable ) {
+    private void insert( Queueable craftable ) {
         Log.d( TAG, "insert: " + craftable.toString() );
         // add craftable to list
         addCraftable( craftable );
@@ -276,7 +276,7 @@ public class CraftingQueue {
             JSONArray json = new JSONArray();
 
             for ( int i = 0; i < getQueue().size(); i++ ) {
-                QueueEngram craftable = getCraftable( i );
+                Queueable craftable = getCraftable( i );
 
                 JSONObject object = new JSONObject();
                 object.put( DatabaseContract.EngramEntry._ID, craftable.getId() );
@@ -316,7 +316,7 @@ public class CraftingQueue {
         }
     }
 
-    private QueueEngram QueryForCraftable( Context context, long engramId, int quantity ) throws Exception {
+    private Queueable QueryForCraftable( Context context, long engramId, int quantity ) throws Exception {
         long dlc_id = PrefsUtil.getInstance( context ).getDLCPreference();
         Uri uri = DatabaseContract.EngramEntry.buildUriWithId( dlc_id, engramId );
 
@@ -328,7 +328,7 @@ public class CraftingQueue {
             if ( !cursor.moveToFirst() )
                 throw new ExceptionUtil.CursorEmptyException( uri );
 
-            return new QueueEngram(
+            return new Queueable(
                     engramId,
                     cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) ),
                     cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER ) ),
@@ -397,7 +397,7 @@ public class CraftingQueue {
                         long id = savedQueue.keyAt( i );
                         int quantity = savedQueue.valueAt( i );
 
-                        QueueEngram craftable = QueryForCraftable( mContext, id, quantity );
+                        Queueable craftable = QueryForCraftable( mContext, id, quantity );
 
                         mTempQueueMap.add( id, craftable );
                     }
@@ -418,13 +418,13 @@ public class CraftingQueue {
         }
 
         @Override
-        public QueueEngram get( long key ) {
-            return ( QueueEngram ) super.get( key );
+        public Queueable get( long key ) {
+            return ( Queueable ) super.get( key );
         }
 
         @Override
-        public QueueEngram valueAt( int position ) {
-            return ( QueueEngram ) super.valueAt( position );
+        public Queueable valueAt( int position ) {
+            return ( Queueable ) super.valueAt( position );
         }
 
         @Override

@@ -11,12 +11,9 @@
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 
-package arc.resource.calculator.model.engram;
+package arc.resource.calculator.model.recipe;
 
-/**
- * Base Engram object
- */
-public class Engram {
+public class Craftable {
     // Primary Key created by Database to track its row location.
     private final long mId;
 
@@ -32,7 +29,7 @@ public class Engram {
     // Yield per crafted item
     private final int mYield;
 
-    Engram( long id, String name, String folder, String file, int yield ) {
+    Craftable( long id, String name, String folder, String file, int yield ) {
         mId = id;
         mName = name;
         mFolder = folder;
@@ -66,6 +63,9 @@ public class Engram {
 
     @Override
     public String toString() {
-        return "mId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile;
+        return "mId=" + mId + ", " +
+                "mName=" + mName + ", " +
+                "mFolder=" + mFolder + ", " +
+                "mFile=" + mFile;
     }
 }

@@ -1,0 +1,99 @@
+{
+  "name": "%1$s Tek Saddle",
+  "description": "Equip %1$s %2$s with this to ride it. Using requires learning the Tekgram.",
+  "level": 1,
+  "category_id": 5001,
+  "image_folder": "Vanilla\/Engrams\/Saddles\/Tek\/",
+  "yield": 1,
+  "dlc_id": 1,
+  "recipes": [
+    {
+      "name": "Megalodon",
+      "image_file": "megalodon_tek_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 370
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Mosasaur",
+      "image_file": "mosasaur_tek_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 370
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tapejara",
+      "description": "Equip a Tapejara with this to ride it, enabling the rider to fire plasma projectiles. Using requires learning this Tekgram.",
+      "image_file": "tapejara_tek_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2500
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 370
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 500
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    }
+  ]
+}

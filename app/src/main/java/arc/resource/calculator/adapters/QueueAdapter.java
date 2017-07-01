@@ -15,7 +15,7 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.CraftingQueue;
-import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.model.recipe.Queueable;
 import arc.resource.calculator.views.QueueRecyclerView;
 
 /**
@@ -34,7 +34,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     private static final String TAG = QueueAdapter.class.getSimpleName();
 
     private Context mContext;
-//    private CraftingQueue mCraftingQueue;
     private QueueRecyclerView.Observer mViewObserver;
     private boolean mDataSetEmpty;
 
@@ -125,10 +124,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
         return CraftingQueue.getInstance();
     }
 
-//    private void setCraftingQueue( CraftingQueue craftingQueue ) {
-//        this.mCraftingQueue = craftingQueue;
-//    }
-
     private QueueRecyclerView.Observer getObserver() {
         return mViewObserver;
     }
@@ -159,7 +154,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position ) {
-        QueueEngram craftable = getCraftingQueue().getCraftable( position );
+        Queueable craftable = getCraftingQueue().getCraftable( position );
 
         String imagePath = "file:///android_asset/" + craftable.getImagePath();
         Picasso.with( getContext() )

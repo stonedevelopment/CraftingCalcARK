@@ -1,0 +1,1525 @@
+{
+  "name": "%1$s Saddle",
+  "description": "Equip %1$s %2$s with this to ride it.",
+  "category_id": 500,
+  "image_folder": "Vanilla\/Engrams\/Saddles\/",
+  "yield": 1,
+  "dlc_id": 1,
+  "recipes": [
+    {
+      "name": "Allosaurus",
+      "level": 67,
+      "image_file": "allosaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 320
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Ankylo",
+      "level": 36,
+      "image_file": "ankylo_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 260
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 10
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Araneo",
+      "level": 40,
+      "image_file": "araneo_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 260
+        },
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Argentavis",
+      "level": 62,
+      "image_file": "argentavis_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 185
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 150
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Arthropluera",
+      "level": 54,
+      "image_file": "arthropluera_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Flint",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Baryonyx",
+      "level": 49,
+      "image_file": "baryonyx_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Basilosaurus",
+      "level": 60,
+      "image_file": "basilosaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 55
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Beelzebufo",
+      "level": 40,
+      "image_file": "beelzebufo_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 95
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 5
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Bronto",
+      "level": 63,
+      "image_file": "bronto_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 185
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 40
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Carbonemys",
+      "level": 10,
+      "image_file": "carbonemys_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 95
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 10
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Carno",
+      "level": 46,
+      "image_file": "carno_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 320
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Castoroides",
+      "description": "Equip a Giant Beaver with this to ride it. Can be used as a mobile Smithy! Sounds pretty good eh?",
+      "level": 61,
+      "image_file": "castoroides_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 180
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Chalicotherium",
+      "level": 42,
+      "image_file": "chalicotherium_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 180
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 265
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 45
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Daeodon",
+      "level": 59,
+      "image_file": "daeodon_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 155
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Diplodocus",
+      "description": "A saddle for your Diplodocus. It has ten seats! Bring lots of friends!",
+      "yield": 1,
+      "level": 32,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "diplodocus_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 600
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 820
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 200
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Dire Bear",
+      "level": 45,
+      "image_file": "dire_bear_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 130
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 300
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Doedicurus",
+      "level": 34,
+      "image_file": "doedicurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 110
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Stone",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 5
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Dunkleosteus",
+      "level": 44,
+      "image_file": "dunkleosteus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 180
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 300
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Equus",
+      "level": 20,
+      "image_file": "equus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 160
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 240
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Gallimimus",
+      "description": "A saddle for your Gallimimus. It has three seats! Bring your friends!",
+      "yield": 1,
+      "level": 29,
+      "category_id": 500,
+      "image_folder": "Vanilla\/Engrams\/Saddles\/",
+      "image_file": "gallimimus_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 160
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 240
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Giganotosaurus",
+      "level": 96,
+      "image_file": "giganotosaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 680
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Ichthyosaurus",
+      "level": 13,
+      "image_file": "ichthyosaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ore",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Flint",
+          "quantity": 8
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Iguanodon",
+      "level": 30,
+      "image_file": "iguanodon_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Kaprosuchus",
+      "level": 39,
+      "image_file": "kaprosuchus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 165
+        },
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 65
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Lymantria",
+      "level": 36,
+      "image_folder": "Scorched Earth\/Engrams\/Saddles\/",
+      "image_file": "lymantria_saddle.webp",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 125
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 130
+        },
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 95
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Mammoth",
+      "level": 31,
+      "image_file": "mammoth_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 260
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 10
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Manta",
+      "level": 28,
+      "image_file": "manta_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 70
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Flint",
+          "quantity": 12
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 35
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Mantis",
+      "level": 45,
+      "image_folder": "Scorched Earth\/Engrams\/Saddles\/",
+      "image_file": "mantis_saddle.webp",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 75
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 35
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Megalania",
+      "level": 73,
+      "image_file": "megalania_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 315
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 215
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Megaloceros",
+      "level": 30,
+      "image_file": "megaloceros_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 110
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 5
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Megalodon",
+      "level": 47,
+      "image_file": "megalodon_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 155
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Megalosaurus",
+      "level": 57,
+      "image_file": "megalosaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 320
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Megatherium",
+      "level": 52,
+      "image_file": "megatherium_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 325
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 130
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Morellatops",
+      "level": 11,
+      "image_folder": "Scorched Earth\/Engrams\/Saddles\/",
+      "image_file": "morellatops_saddle.webp",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 140
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Mosasaur",
+      "level": 78,
+      "image_file": "mosasaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 600
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 800
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 400
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Pachy",
+      "level": 14,
+      "image_file": "pachy_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 65
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 110
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Pachyrhinosaurus",
+      "level": 27,
+      "image_file": "pachyrhinosaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Paracer",
+      "level": 41,
+      "image_file": "paracer_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 110
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 10
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Parasaur",
+      "level": 9,
+      "image_file": "parasaur_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 80
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Pelagornis",
+      "level": 43,
+      "image_file": "pelagornis_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 125
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 230
+        },
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 75
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Phiomia",
+      "level": 5,
+      "image_file": "phiomia_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Plesiosaur",
+      "level": 64,
+      "image_file": "plesiosaur_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 400
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 65
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Procoptodon",
+      "level": 23,
+      "image_file": "procoptodon_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Pelt",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 550
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 70
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Pteranodon",
+      "level": 38,
+      "image_file": "pteranodon_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 125
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 230
+        },
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 75
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Pulmonoscorpius",
+      "level": 22,
+      "image_file": "pulmonoscorpius_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 95
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 170
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Quetzal",
+      "level": 76,
+      "image_file": "quetz_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 500
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 85
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 750
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Raptor",
+      "level": 18,
+      "image_file": "raptor_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 65
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 110
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Rex",
+      "level": 74,
+      "image_file": "rex_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 380
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 50
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Rock Golem",
+      "level": 70,
+      "image_folder": "Scorched Earth\/Engrams\/Saddles\/",
+      "image_file": "rock_golem_saddle.webp",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 270
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 35
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Sabertooth",
+      "level": 37,
+      "image_file": "sabertooth_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 155
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Sarco",
+      "level": 35,
+      "image_file": "sarco_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 75
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 230
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Spino",
+      "level": 71,
+      "image_file": "spino_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 380
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 45
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Stego",
+      "level": 26,
+      "image_file": "stego_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 110
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 200
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Tapejara",
+      "level": 55,
+      "image_file": "tapejara_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 180
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 260
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 45
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Terror Bird",
+      "level": 33,
+      "image_file": "terror_bird_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 65
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 110
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Therizinosaurus",
+      "description": "A saddle for your Therizinosaurus.",
+      "level": 69,
+      "image_file": "therizinosaurus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 160
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 285
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 55
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Thorny Dragon",
+      "level": 40,
+      "image_folder": "Scorched Earth\/Engrams\/Saddles\/",
+      "image_file": "thorny_dragon_saddle.webp",
+      "dlc_id": 3,
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 270
+        },
+        {
+          "resource_id": "Clay",
+          "quantity": 85
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 125
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 35
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Thylacoleo",
+      "level": 51,
+      "image_file": "thylacoleo_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 155
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 290
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Trike",
+      "description": "Equip a Triceratops with this to ride it.",
+      "level": 16,
+      "image_file": "trike_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 140
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Tusoteuthis",
+      "level": 91,
+      "image_file": "tusoteuthis_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 795
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 320
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Woolly Rhino",
+      "level": 53,
+      "image_file": "woolly_rhino_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Fiber",
+          "quantity": 130
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Yutyrannus",
+      "level": 80,
+      "image_file": "yutyrannus_saddle.webp",
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 135
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 425
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Silica Pearls",
+          "quantity": 125
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    }
+  ]
+}

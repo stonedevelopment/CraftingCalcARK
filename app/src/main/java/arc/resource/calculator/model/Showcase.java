@@ -11,7 +11,7 @@ import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.model.recipe.Displayable;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
 import arc.resource.calculator.model.resource.Resource;
@@ -216,7 +216,7 @@ public class Showcase {
             // Finally, let's grab Composition details.
             LongSparseArray<CompositeResource> composition = QueryForComposition( context, dlc_id, _id );
 
-            DisplayEngram craftable = new DisplayEngram( _id, name, folder, file, yield, categoryId, quantity );
+            Displayable craftable = new Displayable( _id, name, folder, file, yield, categoryId, quantity );
 
             return new ShowcaseEntry( craftable, description, requiredLevel, dlc_id, composition, stations );
         }
@@ -319,7 +319,7 @@ public class Showcase {
     }
 
     public class ShowcaseEntry {
-        private DisplayEngram mCraftable;
+        private Displayable mCraftable;
 
         private String mDescription;
         private int mRequiredLevel;
@@ -329,7 +329,7 @@ public class Showcase {
         private LongSparseArray<QueueResource> mQuantifiableComposition;
         private LongSparseArray<Station> mStations;
 
-        public ShowcaseEntry( DisplayEngram craftable, String description, int requiredLevel, long dlc_id,
+        public ShowcaseEntry( Displayable craftable, String description, int requiredLevel, long dlc_id,
                               LongSparseArray<CompositeResource> composition, LongSparseArray<Station> stations ) {
             setCraftable( craftable );
 
@@ -343,7 +343,7 @@ public class Showcase {
             setStations( stations );
         }
 
-        void setCraftable( DisplayEngram craftable ) {
+        void setCraftable( Displayable craftable ) {
             this.mCraftable = craftable;
         }
 
@@ -382,7 +382,7 @@ public class Showcase {
             this.mStations = stations;
         }
 
-        public DisplayEngram getCraftable() {
+        public Displayable getCraftable() {
             return mCraftable;
         }
 
