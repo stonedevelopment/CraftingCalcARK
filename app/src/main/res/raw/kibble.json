@@ -7,6 +7,10 @@
   "image_folder": "Vanilla\/Engrams\/Kibble\/",
   "image_file": "kibble.webp",
   "dlc_id": 1,
+  "points": 0,
+  "xp": 0,
+  "steam_id": 0,
+  "console_id": 0,
   "composition": [
     {
       "resource_id": "Mejoberry",

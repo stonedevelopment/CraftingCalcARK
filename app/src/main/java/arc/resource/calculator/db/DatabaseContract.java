@@ -32,6 +32,7 @@ public class DatabaseContract {
 
     // Established paths that restricts outside queries
     static final String PATH_ENGRAM = "engram";
+
     static final String PATH_CATEGORY = "category";
     static final String PATH_CATEGORY_PARENT = "parent";
     static final String PATH_COMPLEX_RESOURCE = "complex_resource";
@@ -83,6 +84,9 @@ public class DatabaseContract {
         // Integer value indicating Steam item ID
         public static final String COLUMN_CONSOLE_ID = "console_id";
 
+        // String value indicating which dinos favor this kibble over others
+        public static final String COLUMN_FAVORITE = "favorite";
+
         // Foreign key from Crafting Station table
         public static final String COLUMN_STATION_KEY = "station_id";
 
@@ -99,6 +103,7 @@ public class DatabaseContract {
         public static final String SQL_COLUMN_IMAGE_FILE = TABLE_NAME + "." + COLUMN_IMAGE_FILE;
         public static final String SQL_COLUMN_YIELD = TABLE_NAME + "." + COLUMN_YIELD;
         public static final String SQL_COLUMN_LEVEL = TABLE_NAME + "." + COLUMN_LEVEL;
+        public static final String SQL_COLUMN_FAVORITE = TABLE_NAME + "." + COLUMN_FAVORITE;
         public static final String SQL_COLUMN_CATEGORY_KEY = TABLE_NAME + "." + COLUMN_CATEGORY_KEY;
         public static final String SQL_COLUMN_DLC_KEY = TABLE_NAME + "." + COLUMN_DLC_KEY;
         public static final String SQL_COLUMN_STATION_KEY = TABLE_NAME + "." + COLUMN_STATION_KEY;

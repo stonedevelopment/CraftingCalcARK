@@ -2,6 +2,7 @@ package arc.resource.calculator.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 
@@ -16,11 +17,13 @@ import java.util.Objects;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.util.JsonUtil;
+import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
 public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     private final String TAG = ParseConvertTask.class.getSimpleName();
+
+    private static final long INVALID_ID = -1;
 
     private final String _ID = DatabaseContract.EngramEntry._ID;
 
@@ -45,6 +48,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     private final String COLUMN_VERSION = "version";
     private final String COLUMN_YIELD = DatabaseContract.EngramEntry.COLUMN_YIELD;
     private final String COLUMN_XP = DatabaseContract.EngramEntry.COLUMN_XP;
+    private final String COLUMN_FAVORITE = DatabaseContract.EngramEntry.COLUMN_FAVORITE;
 
     // table names
     private final String JSON = "json";
@@ -53,8 +57,21 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     private final String CATEGORY = DatabaseContract.CategoryEntry.TABLE_NAME;
     private final String RESOURCE = DatabaseContract.ResourceEntry.TABLE_NAME;
     private final String ENGRAM = DatabaseContract.EngramEntry.TABLE_NAME;
+    private final String COMPLEX_RESOURCE = DatabaseContract.ComplexResourceEntry.TABLE_NAME;
     private final String COMPOSITION = DatabaseContract.CompositionEntry.TABLE_NAME;
     private final String TOTAL_CONVERSION = DatabaseContract.TotalConversionEntry.TABLE_NAME;
+    private final String RECIPES = "recipes";
+    private final String KIBBLE = "kibble";
+
+    // specific json filenames
+    private final class JSONFile {
+        private static final int MAIN = R.raw.data;
+        private static final int KIBBLE = R.raw.kibble;
+        private static final int DYES = R.raw.dyes;
+        private static final int SADDLES = R.raw.saddles;
+        private static final int PLATFORM_SADDLES = R.raw.saddles_platform;
+        private static final int TEK_SADDLES = R.raw.saddles_tek;
+    }
 
     private final LongSparseArray<ComplexMap> mComplexMap = new LongSparseArray<>();
 
@@ -149,19 +166,18 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground( Void... params ) {
         try {
             // read the local converted json file into a string
-            String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_editable );
+            String jsonString = JSONUtil.readRawJsonFileToJsonString( getContext(), JSONFile.MAIN );
 
             // build a json object based on the read json string
-            JSONObject oldObject = new JSONObject( jsonString );
+            JSONObject jsonObject = new JSONObject( jsonString );
 
-            JSONObject json = oldObject.getJSONObject( JSON );
+            JSONObject json = jsonObject.getJSONObject( JSON );
             String oldVersion = PrefsUtil.getInstance( mContext ).getJSONVersion();
             String newVersion = json.getString( COLUMN_VERSION );
 
             // now, let's check if we even need to update.
-            if ( !isNewVersion( oldVersion, newVersion ) ) {
+            if ( !isNewVersion( oldVersion, newVersion ) )
                 return false;
-            }
 
             setVersion( newVersion );
 
@@ -172,7 +188,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             // let user know that we've begun the process.
             getListener().onStart();
 
-            mJSONObject = convertJSONObjectToIds( oldObject );
+            mJSONObject = convertJSONObjectToIds( jsonObject );
 
             return true;
         }
@@ -225,11 +241,28 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
                 convertResourceJSONArrayToIds( inObject.getJSONArray( RESOURCE ) ) );
 
         // convert, then insert new engram json data
-        outObject.put( ENGRAM,
-                convertEngramJSONArrayToIds( inObject.getJSONArray( ENGRAM ) ) );
+
+        // convert raw engram json data into json array
+        JSONArray engramArray = convertEngramJSONArrayToIds( inObject.getJSONArray( ENGRAM ) );
+
+        // instantiate an index counter for additional data to be created where engram json data left off
+        int index = engramArray.length();
+
+        // convert kibble json data into json array
+        JSONArray kibbleArray = convertKibbleJSONObjectToIds( index );
+
+        // increment index to accommodate for kibble array
+        index += kibbleArray.length();
+
+        // convert dyes json data into json array
+        // convert saddles json data into json array
+        // convert platform saddles json data into json array
+        // convert tek saddles json data into json array
+
+        outObject.put( ENGRAM, engramArray );
 
         // convert, then insert new complex resource json data
-        outObject.put( DatabaseContract.ComplexResourceEntry.TABLE_NAME,
+        outObject.put( COMPLEX_RESOURCE,
                 convertComplexResourceMapIdsToJSONArray() );
 
         // convert, then insert new total conversion json data
@@ -457,6 +490,9 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             convertedObject.put( COLUMN_CONSOLE_ID, console_id );
             convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
 
+            // insert blank favorite data, used only for kibble
+            convertedObject.put( COLUMN_FAVORITE, new JSONArray( "[\"\"]" ) );
+
             // convert composition object array from names to ids
             JSONArray convertedComposition = new JSONArray();
             for ( int j = 0; j < compositionArray.length(); j++ ) {
@@ -469,8 +505,135 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
                 long resource_id = getResourceIdByName( dlc_id, resource_name );
 
                 // if invalid (which should never happen) continue to next resource
-                if ( resource_id == -1 )
+                if ( resource_id == INVALID_ID ) {
+                    Log.e( TAG, "convertEngramJSONArrayToIds: resource_name " + resource_name + " does not exist in dlc_id " + dlc_id );
                     continue;
+                }
+
+                // build new json object with its matched name and quantity
+                JSONObject newObject = new JSONObject();
+                newObject.put( COLUMN_RESOURCE_KEY, resource_id );
+                newObject.put( COLUMN_QUANTITY, quantity );
+
+                // insert object into composition
+                convertedComposition.put( newObject );
+            }
+
+            // insert converted composition array into engram json object
+            convertedObject.put( COMPOSITION, convertedComposition );
+
+            // convert station object array from ids to names
+            List<Long> stations = mapLocalStationIds( stationArray );
+
+            // insert converted station array into engram json object
+            convertedObject.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, new JSONArray( stations.toArray() ) );
+
+            // insert converted object into converted array
+            outArray.put( convertedObject );
+        }
+
+        return outArray;
+    }
+
+    private JSONArray convertKibbleJSONObjectToIds( int index ) throws Exception {
+        // read the local converted json file into a string
+        String jsonString = JSONUtil.readRawJsonFileToJsonString( getContext(), JSONFile.KIBBLE );
+
+        // build a json object based on the read json string
+        JSONObject inObject = new JSONObject( jsonString );
+
+        // Kibble (%1$s)
+        String nameFormat = inObject.getString( COLUMN_NAME );
+
+        String description = inObject.getString( COLUMN_DESCRIPTION );
+        String imageFolder = inObject.getString( COLUMN_IMAGE_FOLDER );
+        String imageFile = inObject.getString( COLUMN_IMAGE_FILE );
+        Integer yield = inObject.getInt( COLUMN_YIELD );
+        Integer level = inObject.getInt( COLUMN_LEVEL );
+        Integer category_id = inObject.getInt( COLUMN_CATEGORY_KEY );
+        long dlc_id = inObject.getLong( COLUMN_DLC_KEY );
+        JSONArray compositionArray = inObject.getJSONArray( COMPOSITION );
+        JSONArray stationArray = inObject.getJSONArray( STATION );
+        JSONArray recipeArray = inObject.getJSONArray( RECIPES );
+
+        // instantiate a JSONArray to export
+        JSONArray outArray = new JSONArray();
+        for ( int i = 0; i < recipeArray.length(); i++ ) {
+            JSONObject object = recipeArray.getJSONObject( i );
+
+            // format name Kibble (%1$s) -> Kibble (Gallimimus Egg)
+            String objectName = object.getString( COLUMN_NAME );
+            String name = String.format( nameFormat, objectName );
+
+            // check if dlc_id should be overridden or not
+            long objectDlc_id = object.optLong( COLUMN_DLC_KEY, INVALID_ID );
+            if ( objectDlc_id > dlc_id )
+                dlc_id = objectDlc_id;
+
+            // create an array of qualified dlc versions, minus total conversions
+            List<Long> dlc_ids = new ArrayList<>();
+            if ( dlc_id == mDlcIds.valueAt( 0 ) ) {
+                for ( int j = 0; j < mDlcIds.size(); j++ ) {
+                    long _id = mDlcIds.valueAt( j );
+                    if ( mTotalConversion.get( _id ) == null )
+                        dlc_ids.add( _id );
+                    else if ( !mTotalConversion.get( _id ).engrams.contains( name ) )
+                        dlc_ids.add( _id );
+                }
+            } else {
+                dlc_ids.add( dlc_id );
+            }
+
+            // create an id based on counter variable, i, plus index variable, index
+            long _id = i + index;
+
+            // insert its id into a map for other methods to use later
+            addEngramIdByName( dlc_id, name, _id );
+
+            // check if complex by finding its name in the complex resource map for its dlc version
+            if ( mComplexMap.get( dlc_id ).contains( name ) )
+                // add if not already added
+                addComplexEngramIdByName( dlc_id, name, _id );
+
+            // instantiate a new json object used to be converted into new layout
+            JSONObject convertedObject = new JSONObject();
+
+            // insert standardized data
+            convertedObject.put( _ID, _id );
+            convertedObject.put( COLUMN_NAME, name );
+            convertedObject.put( COLUMN_DESCRIPTION, description );
+            convertedObject.put( COLUMN_YIELD, yield );
+            convertedObject.put( COLUMN_LEVEL, level );
+            convertedObject.put( COLUMN_CATEGORY_KEY, category_id );
+            convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+            convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+            convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
+
+            // insert favorites, could possibly be ""
+            convertedObject.put( COLUMN_FAVORITE, object.getJSONArray( "favorite" ) );
+
+            // append to global composition array with local composition
+            JSONArray objectComposition = object.getJSONArray( COMPOSITION );
+            for ( int j = 0; j < objectComposition.length(); j++ )
+                compositionArray.put( objectComposition.getJSONObject( j ) );
+
+            // convert composition object array from names to ids
+            JSONArray convertedComposition = new JSONArray();
+            for ( int j = 0; j < compositionArray.length(); j++ ) {
+                JSONObject oldObject = compositionArray.getJSONObject( j );
+
+                String resource_name = oldObject.getString( COLUMN_RESOURCE_KEY );
+                int quantity = oldObject.getInt( COLUMN_QUANTITY );
+
+                // attempt to grab id of resource from previously mapped list
+                long resource_id = getResourceIdByName( dlc_id, resource_name );
+
+                // if resource_id is invalid, continue to next
+                // this should only occur if a resource wasn't added into json file
+                if ( resource_id == INVALID_ID ) {
+                    Log.e( TAG, "convertKibbleJSONObjectToIds: resource_name " + resource_name + " does not exist in dlc_id " + dlc_id );
+                    continue;
+                }
 
                 // build new json object with its matched name and quantity
                 JSONObject newObject = new JSONObject();
@@ -518,8 +681,15 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
                 long converted_id = getResourceIdByName( dlc_id, converted_name );
 
                 // if invalid (which should never happen) continue to next json object
-                if ( _id == -1 || converted_id == -1 )
+                if ( _id == INVALID_ID || converted_id == INVALID_ID ) {
+                    if ( _id == INVALID_ID )
+                        Log.e( TAG, "convertTotalConversionJSONArrayToIds: name " + name + " does not exist in dlc_id " + dlc_id );
+
+                    if ( converted_id == INVALID_ID )
+                        Log.e( TAG, "convertTotalConversionJSONArrayToIds: converted_name " + converted_name + " does not exist in dlc_id " + dlc_id );
+
                     continue;
+                }
 
                 // build new json object with its matched ids
                 JSONObject newObject = new JSONObject();
@@ -581,7 +751,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
         try {
             return mResourceIdsByName.get( dlc_id ).get( name );
         } catch ( Exception e ) {
-            return mResourceIdsByName.get( mDlcIds.valueAt( 0 ) ).get( name );
+            return mResourceIdsByName.get( mDlcIds.valueAt( 0 ) ).get( name, INVALID_ID );
         }
     }
 
@@ -752,7 +922,14 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             if ( contains( name ) )
                 return map.get( name );
             else
-                throw new Exception( "_id is null for name: " + name );
+                throw new Exception( "name doesn't exist: " + name );
+        }
+
+        long get( String name, long returnable ) {
+            if ( contains( name ) )
+                return map.get( name );
+            else
+                return returnable;
         }
     }
 }

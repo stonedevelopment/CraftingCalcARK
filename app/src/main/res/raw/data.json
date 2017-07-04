@@ -1268,6 +1268,13 @@
       "complex_resource": false
     },
     {
+      "name": "Archaeopteryx Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "archaeopteryx_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Argentavis Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "argentavis_egg.webp",
@@ -1835,6 +1842,13 @@
       "complex_resource": false
     },
     {
+      "name": "Kaprosuchus Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "kaprosuchus_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Keratin",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "keratin.webp",
@@ -1877,7 +1891,7 @@
       "complex_resource": false
     },
     {
-      "name": "Lystrosaur Egg",
+      "name": "Lystrosaurus Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "lystrosaur_egg.webp",
       "dlc_id": 1,
@@ -1901,6 +1915,13 @@
       "name": "Megalania Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "megalania_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Megalosaurus Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "megalosaurus_egg.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -1968,9 +1989,30 @@
       "complex_resource": false
     },
     {
+      "name": "Oviraptor Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "oviraptor_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Pachy Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "pachy_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Pachycephalosaurus Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "pachycephalosaurus_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Pachyrhino Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "pachyrhino_egg.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2720,6 +2762,13 @@
       "name": "Cooked Prime Meat",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "cooked_prime_meat.webp",
+      "dlc_id": 1,
+      "complex_resource": true
+    },
+    {
+      "name": "Cooked Prime Fish Meat",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "cooked_prime_fish_meat.webp",
       "dlc_id": 1,
       "complex_resource": true
     },

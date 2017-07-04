@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /*
     DATABASE_VERSION Changelog:
+    v7, Added 'favorite' column to table 'engram'
     v6, Converted drawable to folder/file to use with assets
     v5, Updated database to allow custom _ids for Resources and Engrams.
     v4, Added Stations and Levels
@@ -38,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     v2, Added Versioning (DLC)
     v1, Initial create
      */
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "database.db";
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
@@ -59,6 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 EngramEntry.COLUMN_IMAGE_FILE + " TEXT NOT NULL, " +
                 EngramEntry.COLUMN_YIELD + " INTEGER NOT NULL, " +
                 EngramEntry.COLUMN_LEVEL + " INTEGER NOT NULL, " +
+                EngramEntry.COLUMN_FAVORITE + " TEXT, " +
                 EngramEntry.COLUMN_CATEGORY_KEY + " INTEGER NOT NULL, " +
                 EngramEntry.COLUMN_STATION_KEY + " INTEGER NOT NULL, " +
                 EngramEntry.COLUMN_DLC_KEY + " INTEGER NOT NULL, " +

@@ -32,7 +32,7 @@ import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
 import arc.resource.calculator.db.DatabaseContract.TotalConversionEntry;
-import arc.resource.calculator.util.JsonUtil;
+import arc.resource.calculator.util.JSONUtil;
 
 /**
  * -    Read JSON file
@@ -148,7 +148,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
             try {
                 // first, let's read our json file to a string
                 publishProgress( "Reading JSON from file..." );
-                String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_editable );
+                String jsonString = JSONUtil.readRawJsonFileToJsonString( getContext(), R.raw.data );
 
                 // parse json string into a json object
                 publishProgress( "Parsing JSON string into object..." );

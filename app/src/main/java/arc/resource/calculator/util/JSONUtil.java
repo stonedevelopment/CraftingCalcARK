@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class JsonUtil {
-    private static final String TAG = JsonUtil.class.getSimpleName();
+public class JSONUtil {
+    private static final String TAG = JSONUtil.class.getSimpleName();
 
     public static String readRawJsonFileToJsonString( Context context, int json_resource_file ) throws IOException {
         String jsonString;

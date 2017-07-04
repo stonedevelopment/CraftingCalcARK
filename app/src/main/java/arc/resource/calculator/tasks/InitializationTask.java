@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 
@@ -323,6 +324,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             int yield = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_YIELD );
             int level = jsonObject.getInt( DatabaseContract.EngramEntry.COLUMN_LEVEL );
             long category_id = jsonObject.getLong( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY );
+            JSONArray favorites = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_FAVORITE );
             JSONArray station_ids = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_STATION_KEY );
             JSONArray dlc_ids = jsonObject.getJSONArray( DatabaseContract.EngramEntry.COLUMN_DLC_KEY );
 
@@ -345,19 +347,27 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
 
                     // match found, add values into vector
                     if ( cursor.moveToFirst() ) {
-                        ContentValues values = new ContentValues();
-                        values.put( DatabaseContract.EngramEntry._ID, _id );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER, imageFolder );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE, imageFile );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_YIELD, yield );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_LEVEL, level );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, station_id );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
-                        values.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dlc_id );
+                        ContentValues values;
 
-                        vector.add( values );
+                        // sift through list of favorites ** this is only for kibble at the moment
+                        for ( int f = 0; f < favorites.length(); f++ ) {
+                            String favorite = favorites.getString( f );
+
+                            values = new ContentValues();
+                            values.put( DatabaseContract.EngramEntry._ID, _id );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_NAME, name );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_DESCRIPTION, description );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER, imageFolder );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE, imageFile );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_YIELD, yield );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_LEVEL, level );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_FAVORITE, favorite );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, station_id );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY, category_id );
+                            values.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dlc_id );
+
+                            vector.add( values );
+                        }
 
                         compositionVector.addAll( insertComposition( _id, dlc_id, jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME ) ) );
                     }

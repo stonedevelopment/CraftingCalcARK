@@ -9,6 +9,8 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Arrays;
 
+import arc.resource.calculator.BuildConfig;
+
 public class ExceptionUtil {
 
     public static void SendErrorReportWithAlertDialog( final Context context, String tag, final Exception e ) {
@@ -18,7 +20,7 @@ public class ExceptionUtil {
             @Override
             public void onOk() {
                 // call reset to defaults!
-                PrefsUtil.getInstance(context).saveToDefaultFullReset();
+                PrefsUtil.getInstance( context ).saveToDefaultFullReset();
             }
 
             @Override
@@ -38,7 +40,10 @@ public class ExceptionUtil {
         FirebaseCrash.logcat( Log.ERROR, tag, Arrays.toString( e.getStackTrace() ) );
         FirebaseCrash.logcat( Log.ERROR, tag, BuildErrorReportPreferencesBundle().toString() );
 
-        FirebaseCrash.report( e );
+        if ( BuildConfig.DEBUG )
+            e.printStackTrace();
+        else
+            FirebaseCrash.report( e );
     }
 
     // if position of requested list is out of bounds, then throw this exception
