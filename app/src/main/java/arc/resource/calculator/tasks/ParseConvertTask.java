@@ -2,6 +2,7 @@ package arc.resource.calculator.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
@@ -10,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -259,7 +261,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
         // convert platform saddles json data into json array
         // convert tek saddles json data into json array
 
-        outObject.put( ENGRAM, engramArray );
+        outObject.put( ENGRAM, concatArray( engramArray, kibbleArray ) );
 
         // convert, then insert new complex resource json data
         outObject.put( COMPLEX_RESOURCE,
@@ -475,6 +477,9 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             // instantiate a new json object used to be converted into new layout
             JSONObject convertedObject = new JSONObject();
 
+            // create blank favorite placeholder
+            JSONArray favorite = new JSONArray( "[\"\"]" );
+
             // insert standardized data
             convertedObject.put( _ID, _id );
             convertedObject.put( COLUMN_NAME, name );
@@ -487,37 +492,12 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             convertedObject.put( COLUMN_POINTS, points );
             convertedObject.put( COLUMN_XP, xp );
             convertedObject.put( COLUMN_STEAM_ID, steam_id );
+            convertedObject.put( COLUMN_FAVORITE, favorite );
             convertedObject.put( COLUMN_CONSOLE_ID, console_id );
             convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
 
-            // insert blank favorite data, used only for kibble
-            convertedObject.put( COLUMN_FAVORITE, new JSONArray( "[\"\"]" ) );
-
             // convert composition object array from names to ids
-            JSONArray convertedComposition = new JSONArray();
-            for ( int j = 0; j < compositionArray.length(); j++ ) {
-                JSONObject oldObject = compositionArray.getJSONObject( j );
-
-                String resource_name = oldObject.getString( COLUMN_RESOURCE_KEY );
-                int quantity = oldObject.getInt( COLUMN_QUANTITY );
-
-                // attempt to grab id of resource from previously mapped list
-                long resource_id = getResourceIdByName( dlc_id, resource_name );
-
-                // if invalid (which should never happen) continue to next resource
-                if ( resource_id == INVALID_ID ) {
-                    Log.e( TAG, "convertEngramJSONArrayToIds: resource_name " + resource_name + " does not exist in dlc_id " + dlc_id );
-                    continue;
-                }
-
-                // build new json object with its matched name and quantity
-                JSONObject newObject = new JSONObject();
-                newObject.put( COLUMN_RESOURCE_KEY, resource_id );
-                newObject.put( COLUMN_QUANTITY, quantity );
-
-                // insert object into composition
-                convertedComposition.put( newObject );
-            }
+            JSONArray convertedComposition = convertComposition( dlc_id, compositionArray );
 
             // insert converted composition array into engram json object
             convertedObject.put( COMPOSITION, convertedComposition );
@@ -571,18 +551,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
                 dlc_id = objectDlc_id;
 
             // create an array of qualified dlc versions, minus total conversions
-            List<Long> dlc_ids = new ArrayList<>();
-            if ( dlc_id == mDlcIds.valueAt( 0 ) ) {
-                for ( int j = 0; j < mDlcIds.size(); j++ ) {
-                    long _id = mDlcIds.valueAt( j );
-                    if ( mTotalConversion.get( _id ) == null )
-                        dlc_ids.add( _id );
-                    else if ( !mTotalConversion.get( _id ).engrams.contains( name ) )
-                        dlc_ids.add( _id );
-                }
-            } else {
-                dlc_ids.add( dlc_id );
-            }
+            List<Long> dlc_ids = getDLCIdList( dlc_id, name );
 
             // create an id based on counter variable, i, plus index variable, index
             long _id = i + index;
@@ -594,6 +563,8 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             if ( mComplexMap.get( dlc_id ).contains( name ) )
                 // add if not already added
                 addComplexEngramIdByName( dlc_id, name, _id );
+
+            JSONArray favorite = object.getJSONArray( COLUMN_FAVORITE );
 
             // instantiate a new json object used to be converted into new layout
             JSONObject convertedObject = new JSONObject();
@@ -607,10 +578,8 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             convertedObject.put( COLUMN_CATEGORY_KEY, category_id );
             convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
             convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+            convertedObject.put( COLUMN_FAVORITE, favorite );
             convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
-
-            // insert favorites, could possibly be ""
-            convertedObject.put( COLUMN_FAVORITE, object.getJSONArray( "favorite" ) );
 
             // append to global composition array with local composition
             JSONArray objectComposition = object.getJSONArray( COMPOSITION );
@@ -618,31 +587,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
                 compositionArray.put( objectComposition.getJSONObject( j ) );
 
             // convert composition object array from names to ids
-            JSONArray convertedComposition = new JSONArray();
-            for ( int j = 0; j < compositionArray.length(); j++ ) {
-                JSONObject oldObject = compositionArray.getJSONObject( j );
-
-                String resource_name = oldObject.getString( COLUMN_RESOURCE_KEY );
-                int quantity = oldObject.getInt( COLUMN_QUANTITY );
-
-                // attempt to grab id of resource from previously mapped list
-                long resource_id = getResourceIdByName( dlc_id, resource_name );
-
-                // if resource_id is invalid, continue to next
-                // this should only occur if a resource wasn't added into json file
-                if ( resource_id == INVALID_ID ) {
-                    Log.e( TAG, "convertKibbleJSONObjectToIds: resource_name " + resource_name + " does not exist in dlc_id " + dlc_id );
-                    continue;
-                }
-
-                // build new json object with its matched name and quantity
-                JSONObject newObject = new JSONObject();
-                newObject.put( COLUMN_RESOURCE_KEY, resource_id );
-                newObject.put( COLUMN_QUANTITY, quantity );
-
-                // insert object into composition
-                convertedComposition.put( newObject );
-            }
+            JSONArray convertedComposition = convertComposition( dlc_id, compositionArray );
 
             // insert converted composition array into engram json object
             convertedObject.put( COMPOSITION, convertedComposition );
@@ -658,6 +603,130 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         return outArray;
+    }
+
+    private JSONArray convertDyesJSONObjectToIds( int jsonArrayIndex ) throws Exception {
+        // read the local converted json file into a string
+        String jsonString = JSONUtil.readRawJsonFileToJsonString( getContext(), JSONFile.DYES );
+
+        // build a json object based on the read json string
+        JSONObject inObject = new JSONObject( jsonString );
+
+        // %1$s Coloring
+        String nameFormat = inObject.getString( COLUMN_NAME );
+
+        String description = inObject.getString( COLUMN_DESCRIPTION );
+        String imageFolder = inObject.getString( COLUMN_IMAGE_FOLDER );
+        Integer yield = inObject.getInt( COLUMN_YIELD );
+        Integer level = inObject.getInt( COLUMN_LEVEL );
+        Integer category_id = inObject.getInt( COLUMN_CATEGORY_KEY );
+        long dlc_id = inObject.getLong( COLUMN_DLC_KEY );
+        JSONArray compositionArray = inObject.getJSONArray( COMPOSITION );
+        JSONArray stationArray = inObject.getJSONArray( STATION );
+        JSONArray recipeArray = inObject.getJSONArray( RECIPES );
+
+        // instantiate a JSONArray to export
+        JSONArray outArray = new JSONArray();
+        for ( int i = 0; i < recipeArray.length(); i++ ) {
+            JSONObject object = recipeArray.getJSONObject( i );
+
+            // format name %1$s Coloring -> Black Coloring
+            String objectName = object.getString( COLUMN_NAME );
+            String name = String.format( nameFormat, objectName );
+
+            String imageFile = inObject.getString( COLUMN_IMAGE_FILE );
+
+            // check if dlc_id should be overridden or not
+            long objectDlc_id = object.optLong( COLUMN_DLC_KEY, INVALID_ID );
+            if ( objectDlc_id > dlc_id )
+                dlc_id = objectDlc_id;
+
+            // create an array of qualified dlc versions, minus total conversions
+            List<Long> dlc_ids = getDLCIdList( dlc_id, name );
+
+            // create an id based on counter variable, i, plus index variable, index
+            long _id = i + jsonArrayIndex;
+
+            // insert its id into a map for other methods to use later
+            addEngramIdByName( dlc_id, name, _id );
+
+            // check if complex by finding its name in the complex resource map for its dlc version
+            if ( mComplexMap.get( dlc_id ).contains( name ) )
+                // add if not already added
+                addComplexEngramIdByName( dlc_id, name, _id );
+
+            // create blank favorite placeholder
+            JSONArray favorite = new JSONArray( "[\"\"]" );
+
+            // instantiate a new json object used to be converted into new layout
+            JSONObject convertedObject = new JSONObject();
+
+            // insert standardized data
+            convertedObject.put( _ID, _id );
+            convertedObject.put( COLUMN_NAME, name );
+            convertedObject.put( COLUMN_DESCRIPTION, description );
+            convertedObject.put( COLUMN_YIELD, yield );
+            convertedObject.put( COLUMN_LEVEL, level );
+            convertedObject.put( COLUMN_CATEGORY_KEY, category_id );
+            convertedObject.put( COLUMN_IMAGE_FOLDER, imageFolder );
+            convertedObject.put( COLUMN_IMAGE_FILE, imageFile );
+            convertedObject.put( COLUMN_FAVORITE, favorite );
+            convertedObject.put( COLUMN_DLC_KEY, new JSONArray( dlc_ids.toArray() ) );
+
+            // append to global composition array with local composition
+            JSONArray objectComposition = object.getJSONArray( COMPOSITION );
+            for ( int j = 0; j < objectComposition.length(); j++ )
+                compositionArray.put( objectComposition.getJSONObject( j ) );
+
+            // convert composition object array from names to ids
+            JSONArray convertedComposition = convertComposition( dlc_id, compositionArray );
+
+            // insert converted composition array into engram json object
+            convertedObject.put( COMPOSITION, convertedComposition );
+
+            // convert station object array from ids to names
+            List<Long> stations = mapLocalStationIds( stationArray );
+
+            // insert converted station array into engram json object
+            convertedObject.put( DatabaseContract.EngramEntry.COLUMN_STATION_KEY, new JSONArray( stations.toArray() ) );
+
+            // insert converted object into converted array
+            outArray.put( convertedObject );
+        }
+
+        return outArray;
+    }
+
+    @NonNull
+    private JSONArray convertComposition( long dlc_id, JSONArray compositionArray ) throws Exception {
+        JSONArray convertedComposition = new JSONArray();
+
+        for ( int j = 0; j < compositionArray.length(); j++ ) {
+            JSONObject oldObject = compositionArray.getJSONObject( j );
+
+            String resource_name = oldObject.getString( COLUMN_RESOURCE_KEY );
+            int quantity = oldObject.getInt( COLUMN_QUANTITY );
+
+            // attempt to grab id of resource from previously mapped list
+            long resource_id = getResourceIdByName( dlc_id, resource_name );
+
+            // if resource_id is invalid, continue to next
+            // this should only occur if a resource wasn't added into json file
+            if ( resource_id == INVALID_ID ) {
+                Log.e( TAG, "convertComposition: resource_name " + resource_name + " does not exist in dlc_id " + dlc_id );
+                continue;
+            }
+
+            // build new json object with its matched name and quantity
+            JSONObject newObject = new JSONObject();
+            newObject.put( COLUMN_RESOURCE_KEY, resource_id );
+            newObject.put( COLUMN_QUANTITY, quantity );
+
+            // insert object into composition
+            convertedComposition.put( newObject );
+        }
+
+        return convertedComposition;
     }
 
     private JSONArray convertTotalConversionJSONArrayToIds( JSONArray inArray ) throws Exception {
@@ -796,6 +865,35 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             mEngramIdsByName.put( dlc_id, new Map() );
 
         mEngramIdsByName.get( dlc_id ).add( name, _id );
+    }
+
+    // https://stackoverflow.com/questions/4590753/concate-jsonarray
+    private JSONArray concatArray( JSONArray... arrs )
+            throws JSONException {
+        JSONArray result = new JSONArray();
+        for ( JSONArray arr : arrs ) {
+            for ( int i = 0; i < arr.length(); i++ ) {
+                result.put( arr.get( i ) );
+            }
+        }
+        return result;
+    }
+
+    private List<Long> getDLCIdList( long dlc_id, String name ) {
+        List<Long> dlc_ids = new ArrayList<>();
+        if ( dlc_id == mDlcIds.valueAt( 0 ) ) {
+            for ( int j = 0; j < mDlcIds.size(); j++ ) {
+                long _id = mDlcIds.valueAt( j );
+                if ( mTotalConversion.get( _id ) == null )
+                    dlc_ids.add( _id );
+                else if ( !mTotalConversion.get( _id ).engrams.contains( name ) )
+                    dlc_ids.add( _id );
+            }
+        } else {
+            dlc_ids.add( dlc_id );
+        }
+
+        return dlc_ids;
     }
 
     /**
