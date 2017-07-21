@@ -3,6 +3,9 @@ package arc.resource.calculator.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.util.ExceptionUtil;
+
 public abstract class SortableMap {
     private static final String TAG = SortableMap.class.getSimpleName();
 
@@ -42,7 +45,13 @@ public abstract class SortableMap {
     }
 
     public Object valueAt( int position ) {
-        return mValues.get( position );
+        try {
+            return mValues.get( position );
+        } catch ( IndexOutOfBoundsException e ) {
+            ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, new
+                    ExceptionUtil.PositionOutOfBoundsException( position, mValues.size(), mValues.toString() ) );
+            return null;
+        }
     }
 
     public void setValueAt( int position, Object value ) {

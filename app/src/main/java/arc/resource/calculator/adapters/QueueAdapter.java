@@ -34,7 +34,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     private static final String TAG = QueueAdapter.class.getSimpleName();
 
     private Context mContext;
-//    private CraftingQueue mCraftingQueue;
+    //    private CraftingQueue mCraftingQueue;
     private QueueRecyclerView.Observer mViewObserver;
     private boolean mDataSetEmpty;
 
@@ -170,6 +170,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         holder.getNameView().setText( craftable.getName() );
         holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", craftable.getQuantityWithYield() ) );
+
+        holder.setPosition( position );
     }
 
     @Override
@@ -189,6 +191,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
         private final ImageView mImageView;
         private final TextView mNameView;
         private final TextView mQuantityView;
+
+        private int mPosition;
 
         ViewHolder( View view ) {
             super( view );
@@ -213,9 +217,13 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
             return mQuantityView;
         }
 
+        void setPosition( int position ) {
+            mPosition = position;
+        }
+
         @Override
         public void onClick( View view ) {
-            getCraftingQueue().increaseQuantity( getAdapterPosition() );
+            getCraftingQueue().increaseQuantity( mPosition );
         }
 
         @Override

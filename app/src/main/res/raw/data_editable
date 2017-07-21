@@ -1,7 +1,9 @@
 {
   "json": {
-    "version": "259.0",
+    "version": "263.0",
     "changelog": {
+      "263.0": "Updated all Boss Portals with new resources, names, and compositions.",
+      "260.0": "Added Tek Trough. Updated Gasoline composition to reflect new changes.",
       "259.0": "Added Tapejara Tek Saddle. Updated all Vanilla Engram Level Requirements.",
       "258.1": "Updated Engrams with their proper folder locations.",
       "258.0": "Added all Engrams up to PC v258.0!",
@@ -1232,6 +1234,13 @@
       "complex_resource": false
     },
     {
+      "name": "Allosaurus Brain",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "allosaurus_brain.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Amarberry",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "amarberry.webp",
@@ -1382,6 +1391,13 @@
       "name": "Azulberry",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "azulberry.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Basilosaurus Blubber",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "basilosaurus_blubber.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -1771,6 +1787,13 @@
       "complex_resource": false
     },
     {
+      "name": "Giganotosaurus Heart",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "giganotosaurus_heart.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Golden Hesperonis Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "golden_hesperonis_egg.webp",
@@ -2149,6 +2172,13 @@
       "complex_resource": false
     },
     {
+      "name": "Sarcosuchus Skin",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "sarcosuchus_skin.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Sauropod Vertebra",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "sauropod_vertebra.webp",
@@ -2194,6 +2224,13 @@
       "name": "Spino Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "spino_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Spinosaurus Sail",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "spinosaurus_sail.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2268,9 +2305,23 @@
       "complex_resource": false
     },
     {
+      "name": "Therizino Claws",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "therizino_claws.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Thorny Dragon Egg",
       "image_folder": "Scorched Earth\/Resources\/",
       "image_file": "thorny_dragon_egg.webp",
+      "dlc_id": 3,
+      "complex_resource": false
+    },
+    {
+      "name": "Thylacoleo Hook-Claw",
+      "image_folder": "Scorched Earth\/Resources\/",
+      "image_file": "thylacoleo_hook-claw.webp",
       "dlc_id": 3,
       "complex_resource": false
     },
@@ -2285,6 +2336,13 @@
       "name": "Titanoboa Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "titanoboa_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Titanoboa Venom",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "titanoboa_venom.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2376,6 +2434,13 @@
       "name": "Yutyrannus Egg",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "yutyrannus_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Yutyrannus Lungs",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "yutyrannus_lungs.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -10855,7 +10920,7 @@
       "composition": [
         {
           "resource_id": "Oil",
-          "quantity": 3
+          "quantity": 6
         },
         {
           "resource_id": "Hide",
@@ -17971,7 +18036,7 @@
         },
         {
           "resource_id": "Wood",
-          "quantity": 3
+          "quantity": 30
         },
         {
           "resource_id": "Hide",
@@ -23907,6 +23972,49 @@
       ]
     },
     {
+      "name": "Tek Trough",
+      "description": "Put food for your nearby pets in this, and they'll automatically eat it when hungry! Can refridgerate [sic] items, so long as it's powered by a Tek Generator!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 229,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Tek\/",
+      "image_file": "tek_trough.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 18
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 900
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 175
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
       "name": "Tek Wall",
       "description": "A composite Tek wall that insulates the inside from the outside and separates rooms.",
       "yield": 1,
@@ -27223,8 +27331,8 @@
       ]
     },
     {
-      "name": "Broodmother Portal (Easy)",
-      "description": "Use this to generate a portal [to] the Broodmother (Easy).",
+      "name": "Generate Broodmother (Gamma) Portal",
+      "description": "Use this to generate a portal to the Broodmother (Easy).",
       "yield": 1,
       "level": 30,
       "category_id": 1601,
@@ -27237,27 +27345,11 @@
       "dlc_id": 1,
       "composition": [
         {
-          "resource_id": "Megalodon Tooth",
-          "quantity": 8
-        },
-        {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 4
-        },
-        {
-          "resource_id": "Argentavis Talon",
-          "quantity": 4
-        },
-        {
-          "resource_id": "Sauropod Vertebra",
-          "quantity": 2
-        },
-        {
           "resource_id": "Artifact of the Hunter",
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Pack",
+          "resource_id": "Artifact of the Clever",
           "quantity": 1
         },
         {
@@ -27270,10 +27362,10 @@
       ]
     },
     {
-      "name": "Broodmother Portal (Medium)",
-      "description": "Use this to generate a portal [to] the Broodmother (Medium).",
+      "name": "Generate Broodmother (Beta) Portal",
+      "description": "Use this to generate a portal to the Broodmother (Medium).",
       "yield": 1,
-      "level": 50,
+      "level": 30,
       "category_id": 1601,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
       "image_file": "broodmother_portal.webp",
@@ -27284,27 +27376,27 @@
       "dlc_id": 1,
       "composition": [
         {
-          "resource_id": "Megalodon Tooth",
-          "quantity": 32
+          "resource_id": "Sarcosuchus Skin",
+          "quantity": 5
         },
         {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 16
+          "resource_id": "Titanoboa Venom",
+          "quantity": 5
         },
         {
           "resource_id": "Argentavis Talon",
-          "quantity": 16
+          "quantity": 5
         },
         {
           "resource_id": "Sauropod Vertebra",
-          "quantity": 8
+          "quantity": 5
         },
         {
           "resource_id": "Artifact of the Hunter",
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Pack",
+          "resource_id": "Artifact of the Clever",
           "quantity": 1
         },
         {
@@ -27317,8 +27409,8 @@
       ]
     },
     {
-      "name": "Broodmother Portal (Hard)",
-      "description": "Use this to generate a portal [to] the Broodmother (Hard).",
+      "name": "Generate Broodmother (Alpha) Portal",
+      "description": "Use this to generate a portal to the Broodmother (Hard).",
       "yield": 1,
       "level": 70,
       "category_id": 1601,
@@ -27331,27 +27423,27 @@
       "dlc_id": 1,
       "composition": [
         {
-          "resource_id": "Megalodon Tooth",
-          "quantity": 64
+          "resource_id": "Sarcosuchus Skin",
+          "quantity": 10
         },
         {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 32
+          "resource_id": "Titanoboa Venom",
+          "quantity": 10
         },
         {
           "resource_id": "Argentavis Talon",
-          "quantity": 32
+          "quantity": 10
         },
         {
           "resource_id": "Sauropod Vertebra",
-          "quantity": 16
+          "quantity": 10
         },
         {
           "resource_id": "Artifact of the Hunter",
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Pack",
+          "resource_id": "Artifact of the Clever",
           "quantity": 1
         },
         {
@@ -27364,7 +27456,7 @@
       ]
     },
     {
-      "name": "Megapithecus Portal (Easy)",
+      "name": "Generate Megapithecus (Gamma) Portal",
       "description": "Use this to generate a portal to the Megapithecus (Easy).",
       "yield": 1,
       "level": 45,
@@ -27378,35 +27470,15 @@
       "dlc_id": 1,
       "composition": [
         {
-          "resource_id": "Megalodon Tooth",
-          "quantity": 8
-        },
-        {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 4
-        },
-        {
-          "resource_id": "Argentavis Talon",
-          "quantity": 4
-        },
-        {
-          "resource_id": "Sauropod Vertebra",
-          "quantity": 2
-        },
-        {
-          "resource_id": "Artifact of the Hunter",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Massive",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Skylord",
+          "resource_id": "Artifact of the Brute",
           "quantity": 1
         },
         {
           "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
           "quantity": 1
         }
       ],
@@ -27415,7 +27487,7 @@
       ]
     },
     {
-      "name": "Megapithecus Portal (Medium)",
+      "name": "Generate Megapithecus (Beta) Portal",
       "description": "Use this to generate a portal to the Megapithecus (Medium).",
       "yield": 1,
       "level": 65,
@@ -27429,43 +27501,35 @@
       "dlc_id": 1,
       "composition": [
         {
+          "resource_id": "Megalania Toxin",
+          "quantity": 5
+        },
+        {
           "resource_id": "Megalodon Tooth",
-          "quantity": 16
+          "quantity": 5
         },
         {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 8
+          "resource_id": "Spinosaurus Sail",
+          "quantity": 5
         },
         {
-          "resource_id": "Argentavis Talon",
-          "quantity": 8
+          "resource_id": "Therizino Claws",
+          "quantity": 5
         },
         {
-          "resource_id": "Sauropod Vertebra",
-          "quantity": 4
+          "resource_id": "Thylacoleo Hook-Claw",
+          "quantity": 5
         },
         {
-          "resource_id": "Tusoteuthis Tentacle",
-          "quantity": 4
-        },
-        {
-          "resource_id": "Artifact of the Hunter",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Pack",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Massive",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Clever",
+          "resource_id": "Artifact of the Brute",
           "quantity": 1
         },
         {
           "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
           "quantity": 1
         }
       ],
@@ -27474,8 +27538,8 @@
       ]
     },
     {
-      "name": "Megapithecus Portal (Hard)",
-      "description": "Use this to generate a portal to the Megapithecus (Hard.",
+      "name": "Generate Megapithecus (Alpha) Portal",
+      "description": "Use this to generate a portal to the Megapithecus (Hard).",
       "yield": 1,
       "level": 85,
       "category_id": 1602,
@@ -27488,43 +27552,27 @@
       "dlc_id": 1,
       "composition": [
         {
+          "resource_id": "Megalania Toxin",
+          "quantity": 10
+        },
+        {
           "resource_id": "Megalodon Tooth",
-          "quantity": 32
+          "quantity": 10
         },
         {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 16
+          "resource_id": "Spinosaurus Sail",
+          "quantity": 10
         },
         {
-          "resource_id": "Argentavis Talon",
-          "quantity": 16
+          "resource_id": "Therizino Claws",
+          "quantity": 10
         },
         {
-          "resource_id": "Sauropod Vertebra",
-          "quantity": 8
+          "resource_id": "Thylacoleo Hook-Claw",
+          "quantity": 10
         },
         {
-          "resource_id": "Tusoteuthis Tentacle",
-          "quantity": 8
-        },
-        {
-          "resource_id": "Artifact of the Hunter",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Pack",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Massive",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Clever",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Skylord",
+          "resource_id": "Artifact of the Brute",
           "quantity": 1
         },
         {
@@ -27532,7 +27580,7 @@
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Immune",
+          "resource_id": "Artifact of the Pack",
           "quantity": 1
         }
       ],
@@ -27541,7 +27589,7 @@
       ]
     },
     {
-      "name": "Dragon Portal (Easy)",
+      "name": "Generate Dragon (Gamma) Portal",
       "description": "Use this to generate a portal to the Dragon (Easy).",
       "yield": 1,
       "level": 55,
@@ -27555,31 +27603,7 @@
       "dlc_id": 1,
       "composition": [
         {
-          "resource_id": "Megalodon Tooth",
-          "quantity": 8
-        },
-        {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 4
-        },
-        {
-          "resource_id": "Argentavis Talon",
-          "quantity": 4
-        },
-        {
-          "resource_id": "Sauropod Vertebra",
-          "quantity": 2
-        },
-        {
-          "resource_id": "Tusoteuthis Tentacle",
-          "quantity": 2
-        },
-        {
-          "resource_id": "Artifact of the Hunter",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Massive",
+          "resource_id": "Artifact of the Cunning",
           "quantity": 1
         },
         {
@@ -27600,7 +27624,7 @@
       ]
     },
     {
-      "name": "Dragon Portal (Medium)",
+      "name": "Generate Dragon (Beta) Portal",
       "description": "Use this to generate a portal to the Dragon (Medium).",
       "yield": 1,
       "level": 75,
@@ -27614,35 +27638,27 @@
       "dlc_id": 1,
       "composition": [
         {
-          "resource_id": "Megalodon Tooth",
-          "quantity": 16
+          "resource_id": "Allosaurus Brain",
+          "quantity": 5
         },
         {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 8
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 5
         },
         {
-          "resource_id": "Argentavis Talon",
-          "quantity": 8
-        },
-        {
-          "resource_id": "Sauropod Vertebra",
-          "quantity": 4
+          "resource_id": "Giganotosaurus Heart",
+          "quantity": 5
         },
         {
           "resource_id": "Tusoteuthis Tentacle",
-          "quantity": 4
+          "quantity": 5
         },
         {
-          "resource_id": "Artifact of the Hunter",
-          "quantity": 1
+          "resource_id": "Yutyrannus Lungs",
+          "quantity": 5
         },
         {
-          "resource_id": "Artifact of the Massive",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Clever",
+          "resource_id": "Artifact of the Cunning",
           "quantity": 1
         },
         {
@@ -27656,10 +27672,6 @@
         {
           "resource_id": "Artifact of the Strong",
           "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Brute",
-          "quantity": 1
         }
       ],
       "station": [
@@ -27667,7 +27679,7 @@
       ]
     },
     {
-      "name": "Dragon Portal (Hard)",
+      "name": "Generate Dragon (Alpha) Portal",
       "description": "Use this to generate a portal to the Dragon (Hard).",
       "yield": 1,
       "level": 100,
@@ -27681,47 +27693,31 @@
       "dlc_id": 1,
       "composition": [
         {
-          "resource_id": "Megalodon Tooth",
-          "quantity": 24
+          "resource_id": "Allosaurus Brain",
+          "quantity": 10
         },
         {
-          "resource_id": "Tyrannosaurus Arm",
-          "quantity": 4
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 10
         },
         {
-          "resource_id": "Argentavis Talon",
-          "quantity": 12
-        },
-        {
-          "resource_id": "Sauropod Vertebra",
-          "quantity": 6
+          "resource_id": "Giganotosaurus Heart",
+          "quantity": 10
         },
         {
           "resource_id": "Tusoteuthis Tentacle",
-          "quantity": 6
+          "quantity": 10
         },
         {
-          "resource_id": "Artifact of the Hunter",
-          "quantity": 1
+          "resource_id": "Yutyrannus Lungs",
+          "quantity": 10
         },
         {
-          "resource_id": "Artifact of the Pack",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Massive",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Clever",
+          "resource_id": "Artifact of the Cunning",
           "quantity": 1
         },
         {
           "resource_id": "Artifact of the Skylord",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Devourer",
           "quantity": 1
         },
         {
@@ -27731,14 +27727,6 @@
         {
           "resource_id": "Artifact of the Strong",
           "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Cunning",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Brute",
-          "quantity": 1
         }
       ],
       "station": [
@@ -27746,10 +27734,10 @@
       ]
     },
     {
-      "name": "The Center Portal",
-      "description": "Use this to generate a portal to The Center's Ultimate Life Forms.",
+      "name": "Generate Center (Easy) Portal",
+      "description": "Use this to generate a portal to The Center's Guardians.",
       "yield": 1,
-      "level": 80,
+      "level": 70,
       "category_id": 1604,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
       "image_file": "the_center_portal.webp",
@@ -27788,7 +27776,7 @@
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Devious",
+          "resource_id": "Artifact of the Brute",
           "quantity": 1
         },
         {
@@ -27796,19 +27784,7 @@
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Skylord",
-          "quantity": 1
-        },
-        {
           "resource_id": "Artifact of the Devourer",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Immune",
-          "quantity": 1
-        },
-        {
-          "resource_id": "Artifact of the Strong",
           "quantity": 1
         }
       ],
@@ -27817,7 +27793,173 @@
       ]
     },
     {
-      "name": "Manticore Portal (Easy)",
+      "name": "Generate Center (Medium) Portal",
+      "description": "Use this to generate a portal to The Center's Guardians. (Medium)",
+      "yield": 1,
+      "level": 80,
+      "category_id": 1604,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "the_center_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Megalania Toxin",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Sarcosuchus Skin",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Spinosaurus Sail",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Thylacoleo Hook-Claw",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Titanoboa Venom",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Brute",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Generate Center (Hard) Portal",
+      "description": "Use this to generate a portal to The Center's Guardians. (Hard)",
+      "yield": 1,
+      "level": 90,
+      "category_id": 1604,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "the_center_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Megalania Toxin",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Sarcosuchus Skin",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Spinosaurus Sail",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Thylacoleo Hook-Claw",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Titanoboa Venom",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Brute",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Generate Manticore (Gamma) Portal",
       "description": "Use this to generate a portal to the Manticore (Easy).",
       "yield": 1,
       "level": 55,
@@ -27860,7 +28002,7 @@
       ]
     },
     {
-      "name": "Manticore Portal (Medium)",
+      "name": "Generate Manticore (Beta) Portal",
       "description": "Use this to generate a portal to the Manticore (Medium).",
       "yield": 1,
       "level": 70,
@@ -27903,7 +28045,7 @@
       ]
     },
     {
-      "name": "Manticore Portal (Hard)",
+      "name": "Generate Manticore (Alpha) Portal",
       "description": "Use this to generate a portal to the Manticore (Hard).",
       "yield": 1,
       "level": 95,

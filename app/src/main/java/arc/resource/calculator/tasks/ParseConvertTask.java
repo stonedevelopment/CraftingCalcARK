@@ -16,7 +16,7 @@ import java.util.Objects;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.util.JsonUtil;
+import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
 public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
@@ -149,7 +149,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground( Void... params ) {
         try {
             // read the local converted json file into a string
-            String jsonString = JsonUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_editable );
+            String jsonString = JSONUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_editable );
 
             // build a json object based on the read json string
             JSONObject oldObject = new JSONObject( jsonString );
