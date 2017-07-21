@@ -5,13 +5,15 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.util.PrefsUtil;
 
 public class InventoryLayout extends LinearLayout {
     InventorySwitcher mSwitcher;
-//    NavigationTextView mTextView;
+    RawMaterialCheckBox mCheckBox;
 
     public InventoryLayout( Context context ) {
         super( context );
@@ -34,22 +36,22 @@ public class InventoryLayout extends LinearLayout {
         mSwitcher = ( InventorySwitcher ) findViewById( R.id.switcher_inventory );
         mSwitcher.onCreate();
 
-//        mTextView = ( NavigationTextView ) findViewById( R.id.textview_navigation_hierarchy );
-//        mTextView.create();
+        mCheckBox = ( RawMaterialCheckBox ) findViewById( R.id.checkbox_inventory_raw_materials );
+        mCheckBox.create();
     }
 
     public void onResume() {
-//        mTextView.resume();
+//        mCheckBox.resume();
         mSwitcher.onResume();
     }
 
     public void onPause() {
-//        mTextView.pause();
+//        mCheckBox.pause();
         mSwitcher.onPause();
     }
 
     public void onDestroy() {
-//        mTextView.destroy();
+//        mCheckBox.destroy();
         mSwitcher.onDestroy();
     }
 

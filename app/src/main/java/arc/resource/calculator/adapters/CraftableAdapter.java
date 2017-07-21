@@ -158,14 +158,16 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
             @Override
             public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
-                setCategoryLevelsToRoot();
+                if ( dlcValueChange || categoryPrefChange || stationPrefChange || levelPrefChange || levelValueChange ) {
+                    setCategoryLevelsToRoot();
 
-                unsetSearchQuery();
+                    unsetSearchQuery();
 
-                if ( mViewStatus == VISIBLE ) {
-                    refreshData();
-                } else {
-                    mNeedsFullUpdate = true;
+                    if ( mViewStatus == VISIBLE ) {
+                        refreshData();
+                    } else {
+                        mNeedsFullUpdate = true;
+                    }
                 }
             }
         } );

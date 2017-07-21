@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.SortableMap;
@@ -28,6 +29,7 @@ import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.views.InventoryRecyclerView;
 
+import static android.support.v7.widget.RecyclerView.NO_ID;
 import static arc.resource.calculator.adapters.InventoryAdapter.Status.HIDDEN;
 import static arc.resource.calculator.adapters.InventoryAdapter.Status.VISIBLE;
 
@@ -58,6 +60,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private boolean mNeedsUpdate;
 
+    private boolean mShowRawMaterials;
+
     enum Status {VISIBLE, HIDDEN}
 
     public InventoryAdapter( Context context, InventoryRecyclerView.Observer observer ) {
@@ -66,6 +70,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         setInventory( new InventoryMap() );
 
         mNeedsUpdate = true;
+
+        mShowRawMaterials = PrefsUtil.getInstance( context ).getRefinedFilterPreference();
 
         QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
             public void onDataSetPopulated() {
@@ -100,6 +106,24 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     fetchInventory();
                 } else {
                     mNeedsUpdate = true;
+                }
+            }
+        } );
+
+        PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
+            @Override
+            public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
+                if ( refinedPrefChange ) {
+                    boolean showRawMaterials = PrefsUtil.getInstance( getContext() ).getRefinedFilterPreference();
+                    if ( showRawMaterials != mShowRawMaterials ) {
+                        mShowRawMaterials = showRawMaterials;
+
+                        if ( mViewStatus == VISIBLE ) {
+                            fetchInventory();
+                        } else {
+                            mNeedsUpdate = true;
+                        }
+                    }
                 }
             }
         } );
@@ -171,6 +195,22 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         }
     }
 
+    private long QueryForComplexResource( Uri uri ) throws Exception {
+        try ( Cursor cursor = query( uri ) ) {
+            if ( cursor == null )
+                throw new ExceptionUtil.CursorNullException( uri );
+
+            if ( !cursor.moveToFirst() )
+                return NO_ID;
+
+//            long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry._ID ) );
+            long engram_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
+//            long resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY ) );
+
+            return engram_id;
+        }
+    }
+
     private InventoryMap QueryForComposition( Uri uri ) throws Exception {
         long dlc_id = DatabaseContract.CompositionEntry.getDLCIdFromUri( uri );
 
@@ -183,9 +223,43 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 long resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY ) );
                 int quantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
-                inventoryMap.add( resource_id,
-                        new CompositeResource( QueryForResource( DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, resource_id ) ),
-                                quantity ) );
+                // check if refined filter is enabled
+                if ( mShowRawMaterials ) {
+                    // check if resource_id is complex
+                    long engram_id = QueryForComplexResource( DatabaseContract.ComplexResourceEntry.buildUriWithResourceId( resource_id ) );
+
+                    // if complex, return engram_id
+                    if ( engram_id > NO_ID ) {
+                        // query for composition with update uri built with engram_id
+                        InventoryMap composition = QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram_id ) );
+
+                        // iterate through composition map
+                        for ( int j = 0; j < composition.size(); j++ ) {
+                            CompositeResource tempResource = composition.valueAt( j );
+
+                            CompositeResource resource = inventoryMap.get( tempResource.getId() );
+                            if ( resource == null )
+                                resource = new CompositeResource(
+                                        tempResource.getId(),
+                                        tempResource.getName(),
+                                        tempResource.getFolder(),
+                                        tempResource.getFile(),
+                                        tempResource.getQuantity() * quantity );
+                            else
+                                resource.increaseQuantity( tempResource.getQuantity() * quantity );
+
+                           inventoryMap.put( resource.getId(), resource );
+                        }
+                    } else {
+                        inventoryMap.add( resource_id,
+                                new CompositeResource( QueryForResource( DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, resource_id ) ),
+                                        quantity ) );
+                    }
+                } else {
+                    inventoryMap.add( resource_id,
+                            new CompositeResource( QueryForResource( DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, resource_id ) ),
+                                    quantity ) );
+                }
             }
 
             return inventoryMap;

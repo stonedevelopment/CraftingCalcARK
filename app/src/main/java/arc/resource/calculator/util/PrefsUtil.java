@@ -263,6 +263,12 @@ public class PrefsUtil {
         editPreference( DLCIdKey, dlc_id );
     }
 
+    public void saveRefinedFilterPreference( boolean isRefined ) {
+        editPreference( RefinedFilterKey, isRefined );
+
+        PrefsObserver.getInstance().notifyPreferencesChanged( false, false, false, false, false, true );
+    }
+
     public void saveToDefault() {
         saveStationIdBackToDefault();
         saveCategoryLevelsBackToDefault();

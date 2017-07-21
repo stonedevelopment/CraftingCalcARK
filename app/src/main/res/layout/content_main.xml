@@ -77,7 +77,8 @@
             <arc.resource.calculator.views.InventorySwitcher
                 android:id="@+id/switcher_inventory"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@drawable/frame_inventory_container">
 
                 <TextView
@@ -94,6 +95,15 @@
                     android:padding="@dimen/gridview_container_padding"/>
 
             </arc.resource.calculator.views.InventorySwitcher>
+
+            <arc.resource.calculator.views.RawMaterialCheckBox
+                android:id="@+id/checkbox_inventory_raw_materials"
+                style="@style/AppTheme.Text.DisplayCase.Hierarchy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/gridview_container_padding"
+                android:text="Show Raw Materials"
+                android:layout_gravity="center"/>
 
         </arc.resource.calculator.views.InventoryLayout>
 
