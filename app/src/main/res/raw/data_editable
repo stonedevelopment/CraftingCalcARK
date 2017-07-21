@@ -1927,6 +1927,13 @@
       "complex_resource": false
     },
     {
+      "name": "Megalania Toxin",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "megalania_toxin.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Megalodon Tooth",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "megalodon_tooth.webp",
