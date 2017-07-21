@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -225,11 +226,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
                 // check if refined filter is enabled
                 if ( mShowRawMaterials ) {
+                    Log.d( TAG, "QueryForComposition: showRawMaterials" );
                     // check if resource_id is complex
                     long engram_id = QueryForComplexResource( DatabaseContract.ComplexResourceEntry.buildUriWithResourceId( resource_id ) );
 
                     // if complex, return engram_id
                     if ( engram_id > NO_ID ) {
+                        Log.d( TAG, "QueryForComposition: engram_id is valid as complex resource" );
                         // query for composition with update uri built with engram_id
                         InventoryMap composition = QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram_id ) );
 
@@ -248,7 +251,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                             else
                                 resource.increaseQuantity( tempResource.getQuantity() * quantity );
 
-                           inventoryMap.put( resource.getId(), resource );
+                            inventoryMap.put( resource.getId(), resource );
                         }
                     } else {
                         inventoryMap.add( resource_id,
@@ -418,6 +421,29 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         InventoryMap() {
             super();
         }
+
+//        @Override
+//        public void add( long key, Object value ) {
+//            // check if key/value pair was added or not (if new or stored value)
+//            if ( contains( key ) ) {
+//                // update key/value pair with converged value
+//                CompositeResource tempResource = ( CompositeResource ) value;
+//
+//                CompositeResource resource = get( tempResource.getId() );
+//                if ( resource == null )
+//                    resource = new CompositeResource(
+//                            tempResource.getId(),
+//                            tempResource.getName(),
+//                            tempResource.getFolder(),
+//                            tempResource.getFile(),
+//                            tempResource.getQuantity() * queueEngram.getQuantity() );
+//                else
+//                    resource.increaseQuantity( tempResource.getQuantity() * queueEngram.getQuantity() );
+//            } else {
+//                // add new key/value pair
+//                addNew( key, value );
+//            }
+//        }
 
         @Override
         public CompositeResource get( long key ) {

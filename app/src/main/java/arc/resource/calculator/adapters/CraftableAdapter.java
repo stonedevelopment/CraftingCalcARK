@@ -77,6 +77,9 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private Status mViewStatus;
 
+    private FetchDataTask mFetchDataTask;
+    private SearchDataTask mSearchDataTask;
+
     private boolean mNeedsUpdate;
 
     private boolean mNeedsFullUpdate;
@@ -164,7 +167,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     unsetSearchQuery();
 
                     if ( mViewStatus == VISIBLE ) {
-                        refreshData();
+                        fetchData();
                     } else {
                         mNeedsFullUpdate = true;
                     }
@@ -174,8 +177,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         mViewStatus = INIT;
 
+        mFetchDataTask = new FetchDataTask();
+        mSearchDataTask = new SearchDataTask();
+
         if ( getSearchQuery() == null )
-            refreshData();
+            fetchData();
         else
             searchData();
     }
@@ -257,7 +263,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             mViewStatus = VISIBLE;
 
             if ( mNeedsFullUpdate )
-                refreshData();
+                fetchData();
             else if ( mNeedsUpdate )
                 updateQuantities();
         }
@@ -663,7 +669,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         savePrefs();
 
-        refreshData();
+        fetchData();
     }
 
     private Category queryForCategory( Uri uri )
@@ -740,7 +746,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         savePrefs();
 
-        refreshData();
+        fetchData();
     }
 
     private Station queryForStation( Uri uri )
@@ -850,13 +856,20 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         return builder.toString();
     }
 
-    private void refreshData() {
-        Log.d( TAG, "refreshData: " );
-        new QueryForDataTask().execute();
+    private void fetchData() {
+        mFetchDataTask.cancel( true );
+        mSearchDataTask.cancel( true );
+
+        mFetchDataTask = new FetchDataTask();
+        mFetchDataTask.execute();
     }
 
     private void searchData() {
-        new SearchDataTask().execute();
+        mFetchDataTask.cancel( true );
+        mSearchDataTask.cancel( true );
+
+        mSearchDataTask = new SearchDataTask();
+        mSearchDataTask.execute();
     }
 
     public void searchData( String searchQuery ) {
@@ -864,8 +877,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         new SearchDataTask().execute();
     }
 
-    private class QueryForDataTask extends AsyncTask<Void, Void, Boolean> {
-        private final String TAG = QueryForDataTask.class.getSimpleName();
+    private class FetchDataTask extends AsyncTask<Void, Void, Boolean> {
+        private final String TAG = FetchDataTask.class.getSimpleName();
 
         private StationMap mTempStationMap;
         private CategoryMap mTempCategoryMap;
@@ -873,7 +886,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         private Exception mException;
 
-        QueryForDataTask() {
+        FetchDataTask() {
         }
 
         @Override

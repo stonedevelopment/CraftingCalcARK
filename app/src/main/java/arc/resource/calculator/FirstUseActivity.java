@@ -46,6 +46,10 @@ public class FirstUseActivity extends AppIntro {
                 R.string.content_intro_description_inventory,
                 "screen_inventory.jpg" ) );
 
+        addSlide( SlideFragment.newInstance( R.string.content_intro_title_inventory_raw_materials,
+                R.string.content_intro_description_inventory_raw_materials,
+                "screen_inventory_raw_materials.jpg" ) );
+
         addSlide( SlideFragment.newInstance( R.string.content_intro_title_dlc,
                 R.string.content_intro_description_dlc,
                 "screen_preferences.jpg" ) );

@@ -88,6 +88,17 @@ public abstract class SortableMap {
         }
     }
 
+    /**
+     * Public method that, no matter if key exists, will add a new object to the lists.
+     * @param key   long value key taken from Object's _id (ROWID)
+     * @param value value that will be added to lists
+     */
+    public void addNew( long key, Object value ) {
+        mKeys.add( key );
+        mValues.add( value );
+        mSize++;
+    }
+
     public void addAll( SortableMap map ) {
         mKeys.addAll( map.keySet() );
         mValues.addAll( map.valueSet() );

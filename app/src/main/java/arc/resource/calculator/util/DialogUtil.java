@@ -69,7 +69,7 @@ public class DialogUtil {
                     public void onClick( DialogInterface dialog, int which ) {
                         String quantityText = editText.getText().toString();
 
-                        if ( !quantityText.equals( "" ) && quantityText.length() < 5 ) {
+                        if ( !quantityText.equals( "" ) && quantityText.length() <= 6 ) {
                             int quantity = Integer.parseInt( quantityText );
 
                             if ( quantity > 0 )

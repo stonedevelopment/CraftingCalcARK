@@ -22,9 +22,11 @@
     $ 1.3.13
       % Version 1.3.13
       _ 07/21/2017
+      * Back by popular demand: Show Raw Materials in Inventory screen. (Tutorial has been updated with new changes!)
       * Added Engrams: Tek Trough
-      * Added Resources: Allosaurus Brain, Basilosaurus Blubber, and more!
+      * Added Resources: Allosaurus Brain, Basilosaurus Blubber, and others!
       * Updated Engrams: All Boss Portals now updated with new compositions and details.
+      * Updated Edit Quantity context menu option to allow larger numbers. Now, you can set it to 999,999, but I wouldn't recommend it.
       ! Apologies for the delay, I'm currently working on a brand new and improved app! One that will be available through the web and all other devices. Will also include some new and amazing features!
 
     $ 1.3.12

@@ -371,6 +371,7 @@
     <string name="content_intro_title_crafting_queue_details">Tutorial: Crafting Queue Details</string>
     <string name="content_intro_title_viewing_resources">Tutorial: Viewing Resources</string>
     <string name="content_intro_title_inventory">Tutorial: Inventory</string>
+    <string name="content_intro_title_inventory_raw_materials">Tutorial: Inventory (Show Raw Materials)</string>
     <string name="content_intro_title_dlc" translatable="false">Tutorial: Primitive+/Scorched Earth</string>
     <string name="content_intro_title_remove_ads">Tutorial: Remove Ads</string>
     <string name="content_intro_title_last">End of Tutorial</string>
@@ -406,8 +407,13 @@
     <string name="content_intro_description_inventory">
         You still there? Good! This is one of the newest features - the Inventory screen.
         This allows you to see which resources (materials) you need in order to craft
-        the Crafting Queue. This screen is just for viewing at the moment, but.. big things are coming!
-        ;)
+        the Crafting Queue. Did you notice the Show Raw Materials check box at the bottom? If you
+        check that box, the app will breakdown everything above into their raw materials! ;)
+    </string>
+    <string name="content_intro_description_inventory_raw_materials">
+        Back by popular demand! With this option enabled, anything in your Crafting Queue will be
+        broken down into their rawest materials. Be warned though, if your Crafting Queue is huge..
+        it will take some time to break it all down. Please be patient!
     </string>
     <string name="content_intro_description_dlc">
         Did you know that you can change DLC versions? It\'s true! Just use the main menu

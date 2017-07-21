@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "263.0",
+    "version": "263.1",
     "changelog": {
+      "263.1": "Changed Element to not be Complex, created an inf loop going back and forth between Element Shard and Element.",
       "263.0": "Updated all Boss Portals with new resources, names, and compositions.",
       "260.0": "Added Tek Trough. Updated Gasoline composition to reflect new changes.",
       "259.0": "Added Tapejara Tek Saddle. Updated all Vanilla Engram Level Requirements.",
@@ -1630,7 +1631,7 @@
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "element.webp",
       "dlc_id": 1,
-      "complex_resource": true
+      "complex_resource": false
     },
     {
       "name": "Element Shard",
