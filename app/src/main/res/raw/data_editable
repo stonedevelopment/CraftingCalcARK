@@ -2327,9 +2327,9 @@
     },
     {
       "name": "Thylacoleo Hook-Claw",
-      "image_folder": "Scorched Earth\/Resources\/",
+      "image_folder": "Vanilla\/Resources\/",
       "image_file": "thylacoleo_hook-claw.webp",
-      "dlc_id": 3,
+      "dlc_id": 1,
       "complex_resource": false
     },
     {
