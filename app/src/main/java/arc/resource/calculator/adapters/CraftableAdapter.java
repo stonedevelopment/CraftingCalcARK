@@ -29,10 +29,12 @@ import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.SortableMap;
 import arc.resource.calculator.model.Station;
 import arc.resource.calculator.model.engram.DisplayEngram;
-import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.model.exception.CursorEmptyException;
+import arc.resource.calculator.model.exception.CursorNullException;
+import arc.resource.calculator.model.exception.PositionOutOfBoundsException;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
-import arc.resource.calculator.views.CraftableRecyclerView;
+import arc.resource.calculator.views.switchers.listeners.Observer;
 
 import static arc.resource.calculator.adapters.CraftableAdapter.Status.HIDDEN;
 import static arc.resource.calculator.adapters.CraftableAdapter.Status.INIT;
@@ -73,7 +75,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private Context mContext;
 
-    private CraftableRecyclerView.Observer mViewObserver;
+    private Observer mViewObserver;
 
     private Status mViewStatus;
 
@@ -86,7 +88,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     enum Status {INIT, VISIBLE, HIDDEN}
 
-    public CraftableAdapter( Context context, CraftableRecyclerView.Observer observer ) {
+    public CraftableAdapter( Context context, Observer observer ) {
         setContext( context );
         setObserver( observer );
 
@@ -121,11 +123,15 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             public void onItemChanged( long craftableId, int quantity ) {
                 Log.d( TAG, "onItemChanged: " );
                 if ( mViewStatus == VISIBLE ) {
-                    Log.d( TAG, "onItemChanged: visible" );
-                    if ( getCraftableMap().contains( craftableId ) ) {
-                        int position = getCraftableMap().indexOfKey( craftableId );
-                        getCraftable( position ).setQuantity( quantity );
-                        notifyItemChanged( adjustPositionFromCraftable( position ) );
+                    try {
+                        Log.d( TAG, "onItemChanged: visible" );
+                        if ( getCraftableMap().contains( craftableId ) ) {
+                            int position = getCraftableMap().indexOfKey( craftableId );
+                            getCraftable( position ).setQuantity( quantity );
+                            notifyItemChanged( adjustPositionFromCraftable( position ) );
+                        }
+                    } catch ( PositionOutOfBoundsException e ) {
+                        getObserver().notifyExceptionCaught( e );
                     }
                 } else {
                     Log.d( TAG, "onItemChanged: not visible: needs  updating" );
@@ -137,10 +143,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             public void onItemRemoved( long craftableId ) {
                 Log.d( TAG, "onItemRemoved: " );
                 if ( mViewStatus == VISIBLE ) {
-                    if ( getCraftableMap().contains( craftableId ) ) {
-                        int position = getCraftableMap().indexOfKey( craftableId );
-                        getCraftable( position ).resetQuantity();
-                        notifyItemChanged( adjustPositionFromCraftable( position ) );
+                    try {
+                        if ( getCraftableMap().contains( craftableId ) ) {
+                            int position = getCraftableMap().indexOfKey( craftableId );
+                            getCraftable( position ).resetQuantity();
+                            notifyItemChanged( adjustPositionFromCraftable( position ) );
+                        }
+                    } catch ( PositionOutOfBoundsException e ) {
+                        getObserver().notifyExceptionCaught( e );
                     }
                 } else {
                     mNeedsUpdate = true;
@@ -212,11 +222,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         this.mContext = context.getApplicationContext();
     }
 
-    private CraftableRecyclerView.Observer getObserver() {
+    private Observer getObserver() {
         return mViewObserver;
     }
 
-    private void setObserver( CraftableRecyclerView.Observer observer ) {
+    private void setObserver( Observer observer ) {
         mViewObserver = observer;
     }
 
@@ -408,8 +418,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             if ( isCraftable( position ) )
                 return getCraftable( adjustPositionForCraftable( position ) ).getId();
 
-            throw new ExceptionUtil.PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
-        } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
+        } catch ( PositionOutOfBoundsException e ) {
             ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
 
             return NO_ID;
@@ -427,8 +437,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             if ( isCraftable( position ) )
                 return getCraftable( adjustPositionForCraftable( position ) ).getImagePath();
 
-            throw new ExceptionUtil.PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
-        } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
+        } catch ( PositionOutOfBoundsException e ) {
             ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
 
             return NO_PATH;
@@ -446,8 +456,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             if ( isCraftable( position ) )
                 return getCraftable( adjustPositionForCraftable( position ) ).getName();
 
-            throw new ExceptionUtil.PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
-        } catch ( ExceptionUtil.PositionOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, getItemCount(), getItemContents() );
+        } catch ( PositionOutOfBoundsException e ) {
             ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
 
             return NO_NAME;
@@ -478,58 +488,70 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         return Util.isValidPosition( adjustPositionForCraftable( position ), getCraftableMap().size() );
     }
 
-    private DisplayEngram getCraftable( int position ) {
-        return getCraftableMap().valueAt( position );
+    private DisplayEngram getCraftable( int position ) throws PositionOutOfBoundsException {
+        return getCraftableMap().getAt( position );
     }
 
     private void increaseQuantity( int position ) {
-        CraftingQueue.getInstance().increaseQuantity( getCraftable( adjustPositionForCraftable( position ) ) );
+        try {
+            CraftingQueue.getInstance().increaseQuantity( getCraftable( adjustPositionForCraftable( position ) ) );
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
     }
 
     private void updateQuantities() {
-        CraftingQueue craftingQueue = CraftingQueue.getInstance();
+        try {
+            CraftingQueue craftingQueue = CraftingQueue.getInstance();
 
-        for ( int i = 0; i < getCraftableMap().size(); i++ ) {
-            DisplayEngram craftable = getCraftable( i );
+            for ( int i = 0; i < getCraftableMap().size(); i++ ) {
+                DisplayEngram craftable = getCraftable( i );
 
-            long id = craftable.getId();
+                long id = craftable.getId();
 
-            // if queue contains this craftable's _id, check if quantity is different, if so, update
-            // if queue does not contain and if quantity is above 0, reset quantity back to 0, update
-            if ( craftingQueue.contains( id ) ) {
-                int quantity = craftingQueue.getCraftable( id ).getQuantity();
+                // if queue contains this craftable's _id, check if quantity is different, if so, update
+                // if queue does not contain and if quantity is above 0, reset quantity back to 0, update
+                if ( craftingQueue.contains( id ) ) {
+                    int quantity = craftingQueue.getCraftable( id ).getQuantity();
 
-                if ( craftable.getQuantity() != quantity ) {
-                    craftable.setQuantity( quantity );
+                    if ( craftable.getQuantity() != quantity ) {
+                        craftable.setQuantity( quantity );
 
-                    getCraftableMap().setValueAt( i, craftable );
+                        getCraftableMap().update( i, id, craftable );
+                    }
+                } else if ( craftable.getQuantity() > 0 ) {
+                    craftable.resetQuantity();
+
+                    getCraftableMap().update( i, id, craftable );
                 }
-            } else if ( craftable.getQuantity() > 0 ) {
-                craftable.resetQuantity();
-
-                getCraftableMap().setValueAt( i, craftable );
             }
+
+            notifyDataSetChanged();
+
+            mNeedsUpdate = false;
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
         }
-
-        notifyDataSetChanged();
-
-        mNeedsUpdate = false;
     }
 
     private void clearQuantities() {
-        boolean didUpdate = false;
+        try {
+            boolean didUpdate = false;
 
-        for ( int i = 0; i < getCraftableMap().size(); i++ ) {
-            getCraftable( i ).resetQuantity();
+            for ( int i = 0; i < getCraftableMap().size(); i++ ) {
+                getCraftable( i ).resetQuantity();
 
-            didUpdate = true;
+                didUpdate = true;
+            }
+
+            if ( didUpdate )
+                notifyDataSetChanged();
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
         }
-
-        if ( didUpdate )
-            notifyDataSetChanged();
     }
 
-    private CraftableMap queryForEngrams( Uri uri ) throws Exception {
+    private CraftableMap queryForEngrams( Uri uri ) throws PositionOutOfBoundsException {
         if ( uri == null )
             return new CraftableMap();
 
@@ -556,14 +578,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 craftables.add( _id, new DisplayEngram( _id, name, folder, file, yield, category_id, quantity ) );
             }
 
-            // TODO: 4/30/2017 What if we sorted as we inserted?
+            // TODO: 4/30/2017 What if we sorted as we inserted? - FIXED, made sort() synchronized
             craftables.sort();
 
             return craftables;
         }
     }
 
-    private CraftableMap querySearchForEngrams( Uri uri ) {
+    private CraftableMap querySearchForEngrams( Uri uri ) throws PositionOutOfBoundsException {
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
                 return new CraftableMap();
@@ -625,62 +647,65 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         return Util.isValidPosition( adjustPositionForCategory( position ), getCategoryMap().size() );
     }
 
-    private Category getCategory( int position ) {
-        return getCategoryMap().valueAt( position );
+    private Category getCategory( int position ) throws PositionOutOfBoundsException {
+        return ( Category ) getCategoryMap().getAt( position );
     }
 
-    private void changeCategory( int position )
-            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
-        Category category = getCategory( position );
+    private void changeCategory( int position ) {
+        try {
+            Category category = getCategory( position );
 
-        long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
-        if ( position == 0 ) {
-            // position 0 will always be a back category to the previous level
-            long parent = category.getParent();
-            if ( isCategoryParentLevelSearchRoot( parent ) ) {
-                // backing out of search view
-                unsetSearchQuery();
-            } else {
-                if ( isCategoryParentLevelStationRoot( parent ) ) {
-                    // Back button to station list
-                    setCurrentStationId( NO_STATION );
-                    setCurrentCategoryLevelsToStationRoot();
+            long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
+            if ( position == 0 ) {
+                // position 0 will always be a back category to the previous level
+                long parent = category.getParent();
+                if ( isCategoryParentLevelSearchRoot( parent ) ) {
+                    // backing out of search view
+                    unsetSearchQuery();
                 } else {
-                    if ( isCurrentCategoryLevelRoot() ) {
-                        // Normal Category object
-                        // Grabbing ID is the best way to track its location.
-                        setCurrentCategoryLevels( category.getId(), category.getParent() );
-                    } else if ( isCategoryParentLevelRoot( parent ) ) {
-                        // Back button to category list
-                        setCurrentCategoryLevelsToRoot();
+                    if ( isCategoryParentLevelStationRoot( parent ) ) {
+                        // Back button to station list
+                        setCurrentStationId( NO_STATION );
+                        setCurrentCategoryLevelsToStationRoot();
                     } else {
-                        // Normal Back Category object
-                        // Query for details via its Parent Level
-                        setCurrentCategoryLevels( category.getParent(),
-                                queryForCategory( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
+                        if ( isCurrentCategoryLevelRoot() ) {
+                            // Normal Category object
+                            // Grabbing ID is the best way to track its location.
+                            setCurrentCategoryLevels( category.getId(), category.getParent() );
+                        } else if ( isCategoryParentLevelRoot( parent ) ) {
+                            // Back button to category list
+                            setCurrentCategoryLevelsToRoot();
+                        } else {
+                            // Normal Back Category object
+                            // Query for details via its Parent Level
+                            setCurrentCategoryLevels( category.getParent(),
+                                    queryForCategory( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
+                        }
                     }
                 }
+            } else {
+                // Normal Category object
+                // Grabbing ID is the best way to track its location.
+                setCurrentCategoryLevels( category.getId(), category.getParent() );
             }
-        } else {
-            // Normal Category object
-            // Grabbing ID is the best way to track its location.
-            setCurrentCategoryLevels( category.getId(), category.getParent() );
+
+            savePrefs();
+
+            fetchData();
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
         }
-
-        savePrefs();
-
-        fetchData();
     }
 
     private Category queryForCategory( Uri uri )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException {
 
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             return new Category(
                     DatabaseContract.CategoryEntry.getIdFromUri( uri ),
@@ -691,7 +716,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private CategoryMap queryForCategories( Uri uri )
-            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+            throws CursorEmptyException, CursorNullException, PositionOutOfBoundsException {
         if ( uri == null )
             return new CategoryMap();
 
@@ -734,30 +759,34 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         return Util.isValidPosition( position, getStationMap().size() );
     }
 
-    private Station getStation( int position ) {
-        return getStationMap().valueAt( position );
+    private Station getStation( int position ) throws PositionOutOfBoundsException {
+        return getStationMap().getAt( position );
     }
 
     private void changeStation( int position ) {
-        Station station = getStation( position );
+        try {
+            Station station = getStation( position );
 
-        setCurrentStationId( station.getId() );
-        setCurrentCategoryLevelsToRoot();
+            setCurrentStationId( station.getId() );
+            setCurrentCategoryLevelsToRoot();
 
-        savePrefs();
+            savePrefs();
 
-        fetchData();
+            fetchData();
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
     }
 
     private Station queryForStation( Uri uri )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException {
 
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             return new Station(
                     DatabaseContract.StationEntry.getIdFromUri( uri ),
@@ -769,14 +798,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private StationMap queryForStations( Uri uri )
-            throws ExceptionUtil.CursorNullException {
+            throws CursorNullException, PositionOutOfBoundsException {
 
         if ( uri == null )
             return new StationMap();
 
         try ( Cursor cursor = getContext().getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             StationMap stationMap = new StationMap();
             while ( cursor.moveToNext() ) {
@@ -796,7 +825,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void buildHierarchy() {
-
         try {
             long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
 
@@ -833,14 +861,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             }
 
             NavigationObserver.getInstance().update( builder.toString() );
-        } catch ( ExceptionUtil.CursorNullException | ExceptionUtil.CursorEmptyException e ) {
+        } catch ( CursorNullException | CursorEmptyException e ) {
             ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
         }
 
     }
 
     private String buildCategoryHierarchy( Uri uri )
-            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+            throws CursorEmptyException, CursorNullException {
 
         Category category = queryForCategory( uri );
 
@@ -983,7 +1011,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     }
                 } else {
                     if ( isFilteredByStation() ) {
-                        if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION  ) {
+                        if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION ) {
                             stationUri = DatabaseContract.StationEntry.buildUriWithDLCId( dlc_id );
                         } else {
                             if ( isFilteredByLevel() ) {
@@ -1013,7 +1041,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 if ( backCategory != null )
                     mTempCategoryMap.add( backCategory.getId(), backCategory );
 
-                mTempCategoryMap.addAll( queryForCategories( categoryUri ) );
+                mTempCategoryMap.append( queryForCategories( categoryUri ) );
 
                 mTempCraftableMap = queryForEngrams( craftableUri );
                 return true;
@@ -1133,15 +1161,18 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     @Override
     public long getItemId( int position ) {
-        if ( isStation( position ) )
-            return getStation( position ).getId();
+        try {
+            if ( isStation( position ) )
+                return getStation( position ).getId();
 
-        if ( isCategory( position ) )
-            return getCategory( position ).getId();
+            if ( isCategory( position ) )
+                return getCategory( position ).getId();
 
-        if ( isCraftable( position ) )
-            return getCraftable( adjustPositionForCraftable( position ) ).getId();
-
+            if ( isCraftable( position ) )
+                return getCraftable( adjustPositionForCraftable( position ) ).getId();
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
         return super.getItemId( position );
     }
 
@@ -1185,16 +1216,14 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         public void onClick( View view ) {
             int position = getAdapterPosition();
 
-            try {
-                if ( isCraftable( position ) ) {
-                    increaseQuantity( position );
-                } else if ( isCategory( position ) ) {
-                    changeCategory( position );
-                } else if ( isStation( position ) ) {
-                    changeStation( position );
-                }
-            } catch ( ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e ) {
-                ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
+            if ( isCraftable( position ) ) {
+                increaseQuantity( position );
+            } else if ( isCategory( position ) ) {
+                changeCategory( position );
+            } else if ( isStation( position ) ) {
+                changeStation( position );
+            } else {
+                getObserver().notifyExceptionCaught( new PositionOutOfBoundsException( position, getItemCount() ) );
             }
         }
 
@@ -1210,13 +1239,18 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
 
         @Override
-        public DisplayEngram valueAt( int position ) {
-            return ( DisplayEngram ) super.valueAt( position );
+        public DisplayEngram get( long key ) throws PositionOutOfBoundsException {
+            return ( DisplayEngram ) super.get( key );
         }
 
         @Override
-        public Comparable getComparable( int position ) {
-            return valueAt( position ).getName();
+        public DisplayEngram getAt( int position ) throws PositionOutOfBoundsException {
+            return ( DisplayEngram ) super.getAt( position );
+        }
+
+        @Override
+        public String getComparable( int position ) throws PositionOutOfBoundsException {
+            return getAt( position ).getName();
         }
     }
 
@@ -1226,13 +1260,18 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
 
         @Override
-        public Station valueAt( int position ) {
-            return ( Station ) super.valueAt( position );
+        public Station get( long key ) throws PositionOutOfBoundsException {
+            return ( Station ) super.get( key );
         }
 
         @Override
-        public Comparable getComparable( int position ) {
-            return valueAt( position ).getName();
+        public Station getAt( int position ) throws PositionOutOfBoundsException {
+            return ( Station ) super.getAt( position );
+        }
+
+        @Override
+        public String getComparable( int position ) throws PositionOutOfBoundsException {
+            return getAt( position ).getName();
         }
     }
 
@@ -1242,13 +1281,18 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
 
         @Override
-        public Category valueAt( int position ) {
-            return ( Category ) super.valueAt( position );
+        public Category get( long key ) throws PositionOutOfBoundsException {
+            return ( Category ) super.get( key );
         }
 
         @Override
-        public Comparable getComparable( int position ) {
-            return valueAt( position ).getName();
+        public Category getAt( int position ) throws PositionOutOfBoundsException {
+            return ( Category ) super.getAt( position );
+        }
+
+        @Override
+        public String getComparable( int position ) throws PositionOutOfBoundsException {
+            return getAt( position ).getName();
         }
     }
 }

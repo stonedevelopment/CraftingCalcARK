@@ -16,7 +16,8 @@ import java.util.Locale;
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.views.QueueRecyclerView;
+import arc.resource.calculator.model.exception.PositionOutOfBoundsException;
+import arc.resource.calculator.views.switchers.listeners.Observer;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -35,10 +36,10 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     private Context mContext;
     //    private CraftingQueue mCraftingQueue;
-    private QueueRecyclerView.Observer mViewObserver;
+    private Observer mViewObserver;
     private boolean mDataSetEmpty;
 
-    public class Observer extends QueueRecyclerView.Observer {
+    public class QueueAdapterObserver implements Observer {
         @Override
         public void notifyExceptionCaught( Exception e ) {
             if ( getObserver() != null )
@@ -103,13 +104,12 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
         }
     }
 
-    public QueueAdapter( Context context, QueueRecyclerView.Observer observer ) {
+    public QueueAdapter( Context context, Observer observer ) {
         Log.d( TAG, "QueueAdapter: " );
         setContext( context );
         setObserver( observer );
 
-//        setCraftingQueue( CraftingQueue.getInstance() );
-        getCraftingQueue().setObserver( new Observer() );
+        getCraftingQueue().setObserver( new QueueAdapterObserver() );
         getCraftingQueue().fetch( context );
     }
 
@@ -125,15 +125,11 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
         return CraftingQueue.getInstance();
     }
 
-//    private void setCraftingQueue( CraftingQueue craftingQueue ) {
-//        this.mCraftingQueue = craftingQueue;
-//    }
-
-    private QueueRecyclerView.Observer getObserver() {
+    private Observer getObserver() {
         return mViewObserver;
     }
 
-    private void setObserver( QueueRecyclerView.Observer observer ) {
+    private void setObserver( Observer observer ) {
         this.mViewObserver = observer;
     }
 
@@ -152,31 +148,41 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View itemView = LayoutInflater.from( parent.getContext() ).
-                inflate( R.layout.list_item_queue, parent, false );
+                inflate( R.layout.list_item_craftable_queue, parent, false );
 
         return new ViewHolder( itemView );
     }
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position ) {
-        QueueEngram craftable = getCraftingQueue().getCraftable( position );
+        try {
+            QueueEngram craftable = getCraftingQueue().getCraftable( position );
 
-        String imagePath = "file:///android_asset/" + craftable.getImagePath();
-        Picasso.with( getContext() )
-                .load( imagePath )
-                .error( R.drawable.placeholder_empty )
-                .placeholder( R.drawable.placeholder_empty )
-                .into( holder.getImageView() );
+            String imagePath = "file:///android_asset/" + craftable.getImagePath();
+            Picasso.with( getContext() )
+                    .load( imagePath )
+                    .error( R.drawable.placeholder_empty )
+                    .placeholder( R.drawable.placeholder_empty )
+                    .into( holder.getImageView() );
 
-        holder.getNameView().setText( craftable.getName() );
-        holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", craftable.getQuantityWithYield() ) );
+            holder.getNameView().setText( craftable.getName() );
+            holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", craftable.getQuantityWithYield() ) );
 
-        holder.setPosition( position );
+            holder.setPosition( position );
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
     }
 
     @Override
     public long getItemId( int position ) {
-        return getCraftingQueue().getCraftable( position ).getId();
+        try {
+            return getCraftingQueue().getCraftable( position ).getId();
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
+
+        return super.getItemId( position );
     }
 
     @Override
@@ -223,7 +229,11 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         @Override
         public void onClick( View view ) {
-            getCraftingQueue().increaseQuantity( mPosition );
+            try {
+                getCraftingQueue().increaseQuantity( mPosition );
+            } catch ( PositionOutOfBoundsException e ) {
+                getObserver().notifyExceptionCaught( e );
+            }
         }
 
         @Override

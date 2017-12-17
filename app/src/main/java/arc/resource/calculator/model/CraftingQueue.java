@@ -16,7 +16,9 @@ import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.model.exception.CursorEmptyException;
+import arc.resource.calculator.model.exception.CursorNullException;
+import arc.resource.calculator.model.exception.PositionOutOfBoundsException;
 import arc.resource.calculator.util.PrefsUtil;
 
 /**
@@ -36,7 +38,7 @@ public class CraftingQueue {
 
     private static CraftingQueue sInstance;
     private QueueMap mQueue;
-    private static QueueAdapter.Observer mViewObserver;
+    private static QueueAdapter.QueueAdapterObserver mAdapterObserver;
 
     private CraftingQueue() {
         Log.d( TAG, "CraftingQueue: new CraftingQueue" );
@@ -79,12 +81,12 @@ public class CraftingQueue {
         this.mQueue = queue;
     }
 
-    private static QueueAdapter.Observer getObserver() {
-        return mViewObserver;
+    private static QueueAdapter.QueueAdapterObserver getObserver() {
+        return mAdapterObserver;
     }
 
-    public void setObserver( QueueAdapter.Observer observer ) {
-        mViewObserver = observer;
+    public void setObserver( QueueAdapter.QueueAdapterObserver observer ) {
+        mAdapterObserver = observer;
     }
 
     public int getSize() {
@@ -99,23 +101,29 @@ public class CraftingQueue {
         return getSize() == 0;
     }
 
-    public QueueEngram getCraftable( int position ) {
-        return getQueue().valueAt( position );
+    public QueueEngram getCraftable( int position ) throws PositionOutOfBoundsException {
+        return getQueue().getAt( position );
     }
 
     public QueueEngram getCraftable( long id ) {
-        return getQueue().get( id );
+        try {
+            return getQueue().get( id );
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
+
+        return null;
     }
 
-    private void updateCraftable( int position, QueueEngram craftable ) {
-        getQueue().setValueAt( position, craftable );
+    private void updateCraftable( int position, QueueEngram craftable ) throws PositionOutOfBoundsException {
+        getQueue().update( position, craftable.getId(), craftable );
     }
 
     private void addCraftable( QueueEngram craftable ) {
         getQueue().add( craftable.getId(), craftable );
     }
 
-    private void removeCraftable( int position ) {
+    private void removeCraftable( int position ) throws PositionOutOfBoundsException {
         getQueue().removeAt( position );
     }
 
@@ -127,7 +135,7 @@ public class CraftingQueue {
         return getQueue().indexOfKey( id );
     }
 
-    public void increaseQuantity( int position ) {
+    public void increaseQuantity( int position ) throws PositionOutOfBoundsException {
         QueueEngram craftable = getCraftable( position );
 
         craftable.increaseQuantity();
@@ -143,7 +151,7 @@ public class CraftingQueue {
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
     }
 
-    public void increaseQuantity( QueueEngram craftable ) {
+    public void increaseQuantity( QueueEngram craftable ) throws PositionOutOfBoundsException {
         long id = craftable.getId();
 
         craftable.increaseQuantity();
@@ -166,47 +174,43 @@ public class CraftingQueue {
     }
 
     public void setQuantity( Context context, long id, int quantity ) {
-        if ( getQueue().contains( id ) ) {
-            int position = getPosition( id );
-            if ( quantity > 0 ) {
-                // get object from list
-                QueueEngram craftable = getCraftable( position );
-
-                // update object's quantity
-                craftable.setQuantity( quantity );
-
-                // update item in list
-                updateCraftable( position, craftable );
-
-                // notify list adapter of changes
-                if ( getObserver() != null )
-                    getObserver().notifyItemChanged( position );
-
-                // notify outside listeners of changes
-                QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
-            } else {
-                delete( position );
-            }
-        } else {
-            if ( quantity > 0 ) {
-                insert( context, id, quantity );
-            }
-        }
-    }
-
-    private void insert( Context context, long id, int quantity ) {
-        Log.d( TAG, "insert: " );
         try {
-            insert( QueryForCraftable( context, id, quantity ) );
-        } catch ( Exception e ) {
-            // notify ViewSwitcher of error
-            Log.e( TAG, "insert: ", e );
-            if ( getObserver() != null )
-                getObserver().notifyExceptionCaught( e );
+            if ( getQueue().contains( id ) ) {
+                int position = getPosition( id );
+                if ( quantity > 0 ) {
+                    // get object from list
+                    QueueEngram craftable = getCraftable( position );
+
+                    // update object's quantity
+                    craftable.setQuantity( quantity );
+
+                    // update item in list
+                    updateCraftable( position, craftable );
+
+                    // notify list adapter of changes
+                    if ( getObserver() != null )
+                        getObserver().notifyItemChanged( position );
+
+                    // notify outside listeners of changes
+                    QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
+                } else {
+                    delete( position );
+                }
+            } else {
+                if ( quantity > 0 ) {
+                    insert( context, id, quantity );
+                }
+            }
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
         }
     }
 
-    private void insert( QueueEngram craftable ) {
+    private void insert( Context context, long id, int quantity ) throws PositionOutOfBoundsException {
+        insert( queryForCraftable( context, id, quantity ) );
+    }
+
+    private void insert( QueueEngram craftable ) throws PositionOutOfBoundsException {
         Log.d( TAG, "insert: " + craftable.toString() );
         // add craftable to list
         addCraftable( craftable );
@@ -226,7 +230,7 @@ public class CraftingQueue {
         QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
     }
 
-    private void delete( int position ) {
+    private void delete( int position ) throws PositionOutOfBoundsException {
         long id = getCraftable( position ).getId();
 
         // remove craftable from list
@@ -234,15 +238,13 @@ public class CraftingQueue {
 
         if ( getQueue().size() > 0 ) {
             // notify list adapter of changes
-            if ( getObserver() != null )
-                getObserver().notifyItemRemoved( position );
+            getObserver().notifyItemRemoved( position );
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyItemRemoved( id );
         } else {
             // notify ViewSwitcher of empty status
-            if ( getObserver() != null )
-                getObserver().notifyDataSetEmpty();
+            getObserver().notifyDataSetEmpty();
 
             // notify outside listeners of changes
             QueueObserver.getInstance().notifyDataSetEmpty();
@@ -250,8 +252,10 @@ public class CraftingQueue {
     }
 
     public void delete( long id ) {
-        if ( getQueue().contains( id ) ) {
+        try {
             delete( getPosition( id ) );
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
         }
     }
 
@@ -268,27 +272,27 @@ public class CraftingQueue {
     }
 
     private void saveQueueToPrefs( Context context ) {
-        PrefsUtil.getInstance( context ).saveCraftingQueueJSONString( convertQueueToJSONString() );
+        try {
+            PrefsUtil.getInstance( context ).saveCraftingQueueJSONString( convertQueueToJSONString() );
+        } catch ( JSONException | PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
     }
 
-    private String convertQueueToJSONString() {
-        try {
-            JSONArray json = new JSONArray();
+    private String convertQueueToJSONString() throws PositionOutOfBoundsException, JSONException {
+        JSONArray json = new JSONArray();
 
-            for ( int i = 0; i < getQueue().size(); i++ ) {
-                QueueEngram craftable = getCraftable( i );
+        for ( int i = 0; i < getQueue().size(); i++ ) {
+            QueueEngram craftable = getCraftable( i );
 
-                JSONObject object = new JSONObject();
-                object.put( DatabaseContract.EngramEntry._ID, craftable.getId() );
-                object.put( DatabaseContract.QueueEntry.COLUMN_QUANTITY, craftable.getQuantity() );
+            JSONObject object = new JSONObject();
+            object.put( DatabaseContract.EngramEntry._ID, craftable.getId() );
+            object.put( DatabaseContract.QueueEntry.COLUMN_QUANTITY, craftable.getQuantity() );
 
-                json.put( object );
-            }
-
-            return json.toString();
-        } catch ( JSONException e ) {
-            return null;
+            json.put( object );
         }
+
+        return json.toString();
     }
 
     private LongSparseArray<Integer> convertJSONStringToQueue( Context context ) {
@@ -316,17 +320,16 @@ public class CraftingQueue {
         }
     }
 
-    private QueueEngram QueryForCraftable( Context context, long engramId, int quantity ) throws Exception {
+    private QueueEngram queryForCraftable( Context context, long engramId, int quantity ) {
         long dlc_id = PrefsUtil.getInstance( context ).getDLCPreference();
         Uri uri = DatabaseContract.EngramEntry.buildUriWithId( dlc_id, engramId );
 
         try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
-
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             return new QueueEngram(
                     engramId,
@@ -397,7 +400,7 @@ public class CraftingQueue {
                         long id = savedQueue.keyAt( i );
                         int quantity = savedQueue.valueAt( i );
 
-                        QueueEngram craftable = QueryForCraftable( mContext, id, quantity );
+                        QueueEngram craftable = queryForCraftable( mContext, id, quantity );
 
                         mTempQueueMap.add( id, craftable );
                     }
@@ -418,18 +421,18 @@ public class CraftingQueue {
         }
 
         @Override
-        public QueueEngram get( long key ) {
+        public QueueEngram get( long key ) throws PositionOutOfBoundsException {
             return ( QueueEngram ) super.get( key );
         }
 
         @Override
-        public QueueEngram valueAt( int position ) {
-            return ( QueueEngram ) super.valueAt( position );
+        public QueueEngram getAt( int position ) throws PositionOutOfBoundsException {
+            return ( QueueEngram ) super.getAt( position );
         }
 
         @Override
-        public Comparable getComparable( int position ) {
-            return valueAt( position ).getName();
+        public Comparable getComparable( int position ) throws PositionOutOfBoundsException {
+            return getAt( position ).getName();
         }
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<arc.resource.calculator.views.layouts.QueueLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_queue"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/frame_switcher_main"
+    android:padding="@dimen/gridview_container_padding">
+
+    <arc.resource.calculator.views.switchers.QueueSwitcher
+        android:id="@+id/switcher_queue"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/frame_craftable_container">
+
+        <TextView
+            android:id="@+id/textview_queue"
+            style="@style/AppTheme.Text.Status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <arc.resource.calculator.views.QueueRecyclerView
+            android:id="@+id/gridview_queue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/gridview_container_padding"/>
+
+    </arc.resource.calculator.views.switchers.QueueSwitcher>
+
+</arc.resource.calculator.views.layouts.QueueLayout>

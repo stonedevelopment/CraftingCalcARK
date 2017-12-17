@@ -31,7 +31,7 @@ import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
 import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.util.ExceptionUtil.URIUnknownException;
+import arc.resource.calculator.model.exception.URIUnknownException;
 
 import static arc.resource.calculator.util.Util.NO_ID;
 import static arc.resource.calculator.util.Util.NO_SIZE;
@@ -288,9 +288,8 @@ public class DatabaseProvider extends ContentProvider {
             }
         } catch ( URIUnknownException e ) {
             mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
-
-            return null;
         }
+        return null;
     }
 
     @Nullable

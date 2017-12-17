@@ -50,6 +50,7 @@
     <string name="app_name_full">ARK:Resource Calculator</string>
 
     <string name="title_activity_detail">Engram Details</string>
+    <string name="title_activity_calculate">Craft Calculator</string>
     <string name="title_activity_resources">Calculated Resources</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -64,13 +65,17 @@
     <string name="action_title_feedback_correction">Send correction</string>
 
     <!-- Strings used with the MainActivity layout -->
-    <string name="content_main_clear_queue">Clear Queue</string>
-    <string name="content_main_calculate_resources">Calculate</string>
+    <string name="content_main_button_clear_queue">Clear Queue</string>
+    <string name="content_main_button_calculate_queue">Calculate Queue</string>
+    <string name="content_main_button_view_inventory">View Inventory</string>
     <string name="content_main_button_view_craftables">Back to Engrams</string>
 
     <!-- Strings used with the DetailActivity layout -->
-    <string name="content_detail_save_button">Save and Close</string>
-    <string name="content_detail_remove_button">Remove From Queue</string>
+    <string name="content_detail_button_remove">Remove From Queue</string>
+    <string name="content_detail_button_save">Save and Close</string>
+    <string name="content_detail_button_add_to_queue">Add to Queue</string>
+    <string name="content_detail_button_update_queue">Update Queue</string>
+
     <string name="content_detail_station_and_level_format">
         This Engram <x:g name="crafted_in" example="can be crafted without a station">%1$s</x:g>,
         <x:g name="required_level" example="and can be crafted at any level">%2$s</x:g>.
@@ -357,9 +362,6 @@
 
     <!-- In-App Purchases Strings -->
     <string name="action_title_remove_ads">Remove Ads</string>
-    <string name="detail_content_save_button_add_to_queue">Add to Queue</string>
-    <string name="detail_content_save_button_update_queue">Update Queue</string>
-    <string name="content_main_button_view_inventory">View Inventory</string>
 
     <!-- First Use -->
     <!-- First Use: Titles -->
@@ -430,4 +432,23 @@
         or just want to chat it up, don\'t be afraid to reach out. Thank you for using my app!!
     </string>
 
+    <string name="switcher_queue_status_onerror">An error occurred while fetching crafting queue.</string>
+    <string name="switcher_queue_status_oninit">Fetching crafting queue..</string>
+    <string name="switcher_queue_status_onempty">Crafting queue is empty.</string>
+
+    <string name="switcher_craftable_status_onerror">An error occurred while fetching Engram data.</string>
+    <string name="switcher_craftable_status_oninit">Fetching Engram data..</string>
+    <string name="switcher_craftable_status_onempty">Engram data is empty.</string>
+
+    <string name="switcher_inventory_status_onerror">An error occurred while fetching Inventory.</string>
+    <string name="switcher_inventory_status_oninit">Fetching inventory..</string>
+    <string name="switcher_inventory_status_onempty">Inventory is empty.</string>
+
+    <string name="switcher_calculate_status_onerror">An error occurred while calculating crafting queue.</string>
+    <string name="switcher_calculate_status_oninit">Calculating crafting queue..</string>
+    <string name="switcher_calculate_status_onempty">There is nothing to calculate.</string>
+    <string name="title_craftable_layout">Engrams</string>
+    <string name="title_queue_layout">Crafting Queue</string>
+    <string name="search_hint">Search Engrams</string>
+    <string name="bottom_sheet_title">Crafting Queue</string>
 </resources>

@@ -1,4 +1,4 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.textviews;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
@@ -6,6 +6,9 @@ import android.util.AttributeSet;
 
 import arc.resource.calculator.listeners.NavigationObserver;
 
+/**
+ * TextView that has its text value updated programmatically.
+ */
 public class NavigationTextView extends AppCompatTextView {
     private static final String TAG = NavigationTextView.class.getSimpleName();
 

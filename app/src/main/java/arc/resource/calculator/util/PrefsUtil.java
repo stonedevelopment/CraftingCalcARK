@@ -7,7 +7,7 @@ import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.views.MainSwitcher;
+import arc.resource.calculator.views.switchers.MainSwitcher;
 
 /**
  * Copyright (C) 2016, Jared Stone

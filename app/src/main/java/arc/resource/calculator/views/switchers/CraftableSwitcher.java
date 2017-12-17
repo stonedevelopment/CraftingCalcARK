@@ -1,51 +1,51 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.switchers;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.views.CraftableRecyclerView;
+import arc.resource.calculator.views.switchers.listeners.Listener;
 
-public class CraftableSwitcher extends ViewSwitcher implements CraftableRecyclerView.Listener {
+public class CraftableSwitcher extends ViewSwitcher implements Listener {
     private static final String TAG = CraftableSwitcher.class.getSimpleName();
 
-    private TextView mTextView;
+    private ProgressBar mProgressBar;
     private CraftableRecyclerView mRecyclerView;
 
     @Override
     public void onError( Exception e ) {
-        if ( !isTextViewShown() )
+        if ( isProgressBarVisible() )
             showNext();
-
-        onStatusUpdate( "An error occurred while fetching Engram data." );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
 
     @Override
     public void onInit() {
-        if ( !isTextViewShown() )
+        //  switch view to progress bar
+        if ( !isProgressBarVisible() )
             showNext();
-
-        onStatusUpdate( "Fetching Engram data.." );
     }
 
     @Override
     public void onPopulated() {
         // switch view to recycler
-        if ( !isRecyclerViewShown() )
+        if ( isProgressBarVisible() )
             showNext();
     }
 
     @Override
     public void onEmpty() {
-        // switch view to textview, display empty message
-        if ( !isTextViewShown() )
+        //  switch to recycler, throw exception
+        if ( isProgressBarVisible() )
             showNext();
 
-        onStatusUpdate( "Engram data is empty." );
+        Log.wtf( TAG, "CraftableRecyclerView result is empty and should NOT be." );
     }
 
     public CraftableSwitcher( Context context ) {
@@ -58,10 +58,10 @@ public class CraftableSwitcher extends ViewSwitcher implements CraftableRecycler
 
     public void onCreate() {
         // instantiate our textview for status updates
-        mTextView = ( TextView ) findViewById( R.id.textview_craftables );
+        mProgressBar = findViewById( R.id.progress_bar_craftables );
 
         // instantiate recyclerView
-        mRecyclerView = ( CraftableRecyclerView ) findViewById( R.id.gridview_craftables );
+        mRecyclerView = findViewById( R.id.gridview_craftables );
         mRecyclerView.create( this );
     }
 
@@ -78,18 +78,14 @@ public class CraftableSwitcher extends ViewSwitcher implements CraftableRecycler
     }
 
     public void onSearch( String query ) {
-        mRecyclerView.search(query);
+        mRecyclerView.search( query );
     }
 
-    private void onStatusUpdate( String text ) {
-        mTextView.setText( text );
+    private boolean isProgressBarVisible() {
+        return getCurrentView().getId() == mProgressBar.getId();
     }
 
-    private boolean isTextViewShown() {
-        return getCurrentView().getId() == mTextView.getId();
-    }
-
-    private boolean isRecyclerViewShown() {
-        return getCurrentView().getId() == mRecyclerView.getId();
+    public CraftableRecyclerView getRecyclerView() {
+        return mRecyclerView;
     }
 }

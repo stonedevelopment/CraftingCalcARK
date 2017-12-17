@@ -19,6 +19,7 @@ import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.Showcase;
+import arc.resource.calculator.model.exception.PositionOutOfBoundsException;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.FeedbackUtil;
@@ -132,10 +133,10 @@ public class DetailActivity extends AppCompatActivity
             mIsInQueue = ( getShowcase().getQuantity() > 0 );
 
             if ( mIsInQueue ) {
-                saveButton.setText( R.string.detail_content_save_button_update_queue );
+                saveButton.setText( R.string.content_detail_button_update_queue );
             } else {
                 removeButton.setEnabled( false );
-                saveButton.setText( R.string.detail_content_save_button_add_to_queue );
+                saveButton.setText( R.string.content_detail_button_add_to_queue );
             }
 
             TextView categoryText = ( TextView ) findViewById( R.id.textView_navigation );
@@ -174,7 +175,7 @@ public class DetailActivity extends AppCompatActivity
             recyclerView.setAdapter( getAdapter() );
 
             mAdUtil = new AdUtil( this, R.id.content_detail );
-        } catch ( Exception e ) {
+        } catch ( PositionOutOfBoundsException e ) {
             FinishActivityWithError( e );
         }
 
@@ -349,6 +350,7 @@ public class DetailActivity extends AppCompatActivity
     @Override
     public void onException( String tag, Exception e ) {
         ExceptionUtil.SendErrorReport( tag, e );
+        // TODO: 11/11/2017 Should we FinishActivityWithError?
     }
 
     @Override

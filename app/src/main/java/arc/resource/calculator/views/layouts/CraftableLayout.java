@@ -1,20 +1,25 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.layouts;
 
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.views.switchers.CraftableSwitcher;
+import arc.resource.calculator.views.textviews.NavigationTextView;
 
 public class CraftableLayout extends LinearLayout {
+
     CraftableSwitcher mSwitcher;
     NavigationTextView mTextView;
 
     public CraftableLayout( Context context ) {
         super( context );
+
     }
 
     public CraftableLayout( Context context, @Nullable AttributeSet attrs ) {
@@ -31,6 +36,11 @@ public class CraftableLayout extends LinearLayout {
     }
 
     public void onCreate() {
+//        int actionBarSize = R.attr.actionBarSize;
+//        int padding = 8*2;
+//        int total = actionBarSize + padding;
+//        setPadding( 0, total, 0, 0 );
+
         mSwitcher = ( CraftableSwitcher ) findViewById( R.id.switcher_craftables );
         mSwitcher.onCreate();
 
@@ -55,5 +65,9 @@ public class CraftableLayout extends LinearLayout {
 
     public void onSearch( String query ) {
         mSwitcher.onSearch( query );
+    }
+
+    public CraftableSwitcher getSwitcher() {
+        return mSwitcher;
     }
 }

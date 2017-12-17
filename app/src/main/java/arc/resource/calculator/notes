@@ -1,0 +1,27 @@
+
+User adds Engrams to Crafting Queue
+User presses Calculate to start calculate task
+
+Calculate Task
+    User presses CALCULATE button
+    If QUEUE is not EMPTY
+        Display hovering progress dial "Calculating.."
+    Switches to next view (CalculatorView)
+    Build view in background
+    Switch upon completion
+
+
+ Todo
+    Refactor Inventory* to Calculate*
+        InventorySwitcher -> CalculateSwitcher
+    InventoryRecyclerView will now just be used for Raw Materials
+    Create customer RecyclerView's to display various steps.
+
+    Gather Engram Ids
+    Query for Composition
+        Gather Engram Ids
+    Query for Station Ids
+
+  todo
+    Convert EXCEPTION dialogs to toast messages
+    If Display Engram throws EXCEPTION, just don't display Engram Thumbnail, but still alert Firebase

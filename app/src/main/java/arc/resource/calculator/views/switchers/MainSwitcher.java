@@ -1,26 +1,24 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.switchers;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.util.PrefsUtil;
+import arc.resource.calculator.views.layouts.CalculateLayout;
+import arc.resource.calculator.views.layouts.CraftableLayout;
 
 public class MainSwitcher extends ViewSwitcher {
     private static final String TAG = MainSwitcher.class.getSimpleName();
 
     public static final int CRAFTABLE_SCREEN = 0;
-    public static final int INVENTORY_SCREEN = 1;
+    public static final int CALCULATOR_SCREEN = 1;
     public static final int DEFAULT_SCREEN = CRAFTABLE_SCREEN;
 
-    private int mCurrentScreenId;
-
     CraftableLayout mCraftableLayout;
-    InventoryLayout mInventoryLayout;
+    CalculateLayout mCalculatorLayout;
 
     public MainSwitcher( Context context ) {
         super( context );
@@ -35,29 +33,29 @@ public class MainSwitcher extends ViewSwitcher {
         mCraftableLayout = ( CraftableLayout ) findViewById( R.id.layout_craftables );
         mCraftableLayout.onCreate();
 
-        Button viewCraftables = ( Button ) findViewById( R.id.button_view_craftables );
-        viewCraftables.setOnClickListener( new OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                showCraftableScreen();
-            }
-        } );
+//        findViewById( R.id.button_view_craftables )
+//                .setOnClickListener( new OnClickListener() {
+//                    @Override
+//                    public void onClick( View v ) {
+//                        showCraftableScreen();
+//                    }
+//                } );
 
-        mInventoryLayout = ( InventoryLayout ) findViewById( R.id.layout_inventory );
-        mInventoryLayout.onCreate();
-
-        Button viewInventory = ( Button ) findViewById( R.id.button_view_inventory );
-        viewInventory.setOnClickListener( new OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                showInventoryScreen();
-            }
-        } );
+//        mCalculatorLayout = ( CalculateLayout ) findViewById( R.id.layout_calculate );
+//        mCalculatorLayout.onCreate( this );
+//
+//        findViewById( R.id.button_calculate )
+//                .setOnClickListener( new OnClickListener() {
+//                    @Override
+//                    public void onClick( View v ) {
+//                        showCalculatorScreen();
+//                    }
+//                } );
 
         int screenId = PrefsUtil.getInstance( getContext() ).getMainSwitcherScreenId();
 
-        if ( screenId == INVENTORY_SCREEN ) {
-            showInventoryScreen();
+        if ( screenId == CALCULATOR_SCREEN ) {
+            showCalculatorScreen();
         }
     }
 
@@ -66,7 +64,7 @@ public class MainSwitcher extends ViewSwitcher {
         if ( isCurrentView( mCraftableLayout.getId() ) ) {
             mCraftableLayout.onPause();
         } else {
-            mInventoryLayout.onPause();
+            mCalculatorLayout.onPause();
         }
 
         PrefsUtil.getInstance( getContext() ).saveMainSwitcherScreenId( getCurrentScreenId() );
@@ -77,13 +75,13 @@ public class MainSwitcher extends ViewSwitcher {
         if ( isCurrentView( mCraftableLayout.getId() ) ) {
             mCraftableLayout.onResume();
         } else {
-            mInventoryLayout.onResume();
+            mCalculatorLayout.onResume();
         }
     }
 
     public void onDestroy() {
         mCraftableLayout.onDestroy();
-        mInventoryLayout.onDestroy();
+        mCalculatorLayout.onDestroy();
     }
 
     public void onSearch( String searchQuery ) {
@@ -97,16 +95,16 @@ public class MainSwitcher extends ViewSwitcher {
         return getCurrentView().getId() == id;
     }
 
-    public void showInventoryScreen() {
+    public void showCalculatorScreen() {
         // toggle view to inventory
-        if ( !isCurrentView( mInventoryLayout.getId() ) ) {
+        if ( !isCurrentView( mCalculatorLayout.getId() ) ) {
             showNext();
 
             // onPause craftable view
             mCraftableLayout.onPause();
 
             // onResume inventory view
-            mInventoryLayout.onResume();
+            mCalculatorLayout.onResume();
         }
     }
 
@@ -116,7 +114,7 @@ public class MainSwitcher extends ViewSwitcher {
             showNext();
 
             // onPause inventory view
-            mInventoryLayout.onPause();
+            mCalculatorLayout.onPause();
 
             // onResume craftable view
             mCraftableLayout.onResume();
@@ -124,6 +122,6 @@ public class MainSwitcher extends ViewSwitcher {
     }
 
     private int getCurrentScreenId() {
-        return isCurrentView( mCraftableLayout.getId() ) ? CRAFTABLE_SCREEN : INVENTORY_SCREEN;
+        return isCurrentView( mCraftableLayout.getId() ) ? CRAFTABLE_SCREEN : CALCULATOR_SCREEN;
     }
 }

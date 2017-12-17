@@ -1,4 +1,4 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.switchers;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,19 +7,23 @@ import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.views.CraftableRecyclerView;
+import arc.resource.calculator.views.InventoryRecyclerView;
+import arc.resource.calculator.views.layouts.CalculateLayout;
+import arc.resource.calculator.views.switchers.listeners.Listener;
 
-public class InventorySwitcher extends ViewSwitcher implements InventoryRecyclerView.Listener {
-    private static final String TAG = InventorySwitcher.class.getSimpleName();
+public class CalculateSwitcher extends ViewSwitcher implements Listener {
+    private static final String TAG = CalculateSwitcher.class.getSimpleName();
 
     private TextView mTextView;
-    private InventoryRecyclerView mRecyclerView;
+    private CalculateLayout mLayout;
 
     @Override
     public void onError( Exception e ) {
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "An error occurred while fetching Inventory." );
+        onStatusUpdate( getContext().getString( R.string.switcher_calculate_status_onerror ) );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
@@ -29,7 +33,7 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Fetching inventory.." );
+        onStatusUpdate( getContext().getString( R.string.switcher_calculate_status_oninit ) );
     }
 
     @Override
@@ -45,36 +49,36 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Inventory is empty." );
+        onStatusUpdate( getContext().getString( R.string.switcher_calculate_status_onempty ) );
     }
 
-    public InventorySwitcher( Context context ) {
+    public CalculateSwitcher( Context context ) {
         super( context );
     }
 
-    public InventorySwitcher( Context context, AttributeSet attrs ) {
+    public CalculateSwitcher( Context context, AttributeSet attrs ) {
         super( context, attrs );
     }
 
     public void onCreate() {
         // instantiate our textview for status updates
-        mTextView = ( TextView ) findViewById( R.id.textview_inventory );
+        mTextView = ( TextView ) findViewById( R.id.textview_calculate );
 
-        // instantiate recyclerView
-        mRecyclerView = ( InventoryRecyclerView ) findViewById( R.id.gridview_inventory );
-        mRecyclerView.create( this );
+        // instantiate container layout
+        mLayout = ( CalculateLayout ) findViewById( R.id.layout_calculate );
+        mLayout.onCreate( this );
     }
 
     public void onResume() {
-        mRecyclerView.resume();
+        mLayout.onResume();
     }
 
     public void onPause() {
-        mRecyclerView.pause();
+        mLayout.onPause();
     }
 
     public void onDestroy() {
-        mRecyclerView.destroy();
+        mLayout.onDestroy();
     }
 
     private void onStatusUpdate( String text ) {
@@ -86,6 +90,6 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
     }
 
     private boolean isRecyclerViewShown() {
-        return getCurrentView().getId() == mRecyclerView.getId();
+        return getCurrentView().getId() == mLayout.getId();
     }
 }

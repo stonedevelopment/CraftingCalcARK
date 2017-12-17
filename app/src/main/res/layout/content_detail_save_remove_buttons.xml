@@ -13,7 +13,7 @@
         android:layout_weight="1"
         android:background="@drawable/frame"
         android:onClick="RemoveAndFinish"
-        android:text="@string/content_detail_remove_button"/>
+        android:text="@string/content_detail_button_remove"/>
 
     <Button
         android:id="@+id/saveButton"
@@ -24,6 +24,6 @@
         android:layout_weight="1"
         android:background="@drawable/frame"
         android:onClick="SaveAndFinish"
-        android:text="@string/content_detail_save_button"/>
+        android:text="@string/content_detail_button_save"/>
 
 </LinearLayout>

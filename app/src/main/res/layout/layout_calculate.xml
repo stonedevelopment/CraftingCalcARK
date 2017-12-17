@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<arc.resource.calculator.views.layouts.CalculateLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_calculate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <arc.resource.calculator.views.InventoryRecyclerView
+        android:id="@+id/gridview_inventory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/gridview_container_padding"/>
+
+    <!--
+        Crafting Station Switchers
+
+        Max columns - 2 wide -> 2 columns wide
+        [INVENTORY_SWITCHER] -> [INVENTORY_SWITCHER]
+        | [X] [X] [X] -> [X] |
+
+        _____________________
+        | Crafting Station  |
+        |___________________|
+        | [X] [X] [X] | [X] |
+        | [X] [X]     |     |
+        |_____________|_____|
+
+        Grilling
+            Campfire
+            Industrial Grill
+
+            [MEAT] -> [COOKED_MEAT]
+
+        Cooking (requiring water)
+            Beer Barrel (for Beer Liquid)
+            Cooking Pot
+            Industrial Cooker
+
+            [BERRIES] [THATCH] [WATER] -> [BEER_LIQUID]
+
+        Refining
+            Compost Bin
+            Preserving Bin
+            Refining Forge
+            Industrial Forge
+
+        Crafting
+            Self
+            Catapult Turret
+            Mortar and Pestle
+            Chemistry Bench
+            Smithy
+            Fabricator
+            Tek Replicator
+            Obelisk
+    -->
+
+</arc.resource.calculator.views.layouts.CalculateLayout>

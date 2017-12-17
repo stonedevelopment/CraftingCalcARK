@@ -8,8 +8,10 @@ import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.CraftableAdapter;
+import arc.resource.calculator.views.switchers.listeners.Listener;
+import arc.resource.calculator.views.switchers.listeners.Observer;
 
-public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
+public class CraftableRecyclerView extends RecyclerViewWithContextMenu implements Observer {
     private static final String TAG = CraftableRecyclerView.class.getSimpleName();
 
     private AdapterDataObserver mDataObserver = new AdapterDataObserver() {
@@ -28,32 +30,24 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
 
     private static Listener mListener;
 
-    interface Listener {
-        void onError( Exception e );
-
-        void onInit();
-
-        void onPopulated();
-
-        void onEmpty();
+    @Override
+    public void notifyExceptionCaught( Exception e ) {
+        getListener().onError( e );
     }
 
-    public static class Observer {
-        public void notifyExceptionCaught( Exception e ) {
-            getListener().onError( e );
-        }
+    @Override
+    public void notifyInitializing() {
+        getListener().onInit();
+    }
 
-        public void notifyInitializing() {
-            getListener().onInit();
-        }
+    @Override
+    public void notifyDataSetPopulated() {
+        getListener().onPopulated();
+    }
 
-        public void notifyDataSetPopulated() {
-            getListener().onPopulated();
-        }
-
-        public void notifyDataSetEmpty() {
-            getListener().onEmpty();
-        }
+    @Override
+    public void notifyDataSetEmpty() {
+        getListener().onEmpty();
     }
 
     public CraftableRecyclerView( Context context ) {
@@ -80,7 +74,7 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
         int numCols = getResources().getInteger( R.integer.gridview_column_count );
         setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
         setListener( listener );
-        setAdapter( new CraftableAdapter( getContext(), new Observer() ) );
+        setAdapter( new CraftableAdapter( getContext(), this ) );
     }
 
     public void resume() {

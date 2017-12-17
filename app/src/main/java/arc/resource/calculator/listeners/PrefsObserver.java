@@ -14,15 +14,13 @@ public class PrefsObserver {
     private HashMap<String, Listener> mListeners;
 
     public static abstract class Listener {
-        public void onPreferencesChanged(
+        public abstract void onPreferencesChanged(
                 boolean dlcValueChange,
                 boolean categoryPrefChange,
                 boolean stationPrefChange,
                 boolean levelPrefChange,
                 boolean levelValueChange,
-                boolean refinedPrefChange ) {
-            // do nothing
-        }
+                boolean refinedPrefChange );
     }
 
     public static PrefsObserver getInstance() {

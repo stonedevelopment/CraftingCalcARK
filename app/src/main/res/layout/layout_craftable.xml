@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<arc.resource.calculator.views.layouts.CraftableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_craftables"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/frame_switcher_main"
+    android:orientation="vertical">
+
+    <arc.resource.calculator.views.textviews.NavigationTextView
+        android:id="@+id/textview_navigation_hierarchy"
+        style="@style/AppTheme.Text.Layout.Heading.Normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        tools:text="Smithy/Metal/Storage"/>
+
+    <arc.resource.calculator.views.switchers.CraftableSwitcher
+        android:id="@+id/switcher_craftables"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/frame_craftable_container">
+
+        <ProgressBar
+            android:id="@+id/progress_bar_craftables"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <arc.resource.calculator.views.CraftableRecyclerView
+            android:id="@+id/gridview_craftables"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/gridview_container_padding"/>
+
+    </arc.resource.calculator.views.switchers.CraftableSwitcher>
+
+</arc.resource.calculator.views.layouts.CraftableLayout>

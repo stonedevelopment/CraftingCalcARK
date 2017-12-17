@@ -5,39 +5,34 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
 
+import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.QueueAdapter;
+import arc.resource.calculator.views.switchers.listeners.Listener;
+import arc.resource.calculator.views.switchers.listeners.Observer;
 
-public class QueueRecyclerView extends RecyclerViewWithContextMenu {
+public class QueueRecyclerView extends RecyclerViewWithContextMenu implements Observer {
     private static final String TAG = QueueRecyclerView.class.getSimpleName();
 
     private static Listener mListener;
 
-    interface Listener {
-        void onError( Exception e );
-
-        void onInit();
-
-        void onPopulated();
-
-        void onEmpty();
+    @Override
+    public void notifyExceptionCaught( Exception e ) {
+        getListener().onError( e );
     }
 
-    public static class Observer {
-        public void notifyExceptionCaught( Exception e ) {
-            getListener().onError( e );
-        }
+    @Override
+    public void notifyInitializing() {
+        getListener().onInit();
+    }
 
-        public void notifyInitializing() {
-            getListener().onInit();
-        }
+    @Override
+    public void notifyDataSetPopulated() {
+        getListener().onPopulated();
+    }
 
-        public void notifyDataSetPopulated() {
-            getListener().onPopulated();
-        }
-
-        public void notifyDataSetEmpty() {
-            getListener().onEmpty();
-        }
+    @Override
+    public void notifyDataSetEmpty() {
+        getListener().onEmpty();
     }
 
     public QueueRecyclerView( Context context ) {
@@ -61,9 +56,11 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     public void create( Listener listener ) {
-        setLayoutManager( new GridLayoutManager( getContext(), 1, GridLayoutManager.HORIZONTAL, false ) );
+        int numCols = getResources().getInteger( R.integer.gridview_column_count );
+        setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
+//        setLayoutManager( new GridLayoutManager( getContext(), 1, GridLayoutManager.HORIZONTAL, false ) );
         setListener( listener );
-        setAdapter( new QueueAdapter( getContext(), new Observer() ) );
+        setAdapter( new QueueAdapter( getContext(), this ) );
     }
 
     public void resume() {

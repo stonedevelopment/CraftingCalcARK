@@ -1,0 +1,29 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_calculate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".CalculateActivity">
+
+    <arc.resource.calculator.views.switchers.CalculateSwitcher
+        android:id="@+id/switcher_calculate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/frame_inventory_container">
+
+        <TextView
+            android:id="@+id/textview_calculate"
+            style="@style/AppTheme.Text.Status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <include layout="@layout/layout_calculate"/>
+
+    </arc.resource.calculator.views.switchers.CalculateSwitcher>
+
+</ScrollView>
+

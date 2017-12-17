@@ -1,4 +1,4 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.layouts;
 
 import android.content.Context;
 import android.os.Build;

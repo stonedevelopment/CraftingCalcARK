@@ -9,6 +9,7 @@ import org.solovyev.android.checkout.PlayStoreListener;
 import javax.annotation.Nonnull;
 
 import arc.resource.calculator.model.Encryption;
+import arc.resource.calculator.util.ExceptionUtil;
 
 import static arc.resource.calculator.util.PurchaseUtil.buildPublicKey;
 

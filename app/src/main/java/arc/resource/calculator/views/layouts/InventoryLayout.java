@@ -1,19 +1,23 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.layouts;
 
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.util.PrefsUtil;
+import arc.resource.calculator.views.switchers.InventorySwitcher;
 
 public class InventoryLayout extends LinearLayout {
+
+    //  Switcher view that will display if empty or error occurred
     InventorySwitcher mSwitcher;
-    RawMaterialCheckBox mCheckBox;
+
+    //  Text view that is used as a Title "Raw Materials" or "Gather These Materials"
+    TextView mTextView;
 
     public InventoryLayout( Context context ) {
         super( context );
@@ -33,25 +37,19 @@ public class InventoryLayout extends LinearLayout {
     }
 
     public void onCreate() {
-        mSwitcher = ( InventorySwitcher ) findViewById( R.id.switcher_inventory );
-        mSwitcher.onCreate();
-
-        mCheckBox = ( RawMaterialCheckBox ) findViewById( R.id.checkbox_inventory_raw_materials );
-        mCheckBox.create();
+//        mSwitcher = ( InventorySwitcher ) findViewById( R.id.switcher_inventory );
+//        mSwitcher.onCreate();
     }
 
     public void onResume() {
-//        mCheckBox.resume();
         mSwitcher.onResume();
     }
 
     public void onPause() {
-//        mCheckBox.pause();
         mSwitcher.onPause();
     }
 
     public void onDestroy() {
-//        mCheckBox.destroy();
         mSwitcher.onDestroy();
     }
 

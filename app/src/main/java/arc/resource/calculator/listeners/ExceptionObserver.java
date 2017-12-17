@@ -29,12 +29,12 @@ public class ExceptionObserver {
         mListeners = new ArrayList<>();
     }
 
-    public void registerListener( Listener listener ) {
+    public synchronized void registerListener( Listener listener ) {
         if ( !mListeners.contains( listener ) )
             mListeners.add( listener );
     }
 
-    public void unregisterListener( Listener listener ) {
+    public synchronized void unregisterListener( Listener listener ) {
         mListeners.remove( listener );
     }
 

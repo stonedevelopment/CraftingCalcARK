@@ -146,6 +146,8 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         break;
 
                     case JSON:
+                        // JSONEvent
+                        //  Save 'has  update' to preferences if updated
                         new ParseConvertTask( getApplicationContext(), new ParseConvertTask.Listener() {
                             @Override
                             public void onError( Exception e ) {
@@ -264,6 +266,12 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         break;
 
                     case PREFERENCES:
+                        /*  PreferencesEvent
+                            Start Event
+                            Test if Database was Updated
+                            If True, Update Status Message
+                            End Event
+                        */
                         // if database updated, save new version to preferences, reset categories back to default
                         if ( mHasUpdate ) {
                             updateStatusMessages( getString( R.string.initialization_pref_event_started ) );

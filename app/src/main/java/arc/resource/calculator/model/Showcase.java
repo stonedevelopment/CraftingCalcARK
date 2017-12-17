@@ -12,6 +12,10 @@ import java.util.List;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.model.exception.ArrayElementNullException;
+import arc.resource.calculator.model.exception.CursorEmptyException;
+import arc.resource.calculator.model.exception.CursorNullException;
+import arc.resource.calculator.model.exception.PositionOutOfBoundsException;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
 import arc.resource.calculator.model.resource.Resource;
@@ -39,7 +43,7 @@ public class Showcase {
     private ShowcaseEntry mShowcaseEntry;
 
     public Showcase( Context context, long _id, int quantity )
-            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+            throws CursorEmptyException, CursorNullException, PositionOutOfBoundsException {
         long dlc_id = PrefsUtil.getInstance( context ).getDLCPreference();
 
         setContext( context );
@@ -93,7 +97,7 @@ public class Showcase {
         return getShowcaseEntry().getRequiredLevel();
     }
 
-    public String getDLCName() throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+    public String getDLCName() throws CursorEmptyException, CursorNullException {
         return QueryForDLCName( getContext(), getShowcaseEntry().getDLCId() );
     }
 
@@ -131,7 +135,7 @@ public class Showcase {
     }
 
     public String getCategoryHierarchy( Context context )
-            throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
+            throws CursorEmptyException, CursorNullException {
         Category category = QueryForCategoryDetails( context, getShowcaseEntry().getDLCId(), getShowcaseEntry().getCraftable().getCategoryId() );
 
         if ( category == null ) return null;
@@ -180,15 +184,15 @@ public class Showcase {
     }
 
     private ShowcaseEntry QueryForDetails( Context context, long dlc_id, long _id, int quantity )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException, PositionOutOfBoundsException {
         Uri uri = DatabaseContract.EngramEntry.buildUriWithId( dlc_id, _id );
 
         try ( Cursor cursor = query( context, uri ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_NAME ) );
 
@@ -223,7 +227,7 @@ public class Showcase {
     }
 
     private LongSparseArray<Station> QueryForStations( Context context, long dlc_id, List<Long> ids )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException {
         LongSparseArray<Station> stations = new LongSparseArray<>( 0 );
 
         for ( long _id : ids ) {
@@ -231,10 +235,10 @@ public class Showcase {
 
             try ( Cursor cursor = query( context, uri ) ) {
                 if ( cursor == null )
-                    throw new ExceptionUtil.CursorNullException( uri );
+                    throw new CursorNullException( uri );
 
                 if ( !cursor.moveToFirst() )
-                    throw new ExceptionUtil.CursorEmptyException( uri );
+                    throw new CursorEmptyException( uri );
 
                 String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_NAME ) );
                 String file = cursor.getString( cursor.getColumnIndex( DatabaseContract.StationEntry.COLUMN_IMAGE_FILE ) );
@@ -248,11 +252,11 @@ public class Showcase {
     }
 
     private LongSparseArray<CompositeResource> QueryForComposition( Context context, long dlc_id, long engram_id )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException {
         Uri uri = DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram_id );
         try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             LongSparseArray<CompositeResource> composition = new LongSparseArray<>( 0 );
             while ( cursor.moveToNext() ) {
@@ -267,15 +271,15 @@ public class Showcase {
     }
 
     private Resource QueryForResource( Context context, long dlc_id, long _id )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException {
         Uri uri = DatabaseContract.ResourceEntry.buildUriWithId( dlc_id, _id );
 
         try ( Cursor cursor = context.getContentResolver().query( uri, null, null, null, null ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
             String folder = cursor.getString( cursor.getColumnIndex( DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER ) );
@@ -286,15 +290,15 @@ public class Showcase {
     }
 
     private Category QueryForCategoryDetails( Context context, long dlc_id, long _id )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException {
         Uri uri = DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, _id );
 
         try ( Cursor cursor = query( context, uri ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_NAME ) );
             long parent_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY ) );
@@ -304,15 +308,15 @@ public class Showcase {
     }
 
     private String QueryForDLCName( Context context, long dlc_id )
-            throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
+            throws CursorNullException, CursorEmptyException {
         Uri uri = DatabaseContract.buildUriWithId( DatabaseContract.DLCEntry.CONTENT_URI, dlc_id );
 
         try ( Cursor cursor = query( context, uri ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             return cursor.getString( cursor.getColumnIndex( DatabaseContract.DLCEntry.COLUMN_NAME ) );
         }
@@ -411,11 +415,11 @@ public class Showcase {
                 QueueResource resource = getQuantifiableComposition().valueAt( position );
 
                 if ( resource == null )
-                    throw new ExceptionUtil.ArrayElementNullException( position, getQuantifiableComposition().toString() );
+                    throw new ArrayElementNullException( position, getQuantifiableComposition().toString() );
 
                 return resource;
             } else {
-                throw new ExceptionUtil.PositionOutOfBoundsException( position, getQuantifiableComposition().size(), getQuantifiableComposition().toString() );
+                throw new PositionOutOfBoundsException( position, getQuantifiableComposition().size(), getQuantifiableComposition().toString() );
             }
         }
 

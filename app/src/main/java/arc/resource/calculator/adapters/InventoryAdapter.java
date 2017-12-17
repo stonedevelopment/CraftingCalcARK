@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +18,18 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.CraftingQueue;
-import arc.resource.calculator.model.SortableMap;
+import arc.resource.calculator.model.InventoryMap;
 import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.model.exception.CursorEmptyException;
+import arc.resource.calculator.model.exception.CursorNullException;
+import arc.resource.calculator.model.exception.PositionOutOfBoundsException;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.Resource;
-import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
-import arc.resource.calculator.views.InventoryRecyclerView;
+import arc.resource.calculator.views.switchers.listeners.Observer;
 
 import static android.support.v7.widget.RecyclerView.NO_ID;
-import static arc.resource.calculator.adapters.InventoryAdapter.Status.HIDDEN;
-import static arc.resource.calculator.adapters.InventoryAdapter.Status.VISIBLE;
 
 /**
  * Copyright (C) 2016, Jared Stone
@@ -51,85 +48,20 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private Context mContext;
 
-    private InventoryRecyclerView.Observer mViewObserver;
+    private Observer mViewObserver;
 
-    private InventoryMap mInventory;
-
-    private Status mViewStatus;
+    private InventoryMap mMap;
 
     private FetchInventoryTask mTask;
 
     private boolean mNeedsUpdate;
 
-    private boolean mShowRawMaterials;
-
-    enum Status {VISIBLE, HIDDEN}
-
-    public InventoryAdapter( Context context, InventoryRecyclerView.Observer observer ) {
+    public InventoryAdapter( Context context, Observer observer ) {
         setContext( context );
         setObserver( observer );
-        setInventory( new InventoryMap() );
+        setMap( new InventoryMap() );
 
-        mNeedsUpdate = true;
-
-        mShowRawMaterials = PrefsUtil.getInstance( context ).getRefinedFilterPreference();
-
-        QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
-            public void onDataSetPopulated() {
-                if ( mViewStatus == VISIBLE ) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onItemChanged( long craftableId, int quantity ) {
-                if ( mViewStatus == VISIBLE ) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onItemRemoved( long craftableId ) {
-                if ( mViewStatus == VISIBLE ) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onDataSetEmpty() {
-                if ( mViewStatus == VISIBLE ) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-        } );
-
-        PrefsObserver.getInstance().registerListener( TAG, new PrefsObserver.Listener() {
-            @Override
-            public void onPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
-                if ( refinedPrefChange ) {
-                    boolean showRawMaterials = PrefsUtil.getInstance( getContext() ).getRefinedFilterPreference();
-                    if ( showRawMaterials != mShowRawMaterials ) {
-                        mShowRawMaterials = showRawMaterials;
-
-                        if ( mViewStatus == VISIBLE ) {
-                            fetchInventory();
-                        } else {
-                            mNeedsUpdate = true;
-                        }
-                    }
-                }
-            }
-        } );
-
-        mTask = new FetchInventoryTask();
+        executeTask();
     }
 
     private Context getContext() {
@@ -140,52 +72,86 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         this.mContext = context;
     }
 
-    private InventoryMap getInventory() {
-        return mInventory;
+    private InventoryMap getMap() {
+        return mMap;
     }
 
-    private void setInventory( InventoryMap inventory ) {
-        this.mInventory = inventory;
+    private void setMap( InventoryMap inventory ) {
+        this.mMap = inventory;
     }
 
-    private InventoryRecyclerView.Observer getObserver() {
+    private Observer getObserver() {
         return mViewObserver;
     }
 
-    private void setObserver( InventoryRecyclerView.Observer observer ) {
+    private void setObserver( Observer observer ) {
         mViewObserver = observer;
     }
 
+    private void setTask( FetchInventoryTask task ) {
+        mTask = task;
+    }
+
+    private FetchInventoryTask getTask() {
+        return mTask;
+    }
+
+    private void cancelTask() {
+        getTask().cancel( true );
+    }
+
+    private void executeTask() {
+        cancelTask();
+
+        setTask( new FetchInventoryTask() );
+        getTask().execute();
+    }
+
+    /**
+     * Out of service.
+     * <p>
+     * Used to be used in communications with a QueueObserver.
+     */
     public void resume() {
-        mViewStatus = VISIBLE;
-
-        if ( mNeedsUpdate )
-            fetchInventory();
     }
 
+    /**
+     * Out of service.
+     * <p>
+     * Used to be used in communications with a QueueObserver.
+     */
     public void pause() {
-        mViewStatus = HIDDEN;
     }
 
+    /**
+     * Out of service.
+     * <p>
+     * Used to be used in communications with a QueueObserver.
+     */
     public void destroy() {
-        QueueObserver.getInstance().unregisterListener( TAG );
     }
 
-    private CompositeResource getResource( int position ) {
-        return getInventory().valueAt( position );
+    /**
+     * Requests an object by position from the associated Map of this Adapter
+     *
+     * @param position Position in Map to which the object resides
+     * @return CompositeResource object
+     */
+    private CompositeResource getResource( int position ) throws PositionOutOfBoundsException {
+        return getMap().getAt( position );
     }
 
     private Cursor query( Uri uri ) {
         return getContext().getContentResolver().query( uri, null, null, null, null );
     }
 
-    private Resource QueryForResource( Uri uri ) throws Exception {
+    private Resource QueryForResource( Uri uri ) {
         try ( Cursor cursor = query( uri ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
-                throw new ExceptionUtil.CursorEmptyException( uri );
+                throw new CursorEmptyException( uri );
 
             long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ResourceEntry._ID ) );
             String name = cursor.getString( cursor.getColumnIndex( DatabaseContract.ResourceEntry.COLUMN_NAME ) );
@@ -196,10 +162,10 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         }
     }
 
-    private long QueryForComplexResource( Uri uri ) throws Exception {
+    private long QueryForComplexResource( Uri uri ) {
         try ( Cursor cursor = query( uri ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             if ( !cursor.moveToFirst() )
                 return NO_ID;
@@ -212,12 +178,32 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         }
     }
 
-    private InventoryMap QueryForComposition( Uri uri ) throws Exception {
+    private long QueryForStationId( Uri uri ) {
+        try ( Cursor cursor = query( uri ) ) {
+            if ( cursor == null )
+                throw new CursorNullException( uri );
+
+            if ( !cursor.moveToFirst() )
+                return NO_ID;
+
+//            long _id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry._ID ) );
+            long engram_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_ENGRAM_KEY ) );
+//            long resource_id = cursor.getLong( cursor.getColumnIndex( DatabaseContract.ComplexResourceEntry.COLUMN_RESOURCE_KEY ) );
+
+            return engram_id;
+        }
+    }
+
+    private InventoryMap QueryForComposition( Uri uri ) throws PositionOutOfBoundsException {
+        return QueryForComposition( uri, true );
+    }
+
+    private InventoryMap QueryForComposition( Uri uri, boolean showRawMaterials ) throws PositionOutOfBoundsException {
         long dlc_id = DatabaseContract.CompositionEntry.getDLCIdFromUri( uri );
 
         try ( Cursor cursor = query( uri ) ) {
             if ( cursor == null )
-                throw new ExceptionUtil.CursorNullException( uri );
+                throw new CursorNullException( uri );
 
             InventoryMap inventoryMap = new InventoryMap();
             while ( cursor.moveToNext() ) {
@@ -225,20 +211,22 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 int quantity = cursor.getInt( cursor.getColumnIndex( DatabaseContract.CompositionEntry.COLUMN_QUANTITY ) );
 
                 // check if refined filter is enabled
-                if ( mShowRawMaterials ) {
+                if ( showRawMaterials ) {
                     Log.d( TAG, "QueryForComposition: showRawMaterials" );
                     // check if resource_id is complex
                     long engram_id = QueryForComplexResource( DatabaseContract.ComplexResourceEntry.buildUriWithResourceId( resource_id ) );
 
                     // if complex, return engram_id
                     if ( engram_id > NO_ID ) {
-                        Log.d( TAG, "QueryForComposition: engram_id is valid as complex resource" );
+                        // engram_id, station_id, composition
+                        long station_id = QueryForStationId( DatabaseContract.EngramEntry.buildUriWithId( dlc_id, engram_id ) );
+
                         // query for composition with update uri built with engram_id
-                        InventoryMap composition = QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram_id ) );
+                        InventoryMap composition = QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, engram_id ), true );
 
                         // iterate through composition map
                         for ( int j = 0; j < composition.size(); j++ ) {
-                            CompositeResource tempResource = composition.valueAt( j );
+                            CompositeResource tempResource = composition.getAt( j );
 
                             CompositeResource resource = inventoryMap.get( tempResource.getId() );
                             if ( resource == null )
@@ -272,8 +260,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private void fetchInventory() {
         mTask.cancel( true );
 
-        mTask = new FetchInventoryTask();
-        mTask.execute();
+        new FetchInventoryTask().execute();
     }
 
     /**
@@ -301,7 +288,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         @Override
         protected void onPostExecute( Boolean querySuccessful ) {
             if ( querySuccessful ) {
-                setInventory( mTempInventoryMap );
+                setMap( mTempInventoryMap );
 
                 notifyDataSetChanged();
 
@@ -336,7 +323,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                             QueryForComposition( DatabaseContract.CompositionEntry.buildUriWithEngramId( dlc_id, queueEngram.getId() ) );
 
                     for ( int j = 0; j < composition.size(); j++ ) {
-                        CompositeResource tempResource = composition.valueAt( j );
+                        CompositeResource tempResource = composition.getAt( j );
 
                         CompositeResource resource = mTempInventoryMap.get( tempResource.getId() );
                         if ( resource == null )
@@ -372,22 +359,26 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position ) {
-        CompositeResource resource = getResource( position );
+        try {
+            CompositeResource resource = getResource( position );
 
-        String imagePath = "file:///android_asset/" + resource.getImagePath();
-        Picasso.with( getContext() )
-                .load( imagePath )
-                .error( R.drawable.placeholder_empty )
-                .placeholder( R.drawable.placeholder_empty )
-                .into( holder.getImageView() );
+            String imagePath = "file:///android_asset/" + resource.getImagePath();
+            Picasso.with( getContext() )
+                    .load( imagePath )
+                    .error( R.drawable.placeholder_empty )
+                    .placeholder( R.drawable.placeholder_empty )
+                    .into( holder.getImageView() );
 
-        holder.getNameView().setText( resource.getName() );
-        holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", resource.getQuantity() ) );
+            holder.getNameView().setText( resource.getName() );
+            holder.getQuantityView().setText( String.format( Locale.getDefault(), "x%d", resource.getQuantity() ) );
+        } catch ( PositionOutOfBoundsException e ) {
+            getObserver().notifyExceptionCaught( e );
+        }
     }
 
     @Override
     public int getItemCount() {
-        return getInventory().size();
+        return getMap().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -413,95 +404,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
         TextView getQuantityView() {
             return mQuantityView;
-        }
-    }
-
-    private class InventoryMap extends SortableMap {
-
-        InventoryMap() {
-            super();
-        }
-
-//        @Override
-//        public void add( long key, Object value ) {
-//            // check if key/value pair was added or not (if new or stored value)
-//            if ( contains( key ) ) {
-//                // update key/value pair with converged value
-//                CompositeResource tempResource = ( CompositeResource ) value;
-//
-//                CompositeResource resource = get( tempResource.getId() );
-//                if ( resource == null )
-//                    resource = new CompositeResource(
-//                            tempResource.getId(),
-//                            tempResource.getName(),
-//                            tempResource.getFolder(),
-//                            tempResource.getFile(),
-//                            tempResource.getQuantity() * queueEngram.getQuantity() );
-//                else
-//                    resource.increaseQuantity( tempResource.getQuantity() * queueEngram.getQuantity() );
-//            } else {
-//                // add new key/value pair
-//                addNew( key, value );
-//            }
-//        }
-
-        @Override
-        public CompositeResource get( long key ) {
-            return ( CompositeResource ) super.get( key );
-        }
-
-        @Override
-        public CompositeResource valueAt( int position ) {
-            return ( CompositeResource ) super.valueAt( position );
-        }
-
-        @Override
-        public Comparable getComparable( int position ) {
-            return valueAt( position ).getName();
-        }
-    }
-
-    private class InventorySparseArray extends LongSparseArray<CompositeResource> {
-
-        /**
-         * Constructor that, by default, will set its element size to 0.
-         */
-        InventorySparseArray() {
-            super( 0 );
-        }
-
-        /**
-         * Constructor that sets its element size per the supplied amount.
-         *
-         * @param size Amount of elements the array requires to allocate.
-         */
-        InventorySparseArray( int size ) {
-            super( size );
-        }
-
-        /**
-         * Sorts objects by Name
-         */
-        void sort() {
-            boolean swapped = true;
-            while ( swapped ) {
-                swapped = false;
-                for ( int i = 0; i < size() - 1; i++ ) {
-                    String first = valueAt( i ).getName();
-                    String second = valueAt( i + 1 ).getName();
-                    if ( first.compareTo( second ) > 0 ) {
-                        // swap
-                        CompositeResource tempResource = valueAt( i + 1 );
-                        setValueAt( i + 1, valueAt( i ) );
-                        setValueAt( i, tempResource );
-                        swapped = true;
-                    }
-                }
-            }
-        }
-
-        boolean contains( long key ) {
-            return !( indexOfKey( key ) < 0 );
         }
     }
 }

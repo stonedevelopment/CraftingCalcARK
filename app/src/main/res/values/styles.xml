@@ -1,24 +1,21 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <!--<item name="windowActionBar">false</item>-->
-        <item name="windowNoTitle">true</item>
+    <style name="AppTheme.ActionBar">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Settings">
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:windowBackground">@color/colorWhite</item>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar.NewSettings">
@@ -35,6 +32,11 @@
     </style>
 
     <style name="AppTheme.PopupOverlay">
+    </style>
+
+    <style name="AppTheme.Settings">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
     </style>
 
     <style name="AppTheme.Text">
@@ -151,6 +153,20 @@
 
     <style name="AppTheme.Text.Intro.Description">
         <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="AppTheme.Text.Layout"/>
+
+    <style name="AppTheme.Text.Layout.Heading"/>
+
+    <style name="AppTheme.Text.Layout.Heading.Normal"/>
+
+    <style name="AppTheme.Text.Layout.Heading.Normal.Italic">
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="AppTheme.Text.Layout.Heading.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
     <style name="AlertDialogCustom" parent="@style/Theme.AppCompat.Dialog.Alert">

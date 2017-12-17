@@ -1,7 +1,6 @@
 package arc.resource.calculator.util;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -18,12 +17,12 @@ public class ExceptionUtil {
             @Override
             public void onOk() {
                 // call reset to defaults!
-                PrefsUtil.getInstance(context).saveToDefaultFullReset();
+                PrefsUtil.getInstance( context ).saveToDefaultFullReset();
             }
 
             @Override
             public void onCancel() {
-                // forcily close app
+                // force close app
                 throw new RuntimeException( "Force closing." );
             }
         } ).show();
@@ -41,48 +40,17 @@ public class ExceptionUtil {
         FirebaseCrash.report( e );
     }
 
-    // if position of requested list is out of bounds, then throw this exception
-    public static class PositionOutOfBoundsException extends Exception {
-        public PositionOutOfBoundsException( int index, int size, String contents ) {
-            super( BuildExceptionMessageBundle( index, size, contents ).toString() );
-        }
-    }
+    public static Bundle BuildExceptionMessageBundle( int index, int size ) {
+        Bundle bundle = new Bundle();
 
-    // if list<object> element = null, then throw this exception
-    public static class ArrayElementNullException extends Exception {
-        public ArrayElementNullException( int index, String contents ) {
-            super( BuildExceptionMessageBundle( index, contents ).toString() );
-        }
-    }
+        bundle.putInt( "array_index", index );
+        bundle.putInt( "array_size", size );
 
-    // Uri given to ContentProvider does not match uri list
-    public static class URIUnknownException extends Exception {
-        public URIUnknownException( Uri uri ) {
-            super( uri.toString() );
-        }
-    }
-
-    // Cursor returned null, onResume requested _id
-    public static class CursorNullException extends Exception {
-
-        public CursorNullException( Uri uri ) {
-            super( uri.toString() );
-        }
-
-        public CursorNullException( Uri uri, String contents ) {
-            super( uri.toString() + " array:" + contents );
-        }
-    }
-
-    // Cursor returned null, onResume requested _id
-    public static class CursorEmptyException extends Exception {
-        public CursorEmptyException( Uri uri ) {
-            super( uri.toString() );
-        }
+        return bundle;
     }
 
     // Bundle used to express an array's contents and the requested index
-    private static Bundle BuildExceptionMessageBundle( int index, String contents ) {
+    public static Bundle BuildExceptionMessageBundle( int index, String contents ) {
         Bundle bundle = new Bundle();
 
         bundle.putInt( "array_index", index );
@@ -91,7 +59,7 @@ public class ExceptionUtil {
         return bundle;
     }
 
-    private static Bundle BuildExceptionMessageBundle( int index, int size, String contents ) {
+    public static Bundle BuildExceptionMessageBundle( int index, int size, String contents ) {
         Bundle bundle = new Bundle();
 
         bundle.putInt( "array_index", index );
@@ -101,7 +69,7 @@ public class ExceptionUtil {
         return bundle;
     }
 
-    private static Bundle BuildErrorReportPreferencesBundle() {
+    public static Bundle BuildErrorReportPreferencesBundle() {
         try {
 //            PrefsUtil prefs = PrefsUtil.getInstance();
 

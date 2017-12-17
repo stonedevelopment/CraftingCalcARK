@@ -39,9 +39,13 @@ public class ClearQueueButton extends AppCompatButton {
             }
 
             @Override
+            public void onItemRemoved( long craftableId ) {
+                // do nothing
+            }
+
+            @Override
             public void onDataSetPopulated() {
-                if ( !isEnabled() )
-                    setEnabled( true );
+                setEnabled( true );
             }
 
             @Override

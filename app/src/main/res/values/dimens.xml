@@ -31,4 +31,7 @@
     <!-- GridView: Column/Row Counts -->
     <integer name="gridview_column_count">4</integer>
 
+    <!-- Bottom Sheet -->
+    <dimen name="bottom_sheet_height">340dp</dimen>
+
 </resources>

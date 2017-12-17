@@ -3,32 +3,60 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
 
-    <group
-        android:id="@+id/group_search">
-        <item
-            android:id="@+id/action_search"
-            android:icon="@android:drawable/ic_menu_search"
-            android:title="@string/action_title_search"
-            app:showAsAction="ifRoom"/>
-    </group>
+    <!--<group-->
+    <!--android:id="@+id/group_search">-->
+    <!--<item-->
+    <!--android:id="@+id/action_search"-->
+    <!--android:icon="@android:drawable/ic_menu_search"-->
+    <!--android:title="@string/action_title_search"-->
+    <!--app:actionViewClass="android.support.v7.widget.SearchView"-->
+    <!--app:showAsAction="collapseActionView|ifRoom"/>-->
+    <!--</group>-->
 
     <group
         android:id="@+id/group_settings">
         <item
             android:id="@+id/action_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/action_title_settings"
             app:showAsAction="never"/>
     </group>
+
+    <!--<group-->
+        <!--android:id="@+id/group_choose_dlc">-->
+        <!--<item-->
+            <!--android:id="@+id/action_choose_dlc"-->
+            <!--android:title="Choose Game Version">-->
+            <!--<menu>-->
+                <!--<item-->
+                    <!--android:id="@+id/action_choose_dlc_vanilla"-->
+                    <!--android:checkable="true"-->
+                    <!--android:checked="true"-->
+                    <!--android:title="ARK:Survival Evolved"/>-->
+                <!--<item-->
+                    <!--android:id="@+id/action_choose_dlc_primitive_plus"-->
+                    <!--android:title="Primitive+"/>-->
+                <!--<item-->
+                    <!--android:id="@+id/action_choose_dlc_scorched_earth"-->
+                    <!--android:title="Scorched Earth"/>-->
+                <!--<item-->
+                    <!--android:id="@+id/action_choose_dlc_aberration"-->
+                    <!--android:title="Aberration"/>-->
+            <!--</menu>-->
+        <!--</item>-->
+    <!--</group>-->
 
     <group
         android:id="@+id/group_show_dialogs">
         <item
             android:id="@+id/action_show_tutorial"
+            android:icon="@drawable/ic_help_black_24dp"
             android:title="@string/action_title_help"
             app:showAsAction="never"/>
 
         <item
             android:id="@+id/action_show_changelog"
+            android:icon="@drawable/ic_change_history_black_24dp"
             android:title="@string/action_title_changelog"
             app:showAsAction="never"/>
     </group>
@@ -37,11 +65,13 @@
         android:id="@+id/group_feedback">
         <item
             android:id="@+id/action_feedback_bug_report"
+            android:icon="@drawable/ic_bug_report_black_24dp"
             android:title="@string/action_title_feedback_bug_report"
             app:showAsAction="never"/>
 
         <item
             android:id="@+id/action_feedback"
+            android:icon="@drawable/ic_email_black_24dp"
             android:title="@string/action_title_feedback"
             app:showAsAction="never"/>
     </group>
@@ -50,6 +80,7 @@
         android:id="@+id/group_about">
         <item
             android:id="@+id/action_about"
+            android:icon="@drawable/ic_info_black_24dp"
             android:title="@string/action_title_about"
             app:showAsAction="never"/>
     </group>
@@ -58,6 +89,7 @@
         android:id="@+id/group_purchase">
         <item
             android:id="@+id/action_remove_ads"
+            android:icon="@drawable/ic_monetization_on_black_24dp"
             android:title="@string/action_title_remove_ads"
             app:showAsAction="never"/>
     </group>

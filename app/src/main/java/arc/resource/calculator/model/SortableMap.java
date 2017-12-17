@@ -3,8 +3,7 @@ package arc.resource.calculator.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.model.exception.PositionOutOfBoundsException;
 
 public abstract class SortableMap {
     private static final String TAG = SortableMap.class.getSimpleName();
@@ -19,17 +18,12 @@ public abstract class SortableMap {
         mSize = 0;
     }
 
-    public Object get( long key ) {
-        return get( key, null );
+    public Object get( long key ) throws PositionOutOfBoundsException {
+        return valueAt( indexOfKey( key ) );
     }
 
-    public Object get( long key, Object valueIfNotFound ) {
-        if ( contains( key ) ) {
-            int position = mKeys.indexOf( key );
-            return valueAt( position );
-        } else {
-            return valueIfNotFound;
-        }
+    public Object getAt(int position) throws PositionOutOfBoundsException  {
+        return valueAt( position );
     }
 
     public boolean contains( long key ) {
@@ -40,31 +34,82 @@ public abstract class SortableMap {
         return mKeys.indexOf( key );
     }
 
-    public long keyAt( int position ) {
-        return mKeys.get( position );
-    }
-
-    public Object valueAt( int position ) {
+    private long keyAt( int position ) throws PositionOutOfBoundsException {
         try {
-            return mValues.get( position );
+            return mKeys.get( position );
         } catch ( IndexOutOfBoundsException e ) {
-            ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, new
-                    ExceptionUtil.PositionOutOfBoundsException( position, mValues.size(), mValues.toString() ) );
-            return null;
+            throw new PositionOutOfBoundsException( position, mKeys.size(), mKeys.toString() );
         }
     }
 
-    public void setValueAt( int position, Object value ) {
-        set( position, keyAt( position ), value );
+    private void setKeyAt( int position, long key ) throws PositionOutOfBoundsException {
+        try {
+            mKeys.set( position, key );
+        } catch ( IndexOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, mKeys.size(), mKeys.toString() );
+        }
     }
 
-    public void removeAt( int position ) {
-        mKeys.remove( position );
-        mValues.remove( position );
-        mSize--;
+    private void removeKeyAt( int position ) throws PositionOutOfBoundsException {
+        try {
+            mKeys.remove( position );
+        } catch ( IndexOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, mKeys.size(), mKeys.toString() );
+        }
     }
 
-    public void clear() {
+    private boolean addKey( long key ) throws DuplicateKeyException {
+        return !contains( key ) && mKeys.add( key );
+    }
+
+    private boolean addValue( Object value ) {
+        return mValues.add( value );
+    }
+
+    private boolean appendKeys( List<Long> keys ) {
+        return mKeys.addAll( keys );
+    }
+
+    private boolean appendValues( List<Object> values ) {
+        return mValues.addAll( values );
+    }
+
+    public void update( int position, long key, Object value) throws PositionOutOfBoundsException {
+        setKeyAt( position, key );
+        setValueAt( position, value );
+    }
+
+    private Object setValueAt( int position, Object value ) throws PositionOutOfBoundsException {
+        try {
+            return mValues.set( position, value );
+        } catch ( IndexOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, mKeys.size(), mKeys.toString() );
+        }
+    }
+
+    private Object valueAt( int position ) throws PositionOutOfBoundsException {
+        try {
+            return mValues.get( position );
+        } catch ( IndexOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, mValues.size(), mValues.toString() );
+        }
+    }
+
+    private Object removeValueAt( int position ) throws PositionOutOfBoundsException {
+        try {
+            return mValues.remove( position );
+        } catch ( IndexOutOfBoundsException e ) {
+            throw new PositionOutOfBoundsException( position, mKeys.size(), mKeys.toString() );
+        }
+    }
+
+    void removeAt( int position ) throws PositionOutOfBoundsException {
+        removeKeyAt( position );
+        removeValueAt( position );
+        decreaseSize();
+    }
+
+    void clear() {
         mKeys.clear();
         mValues.clear();
         mSize = 0;
@@ -74,35 +119,39 @@ public abstract class SortableMap {
         return mSize;
     }
 
-    /**
-     * Public method that, depending upon if key exists, will add a new object to the lists.
-     *
-     * @param key   long value key taken from Object's _id (ROWID)
-     * @param value value that will be added to lists
-     */
+    private void decreaseSize() {
+        if ( mSize > 0 ) mSize--;
+    }
+
+    private void decreaseSize( int amount ) {
+        if ( mSize > amount ) mSize -= amount;
+    }
+
+    private void increaseSize() {
+        mSize++;
+    }
+
+    private void increaseSize( int amount ) {
+        mSize += amount;
+    }
+
     public void add( long key, Object value ) {
         if ( !contains( key ) ) {
             mKeys.add( key );
             mValues.add( value );
-            mSize++;
+            increaseSize();
         }
     }
 
     /**
-     * Public method that, no matter if key exists, will add a new object to the lists.
-     * @param key   long value key taken from Object's _id (ROWID)
-     * @param value value that will be added to lists
+     * Appends an unchecked Collection to the end of the map of keys and map of values.
+     *
+     * @param map Collection to append
      */
-    public void addNew( long key, Object value ) {
-        mKeys.add( key );
-        mValues.add( value );
-        mSize++;
-    }
-
-    public void addAll( SortableMap map ) {
-        mKeys.addAll( map.keySet() );
-        mValues.addAll( map.valueSet() );
-        mSize += map.size();
+    public void append( SortableMap map ) {
+        appendKeys( map.keySet() );
+        appendValues( map.valueSet() );
+        increaseSize( map.size() );
     }
 
     /**
@@ -111,11 +160,9 @@ public abstract class SortableMap {
      * @param key   long value key taken from Object's _id (ROWID)
      * @param value value that will be added to lists
      */
-    public void put( long key, Object value ) {
+    public void put( long key, Object value ) throws PositionOutOfBoundsException {
         if ( contains( key ) ) {
-            int position = indexOfKey( key );
-
-            set( position, key, value );
+            setAt( indexOfKey( key ), key, value );
         } else {
             add( key, value );
         }
@@ -129,27 +176,33 @@ public abstract class SortableMap {
         return mValues;
     }
 
-    private void set( int position, long key, Object value ) {
-        mKeys.set( position, key );
-        mValues.set( position, value );
+    private void setAt( int position, long key, Object value ) throws PositionOutOfBoundsException {
+        setKeyAt( position, key );
+        setValueAt( position, value );
     }
 
     /**
-     * Abstract method that is required to override, this will allow each extension a chance to chooose its own comparable.
+     * Abstract method that is required to override, this will allow each extension a chance to choose its own comparable.
      *
      * @param position position of Object in map
      * @return Comparable object, be it String or whatever, used to help sort().
      */
-    public abstract Comparable getComparable( int position );
+    public abstract Comparable getComparable( int position ) throws PositionOutOfBoundsException;
 
-    private void swap( int a, int b ) {
+    /**
+     * Swaps keys and values of one position to another
+     *
+     * @param a position index a
+     * @param b position index b
+     */
+    private void swap( int a, int b ) throws PositionOutOfBoundsException {
         long tempKey = keyAt( a );
         Object tempValue = valueAt( a );
-        set( a, keyAt( b ), valueAt( b ) );
-        set( b, tempKey, tempValue );
+        setAt( a, keyAt( b ), valueAt( b ) );
+        setAt( b, tempKey, tempValue );
     }
 
-    public void sort() {
+    public synchronized void sort() throws PositionOutOfBoundsException {
 //        Log.d( TAG, "sort: before: " + toString() );
         boolean swapped = true;
         while ( swapped ) {
@@ -166,13 +219,22 @@ public abstract class SortableMap {
 //        Log.d( TAG, "sort: after: " + toString() );
     }
 
+    private static class DuplicateKeyException extends Exception {
+
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
         builder.append( '{' ).append( ' ' );
         for ( int i = 0; i < size(); i++ ) {
-            builder.append( valueAt( i ).toString() );
+            try {
+                builder.append( valueAt( i ).toString() );
+            } catch ( PositionOutOfBoundsException e ) {
+                continue;
+            }
+
             if ( i < size() )
                 builder.append( ',' );
 

@@ -1,45 +1,42 @@
-package arc.resource.calculator.views;
+package arc.resource.calculator.views.switchers;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.util.PrefsUtil;
+import arc.resource.calculator.views.InventoryRecyclerView;
+import arc.resource.calculator.views.switchers.listeners.Listener;
 
-public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Listener {
-    private static final String TAG = QueueSwitcher.class.getSimpleName();
+public class InventorySwitcher extends ViewSwitcher implements Listener {
+    private static final String TAG = InventorySwitcher.class.getSimpleName();
 
     private TextView mTextView;
-    private QueueRecyclerView mRecyclerView;
+    private InventoryRecyclerView mRecyclerView;
 
     @Override
     public void onError( Exception e ) {
-        // switch view to textview, display error message
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "An error occurred while fetching crafting queue." );
+        onStatusUpdate( getContext().getString( R.string.switcher_inventory_status_onerror) );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
 
     @Override
     public void onInit() {
-        // switch view to textview, display fetching message
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Fetching crafting queue.." );
+        onStatusUpdate( getContext().getString( R.string.switcher_inventory_status_oninit) );
     }
 
     @Override
     public void onPopulated() {
-        // data is ready for viewing, switch view to recycler
+        // switch view to recycler
         if ( !isRecyclerViewShown() )
             showNext();
     }
@@ -50,31 +47,23 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( "Crafting queue is empty." );
+        onStatusUpdate( getContext().getString( R.string.switcher_inventory_status_onempty) );
     }
 
-    public QueueSwitcher( Context context ) {
+    public InventorySwitcher( Context context ) {
         super( context );
     }
 
-    public QueueSwitcher( Context context, AttributeSet attrs ) {
+    public InventorySwitcher( Context context, AttributeSet attrs ) {
         super( context, attrs );
     }
 
     public void onCreate() {
-        Log.d( TAG, "onCreate: " );
-        // set size (height) to that of 1/5 screen's width
-        int viewSize = PrefsUtil.getInstance( getContext() ).getCraftableViewSize();
-        setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, viewSize ) );
-
         // instantiate our textview for status updates
-        mTextView = ( TextView ) findViewById( R.id.textview_queue );
+//        mTextView = ( TextView ) findViewById( R.id.textview_inventory );
 
         // instantiate recyclerView
-        mRecyclerView = ( QueueRecyclerView ) findViewById( R.id.gridview_queue );
-
-        // onResume view with switcher observer
-        // set this as observer, initialize adapter, create crafting queue instance, query for saved data, if any.
+        mRecyclerView = ( InventoryRecyclerView ) findViewById( R.id.gridview_inventory );
         mRecyclerView.create( this );
     }
 
@@ -83,12 +72,10 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
     }
 
     public void onPause() {
-        Log.d( TAG, "onPause: " );
         mRecyclerView.pause();
     }
 
     public void onDestroy() {
-        Log.d( TAG, "onDestroy: " );
         mRecyclerView.destroy();
     }
 

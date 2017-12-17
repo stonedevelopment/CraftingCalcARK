@@ -7,38 +7,32 @@ import android.util.AttributeSet;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.InventoryAdapter;
+import arc.resource.calculator.views.switchers.listeners.Listener;
+import arc.resource.calculator.views.switchers.listeners.Observer;
 
-public class InventoryRecyclerView extends RecyclerViewWithContextMenu {
+public class InventoryRecyclerView extends RecyclerViewWithContextMenu implements Observer {
     private static final String TAG = InventoryRecyclerView.class.getSimpleName();
 
     private static Listener mListener;
 
-    interface Listener {
-        void onError( Exception e );
-
-        void onInit();
-
-        void onPopulated();
-
-        void onEmpty();
+    @Override
+    public void notifyExceptionCaught( Exception e ) {
+        getListener().onError( e );
     }
 
-    public static class Observer {
-        public void notifyExceptionCaught( Exception e ) {
-            getListener().onError( e );
-        }
+    @Override
+    public void notifyInitializing() {
+        getListener().onInit();
+    }
 
-        public void notifyInitializing() {
-            getListener().onInit();
-        }
+    @Override
+    public void notifyDataSetPopulated() {
+        getListener().onPopulated();
+    }
 
-        public void notifyDataSetPopulated() {
-            getListener().onPopulated();
-        }
-
-        public void notifyDataSetEmpty() {
-            getListener().onEmpty();
-        }
+    @Override
+    public void notifyDataSetEmpty() {
+        getListener().onEmpty();
     }
 
     public InventoryRecyclerView( Context context ) {
@@ -66,19 +60,19 @@ public class InventoryRecyclerView extends RecyclerViewWithContextMenu {
 
         setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
         setListener( listener );
-        setAdapter( new InventoryAdapter( getContext(), new Observer() ) );
+        setAdapter( new InventoryAdapter( getContext(), this ) );
     }
 
     public void resume() {
-        getAdapter().resume();
+//        getAdapter().resume();
     }
 
     public void pause() {
-        getAdapter().pause();
+//        getAdapter().pause();
     }
 
     public void destroy() {
-        getAdapter().destroy();
+//        getAdapter().destroy();
     }
 
     @Override

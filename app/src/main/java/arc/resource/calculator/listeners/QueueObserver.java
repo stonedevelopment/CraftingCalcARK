@@ -14,21 +14,13 @@ public class QueueObserver {
     private HashMap<String, Listener> mListeners;
 
     public static abstract class Listener {
-        public void onItemChanged( long craftableId, int quantity ) {
-            // do nothing
-        }
+        public abstract void onItemChanged( long craftableId, int quantity );
 
-        public void onItemRemoved( long craftableId ) {
-            // do nothing
-        }
+        public abstract void onItemRemoved( long craftableId );
 
-        public void onDataSetPopulated() {
-            // do nothing
-        }
+        public abstract void onDataSetPopulated();
 
-        public void onDataSetEmpty() {
-            // do nothing
-        }
+        public abstract void onDataSetEmpty();
     }
 
     public static QueueObserver getInstance() {
