@@ -5,7 +5,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.View;
 
-import arc.resource.calculator.listeners.QueueObserver;
+import arc.resource.calculator.listeners.QueueObservable;
 import arc.resource.calculator.model.CraftingQueue;
 
 public class ClearQueueButton extends AppCompatButton {
@@ -31,7 +31,7 @@ public class ClearQueueButton extends AppCompatButton {
             }
         } );
 
-        QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
+        QueueObservable.getInstance().registerListener( TAG, new QueueObservable.Listener() {
             @Override
             public void onItemChanged( long craftableId, int quantity ) {
                 if ( !isEnabled() )
@@ -62,6 +62,6 @@ public class ClearQueueButton extends AppCompatButton {
     }
 
     public void onDestroy() {
-        QueueObserver.getInstance().unregisterListener( TAG );
+        QueueObservable.getInstance().unregisterListener( TAG );
     }
 }

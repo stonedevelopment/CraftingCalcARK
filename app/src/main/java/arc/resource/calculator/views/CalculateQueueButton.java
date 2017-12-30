@@ -3,10 +3,8 @@ package arc.resource.calculator.views;
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
-import android.view.View;
 
-import arc.resource.calculator.listeners.QueueObserver;
-import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.listeners.QueueObservable;
 
 public class CalculateQueueButton extends AppCompatButton {
     private static final String TAG = CalculateQueueButton.class.getSimpleName();
@@ -31,7 +29,7 @@ public class CalculateQueueButton extends AppCompatButton {
 //            }
 //        } );
 
-        QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
+        QueueObservable.getInstance().registerListener( TAG, new QueueObservable.Listener() {
             @Override
             public void onItemChanged( long craftableId, int quantity ) {
                 if ( !isEnabled() )
@@ -62,6 +60,6 @@ public class CalculateQueueButton extends AppCompatButton {
     }
 
     public void onDestroy() {
-        QueueObserver.getInstance().unregisterListener( TAG );
+        QueueObservable.getInstance().unregisterListener( TAG );
     }
 }

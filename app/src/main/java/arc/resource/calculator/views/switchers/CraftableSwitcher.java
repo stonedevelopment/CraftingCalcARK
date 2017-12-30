@@ -1,5 +1,9 @@
 package arc.resource.calculator.views.switchers;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -11,7 +15,7 @@ import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.views.CraftableRecyclerView;
 import arc.resource.calculator.views.switchers.listeners.Listener;
 
-public class CraftableSwitcher extends ViewSwitcher implements Listener {
+public class CraftableSwitcher extends ViewSwitcher implements Listener, LifecycleObserver {
     private static final String TAG = CraftableSwitcher.class.getSimpleName();
 
     private ProgressBar mProgressBar;
@@ -56,7 +60,10 @@ public class CraftableSwitcher extends ViewSwitcher implements Listener {
         super( context, attrs );
     }
 
-    public void onCreate() {
+    public void onCreate( LifecycleOwner owner ) {
+        //  register as LifecycleObserver
+        owner.getLifecycle().addObserver( this );
+
         // instantiate our textview for status updates
         mProgressBar = findViewById( R.id.progress_bar_craftables );
 
@@ -65,15 +72,19 @@ public class CraftableSwitcher extends ViewSwitcher implements Listener {
         mRecyclerView.create( this );
     }
 
+    @OnLifecycleEvent( Lifecycle.Event.ON_RESUME )
     public void onResume() {
         mRecyclerView.resume();
     }
 
+    @OnLifecycleEvent( Lifecycle.Event.ON_PAUSE )
     public void onPause() {
         mRecyclerView.pause();
     }
 
-    public void onDestroy() {
+    @OnLifecycleEvent( Lifecycle.Event.ON_DESTROY )
+    public void onDestroy( LifecycleOwner owner ) {
+        owner.getLifecycle().removeObserver( this );
         mRecyclerView.destroy();
     }
 

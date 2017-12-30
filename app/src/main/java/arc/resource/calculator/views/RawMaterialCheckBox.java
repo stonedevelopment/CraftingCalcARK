@@ -2,14 +2,9 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import arc.resource.calculator.listeners.NavigationObserver;
-import arc.resource.calculator.listeners.QueueObserver;
-import arc.resource.calculator.model.CraftingQueue;
-import arc.resource.calculator.util.ListenerUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
 public class RawMaterialCheckBox extends AppCompatCheckBox {

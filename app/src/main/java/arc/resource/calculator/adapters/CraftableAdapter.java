@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
@@ -22,7 +23,7 @@ import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.NavigationObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.listeners.QueueObserver;
+import arc.resource.calculator.listeners.QueueObservable;
 import arc.resource.calculator.model.BackCategory;
 import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.CraftingQueue;
@@ -110,7 +111,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
         mNeedsUpdate = false;
 
-        QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
+        QueueObservable.getInstance().registerListener( TAG, new QueueObservable.Listener() {
             public void onDataSetPopulated() {
                 if ( mViewStatus == VISIBLE ) {
                     updateQuantities();
@@ -285,7 +286,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     public void destroy() {
-        QueueObserver.getInstance().unregisterListener( TAG );
+        QueueObservable.getInstance().unregisterListener( TAG );
         PrefsObserver.getInstance().unregisterListener( TAG );
     }
 
@@ -653,41 +654,44 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private void changeCategory( int position ) {
         try {
+            long _id, parent_id;
+
             Category category = getCategory( position );
 
             long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
             if ( position == 0 ) {
+                // TODO: 12/20/2017 GO_BACK
                 // position 0 will always be a back category to the previous level
-                long parent = category.getParent();
-                if ( isCategoryParentLevelSearchRoot( parent ) ) {
-                    // backing out of search view
-                    unsetSearchQuery();
+                if ( category.getParent() == NO_STATION ) {
+                    // Back button to station list
+                    _id = NO_STATION;
+                    parent_id = NO_STATION;
                 } else {
-                    if ( isCategoryParentLevelStationRoot( parent ) ) {
-                        // Back button to station list
-                        setCurrentStationId( NO_STATION );
-                        setCurrentCategoryLevelsToStationRoot();
+                    if ( isCurrentCategoryLevelRoot() ) {
+                        // Normal Category object
+                        // Grabbing ID is the best way to track its location.
+                        _id = category.getId();
+                        parent_id = category.getParent();
+                    } else if ( isCategoryParentLevelRoot( category.getParent() ) ) {
+                        // Back button to category list
+                        _id = ROOT;
+                        parent_id = ROOT;
                     } else {
-                        if ( isCurrentCategoryLevelRoot() ) {
-                            // Normal Category object
-                            // Grabbing ID is the best way to track its location.
-                            setCurrentCategoryLevels( category.getId(), category.getParent() );
-                        } else if ( isCategoryParentLevelRoot( parent ) ) {
-                            // Back button to category list
-                            setCurrentCategoryLevelsToRoot();
-                        } else {
-                            // Normal Back Category object
-                            // Query for details via its Parent Level
-                            setCurrentCategoryLevels( category.getParent(),
-                                    queryForCategory( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, category.getParent() ) ).getParent() );
-                        }
+                        // Normal Back Category object
+                        // Query for details via its Parent Level
+                        _id = category.getParent();
+                        parent_id = queryForCategory( DatabaseContract.CategoryEntry.buildUriWithId( dlc_id, _id ) ).getParent();
                     }
                 }
             } else {
                 // Normal Category object
+                // TODO: 12/20/2017 GO_FORWARD
                 // Grabbing ID is the best way to track its location.
-                setCurrentCategoryLevels( category.getId(), category.getParent() );
+                _id = category.getId();
+                parent_id = category.getParent();
             }
+
+            setCurrentCategoryLevels( _id, parent_id );
 
             savePrefs();
 
@@ -829,10 +833,12 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             long dlc_id = PrefsUtil.getInstance( getContext() ).getDLCPreference();
 
             StringBuilder builder = new StringBuilder();
+            ArrayList<String> list = new ArrayList<>();
             if ( getSearchQuery() == null ) {
                 if ( isFilteredByStation() ) {
                     if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION ) {
                         builder.append( getContext().getString( R.string.display_case_hierarchy_text_all_stations ) );
+                        list.add( "Crafting Stations" );
                     } else {
                         String name = queryForStation( DatabaseContract.StationEntry.buildUriWithId( dlc_id, getCurrentStationId() ) ).getName();
                         if ( isFilteredByCategory() ) {

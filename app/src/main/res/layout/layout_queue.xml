@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<arc.resource.calculator.views.layouts.QueueLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_queue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,9 +10,13 @@
 
     <arc.resource.calculator.views.switchers.QueueSwitcher
         android:id="@+id/switcher_queue"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/frame_craftable_container">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/frame_craftable_container"
+        app:layout_constraintBottom_toTopOf="@+id/buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textview_queue"
@@ -23,9 +28,47 @@
         <arc.resource.calculator.views.QueueRecyclerView
             android:id="@+id/gridview_queue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="@dimen/gridview_container_padding"/>
 
     </arc.resource.calculator.views.switchers.QueueSwitcher>
 
-</arc.resource.calculator.views.layouts.QueueLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button_clear_queue"
+            style="?buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="Clear Queue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_calculate"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/button_calculate"
+            style="?buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="Craft it!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

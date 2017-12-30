@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<arc.resource.calculator.views.layouts.CraftableLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_craftables"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/frame_switcher_main"
     android:orientation="vertical">
 
-    <arc.resource.calculator.views.textviews.NavigationTextView
-        android:id="@+id/textview_navigation_hierarchy"
-        style="@style/AppTheme.Text.Layout.Heading.Normal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:paddingTop="4dp"
-        tools:text="Smithy/Metal/Storage"/>
+    <!--<arc.resource.calculator.views.textviews.NavigationTextView-->
+    <!--android:id="@+id/textview_navigation_hierarchy"-->
+    <!--style="@style/AppTheme.Text.Layout.Heading.Normal"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:paddingBottom="4dp"-->
+    <!--android:paddingEnd="8dp"-->
+    <!--android:paddingStart="8dp"-->
+    <!--android:paddingTop="4dp"-->
+    <!--tools:text="Smithy/Metal/Storage"/>-->
 
     <arc.resource.calculator.views.switchers.CraftableSwitcher
         android:id="@+id/switcher_craftables"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/frame_craftable_container">
+        android:background="@drawable/frame_craftable_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ProgressBar
             android:id="@+id/progress_bar_craftables"
@@ -40,4 +44,4 @@
 
     </arc.resource.calculator.views.switchers.CraftableSwitcher>
 
-</arc.resource.calculator.views.layouts.CraftableLayout>
+</android.support.constraint.ConstraintLayout>

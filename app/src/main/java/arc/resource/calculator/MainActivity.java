@@ -3,11 +3,11 @@ package arc.resource.calculator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -16,24 +16,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lapism.searchview.SearchView;
 import com.squareup.picasso.Picasso;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.listeners.QueueObserver;
+import arc.resource.calculator.listeners.QueueObservable;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.FeedbackUtil;
-import arc.resource.calculator.views.layouts.CraftableLayout;
-import arc.resource.calculator.views.layouts.QueueLayout;
+import arc.resource.calculator.views.switchers.CraftableSwitcher;
+import arc.resource.calculator.views.switchers.QueueSwitcher;
 
 import static arc.resource.calculator.DetailActivity.ADD;
 import static arc.resource.calculator.DetailActivity.ERROR;
@@ -62,19 +65,10 @@ public class MainActivity extends AppCompatActivity
 
     private AdUtil mAdUtil;
 
-    private FloatingActionButton mFabMenu;
-    private FloatingActionButton mFabMenuOptionPositive;
-    private FloatingActionButton mFabMenuOptionNegative;
-
-    private boolean mIsFabMenuShown;
-
-    private BottomSheetBehavior mBottomSheet;
-
     // Purchase flow -> disable menu option to disable ads
     // CreateOptionsMenu -> disable menu option to disable ads if purchased
 
     // TODO: 5/27/2017 Error popup to have BobOnTheCob image
-
 
     @Override
     public boolean onSearchRequested() {
@@ -88,19 +82,20 @@ public class MainActivity extends AppCompatActivity
 
         ExceptionObserver.getInstance().registerListener( this );
 
-        CraftableLayout craftableLayout = findViewById( R.id.layout_craftables );
-        craftableLayout.onCreate();
+//        mBreadCrumbs = findViewById( R.id.breadcrumbs_view );
 
-        registerForContextMenu( craftableLayout.getSwitcher().getRecyclerView() );
+        ConstraintLayout craftableLayout = findViewById( R.id.layout_craftables );
+        CraftableSwitcher craftableSwitcher = craftableLayout.findViewById( R.id.switcher_craftables );
+        craftableSwitcher.onCreate( this );
+        registerForContextMenu( craftableSwitcher.getRecyclerView() );
 
-        mBottomSheet = BottomSheetBehavior.from( findViewById( R.id.bottom_sheet ) );
-        mBottomSheet.setSkipCollapsed( true );
-        closeBottomSheet();
+        final BottomSheetBehavior bottomSheet = BottomSheetBehavior.from( findViewById( R.id.bottom_sheet ) );
+        bottomSheet.setState( BottomSheetBehavior.STATE_HIDDEN );
 
-        QueueLayout queueLayout = findViewById( R.id.layout_queue );
-        queueLayout.onCreate();
-
-        registerForContextMenu( queueLayout.getSwitcher().getRecyclerView() );
+        ConstraintLayout queueLayout = findViewById( R.id.layout_queue );
+        QueueSwitcher queueSwitcher = queueLayout.findViewById( R.id.switcher_queue );
+        queueSwitcher.onCreate( this );
+        registerForContextMenu( queueSwitcher.getRecyclerView() );
 
         SearchView searchView = findViewById( R.id.searchView );
         searchView.setOnNavigationIconClickListener( new SearchView.OnNavigationIconClickListener() {
@@ -125,88 +120,53 @@ public class MainActivity extends AppCompatActivity
                     .into( imageView );
         }
 
-        mFabMenu = findViewById( R.id.fabMenu );
-        mFabMenu.setOnClickListener( new OnClickListener() {
+        final FloatingActionButton fab = findViewById( R.id.fabMenu );
+        fab.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick( View v ) {
-                toggleBottomSheet();
+                ( ( FloatingActionButton ) v ).hide();
+
+                bottomSheet.setState( BottomSheetBehavior.STATE_COLLAPSED );
             }
         } );
 
-        mFabMenuOptionNegative = findViewById( R.id.fabMenuOptionClearQueue );
-        mFabMenuOptionNegative.setOnClickListener( new OnClickListener() {
+        ConstraintLayout buttonLayout = findViewById( R.id.buttons );
+        final Button clearQueue = buttonLayout.findViewById( R.id.button_clear_queue );
+        clearQueue.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick( View v ) {
                 CraftingQueue.getInstance().clearQueue();
             }
         } );
 
-        mFabMenuOptionPositive = findViewById( R.id.fabMenuOptionCalculate );
-        mFabMenuOptionPositive.setOnClickListener( new OnClickListener() {
+        final Button craftIt = buttonLayout.findViewById( R.id.button_calculate );
+        craftIt.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick( View v ) {
-                Toast.makeText( v.getContext(), "Craft it!", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( MainActivity.this, "Craft it!", Toast.LENGTH_SHORT ).show();
             }
         } );
 
-        if ( CraftingQueue.getInstance().isQueueEmpty() ) {
-            hideFabMenuOptions();
-        }
+        boolean isQueueEmpty = CraftingQueue.getInstance().isQueueEmpty();
+        clearQueue.setEnabled( isQueueEmpty );
+        craftIt.setEnabled( isQueueEmpty );
 
-        mBottomSheet.setBottomSheetCallback( new BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheet.setBottomSheetCallback( new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged( @NonNull View bottomSheet, int newState ) {
                 switch ( newState ) {
                     case BottomSheetBehavior.STATE_EXPANDED:
-                        mFabMenu.setImageResource( R.drawable.ic_hide_bottom_sheet_light );
-                        showFabMenuOptions();
+                        fab.hide();
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
-                        mFabMenu.setImageResource( R.drawable.ic_show_bottom_sheet_light );
-                        hideFabMenuOptions();
+                        fab.show();
                         break;
                 }
             }
 
             @Override
             public void onSlide( @NonNull View bottomSheet, float slideOffset ) {
-//                if ( slideOffset <= 0 ) {
-//                    float fabOffset = 1 + slideOffset;
-//                    if ( mFabMenuOptionNegative.isEnabled() )
-//                        mFabMenuOptionNegative.animate().scaleX( fabOffset ).scaleY( fabOffset ).alpha( fabOffset ).setDuration( 0 ).start();
-//                    if ( mFabMenuOptionPositive.isEnabled() )
-//                        mFabMenuOptionPositive.animate().scaleX( fabOffset ).scaleY( fabOffset ).alpha( fabOffset ).setDuration( 0 ).start();
-//                }
-            }
-        } );
-
-        QueueObserver.getInstance().registerListener( TAG, new QueueObserver.Listener() {
-            @Override
-            public void onItemChanged( long craftableId, int quantity ) {
-//                    enableFabMenuOptions();
-                if ( isBottomSheetOpen() ) {
-                    showFabMenuOptions();
-                }
-            }
-
-            @Override
-            public void onItemRemoved( long craftableId ) {
-
-            }
-
-            @Override
-            public void onDataSetPopulated() {
-//                enableFabMenuOptions();
-                if ( isBottomSheetOpen() ) {
-                    showFabMenuOptions();
-                }
-            }
-
-            @Override
-            public void onDataSetEmpty() {
-                hideFabMenuOptions();
-//                disableFabMenuOptions();
-//                closeBottomSheet();
+                // do nothing!
             }
         } );
 
@@ -225,11 +185,12 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawerLayout = findViewById( R.id.drawer_layout );
         NavigationView navigationView = findViewById( R.id.navigation_view );
+        BottomSheetBehavior bottomSheet = BottomSheetBehavior.from( findViewById( R.id.bottom_sheet ) );
 
         if ( drawerLayout.isDrawerOpen( navigationView ) ) {
             drawerLayout.closeDrawer( navigationView );
-        } else if ( isBottomSheetOpen() ) {
-            closeBottomSheet();
+        } else if ( bottomSheet.getState() != BottomSheetBehavior.STATE_HIDDEN ) {
+            bottomSheet.setState( BottomSheetBehavior.STATE_HIDDEN );
         } else {
             super.onBackPressed();
         }
@@ -241,23 +202,11 @@ public class MainActivity extends AppCompatActivity
 
         ExceptionObserver.getInstance().registerListener( this );
 
-        CraftableLayout craftableLayout = findViewById( R.id.layout_craftables );
-        craftableLayout.onResume();
-
-        QueueLayout queueLayout = findViewById( R.id.layout_queue );
-        queueLayout.onResume();
-
         mAdUtil.resume();
     }
 
     @Override
     protected void onPause() {
-        CraftableLayout craftableLayout = findViewById( R.id.layout_craftables );
-        craftableLayout.onPause();
-
-        QueueLayout queueLayout = findViewById( R.id.layout_queue );
-        queueLayout.onPause();
-
         mAdUtil.pause();
 
         ExceptionObserver.getInstance().unregisterListener( this );
@@ -267,12 +216,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-        CraftableLayout craftableLayout = findViewById( R.id.layout_craftables );
-        craftableLayout.onDestroy();
-
-        QueueLayout queueLayout = findViewById( R.id.layout_queue );
-        queueLayout.onDestroy();
-
         mAdUtil.destroy();
 
         super.onDestroy();
@@ -517,81 +460,5 @@ public class MainActivity extends AppCompatActivity
 
     private void showSnackBar( String text ) {
         Snackbar.make( findViewById( R.id.content_main ), text, Snackbar.LENGTH_SHORT ).show();
-    }
-
-    private void toggleBottomSheet() {
-        if ( isBottomSheetOpen() ) {
-            closeBottomSheet();
-        } else if ( isBottomSheetClosed() ) {
-            openBottomSheet();
-        }
-    }
-
-    private boolean isBottomSheetOpen() {
-        return mBottomSheet.getState() == BottomSheetBehavior.STATE_EXPANDED;
-    }
-
-    private boolean isBottomSheetClosed() {
-        return mBottomSheet.getState() == BottomSheetBehavior.STATE_HIDDEN;
-    }
-
-    private void openBottomSheet() {
-        mBottomSheet.setState( BottomSheetBehavior.STATE_EXPANDED );
-    }
-
-    private void closeBottomSheet() {
-        mBottomSheet.setState( BottomSheetBehavior.STATE_HIDDEN );
-    }
-
-//    private void enableFabMenuOptions() {
-//        enableFabMenuOption( mFabMenuOptionNegative );
-//        enableFabMenuOption( mFabMenuOptionPositive );
-//    }
-//
-//    private void enableFabMenuOption( FloatingActionButton fab ) {
-//        fab.setEnabled( true );
-//        if ( isBottomSheetOpen() ) {
-//            fab.show();
-//        }
-//    }
-//
-//    private void disableFabMenuOptions() {
-//        disableFabMenuOption( mFabMenuOptionNegative );
-//        disableFabMenuOption( mFabMenuOptionPositive );
-//    }
-//
-//    private void disableFabMenuOption( FloatingActionButton fab ) {
-//        fab.setEnabled( false );
-//        fab.hide();
-//    }
-
-    private void showFabMenuOptions() {
-        if ( !CraftingQueue.getInstance().isQueueEmpty() ) {
-            mFabMenuOptionPositive.show();
-            mFabMenuOptionNegative.show();
-        }
-    }
-
-    private void hideFabMenuOptions() {
-        mFabMenuOptionPositive.hide();
-        mFabMenuOptionNegative.hide();
-    }
-
-    public void rotateFabForward() {
-        ViewCompat.animate( mFabMenu )
-                .rotation( 135.0F )
-                .withLayer()
-                .setDuration( 300L )
-                .setInterpolator( new OvershootInterpolator( 10.0F ) )
-                .start();
-    }
-
-    public void rotateFabBackward() {
-        ViewCompat.animate( mFabMenu )
-                .rotation( 0.0F )
-                .withLayer()
-                .setDuration( 300L )
-                .setInterpolator( new OvershootInterpolator( 10.0F ) )
-                .start();
     }
 }

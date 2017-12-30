@@ -28,8 +28,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.tasks.ConvertTask;
 import arc.resource.calculator.tasks.InitializationTask;
-import arc.resource.calculator.tasks.ParseConvertTask;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -148,71 +148,72 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                     case JSON:
                         // JSONEvent
                         //  Save 'has  update' to preferences if updated
-                        new ParseConvertTask( getApplicationContext(), new ParseConvertTask.Listener() {
-                            @Override
-                            public void onError( Exception e ) {
-                                // alert status window of error
-                                updateStatusMessages( getString( R.string.initialization_error_event ) );
-
-                                // trigger activity error event handler
-                                mListener.onError( e );
-                            }
-
-                            @Override
-                            public void onInit() {
-                                // alert status window that database initialization is initializing
-                                updateStatusMessages( getString( R.string.initialization_json_event_init ) );
-                            }
-
-                            @Override
-                            public void onNewVersion( String oldVersion, String newVersion ) {
-                                // alert status window of new version
-                                if ( oldVersion == null )
-                                    // first install
-                                    updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version_first_install ), newVersion ) );
-                                else
-                                    // updated install
-                                    updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version ), oldVersion, newVersion ) );
-
-                                mNewVersion = newVersion;
-                            }
-
-                            @Override
-                            public void onStart() {
-                                // alert status window that database initialization has begun
-                                updateStatusMessages( getString( R.string.initialization_json_event_started ) );
-                            }
-
-                            @Override
-                            public void onUpdate( String message ) {
-                                // alert status window with a new message
-                                updateStatusMessages( message );
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                // alert status window that database initialization has finished, no new update
-                                updateStatusMessages( getString( R.string.initialization_json_event_finished_without_update ) );
-
-                                // trigger next event (database initialization)
-                                mListener.onEndEvent();
-                            }
-
-                            @Override
-                            public void onFinish( JSONObject newObject ) {
-                                // alert status window that database initialization has finished, with update
-                                updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_json_event_finished_with_update ) ) );
-
-                                // set global boolean to notify initialization task
-                                mHasUpdate = true;
-
-                                // set global json object for use in initialization task
-                                mJSONObject = newObject;
-
-                                // trigger next event (database initialization)
-                                mListener.onEndEvent();
-                            }
-                        } ).execute();
+                        new ConvertTask().execute( getApplicationContext() );
+//                        new ParseConvertTask( getApplicationContext(), new ParseConvertTask.Listener() {
+//                            @Override
+//                            public void onError( Exception e ) {
+//                                // alert status window of error
+//                                updateStatusMessages( getString( R.string.initialization_error_event ) );
+//
+//                                // trigger activity error event handler
+//                                mListener.onError( e );
+//                            }
+//
+//                            @Override
+//                            public void onInit() {
+//                                // alert status window that database initialization is initializing
+//                                updateStatusMessages( getString( R.string.initialization_json_event_init ) );
+//                            }
+//
+//                            @Override
+//                            public void onNewVersion( String oldVersion, String newVersion ) {
+//                                // alert status window of new version
+//                                if ( oldVersion == null )
+//                                    // first install
+//                                    updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version_first_install ), newVersion ) );
+//                                else
+//                                    // updated install
+//                                    updateStatusMessages( String.format( getString( R.string.initialization_json_event_new_version ), oldVersion, newVersion ) );
+//
+//                                mNewVersion = newVersion;
+//                            }
+//
+//                            @Override
+//                            public void onStart() {
+//                                // alert status window that database initialization has begun
+//                                updateStatusMessages( getString( R.string.initialization_json_event_started ) );
+//                            }
+//
+//                            @Override
+//                            public void onUpdate( String message ) {
+//                                // alert status window with a new message
+//                                updateStatusMessages( message );
+//                            }
+//
+//                            @Override
+//                            public void onFinish() {
+//                                // alert status window that database initialization has finished, no new update
+//                                updateStatusMessages( getString( R.string.initialization_json_event_finished_without_update ) );
+//
+//                                // trigger next event (database initialization)
+//                                mListener.onEndEvent();
+//                            }
+//
+//                            @Override
+//                            public void onFinish( JSONObject newObject ) {
+//                                // alert status window that database initialization has finished, with update
+//                                updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_json_event_finished_with_update ) ) );
+//
+//                                // set global boolean to notify initialization task
+//                                mHasUpdate = true;
+//
+//                                // set global json object for use in initialization task
+//                                mJSONObject = newObject;
+//
+//                                // trigger next event (database initialization)
+//                                mListener.onEndEvent();
+//                            }
+//                        } ).execute();
                         break;
 
                     case DATABASE:

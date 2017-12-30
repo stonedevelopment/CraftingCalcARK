@@ -55,7 +55,7 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu implements Ob
         mListener = listener;
     }
 
-    public void create( Listener listener ) {
+    public void onCreate( Listener listener ) {
         int numCols = getResources().getInteger( R.integer.gridview_column_count );
         setLayoutManager( new GridLayoutManager( getContext(), numCols ) );
 //        setLayoutManager( new GridLayoutManager( getContext(), 1, GridLayoutManager.HORIZONTAL, false ) );
@@ -63,7 +63,7 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu implements Ob
         setAdapter( new QueueAdapter( getContext(), this ) );
     }
 
-    public void resume() {
+    public void onResume() {
         getAdapter().resume();
     }
 

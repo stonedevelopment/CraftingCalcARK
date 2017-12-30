@@ -295,6 +295,13 @@ public class DatabaseContract {
                     .build();
         }
 
+        // Returns /resource/dlc/#
+        public static Uri buildUriWithDlcId( long dlc_id ) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath( PATH_DLC ).appendPath( Long.toString( dlc_id ) )
+                    .build();
+        }
+
         // Returns /resource/drawable/*/dlc/#
 //        public static Uri buildUriWithDrawable( String drawable, long dlc_id ) {
 //            return CONTENT_URI.buildUpon()

@@ -21,18 +21,23 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp">
+            android:theme="@style/AppTheme.AppBarOverlay">
 
             <com.lapism.searchview.SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_behavior="com.lapism.searchview.SearchBehavior"
                 app:search_hint="Search Engrams..."
                 app:search_shadow="false"
                 app:search_theme="play_store"
                 app:search_voice="true"/>
+
+            <arc.resource.calculator.views.BreadcrumbsRecyclerView
+                android:id="@+id/breadcrumbs_view"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -44,33 +49,9 @@
             android:id="@+id/fabMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:backgroundTint="@color/color_selector_fab_menu"
-            android:src="@drawable/ic_show_bottom_sheet_light"
-            app:layout_anchor="@id/bottom_sheet"
-            app:layout_anchorGravity="top|end"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabMenuOptionCalculate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:backgroundTint="@color/color_selector_fab_menu_option_positive"
-            android:src="@drawable/ic_calculate_contents"
-            app:fabSize="mini"
-            app:layout_anchor="@id/fabMenu"
-            app:layout_anchorGravity="top"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabMenuOptionClearQueue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:backgroundTint="@color/color_selector_fab_menu_option_negative"
-            android:src="@drawable/ic_clear_contents"
-            app:fabSize="mini"
-            app:layout_anchor="@id/fabMenuOptionCalculate"
-            app:layout_anchorGravity="start"/>
+            android:src="@drawable/ic_open_bottom_sheet_dark"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

@@ -28,6 +28,23 @@ public class JSONUtil {
         return jsonString;
     }
 
+    public String jsonFileToJSONString( Context context, String filename ) throws IOException {
+        String jsonString;
+
+        try ( BufferedReader fileReader = new BufferedReader( new InputStreamReader( context.getAssets().open( filename ) ) ) ) {
+            StringBuffer buffer = new StringBuffer();
+
+            String line;
+            while ( ( line = fileReader.readLine() ) != null ) {
+                buffer.append( line + "\n" );
+            }
+
+            jsonString = buffer.toString();
+        }
+
+        return jsonString;
+    }
+
     public static String readRawJsonFileToJsonString( Context context, String json_resource_file ) throws IOException {
         String jsonString;
 

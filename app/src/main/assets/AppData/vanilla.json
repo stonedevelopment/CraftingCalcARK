@@ -1,0 +1,40 @@
+{
+  "id": 1,
+  "name": "ARK:Survival Evolved",
+  "stations": [
+    {
+      "name": "Self",
+      "image_folder": "Vanilla\/Stations\/",
+      "image_file": "self.webp",
+      "categories": [
+        {
+          "name": "Structures",
+          "engrams": [],
+          "categories": [
+            {
+              "name": "Thatch",
+              "engrams": [],
+              "categories": []
+            },
+            {
+              "name": "Wood",
+              "engrams": [],
+              "categories": [
+                {
+                  "name": "Signs",
+                  "engrams": [],
+                  "categories": []
+                },
+                {
+                  "name": "Storage",
+                  "engrams": [],
+                  "categories": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

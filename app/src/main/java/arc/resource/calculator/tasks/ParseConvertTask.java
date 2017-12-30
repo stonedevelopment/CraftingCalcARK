@@ -151,6 +151,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             // read the local converted json file into a string
             String jsonString = JSONUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_editable );
 
+
             // build a json object based on the read json string
             JSONObject oldObject = new JSONObject( jsonString );
 

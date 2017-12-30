@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import arc.resource.calculator.adapters.QueueAdapter;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.listeners.QueueObserver;
+import arc.resource.calculator.listeners.QueueObservable;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.exception.CursorEmptyException;
 import arc.resource.calculator.model.exception.CursorNullException;
@@ -148,7 +148,7 @@ public class CraftingQueue {
             getObserver().notifyItemChanged( position );
 
         // notify outside listeners of changes
-        QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
+        QueueObservable.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
     }
 
     public void increaseQuantity( QueueEngram craftable ) throws PositionOutOfBoundsException {
@@ -167,7 +167,7 @@ public class CraftingQueue {
                 getObserver().notifyItemChanged( position );
 
             // notify outside listeners of changes
-            QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
+            QueueObservable.getInstance().notifyItemChanged( id, craftable.getQuantity() );
         } else {
             insert( craftable );
         }
@@ -192,7 +192,7 @@ public class CraftingQueue {
                         getObserver().notifyItemChanged( position );
 
                     // notify outside listeners of changes
-                    QueueObserver.getInstance().notifyItemChanged( id, craftable.getQuantity() );
+                    QueueObservable.getInstance().notifyItemChanged( id, craftable.getQuantity() );
                 } else {
                     delete( position );
                 }
@@ -227,7 +227,7 @@ public class CraftingQueue {
             getObserver().notifyDataSetPopulated();
 
         // notify outside listeners of changes
-        QueueObserver.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
+        QueueObservable.getInstance().notifyItemChanged( craftable.getId(), craftable.getQuantity() );
     }
 
     private void delete( int position ) throws PositionOutOfBoundsException {
@@ -241,13 +241,13 @@ public class CraftingQueue {
             getObserver().notifyItemRemoved( position );
 
             // notify outside listeners of changes
-            QueueObserver.getInstance().notifyItemRemoved( id );
+            QueueObservable.getInstance().notifyItemRemoved( id );
         } else {
             // notify ViewSwitcher of empty status
             getObserver().notifyDataSetEmpty();
 
             // notify outside listeners of changes
-            QueueObserver.getInstance().notifyDataSetEmpty();
+            QueueObservable.getInstance().notifyDataSetEmpty();
         }
     }
 
@@ -268,7 +268,7 @@ public class CraftingQueue {
             getObserver().notifyDataSetEmpty();
 
         // notify outside listeners of changes
-        QueueObserver.getInstance().notifyDataSetEmpty();
+        QueueObservable.getInstance().notifyDataSetEmpty();
     }
 
     private void saveQueueToPrefs( Context context ) {
@@ -375,7 +375,7 @@ public class CraftingQueue {
                     if ( getObserver() != null )
                         getObserver().notifyDataSetPopulated();
 
-                    QueueObserver.getInstance().notifyDataSetPopulated();
+                    QueueObservable.getInstance().notifyDataSetPopulated();
                 } else {
                     if ( getObserver() != null )
                         getObserver().notifyDataSetEmpty();

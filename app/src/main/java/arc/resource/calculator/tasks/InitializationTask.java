@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 
@@ -12,9 +13,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
+import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.db.dao.EngramDao;
+import arc.resource.calculator.db.entity.Composition;
+import arc.resource.calculator.db.entity.Engram;
 
 import static arc.resource.calculator.util.Util.NO_ID;
 
@@ -358,6 +365,16 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
                         values.put( DatabaseContract.EngramEntry.COLUMN_DLC_KEY, dlc_id );
 
                         vector.add( values );
+
+//                        EngramDao engramDao =
+//                                AppDatabase.getInstance( getContext() ).getEngramDao();
+//
+//                        long id = engramDao.insert(
+//                                new Engram( name, description, imageFolder, imageFile, yield, level,
+//                                        station_id, category_id, dlc_id ) );
+//
+//                        List<Composition> compositionList = new ArrayList<>();
+//                        compositionList.add( new Composition( id, 1, 1 ) );
 
                         compositionVector.addAll( insertComposition( _id, dlc_id, jsonObject.getJSONArray( DatabaseContract.CompositionEntry.TABLE_NAME ) ) );
                     }

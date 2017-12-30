@@ -110,7 +110,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     /**
      * Out of service.
      * <p>
-     * Used to be used in communications with a QueueObserver.
+     * Used to be used in communications with a QueueObservable.
      */
     public void resume() {
     }
@@ -118,7 +118,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     /**
      * Out of service.
      * <p>
-     * Used to be used in communications with a QueueObserver.
+     * Used to be used in communications with a QueueObservable.
      */
     public void pause() {
     }
@@ -126,7 +126,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     /**
      * Out of service.
      * <p>
-     * Used to be used in communications with a QueueObserver.
+     * Used to be used in communications with a QueueObservable.
      */
     public void destroy() {
     }

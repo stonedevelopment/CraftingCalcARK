@@ -1,21 +1,20 @@
 package arc.resource.calculator.views.switchers;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.views.QueueRecyclerView;
 import arc.resource.calculator.views.switchers.listeners.Listener;
 
-public class QueueSwitcher extends ViewSwitcher implements Listener {
+public class QueueSwitcher extends ViewSwitcher implements Listener, LifecycleObserver {
     private static final String TAG = QueueSwitcher.class.getSimpleName();
 
     private TextView mTextView;
@@ -27,7 +26,7 @@ public class QueueSwitcher extends ViewSwitcher implements Listener {
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( getContext().getString( R.string.switcher_queue_status_onerror) );
+        onStatusUpdate( getContext().getString( R.string.switcher_queue_status_onerror ) );
 
         ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
     }
@@ -38,7 +37,7 @@ public class QueueSwitcher extends ViewSwitcher implements Listener {
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( getContext().getString( R.string.switcher_queue_status_oninit) );
+        onStatusUpdate( getContext().getString( R.string.switcher_queue_status_oninit ) );
     }
 
     @Override
@@ -54,7 +53,7 @@ public class QueueSwitcher extends ViewSwitcher implements Listener {
         if ( !isTextViewShown() )
             showNext();
 
-        onStatusUpdate( getContext().getString( R.string.switcher_queue_status_onempty) );
+        onStatusUpdate( getContext().getString( R.string.switcher_queue_status_onempty ) );
     }
 
     public QueueSwitcher( Context context ) {
@@ -65,34 +64,42 @@ public class QueueSwitcher extends ViewSwitcher implements Listener {
         super( context, attrs );
     }
 
-    public void onCreate() {
-        Log.d( TAG, "onCreate: " );
+    public void init( Lifecycle lifecycle ) {
+        lifecycle.addObserver( this );
+    }
+
+    public void onCreate( LifecycleOwner owner ) {
+        //  register as LifecycleObserver
+        owner.getLifecycle().addObserver( this );
+
         // set size (height) to that of 1/5 screen's width
 //        int viewSize = PrefsUtil.getInstance( getContext() ).getCraftableViewSize();
 //        setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, viewSize ) );
 
         // instantiate our textview for status updates
-        mTextView = ( TextView ) findViewById( R.id.textview_queue );
+        mTextView = findViewById( R.id.textview_queue );
 
         // instantiate recyclerView
-        mRecyclerView = ( QueueRecyclerView ) findViewById( R.id.gridview_queue );
+        mRecyclerView = findViewById( R.id.gridview_queue );
 
         // onResume view with switcher observer
         // set this as observer, initialize adapter, create crafting queue instance, query for saved data, if any.
-        mRecyclerView.create( this );
+        mRecyclerView.onCreate( this );
     }
 
+    @OnLifecycleEvent( Lifecycle.Event.ON_RESUME )
     public void onResume() {
-        mRecyclerView.resume();
+        mRecyclerView.onResume();
     }
 
+    @OnLifecycleEvent( Lifecycle.Event.ON_PAUSE )
     public void onPause() {
-        Log.d( TAG, "onPause: " );
         mRecyclerView.pause();
     }
 
-    public void onDestroy() {
-        Log.d( TAG, "onDestroy: " );
+    @OnLifecycleEvent( Lifecycle.Event.ON_DESTROY )
+    public void onDestroy( LifecycleOwner owner ) {
+        owner.getLifecycle().removeObserver( this );
         mRecyclerView.destroy();
     }
 

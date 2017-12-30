@@ -1,6 +1,8 @@
 package arc.resource.calculator.listeners;
 
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Observing class helper for CraftableAdapter and InventoryAdapter
@@ -8,8 +10,8 @@ import java.util.HashMap;
  * Alerts listeners of changes to the 'Queue' - adds, removes, etc.
  */
 
-public class QueueObserver {
-    private static QueueObserver sInstance;
+public class QueueObservable extends Observable {
+    private static QueueObservable sInstance;
 
     private HashMap<String, Listener> mListeners;
 
@@ -23,14 +25,14 @@ public class QueueObserver {
         public abstract void onDataSetEmpty();
     }
 
-    public static QueueObserver getInstance() {
+    public static QueueObservable getInstance() {
         if ( sInstance == null )
-            sInstance = new QueueObserver();
+            sInstance = new QueueObservable();
 
         return sInstance;
     }
 
-    private QueueObserver() {
+    public QueueObservable() {
         mListeners = new HashMap<>();
     }
 

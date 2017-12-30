@@ -105,7 +105,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     }
 
     public QueueAdapter( Context context, Observer observer ) {
-        Log.d( TAG, "QueueAdapter: " );
         setContext( context );
         setObserver( observer );
 
