@@ -1,6 +1,6 @@
 {
-  "id": 1,
-  "name": "ARK:Survival Evolved",
+  "id": 3,
+  "name": "Scorched Earth",
   "stations": [
     {
       "name": "Beer Barrel",
@@ -358,6 +358,24 @@
               ]
             },
             {
+              "name": "Clay",
+              "description": "Created by grinding Sand with Cactus Sap in a Mortar and Pestle.",
+              "image_folder": "Scorched Earth/Engrams/Refined/",
+              "image_file": "clay.webp",
+              "yield": 4,
+              "level": 5,
+              "composition": [
+                {
+                  "name": "Cactus Sap",
+                  "quantity": 4
+                },
+                {
+                  "name": "Sand",
+                  "quantity": 8
+                }
+              ]
+            },
+            {
               "name": "Gunpowder",
               "description": "An (sic) powerful propellant. Necessary for any firearm or explosive.",
               "image_folder": "Vanilla/Engrams/Refined/",
@@ -371,6 +389,46 @@
                 },
                 {
                   "name": "Charcoal",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "name": "Preserving Salt",
+              "description": "Created by grinding salt with sulfur in a Mortar and Pestle. Preserves food.",
+              "image_folder": "Scorched Earth/Engrams/Refined/",
+              "image_file": "preserving_salt.webp",
+              "yield": 4,
+              "level": 5,
+              "composition": [
+                {
+                  "name": "Sulfur",
+                  "quantity": 4
+                },
+                {
+                  "name": "Raw Salt",
+                  "quantity": 8
+                }
+              ]
+            },
+            {
+              "name": "Propellant",
+              "description": "Used to manufacture highly flammable resources.",
+              "image_folder": "Scorched Earth/Engrams/Refined/",
+              "image_file": "propellant.webp",
+              "yield": 4,
+              "level": 22,
+              "composition": [
+                {
+                  "name": "Oil",
+                  "quantity": 4
+                },
+                {
+                  "name": "Sulfur",
+                  "quantity": 4
+                },
+                {
+                  "name": "Cactus Sap",
                   "quantity": 4
                 }
               ]
@@ -518,6 +576,36 @@
                     {
                       "name": "Longrass",
                       "quantity": 2
+                    }
+                  ]
+                },
+                {
+                  "name": "Cactus Broth",
+                  "description": "This magical soup will greatly reduce your water consumption. The aroma of the cactus has a side effect of making the wildlife notice you less.",
+                  "image_folder": "Scorched Earth/Engrams/Consumables/Food/",
+                  "image_file": "cactus_broth.webp",
+                  "yield": 1,
+                  "level": 1,
+                  "composition": [
+                    {
+                      "name": "Mejoberry",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Azulberry",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Water",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Cactus Sap",
+                      "quantity": 30
+                    },
+                    {
+                      "name": "Amarberry",
+                      "quantity": 10
                     }
                   ]
                 },
@@ -2266,6 +2354,40 @@
               ]
             },
             {
+              "name": "Mantis Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Citronal",
+                  "quantity": 1
+                },
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Obsidian",
+                  "quantity": 1
+                },
+                {
+                  "name": "Mantis Egg",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
               "name": "Megalania Kibble",
               "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
               "image_folder": "Vanilla/Engrams/Kibble/",
@@ -2330,6 +2452,40 @@
                 {
                   "name": "Longrass",
                   "quantity": 1
+                }
+              ]
+            },
+            {
+              "name": "Morellatops (Camelsaurus) Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Savoroot",
+                  "quantity": 1
+                },
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Camelsaurus Egg",
+                  "quantity": 1
+                },
+                {
+                  "name": "Chitin",
+                  "quantity": 50
                 }
               ]
             },
@@ -2878,6 +3034,40 @@
               ]
             },
             {
+              "name": "Thorny Dragon Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Savoroot",
+                  "quantity": 1
+                },
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Thorny Dragon Egg",
+                  "quantity": 1
+                },
+                {
+                  "name": "Cooked Meat Jerky",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
               "name": "Titanoboa Kibble",
               "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
               "image_folder": "Vanilla/Engrams/Kibble/",
@@ -2975,6 +3165,40 @@
                 },
                 {
                   "name": "Troodon Egg",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "name": "Vulture Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Longrass",
+                  "quantity": 1
+                },
+                {
+                  "name": "Cooked Meat",
+                  "quantity": 1
+                },
+                {
+                  "name": "Vulture Egg",
                   "quantity": 1
                 }
               ]
@@ -4123,6 +4347,28 @@
                       "quantity": 3
                     }
                   ]
+                },
+                {
+                  "name": "Wind Turbine",
+                  "description": "Converts the force of the wind into electricity.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Electrical/",
+                  "image_file": "wind_turbine.webp",
+                  "yield": 1,
+                  "level": 50,
+                  "composition": [
+                    {
+                      "name": "Electronics",
+                      "quantity": 25
+                    },
+                    {
+                      "name": "Cementing Paste",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Metal Ingot",
+                      "quantity": 75
+                    }
+                  ]
                 }
               ],
               "categories": [
@@ -4348,6 +4594,34 @@
                   "categories": []
                 }
               ]
+            },
+            {
+              "name": "Oil Pump",
+              "engrams": [
+                {
+                  "name": "Oil Pump",
+                  "description": "Extracts Oil from an Oil zone.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Oil Pump/",
+                  "image_file": "oil_pump.webp",
+                  "yield": 1,
+                  "level": 60,
+                  "composition": [
+                    {
+                      "name": "Crystal",
+                      "quantity": 25
+                    },
+                    {
+                      "name": "Electronics",
+                      "quantity": 25
+                    },
+                    {
+                      "name": "Metal Ingot",
+                      "quantity": 75
+                    }
+                  ]
+                }
+              ],
+              "categories": []
             }
           ]
         },
@@ -4499,6 +4773,40 @@
                     {
                       "name": "Ammonite Bile",
                       "quantity": 3
+                    }
+                  ]
+                },
+                {
+                  "name": "Rocket Homing Missile",
+                  "description": "Advanced projectile with trajectory auto-correction.",
+                  "image_folder": "Scorched Earth/Engrams/Weapons/Ammo/",
+                  "image_file": "rocket_homing_missile.webp",
+                  "yield": 1,
+                  "level": 90,
+                  "composition": [
+                    {
+                      "name": "Gunpowder",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Crystal",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Cementing Paste",
+                      "quantity": 40
+                    },
+                    {
+                      "name": "Polymer",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Electronics",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Metal Ingot",
+                      "quantity": 20
                     }
                   ]
                 },
@@ -4663,6 +4971,40 @@
                   ]
                 },
                 {
+                  "name": "Cluster Grenade",
+                  "description": "Splits in several explosive fragments.",
+                  "image_folder": "Scorched Earth/Engrams/Weapons/Explosive/",
+                  "image_file": "cluster_grenade.webp",
+                  "yield": 1,
+                  "level": 80,
+                  "composition": [
+                    {
+                      "name": "Propellant",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Gunpowder",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Crystal",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Cementing Paste",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Polymer",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Metal Ingot",
+                      "quantity": 15
+                    }
+                  ]
+                },
+                {
                   "name": "Poison Grenade",
                   "description": "Releases narcotic smoke to knock out anything in the area - only affects humans. Pulling the pin starts a 2.5 second timer to the gas release.",
                   "image_folder": "Vanilla/Engrams/Weapons/Explosive/",
@@ -4781,6 +5123,36 @@
                   ]
                 },
                 {
+                  "name": "Flamethrower",
+                  "description": "The fastest way to roast a target.",
+                  "image_folder": "Scorched Earth/Engrams/Weapons/Firearms/",
+                  "image_file": "flamethrower.webp",
+                  "yield": 1,
+                  "level": 65,
+                  "composition": [
+                    {
+                      "name": "Cementing Paste",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Polymer",
+                      "quantity": 75
+                    },
+                    {
+                      "name": "Sulfur",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Electronics",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Metal Ingot",
+                      "quantity": 35
+                    }
+                  ]
+                },
+                {
                   "name": "Pump-Action Shotgun",
                   "description": "Powerful up close, but less reliable with range. Can fire six rounds before reloading.",
                   "image_folder": "Vanilla/Engrams/Weapons/Firearms/",
@@ -4830,6 +5202,32 @@
             {
               "name": "Melee",
               "engrams": [
+                {
+                  "name": "Chainsaw",
+                  "description": "The fastest way to cut a tree.",
+                  "image_folder": "Scorched Earth/Engrams/Weapons/Melee/",
+                  "image_file": "chainsaw.webp",
+                  "yield": 1,
+                  "level": 55,
+                  "composition": [
+                    {
+                      "name": "Polymer",
+                      "quantity": 75
+                    },
+                    {
+                      "name": "Electronics",
+                      "quantity": 25
+                    },
+                    {
+                      "name": "Metal Ingot",
+                      "quantity": 25
+                    },
+                    {
+                      "name": "Cementing Paste",
+                      "quantity": 50
+                    }
+                  ]
+                },
                 {
                   "name": "Electric Prod",
                   "description": "Powerful stunning weapon, but can only be used for a single strike before recharge is needed.",
@@ -6288,6 +6686,40 @@
               ]
             },
             {
+              "name": "Mantis Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Citronal",
+                  "quantity": 1
+                },
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Obsidian",
+                  "quantity": 1
+                },
+                {
+                  "name": "Mantis Egg",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
               "name": "Megalania Kibble",
               "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
               "image_folder": "Vanilla/Engrams/Kibble/",
@@ -6352,6 +6784,40 @@
                 {
                   "name": "Longrass",
                   "quantity": 1
+                }
+              ]
+            },
+            {
+              "name": "Morellatops (Camelsaurus) Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Savoroot",
+                  "quantity": 1
+                },
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Camelsaurus Egg",
+                  "quantity": 1
+                },
+                {
+                  "name": "Chitin",
+                  "quantity": 50
                 }
               ]
             },
@@ -6900,6 +7366,40 @@
               ]
             },
             {
+              "name": "Thorny Dragon Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Savoroot",
+                  "quantity": 1
+                },
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Thorny Dragon Egg",
+                  "quantity": 1
+                },
+                {
+                  "name": "Cooked Meat Jerky",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
               "name": "Titanoboa Kibble",
               "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
               "image_folder": "Vanilla/Engrams/Kibble/",
@@ -6997,6 +7497,40 @@
                 },
                 {
                   "name": "Troodon Egg",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "name": "Vulture Kibble",
+              "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+              "image_folder": "Scorched Earth/Engrams/Kibble/",
+              "image_file": "kibble.webp",
+              "yield": 1,
+              "level": 1,
+              "composition": [
+                {
+                  "name": "Fiber",
+                  "quantity": 3
+                },
+                {
+                  "name": "Mejoberry",
+                  "quantity": 2
+                },
+                {
+                  "name": "Water",
+                  "quantity": 1
+                },
+                {
+                  "name": "Longrass",
+                  "quantity": 1
+                },
+                {
+                  "name": "Cooked Meat",
+                  "quantity": 1
+                },
+                {
+                  "name": "Vulture Egg",
                   "quantity": 1
                 }
               ]
@@ -7281,6 +7815,24 @@
               ]
             },
             {
+              "name": "Clay",
+              "description": "Created by grinding Sand with Cactus Sap in a Mortar and Pestle.",
+              "image_folder": "Scorched Earth/Engrams/Refined/",
+              "image_file": "clay.webp",
+              "yield": 1,
+              "level": 5,
+              "composition": [
+                {
+                  "name": "Cactus Sap",
+                  "quantity": 1
+                },
+                {
+                  "name": "Sand",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
               "name": "Gunpowder",
               "description": "A powerful propellant. Necessary for any firearm or explosive.",
               "image_folder": "Vanilla/Engrams/Refined/",
@@ -7294,6 +7846,46 @@
                 },
                 {
                   "name": "Charcoal",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "name": "Preserving Salt",
+              "description": "Created by grinding salt with sulfur in a Mortar and Pestle. Preserves food.",
+              "image_folder": "Scorched Earth/Engrams/Refined/",
+              "image_file": "preserving_salt.webp",
+              "yield": 1,
+              "level": 5,
+              "composition": [
+                {
+                  "name": "Sulfur",
+                  "quantity": 1
+                },
+                {
+                  "name": "Raw Salt",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "name": "Propellant",
+              "description": "Used to manufacture highly flammable resources.",
+              "image_folder": "Scorched Earth/Engrams/Refined/",
+              "image_file": "propellant.webp",
+              "yield": 1,
+              "level": 22,
+              "composition": [
+                {
+                  "name": "Oil",
+                  "quantity": 1
+                },
+                {
+                  "name": "Sulfur",
+                  "quantity": 1
+                },
+                {
+                  "name": "Cactus Sap",
                   "quantity": 1
                 }
               ]
@@ -7551,6 +8143,114 @@
                     },
                     {
                       "name": "Artifact of the Strong",
+                      "quantity": 1
+                    }
+                  ]
+                }
+              ],
+              "categories": []
+            },
+            {
+              "name": "Manticore Arena",
+              "engrams": [
+                {
+                  "name": "Generate Manticore (Alpha) Portal",
+                  "description": "Use this to generate a portal to the Manticore (Hard).",
+                  "image_folder": "Scorched Earth/Engrams/Boss Arenas/",
+                  "image_file": "manticore_portal.webp",
+                  "yield": 1,
+                  "level": 95,
+                  "composition": [
+                    {
+                      "name": "Fire Talon",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Lightning Talon",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Poison Talon",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Artifact of the Gatekeeper",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Artifact of the Crag",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Artifact of the Destroyer",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "name": "Generate Manticore (Beta) Portal",
+                  "description": "Use this to generate a portal to the Manticore (Medium).",
+                  "image_folder": "Scorched Earth/Engrams/Boss Arenas/",
+                  "image_file": "manticore_portal.webp",
+                  "yield": 1,
+                  "level": 70,
+                  "composition": [
+                    {
+                      "name": "Fire Talon",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Lightning Talon",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Poison Talon",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Artifact of the Gatekeeper",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Artifact of the Crag",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Artifact of the Destroyer",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "name": "Generate Manticore (Gamma) Portal",
+                  "description": "Use this to generate a portal to the Manticore (Easy).",
+                  "image_folder": "Scorched Earth/Engrams/Boss Arenas/",
+                  "image_file": "manticore_portal.webp",
+                  "yield": 1,
+                  "level": 55,
+                  "composition": [
+                    {
+                      "name": "Fire Talon",
+                      "quantity": 2
+                    },
+                    {
+                      "name": "Lightning Talon",
+                      "quantity": 2
+                    },
+                    {
+                      "name": "Poison Talon",
+                      "quantity": 2
+                    },
+                    {
+                      "name": "Artifact of the Gatekeeper",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Artifact of the Crag",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Artifact of the Destroyer",
                       "quantity": 1
                     }
                   ]
@@ -8794,6 +9494,50 @@
               ]
             },
             {
+              "name": "Lymantria Saddle",
+              "description": "Equip a Lymantria with this to ride it.",
+              "image_folder": "Scorched Earth/Engrams/Saddles/",
+              "image_file": "lymantria_saddle.webp",
+              "yield": 1,
+              "level": 36,
+              "composition": [
+                {
+                  "name": "Fiber",
+                  "quantity": 125
+                },
+                {
+                  "name": "Hide",
+                  "quantity": 130
+                },
+                {
+                  "name": "Chitin or Keratin",
+                  "quantity": 95
+                }
+              ]
+            },
+            {
+              "name": "Mantis Saddle",
+              "description": "Equip a Mantis with this to ride it.",
+              "image_folder": "Scorched Earth/Engrams/Saddles/",
+              "image_file": "mantis_saddle.webp",
+              "yield": 1,
+              "level": 45,
+              "composition": [
+                {
+                  "name": "Fiber",
+                  "quantity": 75
+                },
+                {
+                  "name": "Hide",
+                  "quantity": 120
+                },
+                {
+                  "name": "Metal Ingot",
+                  "quantity": 35
+                }
+              ]
+            },
+            {
               "name": "Megalodon Saddle",
               "description": "Equip a Megalodon with this to ride it.",
               "image_folder": "Vanilla/Engrams/Saddles/",
@@ -8812,6 +9556,28 @@
                 {
                   "name": "Cementing Paste",
                   "quantity": 30
+                }
+              ]
+            },
+            {
+              "name": "Morellatops Saddle",
+              "description": "Equip a Morellatops with this to ride it.",
+              "image_folder": "Scorched Earth/Engrams/Saddles/",
+              "image_file": "morellatops_saddle.webp",
+              "yield": 1,
+              "level": 11,
+              "composition": [
+                {
+                  "name": "Fiber",
+                  "quantity": 80
+                },
+                {
+                  "name": "Wood",
+                  "quantity": 30
+                },
+                {
+                  "name": "Hide",
+                  "quantity": 140
                 }
               ]
             },
@@ -9086,6 +9852,528 @@
           "name": "Structures",
           "engrams": [],
           "categories": [
+            {
+              "name": "Adobe",
+              "engrams": [
+                {
+                  "name": "Adobe Ceiling",
+                  "description": "A stable adobe-plated concrete ceiling that provides insulation, and doubles as a floor for higher levels.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_ceiling.webp",
+                  "yield": 1,
+                  "level": 15,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 60
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 30
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 15
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Dinosaur Gate",
+                  "description": "A large adobe gate that can be used with a Gateway to most keep dinosaurs in or out.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_dinosaur_gate.webp",
+                  "yield": 1,
+                  "level": 30,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 60
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 15
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Dinosaur Gateway",
+                  "description": "A large adobe gateway that can be used with a Gate to keep most dinosaurs in or out.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_dinosaur_gateway.webp",
+                  "yield": 1,
+                  "level": 30,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 80
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 280
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 70
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Door",
+                  "description": "A stable adobe door that provides entance to structures. Can be locked for security.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_door.webp",
+                  "yield": 1,
+                  "level": 15,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 7
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Doorframe",
+                  "description": "A adobe wall that provides entrance to a structure.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_doorframe.webp",
+                  "yield": 1,
+                  "level": 15,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 30
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 8
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Fence Foundation",
+                  "description": "This very strong, narrow foundation is used to build walls around an area.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_fence_foundation.webp",
+                  "yield": 1,
+                  "level": 15,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 3
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Foundation",
+                  "description": "Required to build structures in an area.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_foundation.webp",
+                  "yield": 1,
+                  "level": 15,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 80
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 40
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 20
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Hatchframe",
+                  "description": "This Adobe concrete ceiling has a hole in it for trapdoors.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_hatchframe.webp",
+                  "yield": 1,
+                  "level": 16,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 25
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 12
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Ladder",
+                  "description": "A simple adobe ladder used to climb up or down tall structures. Can also be used to extend existing ladders.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_ladder.webp",
+                  "yield": 1,
+                  "level": 16,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 3
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 4
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 7
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Pillar",
+                  "description": "The adobe pillar adds structural integrity to the area it is built under. Can also act as stilts for buildings on inclines.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_pillar.webp",
+                  "yield": 1,
+                  "level": 17,
+                  "composition": [
+                    {
+                      "name": "Clay",
+                      "quantity": 40
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 10
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Railing",
+                  "description": "A adobe railing that acts a a simple barrier to prevent people from falling.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_railing.webp",
+                  "yield": 1,
+                  "level": 17,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 3
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 5
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Ramp",
+                  "description": "An inclined adobe-plated concrete floor for travelling up or down levels. Can also be used to make an angled roof.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_ramp.webp",
+                  "yield": 1,
+                  "level": 16,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 60
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 30
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 15
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Staircase",
+                  "description": "An adobe spiral staircase, useful in constructing multi-level buildings.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_staircase.webp",
+                  "yield": 1,
+                  "level": 17,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 40
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 200
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 100
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 50
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Trapdoor",
+                  "description": "This adobe slab can be used to secure hatches.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_trapdoor.webp",
+                  "yield": 1,
+                  "level": 16,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 7
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Wall",
+                  "description": "An adobe wall that insulates the inside from the outside and separates rooms.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_wall.webp",
+                  "yield": 1,
+                  "level": 15,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 40
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 10
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Window",
+                  "description": "Adobe plates on hinges that cover windows to provide protection from projectiles and spying.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_window.webp",
+                  "yield": 1,
+                  "level": 20,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 4
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 4
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 2
+                    }
+                  ]
+                },
+                {
+                  "name": "Adobe Windowframe",
+                  "description": "An adobe wall, with a hole for a window.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "adobe_windowframe.webp",
+                  "yield": 1,
+                  "level": 20,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 36
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 9
+                    }
+                  ]
+                },
+                {
+                  "name": "Sloped Adobe Roof",
+                  "description": "An inclined adobe-framed roof. Slightly different angle than the ramp. Excellent for growing crops indoors.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "sloped_adobe_roof.webp",
+                  "yield": 1,
+                  "level": 18,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 60
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 30
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 15
+                    }
+                  ]
+                },
+                {
+                  "name": "Sloped Adobe Wall Left",
+                  "description": "A sturdy adobe-framed, sloped wall that insulates the inside from the outside, seprarates rooms, and provides structural integrity. Used in conjunction with the roof. Excellent for growing crops indoors.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "sloped_adobe_wall_left.webp",
+                  "yield": 1,
+                  "level": 18,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 5
+                    }
+                  ]
+                },
+                {
+                  "name": "Sloped Adobe Wall Right",
+                  "description": "A sturdy adobe-framed, sloped wall that insulates the inside from the outside, seprarates rooms, and provides structural integrity. Used in conjunction with the roof. Excellent for growing crops indoors.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "sloped_adobe_wall_right.webp",
+                  "yield": 1,
+                  "level": 18,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 5
+                    }
+                  ]
+                }
+              ],
+              "categories": []
+            },
             {
               "name": "Beds",
               "engrams": [
@@ -9414,7 +10702,68 @@
             },
             {
               "name": "Furniture",
-              "engrams": [],
+              "engrams": [
+                {
+                  "name": "Mirror",
+                  "description": "Put it on a wall, and look at your beautiful self!",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Furniture/",
+                  "image_file": "mirror.webp",
+                  "yield": 1,
+                  "level": 32,
+                  "composition": [
+                    {
+                      "name": "Crystal",
+                      "quantity": 100
+                    },
+                    {
+                      "name": "Obsidian",
+                      "quantity": 70
+                    },
+                    {
+                      "name": "Silica Pearls",
+                      "quantity": 100
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 7
+                    },
+                    {
+                      "name": "Metal Ingot",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Sand",
+                      "quantity": 100
+                    }
+                  ]
+                },
+                {
+                  "name": "Vessel",
+                  "description": "Stores preservings salts and makes them last longer.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Furniture/",
+                  "image_file": "vessel.webp",
+                  "yield": 1,
+                  "level": 13,
+                  "composition": [
+                    {
+                      "name": "Clay",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 7
+                    }
+                  ]
+                }
+              ],
               "categories": [
                 {
                   "name": "Stone",
@@ -10403,6 +11752,46 @@
               "categories": []
             },
             {
+              "name": "Water Well",
+              "engrams": [
+                {
+                  "name": "Water Well",
+                  "description": "This stone tap allows access to the water in an irrigation network. Can refill containers, irrigate crop plots, or provide a refreshing drink.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Water Well/",
+                  "image_file": "water_well.webp",
+                  "yield": 1,
+                  "level": 15,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Stone",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Cementing Paste",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Flint",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 30
+                    }
+                  ]
+                }
+              ],
+              "categories": []
+            },
+            {
               "name": "Wood",
               "engrams": [
                 {
@@ -10564,6 +11953,36 @@
                     {
                       "name": "Stone",
                       "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "name": "Tent",
+                  "description": "A portable Tent where you can take cover in hostile environments.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Wood/",
+                  "image_file": "tent.webp",
+                  "yield": 1,
+                  "level": 7,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Hide",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Silk",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 25
                     }
                   ]
                 },
@@ -11147,6 +12566,24 @@
               "name": "Ammo",
               "engrams": [
                 {
+                  "name": "Flame Arrow",
+                  "description": "Lights the target on fire, and can also light oil slicks.",
+                  "image_folder": "Scorched Earth/Engrams/Weapons/Ammo/",
+                  "image_file": "flame_arrow.webp",
+                  "yield": 1,
+                  "level": 26,
+                  "composition": [
+                    {
+                      "name": "Stone Arrow",
+                      "quantity": 1
+                    },
+                    {
+                      "name": "Propellant",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
                   "name": "Stone Arrow",
                   "description": "An arrow for the bow.",
                   "image_folder": "Vanilla/Engrams/Weapons/Ammo/",
@@ -11192,6 +12629,28 @@
             {
               "name": "Explosive",
               "engrams": [
+                {
+                  "name": "Oil Jar",
+                  "description": "Throw it to create an oil slick which can be lit on fire! This sticky substance can also slow people down which step in it!",
+                  "image_folder": "Scorched Earth/Engrams/Weapons/Explosive/",
+                  "image_file": "oil_jar.webp",
+                  "yield": 1,
+                  "level": 24,
+                  "composition": [
+                    {
+                      "name": "Clay",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Propellant",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Gunpowder",
+                      "quantity": 50
+                    }
+                  ]
+                },
                 {
                   "name": "Smoke Grenade",
                   "description": "Releases a lot of smoke to obscure your plans. Pulling the pin starts a 5 second timer to an explosion.",
@@ -11249,6 +12708,28 @@
                 {
                   "name": "Melee",
                   "engrams": [
+                    {
+                      "name": "Boomerang",
+                      "description": "Your trusty ranged weapon.",
+                      "image_folder": "Scorched Earth/Engrams/Weapons/Primitive/Melee/",
+                      "image_file": "boomerang.webp",
+                      "yield": 1,
+                      "level": 9,
+                      "composition": [
+                        {
+                          "name": "Fiber",
+                          "quantity": 15
+                        },
+                        {
+                          "name": "Wood",
+                          "quantity": 3
+                        },
+                        {
+                          "name": "Sand",
+                          "quantity": 5
+                        }
+                      ]
+                    },
                     {
                       "name": "Spear",
                       "description": "An easily made melee weapon that can also be thrown. Has a chance to break when used.",
@@ -11334,6 +12815,32 @@
                         {
                           "name": "Stone",
                           "quantity": 1
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Whip",
+                      "description": "Keeps your foes at bay, keeps your herd moving.",
+                      "image_folder": "Scorched Earth/Engrams/Weapons/Primitive/Melee/",
+                      "image_file": "whip.webp",
+                      "yield": 1,
+                      "level": 20,
+                      "composition": [
+                        {
+                          "name": "Silk",
+                          "quantity": 10
+                        },
+                        {
+                          "name": "Fiber",
+                          "quantity": 25
+                        },
+                        {
+                          "name": "Wood",
+                          "quantity": 5
+                        },
+                        {
+                          "name": "Hide",
+                          "quantity": 10
                         }
                       ]
                     },
@@ -11653,6 +13160,130 @@
                     {
                       "name": "Chitin",
                       "quantity": 25
+                    }
+                  ]
+                }
+              ],
+              "categories": []
+            },
+            {
+              "name": "Desert Cloth",
+              "engrams": [
+                {
+                  "name": "Desert Cloth Boots",
+                  "description": "Hide-soled shoes provide some protection from the heat and cold, but only minimal protection from injuries.",
+                  "image_folder": "Scorched Earth/Engrams/Armor/Desert Cloth/",
+                  "image_file": "desert_cloth_boots.webp",
+                  "yield": 1,
+                  "level": 28,
+                  "composition": [
+                    {
+                      "name": "Silk",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Fiber",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Hide",
+                      "quantity": 12
+                    }
+                  ]
+                },
+                {
+                  "name": "Desert Cloth Gloves",
+                  "description": "Hide-padded gloves provide some protection from the heat and cold, but only minimal protection from injuries.",
+                  "image_folder": "Scorched Earth/Engrams/Armor/Desert Cloth/",
+                  "image_file": "desert_cloth_gloves.webp",
+                  "yield": 1,
+                  "level": 28,
+                  "composition": [
+                    {
+                      "name": "Silk",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Fiber",
+                      "quantity": 4
+                    },
+                    {
+                      "name": "Hide",
+                      "quantity": 10
+                    }
+                  ]
+                },
+                {
+                  "name": "Desert Cloth Pants",
+                  "description": "Provides some protection from the heat and cold, but only minimal protection from injuries.",
+                  "image_folder": "Scorched Earth/Engrams/Armor/Desert Cloth/",
+                  "image_file": "desert_cloth_pants.webp",
+                  "yield": 1,
+                  "level": 28,
+                  "composition": [
+                    {
+                      "name": "Silk",
+                      "quantity": 15
+                    },
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Hide",
+                      "quantity": 25
+                    }
+                  ]
+                },
+                {
+                  "name": "Desert Cloth Shirt",
+                  "description": "Provides some protection from the heat and cold, but only minimal protection from injuries.",
+                  "image_folder": "Scorched Earth/Engrams/Armor/Desert Cloth/",
+                  "image_file": "desert_cloth_shirt.webp",
+                  "yield": 1,
+                  "level": 28,
+                  "composition": [
+                    {
+                      "name": "Silk",
+                      "quantity": 12
+                    },
+                    {
+                      "name": "Fiber",
+                      "quantity": 8
+                    },
+                    {
+                      "name": "Hide",
+                      "quantity": 20
+                    }
+                  ]
+                },
+                {
+                  "name": "Desert Goggles and Hat",
+                  "description": "You can see better during sandstorms. Provides some protection from the heat and cold, but only minimal protection from injuries.",
+                  "image_folder": "Scorched Earth/Engrams/Armor/Desert Cloth/",
+                  "image_file": "desert_goggles_and_hat.webp",
+                  "yield": 1,
+                  "level": 28,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 6
+                    },
+                    {
+                      "name": "Hide",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Crystal",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Silk",
+                      "quantity": 3
+                    },
+                    {
+                      "name": "Silica Pearls",
+                      "quantity": 3
                     }
                   ]
                 }
@@ -12937,6 +14568,28 @@
               ]
             },
             {
+              "name": "Rock Golem Saddle",
+              "description": "Equip a Rock Golem with this to ride it.",
+              "image_folder": "Scorched Earth/Engrams/Saddles/",
+              "image_file": "rock_golem_saddle.webp",
+              "yield": 1,
+              "level": 70,
+              "composition": [
+                {
+                  "name": "Fiber",
+                  "quantity": 150
+                },
+                {
+                  "name": "Hide",
+                  "quantity": 270
+                },
+                {
+                  "name": "Metal Ingot",
+                  "quantity": 35
+                }
+              ]
+            },
+            {
               "name": "Sabertooth Saddle",
               "description": "Equip a Sabertooth with this to ride it.",
               "image_folder": "Vanilla/Engrams/Saddles/",
@@ -13033,6 +14686,36 @@
                 {
                   "name": "Metal Ingot",
                   "quantity": 55
+                }
+              ]
+            },
+            {
+              "name": "Thorny Dragon Saddle",
+              "description": "Equip a Thorny Dragon with this to ride it.",
+              "image_folder": "Scorched Earth/Engrams/Saddles/",
+              "image_file": "thorny_dragon_saddle.webp",
+              "yield": 1,
+              "level": 40,
+              "composition": [
+                {
+                  "name": "Fiber",
+                  "quantity": 150
+                },
+                {
+                  "name": "Hide",
+                  "quantity": 270
+                },
+                {
+                  "name": "Clay",
+                  "quantity": 85
+                },
+                {
+                  "name": "Wood",
+                  "quantity": 125
+                },
+                {
+                  "name": "Metal Ingot",
+                  "quantity": 35
                 }
               ]
             },
@@ -13169,6 +14852,112 @@
           "name": "Structures",
           "engrams": [],
           "categories": [
+            {
+              "name": "Adobe",
+              "engrams": [
+                {
+                  "name": "Behemoth Adobe Dinosaur Gate",
+                  "description": "A large, reinforced adobe gate that can be used with a Behemoth Gateway to keep dinosaurs in or out.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "behemoth_adobe_dinosaur_gate.webp",
+                  "yield": 1,
+                  "level": 38,
+                  "composition": [
+                    {
+                      "name": "Clay",
+                      "quantity": 450
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 450
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 450
+                    }
+                  ]
+                },
+                {
+                  "name": "Behemoth Adobe Dinosaur Gateway",
+                  "description": "A large adobe gateway that can be used with a Gate to keep most dinosaurs in or out.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "behemoth_adobe_dinosaur_gateway.webp",
+                  "yield": 1,
+                  "level": 38,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 50
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 80
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 280
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 70
+                    }
+                  ]
+                },
+                {
+                  "name": "Giant Adobe Hatchframe",
+                  "description": "This Giant Adobe concrete ceiling has a hole in it for trapdoors.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "giant_adobe_hatchframe.webp",
+                  "yield": 1,
+                  "level": 34,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 70
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 20
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 10
+                    }
+                  ]
+                },
+                {
+                  "name": "Giant Adobe Trapdoor",
+                  "description": "A large adobe gate that can be used with a Gateway to most keep dinosaurs in or out.",
+                  "image_folder": "Scorched Earth/Engrams/Structures/Adobe/",
+                  "image_file": "giant_adobe_trapdoor.webp",
+                  "yield": 1,
+                  "level": 34,
+                  "composition": [
+                    {
+                      "name": "Fiber",
+                      "quantity": 10
+                    },
+                    {
+                      "name": "Clay",
+                      "quantity": 100
+                    },
+                    {
+                      "name": "Wood",
+                      "quantity": 45
+                    },
+                    {
+                      "name": "Thatch",
+                      "quantity": 20
+                    }
+                  ]
+                }
+              ],
+              "categories": []
+            },
             {
               "name": "Cooking",
               "engrams": [
@@ -16484,9 +18273,19 @@
       "image_file": "artifact_of_the_clever.webp"
     },
     {
+      "name": "Artifact of the Crag",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "artifact_of_the_crag.webp"
+    },
+    {
       "name": "Artifact of the Cunning",
       "image_folder": "Vanilla/Resources/",
       "image_file": "artifact_of_the_cunning.webp"
+    },
+    {
+      "name": "Artifact of the Destroyer",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "artifact_of_the_destroyer.webp"
     },
     {
       "name": "Artifact of the Devious",
@@ -16497,6 +18296,11 @@
       "name": "Artifact of the Devourer",
       "image_folder": "Vanilla/Resources/",
       "image_file": "artifact_of_the_devourer.webp"
+    },
+    {
+      "name": "Artifact of the Gatekeeper",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "artifact_of_the_gatekeeper.webp"
     },
     {
       "name": "Artifact of the Hunter",
@@ -16574,6 +18378,16 @@
       "image_file": "bunny_egg.webp"
     },
     {
+      "name": "Cactus Sap",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "cactus_sap.webp"
+    },
+    {
+      "name": "Camelsaurus Egg",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "camelsaurus_egg.webp"
+    },
+    {
       "name": "Carbonemys Egg",
       "image_folder": "Vanilla/Resources/",
       "image_file": "carbonemys_egg.webp"
@@ -16607,6 +18421,11 @@
       "name": "Citronal",
       "image_folder": "Vanilla/Resources/",
       "image_file": "citronal.webp"
+    },
+    {
+      "name": "Clay",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "clay.webp"
     },
     {
       "name": "Compy Egg",
@@ -16652,6 +18471,11 @@
       "name": "Crystal",
       "image_folder": "Vanilla/Resources/",
       "image_file": "crystal.webp"
+    },
+    {
+      "name": "Deathworm Horn",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "deathworm_horn.webp"
     },
     {
       "name": "Deathworm or Woolly Rhino Horn",
@@ -16722,6 +18546,11 @@
       "name": "Fiber",
       "image_folder": "Vanilla/Resources/",
       "image_file": "fiber.webp"
+    },
+    {
+      "name": "Fire Talon",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "fire_talon.webp"
     },
     {
       "name": "Fish Egg",
@@ -16809,6 +18638,11 @@
       "image_file": "leech_blood_or_horns.webp"
     },
     {
+      "name": "Lightning Talon",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "lightning_talon.webp"
+    },
+    {
       "name": "Longrass",
       "image_folder": "Vanilla/Resources/",
       "image_file": "longrass.webp"
@@ -16817,6 +18651,11 @@
       "name": "Lystrosaur Egg",
       "image_folder": "Vanilla/Resources/",
       "image_file": "lystrosaur_egg.webp"
+    },
+    {
+      "name": "Mantis Egg",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "mantis_egg.webp"
     },
     {
       "name": "Megalania Egg",
@@ -16857,6 +18696,11 @@
       "name": "Moschops Egg",
       "image_folder": "Vanilla/Resources/",
       "image_file": "moschops_egg.webp"
+    },
+    {
+      "name": "Moth Egg",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "moth_egg.webp"
     },
     {
       "name": "Narcoberry",
@@ -16914,9 +18758,9 @@
       "image_file": "pelt.webp"
     },
     {
-      "name": "Pelt, Hair, or Wool",
-      "image_folder": "Vanilla/Resources/",
-      "image_file": "pelt.webp"
+      "name": "Poison Talon",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "poison_talon.webp"
     },
     {
       "name": "Polymer",
@@ -16927,6 +18771,11 @@
       "name": "Prime Meat Jerky",
       "image_folder": "Vanilla/Resources/",
       "image_file": "prime_meat_jerky.webp"
+    },
+    {
+      "name": "Propellant",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "propellant.webp"
     },
     {
       "name": "Pteranodon Egg",
@@ -16989,6 +18838,11 @@
       "image_file": "raw_prime_meat.webp"
     },
     {
+      "name": "Raw Salt",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "raw_salt.webp"
+    },
+    {
       "name": "Rex Egg",
       "image_folder": "Vanilla/Resources/",
       "image_file": "rex_egg.webp"
@@ -16997,6 +18851,11 @@
       "name": "Rockarrot",
       "image_folder": "Vanilla/Resources/",
       "image_file": "rockarrot.webp"
+    },
+    {
+      "name": "Sand",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "sand.webp"
     },
     {
       "name": "Sap",
@@ -17032,6 +18891,11 @@
       "name": "Silica Pearls",
       "image_folder": "Vanilla/Resources/",
       "image_file": "silica_pearls.webp"
+    },
+    {
+      "name": "Silk",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "silk.webp"
     },
     {
       "name": "Simple Rifle Ammo",
@@ -17094,6 +18958,11 @@
       "image_file": "stone_arrow.webp"
     },
     {
+      "name": "Sulfur",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "sulfur.webp"
+    },
+    {
       "name": "Tapejara Egg",
       "image_folder": "Vanilla/Resources/",
       "image_file": "tapejara_egg.webp"
@@ -17117,6 +18986,11 @@
       "name": "Therizinosaurus Egg",
       "image_folder": "Vanilla/Resources/",
       "image_file": "therizinosaurus_egg.webp"
+    },
+    {
+      "name": "Thorny Dragon Egg",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "thorny_dragon_egg.webp"
     },
     {
       "name": "Thylacoleo Hook-Claw",
@@ -17164,6 +19038,11 @@
       "image_file": "tyrannosaurus_arm.webp"
     },
     {
+      "name": "Vulture Egg",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "vulture_egg.webp"
+    },
+    {
       "name": "Water",
       "image_folder": "Vanilla/Resources/",
       "image_file": "water.webp"
@@ -17182,6 +19061,16 @@
       "name": "Woolly Rhino Horn",
       "image_folder": "Vanilla/Resources/",
       "image_file": "woolly_rhino_horn.webp"
+    },
+    {
+      "name": "Wyvern Egg",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "wyvern_egg.webp"
+    },
+    {
+      "name": "Wyvern Milk",
+      "image_folder": "Scorched Earth/Resources/",
+      "image_file": "wyvern_milk.webp"
     },
     {
       "name": "Yutyrannus Egg",

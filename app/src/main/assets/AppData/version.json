@@ -3,7 +3,6 @@
   "files": [
     "vanilla.json",
     "primitive_plus.json",
-    "scorched_earth.json",
-    "aberration.json"
+    "scorched_earth.json"
   ]
 }

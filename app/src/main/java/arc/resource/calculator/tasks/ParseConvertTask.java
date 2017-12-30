@@ -5,21 +5,24 @@ import android.os.AsyncTask;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.util.JSONUtil;
+import arc.resource.calculator.model.json.JSONDataObject;
+import arc.resource.calculator.model.json.JSONVersion;
 import arc.resource.calculator.util.PrefsUtil;
 
-public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
+public class ParseConvertTask extends AsyncTask<Context, Void, Boolean> {
     private final String TAG = ParseConvertTask.class.getSimpleName();
 
     private final String _ID = DatabaseContract.EngramEntry._ID;
@@ -66,8 +69,6 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
 
     private SparseArray<Long> mDlcIds = new SparseArray<>();
 
-    private Context mContext;
-    private String mVersion;
     private JSONObject mJSONObject;
     private Listener mListener;
 
@@ -100,25 +101,8 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
         void onFinish( JSONObject newObject );
     }
 
-    public ParseConvertTask( Context context, Listener listener ) {
-        setContext( context );
+    public ParseConvertTask( Listener listener ) {
         setListener( listener );
-    }
-
-    private void setContext( Context context ) {
-        mContext = context;
-    }
-
-    private Context getContext() {
-        return mContext;
-    }
-
-    private void setVersion( String version ) {
-        mVersion = version;
-    }
-
-    private String getVersion() {
-        return mVersion;
     }
 
     private void setListener( Listener listener ) {
@@ -146,34 +130,38 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground( Void... params ) {
+    protected Boolean doInBackground( Context... params ) {
         try {
-            // read the local converted json file into a string
-            String jsonString = JSONUtil.readRawJsonFileToJsonString( getContext(), R.raw.data_editable );
+            Context context = params[0];
 
+            ObjectMapper mapper = new ObjectMapper();
 
-            // build a json object based on the read json string
-            JSONObject oldObject = new JSONObject( jsonString );
+            // read json version file for current version
+            // TODO: 12/30/2017 "version.json" to string resource
+            JSONVersion jsonVersion = mapper.readValue( getFileFromFilename( context, "version.json" ), JSONVersion.class );
 
-            JSONObject json = oldObject.getJSONObject( JSON );
-            String oldVersion = PrefsUtil.getInstance( mContext ).getJSONVersion();
-            String newVersion = json.getString( COLUMN_VERSION );
+            // grab persistent version saved on phone
+            String currentVersion = PrefsUtil.getInstance( context ).getJSONVersion();
 
             // now, let's check if we even need to update.
-            if ( !isNewVersion( oldVersion, newVersion ) ) {
+            // if not, return out of task
+            if ( !isNewVersion( currentVersion, jsonVersion.getCurrent() ) ) {
                 return false;
             }
 
-            setVersion( newVersion );
-
             // emit new version event
-            getListener().onNewVersion( oldVersion, newVersion );
+            getListener().onNewVersion( currentVersion, jsonVersion.getCurrent() );
 
             // new version! let's get cracking!
             // let user know that we've begun the process.
             getListener().onStart();
 
-            mJSONObject = convertJSONObjectToIds( oldObject );
+//            mJSONObject = convertJSONObjectToIds( oldObject );
+
+            for ( String fileName : jsonVersion.getFiles() ) {
+                JSONDataObject jsonDataObject = mapper.readValue( getFileFromFilename( context, fileName ), JSONDataObject.class );
+
+            }
 
             return true;
         }
@@ -183,6 +171,10 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             mException = e;
             return false;
         }
+    }
+
+    private File getFileFromFilename( Context context, String fileName ) {
+        return new File( context.getExternalFilesDir( null ), fileName );
     }
 
     private boolean isNewVersion( String oldVersion, String newVersion ) {

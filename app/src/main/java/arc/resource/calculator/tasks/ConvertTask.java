@@ -125,7 +125,6 @@ public class ConvertTask extends AsyncTask<Context, Void, Void> {
 
                     Log.d( TAG, "--[ End of DLC ]--" );
                 }
-
             } else {
                 Log.d( TAG, "No DLC found." );
             }
