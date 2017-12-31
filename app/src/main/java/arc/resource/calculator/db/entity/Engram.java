@@ -21,7 +21,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class Engram {
     @PrimaryKey( autoGenerate = true )
     @ColumnInfo( name = "_id" )
-    private int id;
+    private long id;
 
     private String name;
 
@@ -58,11 +58,11 @@ public class Engram {
         this.dlcId = dlcId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId( int id ) {
+    public void setId( long id ) {
         this.id = id;
     }
 

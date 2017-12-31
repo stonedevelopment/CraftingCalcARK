@@ -16,20 +16,28 @@ import android.arch.persistence.room.ForeignKey;
 
 public class ComplexResource {
     @ColumnInfo( name = "engram_id" )
-    private int engramId;
+    private long engramId;
     @ColumnInfo( name = "resource_id" )
-    private int resourceId;
+    private long resourceId;
 
-    public ComplexResource( int engramId, int resourceId ) {
+    public ComplexResource( long engramId, long resourceId ) {
         this.engramId = engramId;
         this.resourceId = resourceId;
     }
 
-    public int getEngramId() {
+    public long getEngramId() {
         return engramId;
     }
 
-    public int getResourceId() {
+    public void setEngramId( long engramId ) {
+        this.engramId = engramId;
+    }
+
+    public long getResourceId() {
         return resourceId;
+    }
+
+    public void setResourceId( long resourceId ) {
+        this.resourceId = resourceId;
     }
 }

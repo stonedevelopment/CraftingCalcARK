@@ -14,46 +14,65 @@ import android.arch.persistence.room.PrimaryKey;
                 childColumns = "dlc_id" ) } )
 
 public class Category {
-    @PrimaryKey
+    @PrimaryKey( autoGenerate = true )
     @ColumnInfo( name = "_id" )
-    private int id;
+    private long id;
 
     private String name;
 
     @ColumnInfo( name = "parent_id" )
-    private int parentId;
+    private long parentId;
 
     @ColumnInfo( name = "station_id" )
-    private int stationId;
+    private long stationId;
 
     @ColumnInfo( name = "dlc_id" )
-    private int dlcId;
+    private long dlcId;
 
-    public Category( String name, int parentId, int stationId, int dlcId ) {
+    public Category( String name, long parentId, long stationId, long dlcId ) {
         this.name = name;
         this.parentId = parentId;
         this.stationId = stationId;
         this.dlcId = dlcId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId( long id ) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getParentId() {
+    public void setName( String name ) {
+        this.name = name;
+    }
+
+    public long getParentId() {
         return parentId;
     }
 
-    public int getStationId() {
+    public void setParentId( long parentId ) {
+        this.parentId = parentId;
+    }
+
+    public long getStationId() {
         return stationId;
     }
 
-    public int getDlcId() {
+    public void setStationId( long stationId ) {
+        this.stationId = stationId;
+    }
+
+    public long getDlcId() {
         return dlcId;
     }
 
+    public void setDlcId( long dlcId ) {
+        this.dlcId = dlcId;
+    }
 }

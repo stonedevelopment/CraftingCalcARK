@@ -31,4 +31,36 @@ public class Composition {
         this.resourceId = resourceId;
         this.quantity = quantity;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId( long id ) {
+        this.id = id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity( int quantity ) {
+        this.quantity = quantity;
+    }
+
+    public long getEngramId() {
+        return engramId;
+    }
+
+    public void setEngramId( long engramId ) {
+        this.engramId = engramId;
+    }
+
+    public long getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId( long resourceId ) {
+        this.resourceId = resourceId;
+    }
 }

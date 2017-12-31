@@ -20,7 +20,7 @@ import arc.resource.calculator.model.json.JSONDataObject;
  * Converts data_editable.json's old configuration into the new tree style
  * Still editable
  *
- * @see ParseConvertTask todo update to new tree style
+ * @see UpdateDatabaseTask todo update to new tree style
  */
 public class ConvertTask extends AsyncTask<Context, Void, Void> {
     private static final String TAG = ConvertTask.class.getSimpleName();

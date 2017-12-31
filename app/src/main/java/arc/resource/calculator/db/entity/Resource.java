@@ -13,7 +13,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class Resource {
     @PrimaryKey( autoGenerate = true )
     @ColumnInfo( name = "_id" )
-    private int id;
+    private long id;
 
     private String name;
 
@@ -24,32 +24,52 @@ public class Resource {
     private String imageFile;
 
     @ColumnInfo( name = "dlc_id" )
-    private int dlcId;
+    private long dlcId;
 
-    public Resource( String name, String imageFolder, String imageFile, int dlcId ) {
+    public Resource( String name, String imageFolder, String imageFile, long dlcId ) {
         this.name = name;
         this.imageFolder = imageFolder;
         this.imageFile = imageFile;
         this.dlcId = dlcId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId( long id ) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName( String name ) {
+        this.name = name;
+    }
+
     public String getImageFolder() {
         return imageFolder;
+    }
+
+    public void setImageFolder( String imageFolder ) {
+        this.imageFolder = imageFolder;
     }
 
     public String getImageFile() {
         return imageFile;
     }
 
-    public int getDlcId() {
+    public void setImageFile( String imageFile ) {
+        this.imageFile = imageFile;
+    }
+
+    public long getDlcId() {
         return dlcId;
+    }
+
+    public void setDlcId( long dlcId ) {
+        this.dlcId = dlcId;
     }
 }

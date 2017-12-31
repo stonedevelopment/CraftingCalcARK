@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.DatabaseHelper;
+import arc.resource.calculator.db.AppDatabase;
 
 public class DialogUtil {
     public abstract static class Callback {
@@ -122,7 +122,7 @@ public class DialogUtil {
                                 "Steam:\n  MasterxOfxNone\n" +
                                 "Xbox Live:\n  MasterxOfxNone\n\n" +
                                 "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
-                                "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
+                                "Database Version: " + AppDatabase.getInstance( context ).getOpenHelper().getReadableDatabase().getVersion() + "\n" +
                                 "JSON File Version: " + PrefsUtil.getInstance( context ).getJSONVersion() + "\n\n" +
                                 "Screen Size: " + context.getString( R.string.dimens ) );
 

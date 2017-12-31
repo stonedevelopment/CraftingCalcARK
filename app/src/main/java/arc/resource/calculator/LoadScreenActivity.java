@@ -28,8 +28,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.tasks.InitializationTask;
-import arc.resource.calculator.tasks.ParseConvertTask;
+import arc.resource.calculator.tasks.InitializationTask_old;
+import arc.resource.calculator.tasks.UpdateDatabaseTask;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -149,7 +149,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         // JSONEvent
                         //  Save 'has  update' to preferences if updated
 //                        new ConvertTask().execute( getApplicationContext() );
-                        new ParseConvertTask( new ParseConvertTask.Listener() {
+                        new UpdateDatabaseTask( new UpdateDatabaseTask.Listener() {
                             @Override
                             public void onError( Exception e ) {
                                 // alert status window of error
@@ -200,7 +200,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                             }
 
                             @Override
-                            public void onFinish( JSONObject newObject ) {
+                            public void onFinishWithUpdate() {
                                 // alert status window that database initialization has finished, with update
                                 updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_json_event_finished_with_update ) ) );
 
@@ -208,7 +208,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                                 mHasUpdate = true;
 
                                 // set global json object for use in initialization task
-                                mJSONObject = newObject;
+//                                mJSONObject = newObject;
 
                                 // trigger next event (database initialization)
                                 mListener.onEndEvent();
@@ -218,7 +218,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
                     case DATABASE:
                         if ( mHasUpdate ) {
-                            new InitializationTask( getApplicationContext(), mJSONObject, new InitializationTask.Listener() {
+                            new InitializationTask_old( getApplicationContext(), mJSONObject, new InitializationTask_old.Listener() {
                                 @Override
                                 public void onError( Exception e ) {
                                     // alert status window of error

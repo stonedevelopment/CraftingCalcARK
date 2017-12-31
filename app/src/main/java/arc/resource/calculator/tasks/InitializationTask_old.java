@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 
@@ -13,20 +12,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
-import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.db.dao.EngramDao;
-import arc.resource.calculator.db.entity.Composition;
-import arc.resource.calculator.db.entity.Engram;
 
 import static arc.resource.calculator.util.Util.NO_ID;
 
-public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
-    private static final String TAG = InitializationTask.class.getSimpleName();
+public class InitializationTask_old extends AsyncTask<Void, Void, Boolean> {
+    private static final String TAG = InitializationTask_old.class.getSimpleName();
 
     private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>( 0 );
     private final SparseArray<Long> mDlcIds = new SparseArray<>( 0 );
@@ -50,7 +43,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         void onFinish( boolean didUpdate );
     }
 
-    public InitializationTask( Context context, JSONObject object, Listener listener ) {
+    public InitializationTask_old( Context context, JSONObject object, Listener listener ) {
         setContext( context );
         setJSONObject( object );
         setListener( listener );

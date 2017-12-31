@@ -13,25 +13,39 @@ import android.arch.persistence.room.PrimaryKey;
 public class Queue {
     @PrimaryKey( autoGenerate = true )
     @ColumnInfo( name = "_id" )
-    private int id;
-    private int quantity;
-    @ColumnInfo( name = "engram_id" )
-    private int engramId;
+    private long id;
 
-    public Queue( int quantity, int engramId ) {
+    private int quantity;
+
+    @ColumnInfo( name = "engram_id" )
+    private long engramId;
+
+    public Queue( int quantity, long engramId ) {
         this.quantity = quantity;
         this.engramId = engramId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId( long id ) {
+        this.id = id;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public int getEngramId() {
+    public void setQuantity( int quantity ) {
+        this.quantity = quantity;
+    }
+
+    public long getEngramId() {
         return engramId;
+    }
+
+    public void setEngramId( long engramId ) {
+        this.engramId = engramId;
     }
 }
