@@ -16,10 +16,13 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.db.entity.Queue;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.NavigationObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
@@ -505,6 +508,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         try {
             CraftingQueue craftingQueue = CraftingQueue.getInstance();
 
+            AppDatabase db = AppDatabase.getInstance( getContext() );
+
             for ( int i = 0; i < getCraftableMap().size(); i++ ) {
                 DisplayEngram craftable = getCraftable( i );
 
@@ -976,6 +981,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 if ( isFilteredByCategory() ) {
                     if ( isFilteredByStation() ) {
                         if ( isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION ) {
+//                            List<arc.resource.calculator.db.entity.BaseStation> stations = AppDatabase.getInstance( getContext() ).stationDao().getAll( dlc_id );
                             stationUri = DatabaseContract.StationEntry.buildUriWithDLCId( dlc_id );
                         } else {
                             if ( isFilteredByLevel() ) {

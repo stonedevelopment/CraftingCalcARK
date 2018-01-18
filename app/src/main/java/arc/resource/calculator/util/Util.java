@@ -6,6 +6,7 @@ import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.engram.DisplayEngram;
@@ -174,5 +175,9 @@ public class Util {
 
     private String addSpaces( int n ) {
         return new String( new char[n * 2] ).replace( "\0", " " );
+    }
+
+    public static String generateUUID() {
+        return UUID.randomUUID().toString();
     }
 }

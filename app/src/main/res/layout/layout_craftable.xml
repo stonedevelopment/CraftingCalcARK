@@ -8,17 +8,6 @@
     android:background="@drawable/frame_switcher_main"
     android:orientation="vertical">
 
-    <!--<arc.resource.calculator.views.textviews.NavigationTextView-->
-    <!--android:id="@+id/textview_navigation_hierarchy"-->
-    <!--style="@style/AppTheme.Text.Layout.Heading.Normal"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:paddingBottom="4dp"-->
-    <!--android:paddingEnd="8dp"-->
-    <!--android:paddingStart="8dp"-->
-    <!--android:paddingTop="4dp"-->
-    <!--tools:text="Smithy/Metal/Storage"/>-->
-
     <arc.resource.calculator.views.switchers.CraftableSwitcher
         android:id="@+id/switcher_craftables"
         android:layout_width="0dp"
@@ -30,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ProgressBar
+        <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/progress_bar_craftables"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

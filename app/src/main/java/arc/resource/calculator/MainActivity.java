@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
@@ -23,12 +22,8 @@ import android.widget.Toast;
 import com.lapism.searchview.SearchView;
 import com.squareup.picasso.Picasso;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.listeners.QueueObservable;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
@@ -63,6 +58,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
 
+    private DrawerLayout mDrawer;
+
     private AdUtil mAdUtil;
 
     // Purchase flow -> disable menu option to disable ads
@@ -89,26 +86,26 @@ public class MainActivity extends AppCompatActivity
         craftableSwitcher.onCreate( this );
         registerForContextMenu( craftableSwitcher.getRecyclerView() );
 
-        final BottomSheetBehavior bottomSheet = BottomSheetBehavior.from( findViewById( R.id.bottom_sheet ) );
-        bottomSheet.setState( BottomSheetBehavior.STATE_HIDDEN );
+//        final BottomSheetBehavior bottomSheet = BottomSheetBehavior.from( findViewById( R.id.bottom_sheet ) );
+//        bottomSheet.setState( BottomSheetBehavior.STATE_HIDDEN );
 
         ConstraintLayout queueLayout = findViewById( R.id.layout_queue );
         QueueSwitcher queueSwitcher = queueLayout.findViewById( R.id.switcher_queue );
         queueSwitcher.onCreate( this );
         registerForContextMenu( queueSwitcher.getRecyclerView() );
 
-        SearchView searchView = findViewById( R.id.searchView );
+        SearchView searchView = findViewById( R.id.toolbar );
         searchView.setOnNavigationIconClickListener( new SearchView.OnNavigationIconClickListener() {
             @Override
             public void onNavigationIconClick( float state ) {
-                NavigationView navigationView = findViewById( R.id.navigation_view );
+                NavigationView navigationView = findViewById( R.id.navigation );
 
-                DrawerLayout drawerLayout = findViewById( R.id.drawer_layout );
+                DrawerLayout drawerLayout = findViewById( R.id.drawer );
                 drawerLayout.openDrawer( navigationView );
             }
         } );
 
-        NavigationView navigationView = findViewById( R.id.navigation_view );
+        NavigationView navigationView = findViewById( R.id.navigation );
         View view = navigationView.getHeaderView( 0 );
         ImageView imageView = view.findViewById( R.id.nav_header_image );
         if ( imageView != null ) {
@@ -119,16 +116,6 @@ public class MainActivity extends AppCompatActivity
                     .placeholder( R.drawable.placeholder_empty )
                     .into( imageView );
         }
-
-        final FloatingActionButton fab = findViewById( R.id.fabMenu );
-        fab.setOnClickListener( new OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                ( ( FloatingActionButton ) v ).hide();
-
-                bottomSheet.setState( BottomSheetBehavior.STATE_COLLAPSED );
-            }
-        } );
 
         ConstraintLayout buttonLayout = findViewById( R.id.buttons );
         final Button clearQueue = buttonLayout.findViewById( R.id.button_clear_queue );
@@ -151,25 +138,6 @@ public class MainActivity extends AppCompatActivity
         clearQueue.setEnabled( isQueueEmpty );
         craftIt.setEnabled( isQueueEmpty );
 
-        bottomSheet.setBottomSheetCallback( new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged( @NonNull View bottomSheet, int newState ) {
-                switch ( newState ) {
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        fab.hide();
-                        break;
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        fab.show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide( @NonNull View bottomSheet, float slideOffset ) {
-                // do nothing!
-            }
-        } );
-
         mAdUtil = new AdUtil( this, R.id.content_main );
 
         showChangeLog();
@@ -183,8 +151,8 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawerLayout = findViewById( R.id.drawer_layout );
-        NavigationView navigationView = findViewById( R.id.navigation_view );
+        DrawerLayout drawerLayout = findViewById( R.id.drawer );
+        NavigationView navigationView = findViewById( R.id.navigation );
         BottomSheetBehavior bottomSheet = BottomSheetBehavior.from( findViewById( R.id.bottom_sheet ) );
 
         if ( drawerLayout.isDrawerOpen( navigationView ) ) {
@@ -443,6 +411,7 @@ public class MainActivity extends AppCompatActivity
             }
         } );
     }
+
 
     private void startDetailActivity( long id ) {
         Intent intent = new Intent( this, DetailActivity.class );

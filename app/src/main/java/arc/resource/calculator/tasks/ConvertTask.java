@@ -50,7 +50,7 @@ public class ConvertTask extends AsyncTask<Context, Void, Void> {
                     String dlcName = cDlcs.getString( cDlcs.getColumnIndex(
                             DatabaseContract.DLCEntry.COLUMN_NAME ) );
 
-                    JSONDataObject jsonDataObject = new JSONDataObject( dlcId, dlcName );
+                    JSONDataObject jsonDataObject = new JSONDataObject( dlcName );
 
                     Log.d( TAG, "Found " + dlcName );
 
@@ -191,7 +191,7 @@ public class ConvertTask extends AsyncTask<Context, Void, Void> {
 
                                                 if ( resourceName != null ) {
 //                                                    Log.d( TAG, "Found " + resourceName );
-                                                    engram.addCompositionElement( new JSONDataObject.CompositionElement( resourceName, resourceQuantity ) );
+                                                    engram.addCompositionElement( new JSONDataObject.Composite( resourceName, resourceQuantity ) );
                                                 } else {
 //                                                    Log.d( TAG, "No Resource found." );
                                                 }

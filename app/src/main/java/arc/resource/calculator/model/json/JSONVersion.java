@@ -6,6 +6,10 @@ public class JSONVersion {
     private String current;
     private List<String> files;
 
+    public JSONVersion() {
+
+    }
+
     public JSONVersion( String current, List<String> files ) {
         this.current = current;
         this.files = files;

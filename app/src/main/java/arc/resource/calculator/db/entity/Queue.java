@@ -1,51 +1,55 @@
 package arc.resource.calculator.db.entity;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+import arc.resource.calculator.util.Util;
 
-@Entity( foreignKeys = {
-        @ForeignKey( entity = Engram.class,
-                parentColumns = "_id",
-                childColumns = "engram_id" ) } )
-
+@Entity(foreignKeys = {
+    @ForeignKey(entity = BaseEngram.class,
+        parentColumns = "id",
+        childColumns = "engramId")},
+    indices = {
+        @Index(value = "engramId",
+            unique = true)})
 public class Queue {
-    @PrimaryKey( autoGenerate = true )
-    @ColumnInfo( name = "_id" )
-    private long id;
 
-    private int quantity;
+  @NonNull
+  @PrimaryKey
+  private final String id;
 
-    @ColumnInfo( name = "engram_id" )
-    private long engramId;
+  @NonNull
+  private final String engramId;
 
-    public Queue( int quantity, long engramId ) {
-        this.quantity = quantity;
-        this.engramId = engramId;
-    }
+  @NonNull
+  private final Integer quantity;
 
-    public long getId() {
-        return id;
-    }
+  @Ignore
+  public Queue(String engramId, Integer quantity) {
+    this(Util.generateUUID(), engramId, quantity);
+  }
 
-    public void setId( long id ) {
-        this.id = id;
-    }
+  public Queue(@NonNull String id, @NonNull String engramId, @NonNull Integer quantity) {
+    this.id = id;
+    this.engramId = engramId;
+    this.quantity = quantity;
+  }
 
-    public int getQuantity() {
-        return quantity;
-    }
+  @NonNull
+  public String getId() {
+    return id;
+  }
 
-    public void setQuantity( int quantity ) {
-        this.quantity = quantity;
-    }
+  @NonNull
+  public String getEngramId() {
+    return engramId;
+  }
 
-    public long getEngramId() {
-        return engramId;
-    }
-
-    public void setEngramId( long engramId ) {
-        this.engramId = engramId;
-    }
+  @NonNull
+  public Integer getQuantity() {
+    return quantity;
+  }
 }

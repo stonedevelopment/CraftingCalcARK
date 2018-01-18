@@ -25,10 +25,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONObject;
-
 import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.tasks.InitializationTask_old;
 import arc.resource.calculator.tasks.UpdateDatabaseTask;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
@@ -48,14 +45,12 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     enum EVENT {
         INIT,
         JSON,
-        DATABASE,
         PREFERENCES,
         PREPARATION
     }
 
     private static final long DELAY_MILLIS = 1500;
 
-    private JSONObject mJSONObject;
     private Listener mListener;
     private String mNewVersion;
     private long mStartElapsedTime;
@@ -147,8 +142,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
                     case JSON:
                         // JSONEvent
-                        //  Save 'has  update' to preferences if updated
-//                        new ConvertTask().execute( getApplicationContext() );
                         new UpdateDatabaseTask( new UpdateDatabaseTask.Listener() {
                             @Override
                             public void onError( Exception e ) {
@@ -181,7 +174,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                             @Override
                             public void onStart() {
                                 // alert status window that database initialization has begun
-                                updateStatusMessages( getString( R.string.initialization_json_event_started ) );
+                                updateStatusMessages( getString( R.string.initialization_db_event_started ) );
                             }
 
                             @Override
@@ -204,66 +197,10 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                                 // alert status window that database initialization has finished, with update
                                 updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_json_event_finished_with_update ) ) );
 
-                                // set global boolean to notify initialization task
-                                mHasUpdate = true;
-
-                                // set global json object for use in initialization task
-//                                mJSONObject = newObject;
-
                                 // trigger next event (database initialization)
                                 mListener.onEndEvent();
                             }
                         } ).execute( getApplicationContext() );
-                        break;
-
-                    case DATABASE:
-                        if ( mHasUpdate ) {
-                            new InitializationTask_old( getApplicationContext(), mJSONObject, new InitializationTask_old.Listener() {
-                                @Override
-                                public void onError( Exception e ) {
-                                    // alert status window of error
-                                    updateStatusMessages( getString( R.string.initialization_error_event ) );
-
-                                    // trigger activity error event handler
-                                    mListener.onError( e );
-                                }
-
-                                @Override
-                                public void onInit() {
-                                    // alert status window that database initialization is initializing
-//                                updateStatusMessages( getString( R.string.initialization_db_event_init ) );
-                                }
-
-                                @Override
-                                public void onStart() {
-                                    // alert status window that database initialization has begun
-                                    updateStatusMessages( getString( R.string.initialization_db_event_started ) );
-                                }
-
-                                @Override
-                                public void onUpdate( String message ) {
-                                    // alert status window with a new message
-                                    updateStatusMessages( message );
-                                }
-
-                                @Override
-                                public void onFinish( boolean didUpdate ) {
-                                    // alert status window that database initialization has finished, with or without an error
-                                    if ( didUpdate ) {
-                                        updateStatusMessages( formatMessageWithElapsedTime( getString( R.string.initialization_db_event_finished ) ) );
-
-                                        // set global boolean used to notify main activity when called
-                                        mDidUpdate = true;
-                                    }
-
-                                    // trigger next event (in-app purchases?)
-                                    mListener.onEndEvent();
-                                }
-                            } ).execute();
-                        } else {
-                            // trigger next event (in-app purchases?)
-                            mListener.onEndEvent();
-                        }
                         break;
 
                     case PREFERENCES:

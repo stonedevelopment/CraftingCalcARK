@@ -33,11 +33,11 @@ android {
         signingConfig signingConfigs.config
         vectorDrawables.useSupportLibrary = true
 
-        // used by Room, to test migrations
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation":
-                                     "$projectDir/schemas".toString()]
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
     }
@@ -49,12 +49,6 @@ android {
     }
 
     productFlavors {
-    }
-
-    // used by Room, to test migrations
-    sourceSets {
-        androidTest.assets.srcDirs +=
-                files("$projectDir/schemas".toString())
     }
 }
 
