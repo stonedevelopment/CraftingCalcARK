@@ -1,7 +1,5 @@
 package arc.resource.calculator.db.dao;
 
-import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
-
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -11,32 +9,20 @@ import java.util.List;
 @Dao
 public interface DLCEngramDao {
 
-  //  get id by matching parameters
-  @Query("select id from dlcengram "
-      + "where dlcId = :dlcId "
-      + "and engramId = :engramId "
-      + "limit 1")
-  String getId(String dlcId, String engramId);
-
-  @Query("select engramId from dlcengram "
-      + "where id =:id "
-      + "limit 1")
-  String getEngramId(String id);
-
   @Query("select * from DLCEngram")
   List<DLCEngram> getAll();
 
-  //  insert one DLCResource object
-  @Insert(onConflict = IGNORE)
-  long insert(DLCEngram dlcEngram);
+  @Query("select * from DLCEngram "
+      + "where dlcId = :dlcId")
+  List<DLCEngram> getAll(String dlcId);
 
-  //  insert multiple DLCResource objects
-  @Insert(onConflict = IGNORE)
-  void insert(DLCEngram... dlcEngrams);
+  @Query("select * from DLCEngram "
+      + "where parentId = :parentId "
+      + "and dlcId = :dlcId")
+  List<DLCEngram> getAll(String parentId, String dlcId);
 
-  //  insert a list of DLCResource objects
-  @Insert(onConflict = IGNORE)
-  void insert(List<DLCEngram> dlcEngrams);
+  @Insert
+  void insert(DLCEngram dlcEngram);
 
   //  delete all records from table
   @Query("delete from dlcengram")

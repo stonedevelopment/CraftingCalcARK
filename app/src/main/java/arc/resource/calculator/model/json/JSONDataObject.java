@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonPropertyOrder({"id", "image_folder", "image_file", "name", "stations", "resources"})
+@JsonPropertyOrder({"image_folder", "image_file", "name", "stations", "resources"})
 public class JSONDataObject {
 
-  private String type;
   private String name;
   private String image_folder;
   private String image_file;

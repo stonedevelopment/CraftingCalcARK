@@ -9,7 +9,7 @@ import arc.resource.calculator.util.Util;
 
 @Entity(tableName = "dlc",
     indices = {
-        @Index(value = {"imageFolder", "imageFile"},
+        @Index(value = {"contentFolder", "imageLocationId", "nameId"},
             unique = true)})
 
 public class BaseDLC {
@@ -19,20 +19,24 @@ public class BaseDLC {
   private final String id;
 
   @NonNull
-  private final String imageFolder;
+  private final String contentFolder;
 
   @NonNull
-  private final String imageFile;
+  private final String imageLocationId;
+
+  @NonNull
+  private final String nameId;
 
   @Ignore
-  public BaseDLC(String imageFolder, String imageFile) {
-    this(Util.generateUUID(), imageFolder, imageFile);
+  public BaseDLC(String contentFolder, String imageLocationId, String nameId) {
+    this(Util.generateUUID(), contentFolder, imageLocationId, nameId);
   }
 
-  public BaseDLC(@NonNull String id, @NonNull String imageFolder, @NonNull String imageFile) {
+  public BaseDLC(@NonNull String id, @NonNull String contentFolder, @NonNull String imageLocationId, @NonNull String nameId) {
     this.id = id;
-    this.imageFolder = imageFolder;
-    this.imageFile = imageFile;
+    this.contentFolder = contentFolder;
+    this.imageLocationId = imageLocationId;
+    this.nameId = nameId;
   }
 
   @NonNull
@@ -41,12 +45,17 @@ public class BaseDLC {
   }
 
   @NonNull
-  public String getImageFolder() {
-    return imageFolder;
+  public String getContentFolder() {
+    return contentFolder;
   }
 
   @NonNull
-  public String getImageFile() {
-    return imageFile;
+  public String getImageLocationId() {
+    return imageLocationId;
+  }
+
+  @NonNull
+  public String getNameId() {
+    return nameId;
   }
 }

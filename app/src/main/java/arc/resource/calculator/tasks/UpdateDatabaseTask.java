@@ -1,42 +1,19 @@
 package arc.resource.calculator.tasks;
 
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import arc.resource.calculator.model.json.JSONDLC;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import arc.resource.calculator.db.AppDatabase;
-import arc.resource.calculator.db.entity.BaseComposite;
-import arc.resource.calculator.db.entity.BaseDLC;
-import arc.resource.calculator.db.entity.BaseEngram;
-import arc.resource.calculator.db.entity.BaseFolder;
-import arc.resource.calculator.db.entity.BaseResource;
-import arc.resource.calculator.db.entity.BaseStation;
-import arc.resource.calculator.db.entity.DLCEngram;
-import arc.resource.calculator.db.entity.DLCFolder;
-import arc.resource.calculator.db.entity.DLCName;
-import arc.resource.calculator.db.entity.DLCResource;
-import arc.resource.calculator.db.entity.DLCStation;
-import arc.resource.calculator.db.entity.Description;
-import arc.resource.calculator.db.entity.EngramDescription;
-import arc.resource.calculator.db.entity.EngramName;
-import arc.resource.calculator.db.entity.FolderEngram;
-import arc.resource.calculator.db.entity.FolderName;
-import arc.resource.calculator.db.entity.Name;
-import arc.resource.calculator.db.entity.ResourceName;
-import arc.resource.calculator.db.entity.StationEngram;
-import arc.resource.calculator.db.entity.StationFolder;
-import arc.resource.calculator.db.entity.StationName;
-import arc.resource.calculator.model.json.JSONDataObject;
-import arc.resource.calculator.model.json.JSONVersion;
+import arc.resource.calculator.model.json.JSONUpdate;
 import arc.resource.calculator.util.PrefsUtil;
 
 public class UpdateDatabaseTask extends AsyncTask<Context, Void, Boolean> {
@@ -110,20 +87,20 @@ public class UpdateDatabaseTask extends AsyncTask<Context, Void, Boolean> {
 
             // read json version file for current version
             // TODO: 12/30/2017 "version.json" to string resource
-            JSONVersion jsonVersion = mapper.readValue(
-                    getFileFromFilename( context, "version.json" ), JSONVersion.class );
+            JSONUpdate jsonUpdate = mapper.readValue(
+                    getFileFromFilename( context, "version.json" ), JSONUpdate.class );
 
             // grab persistent version saved on phone
             String currentVersion = PrefsUtil.getInstance( context ).getJSONVersion();
 
             // now, let's check if we even need to update.
             // if not, return out of task
-            if ( !isNewVersion( currentVersion, jsonVersion.getCurrent() ) ) {
+            if ( !isNewVersion( currentVersion, jsonUpdate.getVersion() ) ) {
                 return false;
             }
 
             // emit new version event
-            getListener().onNewVersion( currentVersion, jsonVersion.getCurrent() );
+            getListener().onNewVersion( currentVersion, jsonUpdate.getVersion() );
 
             // new version! let's get cracking!
             // let user know that we've begun the process.
@@ -136,13 +113,13 @@ public class UpdateDatabaseTask extends AsyncTask<Context, Void, Boolean> {
             deleteAllRecordsFromAllTables( db );
 
             //  iterate through list of files to grab data from
-            for ( String fileName : jsonVersion.getFiles() ) {
+            for ( String fileName : jsonUpdate.getDlcFiles() ) {
 
                 // TODO: 1/6/2018 Test if baseObjects full constructor can be private
 
                 //  scrub JSONDataObject for data to insert
-                JSONDataObject dlcData = mapper.readValue(
-                        getFileFromAssets( context, fileName ), JSONDataObject.class );
+                JSONDLC dlcData = mapper.readValue(
+                        getFileFromAssets( context, fileName ), JSONDLC.class );
 
 //                //  test if dlc exists, insert if not
 //                String dlcId = db.dlcDao().getId( dlcData.getImage_folder(), dlcData.getImage_file() );
@@ -235,9 +212,9 @@ public class UpdateDatabaseTask extends AsyncTask<Context, Void, Boolean> {
         }
     }
 
-    private void insertCategories( AppDatabase db, List<JSONDataObject.Category> folders,
+    private void insertCategories( AppDatabase db, List<JSONDLC.Category> folders,
                                    String parentId, String stationId, String dlcId ) {
-        for ( JSONDataObject.Category folder : folders ) {
+        for ( JSONDLC.Category folder : folders ) {
 //            BaseFolder baseFolder = new BaseFolder( parentId );
 //            String folderId = baseFolder.getId();
 //            db.folderDao().insert( baseFolder );
@@ -341,7 +318,7 @@ public class UpdateDatabaseTask extends AsyncTask<Context, Void, Boolean> {
 
     private void deleteAllRecordsFromAllTables( AppDatabase db ) {
         // TODO: 1/7/2018 update this with all tables!
-        db.dlcDao().deleteAll();
+//        db.dlcDao().deleteAll();
         db.engramDao().deleteAll();
         db.queueDao().deleteAll();
         db.resourceDao().deleteAll();

@@ -1,16 +1,19 @@
 package arc.resource.calculator.db.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import arc.resource.calculator.util.Util;
 
 @Entity(tableName = "folder",
     indices = {
-        @Index(value = "parentId")})
+        @Index(value = "nameId"),
+        @Index(value = "parentId"),
+        @Index(value = {"nameId", "parentId"},
+            unique = true)})
 
 public class BaseFolder {
 
@@ -18,21 +21,20 @@ public class BaseFolder {
   @PrimaryKey
   private final String id;
 
-  @Nullable
+  @NonNull
+  private final String nameId;
+
+  @NonNull
   private final String parentId;
 
   @Ignore
-  public BaseFolder() {
-    this(null);
+  public BaseFolder(String nameId, String parentId) {
+    this(Util.generateUUID(), nameId, parentId);
   }
 
-  @Ignore
-  public BaseFolder(String parentId) {
-    this(Util.generateUUID(), parentId);
-  }
-
-  public BaseFolder(@NonNull String id, @Nullable String parentId) {
+  public BaseFolder(@NonNull String id, @NonNull String nameId, @NonNull String parentId) {
     this.id = id;
+    this.nameId = nameId;
     this.parentId = parentId;
   }
 
@@ -41,7 +43,12 @@ public class BaseFolder {
     return id;
   }
 
-  @Nullable
+  @NonNull
+  public String getNameId() {
+    return nameId;
+  }
+
+  @NonNull
   public String getParentId() {
     return parentId;
   }

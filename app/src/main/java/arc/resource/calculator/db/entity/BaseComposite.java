@@ -1,7 +1,6 @@
 package arc.resource.calculator.db.entity;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
@@ -9,13 +8,10 @@ import android.support.annotation.NonNull;
 import arc.resource.calculator.util.Util;
 
 @Entity(tableName = "composite",
-    foreignKeys = {
-        @ForeignKey(entity = DLCResource.class,
-            parentColumns = "id",
-            childColumns = "resourceId")},
     indices = {
+        @Index(value = "engramId"),
         @Index(value = "resourceId"),
-        @Index(value = {"resourceId", "quantity"},
+        @Index(value = {"engramId", "resourceId"},
             unique = true)})
 
 public class BaseComposite {
@@ -24,7 +20,9 @@ public class BaseComposite {
   @PrimaryKey
   private final String id;
 
-  //  id from DLCResource
+  @NonNull
+  private final String engramId;
+
   @NonNull
   private final String resourceId;
 
@@ -32,12 +30,14 @@ public class BaseComposite {
   private final Integer quantity;
 
   @Ignore
-  public BaseComposite(String resourceId, Integer quantity) {
-    this(Util.generateUUID(), resourceId, quantity);
+  public BaseComposite(@NonNull String engramId, String resourceId, Integer quantity) {
+    this(Util.generateUUID(), engramId, resourceId, quantity);
   }
 
-  public BaseComposite(@NonNull String id, @NonNull String resourceId, @NonNull Integer quantity) {
+  public BaseComposite(@NonNull String id, @NonNull String engramId, @NonNull String resourceId,
+      @NonNull Integer quantity) {
     this.id = id;
+    this.engramId = engramId;
     this.resourceId = resourceId;
     this.quantity = quantity;
   }
@@ -55,5 +55,10 @@ public class BaseComposite {
   @NonNull
   public Integer getQuantity() {
     return quantity;
+  }
+
+  @NonNull
+  public String getEngramId() {
+    return engramId;
   }
 }

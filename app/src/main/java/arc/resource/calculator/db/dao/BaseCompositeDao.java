@@ -19,9 +19,10 @@ public interface BaseCompositeDao {
 
   //  get id by its matching parameters
   @Query("select id from composite " +
-      "where resourceId = :resourceId and " +
-      "quantity = :quantity ")
-  String getId(String resourceId, int quantity);
+      "where engramId = :engramId " +
+      "and resourceId = :resourceId " +
+      "limit 1")
+  String getId(String engramId, String resourceId);
 
   @Query("select * from composite "
       + "where id in (:ids)")

@@ -1,7 +1,5 @@
 package arc.resource.calculator.db.dao;
 
-import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
-
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -17,11 +15,20 @@ public interface BaseStationDao {
       + "limit 1")
   BaseStation get(String id);
 
+  //  get object by id
+  @Query("select * from station "
+      + "where nameId = :nameId "
+      + "limit 1")
+  BaseStation getByNameId(String nameId);
+
   //  get id by matching parameters
-  @Query("select id from station " +
-      "where imageLocationId = :imageFolder " +
-      "and imageFile = :imageFile")
-  String getId(String imageFolder, String imageFile);
+  @Query("select id from station "
+      + "where nameId = :nameId "
+      + "limit 1")
+  String getId(String nameId);
+
+  @Query("select * from station")
+  List<BaseStation> getAll();
 
   //  get all records matching supplied ids
   @Query("select * from station "
@@ -29,16 +36,8 @@ public interface BaseStationDao {
   List<BaseStation> getAll(List<String> stationIds);
 
   //  insert one object
-  @Insert(onConflict = IGNORE)
+  @Insert
   long insert(BaseStation station);
-
-  //  insert multiple objects
-  @Insert(onConflict = IGNORE)
-  void insert(BaseStation... stations);
-
-  //  insert a list of objects
-  @Insert(onConflict = IGNORE)
-  void insert(List<BaseStation> stations);
 
   //  delete all records from table
   @Query("delete from station")

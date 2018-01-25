@@ -5,10 +5,11 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import arc.resource.calculator.util.Util;
 
 @Entity(indices = {
-    @Index(value = {"imageFolder", "imageFile"},
+    @Index(value = {"contentFolder", "imageFolder", "imageFile"},
         unique = true)})
 
 public class ImageLocation {
@@ -18,18 +19,23 @@ public class ImageLocation {
   private final String id;
 
   @NonNull
+  private final String contentFolder;
+
+  @Nullable
   private final String imageFolder;
 
   @NonNull
   private final String imageFile;
 
   @Ignore
-  public ImageLocation(String imageFolder, String imageFile) {
-    this(Util.generateUUID(), imageFolder, imageFile);
+  public ImageLocation(String contentFolder, String imageFolder, String imageFile) {
+    this(Util.generateUUID(), contentFolder, imageFolder, imageFile);
   }
 
-  public ImageLocation(@NonNull String id, @NonNull String imageFolder, @NonNull String imageFile) {
+  public ImageLocation(@NonNull String id, @NonNull String contentFolder,
+      @Nullable String imageFolder, @NonNull String imageFile) {
     this.id = id;
+    this.contentFolder = contentFolder;
     this.imageFolder = imageFolder;
     this.imageFile = imageFile;
   }
@@ -40,6 +46,11 @@ public class ImageLocation {
   }
 
   @NonNull
+  public String getContentFolder() {
+    return contentFolder;
+  }
+
+  @Nullable
   public String getImageFolder() {
     return imageFolder;
   }

@@ -19,21 +19,13 @@ public interface BaseResourceDao {
 
   //  get id by matching parameters
   @Query("select id from resource " +
-      "where imageLocationId = :imageFolder " +
-      "and imageFile = :imageFile")
-  String getId(String imageFolder, String imageFile);
+      "where nameId = :nameId " +
+      "limit 1")
+  String getId(String nameId);
 
   //  insert one Resource object
-  @Insert(onConflict = IGNORE)
+  @Insert
   long insert(BaseResource resource);
-
-  //  insert multiple Resource objects
-  @Insert(onConflict = IGNORE)
-  void insert(BaseResource... resources);
-
-  //  insert a list of Resource objects
-  @Insert(onConflict = IGNORE)
-  void insert(List<BaseResource> resources);
 
   //  delete all records from table
   @Query("delete from resource")

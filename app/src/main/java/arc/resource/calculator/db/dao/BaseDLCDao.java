@@ -1,7 +1,5 @@
 package arc.resource.calculator.db.dao;
 
-import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
-
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -17,27 +15,13 @@ public interface BaseDLCDao {
       + "limit 1")
   BaseDLC get(String id);
 
-  //  get id by its matching parameter
-  @Query("select id from dlc " +
-      "where imageLocationId = :imageFolder " +
-      "and imageFile = :imageFile")
-  String getId(String imageFolder, String imageFile);
-
   //  get all records
   @Query("select * from dlc")
   List<BaseDLC> getAll();
 
   //  insert one object
-  @Insert(onConflict = IGNORE)
-  long insert(BaseDLC dlc);
-
-  //  insert multiple objects
-  @Insert(onConflict = IGNORE)
-  void insert(BaseDLC... dlcs);
-
-  //  insert a list of objects
-  @Insert(onConflict = IGNORE)
-  void insert(List<BaseDLC> dlcs);
+  @Insert
+  void insert(BaseDLC dlc);
 
   //  delete all records from table
   @Query("delete from dlc")

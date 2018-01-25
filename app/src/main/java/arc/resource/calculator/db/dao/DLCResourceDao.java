@@ -1,38 +1,27 @@
 package arc.resource.calculator.db.dao;
 
-import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
-
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import arc.resource.calculator.db.entity.DLCResource;
-import java.util.List;
 
 @Dao
 public interface DLCResourceDao {
 
-  @Query("select id from dlcresource "
-      + "where dlcId = :dlcId "
-      + "and resourceId = :resourceId "
+  @Query("select * from dlcresource "
+      + "where id = :id "
       + "limit 1")
-  String getId(String dlcId, String resourceId);
+  DLCResource get(String id);
 
-  //  get dlc id by resource id
-  @Query("select dlcId from dlcresource "
-      + "where resourceId = :resourceId")
-  String getDlcId(String resourceId);
+  //  get id by matching parameters
+  @Query("select id from dlcresource " +
+      "where nameId = :nameId " +
+      "limit 1")
+  String getId(String nameId);
 
   //  insert one object
-  @Insert(onConflict = IGNORE)
-  long insert(DLCResource dlcResource);
-
-  //  insert multiple objects
-  @Insert(onConflict = IGNORE)
-  void insert(DLCResource... dlcResources);
-
-  //  insert a list of objects
-  @Insert(onConflict = IGNORE)
-  void insert(List<DLCResource> dlcResources);
+  @Insert
+  void insert(DLCResource dlcResource);
 
   //  delete all records from table
   @Query("delete from dlcresource")

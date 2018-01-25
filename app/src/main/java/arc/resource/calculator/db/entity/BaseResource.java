@@ -9,7 +9,8 @@ import arc.resource.calculator.util.Util;
 
 @Entity(tableName = "resource",
     indices = {
-        @Index(value = {"imageFolder", "imageFile"},
+        @Index(value = {"imageLocationId"}),
+        @Index(value = {"nameId"},
             unique = true)})
 
 public class BaseResource {
@@ -19,20 +20,20 @@ public class BaseResource {
   private final String id;
 
   @NonNull
-  private final String imageFolder;
+  private final String imageLocationId;
 
   @NonNull
-  private final String imageFile;
+  private final String nameId;
 
   @Ignore
-  public BaseResource(String imageFolder, String imageFile) {
-    this(Util.generateUUID(), imageFolder, imageFile);
+  public BaseResource(String imageLocationId, @NonNull String nameId) {
+    this(Util.generateUUID(), imageLocationId, nameId);
   }
 
-  public BaseResource(@NonNull String id, @NonNull String imageFolder, @NonNull String imageFile) {
+  public BaseResource(@NonNull String id, @NonNull String imageLocationId, @NonNull String nameId) {
     this.id = id;
-    this.imageFolder = imageFolder;
-    this.imageFile = imageFile;
+    this.imageLocationId = imageLocationId;
+    this.nameId = nameId;
   }
 
   @NonNull
@@ -41,12 +42,12 @@ public class BaseResource {
   }
 
   @NonNull
-  public String getImageFolder() {
-    return imageFolder;
+  public String getImageLocationId() {
+    return imageLocationId;
   }
 
   @NonNull
-  public String getImageFile() {
-    return imageFile;
+  public String getNameId() {
+    return nameId;
   }
 }

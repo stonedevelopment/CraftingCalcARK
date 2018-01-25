@@ -9,7 +9,8 @@ import arc.resource.calculator.util.Util;
 
 @Entity(tableName = "station",
     indices = {
-        @Index(value = {"imageLocationId", "nameId"},
+        @Index(value = {"imageLocationId"}),
+        @Index(value = {"nameId"},
             unique = true)})
 
 public class BaseStation {

@@ -1,454 +1,463 @@
 <resources xmlns:x="urn:oasis:names:tc:xliff:document:1.2" xmlns:xliff="http://schemas.android.com/tools">
-    <!-- LoadActivity -->
+  <!-- LoadActivity -->
 
-    <!-- LoadActivity: Status Messages -->
-    <string name="load_activity_status_message_error_with_message">
+  <!-- LoadActivity: Status Messages -->
+  <string name="load_activity_status_message_error_with_message">
         \nOh noes! It\'s a Meganeura!
         \n\nOh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
         \n\nWhile we work on a fix, a workaround could simply be to restart the app or, if the problem persists, reinstall it.
         \n\nWe truly apologize for any inconvenience caused. Rest assured a fix will be on the way. -Shane
     </string>
-    <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
-    <string name="load_activity_status_message_format_with_elapsed_time"><x:g id="message">%1$s</x:g> (<x:g id="elapsed">%2$s</x:g>)</string>
+  <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
+  <string name="load_activity_status_message_format_with_elapsed_time"><x:g id="message">%1$s</x:g> (<x:g id="elapsed">%2$s</x:g>)</string>
 
-    <!-- LoadActivity: Events: -->
-    <string name="initialization_init_event">Greetings Survivor!</string>
-    <string name="initialization_finish_event">\nStarting app!\n\nCraft efficiently, my friend.</string>
-    <string name="initialization_error_event">\nInitialization failed.</string>
+  <!-- LoadActivity: Events: -->
+  <string name="initialization_init_event">Greetings Survivor!</string>
+  <string name="initialization_finish_event">\nStarting app!\n\nCraft efficiently, my friend.</string>
+  <string name="initialization_error_event">\nInitialization failed.</string>
 
-    <!-- LoadActivity: Events: JSON -->
-    <string name="initialization_json_event_init">\nChecking for new data..</string>
-    <string name="initialization_json_event_new_version">\nNew items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
-    <string name="initialization_json_event_new_version_first_install">\nNew items found! Upgrading to v<x:g>%1$s</x:g>!</string>
-    <string name="initialization_json_event_started">\nConverting new items..</string>
-    <string name="initialization_json_event_finished_with_update">.done!</string>
-    <string name="initialization_json_event_finished_without_update">.no new items found. :(</string>
+  <!-- LoadActivity: Events: JSON -->
+  <string name="initialization_json_event_init">\nChecking for new data..</string>
+  <string name="initialization_json_event_new_version">\nNew items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
+  <string name="initialization_json_event_new_version_first_install">\nNew items found! Upgrading to v<x:g>%1$s</x:g>!</string>
+  <string name="initialization_json_event_started">\nConverting new items..</string>
+  <string name="initialization_json_event_finished_with_update">.done!</string>
+  <string name="initialization_json_event_finished_without_update">.no new items found. :(</string>
 
-    <!-- LoadActivity: Events: Database Initialization -->
-    <string name="initialization_db_event_started">\nInitializing database with new stuff and things..</string>
-    <string name="initialization_db_event_finished">.done!</string>
+  <!-- LoadActivity: Events: Database Initialization -->
+  <string name="initialization_db_event_started">\nInitializing database with new stuff and things..</string>
+  <string name="initialization_db_event_finished">.done!</string>
 
-    <!-- LoadActivity: Events: In-App Purchases -->
-    <string name="initialization_purchase_event_init">\nChecking Play Store for purchased items..</string>
-    <string name="initialization_purchase_event_success">.done!</string>
-    <string name="initialization_purchase_event_failure">.failed!</string>
-    <string name="initialization_purchase_event_error">.error!</string>
+  <!-- LoadActivity: Events: In-App Purchases -->
+  <string name="initialization_purchase_event_init">\nChecking Play Store for purchased items..</string>
+  <string name="initialization_purchase_event_success">.done!</string>
+  <string name="initialization_purchase_event_failure">.failed!</string>
+  <string name="initialization_purchase_event_error">.error!</string>
 
-    <!-- LoadActivity: Events: Preferences -->
-    <string name="initialization_pref_event_started">\nChecking preferences..</string>
-    <string name="initialization_pref_event_finished">.done!</string>
+  <!-- LoadActivity: Events: Preferences -->
+  <string name="initialization_pref_event_started">\nChecking preferences..</string>
+  <string name="initialization_pref_event_finished">.done!</string>
 
-    <!-- LoadActivity: Events: Model Preparation phase -->
-    <string name="initialization_app_init_event_started">\nPreparing initial app data..</string>
-    <string name="initialization_app_init_event_finished">.done!</string>
-    <string name="initialization_app_init_event_error">.failed!</string>
+  <!-- LoadActivity: Events: Model Preparation phase -->
+  <string name="initialization_app_init_event_started">\nPreparing initial app data..</string>
+  <string name="initialization_app_init_event_finished">.done!</string>
+  <string name="initialization_app_init_event_error">.failed!</string>
 
-    <!-- LoadActivity: Events: Purchases -->
+  <!-- LoadActivity: Events: Purchases -->
 
-    <!-- Default app/activity details. Also used with ActionBar titles. -->
-    <string name="app_name">A:RC</string>
-    <string name="app_name_full">ARK:Resource Calculator</string>
+  <!-- Default app/activity details. Also used with ActionBar titles. -->
+  <string name="app_name">A:RC</string>
+  <string name="app_name_full">ARK:Resource Calculator</string>
 
-    <string name="title_activity_detail">Engram Details</string>
-    <string name="title_activity_calculate">Craft Calculator</string>
-    <string name="title_activity_resources">Calculated Resources</string>
-    <string name="title_activity_settings">Settings</string>
+  <string name="title_activity_detail">Engram Details</string>
+  <string name="title_activity_calculate">Craft Calculator</string>
+  <string name="title_activity_resources">Calculated Resources</string>
+  <string name="title_activity_settings">Settings</string>
 
-    <!-- Menu titles -->
-    <string name="action_title_search">Search</string>
-    <string name="action_title_settings">Settings</string>
-    <string name="action_title_help">View Tutorial</string>
-    <string name="action_title_changelog">Changelog</string>
-    <string name="action_title_about">About this app</string>
-    <string name="action_title_feedback">Contact us</string>
-    <string name="action_title_feedback_bug_report">Send bug report</string>
-    <string name="action_title_feedback_correction">Send correction</string>
+  <!-- Menu titles -->
+  <string name="action_title_search">Search</string>
+  <string name="action_title_settings">Settings</string>
+  <string name="action_title_help">View Tutorial</string>
+  <string name="action_title_changelog">Changelog</string>
+  <string name="action_title_about">About this app</string>
+  <string name="action_title_feedback">Contact us</string>
+  <string name="action_title_feedback_bug_report">Send bug report</string>
+  <string name="action_title_feedback_correction">Send correction</string>
 
-    <!-- Strings used with the MainActivity layout -->
-    <string name="content_main_button_clear_queue">Clear Queue</string>
-    <string name="content_main_button_calculate_queue">Calculate Queue</string>
-    <string name="content_main_button_view_inventory">View Inventory</string>
-    <string name="content_main_button_view_craftables">Back to Engrams</string>
+  <!-- Strings used with the MainActivity layout -->
+  <string name="content_main_button_clear_queue">Clear Queue</string>
+  <string name="content_main_button_calculate_queue">Calculate Queue</string>
+  <string name="content_main_button_view_inventory">View Inventory</string>
+  <string name="content_main_button_view_craftables">Back to Engrams</string>
 
-    <!-- Strings used with the DetailActivity layout -->
-    <string name="content_detail_button_remove">Remove From Queue</string>
-    <string name="content_detail_button_save">Save and Close</string>
-    <string name="content_detail_button_add_to_queue">Add to Queue</string>
-    <string name="content_detail_button_update_queue">Update Queue</string>
+  <!-- Strings used with the DetailActivity layout -->
+  <string name="content_detail_button_remove">Remove From Queue</string>
+  <string name="content_detail_button_save">Save and Close</string>
+  <string name="content_detail_button_add_to_queue">Add to Queue</string>
+  <string name="content_detail_button_update_queue">Update Queue</string>
 
-    <string name="content_detail_station_and_level_format">
-        This Engram <x:g name="crafted_in" example="can be crafted without a station">%1$s</x:g>,
-        <x:g name="required_level" example="and can be crafted at any level">%2$s</x:g>.
+  <string name="content_detail_station_and_level_format">
+        This Engram <x:g example="can be crafted without a station" name="crafted_in">%1$s</x:g>,
+        <x:g example="and can be crafted at any level" name="required_level">%2$s</x:g>.
     </string>
-    <string name="content_detail_crafted_in_format">can be crafted at the <x:g name="name">%1$s</x:g></string>
-    <string name="content_detail_crafted_in_no_station">can be crafted without a station</string>
-    <string name="content_detail_crafted_in_double_format"><x:g name="first">%1$s</x:g> and the <x:g name="second">%2$s</x:g></string>
-    <string name="content_detail_crafted_in_multiple_format">, <x:g>%1$s</x:g></string>
-    <string name="content_detail_crafted_in_multiple_last_format">, and the <x:g>%1$s</x:g></string>
-    <string name="content_detail_required_level_any_level">and can be crafted at any level</string>
-    <string name="content_detail_required_level_format">but requires level <x:g>%1$d</x:g> to craft</string>
-    <string name="content_detail_number_picker_decrease">-1</string>
-    <string name="content_detail_number_picker_decrease_by_10">-10</string>
-    <string name="content_detail_number_picker_increase">+1</string>
-    <string name="content_detail_number_picker_increase_by_10">+10</string>
-    <string name="content_detail_mock_text_quantity">x0</string>
-    <string name="content_detail_mock_text_name">Stone Wall</string>
-    <string name="content_detail_mock_text_dlc">ARK:Survival Evolved: Scorched Earth</string>
-    <string name="content_detail_mock_text_category">Structures/Stone</string>
-    <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and separates rooms.</string>
-    <string name="content_detail_mock_text_station_and_level">Stone Wall can be crafted without a station, and can be crafted at any level.</string>
+  <string name="content_detail_crafted_in_format">can be crafted at the <x:g name="name">%1$s</x:g></string>
+  <string name="content_detail_crafted_in_no_station">can be crafted without a station</string>
+  <string name="content_detail_crafted_in_double_format"><x:g name="first">%1$s</x:g> and the <x:g name="second">%2$s</x:g></string>
+  <string name="content_detail_crafted_in_multiple_format">, <x:g>%1$s</x:g></string>
+  <string name="content_detail_crafted_in_multiple_last_format">, and the <x:g>%1$s</x:g></string>
+  <string name="content_detail_required_level_any_level">and can be crafted at any level</string>
+  <string name="content_detail_required_level_format">but requires level <x:g>%1$d</x:g> to craft</string>
+  <string name="content_detail_number_picker_decrease">-1</string>
+  <string name="content_detail_number_picker_decrease_by_10">-10</string>
+  <string name="content_detail_number_picker_increase">+1</string>
+  <string name="content_detail_number_picker_increase_by_10">+10</string>
+  <string name="content_detail_mock_text_quantity">x0</string>
+  <string name="content_detail_mock_text_name">Stone Wall</string>
+  <string name="content_detail_mock_text_dlc">ARK:Survival Evolved: Scorched Earth</string>
+  <string name="content_detail_mock_text_category">Structures/Stone</string>
+  <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and separates rooms.</string>
+  <string name="content_detail_mock_text_station_and_level">Stone Wall can be crafted without a station, and can be crafted at any level.</string>
 
-    <!-- AlertDialog -->
+  <!-- AlertDialog -->
 
-    <!-- AlertDialog: Error -->
-    <string name="dialog_error_title">Oh noes! It\'s a Meganeura!</string>
-    <string name="dialog_error_message">
+  <!-- AlertDialog: Error -->
+  <string name="dialog_error_title">Oh noes! It\'s a Meganeura!</string>
+  <string name="dialog_error_message">
         Oh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
         While we work on a fix, a workaround could simply be to reset settings to default (below), restart the app or,
         if the problem persists, reinstall it.
 
         \n\nWe truly apologize for any inconvenience caused. Rest assured that a fix will be on the way. -Shane
     </string>
-    <string name="dialog_error_button_positive">Reset To Defaults</string>
-    <string name="dialog_error_button_negative">Close App</string>
+  <string name="dialog_error_button_positive">Reset To Defaults</string>
+  <string name="dialog_error_button_negative">Close App</string>
 
-    <!-- AlertDialog: About -->
-    <string name="dialog_about_full_title">About ARK:Resource Calculator</string>
+  <!-- AlertDialog: About -->
+  <string name="dialog_about_full_title">About ARK:Resource Calculator</string>
 
-    <!-- AlertDialog: Edit Quantity -->
-    <string name="dialog_edit_quantity_full_title">Edit Quantity</string>
-    <string name="dialog_edit_quantity_positive_button">Update</string>
-    <string name="dialog_edit_quantity_negative_button">Cancel</string>
+  <!-- AlertDialog: Edit Quantity -->
+  <string name="dialog_edit_quantity_full_title">Edit Quantity</string>
+  <string name="dialog_edit_quantity_positive_button">Update</string>
+  <string name="dialog_edit_quantity_negative_button">Cancel</string>
 
-    <!-- AlertDialog: Search -->
-    <string name="search_dialog_full_title">Search</string>
-    <string name="search_dialog_positive_button">Search</string>
-    <string name="search_dialog_negative_button">Cancel</string>
+  <!-- AlertDialog: Search -->
+  <string name="search_dialog_full_title">Search</string>
+  <string name="search_dialog_positive_button">Search</string>
+  <string name="search_dialog_negative_button">Cancel</string>
 
-    <!-- AlertDialog: Help -->
-    <string name="help_dialog_full_title">How to Use This App</string>
-    <string name="help_dialog_ok_button">Close</string>
+  <!-- AlertDialog: Help -->
+  <string name="help_dialog_full_title">How to Use This App</string>
+  <string name="help_dialog_ok_button">Close</string>
 
-    <!-- AlertDialog: Changelog  -->
-    <string name="changelog_full_title">Changelog</string>
-    <string name="changelog_title">What\'s New</string>
-    <string name="changelog_ok_button">OK</string>
-    <string name="changelog_show_full">More…</string>
+  <!-- AlertDialog: Changelog  -->
+  <string name="changelog_full_title">Changelog</string>
+  <string name="changelog_title">What\'s New</string>
+  <string name="changelog_ok_button">OK</string>
+  <string name="changelog_show_full">More…</string>
 
-    <!-- AlertDialog: Feedback -->
+  <!-- AlertDialog: Feedback -->
 
-    <!-- AlertDialog: Feedback: User Feedback -->
-    <string name="dialog_feedback_full_title">User Feedback</string>
-    <string name="dialog_feedback_positive_button">Send</string>
-    <string name="dialog_feedback_negative_button">Cancel</string>
+  <!-- AlertDialog: Feedback: User Feedback -->
+  <string name="dialog_feedback_full_title">User Feedback</string>
+  <string name="dialog_feedback_positive_button">Send</string>
+  <string name="dialog_feedback_negative_button">Cancel</string>
 
-    <!-- Toast Messages -->
+  <!-- Toast Messages -->
 
-    <!-- Toast: Edit Quantity -->
-    <string name="toast_edit_quantity_success">Engram\'s quantity was updated.</string>
-    <string name="toast_edit_quantity_success_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
-    <string name="toast_edit_quantity_fail">Engram\'s quantity wasn\'t changed.</string>
-    <string name="toast_edit_quantity_fail_format"><x:g>%1$s</x:g>\'s quantity wasn\'t changed.</string>
+  <!-- Toast: Edit Quantity -->
+  <string name="toast_edit_quantity_success">Engram\'s quantity was updated.</string>
+  <string name="toast_edit_quantity_success_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
+  <string name="toast_edit_quantity_fail">Engram\'s quantity wasn\'t changed.</string>
+  <string name="toast_edit_quantity_fail_format"><x:g>%1$s</x:g>\'s quantity wasn\'t changed.</string>
 
-    <!-- Toast: Remove From Queue -->
-    <string name="toast_remove_from_queue_success">Engram was removed from Crafting Queue.</string>
-    <string name="toast_remove_from_queue_success_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
-    <string name="toast_remove_from_queue_fail">Engram was not removed from Crafting Queue.</string>
-    <string name="toast_remove_from_queue_fail_format"><x:g>%1$s</x:g> was not removed from Crafting Queue.</string>
+  <!-- Toast: Remove From Queue -->
+  <string name="toast_remove_from_queue_success">Engram was removed from Crafting Queue.</string>
+  <string name="toast_remove_from_queue_success_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
+  <string name="toast_remove_from_queue_fail">Engram was not removed from Crafting Queue.</string>
+  <string name="toast_remove_from_queue_fail_format"><x:g>%1$s</x:g> was not removed from Crafting Queue.</string>
 
-    <!-- Toast: Settings -->
-    <string name="toast_settings_success">Settings were changed.</string>
-    <string name="toast_settings_fail">No changes were made.</string>
+  <!-- Toast: Settings -->
+  <string name="toast_settings_success">Settings were changed.</string>
+  <string name="toast_settings_fail">No changes were made.</string>
 
-    <!-- Toast: Details -->
-    <string name="toast_details_error">Engram details closed with an error.</string>
-    <string name="toast_details_added">Engram was added to Crafting Queue.</string>
-    <string name="toast_details_added_format"><x:g>%1$s</x:g> was added to Crafting Queue.</string>
-    <string name="toast_details_removed">Engram was removed from Crafting Queue.</string>
-    <string name="toast_details_removed_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
-    <string name="toast_details_updated">Engram\'s quantity was updated.</string>
-    <string name="toast_details_updated_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
-    <string name="toast_details_no_change">No changes were made.</string>
+  <!-- Toast: Details -->
+  <string name="toast_details_error">Engram details closed with an error.</string>
+  <string name="toast_details_added">Engram was added to Crafting Queue.</string>
+  <string name="toast_details_added_format"><x:g>%1$s</x:g> was added to Crafting Queue.</string>
+  <string name="toast_details_removed">Engram was removed from Crafting Queue.</string>
+  <string name="toast_details_removed_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
+  <string name="toast_details_updated">Engram\'s quantity was updated.</string>
+  <string name="toast_details_updated_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
+  <string name="toast_details_no_change">No changes were made.</string>
 
-    <!-- Toast: Search -->
-    <string name="toast_search_fail">Search cancelled.</string>
+  <!-- Toast: Search -->
+  <string name="toast_search_fail">Search cancelled.</string>
 
-    <!-- Toast: Feedback -->
-    <string name="toast_feedback_fail">Feedback not sent.</string>
+  <!-- Toast: Feedback -->
+  <string name="toast_feedback_fail">Feedback not sent.</string>
 
-    <!-- Strings related to Go Back -->
-    <string name="go_back">Go back</string>
-    <string name="go_back_to_stations">Go back to Crafting Stations</string>
+  <!-- Strings related to Go Back -->
+  <string name="go_back">Go back</string>
+  <string name="go_back_to_stations">Go back to Crafting Stations</string>
 
-    <!-- Strings related to Categories -->
-    <string name="category_go_back">Go back</string>
-    <string name="category_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
+  <!-- Strings related to Categories -->
+  <string name="category_go_back">Go back</string>
+  <string name="category_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
 
-    <!-- Strings related to Stations -->
-    <string name="station_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
+  <!-- Strings related to Stations -->
+  <string name="station_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
 
-    <!-- Strings related to Required Level -->
-    <string name="level_max_value">105</string>
+  <!-- Strings related to Required Level -->
+  <string name="level_max_value">105</string>
 
-    <!-- Strings related to Display Case's Hierarchy Text -->
-    <string name="display_case_hierarchy_text_showing_format">Showing <x:g>%1$s</x:g></string>
-    <string name="display_case_hierarchy_text_all_stations">Showing all Crafting Stations.</string>
-    <string name="display_case_hierarchy_text_contents_of_station">Showing contents of <x:g id="station_name">%1$s</x:g>.</string>
-    <string name="display_case_hierarchy_text_contents_of_station_in_folder">Showing contents of <x:g id="station_name">%1$s</x:g> in folder <x:g id="folder_name">%2$s</x:g>.</string>
-    <string name="display_case_hierarchy_text_all_categories">Showing all Folders.</string>
-    <string name="display_case_hierarchy_text_all_engrams">Showing all Engrams.</string>
-    <string name="display_case_hierarchy_text_search_results_format">Showing <x:g>%1$d</x:g> search results for: \"*<xliff:g>%2$s</xliff:g>*\"</string>
+  <!-- Strings related to Display Case's Hierarchy Text -->
+  <string name="display_case_hierarchy_text_showing_format">Showing <x:g>%1$s</x:g></string>
+  <string name="display_case_hierarchy_text_all_stations">Showing all Crafting Stations.</string>
+  <string name="display_case_hierarchy_text_contents_of_station">Showing contents of <x:g id="station_name">%1$s</x:g>.</string>
+  <string name="display_case_hierarchy_text_contents_of_station_in_folder">Showing contents of <x:g id="station_name">%1$s</x:g> in folder <x:g id="folder_name">%2$s</x:g>.</string>
+  <string name="display_case_hierarchy_text_all_categories">Showing all Folders.</string>
+  <string name="display_case_hierarchy_text_all_engrams">Showing all Engrams.</string>
+  <string name="display_case_hierarchy_text_search_results_format">Showing <x:g>%1$d</x:g> search results for: \"*<xliff:g>%2$s</xliff:g>*\"</string>
 
-    <!-- Strings related to Settings -->
+  <!-- Strings related to Settings -->
 
-    <!-- Key name for JSON version preference, holds latest version of raw json file -->
-    <string name="pref_json_version_key">json_version</string>
+  <!-- Key name for JSON version preference, holds latest version of raw json file -->
+  <string name="pref_json_version_key">json_version</string>
 
-    <!-- Key name for JSON encoded crafting queue -->
-    <string name="pref_crafting_queue_key">crafting_queue</string>
+  <!-- Key name for JSON encoded crafting queue -->
+  <string name="pref_crafting_queue_key">crafting_queue</string>
 
-    <!-- Key name for Category Level preference, holds last viewed Category's _id. -->
-    <string name="pref_category_level_key">category_level</string>
+  <!-- Key name for Category Level preference, holds last viewed Category's _id. -->
+  <string name="pref_category_level_key">category_level</string>
 
-    <!-- Key name for Category Parent Level preference, holds last viewed Category's parent_id. -->
-    <string name="pref_category_parent_key">category_parent</string>
+  <!-- Key name for Category Parent Level preference, holds last viewed Category's parent_id. -->
+  <string name="pref_category_parent_key">category_parent</string>
 
-    <!-- Default value for Category Level preference, aka ROOT -->
-    <string name="pref_category_default_value">0</string>
+  <!-- Default value for Category Level preference, aka ROOT -->
+  <string name="pref_category_default_value">0</string>
 
-    <!-- Default value for Category Level preference if filtering by Stations also, aka STATION_ROOT -->
-    <string name="pref_category_default_value_with_stations">-1</string>
+  <!-- Default value for Category Level preference if filtering by Stations also, aka STATION_ROOT -->
+  <string name="pref_category_default_value_with_stations">-1</string>
 
-    <!-- Key name for Crafting Station preference, holds last viewed Station's _id. -->
-    <string name="pref_station_id_key">station_id</string>
+  <!-- Key name for Crafting Station preference, holds last viewed Station's _id. -->
+  <string name="pref_station_id_key">station_id</string>
 
-    <!-- Default value for Crafting Station preference, no stations selected -->
-    <string name="pref_station_id_default_value">-1</string>
+  <!-- Default value for Crafting Station preference, no stations selected -->
+  <string name="pref_station_id_default_value">-1</string>
 
-    <!-- Strings related to DLC settings -->
+  <!-- Strings related to DLC settings -->
 
-    <!-- Title for DLC Version preference, used by SettingsActivity -->
-    <string name="pref_dlc_title">Change DLC</string>
+  <!-- Title for DLC Version preference, used by SettingsActivity -->
+  <string name="pref_dlc_title">Change DLC</string>
 
-    <!-- Description for DLC Version preference, used by SettingsActivity -->
-    <string name="pref_dlc_description">Choose which DLC you are playing! (Currently set to <xliff:g>%1$s</xliff:g>)</string>
+  <!-- Description for DLC Version preference, used by SettingsActivity -->
+  <string name="pref_dlc_description">Choose which DLC you are playing! (Currently set to <xliff:g>%1$s</xliff:g>)</string>
 
-    <!-- Key name for DLC Version preference in SharedPreferences -->
-    <string name="pref_dlc_key">dlc</string>
+  <!-- Key name for DLC Version preference in SharedPreferences -->
+  <string name="pref_dlc_key">dlc</string>
 
-    <!-- Label for the DLC Version: Vanilla preference -->
-    <string name="pref_dlc_label_vanilla">ARK:Survival Evolved</string>
+  <!-- Label for the DLC Version: Vanilla preference -->
+  <string name="pref_dlc_label_vanilla">ARK:Survival Evolved</string>
 
-    <!-- Label for the DLC Version: Primitive+ preference -->
-    <string name="pref_dlc_label_primitive_plus">ARK:Survival Evolved: Primitive+</string>
+  <!-- Label for the DLC Version: Primitive+ preference -->
+  <string name="pref_dlc_label_primitive_plus">ARK:Survival Evolved: Primitive+</string>
 
-    <!-- Label for the DLC Version: Scorched Earth preference -->
-    <string name="pref_dlc_label_scorched_earth">ARK:Survival Evolved: Scorched Earth</string>
+  <!-- Label for the DLC Version: Scorched Earth preference -->
+  <string name="pref_dlc_label_scorched_earth">ARK:Survival Evolved: Scorched Earth</string>
 
-    <!-- Label for the DLC Version: Vanilla preference -->
+  <!-- Label for the DLC Version: Vanilla preference -->
 
-    <!-- Value in SharedPreferences for DLC Version: Vanilla -->
-    <string name="pref_dlc_value_vanilla">1</string>
+  <!-- Value in SharedPreferences for DLC Version: Vanilla -->
+  <string name="pref_dlc_value_vanilla">1</string>
 
-    <!-- Value in SharedPreferences for DLC Version: Primitive+ -->
-    <string name="pref_dlc_value_primitive_plus">2</string>
+  <!-- Value in SharedPreferences for DLC Version: Primitive+ -->
+  <string name="pref_dlc_value_primitive_plus">2</string>
 
-    <!-- Value in SharedPreferences for DLC Version: Scorched Earth -->
-    <string name="pref_dlc_value_scorched_earth">3</string>
+  <!-- Value in SharedPreferences for DLC Version: Scorched Earth -->
+  <string name="pref_dlc_value_scorched_earth">3</string>
 
-    <!-- Default value for DLC Version preference in SharedPreferences -->
-    <string name="pref_dlc_value_default">@string/pref_dlc_value_vanilla</string>
+  <!-- Default value for DLC Version preference in SharedPreferences -->
+  <string name="pref_dlc_value_default">@string/pref_dlc_value_vanilla</string>
 
-    <!-- Strings related to Category Filter settings -->
-    <!-- Title for Category Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_category_title">Categories/Folders</string>
+  <!-- Strings related to Category Filter settings -->
+  <!-- Title for Category Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_category_title">Categories/Folders</string>
 
-    <!-- Description for Category Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_category_description">Filter Engrams by folders that match in-game
+  <!-- Description for Category Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_category_description">Filter Engrams by folders that match in-game
         folders! (Disabling this will show all Engrams from all folders.)
     </string>
 
-    <!-- Key name for Category Filter preference in SharedPreferences -->
-    <string name="pref_filter_category_key">category_filter</string>
+  <!-- Key name for Category Filter preference in SharedPreferences -->
+  <string name="pref_filter_category_key">category_filter</string>
 
-    <!-- Default value for Category Filter preference in SharedPreferences -->
-    <string name="pref_filter_category_value_default">true</string>
+  <!-- Default value for Category Filter preference in SharedPreferences -->
+  <string name="pref_filter_category_value_default">true</string>
 
-    <!-- Strings related to Station Filter settings -->
-    <!-- Title for Station Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_station_title">Crafting Stations</string>
+  <!-- Strings related to Station Filter settings -->
+  <!-- Title for Station Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_station_title">Crafting Stations</string>
 
-    <!-- Description for Station Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_station_description">Filter Engrams by Crafting Stations that match
+  <!-- Description for Station Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_station_description">Filter Engrams by Crafting Stations that match
         in-game stations! (Disabling this will show all Engrams from all stations.)
     </string>
 
-    <!-- Key name for Station Filter preference in SharedPreferences -->
-    <string name="pref_filter_station_key">station_filter</string>
+  <!-- Key name for Station Filter preference in SharedPreferences -->
+  <string name="pref_filter_station_key">station_filter</string>
 
-    <!-- Default value for Station Filter preference in SharedPreferences -->
-    <string name="pref_filter_station_value_default">true</string>
+  <!-- Default value for Station Filter preference in SharedPreferences -->
+  <string name="pref_filter_station_value_default">true</string>
 
-    <!-- Strings related to Level Filter settings -->
-    <!-- Title for Level Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_level_title">Required Level</string>
+  <!-- Strings related to Level Filter settings -->
+  <!-- Title for Level Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_level_title">Required Level</string>
 
-    <!-- Description for Level Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_level_description">Filter Engrams by Required Level! Dependent upon
+  <!-- Description for Level Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_level_description">Filter Engrams by Required Level! Dependent upon
         which level is selected below. (Disabling this will show all Engrams from all levels.)
     </string>
 
-    <!-- Key name for Level Filter preference in SharedPreferences -->
-    <string name="pref_filter_level_key">level_filter</string>
+  <!-- Key name for Level Filter preference in SharedPreferences -->
+  <string name="pref_filter_level_key">level_filter</string>
 
-    <!-- Default value for Level Filter preference in SharedPreferences -->
-    <string name="pref_filter_level_value_default">false</string>
+  <!-- Default value for Level Filter preference in SharedPreferences -->
+  <string name="pref_filter_level_value_default">false</string>
 
-    <!-- Strings related to Level EditText settings -->
-    <!-- Title for Level EditText preference, used by SettingsActivity -->
-    <string name="pref_edit_text_level_title">Current level</string>
+  <!-- Strings related to Level EditText settings -->
+  <!-- Title for Level EditText preference, used by SettingsActivity -->
+  <string name="pref_edit_text_level_title">Current level</string>
 
-    <!-- Description for Level EditText preference, used by SettingsActivity -->
-    <string name="pref_edit_text_level_description">Change this to your in-game level! (Currently set as level <xliff:g>%1$s</xliff:g>)</string>
+  <!-- Description for Level EditText preference, used by SettingsActivity -->
+  <string name="pref_edit_text_level_description">Change this to your in-game level! (Currently set as level <xliff:g>%1$s</xliff:g>)</string>
 
-    <!-- Key name for Level EditText preference in SharedPreferences -->
-    <string name="pref_edit_text_level_key">level_edit_text</string>
+  <!-- Key name for Level EditText preference in SharedPreferences -->
+  <string name="pref_edit_text_level_key">level_edit_text</string>
 
-    <!-- Default value for Level EditText preference in SharedPreferences -->
-    <string name="pref_edit_text_level_value_default">@string/level_max_value</string>
+  <!-- Default value for Level EditText preference in SharedPreferences -->
+  <string name="pref_edit_text_level_value_default">@string/level_max_value</string>
 
-    <!-- Strings related to Refined Resource Filter settings -->
-    <!-- Title for Refined Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_refined_title">Breakdown Refined Materials</string>
+  <!-- Strings related to Refined Resource Filter settings -->
+  <!-- Title for Refined Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_refined_title">Breakdown Refined Materials</string>
 
-    <!-- Description for Refined Filter preference, used by SettingsActivity -->
-    <string name="pref_filter_refined_description">Displays raw materials in place of their refined
+  <!-- Description for Refined Filter preference, used by SettingsActivity -->
+  <string name="pref_filter_refined_description">Displays raw materials in place of their refined
         Engram recipe. (Example: Show 2 Metal Ore instead of 1 Metal Ingot.)
     </string>
 
-    <!-- Key name for Refined Filter preference in SharedPreferences -->
-    <string name="pref_filter_refined_key">refined_filter</string>
+  <!-- Key name for Refined Filter preference in SharedPreferences -->
+  <string name="pref_filter_refined_key">refined_filter</string>
 
-    <!-- Default value for Refined Filter preference in SharedPreferences -->
-    <string name="pref_filter_refined_value_default">false</string>
+  <!-- Default value for Refined Filter preference in SharedPreferences -->
+  <string name="pref_filter_refined_value_default">false</string>
 
-    <!-- Key name for the View size of QueueSwitcher -->
-    <string name="pref_craftable_view_size_key">craftable_image_size</string>
+  <!-- Key name for the View size of QueueSwitcher -->
+  <string name="pref_craftable_view_size_key">craftable_image_size</string>
 
-    <!-- Key name for the View Screen ID of MainSwitcher -->
-    <string name="pref_switcher_main_screen_id_key">switcher_main_screen_id_key</string>
+  <!-- Key name for the View Screen ID of MainSwitcher -->
+  <string name="pref_switcher_main_screen_id_key">switcher_main_screen_id_key</string>
 
-    <!-- Key name for Search Query in SharedPreferences -->
-    <string name="pref_search_query_key">search_query</string>
+  <!-- Key name for Search Query in SharedPreferences -->
+  <string name="pref_search_query_key">search_query</string>
 
-    <!-- Key name for Purchasable: Remove Ads in SharedPreferences -->
-    <string name="pref_purchasable_remove_ads_key">remove_ads</string>
+  <!-- Key name for Purchasable: Remove Ads in SharedPreferences -->
+  <string name="pref_purchasable_remove_ads_key">remove_ads</string>
 
-    <!-- Key name for Purchasable: Remove Ads in SharedPreferences -->
-    <string name="pref_purchasable_remove_ads_value_default">false</string>
+  <!-- Key name for Purchasable: Remove Ads in SharedPreferences -->
+  <string name="pref_purchasable_remove_ads_value_default">false</string>
 
-    <!-- Exceptions -->
-    <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>
-    <string name="exception_indexoutofbounds">position %1$d of %2$d is out of bounds, data: %3$s</string>
+  <!-- Exceptions -->
+  <string name="exception_sql_insert">Failed to insert row into <x:g>%1$s</x:g></string>
+  <string name="exception_indexoutofbounds">position %1$d of %2$d is out of bounds, data: %3$s</string>
 
-    <!-- Strings related to MobAds -->
-    <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
-    <string name="banner_ad_app_id">ca-app-pub-8859801923918627~2903432190</string>
+  <!-- Strings related to MobAds -->
+  <string name="banner_ad_unit_id">ca-app-pub-8859801923918627/4380165396</string>
+  <string name="banner_ad_app_id">ca-app-pub-8859801923918627~2903432190</string>
 
-    <!-- Strings related to Context Menu labels -->
-    <string name="context_menu_view_details">View Details</string>
-    <string name="context_menu_edit_quantity">Edit Quantity</string>
-    <string name="context_menu_remove_from_queue">Remove From Queue</string>
+  <!-- Strings related to Context Menu labels -->
+  <string name="context_menu_view_details">View Details</string>
+  <string name="context_menu_edit_quantity">Edit Quantity</string>
+  <string name="context_menu_remove_from_queue">Remove From Queue</string>
 
-    <!-- In-App Purchases Strings -->
-    <string name="action_title_remove_ads">Remove Ads</string>
+  <!-- In-App Purchases Strings -->
+  <string name="action_title_remove_ads">Remove Ads</string>
 
-    <!-- First Use -->
-    <!-- First Use: Titles -->
-    <string name="content_intro_title_first">Tutorial</string>
-    <string name="content_intro_title_crafting_stations">Tutorial: Crafting Stations</string>
-    <string name="content_intro_title_folders">Tutorial: Folders</string>
-    <string name="content_intro_title_engrams">Tutorial: Engrams</string>
-    <string name="content_intro_title_crafting_queue">Tutorial: Crafting Queue</string>
-    <string name="content_intro_title_crafting_queue_details">Tutorial: Crafting Queue Details</string>
-    <string name="content_intro_title_viewing_resources">Tutorial: Viewing Resources</string>
-    <string name="content_intro_title_inventory">Tutorial: Inventory</string>
-    <string name="content_intro_title_inventory_raw_materials">Tutorial: Inventory (Show Raw Materials)</string>
-    <string name="content_intro_title_dlc" translatable="false">Tutorial: Primitive+/Scorched Earth</string>
-    <string name="content_intro_title_remove_ads">Tutorial: Remove Ads</string>
-    <string name="content_intro_title_last">End of Tutorial</string>
+  <!-- First Use -->
+  <!-- First Use: Titles -->
+  <string name="content_intro_title_first">Tutorial</string>
+  <string name="content_intro_title_crafting_stations">Tutorial: Crafting Stations</string>
+  <string name="content_intro_title_folders">Tutorial: Folders</string>
+  <string name="content_intro_title_engrams">Tutorial: Engrams</string>
+  <string name="content_intro_title_crafting_queue">Tutorial: Crafting Queue</string>
+  <string name="content_intro_title_crafting_queue_details">Tutorial: Crafting Queue Details</string>
+  <string name="content_intro_title_viewing_resources">Tutorial: Viewing Resources</string>
+  <string name="content_intro_title_inventory">Tutorial: Inventory</string>
+  <string name="content_intro_title_inventory_raw_materials">Tutorial: Inventory (Show Raw Materials)</string>
+  <string name="content_intro_title_dlc" translatable="false">Tutorial: Primitive+/Scorched Earth</string>
+  <string name="content_intro_title_remove_ads">Tutorial: Remove Ads</string>
+  <string name="content_intro_title_last">End of Tutorial</string>
 
-    <!-- First Use: Descriptions -->
-    <string name="content_intro_description_first">
+  <!-- First Use: Descriptions -->
+  <string name="content_intro_description_first">
         Greetings Survivor! My name is BobOnTheCob, and I made an app! Let me show you how to use it.
     </string>
-    <string name="content_intro_description_crafting_stations">
+  <string name="content_intro_description_crafting_stations">
         This will usually be the first screen you\'ll see, if filtering by \'Crafting Station\' is enabled.
         All you have to do is choose which station by simply tapping on it. Easy!
     </string>
-    <string name="content_intro_description_folders">
+  <string name="content_intro_description_folders">
         Hooray! Now that we\'ve chosen a Crafting Station, we can move through the folders
         (matched up exactly with in-game folders), until you find the Engram you
         wish to add to the Crafting Queue. Simple!
     </string>
-    <string name="content_intro_description_engrams">
+  <string name="content_intro_description_engrams">
         You\'re doing great so far! Now, when you find the Engram you want to \'craft\', simply
         tap it to add it to the Crafting Queue. Tap it again to increase its quantity. Magic!
     </string>
-    <string name="content_intro_description_crafting_queue">
+  <string name="content_intro_description_crafting_queue">
         This is the Crafting Queue. Anything you tap on above will go down here. Additionally,
         you can increase its quantity by tapping on it or \'long press\' it
         to view more options. If you wish to start over, tap the \'Clear Queue\'
         button at the bottom of the screen. Amazing!
     </string>
-    <string name="content_intro_description_viewing_resources">
+  <string name="content_intro_description_viewing_resources">
         Ready to craft? Let\'s get started! Tap the \'View Inventory\' button at the top and
         you\'ll be taken to the Inventory screen. This is where you\'ll see all the resources
         (materials) needed to craft your newly added items. Woot!
     </string>
-    <string name="content_intro_description_inventory">
+  <string name="content_intro_description_inventory">
         You still there? Good! This is one of the newest features - the Inventory screen.
         This allows you to see which resources (materials) you need in order to craft
         the Crafting Queue. Did you notice the Show Raw Materials check box at the bottom? If you
         check that box, the app will breakdown everything above into their raw materials! ;)
     </string>
-    <string name="content_intro_description_inventory_raw_materials">
+  <string name="content_intro_description_inventory_raw_materials">
         Back by popular demand! With this option enabled, anything in your Crafting Queue will be
         broken down into their rawest materials. Be warned though, if your Crafting Queue is huge..
         it will take some time to break it all down. Please be patient!
     </string>
-    <string name="content_intro_description_dlc">
+  <string name="content_intro_description_dlc">
         Did you know that you can change DLC versions? It\'s true! Just use the main menu
         and tap on Settings. Once in the Settings screen, simply tap on Change DLC
         and choose which version you\'re currently playing. Boom!
     </string>
-    <string name="content_intro_description_remove_ads">
+  <string name="content_intro_description_remove_ads">
         Ads: more annoying than a Pegomastax running off with your Cooked Meat! Tame them today
         by tapping on Remove Ads in the menu. Genius! ;)
     </string>
-    <string name="content_intro_description_last">
+  <string name="content_intro_description_last">
         Well, that\'s the end of the tour. If you made it this far, you are one fine-tuned
         crafting machine! If you have any questions, suggestions,
         or just want to chat it up, don\'t be afraid to reach out. Thank you for using my app!!
     </string>
 
-    <string name="switcher_queue_status_onerror">An error occurred while fetching crafting queue.</string>
-    <string name="switcher_queue_status_oninit">Fetching crafting queue..</string>
-    <string name="switcher_queue_status_onempty">Crafting queue is empty.</string>
+  <string name="switcher_queue_status_onerror">An error occurred while fetching crafting queue.</string>
+  <string name="switcher_queue_status_oninit">Fetching crafting queue..</string>
+  <string name="switcher_queue_status_onempty">Crafting queue is empty.</string>
 
-    <string name="switcher_craftable_status_onerror">An error occurred while fetching Engram data.</string>
-    <string name="switcher_craftable_status_oninit">Fetching Engram data..</string>
-    <string name="switcher_craftable_status_onempty">Engram data is empty.</string>
+  <string name="switcher_craftable_status_onerror">An error occurred while fetching Engram data.</string>
+  <string name="switcher_craftable_status_oninit">Fetching Engram data..</string>
+  <string name="switcher_craftable_status_onempty">Engram data is empty.</string>
 
-    <string name="switcher_inventory_status_onerror">An error occurred while fetching Inventory.</string>
-    <string name="switcher_inventory_status_oninit">Fetching inventory..</string>
-    <string name="switcher_inventory_status_onempty">Inventory is empty.</string>
+  <string name="switcher_inventory_status_onerror">An error occurred while fetching Inventory.</string>
+  <string name="switcher_inventory_status_oninit">Fetching inventory..</string>
+  <string name="switcher_inventory_status_onempty">Inventory is empty.</string>
 
-    <string name="switcher_calculate_status_onerror">An error occurred while calculating crafting queue.</string>
-    <string name="switcher_calculate_status_oninit">Calculating crafting queue..</string>
-    <string name="switcher_calculate_status_onempty">There is nothing to calculate.</string>
-    <string name="title_craftable_layout">Engrams</string>
-    <string name="title_queue_layout">Crafting Queue</string>
-    <string name="search_hint">Search Engrams</string>
-    <string name="bottom_sheet_title">Crafting Queue</string>
+  <string name="switcher_calculate_status_onerror">An error occurred while calculating crafting queue.</string>
+  <string name="switcher_calculate_status_oninit">Calculating crafting queue..</string>
+  <string name="switcher_calculate_status_onempty">There is nothing to calculate.</string>
+  <string name="title_craftable_layout">Engrams</string>
+  <string name="title_queue_layout">Crafting Queue</string>
+  <string name="search_hint">Search Engrams</string>
+  <string name="bottom_sheet_title">Crafting Queue</string>
+
+  <!-- AppData -->
+  <string name="appdata_update_json">test_update.json</string>
+
+  <!--  AppData: Primary -->
+  <string name="appdata_primary_json">primary.json</string>
+  <string name="appdata_primary_name">ARK:Survival Evolved</string>
+  <string name="appdata_primary_content_folder">Vanilla/</string>
+  <string name="appdata_primary_image_file">logo.webp</string>
 </resources>

@@ -16,37 +16,13 @@ public interface DLCStationDao {
       + "limit 1")
   DLCStation get(String id);
 
-  //  get by matching parameters
-  @Query("select * from dlcstation "
-      + "where dlcId = :dlcId "
-      + "and stationId = :stationId "
-      + "limit 1")
-  DLCStation get(String dlcId, String stationId);
-
-  //  get id by matching parameters
-  @Query("select id from dlcstation "
-      + "where dlcId = :dlcId "
-      + "and stationId = :stationId "
-      + "limit 1")
-  String getId(String dlcId, String stationId);
-
-  //  get dlc id by station id
-  @Query("select dlcId from dlcstation "
-      + "where stationId = :stationId")
-  String getDlcId(String stationId);
-
-  //  get list of station ids per dlc id
-  @Query("select stationId from dlcstation "
-      + "where dlcId = :dlcId")
-  List<String> getStationIds(String dlcId);
-
   @Query("select * from dlcstation "
       + "where dlcId = :dlcId")
   List<DLCStation> getAll(String dlcId);
 
   //  insert one object
-  @Insert(onConflict = IGNORE)
-  long insert(DLCStation dlcStation);
+  @Insert
+  void insert(DLCStation dlcStation);
 
   //  insert multiple objects
   @Insert(onConflict = IGNORE)

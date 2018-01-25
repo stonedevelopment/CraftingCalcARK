@@ -11,10 +11,11 @@ import arc.resource.calculator.db.entity.ImageLocation;
 public interface ImageLocationDao {
 
   @Query("select id from imagelocation "
-      + "where imageLocationId = :imageFolder "
+      + "where contentFolder = :contentFolder "
+      + "and imageFolder = :imageFolder "
       + "and imageFile = :imageFile "
       + "limit 1")
-  String getId(String imageFolder, String imageFile);
+  String getId(String contentFolder, String imageFolder, String imageFile);
 
   @Insert(onConflict = IGNORE)
   long insert(ImageLocation imageLocation);

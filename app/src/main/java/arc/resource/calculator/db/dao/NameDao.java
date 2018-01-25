@@ -26,6 +26,10 @@ public interface NameDao {
       + "order by text")
   List<Name> getAll();
 
+  @Query("select id from name "
+      + "where text like :searchText")
+  List<String> getByLikeText(String searchText);
+
   //  insert one object
   @Insert(onConflict = IGNORE)
   long insert(Name name);
@@ -41,4 +45,9 @@ public interface NameDao {
   //  delete all records from table
   @Query("delete from name")
   int deleteAll();
+
+  @Query("select * from name "
+      + "where id in (:nameIds) "
+      + "order by text")
+  List<Name> getAll(List<String> nameIds);
 }

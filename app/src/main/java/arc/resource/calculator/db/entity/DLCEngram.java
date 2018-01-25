@@ -1,61 +1,37 @@
 package arc.resource.calculator.db.entity;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import arc.resource.calculator.util.Util;
 
-@Entity(foreignKeys = {
-    @ForeignKey(entity = BaseDLC.class,
-        parentColumns = "id",
-        childColumns = "dlcId"),
-    @ForeignKey(entity = BaseEngram.class,
-        parentColumns = "id",
-        childColumns = "engramId")},
+@Entity(
     indices = {
-        @Index(value = "dlcId"),
-        @Index(value = "engramId"),
-        @Index(value = {"dlcId", "engramId"}, unique = true)
-    })
+        @Index(value = {"dlcId"})},
+    inheritSuperIndices = true)
 
-public class DLCEngram {
-
-  @NonNull
-  @PrimaryKey
-  private final String id;
+public class DLCEngram extends BaseEngram {
 
   @NonNull
   private final String dlcId;
 
-  @NonNull
-  private final String engramId;
-
   @Ignore
-  public DLCEngram(String dlcId, String engramId) {
-    this(Util.generateUUID(), dlcId, engramId);
+  public DLCEngram(String descriptionId, String imageLocationId, String nameId,
+      String parentId, Integer requiredLevel, Integer yield, String dlcId) {
+    this(Util.generateUUID(), descriptionId, imageLocationId, nameId, parentId, requiredLevel,
+        yield, dlcId);
   }
 
-  public DLCEngram(@NonNull String id, @NonNull String dlcId, @NonNull String engramId) {
-    this.id = id;
+  public DLCEngram(String id, @NonNull String descriptionId, String imageLocationId, String nameId,
+      @NonNull String parentId, Integer requiredLevel, Integer yield, @NonNull String dlcId) {
+    super(id, descriptionId, imageLocationId, nameId, parentId, requiredLevel,
+        yield);
     this.dlcId = dlcId;
-    this.engramId = engramId;
-  }
-
-  @NonNull
-  public String getId() {
-    return id;
   }
 
   @NonNull
   public String getDlcId() {
     return dlcId;
-  }
-
-  @NonNull
-  public String getEngramId() {
-    return engramId;
   }
 }

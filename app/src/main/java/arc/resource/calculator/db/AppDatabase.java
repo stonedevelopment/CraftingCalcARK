@@ -19,18 +19,9 @@ import arc.resource.calculator.db.dao.DLCNameDao;
 import arc.resource.calculator.db.dao.DLCResourceDao;
 import arc.resource.calculator.db.dao.DLCStationDao;
 import arc.resource.calculator.db.dao.DescriptionDao;
-import arc.resource.calculator.db.dao.EngramCompositeDao;
-import arc.resource.calculator.db.dao.EngramDescriptionDao;
-import arc.resource.calculator.db.dao.EngramNameDao;
-import arc.resource.calculator.db.dao.FolderEngramDao;
-import arc.resource.calculator.db.dao.FolderNameDao;
 import arc.resource.calculator.db.dao.ImageLocationDao;
 import arc.resource.calculator.db.dao.NameDao;
 import arc.resource.calculator.db.dao.QueueDao;
-import arc.resource.calculator.db.dao.ResourceNameDao;
-import arc.resource.calculator.db.dao.StationEngramDao;
-import arc.resource.calculator.db.dao.StationFolderDao;
-import arc.resource.calculator.db.dao.StationNameDao;
 import arc.resource.calculator.db.entity.BaseComposite;
 import arc.resource.calculator.db.entity.BaseDLC;
 import arc.resource.calculator.db.entity.BaseEngram;
@@ -39,22 +30,12 @@ import arc.resource.calculator.db.entity.BaseResource;
 import arc.resource.calculator.db.entity.BaseStation;
 import arc.resource.calculator.db.entity.DLCEngram;
 import arc.resource.calculator.db.entity.DLCFolder;
-import arc.resource.calculator.db.entity.DLCName;
 import arc.resource.calculator.db.entity.DLCResource;
 import arc.resource.calculator.db.entity.DLCStation;
 import arc.resource.calculator.db.entity.Description;
-import arc.resource.calculator.db.entity.EngramComposite;
-import arc.resource.calculator.db.entity.EngramDescription;
-import arc.resource.calculator.db.entity.EngramName;
-import arc.resource.calculator.db.entity.FolderEngram;
-import arc.resource.calculator.db.entity.FolderName;
 import arc.resource.calculator.db.entity.ImageLocation;
 import arc.resource.calculator.db.entity.Name;
 import arc.resource.calculator.db.entity.Queue;
-import arc.resource.calculator.db.entity.ResourceName;
-import arc.resource.calculator.db.entity.StationEngram;
-import arc.resource.calculator.db.entity.StationFolder;
-import arc.resource.calculator.db.entity.StationName;
 
 @Database(version = 7,
     entities = {
@@ -67,21 +48,11 @@ import arc.resource.calculator.db.entity.StationName;
         Description.class,
         DLCEngram.class,
         DLCFolder.class,
-        DLCName.class,
         DLCResource.class,
         DLCStation.class,
-        EngramComposite.class,
-        EngramDescription.class,
-        EngramName.class,
-        FolderEngram.class,
-        FolderName.class,
         ImageLocation.class,
         Name.class,
-        Queue.class,
-        ResourceName.class,
-        StationEngram.class,
-        StationFolder.class,
-        StationName.class
+        Queue.class
     })
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -129,21 +100,19 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public abstract DLCFolderDao dlcFolderDao();
 
-  public abstract DLCNameDao dlcNameDao();
-
   public abstract DLCResourceDao dlcResourceDao();
 
   public abstract DLCStationDao dlcStationDao();
 
-  public abstract EngramCompositeDao engramCompositeDao();
-
-  public abstract EngramDescriptionDao engramDescriptionDao();
-
-  public abstract EngramNameDao engramNameDao();
-
-  public abstract FolderEngramDao folderEngramDao();
-
-  public abstract FolderNameDao folderNameDao();
+//  public abstract EngramCompositeDao engramCompositeDao();
+//
+//  public abstract EngramDescriptionDao engramDescriptionDao();
+//
+//  public abstract EngramNameDao engramNameDao();
+//
+//  public abstract FolderEngramDao folderEngramDao();
+//
+//  public abstract FolderNameDao folderNameDao();
 
   public abstract ImageLocationDao imageLocationDao();
 
@@ -151,11 +120,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public abstract QueueDao queueDao();
 
-  public abstract ResourceNameDao resourceNameDao();
-
-  public abstract StationEngramDao stationEngramDao();
-
-  public abstract StationFolderDao stationFolderDao();
-
-  public abstract StationNameDao stationNameDao();
+//  public abstract ResourceNameDao resourceNameDao();
+//
+//  public abstract StationEngramDao stationEngramDao();
+//
+//  public abstract StationFolderDao stationFolderDao();
+//
+//  public abstract StationNameDao stationNameDao();
 }
