@@ -1,4 +1,797 @@
 {
+  "qualities": [
+    {
+      "name": "Primitive",
+      "color": "gray"
+    },
+    {
+      "name": "Ramshackle",
+      "color": "green"
+    },
+    {
+      "name": "Apprentice",
+      "color": "blue"
+    },
+    {
+      "name": "Journeyman",
+      "color": "purple"
+    },
+    {
+      "name": "Mastercraft",
+      "color": "yellow"
+    },
+    {
+      "name": "Ascendant",
+      "color": "teal"
+    }
+  ],
+  "resources": [
+    {
+      "name": "Absorbent Substrate",
+      "imageFolder": "Resources/",
+      "imageFile": "absorbent_substrate.webp"
+    },
+    {
+      "name": "Allosaurus Brain",
+      "imageFolder": "Resources/",
+      "imageFile": "allosaurus_brain.webp"
+    },
+    {
+      "name": "Allosaurus Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "allosaurus_egg.webp"
+    },
+    {
+      "name": "Amarberry",
+      "imageFolder": "Resources/",
+      "imageFile": "amarberry.webp"
+    },
+    {
+      "name": "Ammonite Bile",
+      "imageFolder": "Resources/",
+      "imageFile": "ammonite_bile.webp"
+    },
+    {
+      "name": "Angler Gel",
+      "imageFolder": "Resources/",
+      "imageFile": "angler_gel.webp"
+    },
+    {
+      "name": "Ankylo Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "ankylo_egg.webp"
+    },
+    {
+      "name": "Araneo Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "araneo_egg.webp"
+    },
+    {
+      "name": "Argentavis Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "argentavis_egg.webp"
+    },
+    {
+      "name": "Argentavis Talon",
+      "imageFolder": "Resources/",
+      "imageFile": "argentavis_talon.webp"
+    },
+    {
+      "name": "Artifact of the Brute",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_brute.webp"
+    },
+    {
+      "name": "Artifact of the Clever",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_clever.webp"
+    },
+    {
+      "name": "Artifact of the Cunning",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_cunning.webp"
+    },
+    {
+      "name": "Artifact of the Devious",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_devious.webp"
+    },
+    {
+      "name": "Artifact of the Devourer",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_devourer.webp"
+    },
+    {
+      "name": "Artifact of the Hunter",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_hunter.webp"
+    },
+    {
+      "name": "Artifact of the Immune",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_immune.webp"
+    },
+    {
+      "name": "Artifact of the Massive",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_massive.webp"
+    },
+    {
+      "name": "Artifact of the Pack",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_pack.webp"
+    },
+    {
+      "name": "Artifact of the Skylord",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_skylord.webp"
+    },
+    {
+      "name": "Artifact of the Strong",
+      "imageFolder": "Resources/",
+      "imageFile": "artifact_of_the_strong.webp"
+    },
+    {
+      "name": "Azulberry",
+      "imageFolder": "Resources/",
+      "imageFile": "azulberry.webp"
+    },
+    {
+      "name": "Baryonyx Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "baryonyx_egg.webp"
+    },
+    {
+      "name": "Basilosaurus Blubber",
+      "imageFolder": "Resources/",
+      "imageFile": "basilosaurus_blubber.webp"
+    },
+    {
+      "name": "Beer Liquid",
+      "imageFolder": "Resources/",
+      "imageFile": "beer_liquid.webp"
+    },
+    {
+      "name": "Berries (Any Kind)",
+      "imageFolder": "Resources/",
+      "imageFile": "berries_any_kind.webp"
+    },
+    {
+      "name": "Bio Toxin",
+      "imageFolder": "Resources/",
+      "imageFile": "bio_toxin.webp"
+    },
+    {
+      "name": "Black Pearl",
+      "imageFolder": "Resources/",
+      "imageFile": "black_pearl.webp"
+    },
+    {
+      "name": "Bronto Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "bronto_egg.webp"
+    },
+    {
+      "name": "Bunny Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "bunny_egg.webp"
+    },
+    {
+      "name": "Carbonemys Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "carbonemys_egg.webp"
+    },
+    {
+      "name": "Carno Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "carno_egg.webp"
+    },
+    {
+      "name": "Cementing Paste",
+      "imageFolder": "Resources/",
+      "imageFile": "cementing_paste.webp"
+    },
+    {
+      "name": "Charcoal",
+      "imageFolder": "Resources/",
+      "imageFile": "charcoal.webp"
+    },
+    {
+      "name": "Chitin",
+      "imageFolder": "Resources/",
+      "imageFile": "chitin.webp"
+    },
+    {
+      "name": "Chitin or Keratin",
+      "imageFolder": "Resources/",
+      "imageFile": "chitin_or_keratin.webp"
+    },
+    {
+      "name": "Citronal",
+      "imageFolder": "Resources/",
+      "imageFile": "citronal.webp"
+    },
+    {
+      "name": "Compy Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "compy_egg.webp"
+    },
+    {
+      "name": "Cooked Fish Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "cooked_fish_meat.webp"
+    },
+    {
+      "name": "Cooked Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "cooked_meat.webp"
+    },
+    {
+      "name": "Cooked Meat Jerky",
+      "imageFolder": "Resources/",
+      "imageFile": "cooked_meat_jerky.webp"
+    },
+    {
+      "name": "Cooked Meat or Fish Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "cooked_meat_or_fish_meat.webp"
+    },
+    {
+      "name": "Cooked Meat or Meat Jerky",
+      "imageFolder": "Resources/",
+      "imageFile": "cooked_meat_or_meat_jerky.webp"
+    },
+    {
+      "name": "Cooked Prime Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "cooked_prime_meat.webp"
+    },
+    {
+      "name": "Cooked Prime Meat or Prime Meat Jerky",
+      "imageFolder": "Resources/",
+      "imageFile": "cooked_prime_meat_or_prime_meat_jerky.webp"
+    },
+    {
+      "name": "Crystal",
+      "imageFolder": "Resources/",
+      "imageFile": "crystal.webp"
+    },
+    {
+      "name": "Deathworm or Woolly Rhino Horn",
+      "imageFolder": "Resources/",
+      "imageFile": "deathworm_or_woolly_rhino_horn.webp"
+    },
+    {
+      "name": "Dilo Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "dilo_egg.webp"
+    },
+    {
+      "name": "Dimetrodon Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "dimetrodon_egg.webp"
+    },
+    {
+      "name": "Dimorphodon Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "dimorphodon_egg.webp"
+    },
+    {
+      "name": "Diplodocus Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "diplodocus_egg.webp"
+    },
+    {
+      "name": "Dodo Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "dodo_egg.webp"
+    },
+    {
+      "name": "DodoRex Mask Skin",
+      "imageFolder": "Resources/",
+      "imageFile": "dodorex_mask_skin.webp"
+    },
+    {
+      "name": "DodoWyvern Mask Skin",
+      "imageFolder": "Resources/",
+      "imageFile": "dodowyvern_mask_skin.webp"
+    },
+    {
+      "name": "Electronics",
+      "imageFolder": "Resources/",
+      "imageFile": "electronics.webp"
+    },
+    {
+      "name": "Element",
+      "imageFolder": "Resources/",
+      "imageFile": "element.webp"
+    },
+    {
+      "name": "Element Shard",
+      "imageFolder": "Resources/",
+      "imageFile": "element_shard.webp"
+    },
+    {
+      "name": "Feces (Any Size)",
+      "imageFolder": "Resources/",
+      "imageFile": "feces.webp"
+    },
+    {
+      "name": "Fertilizer",
+      "imageFolder": "Resources/",
+      "imageFile": "fertilizer.webp"
+    },
+    {
+      "name": "Fiber",
+      "imageFolder": "Resources/",
+      "imageFile": "fiber.webp"
+    },
+    {
+      "name": "Fish Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "fish_egg.webp"
+    },
+    {
+      "name": "Flint",
+      "imageFolder": "Resources/",
+      "imageFile": "flint.webp"
+    },
+    {
+      "name": "Gallimimus Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "gallimimus_egg.webp"
+    },
+    {
+      "name": "Gasoline",
+      "imageFolder": "Resources/",
+      "imageFile": "gasoline.webp"
+    },
+    {
+      "name": "Giant Bee Honey",
+      "imageFolder": "Resources/",
+      "imageFile": "giant_bee_honey.webp"
+    },
+    {
+      "name": "Giganotosaurus Heart",
+      "imageFolder": "Resources/",
+      "imageFile": "giganotosaurus_heart.webp"
+    },
+    {
+      "name": "Golden Hesperonis Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "golden_hesperonis_egg.webp"
+    },
+    {
+      "name": "Gunpowder",
+      "imageFolder": "Resources/",
+      "imageFile": "gunpowder.webp"
+    },
+    {
+      "name": "Hesperornis Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "hesperornis_egg.webp"
+    },
+    {
+      "name": "Hide",
+      "imageFolder": "Resources/",
+      "imageFile": "hide.webp"
+    },
+    {
+      "name": "Ichthyornis Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "ichthyornis_egg.webp"
+    },
+    {
+      "name": "Iguanodon Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "iguanodon_egg.webp"
+    },
+    {
+      "name": "Kairuku Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "kairuku_egg.webp"
+    },
+    {
+      "name": "Kentrosaurus Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "kentrosaurus_egg.webp"
+    },
+    {
+      "name": "Keratin",
+      "imageFolder": "Resources/",
+      "imageFile": "keratin.webp"
+    },
+    {
+      "name": "Leech Blood",
+      "imageFolder": "Resources/",
+      "imageFile": "leech_blood.webp"
+    },
+    {
+      "name": "Leech Blood or Horns",
+      "imageFolder": "Resources/",
+      "imageFile": "leech_blood_or_horns.webp"
+    },
+    {
+      "name": "Longrass",
+      "imageFolder": "Resources/",
+      "imageFile": "longrass.webp"
+    },
+    {
+      "name": "Lystrosaur Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "lystrosaur_egg.webp"
+    },
+    {
+      "name": "Megalania Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "megalania_egg.webp"
+    },
+    {
+      "name": "Megalania Toxin",
+      "imageFolder": "Resources/",
+      "imageFile": "megalania_toxin.webp"
+    },
+    {
+      "name": "Megalodon Tooth",
+      "imageFolder": "Resources/",
+      "imageFile": "megalodon_tooth.webp"
+    },
+    {
+      "name": "Mejoberry",
+      "imageFolder": "Resources/",
+      "imageFile": "mejoberry.webp"
+    },
+    {
+      "name": "Metal Ingot",
+      "imageFolder": "Resources/",
+      "imageFile": "metal_ingot.webp"
+    },
+    {
+      "name": "Metal Ore",
+      "imageFolder": "Resources/",
+      "imageFile": "metal_ore.webp"
+    },
+    {
+      "name": "Microraptor Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "microraptor_egg.webp"
+    },
+    {
+      "name": "Moschops Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "moschops_egg.webp"
+    },
+    {
+      "name": "Narcoberry",
+      "imageFolder": "Resources/",
+      "imageFile": "narcoberry.webp"
+    },
+    {
+      "name": "Narcotic",
+      "imageFolder": "Resources/",
+      "imageFile": "narcotic.webp"
+    },
+    {
+      "name": "Note",
+      "imageFolder": "Resources/",
+      "imageFile": "note.webp"
+    },
+    {
+      "name": "Obsidian",
+      "imageFolder": "Resources/",
+      "imageFile": "obsidian.webp"
+    },
+    {
+      "name": "Oil",
+      "imageFolder": "Resources/",
+      "imageFile": "oil.webp"
+    },
+    {
+      "name": "Organic Polymer",
+      "imageFolder": "Resources/",
+      "imageFile": "organic_polymer.webp"
+    },
+    {
+      "name": "Pachy Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "pachy_egg.webp"
+    },
+    {
+      "name": "Parasaur Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "parasaur_egg.webp"
+    },
+    {
+      "name": "Pegomastax Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "pegomastax_egg.webp"
+    },
+    {
+      "name": "Pelagornis Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "pelagornis_egg.webp"
+    },
+    {
+      "name": "Pelt, Hair, or Wool",
+      "imageFolder": "Resources/",
+      "imageFile": "pelt.webp"
+    },
+    {
+      "name": "Polymer",
+      "imageFolder": "Resources/",
+      "imageFile": "polymer.webp"
+    },
+    {
+      "name": "Prime Meat Jerky",
+      "imageFolder": "Resources/",
+      "imageFile": "prime_meat_jerky.webp"
+    },
+    {
+      "name": "Pteranodon Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "pteranodon_egg.webp"
+    },
+    {
+      "name": "Pulmonoscorpius Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "pulmonoscorpius_egg.webp"
+    },
+    {
+      "name": "Pumpkin",
+      "imageFolder": "Resources/",
+      "imageFile": "pumpkin.webp"
+    },
+    {
+      "name": "Quetzal Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "quetzal_egg.webp"
+    },
+    {
+      "name": "Raptor Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "raptor_egg.webp"
+    },
+    {
+      "name": "Rare Flower",
+      "imageFolder": "Resources/",
+      "imageFile": "rare_flower.webp"
+    },
+    {
+      "name": "Rare Mushroom",
+      "imageFolder": "Resources/",
+      "imageFile": "rare_mushroom.webp"
+    },
+    {
+      "name": "Raw Fish Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "raw_fish_meat.webp"
+    },
+    {
+      "name": "Raw Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "raw_meat.webp"
+    },
+    {
+      "name": "Raw Mutton",
+      "imageFolder": "Resources/",
+      "imageFile": "raw_mutton.webp"
+    },
+    {
+      "name": "Raw Prime Fish Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "raw_prime_fish_meat.webp"
+    },
+    {
+      "name": "Raw Prime Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "raw_prime_meat.webp"
+    },
+    {
+      "name": "Rex Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "rex_egg.webp"
+    },
+    {
+      "name": "Rockarrot",
+      "imageFolder": "Resources/",
+      "imageFile": "rockarrot.webp"
+    },
+    {
+      "name": "Sap",
+      "imageFolder": "Resources/",
+      "imageFile": "sap.webp"
+    },
+    {
+      "name": "Sarco Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "sarco_egg.webp"
+    },
+    {
+      "name": "Sarcosuchus Skin",
+      "imageFolder": "Resources/",
+      "imageFile": "sarcosuchus_skin.webp"
+    },
+    {
+      "name": "Sauropod Vertebra",
+      "imageFolder": "Resources/",
+      "imageFile": "sauropod_vertebra.webp"
+    },
+    {
+      "name": "Savoroot",
+      "imageFolder": "Resources/",
+      "imageFile": "savoroot.webp"
+    },
+    {
+      "name": "Scarecrow",
+      "imageFolder": "Resources/",
+      "imageFile": "scarecrow.webp"
+    },
+    {
+      "name": "Silica Pearls",
+      "imageFolder": "Resources/",
+      "imageFile": "silica_pearls.webp"
+    },
+    {
+      "name": "Simple Rifle Ammo",
+      "imageFolder": "Resources/",
+      "imageFile": "simple_rifle_ammo.webp"
+    },
+    {
+      "name": "Sparkpowder",
+      "imageFolder": "Resources/",
+      "imageFile": "sparkpowder.webp"
+    },
+    {
+      "name": "Spear Bolt",
+      "imageFolder": "Resources/",
+      "imageFile": "spear_bolt.webp"
+    },
+    {
+      "name": "Spino Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "spino_egg.webp"
+    },
+    {
+      "name": "Spinosaurus Sail",
+      "imageFolder": "Resources/",
+      "imageFile": "spinosaurus_sail.webp"
+    },
+    {
+      "name": "Spoiled Meat",
+      "imageFolder": "Resources/",
+      "imageFile": "spoiled_meat.webp"
+    },
+    {
+      "name": "Stego Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "stego_egg.webp"
+    },
+    {
+      "name": "Stimberry",
+      "imageFolder": "Resources/",
+      "imageFile": "stimberry.webp"
+    },
+    {
+      "name": "Stimulant",
+      "imageFolder": "Resources/",
+      "imageFile": "stimulant.webp"
+    },
+    {
+      "name": "Stolen Headstone",
+      "imageFolder": "Resources/",
+      "imageFile": "stolen_headstone.webp"
+    },
+    {
+      "name": "Stone",
+      "imageFolder": "Resources/",
+      "imageFile": "stone.webp"
+    },
+    {
+      "name": "Stone Arrow",
+      "imageFolder": "Resources/",
+      "imageFile": "stone_arrow.webp"
+    },
+    {
+      "name": "Tapejara Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "tapejara_egg.webp"
+    },
+    {
+      "name": "Terror Bird Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "terror_bird_egg.webp"
+    },
+    {
+      "name": "Thatch",
+      "imageFolder": "Resources/",
+      "imageFile": "thatch.webp"
+    },
+    {
+      "name": "Therizino Claws",
+      "imageFolder": "Resources/",
+      "imageFile": "therizino_claws.webp"
+    },
+    {
+      "name": "Therizinosaurus Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "therizinosaurus_egg.webp"
+    },
+    {
+      "name": "Thylacoleo Hook-Claw",
+      "imageFolder": "Resources/",
+      "imageFile": "thylacoleo_hook-claw.webp"
+    },
+    {
+      "name": "Tintoberry",
+      "imageFolder": "Resources/",
+      "imageFile": "tintoberry.webp"
+    },
+    {
+      "name": "Titanoboa Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "titanoboa_egg.webp"
+    },
+    {
+      "name": "Titanoboa Venom",
+      "imageFolder": "Resources/",
+      "imageFile": "titanoboa_venom.webp"
+    },
+    {
+      "name": "Tranquilizer Dart",
+      "imageFolder": "Resources/",
+      "imageFile": "tranquilizer_dart.webp"
+    },
+    {
+      "name": "Trike Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "trike_egg.webp"
+    },
+    {
+      "name": "Troodon Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "troodon_egg.webp"
+    },
+    {
+      "name": "Tusoteuthis Tentacle",
+      "imageFolder": "Resources/",
+      "imageFile": "tusoteuthis_tentacle.webp"
+    },
+    {
+      "name": "Tyrannosaurus Arm",
+      "imageFolder": "Resources/",
+      "imageFile": "tyrannosaurus_arm.webp"
+    },
+    {
+      "name": "Water",
+      "imageFolder": "Resources/",
+      "imageFile": "water.webp"
+    },
+    {
+      "name": "Water Jar",
+      "imageFolder": "Resources/",
+      "imageFile": "water_jar.webp"
+    },
+    {
+      "name": "Wood",
+      "imageFolder": "Resources/",
+      "imageFile": "wood.webp"
+    },
+    {
+      "name": "Woolly Rhino Horn",
+      "imageFolder": "Resources/",
+      "imageFile": "woolly_rhino_horn.webp"
+    },
+    {
+      "name": "Yutyrannus Egg",
+      "imageFolder": "Resources/",
+      "imageFile": "yutyrannus_egg.webp"
+    },
+    {
+      "name": "Yutyrannus Lungs",
+      "imageFolder": "Resources/",
+      "imageFile": "yutyrannus_lungs.webp"
+    }
+  ],
   "stations": [
     {
       "name": "Beer Barrel",
@@ -16433,773 +17226,6 @@
           ]
         }
       ]
-    }
-  ],
-  "resources": [
-    {
-      "name": "Absorbent Substrate",
-      "imageFolder": "Resources/",
-      "imageFile": "absorbent_substrate.webp"
-    },
-    {
-      "name": "Allosaurus Brain",
-      "imageFolder": "Resources/",
-      "imageFile": "allosaurus_brain.webp"
-    },
-    {
-      "name": "Allosaurus Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "allosaurus_egg.webp"
-    },
-    {
-      "name": "Amarberry",
-      "imageFolder": "Resources/",
-      "imageFile": "amarberry.webp"
-    },
-    {
-      "name": "Ammonite Bile",
-      "imageFolder": "Resources/",
-      "imageFile": "ammonite_bile.webp"
-    },
-    {
-      "name": "Angler Gel",
-      "imageFolder": "Resources/",
-      "imageFile": "angler_gel.webp"
-    },
-    {
-      "name": "Ankylo Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "ankylo_egg.webp"
-    },
-    {
-      "name": "Araneo Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "araneo_egg.webp"
-    },
-    {
-      "name": "Argentavis Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "argentavis_egg.webp"
-    },
-    {
-      "name": "Argentavis Talon",
-      "imageFolder": "Resources/",
-      "imageFile": "argentavis_talon.webp"
-    },
-    {
-      "name": "Artifact of the Brute",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_brute.webp"
-    },
-    {
-      "name": "Artifact of the Clever",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_clever.webp"
-    },
-    {
-      "name": "Artifact of the Cunning",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_cunning.webp"
-    },
-    {
-      "name": "Artifact of the Devious",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_devious.webp"
-    },
-    {
-      "name": "Artifact of the Devourer",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_devourer.webp"
-    },
-    {
-      "name": "Artifact of the Hunter",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_hunter.webp"
-    },
-    {
-      "name": "Artifact of the Immune",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_immune.webp"
-    },
-    {
-      "name": "Artifact of the Massive",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_massive.webp"
-    },
-    {
-      "name": "Artifact of the Pack",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_pack.webp"
-    },
-    {
-      "name": "Artifact of the Skylord",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_skylord.webp"
-    },
-    {
-      "name": "Artifact of the Strong",
-      "imageFolder": "Resources/",
-      "imageFile": "artifact_of_the_strong.webp"
-    },
-    {
-      "name": "Azulberry",
-      "imageFolder": "Resources/",
-      "imageFile": "azulberry.webp"
-    },
-    {
-      "name": "Baryonyx Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "baryonyx_egg.webp"
-    },
-    {
-      "name": "Basilosaurus Blubber",
-      "imageFolder": "Resources/",
-      "imageFile": "basilosaurus_blubber.webp"
-    },
-    {
-      "name": "Beer Liquid",
-      "imageFolder": "Resources/",
-      "imageFile": "beer_liquid.webp"
-    },
-    {
-      "name": "Berries (Any Kind)",
-      "imageFolder": "Resources/",
-      "imageFile": "berries_any_kind.webp"
-    },
-    {
-      "name": "Bio Toxin",
-      "imageFolder": "Resources/",
-      "imageFile": "bio_toxin.webp"
-    },
-    {
-      "name": "Black Pearl",
-      "imageFolder": "Resources/",
-      "imageFile": "black_pearl.webp"
-    },
-    {
-      "name": "Bronto Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "bronto_egg.webp"
-    },
-    {
-      "name": "Bunny Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "bunny_egg.webp"
-    },
-    {
-      "name": "Carbonemys Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "carbonemys_egg.webp"
-    },
-    {
-      "name": "Carno Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "carno_egg.webp"
-    },
-    {
-      "name": "Cementing Paste",
-      "imageFolder": "Resources/",
-      "imageFile": "cementing_paste.webp"
-    },
-    {
-      "name": "Charcoal",
-      "imageFolder": "Resources/",
-      "imageFile": "charcoal.webp"
-    },
-    {
-      "name": "Chitin",
-      "imageFolder": "Resources/",
-      "imageFile": "chitin.webp"
-    },
-    {
-      "name": "Chitin or Keratin",
-      "imageFolder": "Resources/",
-      "imageFile": "chitin_or_keratin.webp"
-    },
-    {
-      "name": "Citronal",
-      "imageFolder": "Resources/",
-      "imageFile": "citronal.webp"
-    },
-    {
-      "name": "Compy Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "compy_egg.webp"
-    },
-    {
-      "name": "Cooked Fish Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "cooked_fish_meat.webp"
-    },
-    {
-      "name": "Cooked Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "cooked_meat.webp"
-    },
-    {
-      "name": "Cooked Meat Jerky",
-      "imageFolder": "Resources/",
-      "imageFile": "cooked_meat_jerky.webp"
-    },
-    {
-      "name": "Cooked Meat or Fish Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "cooked_meat_or_fish_meat.webp"
-    },
-    {
-      "name": "Cooked Meat or Meat Jerky",
-      "imageFolder": "Resources/",
-      "imageFile": "cooked_meat_or_meat_jerky.webp"
-    },
-    {
-      "name": "Cooked Prime Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "cooked_prime_meat.webp"
-    },
-    {
-      "name": "Cooked Prime Meat or Prime Meat Jerky",
-      "imageFolder": "Resources/",
-      "imageFile": "cooked_prime_meat_or_prime_meat_jerky.webp"
-    },
-    {
-      "name": "Crystal",
-      "imageFolder": "Resources/",
-      "imageFile": "crystal.webp"
-    },
-    {
-      "name": "Deathworm or Woolly Rhino Horn",
-      "imageFolder": "Resources/",
-      "imageFile": "deathworm_or_woolly_rhino_horn.webp"
-    },
-    {
-      "name": "Dilo Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "dilo_egg.webp"
-    },
-    {
-      "name": "Dimetrodon Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "dimetrodon_egg.webp"
-    },
-    {
-      "name": "Dimorphodon Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "dimorphodon_egg.webp"
-    },
-    {
-      "name": "Diplodocus Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "diplodocus_egg.webp"
-    },
-    {
-      "name": "Dodo Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "dodo_egg.webp"
-    },
-    {
-      "name": "DodoRex Mask Skin",
-      "imageFolder": "Resources/",
-      "imageFile": "dodorex_mask_skin.webp"
-    },
-    {
-      "name": "DodoWyvern Mask Skin",
-      "imageFolder": "Resources/",
-      "imageFile": "dodowyvern_mask_skin.webp"
-    },
-    {
-      "name": "Electronics",
-      "imageFolder": "Resources/",
-      "imageFile": "electronics.webp"
-    },
-    {
-      "name": "Element",
-      "imageFolder": "Resources/",
-      "imageFile": "element.webp"
-    },
-    {
-      "name": "Element Shard",
-      "imageFolder": "Resources/",
-      "imageFile": "element_shard.webp"
-    },
-    {
-      "name": "Feces (Any Size)",
-      "imageFolder": "Resources/",
-      "imageFile": "feces.webp"
-    },
-    {
-      "name": "Fertilizer",
-      "imageFolder": "Resources/",
-      "imageFile": "fertilizer.webp"
-    },
-    {
-      "name": "Fiber",
-      "imageFolder": "Resources/",
-      "imageFile": "fiber.webp"
-    },
-    {
-      "name": "Fish Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "fish_egg.webp"
-    },
-    {
-      "name": "Flint",
-      "imageFolder": "Resources/",
-      "imageFile": "flint.webp"
-    },
-    {
-      "name": "Gallimimus Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "gallimimus_egg.webp"
-    },
-    {
-      "name": "Gasoline",
-      "imageFolder": "Resources/",
-      "imageFile": "gasoline.webp"
-    },
-    {
-      "name": "Giant Bee Honey",
-      "imageFolder": "Resources/",
-      "imageFile": "giant_bee_honey.webp"
-    },
-    {
-      "name": "Giganotosaurus Heart",
-      "imageFolder": "Resources/",
-      "imageFile": "giganotosaurus_heart.webp"
-    },
-    {
-      "name": "Golden Hesperonis Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "golden_hesperonis_egg.webp"
-    },
-    {
-      "name": "Gunpowder",
-      "imageFolder": "Resources/",
-      "imageFile": "gunpowder.webp"
-    },
-    {
-      "name": "Hesperornis Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "hesperornis_egg.webp"
-    },
-    {
-      "name": "Hide",
-      "imageFolder": "Resources/",
-      "imageFile": "hide.webp"
-    },
-    {
-      "name": "Ichthyornis Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "ichthyornis_egg.webp"
-    },
-    {
-      "name": "Iguanodon Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "iguanodon_egg.webp"
-    },
-    {
-      "name": "Kairuku Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "kairuku_egg.webp"
-    },
-    {
-      "name": "Kentrosaurus Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "kentrosaurus_egg.webp"
-    },
-    {
-      "name": "Keratin",
-      "imageFolder": "Resources/",
-      "imageFile": "keratin.webp"
-    },
-    {
-      "name": "Leech Blood",
-      "imageFolder": "Resources/",
-      "imageFile": "leech_blood.webp"
-    },
-    {
-      "name": "Leech Blood or Horns",
-      "imageFolder": "Resources/",
-      "imageFile": "leech_blood_or_horns.webp"
-    },
-    {
-      "name": "Longrass",
-      "imageFolder": "Resources/",
-      "imageFile": "longrass.webp"
-    },
-    {
-      "name": "Lystrosaur Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "lystrosaur_egg.webp"
-    },
-    {
-      "name": "Megalania Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "megalania_egg.webp"
-    },
-    {
-      "name": "Megalania Toxin",
-      "imageFolder": "Resources/",
-      "imageFile": "megalania_toxin.webp"
-    },
-    {
-      "name": "Megalodon Tooth",
-      "imageFolder": "Resources/",
-      "imageFile": "megalodon_tooth.webp"
-    },
-    {
-      "name": "Mejoberry",
-      "imageFolder": "Resources/",
-      "imageFile": "mejoberry.webp"
-    },
-    {
-      "name": "Metal Ingot",
-      "imageFolder": "Resources/",
-      "imageFile": "metal_ingot.webp"
-    },
-    {
-      "name": "Metal Ore",
-      "imageFolder": "Resources/",
-      "imageFile": "metal_ore.webp"
-    },
-    {
-      "name": "Microraptor Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "microraptor_egg.webp"
-    },
-    {
-      "name": "Moschops Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "moschops_egg.webp"
-    },
-    {
-      "name": "Narcoberry",
-      "imageFolder": "Resources/",
-      "imageFile": "narcoberry.webp"
-    },
-    {
-      "name": "Narcotic",
-      "imageFolder": "Resources/",
-      "imageFile": "narcotic.webp"
-    },
-    {
-      "name": "Note",
-      "imageFolder": "Resources/",
-      "imageFile": "note.webp"
-    },
-    {
-      "name": "Obsidian",
-      "imageFolder": "Resources/",
-      "imageFile": "obsidian.webp"
-    },
-    {
-      "name": "Oil",
-      "imageFolder": "Resources/",
-      "imageFile": "oil.webp"
-    },
-    {
-      "name": "Organic Polymer",
-      "imageFolder": "Resources/",
-      "imageFile": "organic_polymer.webp"
-    },
-    {
-      "name": "Pachy Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "pachy_egg.webp"
-    },
-    {
-      "name": "Parasaur Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "parasaur_egg.webp"
-    },
-    {
-      "name": "Pegomastax Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "pegomastax_egg.webp"
-    },
-    {
-      "name": "Pelagornis Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "pelagornis_egg.webp"
-    },
-    {
-      "name": "Pelt, Hair, or Wool",
-      "imageFolder": "Resources/",
-      "imageFile": "pelt.webp"
-    },
-    {
-      "name": "Polymer",
-      "imageFolder": "Resources/",
-      "imageFile": "polymer.webp"
-    },
-    {
-      "name": "Prime Meat Jerky",
-      "imageFolder": "Resources/",
-      "imageFile": "prime_meat_jerky.webp"
-    },
-    {
-      "name": "Pteranodon Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "pteranodon_egg.webp"
-    },
-    {
-      "name": "Pulmonoscorpius Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "pulmonoscorpius_egg.webp"
-    },
-    {
-      "name": "Pumpkin",
-      "imageFolder": "Resources/",
-      "imageFile": "pumpkin.webp"
-    },
-    {
-      "name": "Quetzal Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "quetzal_egg.webp"
-    },
-    {
-      "name": "Raptor Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "raptor_egg.webp"
-    },
-    {
-      "name": "Rare Flower",
-      "imageFolder": "Resources/",
-      "imageFile": "rare_flower.webp"
-    },
-    {
-      "name": "Rare Mushroom",
-      "imageFolder": "Resources/",
-      "imageFile": "rare_mushroom.webp"
-    },
-    {
-      "name": "Raw Fish Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "raw_fish_meat.webp"
-    },
-    {
-      "name": "Raw Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "raw_meat.webp"
-    },
-    {
-      "name": "Raw Mutton",
-      "imageFolder": "Resources/",
-      "imageFile": "raw_mutton.webp"
-    },
-    {
-      "name": "Raw Prime Fish Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "raw_prime_fish_meat.webp"
-    },
-    {
-      "name": "Raw Prime Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "raw_prime_meat.webp"
-    },
-    {
-      "name": "Rex Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "rex_egg.webp"
-    },
-    {
-      "name": "Rockarrot",
-      "imageFolder": "Resources/",
-      "imageFile": "rockarrot.webp"
-    },
-    {
-      "name": "Sap",
-      "imageFolder": "Resources/",
-      "imageFile": "sap.webp"
-    },
-    {
-      "name": "Sarco Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "sarco_egg.webp"
-    },
-    {
-      "name": "Sarcosuchus Skin",
-      "imageFolder": "Resources/",
-      "imageFile": "sarcosuchus_skin.webp"
-    },
-    {
-      "name": "Sauropod Vertebra",
-      "imageFolder": "Resources/",
-      "imageFile": "sauropod_vertebra.webp"
-    },
-    {
-      "name": "Savoroot",
-      "imageFolder": "Resources/",
-      "imageFile": "savoroot.webp"
-    },
-    {
-      "name": "Scarecrow",
-      "imageFolder": "Resources/",
-      "imageFile": "scarecrow.webp"
-    },
-    {
-      "name": "Silica Pearls",
-      "imageFolder": "Resources/",
-      "imageFile": "silica_pearls.webp"
-    },
-    {
-      "name": "Simple Rifle Ammo",
-      "imageFolder": "Resources/",
-      "imageFile": "simple_rifle_ammo.webp"
-    },
-    {
-      "name": "Sparkpowder",
-      "imageFolder": "Resources/",
-      "imageFile": "sparkpowder.webp"
-    },
-    {
-      "name": "Spear Bolt",
-      "imageFolder": "Resources/",
-      "imageFile": "spear_bolt.webp"
-    },
-    {
-      "name": "Spino Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "spino_egg.webp"
-    },
-    {
-      "name": "Spinosaurus Sail",
-      "imageFolder": "Resources/",
-      "imageFile": "spinosaurus_sail.webp"
-    },
-    {
-      "name": "Spoiled Meat",
-      "imageFolder": "Resources/",
-      "imageFile": "spoiled_meat.webp"
-    },
-    {
-      "name": "Stego Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "stego_egg.webp"
-    },
-    {
-      "name": "Stimberry",
-      "imageFolder": "Resources/",
-      "imageFile": "stimberry.webp"
-    },
-    {
-      "name": "Stimulant",
-      "imageFolder": "Resources/",
-      "imageFile": "stimulant.webp"
-    },
-    {
-      "name": "Stolen Headstone",
-      "imageFolder": "Resources/",
-      "imageFile": "stolen_headstone.webp"
-    },
-    {
-      "name": "Stone",
-      "imageFolder": "Resources/",
-      "imageFile": "stone.webp"
-    },
-    {
-      "name": "Stone Arrow",
-      "imageFolder": "Resources/",
-      "imageFile": "stone_arrow.webp"
-    },
-    {
-      "name": "Tapejara Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "tapejara_egg.webp"
-    },
-    {
-      "name": "Terror Bird Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "terror_bird_egg.webp"
-    },
-    {
-      "name": "Thatch",
-      "imageFolder": "Resources/",
-      "imageFile": "thatch.webp"
-    },
-    {
-      "name": "Therizino Claws",
-      "imageFolder": "Resources/",
-      "imageFile": "therizino_claws.webp"
-    },
-    {
-      "name": "Therizinosaurus Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "therizinosaurus_egg.webp"
-    },
-    {
-      "name": "Thylacoleo Hook-Claw",
-      "imageFolder": "Resources/",
-      "imageFile": "thylacoleo_hook-claw.webp"
-    },
-    {
-      "name": "Tintoberry",
-      "imageFolder": "Resources/",
-      "imageFile": "tintoberry.webp"
-    },
-    {
-      "name": "Titanoboa Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "titanoboa_egg.webp"
-    },
-    {
-      "name": "Titanoboa Venom",
-      "imageFolder": "Resources/",
-      "imageFile": "titanoboa_venom.webp"
-    },
-    {
-      "name": "Tranquilizer Dart",
-      "imageFolder": "Resources/",
-      "imageFile": "tranquilizer_dart.webp"
-    },
-    {
-      "name": "Trike Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "trike_egg.webp"
-    },
-    {
-      "name": "Troodon Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "troodon_egg.webp"
-    },
-    {
-      "name": "Tusoteuthis Tentacle",
-      "imageFolder": "Resources/",
-      "imageFile": "tusoteuthis_tentacle.webp"
-    },
-    {
-      "name": "Tyrannosaurus Arm",
-      "imageFolder": "Resources/",
-      "imageFile": "tyrannosaurus_arm.webp"
-    },
-    {
-      "name": "Water",
-      "imageFolder": "Resources/",
-      "imageFile": "water.webp"
-    },
-    {
-      "name": "Water Jar",
-      "imageFolder": "Resources/",
-      "imageFile": "water_jar.webp"
-    },
-    {
-      "name": "Wood",
-      "imageFolder": "Resources/",
-      "imageFile": "wood.webp"
-    },
-    {
-      "name": "Woolly Rhino Horn",
-      "imageFolder": "Resources/",
-      "imageFile": "woolly_rhino_horn.webp"
-    },
-    {
-      "name": "Yutyrannus Egg",
-      "imageFolder": "Resources/",
-      "imageFile": "yutyrannus_egg.webp"
-    },
-    {
-      "name": "Yutyrannus Lungs",
-      "imageFolder": "Resources/",
-      "imageFile": "yutyrannus_lungs.webp"
     }
   ]
 }

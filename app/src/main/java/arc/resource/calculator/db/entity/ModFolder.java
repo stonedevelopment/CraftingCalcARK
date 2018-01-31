@@ -3,33 +3,34 @@ package arc.resource.calculator.db.entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(primaryKeys = {"folderId", "engramId"},
+@Entity(
     foreignKeys = {
-        @ForeignKey(entity = DLCFolder.class,
+        @ForeignKey(entity = BaseFolder.class,
             parentColumns = "id",
             childColumns = "folderId"),
-        @ForeignKey(entity = DLCEngram.class,
+        @ForeignKey(entity = BaseMod.class,
             parentColumns = "id",
-            childColumns = "engramId")
-    },
+            childColumns = "modId")},
     indices = {
-        @Index(value = "folderId"),
-        @Index(value = "engramId"),
-        @Index(value = {"folderId", "engramId"}, unique = true)})
+        @Index(value = {"modId"}),
+        @Index(value = {"folderId"},
+            unique = true)})
 
-public class FolderEngram {
+public class ModFolder {
 
   @NonNull
+  @PrimaryKey
   private final String folderId;
 
   @NonNull
-  private final String engramId;
+  private final String modId;
 
-  public FolderEngram(@NonNull String folderId, @NonNull String engramId) {
+  public ModFolder(@NonNull String folderId, @NonNull String modId) {
     this.folderId = folderId;
-    this.engramId = engramId;
+    this.modId = modId;
   }
 
   @NonNull
@@ -38,7 +39,7 @@ public class FolderEngram {
   }
 
   @NonNull
-  public String getEngramId() {
-    return engramId;
+  public String getModId() {
+    return modId;
   }
 }

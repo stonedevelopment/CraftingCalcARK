@@ -9,12 +9,6 @@ import java.util.List;
 @Dao
 public interface BaseDLCDao {
 
-  //  get object by id
-  @Query("select * from dlc "
-      + "where id = :id "
-      + "limit 1")
-  BaseDLC get(String id);
-
   //  get all records
   @Query("select * from dlc")
   List<BaseDLC> getAll();

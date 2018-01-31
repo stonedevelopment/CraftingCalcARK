@@ -1,1 +1,13 @@
-{}
+{
+  "name": "Structures Plus",
+  "contentFolder": "Mod/Structures Plus/",
+  "imageFile": "logo.webp",
+  "override": {
+    "stations": [
+    ]
+  },
+  "stations": [
+  ],
+  "resources": [
+  ]
+}

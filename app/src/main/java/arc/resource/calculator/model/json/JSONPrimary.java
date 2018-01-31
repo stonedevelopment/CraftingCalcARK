@@ -1,12 +1,12 @@
 package arc.resource.calculator.model.json;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class JSONPrimary {
 
   private List<Station> stations;
   private List<Resource> resources;
+  private List<Quality> qualities;
 
   public JSONPrimary() {
 
@@ -34,6 +34,41 @@ public class JSONPrimary {
 
   public void addResource(Resource resource) {
     this.resources.add(resource);
+  }
+
+  public List<Quality> getQualities() {
+    return qualities;
+  }
+
+  public void setQualities(
+      List<Quality> qualities) {
+    this.qualities = qualities;
+  }
+
+  public static class Quality {
+
+    private String name;
+    private String color;
+
+    public Quality() {
+
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public String getColor() {
+      return color;
+    }
+
+    public void setColor(String color) {
+      this.color = color;
+    }
   }
 
   public static class Station {
@@ -274,6 +309,66 @@ public class JSONPrimary {
 
     public void setImageFile(String imageFile) {
       this.imageFile = imageFile;
+    }
+  }
+
+  public static class Override {
+
+    private List<Station> stations;
+
+    public Override() {
+
+    }
+
+    public List<Station> getStations() {
+      return stations;
+    }
+
+    public void setStations(List<Station> stations) {
+      this.stations = stations;
+    }
+
+    public static class Station {
+
+      private String name;
+      private List<Engram> engrams;
+      private List<Category> categories;
+
+      public Station() {
+
+      }
+
+      public String getName() {
+        return name;
+      }
+
+      public void setName(String name) {
+        this.name = name;
+      }
+
+      public List<Category> getCategories() {
+        return categories;
+      }
+
+      public void setCategories(List<Category> categories) {
+        this.categories = categories;
+      }
+
+      public void addCategory(Category category) {
+        this.categories.add(category);
+      }
+
+      public List<Engram> getEngrams() {
+        return engrams;
+      }
+
+      public void setEngrams(List<Engram> engrams) {
+        this.engrams = engrams;
+      }
+
+      public void addEngram(Engram engram) {
+        this.engrams.add(engram);
+      }
     }
   }
 }

@@ -26,9 +26,10 @@ public interface NameDao {
       + "order by text")
   List<Name> getAll();
 
-  @Query("select id from name "
+  @Query("select * from name "
+      + "inner join engram on engram.nameId = name.id "
       + "where text like :searchText")
-  List<String> getByLikeText(String searchText);
+  List<Name> search(String searchText);
 
   //  insert one object
   @Insert(onConflict = IGNORE)

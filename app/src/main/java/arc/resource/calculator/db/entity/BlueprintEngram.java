@@ -3,33 +3,35 @@ package arc.resource.calculator.db.entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(primaryKeys = {"engramId", "descriptionId"},
+@Entity(
     foreignKeys = {
-        @ForeignKey(entity = DLCEngram.class,
+        @ForeignKey(entity = BaseEngram.class,
             parentColumns = "id",
             childColumns = "engramId"),
-        @ForeignKey(entity = Description.class,
+        @ForeignKey(entity = BaseQuality.class,
             parentColumns = "id",
-            childColumns = "descriptionId")
-    },
+            childColumns = "qualityId")},
     indices = {
+        @Index(value = "qualityId"),
         @Index(value = "engramId"),
-        @Index(value = "descriptionId"),
-        @Index(value = {"engramId", "descriptionId"}, unique = true)})
+        @Index(value = {"engramId", "qualityId"},
+            unique = true)})
 
-public class EngramDescription {
+public class BlueprintEngram {
 
   @NonNull
+  @PrimaryKey
   private final String engramId;
 
   @NonNull
-  private final String descriptionId;
+  private final String qualityId;
 
-  public EngramDescription(@NonNull String engramId, @NonNull String descriptionId) {
+  public BlueprintEngram(@NonNull String engramId, @NonNull String qualityId) {
     this.engramId = engramId;
-    this.descriptionId = descriptionId;
+    this.qualityId = qualityId;
   }
 
   @NonNull
@@ -38,7 +40,7 @@ public class EngramDescription {
   }
 
   @NonNull
-  public String getDescriptionId() {
-    return descriptionId;
+  public String getQualityId() {
+    return qualityId;
   }
 }

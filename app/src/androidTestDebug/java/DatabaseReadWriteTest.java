@@ -10,6 +10,7 @@ import arc.resource.calculator.db.entity.BaseComposite;
 import arc.resource.calculator.db.entity.BaseDLC;
 import arc.resource.calculator.db.entity.BaseEngram;
 import arc.resource.calculator.db.entity.BaseFolder;
+import arc.resource.calculator.db.entity.BaseMod;
 import arc.resource.calculator.db.entity.BaseResource;
 import arc.resource.calculator.db.entity.BaseStation;
 import arc.resource.calculator.db.entity.DLCEngram;
@@ -18,12 +19,22 @@ import arc.resource.calculator.db.entity.DLCResource;
 import arc.resource.calculator.db.entity.DLCStation;
 import arc.resource.calculator.db.entity.Description;
 import arc.resource.calculator.db.entity.ImageLocation;
+import arc.resource.calculator.db.entity.ModEngram;
+import arc.resource.calculator.db.entity.ModFolder;
+import arc.resource.calculator.db.entity.ModResource;
+import arc.resource.calculator.db.entity.ModStation;
 import arc.resource.calculator.db.entity.Name;
+import arc.resource.calculator.db.entity.PrimaryEngram;
+import arc.resource.calculator.db.entity.PrimaryFolder;
+import arc.resource.calculator.db.entity.PrimaryResource;
+import arc.resource.calculator.db.entity.PrimaryStation;
 import arc.resource.calculator.model.json.JSONDLC;
+import arc.resource.calculator.model.json.JSONMod;
 import arc.resource.calculator.model.json.JSONPrimary;
 import arc.resource.calculator.model.json.JSONPrimary.Category;
 import arc.resource.calculator.model.json.JSONPrimary.Composite;
 import arc.resource.calculator.model.json.JSONPrimary.Engram;
+import arc.resource.calculator.model.json.JSONPrimary.Override;
 import arc.resource.calculator.model.json.JSONPrimary.Resource;
 import arc.resource.calculator.model.json.JSONPrimary.Station;
 import arc.resource.calculator.model.json.JSONUpdate;
@@ -75,13 +86,18 @@ public class DatabaseReadWriteTest {
       insertDLCData(mapper, jsonUpdate.getDlcFiles());
     }
 
-//    int max = 5;
-//    for (int i = 1; i <= max; i++) {
-//      printLn("--[ Printing Random Data " + i + "/" + max + " ]--");
-//      printRandomData();
-//    }
-    String searchQuery = "metal d";
-    printSearchData(searchQuery);
+    //  #MOD
+    if (jsonUpdate.getModFiles() != null) {
+      insertModData(mapper, jsonUpdate.getModFiles());
+    }
+
+    int max = 5;
+    for (int i = 1; i <= max; i++) {
+      printLn("--[ Printing Random Data " + i + "/" + max + " ]--");
+      printRandomData();
+    }
+//    String searchQuery = "metal";
+//    printSearchData(searchQuery);
   }
 
   private void insertPrimaryData(ObjectMapper mapper) throws IOException {
@@ -128,17 +144,57 @@ public class DatabaseReadWriteTest {
 
       //  iterate through list of Resource objects
       if (dlc.getResources() != null) {
-        insertResources(contentFolder, dlc.getResources(), dlcId);
+        insertDLCResources(contentFolder, dlc.getResources(), dlcId);
       }
 
       //  iterate through list of override objects
       if (dlc.getOverride().getStations() != null) {
-        overrideStations(contentFolder, dlc.getOverride().getStations(), dlcId);
+        overrideStationsForDLC(contentFolder, dlc.getOverride().getStations(), dlcId);
       }
 
       //  iterate through list of station objects
       if (dlc.getStations() != null) {
-        insertStations(contentFolder, dlc.getStations(), dlcId);
+        insertDLCStations(contentFolder, dlc.getStations(), dlcId);
+      }
+    }
+  }
+
+  private void insertModData(ObjectMapper mapper, List<String> filenames) throws IOException {
+    for (String filename : filenames) {
+      //  read json data to jackson object
+      JSONMod mod = mapper.readValue(
+          getFileFromAssets(context, filename), JSONMod.class);
+
+      String contentFolder = mod.getContentFolder();
+
+      //  insert image location, get id
+      String modImageLocationId = insertImageLocation(
+          new ImageLocation(contentFolder, null,
+              mod.getImageFile()));
+      assertNotNull(modImageLocationId);
+
+      //  insert name, get id
+      String modNameId = insertName(new Name(mod.getName()));
+      assertNotNull(modNameId);
+
+      //  insert mod, get id if added
+      BaseMod baseMod = new BaseMod(contentFolder, modImageLocationId, modNameId);
+      String modId = baseMod.getId();
+      db.modDao().insert(baseMod);
+
+      //  iterate through list of Resource objects
+      if (mod.getResources() != null) {
+        insertModResources(contentFolder, mod.getResources(), modId);
+      }
+
+      //  iterate through list of override objects
+      if (mod.getOverride().getStations() != null) {
+        overrideStationsForDLC(contentFolder, mod.getOverride().getStations(), modId);
+      }
+
+      //  iterate through list of station objects
+      if (mod.getStations() != null) {
+        insertModStations(contentFolder, mod.getStations(), modId);
       }
     }
   }
@@ -159,9 +215,20 @@ public class DatabaseReadWriteTest {
         ? description.getId() : db.descriptionDao().getId(description.getText());
   }
 
+  /**
+   * Attempt to insert an object into database, query for Id upon conflict, return Id.
+   *
+   * @param baseEngram Object to insert into database.
+   * @return UUID of Object inserted.
+   */
+  private String insertEngram(BaseEngram baseEngram) {
+    return db.engramDao().insert(baseEngram) != INVALID_ID ? baseEngram.getId()
+        : db.engramDao().getId(baseEngram.getDescriptionId(), baseEngram.getImageLocationId(),
+            baseEngram.getNameId(), baseEngram.getRequiredLevel(), baseEngram.getYield());
+  }
+
   private void insertEngrams(String contentFolder, List<Engram> engrams, String parentId) {
     for (Engram engram : engrams) {
-
       //  insert image location
       String engramImageLocationId = insertImageLocation(
           new ImageLocation(contentFolder, engram.getImageFolder(), engram.getImageFile()));
@@ -175,11 +242,14 @@ public class DatabaseReadWriteTest {
       String engramDescriptionId = insertDescription(new Description(engram.getDescription()));
       assertNotNull(engramDescriptionId);
 
-      //  insert engram
+      //  insert base engram
       BaseEngram baseEngram = new BaseEngram(engramDescriptionId, engramImageLocationId,
-          engramNameId, parentId, engram.getLevel(), engram.getYield());
-      String engramId = baseEngram.getId();
-      db.engramDao().insert(baseEngram);
+          engramNameId, engram.getLevel(), engram.getYield());
+      String engramId = insertEngram(baseEngram);
+
+      //  insert primary engram
+      PrimaryEngram primaryEngram = new PrimaryEngram(engramId, parentId);
+      db.primaryEngramDao().insert(primaryEngram);
 
       //  iterate through list of compositionElement objects
       for (Composite composite : engram.getComposition()) {
@@ -198,7 +268,7 @@ public class DatabaseReadWriteTest {
     }
   }
 
-  private void insertEngrams(String contentFolder, List<Engram> engrams, String parentId,
+  private void insertDLCEngrams(String contentFolder, List<Engram> engrams, String parentId,
       String dlcId) {
     for (Engram engram : engrams) {
       //  insert image location
@@ -215,9 +285,12 @@ public class DatabaseReadWriteTest {
       assertNotNull(engramDescriptionId);
 
       //  insert engram
-      DLCEngram dlcEngram = new DLCEngram(engramDescriptionId, engramImageLocationId,
-          engramNameId, parentId, engram.getLevel(), engram.getYield(), dlcId);
-      String engramId = dlcEngram.getId();
+      BaseEngram baseEngram = new BaseEngram(engramDescriptionId, engramImageLocationId,
+          engramNameId, engram.getLevel(), engram.getYield());
+      String engramId = insertEngram(baseEngram);
+
+      //  insert dlc engram
+      DLCEngram dlcEngram = new DLCEngram(engramId, parentId, dlcId);
       db.dlcEngramDao().insert(dlcEngram);
 
       //  iterate through list of compositionElement objects
@@ -227,9 +300,6 @@ public class DatabaseReadWriteTest {
 
         //  get resource id by name id
         String resourceId = db.resourceDao().getId(resourceNameId);
-        if (resourceId == null) {
-          resourceId = db.dlcResourceDao().getId(resourceNameId);
-        }
 
         //  insert composite
         BaseComposite baseComposite = new BaseComposite(engramId, resourceId,
@@ -239,16 +309,71 @@ public class DatabaseReadWriteTest {
     }
   }
 
+  private void insertModEngrams(String contentFolder, List<Engram> engrams, String parentId,
+      String modId) {
+    for (Engram engram : engrams) {
+      //  insert image location
+      String engramImageLocationId = insertImageLocation(
+          new ImageLocation(contentFolder, engram.getImageFolder(), engram.getImageFile()));
+      assertNotNull(engramImageLocationId);
+
+      //  insert name
+      String engramNameId = insertName(new Name(engram.getName()));
+      assertNotNull(engramNameId);
+
+      //  insert description
+      String engramDescriptionId = insertDescription(new Description(engram.getDescription()));
+      assertNotNull(engramDescriptionId);
+
+      //  insert engram
+      BaseEngram baseEngram = new BaseEngram(engramDescriptionId, engramImageLocationId,
+          engramNameId, engram.getLevel(), engram.getYield());
+      String engramId = insertEngram(baseEngram);
+
+      //  insert mod engram
+      ModEngram modEngram = new ModEngram(engramId, modId);
+      db.modEngramDao().insert(modEngram);
+
+      //  iterate through list of compositionElement objects
+      for (Composite composite : engram.getComposition()) {
+        //  get name id by name text
+        String resourceNameId = db.nameDao().getId(composite.getName());
+
+        //  get resource id by name id
+        String resourceId = db.resourceDao().getId(resourceNameId);
+
+        //  insert composite
+        BaseComposite baseComposite = new BaseComposite(engramId, resourceId,
+            composite.getQuantity());
+        db.compositeDao().insert(baseComposite);
+      }
+    }
+  }
+
+  /**
+   * Attempt to insert an object into database, query for Id upon conflict, return Id.
+   *
+   * @param baseFolder Object to insert into database.
+   * @return UUID of Object inserted.
+   */
+  private String insertFolder(BaseFolder baseFolder) {
+    return db.folderDao().insert(baseFolder) != INVALID_ID ? baseFolder.getId()
+        : db.folderDao().getId(baseFolder.getNameId());
+  }
+
   private void insertFolders(String contentFolder, List<Category> folders, String parentId) {
     for (Category folder : folders) {
       //  insert name
       String folderNameId = insertName(new Name(folder.getName()));
       assertNotNull(folderNameId);
 
-      //  insert folder
-      BaseFolder baseFolder = new BaseFolder(folderNameId, parentId);
-      String folderId = baseFolder.getId();
-      db.folderDao().insert(baseFolder);
+      //  insert base folder
+      BaseFolder baseFolder = new BaseFolder(folderNameId);
+      String folderId = insertFolder(baseFolder);
+
+      //  insert primary folder
+      PrimaryFolder primaryFolder = new PrimaryFolder(folderId, parentId);
+      db.primaryFolderDao().insert(primaryFolder);
 
       //  iterate through list of engram objects
       if (folder.getEngrams() != null) {
@@ -262,34 +387,69 @@ public class DatabaseReadWriteTest {
     }
   }
 
-  private void insertFolders(String contentFolder, List<Category> folders, String parentId,
+  private void insertDLCFolders(String contentFolder, List<Category> folders, String parentId,
       String dlcId) {
     for (Category folder : folders) {
       //  insert name
-      String nameId = insertName(new Name(folder.getName()));
-      assertNotNull(nameId);
+      String folderNameId = insertName(new Name(folder.getName()));
+      assertNotNull(folderNameId);
 
-      //  insert folder
-      String folderId;
-      BaseFolder baseFolder = db.folderDao().get(nameId, parentId);
-      if (baseFolder == null) {
-        DLCFolder dlcFolder = new DLCFolder(nameId, parentId, dlcId);
-        folderId = dlcFolder.getId();
-        db.dlcFolderDao().insert(dlcFolder);
-      } else {
-        folderId = baseFolder.getId();
-      }
+      //  insert base folder
+      BaseFolder baseFolder = new BaseFolder(folderNameId);
+      String folderId = insertFolder(baseFolder);
+
+      //  insert dlc folder
+      DLCFolder dlcFolder = new DLCFolder(folderId, parentId, dlcId);
+      db.dlcFolderDao().insert(dlcFolder);
 
       //  iterate through list of engram objects
       if (folder.getEngrams() != null) {
-        insertEngrams(contentFolder, folder.getEngrams(), folderId, dlcId);
+        insertDLCEngrams(contentFolder, folder.getEngrams(), folderId, dlcId);
       }
 
       //  recursively sift through subcategories ftw
       if (folder.getCategories() != null) {
-        insertFolders(contentFolder, folder.getCategories(), folderId, dlcId);
+        insertDLCFolders(contentFolder, folder.getCategories(), folderId, dlcId);
       }
     }
+  }
+
+  private void insertModFolders(String contentFolder, List<Category> folders, String parentId,
+      String modId) {
+    for (Category folder : folders) {
+      //  insert name
+      String folderNameId = insertName(new Name(folder.getName()));
+      assertNotNull(folderNameId);
+
+      //  insert folder
+      BaseFolder baseFolder = new BaseFolder(folderNameId);
+      String folderId = insertFolder(baseFolder);
+
+      //  insert mod folder
+      ModFolder modFolder = new ModFolder(folderId, modId);
+      db.modFolderDao().insert(modFolder);
+
+      //  iterate through list of engram objects
+      if (folder.getEngrams() != null) {
+        insertModEngrams(contentFolder, folder.getEngrams(), folderId, modId);
+      }
+
+      //  recursively sift through subcategories ftw
+      if (folder.getCategories() != null) {
+        insertModFolders(contentFolder, folder.getCategories(), folderId, modId);
+      }
+    }
+  }
+
+  /**
+   * Attempt to insert an object into database, query for Id upon conflict, return Id.
+   *
+   * @param baseResource Object to insert into database.
+   * @return UUID of Object inserted.
+   */
+  private String insertResource(BaseResource baseResource) {
+    return db.resourceDao().insert(baseResource) != INVALID_ID ? baseResource.getId()
+        : db.resourceDao().getId(baseResource.getNameId());
   }
 
   private void insertResources(String contentFolder, List<Resource> resources) {
@@ -303,13 +463,17 @@ public class DatabaseReadWriteTest {
       String resourceNameId = insertName(new Name(resource.getName()));
       assertNotNull(resourceNameId);
 
-      //  insert resource, get id if added
+      //  insert base resource
       BaseResource baseResource = new BaseResource(resourceImageLocationId, resourceNameId);
-      db.resourceDao().insert(baseResource);
+      String resourceId = insertResource(baseResource);
+
+      //  insert primary resource
+      PrimaryResource primaryResource = new PrimaryResource(resourceId);
+      db.primaryResourceDao().insert(primaryResource);
     }
   }
 
-  private void insertResources(String contentFolder, List<Resource> resources, String dlcId) {
+  private void insertDLCResources(String contentFolder, List<Resource> resources, String dlcId) {
     for (Resource resource : resources) {
       //  insert image location
       String resourceImageLocationId = insertImageLocation(
@@ -320,10 +484,46 @@ public class DatabaseReadWriteTest {
       String resourceNameId = insertName(new Name(resource.getName()));
       assertNotNull(resourceNameId);
 
+      //  insert base resource
+      BaseResource baseResource = new BaseResource(resourceImageLocationId, resourceNameId);
+      String resourceId = insertResource(baseResource);
+
       //  insert dlc resource
-      DLCResource dlcResource = new DLCResource(resourceImageLocationId, resourceNameId, dlcId);
+      DLCResource dlcResource = new DLCResource(resourceId, dlcId);
       db.dlcResourceDao().insert(dlcResource);
     }
+  }
+
+  private void insertModResources(String contentFolder, List<Resource> resources, String modId) {
+    for (Resource resource : resources) {
+      //  insert image location
+      String resourceImageLocationId = insertImageLocation(
+          new ImageLocation(contentFolder, resource.getImageFolder(), resource.getImageFile()));
+      assertNotNull(resourceImageLocationId);
+
+      //  insert name
+      String resourceNameId = insertName(new Name(resource.getName()));
+      assertNotNull(resourceNameId);
+
+      //  insert base resource
+      BaseResource baseResource = new BaseResource(resourceImageLocationId, resourceNameId);
+      String resourceId = insertResource(baseResource);
+
+      //  insert mod resource
+      ModResource modResource = new ModResource(resourceId, modId);
+      db.modResourceDao().insert(modResource);
+    }
+  }
+
+  /**
+   * Attempt to insert an object into database, query for Id upon conflict, return Id.
+   *
+   * @param baseStation Object to insert into database.
+   * @return UUID of Object inserted.
+   */
+  private String insertStation(BaseStation baseStation) {
+    return db.stationDao().insert(baseStation) != INVALID_ID ? baseStation.getId()
+        : db.stationDao().getId(baseStation.getNameId());
   }
 
   private void insertStations(String contentFolder, List<Station> stations) {
@@ -337,10 +537,13 @@ public class DatabaseReadWriteTest {
       String stationNameId = insertName(new Name(station.getName()));
       assertNotNull(stationNameId);
 
-      //  insert station, get id if conflict
+      //  insert base station
       BaseStation baseStation = new BaseStation(stationImageLocationId, stationNameId);
-      String stationId = baseStation.getId();
-      db.stationDao().insert(baseStation);
+      String stationId = insertStation(baseStation);
+
+      //  insert primary station
+      PrimaryStation primaryStation = new PrimaryStation(stationId);
+      db.primaryStationDao().insert(primaryStation);
 
       //  iterate through list of engram objects
       if (station.getEngrams() != null) {
@@ -354,7 +557,7 @@ public class DatabaseReadWriteTest {
     }
   }
 
-  private void insertStations(String contentFolder, List<Station> stations, String dlcId) {
+  private void insertDLCStations(String contentFolder, List<Station> stations, String dlcId) {
     for (Station station : stations) {
 
       //  insert image location
@@ -366,31 +569,65 @@ public class DatabaseReadWriteTest {
       String stationNameId = insertName(new Name(station.getName()));
       assertNotNull(stationNameId);
 
-      //  insert station, get id if conflict
-      DLCStation dlcStation = new DLCStation(stationImageLocationId, stationNameId, dlcId);
-      String stationId = dlcStation.getId();
+      //  insert base station
+      BaseStation baseStation = new BaseStation(stationImageLocationId, stationNameId);
+      String stationId = insertStation(baseStation);
+
+      //  insert dlc station
+      DLCStation dlcStation = new DLCStation((stationId), dlcId);
       db.dlcStationDao().insert(dlcStation);
 
       //  iterate through list of engram objects
       if (station.getEngrams() != null) {
-        insertEngrams(contentFolder, station.getEngrams(), stationId, dlcId);
+        insertDLCEngrams(contentFolder, station.getEngrams(), stationId, dlcId);
       }
 
       //  iterate through list of category objects
       if (station.getCategories() != null) {
-        insertFolders(contentFolder, station.getCategories(), stationId, dlcId);
+        insertDLCFolders(contentFolder, station.getCategories(), stationId, dlcId);
       }
     }
   }
 
-  private void overrideStations(String contentFolder, List<JSONDLC.Station> stations,
-      String dlcId) {
-    for (JSONDLC.Station station : stations) {
+  private void insertModStations(String contentFolder, List<Station> stations, String modId) {
+    for (Station station : stations) {
 
+      //  insert image location
+      String stationImageLocationId = insertImageLocation(
+          new ImageLocation(contentFolder, station.getImageFolder(), station.getImageFile()));
+      assertNotNull(stationImageLocationId);
+
+      //  insert name
+      String stationNameId = insertName(new Name(station.getName()));
+      assertNotNull(stationNameId);
+
+      //  insert base station
+      BaseStation baseStation = new BaseStation(stationImageLocationId, stationNameId);
+      String stationId = insertStation(baseStation);
+
+      //  insert mod station
+      ModStation modStation = new ModStation((stationId), modId);
+      db.modStationDao().insert(modStation);
+
+      //  iterate through list of engram objects
+      if (station.getEngrams() != null) {
+        insertModEngrams(contentFolder, station.getEngrams(), stationId, modId);
+      }
+
+      //  iterate through list of category objects
+      if (station.getCategories() != null) {
+        insertModFolders(contentFolder, station.getCategories(), stationId, modId);
+      }
+    }
+  }
+
+  private void overrideStationsForDLC(String contentFolder, List<Override.Station> stations,
+      String dlcId) {
+    for (Override.Station station : stations) {
       String stationNameId = db.nameDao().getId(station.getName());
       assertNotNull(stationNameId);
 
-      BaseStation baseStation = db.stationDao().getByNameId(stationNameId);
+      BaseStation baseStation = db.stationDao().get(stationNameId);
       assertNotNull(baseStation);
 
       String stationId = baseStation.getId();
@@ -401,12 +638,39 @@ public class DatabaseReadWriteTest {
 
       //  iterate through list of engram objects
       if (station.getEngrams() != null) {
-        insertEngrams(contentFolder, station.getEngrams(), stationId, dlcId);
+        insertDLCEngrams(contentFolder, station.getEngrams(), stationId, dlcId);
       }
 
       //  iterate through list of category objects
       if (station.getCategories() != null) {
-        insertFolders(contentFolder, station.getCategories(), stationId, dlcId);
+        insertDLCFolders(contentFolder, station.getCategories(), stationId, dlcId);
+      }
+    }
+  }
+
+  private void overrideStationsForMod(String contentFolder, List<Override.Station> stations,
+      String modId) {
+    for (Override.Station station : stations) {
+      String stationNameId = db.nameDao().getId(station.getName());
+      assertNotNull(stationNameId);
+
+      BaseStation baseStation = db.stationDao().get(stationNameId);
+      assertNotNull(baseStation);
+
+      String stationId = baseStation.getId();
+      assertNotNull(stationId);
+
+      String stationImageLocationId = baseStation.getImageLocationId();
+      assertNotNull(stationImageLocationId);
+
+      //  iterate through list of engram objects
+      if (station.getEngrams() != null) {
+        insertModEngrams(contentFolder, station.getEngrams(), stationId, modId);
+      }
+
+      //  iterate through list of category objects
+      if (station.getCategories() != null) {
+        insertModFolders(contentFolder, station.getCategories(), stationId, modId);
       }
     }
   }
@@ -416,15 +680,15 @@ public class DatabaseReadWriteTest {
 
     printLn("Searching for " + query);
 
-    List<String> nameIds = db.nameDao().getByLikeText(query);
+    List<Name> names = db.nameDao().search(query);
 
-    printLn("Found " + nameIds.size() + " matches by Name.");
-
-    List<String> engramNameIds = db.engramDao().getAllByNameIds(nameIds);
-
-    printLn("Found " + engramNameIds.size() + " matches by Engram.");
-
-    List<Name> names = db.nameDao().getAll(engramNameIds);
+    printLn("Found " + names.size() + " matches by Name.");
+//
+//    List<String> engramNameIds = db.engramDao().getAllByNameIds(nameIds);
+//
+//    printLn("Found " + engramNameIds.size() + " matches by Engram.");
+//
+//    List<Name> names = db.nameDao().getAll(engramNameIds);
 
     for (Name name : names) {
       printLn(name.getText());
@@ -432,21 +696,21 @@ public class DatabaseReadWriteTest {
   }
 
   private void printRandomData() {
-    if (new Random().nextInt(1) == 1) {
-      printLn("Showing Primary Game Data..");
-
-      List<BaseStation> stations = db.stationDao().getAll();
-      BaseStation station = stations.get(new Random().nextInt(stations.size()));
-
-      Name stationName = db.nameDao().get(station.getNameId());
-      printLn("Station: " + stationName.getText());
-
-      printEngrams(db.engramDao().getAll(station.getId()), "");
-
-      printFolders(db.folderDao().getAll(station.getId()), "");
-    } else {
-      printRandomDlcData();
-    }
+//    if (new Random().nextInt(10) < 5) {
+//      printLn("Showing Primary Game Data..");
+//
+//      List<BaseStation> stations = db.primaryStationDao().getAll();
+//      BaseStation station = stations.get(new Random().nextInt(stations.size()));
+//
+//      Name stationName = db.nameDao().get(station.getNameId());
+//      printLn("Station: " + stationName.getText());
+//
+//      printEngrams(db.primaryEngramDao().getAll(station.getId()), "");
+//
+//      printFolders(db.primaryFolderDao().getAll(station.getId()), "");
+//    } else {
+    printRandomDlcData();
+//    }
   }
 
   private void printRandomDlcData() {
@@ -456,7 +720,10 @@ public class DatabaseReadWriteTest {
     Name dlcName = db.nameDao().get(dlc.getNameId());
     printLn("DLC: " + dlcName.getText());
 
-    List<BaseStation> stations = db.stationDao().getAll();
+    //  get primary stations
+    List<BaseStation> stations = db.primaryStationDao().getAll();
+
+    //  add on dlc stations, if any
     stations.addAll(db.dlcStationDao().getAll(dlc.getId()));
 
     if (stations.size() > 0) {
@@ -465,11 +732,17 @@ public class DatabaseReadWriteTest {
       Name stationName = db.nameDao().get(station.getNameId());
       printLn("Station: " + stationName.getText());
 
-      List<BaseEngram> engrams = db.engramDao().getAll(station.getId());
+      //  get primary engrams
+      List<BaseEngram> engrams = db.primaryEngramDao().getAll(station.getId());
+
+      //  add on dlc engrams, if any
       engrams.addAll(db.dlcEngramDao().getAll(station.getId(), dlc.getId()));
       printEngrams(engrams, "");
 
-      List<BaseFolder> folders = db.folderDao().getAll(station.getId());
+      //  get primary folders
+      List<BaseFolder> folders = db.primaryFolderDao().getAll(station.getId());
+
+      //  add on dlc folders, if any
       folders.addAll(db.dlcFolderDao().getAll(station.getId(), dlc.getId()));
       printDLCFolders(folders, "", dlc.getId());
     }
@@ -487,9 +760,9 @@ public class DatabaseReadWriteTest {
       Name name = db.nameDao().get(folder.getNameId());
       printLn(indention + "  Folder: " + name.getText());
 
-      printEngrams(db.engramDao().getAll(folder.getId()), indention + "  ");
+      printEngrams(db.primaryEngramDao().getAll(folder.getId()), indention + "  ");
 
-      printFolders(db.folderDao().getAll(folder.getId()), indention + "  ");
+      printFolders(db.primaryFolderDao().getAll(folder.getId()), indention + "  ");
     }
   }
 
@@ -498,11 +771,17 @@ public class DatabaseReadWriteTest {
       Name name = db.nameDao().get(folder.getNameId());
       printLn(indention + "  Folder: " + name.getText());
 
-      List<BaseEngram> engrams = db.engramDao().getAll(folder.getId());
+      //  get primary engrams
+      List<BaseEngram> engrams = db.primaryEngramDao().getAll(folder.getId());
+
+      //  add on dlc engrams, if any
       engrams.addAll(db.dlcEngramDao().getAll(folder.getId(), dlcId));
       printEngrams(engrams, indention + "  ");
 
-      List<BaseFolder> folders = db.folderDao().getAll(folder.getId());
+      //  get primary folders
+      List<BaseFolder> folders = db.primaryFolderDao().getAll(folder.getId());
+
+      //  add on dlc folders, if any
       folders.addAll(db.dlcFolderDao().getAll(folder.getId(), dlcId));
       printDLCFolders(folders, indention + "  ", dlcId);
     }

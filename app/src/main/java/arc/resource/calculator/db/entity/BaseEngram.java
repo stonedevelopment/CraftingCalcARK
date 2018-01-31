@@ -1,6 +1,7 @@
 package arc.resource.calculator.db.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
@@ -8,13 +9,23 @@ import android.support.annotation.NonNull;
 import arc.resource.calculator.util.Util;
 
 @Entity(tableName = "engram",
+    foreignKeys = {
+        @ForeignKey(entity = Description.class,
+            parentColumns = "id",
+            childColumns = "descriptionId"),
+        @ForeignKey(entity = Name.class,
+            parentColumns = "id",
+            childColumns = "nameId"),
+        @ForeignKey(entity = ImageLocation.class,
+            parentColumns = "id",
+            childColumns = "imageLocationId"),
+    },
     indices = {
-        @Index(value = {"descriptionId"}),
-        @Index(value = {"imageLocationId"}),
-        @Index(value = {"nameId"}),
-        @Index(value = {"parentId"}),
-        @Index(value = {"requiredLevel"}),
-        @Index(value = {"nameId", "parentId"},
+        @Index(value = "descriptionId"),
+        @Index(value = "imageLocationId"),
+        @Index(value = "nameId"),
+        @Index(value = "requiredLevel"),
+        @Index(value = {"descriptionId", "imageLocationId", "nameId", "requiredLevel", "yield"},
             unique = true)})
 
 public class BaseEngram {
@@ -33,9 +44,6 @@ public class BaseEngram {
   private final String nameId;
 
   @NonNull
-  private final String parentId;
-
-  @NonNull
   private final Integer requiredLevel;
 
   @NonNull
@@ -43,19 +51,18 @@ public class BaseEngram {
 
   @Ignore
   public BaseEngram(@NonNull String descriptionId, String imageLocationId, String nameId,
-      @NonNull String parentId, Integer requiredLevel, Integer yield) {
-    this(Util.generateUUID(), descriptionId, imageLocationId, nameId, parentId, requiredLevel,
+      Integer requiredLevel, Integer yield) {
+    this(Util.generateUUID(), descriptionId, imageLocationId, nameId, requiredLevel,
         yield);
   }
 
   public BaseEngram(@NonNull String id, @NonNull String descriptionId,
-      @NonNull String imageLocationId, @NonNull String nameId,
-      @NonNull String parentId, @NonNull Integer requiredLevel, @NonNull Integer yield) {
+      @NonNull String imageLocationId, @NonNull String nameId, @NonNull Integer requiredLevel,
+      @NonNull Integer yield) {
     this.id = id;
     this.descriptionId = descriptionId;
     this.imageLocationId = imageLocationId;
     this.nameId = nameId;
-    this.parentId = parentId;
     this.requiredLevel = requiredLevel;
     this.yield = yield;
   }
@@ -78,11 +85,6 @@ public class BaseEngram {
   @NonNull
   public String getNameId() {
     return nameId;
-  }
-
-  @NonNull
-  public String getParentId() {
-    return parentId;
   }
 
   @NonNull

@@ -3,32 +3,34 @@ package arc.resource.calculator.db.entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(primaryKeys = {"resourceId", "nameId"},
+@Entity(
     foreignKeys = {
-        @ForeignKey(entity = DLCResource.class,
+        @ForeignKey(entity = BaseResource.class,
             parentColumns = "id",
             childColumns = "resourceId"),
-        @ForeignKey(entity = Name.class,
+        @ForeignKey(entity = BaseMod.class,
             parentColumns = "id",
-            childColumns = "nameId")},
+            childColumns = "modId")},
     indices = {
-        @Index(value = "resourceId"),
-        @Index(value = "nameId"),
-        @Index(value = {"resourceId", "nameId"}, unique = true)})
+        @Index(value = {"modId"}),
+        @Index(value = {"resourceId"},
+            unique = true)})
 
-public class ResourceName {
+public class ModResource {
 
   @NonNull
+  @PrimaryKey
   private final String resourceId;
 
   @NonNull
-  private final String nameId;
+  private final String modId;
 
-  public ResourceName(@NonNull String resourceId, @NonNull String nameId) {
+  public ModResource(@NonNull String resourceId, @NonNull String modId) {
     this.resourceId = resourceId;
-    this.nameId = nameId;
+    this.modId = modId;
   }
 
   @NonNull
@@ -37,7 +39,7 @@ public class ResourceName {
   }
 
   @NonNull
-  public String getNameId() {
-    return nameId;
+  public String getModId() {
+    return modId;
   }
 }

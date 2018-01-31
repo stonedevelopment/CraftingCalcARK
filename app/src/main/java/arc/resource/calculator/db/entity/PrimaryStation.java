@@ -10,36 +10,23 @@ import android.support.annotation.NonNull;
     foreignKeys = {
         @ForeignKey(entity = BaseStation.class,
             parentColumns = "id",
-            childColumns = "stationId"),
-        @ForeignKey(entity = BaseDLC.class,
-            parentColumns = "id",
-            childColumns = "dlcId")},
+            childColumns = "stationId")},
     indices = {
-        @Index(value = {"dlcId"}),
-        @Index(value = {"stationId"},
+        @Index(value = "stationId",
             unique = true)})
 
-public class DLCStation {
+public class PrimaryStation {
 
   @NonNull
   @PrimaryKey
   private final String stationId;
 
-  @NonNull
-  private final String dlcId;
-
-  public DLCStation(@NonNull String stationId, @NonNull String dlcId) {
+  public PrimaryStation(@NonNull String stationId) {
     this.stationId = stationId;
-    this.dlcId = dlcId;
   }
 
   @NonNull
   public String getStationId() {
     return stationId;
-  }
-
-  @NonNull
-  public String getDlcId() {
-    return dlcId;
   }
 }

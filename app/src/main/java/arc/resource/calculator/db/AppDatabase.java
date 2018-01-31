@@ -11,30 +11,51 @@ import arc.resource.calculator.db.dao.BaseCompositeDao;
 import arc.resource.calculator.db.dao.BaseDLCDao;
 import arc.resource.calculator.db.dao.BaseEngramDao;
 import arc.resource.calculator.db.dao.BaseFolderDao;
+import arc.resource.calculator.db.dao.BaseModDao;
+import arc.resource.calculator.db.dao.BaseQualityDao;
 import arc.resource.calculator.db.dao.BaseResourceDao;
 import arc.resource.calculator.db.dao.BaseStationDao;
 import arc.resource.calculator.db.dao.DLCEngramDao;
 import arc.resource.calculator.db.dao.DLCFolderDao;
-import arc.resource.calculator.db.dao.DLCNameDao;
 import arc.resource.calculator.db.dao.DLCResourceDao;
 import arc.resource.calculator.db.dao.DLCStationDao;
 import arc.resource.calculator.db.dao.DescriptionDao;
 import arc.resource.calculator.db.dao.ImageLocationDao;
+import arc.resource.calculator.db.dao.ModEngramDao;
+import arc.resource.calculator.db.dao.ModFolderDao;
+import arc.resource.calculator.db.dao.ModResourceDao;
+import arc.resource.calculator.db.dao.ModStationDao;
 import arc.resource.calculator.db.dao.NameDao;
+import arc.resource.calculator.db.dao.PrimaryEngramDao;
+import arc.resource.calculator.db.dao.PrimaryFolderDao;
+import arc.resource.calculator.db.dao.PrimaryResourceDao;
+import arc.resource.calculator.db.dao.PrimaryStationDao;
 import arc.resource.calculator.db.dao.QueueDao;
+import arc.resource.calculator.db.dao.SearchDao;
 import arc.resource.calculator.db.entity.BaseComposite;
 import arc.resource.calculator.db.entity.BaseDLC;
 import arc.resource.calculator.db.entity.BaseEngram;
 import arc.resource.calculator.db.entity.BaseFolder;
+import arc.resource.calculator.db.entity.BaseMod;
+import arc.resource.calculator.db.entity.BaseQuality;
 import arc.resource.calculator.db.entity.BaseResource;
 import arc.resource.calculator.db.entity.BaseStation;
+import arc.resource.calculator.db.entity.BlueprintEngram;
 import arc.resource.calculator.db.entity.DLCEngram;
 import arc.resource.calculator.db.entity.DLCFolder;
 import arc.resource.calculator.db.entity.DLCResource;
 import arc.resource.calculator.db.entity.DLCStation;
 import arc.resource.calculator.db.entity.Description;
 import arc.resource.calculator.db.entity.ImageLocation;
+import arc.resource.calculator.db.entity.ModEngram;
+import arc.resource.calculator.db.entity.ModFolder;
+import arc.resource.calculator.db.entity.ModResource;
+import arc.resource.calculator.db.entity.ModStation;
 import arc.resource.calculator.db.entity.Name;
+import arc.resource.calculator.db.entity.PrimaryEngram;
+import arc.resource.calculator.db.entity.PrimaryFolder;
+import arc.resource.calculator.db.entity.PrimaryResource;
+import arc.resource.calculator.db.entity.PrimaryStation;
 import arc.resource.calculator.db.entity.Queue;
 
 @Database(version = 7,
@@ -43,15 +64,26 @@ import arc.resource.calculator.db.entity.Queue;
         BaseDLC.class,
         BaseEngram.class,
         BaseFolder.class,
+        BaseMod.class,
+        BaseQuality.class,
         BaseResource.class,
         BaseStation.class,
+        BlueprintEngram.class,
         Description.class,
         DLCEngram.class,
         DLCFolder.class,
         DLCResource.class,
         DLCStation.class,
         ImageLocation.class,
+        ModEngram.class,
+        ModFolder.class,
+        ModResource.class,
+        ModStation.class,
         Name.class,
+        PrimaryEngram.class,
+        PrimaryFolder.class,
+        PrimaryResource.class,
+        PrimaryStation.class,
         Queue.class
     })
 
@@ -90,6 +122,10 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public abstract BaseFolderDao folderDao();
 
+  public abstract BaseModDao modDao();
+
+  public abstract BaseQualityDao qualityDao();
+
   public abstract BaseResourceDao resourceDao();
 
   public abstract BaseStationDao stationDao();
@@ -104,27 +140,27 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public abstract DLCStationDao dlcStationDao();
 
-//  public abstract EngramCompositeDao engramCompositeDao();
-//
-//  public abstract EngramDescriptionDao engramDescriptionDao();
-//
-//  public abstract EngramNameDao engramNameDao();
-//
-//  public abstract FolderEngramDao folderEngramDao();
-//
-//  public abstract FolderNameDao folderNameDao();
-
   public abstract ImageLocationDao imageLocationDao();
+
+  public abstract ModEngramDao modEngramDao();
+
+  public abstract ModFolderDao modFolderDao();
+
+  public abstract ModResourceDao modResourceDao();
+
+  public abstract ModStationDao modStationDao();
 
   public abstract NameDao nameDao();
 
+  public abstract PrimaryEngramDao primaryEngramDao();
+
+  public abstract PrimaryFolderDao primaryFolderDao();
+
+  public abstract PrimaryResourceDao primaryResourceDao();
+
+  public abstract PrimaryStationDao primaryStationDao();
+
   public abstract QueueDao queueDao();
 
-//  public abstract ResourceNameDao resourceNameDao();
-//
-//  public abstract StationEngramDao stationEngramDao();
-//
-//  public abstract StationFolderDao stationFolderDao();
-//
-//  public abstract StationNameDao stationNameDao();
+  public abstract SearchDao searchDao();
 }

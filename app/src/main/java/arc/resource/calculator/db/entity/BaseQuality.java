@@ -8,12 +8,15 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import arc.resource.calculator.util.Util;
 
-@Entity(tableName = "folder",
+@Entity(tableName = "quality",
+    foreignKeys = {
+        @ForeignKey(entity = Name.class,
+            parentColumns = "id",
+            childColumns = "nameId")},
     indices = {
-        @Index(value = {"nameId"},
-            unique = true)})
+        @Index(value = "nameId")})
 
-public class BaseFolder {
+public class BaseQuality {
 
   @NonNull
   @PrimaryKey
@@ -22,14 +25,18 @@ public class BaseFolder {
   @NonNull
   private final String nameId;
 
+  @NonNull
+  private final String color;
+
   @Ignore
-  public BaseFolder(String nameId) {
-    this(Util.generateUUID(), nameId);
+  public BaseQuality(String nameId, String color) {
+    this(Util.generateUUID(), nameId, color);
   }
 
-  public BaseFolder(@NonNull String id, @NonNull String nameId) {
+  public BaseQuality(@NonNull String id, @NonNull String nameId, @NonNull String color) {
     this.id = id;
     this.nameId = nameId;
+    this.color = color;
   }
 
   @NonNull
@@ -40,5 +47,10 @@ public class BaseFolder {
   @NonNull
   public String getNameId() {
     return nameId;
+  }
+
+  @NonNull
+  public String getColor() {
+    return color;
   }
 }

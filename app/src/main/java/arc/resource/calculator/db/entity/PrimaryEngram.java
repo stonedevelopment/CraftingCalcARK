@@ -10,42 +10,30 @@ import android.support.annotation.NonNull;
     foreignKeys = {
         @ForeignKey(entity = BaseEngram.class,
             parentColumns = "id",
-            childColumns = "engramId"),
-        @ForeignKey(entity = BaseDLC.class,
-            parentColumns = "id",
-            childColumns = "dlcId")},
+            childColumns = "engramId")},
     indices = {
-        @Index(value = {"dlcId"}),
-        @Index(value = {"parentId"}),
-        @Index(value = {"engramId"},
+        @Index(value = "engramId"),
+        @Index(value = "parentId"),
+        @Index(value = {"engramId", "parentId"},
             unique = true)})
 
-public class DLCEngram {
+public class PrimaryEngram {
 
   @NonNull
   @PrimaryKey
   private final String engramId;
 
   @NonNull
-  private final String dlcId;
-
-  @NonNull
   private final String parentId;
 
-  public DLCEngram(@NonNull String engramId, @NonNull String parentId, @NonNull String dlcId) {
+  public PrimaryEngram(@NonNull String engramId, @NonNull String parentId) {
     this.engramId = engramId;
     this.parentId = parentId;
-    this.dlcId = dlcId;
   }
 
   @NonNull
   public String getEngramId() {
     return engramId;
-  }
-
-  @NonNull
-  public String getDlcId() {
-    return dlcId;
   }
 
   @NonNull

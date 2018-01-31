@@ -10,43 +10,30 @@ import android.support.annotation.NonNull;
     foreignKeys = {
         @ForeignKey(entity = BaseFolder.class,
             parentColumns = "id",
-            childColumns = "folderId"),
-        @ForeignKey(entity = BaseDLC.class,
-            parentColumns = "id",
-            childColumns = "dlcId")},
+            childColumns = "folderId")},
     indices = {
-        @Index(value = "dlcId"),
         @Index(value = "folderId"),
         @Index(value = "parentId"),
-        @Index(value = {"dlcId", "folderId", "parentId"},
+        @Index(value = {"folderId", "parentId"},
             unique = true)})
 
-public class DLCFolder {
+public class PrimaryFolder {
 
   @NonNull
   @PrimaryKey
   private final String folderId;
 
   @NonNull
-  private final String dlcId;
-
-  @NonNull
   private final String parentId;
 
-  public DLCFolder(@NonNull String folderId, @NonNull String parentId, @NonNull String dlcId) {
+  public PrimaryFolder(@NonNull String folderId, @NonNull String parentId) {
     this.folderId = folderId;
     this.parentId = parentId;
-    this.dlcId = dlcId;
   }
 
   @NonNull
   public String getFolderId() {
     return folderId;
-  }
-
-  @NonNull
-  public String getDlcId() {
-    return dlcId;
   }
 
   @NonNull

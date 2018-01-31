@@ -2,14 +2,14 @@ package arc.resource.calculator.model.json;
 
 import java.util.List;
 
-public class JSONDLC extends JSONPrimary {
+public class JSONMod extends JSONPrimary {
 
   private String name;
   private String contentFolder;
   private String imageFile;
   private Override override;
 
-  public JSONDLC() {
+  public JSONMod() {
     super();
   }
 

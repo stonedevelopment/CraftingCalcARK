@@ -1,6 +1,7 @@
 {
-  "id": 2,
   "name": "Primitive Plus",
+  "contentFolder": "DLC/Primitive Plus/",
+  "imageFile": "logo.webp",
   "stations": [
     {
       "name": "Apiary",

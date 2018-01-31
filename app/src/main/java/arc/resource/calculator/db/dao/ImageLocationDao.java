@@ -10,6 +10,11 @@ import arc.resource.calculator.db.entity.ImageLocation;
 @Dao
 public interface ImageLocationDao {
 
+  @Query("select * from imagelocation "
+      + "where id = :id "
+      + "limit 1")
+  ImageLocation get(String id);
+
   @Query("select id from imagelocation "
       + "where contentFolder = :contentFolder "
       + "and imageFolder = :imageFolder "
