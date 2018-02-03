@@ -6,6 +6,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import arc.resource.calculator.db.entity.BaseFolder;
+import java.util.List;
 
 @Dao
 public interface BaseFolderDao {
@@ -15,6 +16,10 @@ public interface BaseFolderDao {
       + "where nameId = :nameId "
       + "limit 1")
   String getId(String nameId);
+
+  @Query("select * from folder "
+      + "where id in (:folderIds)")
+  List<BaseFolder> getAll(List<String> folderIds);
 
   @Insert(onConflict = IGNORE)
   long insert(BaseFolder folder);

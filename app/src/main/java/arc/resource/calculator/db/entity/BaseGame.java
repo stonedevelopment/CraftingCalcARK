@@ -7,16 +7,19 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import arc.resource.calculator.util.Util;
 
-@Entity(tableName = "station",
+@Entity(tableName = "game",
     indices = {
         @Index(value = {"nameId"},
             unique = true)})
 
-public class BaseStation {
+public class BaseGame {
 
   @NonNull
   @PrimaryKey
   private final String id;
+
+  @NonNull
+  private final String contentFolder;
 
   @NonNull
   private final String imageLocationId;
@@ -25,12 +28,14 @@ public class BaseStation {
   private final String nameId;
 
   @Ignore
-  public BaseStation(String imageLocationId, String nameId) {
-    this(Util.generateUUID(), imageLocationId, nameId);
+  public BaseGame(String contentFolder, String imageLocationId, String nameId) {
+    this(Util.generateUUID(), contentFolder, imageLocationId, nameId);
   }
 
-  public BaseStation(@NonNull String id, @NonNull String imageLocationId, @NonNull String nameId) {
+  public BaseGame(@NonNull String id, @NonNull String contentFolder,
+      @NonNull String imageLocationId, @NonNull String nameId) {
     this.id = id;
+    this.contentFolder = contentFolder;
     this.imageLocationId = imageLocationId;
     this.nameId = nameId;
   }
@@ -38,6 +43,11 @@ public class BaseStation {
   @NonNull
   public String getId() {
     return id;
+  }
+
+  @NonNull
+  public String getContentFolder() {
+    return contentFolder;
   }
 
   @NonNull

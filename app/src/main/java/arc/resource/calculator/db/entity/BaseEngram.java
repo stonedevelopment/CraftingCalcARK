@@ -22,10 +22,8 @@ import arc.resource.calculator.util.Util;
     },
     indices = {
         @Index(value = "descriptionId"),
-        @Index(value = "imageLocationId"),
-        @Index(value = "nameId"),
         @Index(value = "requiredLevel"),
-        @Index(value = {"descriptionId", "imageLocationId", "nameId", "requiredLevel", "yield"},
+        @Index(value = {"nameId"},
             unique = true)})
 
 public class BaseEngram {
@@ -46,25 +44,19 @@ public class BaseEngram {
   @NonNull
   private final Integer requiredLevel;
 
-  @NonNull
-  private final Integer yield;
-
   @Ignore
   public BaseEngram(@NonNull String descriptionId, String imageLocationId, String nameId,
-      Integer requiredLevel, Integer yield) {
-    this(Util.generateUUID(), descriptionId, imageLocationId, nameId, requiredLevel,
-        yield);
+      Integer requiredLevel) {
+    this(Util.generateUUID(), descriptionId, imageLocationId, nameId, requiredLevel);
   }
 
   public BaseEngram(@NonNull String id, @NonNull String descriptionId,
-      @NonNull String imageLocationId, @NonNull String nameId, @NonNull Integer requiredLevel,
-      @NonNull Integer yield) {
+      @NonNull String imageLocationId, @NonNull String nameId, @NonNull Integer requiredLevel) {
     this.id = id;
     this.descriptionId = descriptionId;
     this.imageLocationId = imageLocationId;
     this.nameId = nameId;
     this.requiredLevel = requiredLevel;
-    this.yield = yield;
   }
 
   @NonNull
@@ -90,10 +82,5 @@ public class BaseEngram {
   @NonNull
   public Integer getRequiredLevel() {
     return requiredLevel;
-  }
-
-  @NonNull
-  public Integer getYield() {
-    return yield;
   }
 }

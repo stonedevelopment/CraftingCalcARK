@@ -1,0 +1,34 @@
+{
+  "name": "ARK:Survival Evolved",
+  "contentFolders": {
+    "game": "ARK/",
+    "dlc": "DLC/",
+    "mods": "Mods/"
+  },
+  "itemQuality": [
+    {
+      "name": "Primitive",
+      "color": "gray"
+    },
+    {
+      "name": "Ramshackle",
+      "color": "green"
+    },
+    {
+      "name": "Apprentice",
+      "color": "blue"
+    },
+    {
+      "name": "Journeyman",
+      "color": "purple"
+    },
+    {
+      "name": "Mastercraft",
+      "color": "yellow"
+    },
+    {
+      "name": "Ascendant",
+      "color": "teal"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "name": "Scorched Earth",
-  "contentFolder": "DLC/Scorched Earth/",
+  "contentFolder": "Scorched Earth/",
+  "imageFolder": "",
   "imageFile": "logo.webp",
   "override": {
     "stations": [

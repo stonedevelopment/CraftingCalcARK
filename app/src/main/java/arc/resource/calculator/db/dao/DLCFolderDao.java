@@ -12,11 +12,10 @@ import java.util.List;
 @Dao
 public interface DLCFolderDao {
 
-  @Query("select * from folder "
-      + "inner join dlcfolder on dlcfolder.folderId = folder.id "
-      + "where dlcfolder.dlcId = :dlcId "
-      + "and dlcfolder.parentId = :parentId")
-  List<BaseFolder> getAll(String parentId, String dlcId);
+  @Query("select folderId from dlcfolder "
+      + "where dlcId = :dlcId "
+      + "and parentId = :parentId")
+  List<String> getFolderIds(String parentId, String dlcId);
 
   @Insert(onConflict = IGNORE)
   void insert(DLCFolder dlcFolder);

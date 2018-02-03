@@ -76,6 +76,9 @@ public class DatabaseReadWriteTest {
         getFileFromAssets(context, context.getString(R.string.appdata_update_json)),
         JSONUpdate.class);
 
+    //  #GAME
+
+
     // #PRIMARY
     if (jsonUpdate.updatePrimary()) {
       insertPrimaryData(mapper);
@@ -223,8 +226,7 @@ public class DatabaseReadWriteTest {
    */
   private String insertEngram(BaseEngram baseEngram) {
     return db.engramDao().insert(baseEngram) != INVALID_ID ? baseEngram.getId()
-        : db.engramDao().getId(baseEngram.getDescriptionId(), baseEngram.getImageLocationId(),
-            baseEngram.getNameId(), baseEngram.getRequiredLevel(), baseEngram.getYield());
+        : db.engramDao().getId(baseEngram.getNameId());
   }
 
   private void insertEngrams(String contentFolder, List<Engram> engrams, String parentId) {
@@ -244,11 +246,11 @@ public class DatabaseReadWriteTest {
 
       //  insert base engram
       BaseEngram baseEngram = new BaseEngram(engramDescriptionId, engramImageLocationId,
-          engramNameId, engram.getLevel(), engram.getYield());
+          engramNameId, engram.getLevel());
       String engramId = insertEngram(baseEngram);
 
       //  insert primary engram
-      PrimaryEngram primaryEngram = new PrimaryEngram(engramId, parentId);
+      PrimaryEngram primaryEngram = new PrimaryEngram(engramId, parentId, engram.getYield());
       db.primaryEngramDao().insert(primaryEngram);
 
       //  iterate through list of compositionElement objects
@@ -262,7 +264,6 @@ public class DatabaseReadWriteTest {
         //  insert composite
         BaseComposite baseComposite = new BaseComposite(engramId, resourceId,
             composite.getQuantity());
-        String compositeId = baseComposite.getId();
         db.compositeDao().insert(baseComposite);
       }
     }
@@ -286,11 +287,11 @@ public class DatabaseReadWriteTest {
 
       //  insert engram
       BaseEngram baseEngram = new BaseEngram(engramDescriptionId, engramImageLocationId,
-          engramNameId, engram.getLevel(), engram.getYield());
+          engramNameId, engram.getLevel());
       String engramId = insertEngram(baseEngram);
 
       //  insert dlc engram
-      DLCEngram dlcEngram = new DLCEngram(engramId, parentId, dlcId);
+      DLCEngram dlcEngram = new DLCEngram(engramId, parentId, engram.getYield(), dlcId);
       db.dlcEngramDao().insert(dlcEngram);
 
       //  iterate through list of compositionElement objects
@@ -327,11 +328,11 @@ public class DatabaseReadWriteTest {
 
       //  insert engram
       BaseEngram baseEngram = new BaseEngram(engramDescriptionId, engramImageLocationId,
-          engramNameId, engram.getLevel(), engram.getYield());
+          engramNameId, engram.getLevel());
       String engramId = insertEngram(baseEngram);
 
       //  insert mod engram
-      ModEngram modEngram = new ModEngram(engramId, modId);
+      ModEngram modEngram = new ModEngram(engramId, parentId, engram.getYield(), modId);
       db.modEngramDao().insert(modEngram);
 
       //  iterate through list of compositionElement objects
@@ -724,7 +725,7 @@ public class DatabaseReadWriteTest {
     List<BaseStation> stations = db.primaryStationDao().getAll();
 
     //  add on dlc stations, if any
-    stations.addAll(db.dlcStationDao().getAll(dlc.getId()));
+//    stations.addAll(db.dlcStationDao().getAll(dlc.getId()));
 
     if (stations.size() > 0) {
       BaseStation station = stations.get(new Random().nextInt(stations.size()));
@@ -736,14 +737,16 @@ public class DatabaseReadWriteTest {
       List<BaseEngram> engrams = db.primaryEngramDao().getAll(station.getId());
 
       //  add on dlc engrams, if any
-      engrams.addAll(db.dlcEngramDao().getAll(station.getId(), dlc.getId()));
+      engrams.addAll(db.engramDao().getAll(
+          db.dlcEngramDao().getEngramIds(station.getId(), dlc.getId())));
       printEngrams(engrams, "");
 
       //  get primary folders
       List<BaseFolder> folders = db.primaryFolderDao().getAll(station.getId());
 
       //  add on dlc folders, if any
-      folders.addAll(db.dlcFolderDao().getAll(station.getId(), dlc.getId()));
+      folders.addAll(db.folderDao().getAll(
+          db.dlcFolderDao().getFolderIds(station.getId(), dlc.getId())));
       printDLCFolders(folders, "", dlc.getId());
     }
   }
@@ -775,14 +778,16 @@ public class DatabaseReadWriteTest {
       List<BaseEngram> engrams = db.primaryEngramDao().getAll(folder.getId());
 
       //  add on dlc engrams, if any
-      engrams.addAll(db.dlcEngramDao().getAll(folder.getId(), dlcId));
+      engrams.addAll(db.engramDao().getAll(
+          db.dlcEngramDao().getEngramIds(folder.getId(), dlcId)));
       printEngrams(engrams, indention + "  ");
 
       //  get primary folders
       List<BaseFolder> folders = db.primaryFolderDao().getAll(folder.getId());
 
       //  add on dlc folders, if any
-      folders.addAll(db.dlcFolderDao().getAll(folder.getId(), dlcId));
+      folders.addAll(db.folderDao().getAll(
+          db.dlcFolderDao().getFolderIds(folder.getId(), dlcId)));
       printDLCFolders(folders, indention + "  ", dlcId);
     }
   }
