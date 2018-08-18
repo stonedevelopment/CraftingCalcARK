@@ -2,7 +2,7 @@
   "json": {
     "version": "282.102",
     "changelog": {
-      "282.102": "Added Heavy Auto Turret.",
+      "282.102": "Added Heavy Auto Turret, Updated Metal Billboard, Thatch Wall.",
       "263.1": "Changed Element to not be Complex, created an inf loop going back and forth between Element Shard and Element.",
       "263.0": "Updated all Boss Portals with new resources, names, and compositions.",
       "260.0": "Added Tek Trough. Updated Gasoline composition to reflect new changes.",
@@ -14496,11 +14496,11 @@
       "composition": [
         {
           "resource_id": "Metal Ingot",
-          "quantity": 5
+          "quantity": 35
         },
         {
           "resource_id": "Cementing Paste",
-          "quantity": 3
+          "quantity": 10
         }
       ],
       "station": [
@@ -24430,6 +24430,10 @@
         {
           "resource_id": "Thatch",
           "quantity": 10
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 2
         }
       ],
       "station": [
