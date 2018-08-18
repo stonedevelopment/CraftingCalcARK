@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "263.1",
+    "version": "282.102",
     "changelog": {
+      "282.102": "Added Heavy Auto Turret.",
       "263.1": "Changed Element to not be Complex, created an inf loop going back and forth between Element Shard and Element.",
       "263.0": "Updated all Boss Portals with new resources, names, and compositions.",
       "260.0": "Added Tek Trough. Updated Gasoline composition to reflect new changes.",
@@ -55,6 +56,10 @@
     {
       "_id": 3,
       "name": "Scorched Earth"
+    },
+    {
+      "_id": 4,
+      "name": "Aberration"
     }
   ],
   "station": [
@@ -2829,6 +2834,13 @@
       "image_file": "tranquilizer_dart.webp",
       "dlc_id": 1,
       "complex_resource": true
+    },
+    {
+      "name": "Auto Turret",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "auto_turret.webp",
+      "dlc_id": 1,
+      "complex_resource": true
     }
   ],
   "engram": [
@@ -4197,6 +4209,45 @@
         {
           "resource_id": "Electronics",
           "quantity": 70
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Heavy Auto Turret",
+      "description": "Requires electricity to run. Provides increased firepower, but consumes FOUR bullets while firing. Can be configured to automatically attack hostiles within range.",
+      "yield": 1,
+      "level": 100,
+      "category_id": 2151,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Electrical\/Defenses\/",
+      "image_file": "heavy_auto_turret.webp",
+      "points": 100,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 400
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Auto Turret",
+          "quantity": 1
         }
       ],
       "station": [
