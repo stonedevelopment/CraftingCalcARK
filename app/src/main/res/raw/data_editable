@@ -1,8 +1,10 @@
 {
   "json": {
-    "version": "282.102",
+    "version": "282.2",
     "changelog": {
-      "282.102": "Added DLC: Aberration! Added Heavy Auto Turret, Updated Metal Billboard, Thatch Wall.",
+      "282.2": "Fixed disconnected Engrams, moved Self/Refined category to be only P+.",
+      "282.1": "Added DLC: Aberration!",
+      "282.0": "Added Heavy Auto Turret, Updated Metal Billboard, Thatch Wall.",
       "263.1": "Changed Element to not be Complex, created an inf loop going back and forth between Element Shard and Element.",
       "263.0": "Updated all Boss Portals with new resources, names, and compositions.",
       "260.0": "Added Tek Trough. Updated Gasoline composition to reflect new changes.",
@@ -1173,7 +1175,6 @@
       "parent_id": 0,
       "dlc_id": 1,
       "station": [
-        "Self",
         "Beer Barrel",
         "Campfire",
         "Chemistry Bench",
@@ -1195,7 +1196,8 @@
         "Tanning Rack",
         "Windmill",
         "Candles",
-        "Big Bonfire"
+        "Big Bonfire",
+        "Charge Node"
       ]
     },
     {
@@ -1289,6 +1291,15 @@
       "dlc_id": 3,
       "station": [
         "Obelisk"
+      ]
+    },
+    {
+      "_id": 1700,
+      "name": "Refined",
+      "parent_id": 0,
+      "dlc_id": 2,
+      "station": [
+        "Self"
       ]
     }
   ],
@@ -10174,7 +10185,7 @@
       "description": "Lure for the fishing trap.",
       "yield": 5,
       "level": 15,
-      "category_id": 1300,
+      "category_id": 1700,
       "image_folder": "Primitive Plus\/Engrams\/Refined\/",
       "image_file": "fish_bait.webp",
       "points": 0,
@@ -25415,7 +25426,7 @@
       "description": "Lure for the deadfall trap.",
       "yield": 5,
       "level": 15,
-      "category_id": 1300,
+      "category_id": 1700,
       "image_folder": "Primitive Plus\/Engrams\/Refined\/",
       "image_file": "trap_bait.webp",
       "points": 0,
@@ -28545,7 +28556,7 @@
       "description": "Equip a Rock Drake with this to ride it, enabling the rider to fire plasma projectiles. Using requires learning this Tekgram.",
       "yield": 1,
       "level": 1,
-      "category_id": 500,
+      "category_id": 5001,
       "image_folder": "Aberration\/Engrams\/Saddles\/",
       "image_file": "rock_drake_tek_saddle.webp",
       "points": 0,
