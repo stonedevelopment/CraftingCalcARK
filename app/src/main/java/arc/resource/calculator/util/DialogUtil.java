@@ -117,7 +117,7 @@ public class DialogUtil {
                 .setIcon( R.drawable.dialog_icons_about )
                 .setMessage(
                         "Passionately developed by Shane Stone.\n\n" +
-                                "Email:\n  jaredstone1982@gmail.com\n  stonedevs@gmail.com\n\n" +
+                                "Email:\n  stonedevs@gmail.com\n\n" +
                                 "Twitter:\n  @MasterxOfxNone\n  @ARKResourceCalc\n\n" +
                                 "Steam:\n  MasterxOfxNone\n" +
                                 "Xbox Live:\n  MasterxOfxNone\n\n" +

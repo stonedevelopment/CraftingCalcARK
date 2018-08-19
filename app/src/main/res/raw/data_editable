@@ -1,7 +1,14 @@
 {
   "json": {
-    "version": "263.1",
+    "version": "282.102r6",
     "changelog": {
+      "282.102r6": "Updated Consumables/Food/Refined with Industrial Cooker, Removed Charcoal from Industrial Forge.",
+      "282.102r5": "Updated Sweet Vegetable Cake.",
+      "282.102r4": "Added Boss Arenas category to Tek Terminal, Changed Aberration Portal category to Boss Arenas, Added Stations to Total Conversion.",
+      "282.102r3": "Added Aberration, Ragnarok, Tek Portals, Updated other Portals with new portal assets, Added Categories to Total Conversion.",
+      "282.102r2": "Fixed disconnected Engrams, moved Self/Refined category to be only P+.",
+      "282.102r1": "Added DLC: Aberration!",
+      "282.102": "Added Heavy Auto Turret, Updated Metal Billboard, Thatch Wall.",
       "263.1": "Changed Element to not be Complex, created an inf loop going back and forth between Element Shard and Element.",
       "263.0": "Updated all Boss Portals with new resources, names, and compositions.",
       "260.0": "Added Tek Trough. Updated Gasoline composition to reflect new changes.",
@@ -55,6 +62,10 @@
     {
       "_id": 3,
       "name": "Scorched Earth"
+    },
+    {
+      "_id": 4,
+      "name": "Aberration"
     }
   ],
   "station": [
@@ -161,6 +172,12 @@
       "dlc_id": 1
     },
     {
+      "name": "Tek Terminal",
+      "image_folder": "Vanilla\/Stations\/",
+      "image_file": "obelisk.webp",
+      "dlc_id": 1
+    },
+    {
       "name": "Apiary",
       "image_folder": "Primitive Plus\/Stations\/",
       "image_file": "apiary.webp",
@@ -261,6 +278,12 @@
       "image_folder": "Primitive Plus\/Stations\/",
       "image_file": "big_bonfire.webp",
       "dlc_id": 2
+    },
+    {
+      "name": "Charge Node",
+      "image_folder": "Aberration\/Stations\/",
+      "image_file": "charge_node.webp",
+      "dlc_id": 4
     }
   ],
   "category": [
@@ -287,7 +310,8 @@
         "Fabricator",
         "Smithy",
         "Construction Table",
-        "Tek Replicator"
+        "Tek Replicator",
+        "Obelisk"
       ]
     },
     {
@@ -372,7 +396,8 @@
         "Smithy",
         "Fabricator",
         "Construction Table",
-        "Tek Replicator"
+        "Tek Replicator",
+        "Obelisk"
       ]
     },
     {
@@ -410,6 +435,15 @@
       "name": "Stone",
       "parent_id": 208,
       "dlc_id": 1,
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "_id": 2083,
+      "name": "Decorative",
+      "parent_id": 208,
+      "dlc_id": 4,
       "station": [
         "Self"
       ]
@@ -670,6 +704,33 @@
       "dlc_id": 1,
       "station": [
         "Tek Replicator"
+      ]
+    },
+    {
+      "_id": 230,
+      "name": "Gas Collector",
+      "parent_id": 200,
+      "dlc_id": 4,
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "_id": 231,
+      "name": "Elevators",
+      "parent_id": 200,
+      "dlc_id": 4,
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "_id": 232,
+      "name": "Cliff",
+      "parent_id": 200,
+      "dlc_id": 4,
+      "station": [
+        "Smithy"
       ]
     },
     {
@@ -936,6 +997,25 @@
       ]
     },
     {
+      "_id": 413,
+      "name": "Attachments",
+      "parent_id": 400,
+      "dlc_id": 4,
+      "station": [
+        "Smithy",
+        "Fabricator"
+      ]
+    },
+    {
+      "_id": 414,
+      "name": "Hazard",
+      "parent_id": 400,
+      "dlc_id": 4,
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
       "_id": 500,
       "name": "Saddles",
       "parent_id": 0,
@@ -1005,6 +1085,7 @@
         "Chemistry Bench",
         "Cooking Pot",
         "Industrial Grill",
+        "Industrial Cooker",
         "Mortar and Pestle",
         "Preserving Bin",
         "Baker's Oven",
@@ -1040,6 +1121,7 @@
         "Campfire",
         "Cooking Pot",
         "Industrial Grill",
+        "Industrial Cooker",
         "Preserving Bin",
         "Baker's Oven",
         "Big Campfire",
@@ -1107,12 +1189,12 @@
       "parent_id": 0,
       "dlc_id": 1,
       "station": [
-        "Self",
         "Beer Barrel",
         "Campfire",
         "Chemistry Bench",
         "Cooking Pot",
         "Industrial Forge",
+        "Industrial Cooker",
         "Mortar and Pestle",
         "Refining Forge",
         "Compost Bin",
@@ -1129,7 +1211,8 @@
         "Tanning Rack",
         "Windmill",
         "Candles",
-        "Big Bonfire"
+        "Big Bonfire",
+        "Charge Node"
       ]
     },
     {
@@ -1177,7 +1260,8 @@
       "parent_id": 0,
       "dlc_id": 1,
       "station": [
-        "Obelisk"
+        "Obelisk",
+        "Tek Terminal"
       ]
     },
     {
@@ -1223,6 +1307,24 @@
       "dlc_id": 3,
       "station": [
         "Obelisk"
+      ]
+    },
+    {
+      "_id": 1606,
+      "name": "Ragnarok Arena",
+      "parent_id": 1600,
+      "dlc_id": 1,
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "_id": 1700,
+      "name": "Refined",
+      "parent_id": 0,
+      "dlc_id": 2,
+      "station": [
+        "Self"
       ]
     }
   ],
@@ -2829,6 +2931,335 @@
       "image_file": "tranquilizer_dart.webp",
       "dlc_id": 1,
       "complex_resource": true
+    },
+    {
+      "name": "Auto Turret",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "auto_turret.webp",
+      "dlc_id": 1,
+      "complex_resource": true
+    },
+    {
+      "name": "Pelt, Hair, or Wool",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "pelt_hair_or_wool.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Broodmother Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_broodmother_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Beta Broodmother Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "beta_broodmother_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Gamma Broodmother Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "gamma_broodmother_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Carnotaurus Arm",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_carnotaurus_arm.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Dragon Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_dragon_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Beta Dragon Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "beta_dragon_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Gamma Dragon Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "gamma_dragon_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Leedsichthys Blubber",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_leedsichthys_blubber.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Megalodon Fin",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_megalodon_fin.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Megapithecus Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_megapithecus_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Beta Megapithecus Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "beta_megapithecus_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Gamma Megapithecus Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "gamma_megapithecus_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Mosasaur Tooth",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_mosasaur_tooth.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Raptor Claw",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_raptor_claw.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Tusoteuthis Eye",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_tusoteuthis_eye.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Tyrannosaur Tooth",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "alpha_tyrannosaur_tooth.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Aggeravic Mushroom",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "aggeravic_mushroom.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Basilisk Fang",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "alpha_basilisk_fang.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Karkinos Claw",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "alpha_karkinos_claw.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Alpha Reaper King Barb",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "alpha_reaper_king_barb.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Aquatic Mushroom",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "aquatic_mushroom.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Depths",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "artifact_of_the_depths.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Shadows",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "artifact_of_the_shadows.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Stalker",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "artifact_of_the_stalker.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Ascerbic Mushroom",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "ascerbic_mushroom.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Auric Mushroom",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "auric_mushroom.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Basilisk Egg",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "basilisk_egg.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Basilisk Scale",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "basilisk_scale.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Blue Gem",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "blue_gem.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Charge Battery",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "charge_battery.webp",
+      "dlc_id": 4,
+      "complex_resource": true
+    },
+    {
+      "name": "Congealed Gas Ball",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "congealed_gas_ball.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Element Ore",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "element_ore.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Featherlight Egg",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "featherlight_egg.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Fungal Wood",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "fungal_wood.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Glow Stick",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "glow_stick.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Glowtail Egg",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "glowtail_egg.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Green Gem",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "green_gem.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Nameless Venom",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "nameless_venom.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Plant Species Z Seed",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "plant_species_z_seed.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Reaper Pheromone Gland",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "reaper_pheromone_gland.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Red Gem",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "red_gem.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Rock Drake Egg",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "rock_drake_egg.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Rock Drake Feather",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "rock_drake_feather.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Rockwell Flag",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "rockwell_flag.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Rockwell Trophy",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "rockwell_trophy.webp",
+      "dlc_id": 4,
+      "complex_resource": false
     }
   ],
   "engram": [
@@ -4197,6 +4628,45 @@
         {
           "resource_id": "Electronics",
           "quantity": 70
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Heavy Auto Turret",
+      "description": "Requires electricity to run. Provides increased firepower, but consumes FOUR bullets while firing. Can be configured to automatically attack hostiles within range.",
+      "yield": 1,
+      "level": 100,
+      "category_id": 2151,
+      "image_folder": "Vanilla\/Engrams\/Structures\/Electrical\/Defenses\/",
+      "image_file": "heavy_auto_turret.webp",
+      "points": 100,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 400
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Auto Turret",
+          "quantity": 1
         }
       ],
       "station": [
@@ -5899,7 +6369,7 @@
           "quantity": 4
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 6
         },
         {
@@ -5940,7 +6410,7 @@
           "quantity": 120
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 200
         },
         {
@@ -6932,7 +7402,6 @@
       "station": [
         "Campfire",
         "Cooking Pot",
-        "Industrial Forge",
         "Refining Forge",
         "Big Campfire",
         "Candles",
@@ -9260,7 +9729,7 @@
       "name": "Electrical Cable - Vertical",
       "description": "A vertical cable for transmitting electricity up and down cliffs.",
       "yield": 1,
-      "level": 49 ,
+      "level": 49,
       "category_id": 215,
       "image_folder": "Vanilla\/Engrams\/Structures\/Electrical\/",
       "image_file": "electrical_cable_vertical.webp",
@@ -9873,7 +10342,7 @@
       "description": "Lure for the fishing trap.",
       "yield": 5,
       "level": 15,
-      "category_id": 1300,
+      "category_id": 1700,
       "image_folder": "Primitive Plus\/Engrams\/Refined\/",
       "image_file": "fish_bait.webp",
       "points": 0,
@@ -10618,7 +11087,7 @@
           "quantity": 4
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 48
         },
         {
@@ -10653,7 +11122,7 @@
           "quantity": 3
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 56
         },
         {
@@ -10688,7 +11157,7 @@
           "quantity": 4
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 80
         },
         {
@@ -10723,7 +11192,7 @@
           "quantity": 2
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 40
         },
         {
@@ -10758,7 +11227,7 @@
           "quantity": 5
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 96
         },
         {
@@ -14445,11 +14914,11 @@
       "composition": [
         {
           "resource_id": "Metal Ingot",
-          "quantity": 5
+          "quantity": 35
         },
         {
           "resource_id": "Cementing Paste",
-          "quantity": 3
+          "quantity": 10
         }
       ],
       "station": [
@@ -17855,7 +18324,7 @@
           "quantity": 200
         },
         {
-          "resource_id": "Pelt",
+          "resource_id": "Pelt, Hair, or Wool",
           "quantity": 150
         },
         {
@@ -22676,8 +23145,8 @@
       ]
     },
     {
-      "name": "Sweet Veggie Cake",
-      "description": "A sappy-sweet vegetable cake which Herbivores find delicious. Sadly, humans and carnivores tend to find its taste repugnant.",
+      "name": "Sweet Vegetable Cake",
+      "description": "A sappy-sweet vegetable cake which Herbivores find delicious, which will be automatically eaten when needed for healing. Alas, humans and carnivores tend to find its taste repugnant.",
       "yield": 1,
       "level": 1,
       "category_id": 1002,
@@ -22691,6 +23160,10 @@
       "composition": [
         {
           "resource_id": "Savoroot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Giant Bee Honey",
           "quantity": 2
         },
         {
@@ -24379,6 +24852,10 @@
         {
           "resource_id": "Thatch",
           "quantity": 10
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 2
         }
       ],
       "station": [
@@ -25110,7 +25587,7 @@
       "description": "Lure for the deadfall trap.",
       "yield": 5,
       "level": 15,
-      "category_id": 1300,
+      "category_id": 1700,
       "image_folder": "Primitive Plus\/Engrams\/Refined\/",
       "image_file": "trap_bait.webp",
       "points": 0,
@@ -27345,7 +27822,7 @@
       "level": 30,
       "category_id": 1601,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "broodmother_portal.webp",
+      "image_file": "gamma_broodmother_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27376,7 +27853,7 @@
       "level": 30,
       "category_id": 1601,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "broodmother_portal.webp",
+      "image_file": "beta_broodmother_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27423,7 +27900,7 @@
       "level": 70,
       "category_id": 1601,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "broodmother_portal.webp",
+      "image_file": "alpha_broodmother_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27470,7 +27947,7 @@
       "level": 45,
       "category_id": 1602,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "megapithecus_portal.webp",
+      "image_file": "gamma_megapithecus_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27501,7 +27978,7 @@
       "level": 65,
       "category_id": 1602,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "megapithecus_portal.webp",
+      "image_file": "beta_megapithecus_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27552,7 +28029,7 @@
       "level": 85,
       "category_id": 1602,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "megapithecus_portal.webp",
+      "image_file": "alpha_megapithecus_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27603,7 +28080,7 @@
       "level": 55,
       "category_id": 1603,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "dragon_portal.webp",
+      "image_file": "gamma_dragon_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27638,7 +28115,7 @@
       "level": 75,
       "category_id": 1603,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "dragon_portal.webp",
+      "image_file": "beta_dragon_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27647,22 +28124,6 @@
       "composition": [
         {
           "resource_id": "Allosaurus Brain",
-          "quantity": 5
-        },
-        {
-          "resource_id": "Basilosaurus Blubber",
-          "quantity": 5
-        },
-        {
-          "resource_id": "Giganotosaurus Heart",
-          "quantity": 5
-        },
-        {
-          "resource_id": "Tusoteuthis Tentacle",
-          "quantity": 5
-        },
-        {
-          "resource_id": "Yutyrannus Lungs",
           "quantity": 5
         },
         {
@@ -27680,6 +28141,26 @@
         {
           "resource_id": "Artifact of the Strong",
           "quantity": 1
+        },
+        {
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Giganotosaurus Heart",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Yutyrannus Lungs",
+          "quantity": 5
         }
       ],
       "station": [
@@ -27693,7 +28174,7 @@
       "level": 100,
       "category_id": 1603,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "dragon_portal.webp",
+      "image_file": "alpha_dragon_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27702,22 +28183,6 @@
       "composition": [
         {
           "resource_id": "Allosaurus Brain",
-          "quantity": 10
-        },
-        {
-          "resource_id": "Basilosaurus Blubber",
-          "quantity": 10
-        },
-        {
-          "resource_id": "Giganotosaurus Heart",
-          "quantity": 10
-        },
-        {
-          "resource_id": "Tusoteuthis Tentacle",
-          "quantity": 10
-        },
-        {
-          "resource_id": "Yutyrannus Lungs",
           "quantity": 10
         },
         {
@@ -27735,6 +28200,26 @@
         {
           "resource_id": "Artifact of the Strong",
           "quantity": 1
+        },
+        {
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Giganotosaurus Heart",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Tyrannosaurus Arm",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Yutyrannus Lungs",
+          "quantity": 10
         }
       ],
       "station": [
@@ -27748,7 +28233,7 @@
       "level": 70,
       "category_id": 1604,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "the_center_portal.webp",
+      "image_file": "gamma_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27807,7 +28292,7 @@
       "level": 80,
       "category_id": 1604,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "the_center_portal.webp",
+      "image_file": "beta_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27890,7 +28375,7 @@
       "level": 90,
       "category_id": 1604,
       "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
-      "image_file": "the_center_portal.webp",
+      "image_file": "alpha_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -27900,6 +28385,30 @@
         {
           "resource_id": "Argentavis Talon",
           "quantity": 25
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Brute",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
         },
         {
           "resource_id": "Basilosaurus Blubber",
@@ -27936,13 +28445,52 @@
         {
           "resource_id": "Tusoteuthis Tentacle",
           "quantity": 25
+        }      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+
+    {
+      "name": "Generate Ragnarok (Hard) Portal",
+      "description": "Use this to generate a portal to Ragnarok's Guardians. (Hard)",
+      "yield": 1,
+      "level": 90,
+      "category_id": 1606,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "alpha_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Cunning",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devious",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
         },
         {
           "resource_id": "Artifact of the Hunter",
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Pack",
+          "resource_id": "Artifact of the Immune",
           "quantity": 1
         },
         {
@@ -27950,16 +28498,150 @@
           "quantity": 1
         },
         {
-          "resource_id": "Artifact of the Brute",
+          "resource_id": "Artifact of the Pack",
           "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Strong",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Megalania Toxin",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Sarcosuchus Skin",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Spinosaurus Sail",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Thylacoleo Hook-Claw",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Titanoboa Venom",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 25
+        }      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Generate Ragnarok (Medium) Portal",
+      "description": "Use this to generate a portal to Ragnarok's Guardians. (Medium)",
+      "yield": 1,
+      "level": 80,
+      "category_id": 1606,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "beta_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Argentavis Talon",
+          "quantity": 10
         },
         {
           "resource_id": "Artifact of the Clever",
           "quantity": 1
         },
         {
+          "resource_id": "Artifact of the Cunning",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devious",
+          "quantity": 1
+        },
+        {
           "resource_id": "Artifact of the Devourer",
           "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Immune",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Strong",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Basilosaurus Blubber",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Megalania Toxin",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Megalodon Tooth",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Sarcosuchus Skin",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Sauropod Vertebra",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Spinosaurus Sail",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Thylacoleo Hook-Claw",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Titanoboa Venom",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Tusoteuthis Tentacle",
+          "quantity": 10
         }
       ],
       "station": [
@@ -27967,13 +28649,73 @@
       ]
     },
     {
+      "name": "Generate Ragnarok (Easy) Portal",
+      "description": "Use this to generate a portal to Ragnarok's Guardians.",
+      "yield": 1,
+      "level": 70,
+      "category_id": 1606,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "gamma_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Artifact of the Clever",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Cunning",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devious",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Devourer",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Hunter",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Immune",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Massive",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Pack",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Skylord",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Strong",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+
+    {
       "name": "Generate Manticore (Gamma) Portal",
       "description": "Use this to generate a portal to the Manticore (Easy).",
       "yield": 1,
       "level": 55,
       "category_id": 1605,
       "image_folder": "Scorched Earth\/Engrams\/Boss Arenas\/",
-      "image_file": "manticore_portal.webp",
+      "image_file": "gamma_manticore_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -28016,7 +28758,7 @@
       "level": 70,
       "category_id": 1605,
       "image_folder": "Scorched Earth\/Engrams\/Boss Arenas\/",
-      "image_file": "manticore_portal.webp",
+      "image_file": "beta_manticore_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -28059,7 +28801,7 @@
       "level": 95,
       "category_id": 1605,
       "image_folder": "Scorched Earth\/Engrams\/Boss Arenas\/",
-      "image_file": "manticore_portal.webp",
+      "image_file": "alpha_manticore_portal.webp",
       "points": 0,
       "xp": 0,
       "steam_id": 0,
@@ -28094,6 +28836,1648 @@
       "station": [
         "Obelisk"
       ]
+    },
+
+    {
+      "name": "Access Tek Cave (Alpha)",
+      "description": "Access the Tek Case with this.",
+      "yield": 1,
+      "level": 100,
+      "category_id": 1600,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "alpha_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Alpha Broodmother Trophy",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Carnotaurus Arm",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Dragon Trophy",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Leedsichthys Blubber",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Megalodon Fin",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Megapithecus Trophy",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Mosasaur Tooth",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Raptor Claw",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Tusoteuthis Eye",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Tyrannosaur Tooth",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Tek Terminal"
+      ]
+    },
+    {
+      "name": "Access Tek Cave (Beta)",
+      "description": "Access the Tek Case with this.",
+      "yield": 1,
+      "level": 80,
+      "category_id": 1600,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "beta_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Alpha Carnotaurus Arm",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Raptor Claw",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Tyrannosaur Tooth",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Beta Broodmother Trophy",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Beta Dragon Trophy",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Beta Megapithecus Trophy",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Tek Terminal"
+      ]
+    },
+    {
+      "name": "Access Tek Cave (Gamma)",
+      "description": "Access the Tek Case with this.",
+      "yield": 1,
+      "level": 60,
+      "category_id": 1600,
+      "image_folder": "Vanilla\/Engrams\/Boss Arenas\/",
+      "image_file": "gamma_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Gamma Broodmother Trophy",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Gamma Dragon Trophy",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Gamma Megapithecus Trophy",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Tek Terminal"
+      ]
+    },
+
+    {
+      "name": "Basilisk Saddle",
+      "description": "Equip a Basilisk with this to ride it.",
+      "yield": 1,
+      "level": 85,
+      "category_id": 500,
+      "image_folder": "Aberration\/Engrams\/Saddles\/",
+      "image_file": "basilisk_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 425
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 270
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 85
+        },
+        {
+          "resource_id": "Green Gem",
+          "quantity": 45
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Karkinos Saddle",
+      "description": "Equip a Karkinos with this to ride it.",
+      "yield": 1,
+      "level": 65,
+      "category_id": 500,
+      "image_folder": "Aberration\/Engrams\/Saddles\/",
+      "image_file": "karkinos_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 170
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 80
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Ravager Saddle",
+      "description": "Equip a Ravager with this to ride it.",
+      "yield": 1,
+      "level": 47,
+      "category_id": 500,
+      "image_folder": "Aberration\/Engrams\/Saddles\/",
+      "image_file": "ravager_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 110
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 285
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 125
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Rock Drake Saddle",
+      "description": "Equip a Rock Drake with this to ride it.",
+      "yield": 1,
+      "level": 75,
+      "category_id": 500,
+      "image_folder": "Aberration\/Engrams\/Saddles\/",
+      "image_file": "rock_drake_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 125
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Red Gem",
+          "quantity": 85
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Rock Drake Tek Saddle",
+      "description": "Equip a Rock Drake with this to ride it, enabling the rider to fire plasma projectiles. Using requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 5001,
+      "image_folder": "Aberration\/Engrams\/Saddles\/",
+      "image_file": "rock_drake_tek_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2350
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 270
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 325
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 75
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 185
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Roll Rat Saddle",
+      "description": "Equip a Roll Rat with this to ride it. Provides protection to passengers while rolling.",
+      "yield": 1,
+      "level": 58,
+      "category_id": 500,
+      "image_folder": "Aberration\/Engrams\/Saddles\/",
+      "image_file": "roll_rat_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 425
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 270
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 85
+        },
+        {
+          "resource_id": "Green Gem",
+          "quantity": 45
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Element",
+      "description": "A strange, highly advanced material humming with energy. It dissolves when transferred across ARKs.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1300,
+      "image_folder": "Vanilla\/Engrams\/Refined\/",
+      "image_file": "element.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Green Gem",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Red Gem",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Charge Battery",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Element Ore",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Charge Node"
+      ]
+    },
+    {
+      "name": "Charge Battery",
+      "description": "Stores Charge from Power Nodes, and can be placed in various Electrical Devices to power them.",
+      "yield": 1,
+      "level": 71,
+      "category_id": 100,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "charge_battery.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Charge Lantern",
+      "description": "Weaponized Charge Light that damages and stuns lifeforms. Place down to ward off dangers in an area. Uses Charge Batteries as fuel.",
+      "yield": 1,
+      "level": 80,
+      "category_id": 300,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "charge_lantern.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 130
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Charge Battery",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Red Gem",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 400
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Climbing Pick",
+      "description": "Climb up and hang from nearly any surface with these!",
+      "yield": 1,
+      "level": 34,
+      "category_id": 100,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "climbing_pick.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Green Gem",
+          "quantity": 4
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Fish Basket",
+      "description": "Trap certain fish in this basket to tame and transport them!",
+      "yield": 1,
+      "level": 13,
+      "category_id": 207,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "fish_basket.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Gas Collector",
+      "description": "Place on a Gas Vent to extract Congealed Gas Balls over time.",
+      "yield": 1,
+      "level": 40,
+      "category_id": 230,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "gas_collector.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 75
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Green Gem",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Glider Suit Skin",
+      "description": "When attached to a Chest Armor, the Glider Suit enables sailing through the air by double-tapping jump, while gaining speed by running and diving!",
+      "yield": 1,
+      "level": 62,
+      "category_id": 413,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "glider_suit_skin.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Hazard Suit Boots",
+      "description": "Boots made from a unique combination of materials that protect the wearer from environmental contaminants.",
+      "yield": 1,
+      "level": 68,
+      "category_id": 414,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "hazard_suit_boots.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 5
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Hazard Suit Gloves",
+      "description": "Gloves made from a unique combination of materials that protect the wearer from environmental contaminants.",
+      "yield": 1,
+      "level": 68,
+      "category_id": 414,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "hazard_suit_gloves.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 16
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 8
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Hazard Suit Hat",
+      "description": "A helmet made from a unique combination of materials that protect the wearer from environmental contaminants.",
+      "yield": 1,
+      "level": 68,
+      "category_id": 414,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "hazard_suit_hat.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Hazard Suit Pants",
+      "description": "Pants made from a unique combination of materials that protect the wearer from environmental contaminants.",
+      "yield": 1,
+      "level": 68,
+      "category_id": 414,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "hazard_suit_pants.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 65
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 20
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Hazard Suit Shirt",
+      "description": "A shirt made from a unique combination of materials that protect the wearer from environmental contaminants.",
+      "yield": 1,
+      "level": 68,
+      "category_id": 414,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "hazard_suit_shirt.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 65
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 45
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 25
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Large Wood Elevator Platform",
+      "description": "Attach to an Elevator Track to lift a large amount of weight.",
+      "yield": 1,
+      "level": 30,
+      "category_id": 231,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "large_wood_elevator_platform.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 85
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 270
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 600
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Medium Wood Elevator Platform",
+      "description": "Attach to an Elevator Track to lift a medium amount of weight.",
+      "yield": 1,
+      "level": 23,
+      "category_id": 231,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "medium_wood_elevator_platform.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 285
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 350
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Small Wood Elevator Platform",
+      "description": "Attach to an Elevator Track to lift a small amount of weight.",
+      "yield": 1,
+      "level": 20,
+      "category_id": 231,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "small_wood_elevator_platform.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 175
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 175
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Wood Elevator Top Switch",
+      "description": "Attach to the top of a Wood Elevator Track to complete an Elevator!",
+      "yield": 1,
+      "level": 20,
+      "category_id": 231,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "wood_elevator_top_switch.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 35
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 125
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 200
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Wood Elevator Track",
+      "description": "Attach a Wood Elevator Platform to these to complete an elevator!",
+      "yield": 1,
+      "level": 20,
+      "category_id": 231,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "wood_elevator_track.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 45
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Metal Cliff Platform",
+      "description": "A Cliff Platform is required to build structures extending from a cliff. This one is made from shiny metal.",
+      "yield": 1,
+      "level": 51,
+      "category_id": 232,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "metal_cliff_platform.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 800
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 200
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Stone Cliff Platform",
+      "description": "A Cliff Platform is required to build structures extending from a cliff. This one is made from heavy stone.",
+      "yield": 1,
+      "level": 37,
+      "category_id": 232,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "stone_cliff_platform.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Stone",
+          "quantity": 1200
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 800
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 600
+        },
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 250
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Mushroom Brew",
+      "description": "Double, double, toil and trouble, fire burn and cauldron bubble... this is a lovely mushroom brew, a healthy syrup to protect your pets from radiation!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 102,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "mushroom_brew.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Aggeravic Mushroom",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Aquatic Mushroom",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Ascerbic Mushroom",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Auric Mushroom",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Sap",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker"
+      ]
+    },
+    {
+      "name": "Pliers",
+      "description": "Use on a Smithy-crafted item in need of repairing and you can repair it on the go within any inventory, at a higher cost of resources.",
+      "yield": 1,
+      "level": 45,
+      "category_id": 100,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "pliers.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Flint",
+          "quantity": 70
+        },
+        {
+          "resource_id": "Obsidian",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 12
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Portable Rope Ladder",
+      "description": "A portable ladder that can be used to climb up or down. Place onto structures or terrain at waist height or lower.",
+      "yield": 1,
+      "level": 15,
+      "category_id": 202,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "portable_rope_ladder.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 140
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 180
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Glow Stick",
+      "description": "Glow Sticks generate light in a radius around them. Throw it and it will stick immediately to the location they first impact.",
+      "yield": 1,
+      "level": 10,
+      "category_id": 100,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "glow_stick.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Green Gem",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Shag Rug",
+      "description": "A decorative, paintable rug with a shaggy appearance, which dulls the sound of footsteps.",
+      "yield": 1,
+      "level": 17,
+      "category_id": 2083,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "shag_rug.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Pelt, Hair, or Wool",
+          "quantity": 140
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Tek Railgun",
+      "description": "Shoots explosive plasma bolts, with an infrared zoomable scope. Equipping requires learning this Tekgram.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 3051,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "tek_railgun.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Congealed Gas Ball",
+          "quantity": 525
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 55
+        },
+        {
+          "resource_id": "Red Gem",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Sleeping Pod",
+      "description": "This Tek-powered Chamber lets you rapidly recover vitals, and slowly gain XP even when sleeping. You can also sleep soundly within it, protected even while on a moving platform!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 205,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "tek_sleeping_pod.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Polymer",
+          "quantity": 80
+        },
+        {
+          "resource_id": "Pelt, Hair, or Wool",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 320
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 280
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Zip-Line Anchor",
+      "description": "Apply onto a Crossbow to fire Zip-Line anchor points. Use two anchor points to complete a Zip-Line, which you can then grab onto [sic]",
+      "yield": 1,
+      "level": 31,
+      "category_id": 302,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "zip-line_anchor.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Stone Arrow",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Fungal Wood",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Zip-Line Motor Attachment Skin",
+      "description": "Equip onto pants and combine with Gasoline to power yourself up a Zip-Line.",
+      "yield": 1,
+      "level": 54,
+      "category_id": 413,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "zip-line_motor_attachment_skin.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Blue Gem",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 15
+        }
+      ],
+      "station": [
+        "Fabricator"
+      ]
+    },
+    {
+      "name": "Featherlight Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Auric Mushroom",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Featherlight Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Glowtail Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Aquatic Mushroom",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Cooked Fish Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Glowtail Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Rock Drake Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to almost any creature native to the island. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Ascerbic Mushroom",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 3
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Rock Drake Egg",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Generate Aberration (Gamma) Portal",
+      "description": "Use this to generate a portal to Aberration's Guardian.",
+      "yield": 1,
+      "level": 60,
+      "category_id": 1600,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "gamma_aberration_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Artifact of the Depths",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Shadows",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Stalker",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Generate Aberration (Beta) Portal",
+      "description": "Use this to generate a portal to Aberration's Guardian.",
+      "yield": 1,
+      "level": 75,
+      "category_id": 1600,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "beta_aberration_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Basilisk Scale",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Nameless Venom",
+          "quantity": 12
+        },
+        {
+          "resource_id": "Reaper Pheromone Gland",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Rock Drake Feather",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Artifact of the Depths",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Shadows",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Stalker",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
+    },
+    {
+      "name": "Generate Aberration (Alpha) Portal",
+      "description": "Use this to generate a portal to Aberration's Guardian.",
+      "yield": 1,
+      "level": 100,
+      "category_id": 1600,
+      "image_folder": "Aberration\/Engrams\/",
+      "image_file": "alpha_aberration_portal.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 4,
+      "composition": [
+        {
+          "resource_id": "Alpha Basilisk Fang",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Karkinos Claw",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Alpha Reaper King Barb",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Basilisk Scale",
+          "quantity": 8
+        },
+        {
+          "resource_id": "Nameless Venom",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Reaper Pheromone Gland",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Rock Drake Feather",
+          "quantity": 7
+        },
+        {
+          "resource_id": "Artifact of the Depths",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Shadows",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Artifact of the Stalker",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Obelisk"
+      ]
     }
   ],
   "total_conversion": [
@@ -28117,9 +30501,73 @@
           "to": "Fresh Meat"
         }
       ],
+      "station":[],
+      "category":[],
       "engram": [
         "Metal Ingot",
         "Canteen"
+      ]
+    },
+    {
+      "dlc_id": 3,
+      "resource":[],
+      "station":[
+        "Tek Terminal"
+      ],
+      "category": [
+        1601,
+        1602,
+        1603,
+        1604,
+        1606
+      ],
+      "engram": [
+        "Generate Broodmother (Alpha) Portal",
+        "Generate Broodmother (Beta) Portal",
+        "Generate Broodmother (Gamma) Portal",
+        "Generate Megapithecus (Alpha) Portal",
+        "Generate Megapithecus (Beta) Portal",
+        "Generate Megapithecus (Gamma) Portal",
+        "Generate Dragon (Alpha) Portal",
+        "Generate Dragon (Beta) Portal",
+        "Generate Dragon (Gamma) Portal",
+        "Generate Center (Easy) Portal",
+        "Generate Center (Medium) Portal",
+        "Generate Center (Hard) Portal",
+        "Generate Ragnarok (Easy) Portal",
+        "Generate Ragnarok (Medium) Portal",
+        "Generate Ragnarok (Hard) Portal"
+      ]
+    },
+    {
+      "dlc_id": 4,
+      "resource":[],
+      "station":[
+        "Tek Terminal"
+      ],
+      "category": [
+        1601,
+        1602,
+        1603,
+        1604,
+        1606
+      ],
+      "engram": [
+        "Generate Broodmother (Alpha) Portal",
+        "Generate Broodmother (Beta) Portal",
+        "Generate Broodmother (Gamma) Portal",
+        "Generate Megapithecus (Alpha) Portal",
+        "Generate Megapithecus (Beta) Portal",
+        "Generate Megapithecus (Gamma) Portal",
+        "Generate Dragon (Alpha) Portal",
+        "Generate Dragon (Beta) Portal",
+        "Generate Dragon (Gamma) Portal",
+        "Generate Center (Easy) Portal",
+        "Generate Center (Medium) Portal",
+        "Generate Center (Hard) Portal",
+        "Generate Ragnarok (Easy) Portal",
+        "Generate Ragnarok (Medium) Portal",
+        "Generate Ragnarok (Hard) Portal"
       ]
     }
   ]

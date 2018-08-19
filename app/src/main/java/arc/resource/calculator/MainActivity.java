@@ -1,5 +1,12 @@
 package arc.resource.calculator;
 
+import static arc.resource.calculator.DetailActivity.ADD;
+import static arc.resource.calculator.DetailActivity.ERROR;
+import static arc.resource.calculator.DetailActivity.REMOVE;
+import static arc.resource.calculator.DetailActivity.RESULT_CODE;
+import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
+import static arc.resource.calculator.DetailActivity.UPDATE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.model.CraftingQueue;
@@ -26,15 +32,6 @@ import arc.resource.calculator.views.MainSwitcher;
 import arc.resource.calculator.views.QueueRecyclerView;
 import arc.resource.calculator.views.QueueSwitcher;
 
-import static arc.resource.calculator.DetailActivity.ADD;
-import static arc.resource.calculator.DetailActivity.ERROR;
-import static arc.resource.calculator.DetailActivity.REMOVE;
-import static arc.resource.calculator.DetailActivity.RESULT_CODE;
-import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_ID;
-import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
-import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_QUANTITY;
-import static arc.resource.calculator.DetailActivity.UPDATE;
-
 /**
  * Copyright (C) 2016, Jared Stone
  * -
@@ -48,349 +45,362 @@ import static arc.resource.calculator.DetailActivity.UPDATE;
  * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
 public class MainActivity extends AppCompatActivity
-        implements ExceptionObserver.Listener {
-    private static final String TAG = MainActivity.class.getSimpleName();
+    implements ExceptionObserver.Listener {
 
-    public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
+  private static final String TAG = MainActivity.class.getSimpleName();
 
-    private AdUtil mAdUtil;
+  public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
 
-    // Purchase flow -> disable menu option to disable ads
-    // CreateOptionsMenu -> disable menu option to disable ads if purchased
+  private AdUtil mAdUtil;
 
-    // TODO: 5/27/2017 Error popup to have BobOnTheCob image
+  // Purchase flow -> disable menu option to disable ads
+  // CreateOptionsMenu -> disable menu option to disable ads if purchased
 
-    @Override
-    protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
+  // TODO: 5/27/2017 Error popup to have BobOnTheCob image
 
-        Log.d( TAG, "onCreate: " );
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-        // Check to see if database was updated
-        boolean didUpdate = getIntent().getBooleanExtra( INTENT_KEY_DID_UPDATE, false );
+    Log.d(TAG, "onCreate: ");
 
-        ExceptionObserver.getInstance().registerListener( this );
+    // Check to see if database was updated
+    boolean didUpdate = getIntent().getBooleanExtra(INTENT_KEY_DID_UPDATE, false);
 
-        QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
-        queueSwitcher.onCreate();
+    ExceptionObserver.getInstance().registerListener(this);
 
-        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
-        mainSwitcher.onCreate();
+    QueueSwitcher queueSwitcher = (QueueSwitcher) findViewById(R.id.switcher_queue);
+    queueSwitcher.onCreate();
 
-        ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
-        button.onCreate();
+    MainSwitcher mainSwitcher = (MainSwitcher) findViewById(R.id.switcher_main);
+    mainSwitcher.onCreate();
 
-        CraftableRecyclerView craftableRecyclerView = ( CraftableRecyclerView ) findViewById( R.id.gridview_craftables );
-        registerForContextMenu( craftableRecyclerView );
+    ClearQueueButton button = (ClearQueueButton) findViewById(R.id.button_clear_queue);
+    button.onCreate();
 
-        QueueRecyclerView queueRecyclerView = ( QueueRecyclerView ) findViewById( R.id.gridview_queue );
-        registerForContextMenu( queueRecyclerView );
+    CraftableRecyclerView craftableRecyclerView = (CraftableRecyclerView) findViewById(
+        R.id.gridview_craftables);
+    registerForContextMenu(craftableRecyclerView);
 
-        mAdUtil = new AdUtil( this, R.id.content_main );
+    QueueRecyclerView queueRecyclerView = (QueueRecyclerView) findViewById(R.id.gridview_queue);
+    registerForContextMenu(queueRecyclerView);
 
-        showChangeLog();
-    }
+    mAdUtil = new AdUtil(this, R.id.content_main);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    showChangeLog();
+  }
 
-        Log.d( TAG, "onResume: " );
+  @Override
+  protected void onResume() {
+    super.onResume();
 
-        ExceptionObserver.getInstance().registerListener( this );
+    Log.d(TAG, "onResume: ");
 
-        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
-        mainSwitcher.onResume();
+    ExceptionObserver.getInstance().registerListener(this);
 
-        QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
-        queueSwitcher.onResume();
+    MainSwitcher mainSwitcher = (MainSwitcher) findViewById(R.id.switcher_main);
+    mainSwitcher.onResume();
 
-        ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
-        button.onResume();
+    QueueSwitcher queueSwitcher = (QueueSwitcher) findViewById(R.id.switcher_queue);
+    queueSwitcher.onResume();
 
-        mAdUtil.resume();
-    }
+    ClearQueueButton button = (ClearQueueButton) findViewById(R.id.button_clear_queue);
+    button.onResume();
 
-    @Override
-    protected void onPause() {
-        Log.d( TAG, "onPause: " );
+    mAdUtil.resume();
+  }
 
-        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
-        mainSwitcher.onPause();
+  @Override
+  protected void onPause() {
+    Log.d(TAG, "onPause: ");
 
-        QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
-        queueSwitcher.onPause();
+    MainSwitcher mainSwitcher = (MainSwitcher) findViewById(R.id.switcher_main);
+    mainSwitcher.onPause();
 
-        ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
-        button.onPause();
+    QueueSwitcher queueSwitcher = (QueueSwitcher) findViewById(R.id.switcher_queue);
+    queueSwitcher.onPause();
 
-        mAdUtil.pause();
+    ClearQueueButton button = (ClearQueueButton) findViewById(R.id.button_clear_queue);
+    button.onPause();
 
-        ExceptionObserver.getInstance().unregisterListener( this );
+    mAdUtil.pause();
 
-        super.onPause();
-    }
+    ExceptionObserver.getInstance().unregisterListener(this);
 
-    @Override
-    protected void onDestroy() {
-        Log.d( TAG, "onDestroy: " );
+    super.onPause();
+  }
 
-        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
-        mainSwitcher.onDestroy();
+  @Override
+  protected void onDestroy() {
+    Log.d(TAG, "onDestroy: ");
 
-        QueueSwitcher queueSwitcher = ( QueueSwitcher ) findViewById( R.id.switcher_queue );
-        queueSwitcher.onDestroy();
+    MainSwitcher mainSwitcher = (MainSwitcher) findViewById(R.id.switcher_main);
+    mainSwitcher.onDestroy();
 
-        ClearQueueButton button = ( ClearQueueButton ) findViewById( R.id.button_clear_queue );
-        button.onDestroy();
+    QueueSwitcher queueSwitcher = (QueueSwitcher) findViewById(R.id.switcher_queue);
+    queueSwitcher.onDestroy();
 
-        mAdUtil.destroy();
+    ClearQueueButton button = (ClearQueueButton) findViewById(R.id.button_clear_queue);
+    button.onDestroy();
 
-        super.onDestroy();
-    }
+    mAdUtil.destroy();
 
-    @Override
-    public boolean onCreateOptionsMenu( Menu menu ) {
-        getMenuInflater().inflate( R.menu.menu_main, menu );
+    super.onDestroy();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    final boolean show = super.onPrepareOptionsMenu(menu);
+
+    // set up menu to enable/disable remove ads button
+    menu.findItem(R.id.action_remove_ads).setEnabled(!mAdUtil.mRemoveAds);
+
+    return show;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_search:
+        DialogUtil.Search(MainActivity.this, new DialogUtil.Callback() {
+          @Override
+          public void onResult(@Nullable Object result) {
+            String searchQuery = (String) result;
+
+            MainSwitcher mainSwitcher = (MainSwitcher) findViewById(R.id.switcher_main);
+            mainSwitcher.onSearch(searchQuery);
+          }
+
+          @Override
+          public void onCancel() {
+            showSnackBar(getString(R.string.toast_search_fail));
+          }
+        }).show();
+        break;
+
+      case R.id.action_settings:
+        startActivityForResult(new Intent(this, SettingsActivity.class),
+            SettingsActivity.REQUEST_CODE);
         return true;
+
+      case R.id.action_show_changelog:
+        ChangeLog changeLog = new ChangeLog(this);
+        changeLog.getFullLogDialog().show();
+        break;
+
+      case R.id.action_show_tutorial:
+        startActivity(new Intent(this, FirstUseActivity.class));
+        break;
+
+      case R.id.action_about:
+        DialogUtil.About(MainActivity.this).show();
+        break;
+
+      case R.id.action_feedback:
+        FeedbackUtil.composeFeedbackEmail(this);
+        break;
+
+      case R.id.action_feedback_bug_report:
+        FeedbackUtil.composeBugReportEmail(this);
+        break;
+
+      case R.id.action_remove_ads:
+        mAdUtil.beginPurchase();
+        break;
+
+      default:
+        break;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu( Menu menu ) {
-        final boolean show = super.onPrepareOptionsMenu( menu );
+    return super.onOptionsItemSelected(item);
+  }
 
-        // set up menu to enable/disable remove ads button
-        menu.findItem( R.id.action_remove_ads ).setEnabled( !mAdUtil.mRemoveAds );
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    MenuInflater inflater = getMenuInflater();
 
-        return show;
+    switch (v.getId()) {
+      case R.id.gridview_queue:
+        inflater.inflate(R.menu.craftable_in_queue_menu, menu);
+        break;
+
+      case R.id.gridview_craftables:
+        inflater.inflate(R.menu.displaycase_menu, menu);
+        break;
+    }
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    RecyclerContextMenuInfo menuInfo = (RecyclerContextMenuInfo) item.getMenuInfo();
+
+    final long id = menuInfo.getId();
+
+    final String name;
+
+    switch (item.getItemId()) {
+      case R.id.floating_action_remove_from_queue:
+        name = CraftingQueue.getInstance().getCraftable(id).getName();
+
+        CraftingQueue.getInstance().delete(id);
+
+        showSnackBar(
+            String.format(getString(R.string.toast_remove_from_queue_success_format), name));
+        break;
+
+      case R.id.floating_action_edit_quantity:
+        name = CraftingQueue.getInstance().getCraftable(id).getName();
+
+        DialogUtil.EditQuantity(MainActivity.this, name, new DialogUtil.Callback() {
+          @Override
+          public void onResult(Object result) {
+            int quantity = (int) result;
+            CraftingQueue.getInstance().setQuantity(getApplicationContext(), id, quantity);
+
+            showSnackBar(
+                String.format(getString(R.string.toast_edit_quantity_success_format), name));
+          }
+
+          @Override
+          public void onCancel() {
+            showSnackBar(String.format(getString(R.string.toast_edit_quantity_fail_format), name));
+          }
+        }).show();
+        break;
+
+      case R.id.floating_action_view_details:
+        startDetailActivity(id);
+        break;
     }
 
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-        switch ( item.getItemId() ) {
-            case R.id.action_search:
-                DialogUtil.Search( MainActivity.this, new DialogUtil.Callback() {
-                    @Override
-                    public void onResult( @Nullable Object result ) {
-                        String searchQuery = ( String ) result;
+    return super.onContextItemSelected(item);
+  }
 
-                        MainSwitcher mainSwitcher = ( MainSwitcher ) findViewById( R.id.switcher_main );
-                        mainSwitcher.onSearch( searchQuery );
-                    }
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
 
-                    @Override
-                    public void onCancel() {
-                        showSnackBar( getString( R.string.toast_search_fail ) );
-                    }
-                } ).show();
-                break;
+    if (!mAdUtil.onActivityResult(requestCode, resultCode, data)) {
+      if (data != null) {
+        Bundle extras = data.getExtras();
 
-            case R.id.action_settings:
-                startActivityForResult( new Intent( this, SettingsActivity.class ), SettingsActivity.REQUEST_CODE );
-                return true;
+        switch (requestCode) {
+          case DetailActivity.REQUEST_CODE:
+            int extraResultCode = extras.getInt(RESULT_CODE);
 
-            case R.id.action_show_changelog:
-                ChangeLog changeLog = new ChangeLog( this );
-                changeLog.getFullLogDialog().show();
-                break;
-
-            case R.id.action_show_tutorial:
-                startActivity( new Intent( this, FirstUseActivity.class ) );
-                break;
-
-            case R.id.action_about:
-                DialogUtil.About( MainActivity.this ).show();
-                break;
-
-            case R.id.action_feedback:
-                FeedbackUtil.composeFeedbackEmail( this );
-                break;
-
-            case R.id.action_feedback_bug_report:
-                FeedbackUtil.composeBugReportEmail( this );
-                break;
-
-            case R.id.action_remove_ads:
-                mAdUtil.beginPurchase();
-                break;
-
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected( item );
-    }
-
-    @Override
-    public void onCreateContextMenu( ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo ) {
-        super.onCreateContextMenu( menu, v, menuInfo );
-        MenuInflater inflater = getMenuInflater();
-
-        switch ( v.getId() ) {
-            case R.id.gridview_queue:
-                inflater.inflate( R.menu.craftable_in_queue_menu, menu );
-                break;
-
-            case R.id.gridview_craftables:
-                inflater.inflate( R.menu.displaycase_menu, menu );
-                break;
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected( MenuItem item ) {
-        RecyclerContextMenuInfo menuInfo = ( RecyclerContextMenuInfo ) item.getMenuInfo();
-
-        final long id = menuInfo.getId();
-
-        final String name;
-
-        switch ( item.getItemId() ) {
-            case R.id.floating_action_remove_from_queue:
-                name = CraftingQueue.getInstance().getCraftable( id ).getName();
-
-                CraftingQueue.getInstance().delete( id );
-
-                showSnackBar( String.format( getString( R.string.toast_remove_from_queue_success_format ), name ) );
-                break;
-
-            case R.id.floating_action_edit_quantity:
-                name = CraftingQueue.getInstance().getCraftable( id ).getName();
-
-                DialogUtil.EditQuantity( MainActivity.this, name, new DialogUtil.Callback() {
-                    @Override
-                    public void onResult( Object result ) {
-                        int quantity = ( int ) result;
-                        CraftingQueue.getInstance().setQuantity( getApplicationContext(), id, quantity );
-
-                        showSnackBar( String.format( getString( R.string.toast_edit_quantity_success_format ), name ) );
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        showSnackBar( String.format( getString( R.string.toast_edit_quantity_fail_format ), name ) );
-                    }
-                } ).show();
-                break;
-
-            case R.id.floating_action_view_details:
-                startDetailActivity( id );
-                break;
-        }
-
-        return super.onContextItemSelected( item );
-    }
-
-    @Override
-    protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
-        super.onActivityResult( requestCode, resultCode, data );
-
-        if ( !mAdUtil.onActivityResult( requestCode, resultCode, data ) ) {
-            if ( data != null ) {
-                Bundle extras = data.getExtras();
-
-                switch ( requestCode ) {
-                    case DetailActivity.REQUEST_CODE:
-                        int extraResultCode = extras.getInt( RESULT_CODE );
-
-                        if ( resultCode == RESULT_OK ) {
-                            String name = extras.getString( RESULT_EXTRA_NAME );
+            if (resultCode == RESULT_OK) {
+              String name = extras.getString(RESULT_EXTRA_NAME);
 //                            long id = extras.getLong( RESULT_EXTRA_ID );
 //                            int quantity = extras.getInt( RESULT_EXTRA_QUANTITY );
 
-                            switch ( extraResultCode ) {
-                                case REMOVE:
+              switch (extraResultCode) {
+                case REMOVE:
 //                                    CraftingQueue.getInstance().delete( id );
 
-                                    showSnackBar( String.format( getString( R.string.toast_details_removed_format ), name ) );
-                                    break;
+                  showSnackBar(
+                      String.format(getString(R.string.toast_details_removed_format), name));
+                  break;
 
-                                case UPDATE:
+                case UPDATE:
 //                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
 
-                                    showSnackBar( String.format( getString( R.string.toast_details_updated_format ), name ) );
-                                    break;
+                  showSnackBar(
+                      String.format(getString(R.string.toast_details_updated_format), name));
+                  break;
 
-                                case ADD:
+                case ADD:
 //                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
 
-                                    showSnackBar( String.format( getString( R.string.toast_details_added_format ), name ) );
-                                    break;
-                            }
-                        } else {
-                            if ( extraResultCode == ERROR ) {
-                                Exception e = ( Exception ) extras.get( RESULT_EXTRA_NAME );
-
-                                if ( e != null ) {
-                                    showSnackBar( getString( R.string.toast_details_error ) );
-
-                                    ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
-                                }
-                            } else {
-                                showSnackBar( getString( R.string.toast_details_no_change ) );
-                            }
-                        }
-                        break;
-
-                    case SettingsActivity.REQUEST_CODE:
-                        if ( resultCode == RESULT_OK ) {
-                            boolean dlcValueChange = extras.getBoolean( getString( R.string.pref_dlc_key ) );
-                            boolean categoryPrefChange = extras.getBoolean( getString( R.string.pref_filter_category_key ) );
-                            boolean stationPrefChange = extras.getBoolean( getString( R.string.pref_filter_station_key ) );
-                            boolean levelPrefChange = extras.getBoolean( getString( R.string.pref_filter_level_key ) );
-                            boolean levelValueChange = extras.getBoolean( getString( R.string.pref_edit_text_level_key ) );
-                            boolean refinedPrefChange = extras.getBoolean( getString( R.string.pref_filter_refined_key ) );
-
-                            showSnackBar( getString( R.string.toast_settings_success ) );
-
-                            PrefsObserver.getInstance().notifyPreferencesChanged(
-                                    dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
-                        } else {
-                            showSnackBar( getString( R.string.toast_settings_fail ) );
-                        }
-                        break;
-                }
+                  showSnackBar(String.format(getString(R.string.toast_details_added_format), name));
+                  break;
+              }
             } else {
-                showSnackBar( getString( R.string.toast_settings_fail ) );
+              if (extraResultCode == ERROR) {
+                Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
+
+                if (e != null) {
+                  showSnackBar(getString(R.string.toast_details_error));
+
+                  ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+                }
+              } else {
+                showSnackBar(getString(R.string.toast_details_no_change));
+              }
             }
+            break;
+
+          case SettingsActivity.REQUEST_CODE:
+            if (resultCode == RESULT_OK) {
+              boolean dlcValueChange = extras.getBoolean(getString(R.string.pref_dlc_key));
+              boolean categoryPrefChange = extras
+                  .getBoolean(getString(R.string.pref_filter_category_key));
+              boolean stationPrefChange = extras
+                  .getBoolean(getString(R.string.pref_filter_station_key));
+              boolean levelPrefChange = extras
+                  .getBoolean(getString(R.string.pref_filter_level_key));
+              boolean levelValueChange = extras
+                  .getBoolean(getString(R.string.pref_edit_text_level_key));
+              boolean refinedPrefChange = extras
+                  .getBoolean(getString(R.string.pref_filter_refined_key));
+
+              showSnackBar(getString(R.string.toast_settings_success));
+
+              PrefsObserver.getInstance().notifyPreferencesChanged(
+                  dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange,
+                  levelValueChange, refinedPrefChange);
+            } else {
+              showSnackBar(getString(R.string.toast_settings_fail));
+            }
+            break;
         }
+      } else {
+        showSnackBar(getString(R.string.toast_settings_fail));
+      }
     }
+  }
 
-    @Override
-    public void onException( String tag, Exception e ) {
-        ExceptionUtil.SendErrorReport( tag, e );
+  @Override
+  public void onException(String tag, Exception e) {
+    ExceptionUtil.SendErrorReport(tag, e);
+  }
+
+  @Override
+  public void onFatalException(final String tag, final Exception e) {
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        ExceptionUtil.SendErrorReportWithAlertDialog(MainActivity.this, tag, e);
+      }
+    });
+  }
+
+  private void startDetailActivity(long id) {
+    Intent intent = new Intent(this, DetailActivity.class);
+    intent.putExtra(DetailActivity.REQUEST_ID, id);
+    startActivityForResult(intent, DetailActivity.REQUEST_CODE);
+  }
+
+  private void showChangeLog() {
+    try {
+      ChangeLog changeLog = new ChangeLog(this);
+
+      if (changeLog.firstRun()) {
+        changeLog.getLogDialog().show();
+      }
+    } catch (Exception e) {
+      // do nothing
     }
+  }
 
-    @Override
-    public void onFatalException( final String tag, final Exception e ) {
-        runOnUiThread( new Runnable() {
-            @Override
-            public void run() {
-                ExceptionUtil.SendErrorReportWithAlertDialog( MainActivity.this, tag, e );
-            }
-        } );
-    }
-
-    private void startDetailActivity( long id ) {
-        Intent intent = new Intent( this, DetailActivity.class );
-        intent.putExtra( DetailActivity.REQUEST_ID, id );
-        startActivityForResult( intent, DetailActivity.REQUEST_CODE );
-    }
-
-    private void showChangeLog() {
-        try {
-            ChangeLog changeLog = new ChangeLog( this );
-
-            if ( changeLog.firstRun() ) {
-                changeLog.getLogDialog().show();
-            }
-        } catch ( Exception e ) {
-            // do nothing
-        }
-    }
-
-    private void showSnackBar( String text ) {
-        Snackbar.make( findViewById( R.id.content_main ), text, Snackbar.LENGTH_SHORT ).show();
-    }
+  private void showSnackBar(String text) {
+    Snackbar.make(findViewById(R.id.content_main), text, Snackbar.LENGTH_SHORT).show();
+  }
 }
