@@ -1,0 +1,1498 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 7,
+    "identityHash": "038d9baa1b415e6248b79c3a27eae4f2",
+    "entities": [
+      {
+        "tableName": "composite",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `engramId` TEXT NOT NULL, `resourceId` TEXT NOT NULL, `quantity` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "engramId",
+            "columnName": "engramId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resourceId",
+            "columnName": "resourceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_composite_engramId",
+            "unique": false,
+            "columnNames": [
+              "engramId"
+            ],
+            "createSql": "CREATE  INDEX `index_composite_engramId` ON `${TABLE_NAME}` (`engramId`)"
+          },
+          {
+            "name": "index_composite_resourceId",
+            "unique": false,
+            "columnNames": [
+              "resourceId"
+            ],
+            "createSql": "CREATE  INDEX `index_composite_resourceId` ON `${TABLE_NAME}` (`resourceId`)"
+          },
+          {
+            "name": "index_composite_engramId_resourceId",
+            "unique": true,
+            "columnNames": [
+              "engramId",
+              "resourceId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_composite_engramId_resourceId` ON `${TABLE_NAME}` (`engramId`, `resourceId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "dlc",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `contentFolder` TEXT NOT NULL, `imageLocationId` TEXT NOT NULL, `nameId` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentFolder",
+            "columnName": "contentFolder",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageLocationId",
+            "columnName": "imageLocationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "nameId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_dlc_nameId",
+            "unique": true,
+            "columnNames": [
+              "nameId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_dlc_nameId` ON `${TABLE_NAME}` (`nameId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "engram",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `descriptionId` TEXT NOT NULL, `imageLocationId` TEXT NOT NULL, `nameId` TEXT NOT NULL, `requiredLevel` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`descriptionId`) REFERENCES `Description`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`nameId`) REFERENCES `Name`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`imageLocationId`) REFERENCES `ImageLocation`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "descriptionId",
+            "columnName": "descriptionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageLocationId",
+            "columnName": "imageLocationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "nameId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requiredLevel",
+            "columnName": "requiredLevel",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_engram_descriptionId",
+            "unique": false,
+            "columnNames": [
+              "descriptionId"
+            ],
+            "createSql": "CREATE  INDEX `index_engram_descriptionId` ON `${TABLE_NAME}` (`descriptionId`)"
+          },
+          {
+            "name": "index_engram_requiredLevel",
+            "unique": false,
+            "columnNames": [
+              "requiredLevel"
+            ],
+            "createSql": "CREATE  INDEX `index_engram_requiredLevel` ON `${TABLE_NAME}` (`requiredLevel`)"
+          },
+          {
+            "name": "index_engram_imageLocationId",
+            "unique": false,
+            "columnNames": [
+              "imageLocationId"
+            ],
+            "createSql": "CREATE  INDEX `index_engram_imageLocationId` ON `${TABLE_NAME}` (`imageLocationId`)"
+          },
+          {
+            "name": "index_engram_nameId",
+            "unique": true,
+            "columnNames": [
+              "nameId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_engram_nameId` ON `${TABLE_NAME}` (`nameId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Description",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "descriptionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "Name",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "nameId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "ImageLocation",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "imageLocationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "folder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `nameId` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "nameId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_folder_nameId",
+            "unique": true,
+            "columnNames": [
+              "nameId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_folder_nameId` ON `${TABLE_NAME}` (`nameId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mod",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `contentFolder` TEXT NOT NULL, `imageLocationId` TEXT NOT NULL, `nameId` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentFolder",
+            "columnName": "contentFolder",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageLocationId",
+            "columnName": "imageLocationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "nameId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_mod_contentFolder_imageLocationId_nameId",
+            "unique": true,
+            "columnNames": [
+              "contentFolder",
+              "imageLocationId",
+              "nameId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_mod_contentFolder_imageLocationId_nameId` ON `${TABLE_NAME}` (`contentFolder`, `imageLocationId`, `nameId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "quality",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `nameId` TEXT NOT NULL, `color` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`nameId`) REFERENCES `Name`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "nameId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_quality_nameId",
+            "unique": false,
+            "columnNames": [
+              "nameId"
+            ],
+            "createSql": "CREATE  INDEX `index_quality_nameId` ON `${TABLE_NAME}` (`nameId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Name",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "nameId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "resource",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `imageLocationId` TEXT NOT NULL, `nameId` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageLocationId",
+            "columnName": "imageLocationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "nameId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_resource_imageLocationId",
+            "unique": false,
+            "columnNames": [
+              "imageLocationId"
+            ],
+            "createSql": "CREATE  INDEX `index_resource_imageLocationId` ON `${TABLE_NAME}` (`imageLocationId`)"
+          },
+          {
+            "name": "index_resource_nameId",
+            "unique": true,
+            "columnNames": [
+              "nameId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_resource_nameId` ON `${TABLE_NAME}` (`nameId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "station",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `imageLocationId` TEXT NOT NULL, `nameId` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageLocationId",
+            "columnName": "imageLocationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "nameId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_station_nameId",
+            "unique": true,
+            "columnNames": [
+              "nameId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_station_nameId` ON `${TABLE_NAME}` (`nameId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "BlueprintEngram",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`engramId` TEXT NOT NULL, `qualityId` TEXT NOT NULL, PRIMARY KEY(`engramId`), FOREIGN KEY(`engramId`) REFERENCES `engram`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`qualityId`) REFERENCES `quality`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "engramId",
+            "columnName": "engramId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "qualityId",
+            "columnName": "qualityId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "engramId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_BlueprintEngram_qualityId",
+            "unique": false,
+            "columnNames": [
+              "qualityId"
+            ],
+            "createSql": "CREATE  INDEX `index_BlueprintEngram_qualityId` ON `${TABLE_NAME}` (`qualityId`)"
+          },
+          {
+            "name": "index_BlueprintEngram_engramId",
+            "unique": false,
+            "columnNames": [
+              "engramId"
+            ],
+            "createSql": "CREATE  INDEX `index_BlueprintEngram_engramId` ON `${TABLE_NAME}` (`engramId`)"
+          },
+          {
+            "name": "index_BlueprintEngram_engramId_qualityId",
+            "unique": true,
+            "columnNames": [
+              "engramId",
+              "qualityId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_BlueprintEngram_engramId_qualityId` ON `${TABLE_NAME}` (`engramId`, `qualityId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "engram",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "engramId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "quality",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "qualityId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Description",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `text` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "DLCEngram",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dlcId` TEXT NOT NULL, `engramId` TEXT NOT NULL, `parentId` TEXT NOT NULL, `yield` INTEGER NOT NULL, PRIMARY KEY(`engramId`, `parentId`), FOREIGN KEY(`dlcId`) REFERENCES `dlc`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "dlcId",
+            "columnName": "dlcId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "engramId",
+            "columnName": "engramId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parentId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "yield",
+            "columnName": "yield",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "engramId",
+            "parentId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_DLCEngram_dlcId",
+            "unique": false,
+            "columnNames": [
+              "dlcId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCEngram_dlcId` ON `${TABLE_NAME}` (`dlcId`)"
+          },
+          {
+            "name": "index_DLCEngram_engramId",
+            "unique": false,
+            "columnNames": [
+              "engramId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCEngram_engramId` ON `${TABLE_NAME}` (`engramId`)"
+          },
+          {
+            "name": "index_DLCEngram_parentId",
+            "unique": false,
+            "columnNames": [
+              "parentId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCEngram_parentId` ON `${TABLE_NAME}` (`parentId`)"
+          },
+          {
+            "name": "index_DLCEngram_engramId_parentId_yield",
+            "unique": true,
+            "columnNames": [
+              "engramId",
+              "parentId",
+              "yield"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_DLCEngram_engramId_parentId_yield` ON `${TABLE_NAME}` (`engramId`, `parentId`, `yield`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "dlc",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "dlcId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "DLCFolder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`folderId` TEXT NOT NULL, `dlcId` TEXT NOT NULL, `parentId` TEXT NOT NULL, PRIMARY KEY(`folderId`), FOREIGN KEY(`folderId`) REFERENCES `folder`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`dlcId`) REFERENCES `dlc`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "folderId",
+            "columnName": "folderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dlcId",
+            "columnName": "dlcId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parentId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "folderId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_DLCFolder_dlcId",
+            "unique": false,
+            "columnNames": [
+              "dlcId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCFolder_dlcId` ON `${TABLE_NAME}` (`dlcId`)"
+          },
+          {
+            "name": "index_DLCFolder_folderId",
+            "unique": false,
+            "columnNames": [
+              "folderId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCFolder_folderId` ON `${TABLE_NAME}` (`folderId`)"
+          },
+          {
+            "name": "index_DLCFolder_parentId",
+            "unique": false,
+            "columnNames": [
+              "parentId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCFolder_parentId` ON `${TABLE_NAME}` (`parentId`)"
+          },
+          {
+            "name": "index_DLCFolder_dlcId_folderId_parentId",
+            "unique": true,
+            "columnNames": [
+              "dlcId",
+              "folderId",
+              "parentId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_DLCFolder_dlcId_folderId_parentId` ON `${TABLE_NAME}` (`dlcId`, `folderId`, `parentId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "folder",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "folderId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "dlc",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "dlcId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "DLCResource",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`resourceId` TEXT NOT NULL, `dlcId` TEXT NOT NULL, PRIMARY KEY(`resourceId`), FOREIGN KEY(`resourceId`) REFERENCES `resource`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`dlcId`) REFERENCES `dlc`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "resourceId",
+            "columnName": "resourceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dlcId",
+            "columnName": "dlcId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "resourceId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_DLCResource_dlcId",
+            "unique": false,
+            "columnNames": [
+              "dlcId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCResource_dlcId` ON `${TABLE_NAME}` (`dlcId`)"
+          },
+          {
+            "name": "index_DLCResource_resourceId",
+            "unique": true,
+            "columnNames": [
+              "resourceId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_DLCResource_resourceId` ON `${TABLE_NAME}` (`resourceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "resource",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "resourceId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "dlc",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "dlcId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "DLCStation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stationId` TEXT NOT NULL, `dlcId` TEXT NOT NULL, PRIMARY KEY(`stationId`), FOREIGN KEY(`stationId`) REFERENCES `station`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`dlcId`) REFERENCES `dlc`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "stationId",
+            "columnName": "stationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dlcId",
+            "columnName": "dlcId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "stationId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_DLCStation_dlcId",
+            "unique": false,
+            "columnNames": [
+              "dlcId"
+            ],
+            "createSql": "CREATE  INDEX `index_DLCStation_dlcId` ON `${TABLE_NAME}` (`dlcId`)"
+          },
+          {
+            "name": "index_DLCStation_stationId",
+            "unique": true,
+            "columnNames": [
+              "stationId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_DLCStation_stationId` ON `${TABLE_NAME}` (`stationId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "station",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "stationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "dlc",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "dlcId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "ImageLocation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `contentFolder` TEXT NOT NULL, `imageFolder` TEXT, `imageFile` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentFolder",
+            "columnName": "contentFolder",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageFolder",
+            "columnName": "imageFolder",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imageFile",
+            "columnName": "imageFile",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_ImageLocation_contentFolder_imageFolder_imageFile",
+            "unique": true,
+            "columnNames": [
+              "contentFolder",
+              "imageFolder",
+              "imageFile"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_ImageLocation_contentFolder_imageFolder_imageFile` ON `${TABLE_NAME}` (`contentFolder`, `imageFolder`, `imageFile`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ModEngram",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`modId` TEXT NOT NULL, `engramId` TEXT NOT NULL, `parentId` TEXT NOT NULL, `yield` INTEGER NOT NULL, PRIMARY KEY(`engramId`, `parentId`), FOREIGN KEY(`modId`) REFERENCES `mod`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "modId",
+            "columnName": "modId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "engramId",
+            "columnName": "engramId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parentId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "yield",
+            "columnName": "yield",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "engramId",
+            "parentId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_ModEngram_modId",
+            "unique": false,
+            "columnNames": [
+              "modId"
+            ],
+            "createSql": "CREATE  INDEX `index_ModEngram_modId` ON `${TABLE_NAME}` (`modId`)"
+          },
+          {
+            "name": "index_ModEngram_engramId",
+            "unique": false,
+            "columnNames": [
+              "engramId"
+            ],
+            "createSql": "CREATE  INDEX `index_ModEngram_engramId` ON `${TABLE_NAME}` (`engramId`)"
+          },
+          {
+            "name": "index_ModEngram_parentId",
+            "unique": false,
+            "columnNames": [
+              "parentId"
+            ],
+            "createSql": "CREATE  INDEX `index_ModEngram_parentId` ON `${TABLE_NAME}` (`parentId`)"
+          },
+          {
+            "name": "index_ModEngram_engramId_parentId_yield",
+            "unique": true,
+            "columnNames": [
+              "engramId",
+              "parentId",
+              "yield"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_ModEngram_engramId_parentId_yield` ON `${TABLE_NAME}` (`engramId`, `parentId`, `yield`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "mod",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "modId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "ModFolder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`folderId` TEXT NOT NULL, `modId` TEXT NOT NULL, PRIMARY KEY(`folderId`), FOREIGN KEY(`folderId`) REFERENCES `folder`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`modId`) REFERENCES `mod`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "folderId",
+            "columnName": "folderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modId",
+            "columnName": "modId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "folderId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_ModFolder_modId",
+            "unique": false,
+            "columnNames": [
+              "modId"
+            ],
+            "createSql": "CREATE  INDEX `index_ModFolder_modId` ON `${TABLE_NAME}` (`modId`)"
+          },
+          {
+            "name": "index_ModFolder_folderId",
+            "unique": true,
+            "columnNames": [
+              "folderId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_ModFolder_folderId` ON `${TABLE_NAME}` (`folderId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "folder",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "folderId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "mod",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "modId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "ModResource",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`resourceId` TEXT NOT NULL, `modId` TEXT NOT NULL, PRIMARY KEY(`resourceId`), FOREIGN KEY(`resourceId`) REFERENCES `resource`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`modId`) REFERENCES `mod`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "resourceId",
+            "columnName": "resourceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modId",
+            "columnName": "modId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "resourceId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_ModResource_modId",
+            "unique": false,
+            "columnNames": [
+              "modId"
+            ],
+            "createSql": "CREATE  INDEX `index_ModResource_modId` ON `${TABLE_NAME}` (`modId`)"
+          },
+          {
+            "name": "index_ModResource_resourceId",
+            "unique": true,
+            "columnNames": [
+              "resourceId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_ModResource_resourceId` ON `${TABLE_NAME}` (`resourceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "resource",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "resourceId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "mod",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "modId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "ModStation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stationId` TEXT NOT NULL, `modId` TEXT NOT NULL, PRIMARY KEY(`stationId`), FOREIGN KEY(`stationId`) REFERENCES `station`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`modId`) REFERENCES `mod`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "stationId",
+            "columnName": "stationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modId",
+            "columnName": "modId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "stationId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_ModStation_modId",
+            "unique": false,
+            "columnNames": [
+              "modId"
+            ],
+            "createSql": "CREATE  INDEX `index_ModStation_modId` ON `${TABLE_NAME}` (`modId`)"
+          },
+          {
+            "name": "index_ModStation_stationId",
+            "unique": true,
+            "columnNames": [
+              "stationId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_ModStation_stationId` ON `${TABLE_NAME}` (`stationId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "station",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "stationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "mod",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "modId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Name",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `text` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_Name_text",
+            "unique": true,
+            "columnNames": [
+              "text"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Name_text` ON `${TABLE_NAME}` (`text`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PrimaryEngram",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`engramId` TEXT NOT NULL, `parentId` TEXT NOT NULL, `yield` INTEGER NOT NULL, PRIMARY KEY(`engramId`, `parentId`), FOREIGN KEY(`engramId`) REFERENCES `engram`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "engramId",
+            "columnName": "engramId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parentId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "yield",
+            "columnName": "yield",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "engramId",
+            "parentId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PrimaryEngram_engramId",
+            "unique": false,
+            "columnNames": [
+              "engramId"
+            ],
+            "createSql": "CREATE  INDEX `index_PrimaryEngram_engramId` ON `${TABLE_NAME}` (`engramId`)"
+          },
+          {
+            "name": "index_PrimaryEngram_parentId",
+            "unique": false,
+            "columnNames": [
+              "parentId"
+            ],
+            "createSql": "CREATE  INDEX `index_PrimaryEngram_parentId` ON `${TABLE_NAME}` (`parentId`)"
+          },
+          {
+            "name": "index_PrimaryEngram_engramId_parentId_yield",
+            "unique": true,
+            "columnNames": [
+              "engramId",
+              "parentId",
+              "yield"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_PrimaryEngram_engramId_parentId_yield` ON `${TABLE_NAME}` (`engramId`, `parentId`, `yield`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "engram",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "engramId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PrimaryFolder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`folderId` TEXT NOT NULL, `parentId` TEXT NOT NULL, PRIMARY KEY(`folderId`), FOREIGN KEY(`folderId`) REFERENCES `folder`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "folderId",
+            "columnName": "folderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parentId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "folderId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PrimaryFolder_folderId",
+            "unique": false,
+            "columnNames": [
+              "folderId"
+            ],
+            "createSql": "CREATE  INDEX `index_PrimaryFolder_folderId` ON `${TABLE_NAME}` (`folderId`)"
+          },
+          {
+            "name": "index_PrimaryFolder_parentId",
+            "unique": false,
+            "columnNames": [
+              "parentId"
+            ],
+            "createSql": "CREATE  INDEX `index_PrimaryFolder_parentId` ON `${TABLE_NAME}` (`parentId`)"
+          },
+          {
+            "name": "index_PrimaryFolder_folderId_parentId",
+            "unique": true,
+            "columnNames": [
+              "folderId",
+              "parentId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_PrimaryFolder_folderId_parentId` ON `${TABLE_NAME}` (`folderId`, `parentId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "folder",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "folderId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PrimaryResource",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`resourceId` TEXT NOT NULL, PRIMARY KEY(`resourceId`), FOREIGN KEY(`resourceId`) REFERENCES `resource`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "resourceId",
+            "columnName": "resourceId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "resourceId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PrimaryResource_resourceId",
+            "unique": true,
+            "columnNames": [
+              "resourceId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_PrimaryResource_resourceId` ON `${TABLE_NAME}` (`resourceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "resource",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "resourceId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PrimaryStation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stationId` TEXT NOT NULL, PRIMARY KEY(`stationId`), FOREIGN KEY(`stationId`) REFERENCES `station`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "stationId",
+            "columnName": "stationId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "stationId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PrimaryStation_stationId",
+            "unique": true,
+            "columnNames": [
+              "stationId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_PrimaryStation_stationId` ON `${TABLE_NAME}` (`stationId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "station",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "stationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Queue",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `engramId` TEXT NOT NULL, `quantity` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "engramId",
+            "columnName": "engramId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_Queue_engramId",
+            "unique": true,
+            "columnNames": [
+              "engramId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Queue_engramId` ON `${TABLE_NAME}` (`engramId`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"038d9baa1b415e6248b79c3a27eae4f2\")"
+    ]
+  }
+}
