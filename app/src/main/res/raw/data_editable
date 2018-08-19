@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "282.102r5",
+    "version": "282.102r6",
     "changelog": {
+      "282.102r6": "Updated Consumables/Food/Refined with Industrial Cooker, Removed Charcoal from Industrial Forge.",
       "282.102r5": "Updated Sweet Vegetable Cake.",
       "282.102r4": "Added Boss Arenas category to Tek Terminal, Changed Aberration Portal category to Boss Arenas, Added Stations to Total Conversion.",
       "282.102r3": "Added Aberration, Ragnarok, Tek Portals, Updated other Portals with new portal assets, Added Categories to Total Conversion.",
@@ -1084,6 +1085,7 @@
         "Chemistry Bench",
         "Cooking Pot",
         "Industrial Grill",
+        "Industrial Cooker",
         "Mortar and Pestle",
         "Preserving Bin",
         "Baker's Oven",
@@ -1119,6 +1121,7 @@
         "Campfire",
         "Cooking Pot",
         "Industrial Grill",
+        "Industrial Cooker",
         "Preserving Bin",
         "Baker's Oven",
         "Big Campfire",
@@ -1191,6 +1194,7 @@
         "Chemistry Bench",
         "Cooking Pot",
         "Industrial Forge",
+        "Industrial Cooker",
         "Mortar and Pestle",
         "Refining Forge",
         "Compost Bin",
@@ -7398,7 +7402,6 @@
       "station": [
         "Campfire",
         "Cooking Pot",
-        "Industrial Forge",
         "Refining Forge",
         "Big Campfire",
         "Candles",
