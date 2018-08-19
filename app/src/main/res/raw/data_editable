@@ -1,7 +1,8 @@
 {
   "json": {
-    "version": "282.102r4",
+    "version": "282.102r5",
     "changelog": {
+      "282.102r5": "Updated Sweet Vegetable Cake.",
       "282.102r4": "Added Boss Arenas category to Tek Terminal, Changed Aberration Portal category to Boss Arenas, Added Stations to Total Conversion.",
       "282.102r3": "Added Aberration, Ragnarok, Tek Portals, Updated other Portals with new portal assets, Added Categories to Total Conversion.",
       "282.102r2": "Fixed disconnected Engrams, moved Self/Refined category to be only P+.",
@@ -23141,8 +23142,8 @@
       ]
     },
     {
-      "name": "Sweet Veggie Cake",
-      "description": "A sappy-sweet vegetable cake which Herbivores find delicious. Sadly, humans and carnivores tend to find its taste repugnant.",
+      "name": "Sweet Vegetable Cake",
+      "description": "A sappy-sweet vegetable cake which Herbivores find delicious, which will be automatically eaten when needed for healing. Alas, humans and carnivores tend to find its taste repugnant.",
       "yield": 1,
       "level": 1,
       "category_id": 1002,
@@ -23156,6 +23157,10 @@
       "composition": [
         {
           "resource_id": "Savoroot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Giant Bee Honey",
           "quantity": 2
         },
         {
