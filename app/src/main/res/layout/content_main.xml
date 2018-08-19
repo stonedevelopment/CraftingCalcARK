@@ -56,7 +56,7 @@
         style="@style/AppTheme.Text.DisplayCase.Hierarchy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/gridview_container_padding"
+        android:padding="4dp"
         android:textAlignment="center"/>
 
     </arc.resource.calculator.views.CraftableLayout>
