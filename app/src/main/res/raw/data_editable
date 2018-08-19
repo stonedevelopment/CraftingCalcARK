@@ -1,8 +1,9 @@
 {
   "json": {
-    "version": "282.102r3",
+    "version": "282.102r4",
     "changelog": {
-      "282.102r3": "Added Aberration, Ragnarok, Tek Portals, Updated other Portals with new portal assets.",
+      "282.102r4": "Added Boss Arenas category to Tek Terminal, Changed Aberration Portal category to Boss Arenas, Added Stations to Total Conversion.",
+      "282.102r3": "Added Aberration, Ragnarok, Tek Portals, Updated other Portals with new portal assets, Added Categories to Total Conversion.",
       "282.102r2": "Fixed disconnected Engrams, moved Self/Refined category to be only P+.",
       "282.102r1": "Added DLC: Aberration!",
       "282.102": "Added Heavy Auto Turret, Updated Metal Billboard, Thatch Wall.",
@@ -1254,7 +1255,8 @@
       "parent_id": 0,
       "dlc_id": 1,
       "station": [
-        "Obelisk"
+        "Obelisk",
+        "Tek Terminal"
       ]
     },
     {
@@ -2947,6 +2949,20 @@
       "complex_resource": false
     },
     {
+      "name": "Beta Broodmother Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "beta_broodmother_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Gamma Broodmother Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "gamma_broodmother_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Alpha Carnotaurus Arm",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "alpha_carnotaurus_arm.webp",
@@ -2957,6 +2973,20 @@
       "name": "Alpha Dragon Trophy",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "alpha_dragon_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Beta Dragon Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "beta_dragon_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Gamma Dragon Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "gamma_dragon_trophy.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -2978,6 +3008,20 @@
       "name": "Alpha Megapithecus Trophy",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "alpha_megapithecus_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Beta Megapithecus Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "beta_megapithecus_trophy.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Gamma Megapithecus Trophy",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "gamma_megapithecus_trophy.webp",
       "dlc_id": 1,
       "complex_resource": false
     },
@@ -3041,6 +3085,27 @@
       "name": "Aquatic Mushroom",
       "image_folder": "Aberration\/Resources\/",
       "image_file": "aquatic_mushroom.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Depths",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "artifact_of_the_depths.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Shadows",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "artifact_of_the_shadows.webp",
+      "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Stalker",
+      "image_folder": "Aberration\/Resources\/",
+      "image_file": "artifact_of_the_stalker.webp",
       "dlc_id": 4,
       "complex_resource": false
     },
@@ -3136,7 +3201,7 @@
       "complex_resource": false
     },
     {
-      "name": "Nameless Vemon",
+      "name": "Nameless Venom",
       "image_folder": "Aberration\/Resources\/",
       "image_file": "nameless_venom.webp",
       "dlc_id": 4,
@@ -30274,7 +30339,7 @@
       "description": "Use this to generate a portal to Aberration's Guardian.",
       "yield": 1,
       "level": 60,
-      "category_id": 1603,
+      "category_id": 1600,
       "image_folder": "Aberration\/Engrams\/",
       "image_file": "gamma_aberration_portal.webp",
       "points": 0,
@@ -30305,7 +30370,7 @@
       "description": "Use this to generate a portal to Aberration's Guardian.",
       "yield": 1,
       "level": 75,
-      "category_id": 1603,
+      "category_id": 1600,
       "image_folder": "Aberration\/Engrams\/",
       "image_file": "beta_aberration_portal.webp",
       "points": 0,
@@ -30352,7 +30417,7 @@
       "description": "Use this to generate a portal to Aberration's Guardian.",
       "yield": 1,
       "level": 100,
-      "category_id": 1603,
+      "category_id": 1600,
       "image_folder": "Aberration\/Engrams\/",
       "image_file": "alpha_aberration_portal.webp",
       "points": 0,
@@ -30428,6 +30493,8 @@
           "to": "Fresh Meat"
         }
       ],
+      "station":[],
+      "category":[],
       "engram": [
         "Metal Ingot",
         "Canteen"
@@ -30435,11 +30502,16 @@
     },
     {
       "dlc_id": 3,
+      "resource":[],
+      "station":[
+        "Tek Terminal"
+      ],
       "category": [
         1601,
         1602,
         1603,
-        1604
+        1604,
+        1606
       ],
       "engram": [
         "Generate Broodmother (Alpha) Portal",
@@ -30448,16 +30520,23 @@
         "Generate Megapithecus (Alpha) Portal",
         "Generate Megapithecus (Beta) Portal",
         "Generate Megapithecus (Gamma) Portal",
-        "Generate Center (Alpha) Portal",
-        "Generate Center (Beta) Portal",
-        "Generate Center (Gamma) Portal",
         "Generate Dragon (Alpha) Portal",
         "Generate Dragon (Beta) Portal",
-        "Generate Dragon (Gamma) Portal"
+        "Generate Dragon (Gamma) Portal",
+        "Generate Center (Easy) Portal",
+        "Generate Center (Medium) Portal",
+        "Generate Center (Hard) Portal",
+        "Generate Ragnarok (Easy) Portal",
+        "Generate Ragnarok (Medium) Portal",
+        "Generate Ragnarok (Hard) Portal"
       ]
     },
     {
       "dlc_id": 4,
+      "resource":[],
+      "station":[
+        "Tek Terminal"
+      ],
       "category": [
         1601,
         1602,

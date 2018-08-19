@@ -265,14 +265,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
       long dlc_id = object.getInt(COLUMN_DLC_KEY);
 
       // let's, first, create an array of qualified dlc versions, minus total conversions
-      List<Long> dlc_ids = new ArrayList<>();
-      if (dlc_id == mDlcIds.valueAt(0)) {
-        for (int j = 0; j < mDlcIds.size(); j++) {
-          dlc_ids.add(mDlcIds.valueAt(j));
-        }
-      } else {
-        dlc_ids.add(dlc_id);
-      }
+      List<Long> dlc_ids = applyTotalConversionToStations(dlc_id, name);
 
       // next, let's create an id based on counter variable, i
       long _id = i;
@@ -295,6 +288,23 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     return outArray;
+  }
+
+  private List<Long> applyTotalConversionToStations(long dlc_id, String name) {
+    List<Long> dlc_ids = new ArrayList<>();
+    if (dlc_id == mDlcIds.valueAt(0)) {
+      for (int j = 0; j < mDlcIds.size(); j++) {
+        long _id = mDlcIds.valueAt(j);
+        if (mTotalConversion.get(_id) == null) {
+          dlc_ids.add(_id);
+        } else if (!mTotalConversion.get(_id).stations.contains(name)) {
+          dlc_ids.add(_id);
+        }
+      }
+    } else {
+      dlc_ids.add(dlc_id);
+    }
+    return dlc_ids;
   }
 
   private JSONArray convertCategoryJSONArrayToIds(JSONArray inArray) throws Exception {
@@ -429,19 +439,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
       long dlc_id = object.getInt(COLUMN_DLC_KEY);
 
       // let's, first, create an array of qualified dlc versions, minus total conversions
-      List<Long> dlc_ids = new ArrayList<>();
-      if (dlc_id == mDlcIds.valueAt(0)) {
-        for (int j = 0; j < mDlcIds.size(); j++) {
-          long _id = mDlcIds.valueAt(j);
-          if (mTotalConversion.get(_id) == null) {
-            dlc_ids.add(_id);
-          } else if (!mTotalConversion.get(_id).engrams.contains(name)) {
-            dlc_ids.add(_id);
-          }
-        }
-      } else {
-        dlc_ids.add(dlc_id);
-      }
+      List<Long> dlc_ids = applyTotalConversionToEngrams(dlc_id, name);
 
       // next, let's create an id based on counter variable, i
       long _id = i;
@@ -514,6 +512,23 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     return outArray;
+  }
+
+  private List<Long> applyTotalConversionToEngrams(long dlc_id, String name) {
+    List<Long> dlc_ids = new ArrayList<>();
+    if (dlc_id == mDlcIds.valueAt(0)) {
+      for (int j = 0; j < mDlcIds.size(); j++) {
+        long _id = mDlcIds.valueAt(j);
+        if (mTotalConversion.get(_id) == null) {
+          dlc_ids.add(_id);
+        } else if (!mTotalConversion.get(_id).engrams.contains(name)) {
+          dlc_ids.add(_id);
+        }
+      }
+    } else {
+      dlc_ids.add(dlc_id);
+    }
+    return dlc_ids;
   }
 
   private JSONArray convertTotalConversionJSONArrayToIds(JSONArray inArray) throws Exception {
@@ -711,14 +726,16 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
 
   private class TotalConversion {
 
+    final HashMap<String, String> resources;
+    final List<String> stations;
     final List<Long> categories;
     final List<String> engrams;
-    final HashMap<String, String> resources;
 
     TotalConversion() {
+      resources = new HashMap<>();
+      stations = new ArrayList<>();
       categories = new ArrayList<>();
       engrams = new ArrayList<>();
-      resources = new HashMap<>();
     }
   }
 
