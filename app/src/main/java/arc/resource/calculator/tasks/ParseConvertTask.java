@@ -697,8 +697,9 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
 
       long dlc_id = jsonObject.getLong(COLUMN_DLC_KEY);
       JSONArray resourceArray = jsonObject.getJSONArray(RESOURCE);
-      JSONArray engramArray = jsonObject.getJSONArray(ENGRAM);
       JSONArray categoryArray = jsonObject.getJSONArray(CATEGORY);
+      JSONArray stationArray = jsonObject.getJSONArray(STATION);
+      JSONArray engramArray = jsonObject.getJSONArray(ENGRAM);
 
       TotalConversion totalConversion = new TotalConversion();
       for (int j = 0; j < resourceArray.length(); j++) {
@@ -710,12 +711,16 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
         totalConversion.resources.put(from, to);
       }
 
-      for (int j = 0; j < engramArray.length(); j++) {
-        totalConversion.engrams.add(engramArray.getString(j));
-      }
-
       for (int j = 0; j < categoryArray.length(); j++) {
         totalConversion.categories.add(categoryArray.getLong(j));
+      }
+
+      for (int j = 0; j < stationArray.length(); j++) {
+        totalConversion.stations.add(stationArray.getString(j));
+      }
+
+      for (int j = 0; j < engramArray.length(); j++) {
+        totalConversion.engrams.add(engramArray.getString(j));
       }
 
       map.put(dlc_id, totalConversion);
