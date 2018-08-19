@@ -23,8 +23,8 @@
       % Version 1.3.14
       _ 08/19/2018
       * Updated App to v282.102! (Includes ARK: Aberration!)
-      * Added Engrams: All Boss Portals for Aberration, Ragnarok, and Tek Cave.
-      * Updated Engrams: All Boss Portals now updated with new compositions, details, and images.
+      * Added Engrams: Heavy Auto Turret, All Boss Portals for Aberration, Ragnarok, and Tek Cave.
+      * Updated Engrams: Sweet Vegetable Cake, All other Boss Portals.
 
     $ 1.3.13
       % Version 1.3.13
