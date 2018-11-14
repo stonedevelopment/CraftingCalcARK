@@ -66,6 +66,10 @@
     {
       "_id": 4,
       "name": "Aberration"
+    },
+    {
+      "_id": 5,
+      "name": "Extinction"
     }
   ],
   "station": [
@@ -3259,6 +3263,118 @@
       "image_folder": "Aberration\/Resources\/",
       "image_file": "rockwell_trophy.webp",
       "dlc_id": 4,
+      "complex_resource": false
+    },
+    {
+      "name": "Blue Crystalized Sap",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "blue_crystalized_sap.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Condensed Gas",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "condensed_gas.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Corrupted Nodule",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "corrupted_nodule.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Crafted Element Dust",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "crafted_element_dust.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Dermis",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "dermis.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Element Dust",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "element_dust.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Fragmented Green Gem",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "fragmented_green_gem.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Fungal Wood",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "fungal_wood.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Gacha Crystal",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "gacha_crystal.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Red Crystalized Sap",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "red_crystalized_sap.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Scrap Metal",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "scrap_metal.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Scrap Metal Ingot",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "scrap_metal_ingot.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Silicate",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "silicate.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Snow Owl Pellet",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "snow_owl_pellet.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Unstable Element",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "unstable_element.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Unstable Element Shard",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "unstable_element_shard.webp",
+      "dlc_id": 5,
       "complex_resource": false
     }
   ],
