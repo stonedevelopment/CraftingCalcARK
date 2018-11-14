@@ -30594,6 +30594,162 @@
       "station": [
         "Obelisk"
       ]
+    },
+
+    {
+      "name": "Gacha Saddle",
+      "description": "Equip a Gacha with this to ride it.",
+      "yield": 1,
+      "level": 38,
+      "category_id": 500,
+      "image_folder": "Extinction\/Engrams\/Saddles\/",
+      "image_file": "gacha_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 185
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Gasbags Saddle",
+      "description": "Equip a Gasbags with this to ride it.",
+      "yield": 1,
+      "level": 43,
+      "category_id": 500,
+      "image_folder": "Extinction\/Engrams\/Saddles\/",
+      "image_file": "gasbags_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 185
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Managarmr Saddle",
+      "description": "Equip a Managarmr with this to ride it.",
+      "yield": 1,
+      "level": 66,
+      "category_id": 500,
+      "image_folder": "Extinction\/Engrams\/Saddles\/",
+      "image_file": "managarmr_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 185
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Snow Owl Saddle",
+      "description": "Equip a Snow Owl with this to ride it.",
+      "yield": 1,
+      "level": 61,
+      "category_id": 500,
+      "image_folder": "Extinction\/Engrams\/Saddles\/",
+      "image_file": "snow_owl_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 185
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Velonasaur Saddle",
+      "description": "Equip a Velonasaur with this to ride it.",
+      "yield": 1,
+      "level": 27,
+      "category_id": 500,
+      "image_folder": "Extinction\/Engrams\/Saddles\/",
+      "image_file": "velonasaur_saddle.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Chitin or Keratin",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 350
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 185
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
     }
   ],
   "total_conversion": [
