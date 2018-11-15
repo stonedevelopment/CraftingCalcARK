@@ -30750,6 +30750,702 @@
       "station": [
         "Smithy"
       ]
+    },
+    {
+      "name": "Cannon Shell",
+      "description": "A large artillery shell. Used as ammunition for the Mek Siege Cannon Module.",
+      "yield": 1,
+      "level": 97,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "cannon_shell.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 160
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 120
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Cryofridge",
+      "description": "Requires electricity to run. Keeps Cryopods alive forever!",
+      "yield": 1,
+      "level": 88,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "cryofridge.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 60
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Empty Cryopod",
+      "description": "Hold up to a creature to capture it. Throw to deploy a captured creature.",
+      "yield": 1,
+      "level": 51,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "empty_cryopod.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 15
+        },
+        {
+          "resource_id": "Hide",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Oil",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 8
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Delivery Crate",
+      "description": "A box with a Gasbag attached that can be used to deliver items to another location.",
+      "yield": 1,
+      "level": 16,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "delivery_crate.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Wood",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Gasbags Bladder",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Dino Leash",
+      "description": "Electronic leash to keep your dinos from wandering too far.",
+      "yield": 1,
+      "level": 22,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "dino_leash.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Electronics",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 5
+        }
+      ],
+      "station": [
+        "Smithy"
+      ]
+    },
+    {
+      "name": "Large Taxidermy Base",
+      "description": "Place a harvested dermis to show off your prowess!",
+      "yield": 1,
+      "level": 32,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "large_taxidermy_base.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Stone",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 1250
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 1000
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 50
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "M.D.S.M.",
+      "description": "Mek Deployable Shield Module. Equip a Mek with this module to arm it with a large deployable dome shield. Unequipping reduces durability.",
+      "yield": 1,
+      "level": 93,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "mdsm.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 280
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 400
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 180
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Medium Taxidermy Base",
+      "description": "Place a harvested dermis to show off your prowess!",
+      "yield": 1,
+      "level": 21,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "medium_taxidermy_base.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Stone",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 500
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 250
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "M.O.M.I.",
+      "description": "MegaMek Operational Materialization Interface. Drag this to a Mek Module slot to enable forming the MegaMek! Requires three additional nearby Meks to transform. Will fail to operate unless in range of the Alpha King Titan.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "momi.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Element",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 250
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 350
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "M.R.L.M.",
+      "description": "Mek Rocket Launcher Module. Equip a Mek with this module to arm it with a wide reaching swarm-fire rocket launcher. Unequipping reduces durability. Requires Rocket Pods to fire.",
+      "yield": 1,
+      "level": 95,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "mrlm.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 450
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 125
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "M.S.C.M.",
+      "description": "Mek Siege Cannon Module. Equip a Mek with this module to arm it with a powerful long-range siege cannon. Unequipping reduces durability. Requires Cannon Shells to fire.",
+      "yield": 1,
+      "level": 77,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "mscm.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 400
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 180
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Rocket Pod",
+      "description": "A pod containing 16 swarm-fire rockets. Used as ammunition for the Mek Rocket Launcher Module.",
+      "yield": 1,
+      "level": 95,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "rocket_pod.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Cementing Paste",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Crystal",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 120
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Scout Remote",
+      "description": "",
+      "yield": 1,
+      "level": 1,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "scout_remote.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Electronics",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Element Dust",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "City Terminal",
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Small Taxidermy Base",
+      "description": "Place a harvested dermis to show off your prowess!",
+      "yield": 1,
+      "level": 10,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "small_taxidermy_base.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Stone",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Thatch",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 50
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Taxidermy Tool",
+      "description": "Used to capture the Dermis of a dead creature.",
+      "yield": 1,
+      "level": 10,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "taxidermy_tool.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Flint",
+          "quantity": 4
+        },
+        {
+          "resource_id": "Stone",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Wood",
+          "quantity": 10
+        }
+      ],
+      "station": [
+        "Self"
+      ]
+    },
+    {
+      "name": "Tek Bridge",
+      "description": "Extendable force bridge",
+      "yield": 1,
+      "level": 75,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "tek_bridge.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 150
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 100
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Tek Gravity Grenade",
+      "description": "Pulling the pin starts a 5 second timer to an explosion. Make sure you've thrown it by then.",
+      "yield": 1,
+      "level": 79,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "tek_gravity_grenade.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Element Dust",
+          "quantity": 200
+        },
+        {
+          "resource_id": "Gunpowder",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 30
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 60
+        }
+      ],
+      "station": [
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Unassembled Enforcer",
+      "description": "Use this item to assemble a new Enforcer!",
+      "yield": 1,
+      "level": 1,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "unassembled_enforcer.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 50
+        },
+        {
+          "resource_id": "Element Dust",
+          "quantity": 500
+        },
+        {
+          "resource_id": "Oil",
+          "quantity": 20
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 60
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 30
+        }
+      ],
+      "station": [
+        "City Terminal",
+        "Tek Replicator"
+      ]
+    },
+    {
+      "name": "Unassembled Mek",
+      "description": "Use this item to assemble a new Mek!",
+      "yield": 1,
+      "level": 91,
+      "category_id": 0,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "unassembled_mek.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Crystal",
+          "quantity": 225
+        },
+        {
+          "resource_id": "Black Pearl",
+          "quantity": 25
+        },
+        {
+          "resource_id": "Element",
+          "quantity": 40
+        },
+        {
+          "resource_id": "Metal Ingot",
+          "quantity": 1000
+        },
+        {
+          "resource_id": "Polymer",
+          "quantity": 550
+        }
+      ],
+      "station": [
+        "City Terminal",
+        "Tek Replicator"
+      ]
     }
   ],
   "total_conversion": [
