@@ -354,7 +354,8 @@
       "dlc_id": 1,
       "station": [
         "Self",
-        "Construction Table"
+        "Construction Table",
+        "Tek Replicator"
       ]
     },
     {
@@ -586,7 +587,8 @@
       "parent_id": 200,
       "dlc_id": 1,
       "station": [
-        "Fabricator"
+        "Fabricator",
+        "Tek Replicator"
       ]
     },
     {
@@ -792,7 +794,8 @@
         "Self",
         "Smithy",
         "Fabricator",
-        "Catapult Turret"
+        "Catapult Turret",
+        "Tek Replicator"
       ]
     },
     {
@@ -30624,7 +30627,7 @@
         }
       ],
       "station": [
-        "Smithy"
+        "Self"
       ]
     },
     {
@@ -30655,7 +30658,7 @@
         }
       ],
       "station": [
-        "Smithy"
+        "Self"
       ]
     },
     {
@@ -30756,7 +30759,7 @@
       "description": "A large artillery shell. Used as ammunition for the Mek Siege Cannon Module.",
       "yield": 1,
       "level": 97,
-      "category_id": 0,
+      "category_id": 302,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "cannon_shell.webp",
       "points": 0,
@@ -30795,7 +30798,7 @@
       "description": "Requires electricity to run. Keeps Cryopods alive forever!",
       "yield": 1,
       "level": 88,
-      "category_id": 0,
+      "category_id": 216,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "cryofridge.webp",
       "points": 0,
@@ -30830,7 +30833,7 @@
       "description": "Hold up to a creature to capture it. Throw to deploy a captured creature.",
       "yield": 1,
       "level": 51,
-      "category_id": 0,
+      "category_id": 300,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "empty_cryopod.webp",
       "points": 0,
@@ -30873,7 +30876,7 @@
       "description": "A box with a Gasbag attached that can be used to deliver items to another location.",
       "yield": 1,
       "level": 16,
-      "category_id": 0,
+      "category_id": 2022,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "delivery_crate.webp",
       "points": 0,
@@ -30974,7 +30977,7 @@
       "description": "Mek Deployable Shield Module. Equip a Mek with this module to arm it with a large deployable dome shield. Unequipping reduces durability.",
       "yield": 1,
       "level": 93,
-      "category_id": 0,
+      "category_id": 500,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "mdsm.webp",
       "points": 0,
@@ -31083,7 +31086,7 @@
       "description": "Mek Rocket Launcher Module. Equip a Mek with this module to arm it with a wide reaching swarm-fire rocket launcher. Unequipping reduces durability. Requires Rocket Pods to fire.",
       "yield": 1,
       "level": 95,
-      "category_id": 0,
+      "category_id": 500,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "mrlm.webp",
       "points": 0,
@@ -31122,7 +31125,7 @@
       "description": "Mek Siege Cannon Module. Equip a Mek with this module to arm it with a powerful long-range siege cannon. Unequipping reduces durability. Requires Cannon Shells to fire.",
       "yield": 1,
       "level": 77,
-      "category_id": 0,
+      "category_id": 500,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "mscm.webp",
       "points": 0,
@@ -31161,7 +31164,7 @@
       "description": "A pod containing 16 swarm-fire rockets. Used as ammunition for the Mek Rocket Launcher Module.",
       "yield": 1,
       "level": 95,
-      "category_id": 0,
+      "category_id": 302,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "rocket_pod.webp",
       "points": 0,
@@ -31267,7 +31270,7 @@
       "description": "Used to capture the Dermis of a dead creature.",
       "yield": 1,
       "level": 10,
-      "category_id": 0,
+      "category_id": 100,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "taxidermy_tool.webp",
       "points": 0,
@@ -31298,7 +31301,7 @@
       "description": "Extendable force bridge",
       "yield": 1,
       "level": 75,
-      "category_id": 0,
+      "category_id": 229,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "tek_bridge.webp",
       "points": 0,
@@ -31333,7 +31336,7 @@
       "description": "Pulling the pin starts a 5 second timer to an explosion. Make sure you've thrown it by then.",
       "yield": 1,
       "level": 79,
-      "category_id": 0,
+      "category_id": 304,
       "image_folder": "Extinction\/Engrams\/",
       "image_file": "tek_gravity_grenade.webp",
       "points": 0,
