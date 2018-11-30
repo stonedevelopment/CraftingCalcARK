@@ -23,8 +23,11 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.MobileAds;
 import com.squareup.picasso.Picasso;
 
+import io.fabric.sdk.android.Fabric;
 import org.json.JSONObject;
 
 import arc.resource.calculator.listeners.ExceptionObserver;
@@ -89,7 +92,10 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
+        Fabric.with(this, new Crashlytics());
         setContentView( R.layout.activity_load_screen );
+
+        MobileAds.initialize(this, "ca-app-pub-8859801923918627~2903432190");
 
         ImageView imageView = ( ImageView ) findViewById( R.id.content_init_image_view );
 

@@ -448,7 +448,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
       addEngramIdByName(dlc_id, name, _id);
 
       // check if complex by finding its name in the complex resource map for its dlc version
-      if (mComplexMap.get(dlc_id).contains(name))
+      if (checkIfComplexEngramByDlcId(dlc_id, name))
       // add if not already added
       {
         addComplexEngramIdByName(dlc_id, name, _id);
@@ -629,11 +629,16 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
     }
   }
 
-  private void addComplexEngramIdByName(long dlc_id, String name, long _id) throws Exception {
+  // check if complex by finding its name in the complex resource map for its dlc version
+  private boolean checkIfComplexEngramByDlcId(long dlc_id, String name) {
     if (mComplexMap.indexOfKey(dlc_id) < 0) {
       mComplexMap.put(dlc_id, new ComplexMap());
     }
 
+    return mComplexMap.get(dlc_id).contains(name);
+  }
+
+  private void addComplexEngramIdByName(long dlc_id, String name, long _id) throws Exception {
     mComplexMap.get(dlc_id).addEngram(name, _id);
   }
 

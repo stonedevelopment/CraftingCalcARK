@@ -182,6 +182,18 @@
       "dlc_id": 1
     },
     {
+      "name": "Tribute Terminal",
+      "image_folder": "Vanilla\/Stations\/",
+      "image_file": "obelisk.webp",
+      "dlc_id": 5
+    },
+    {
+      "name": "City Terminal",
+      "image_folder": "Vanilla\/Stations\/",
+      "image_file": "obelisk.webp",
+      "dlc_id": 5
+    },
+    {
       "name": "Apiary",
       "image_folder": "Primitive Plus\/Stations\/",
       "image_file": "apiary.webp",
@@ -1268,7 +1280,8 @@
       "dlc_id": 1,
       "station": [
         "Obelisk",
-        "Tek Terminal"
+        "Tek Terminal",
+        "Tribute Terminal"
       ]
     },
     {
@@ -1323,6 +1336,15 @@
       "dlc_id": 1,
       "station": [
         "Obelisk"
+      ]
+    },
+    {
+      "_id": 1607,
+      "name": "Extinction Arena",
+      "parent_id": 1600,
+      "dlc_id": 5,
+      "station": [
+        "Tribute Terminal"
       ]
     },
     {
@@ -3269,6 +3291,28 @@
       "complex_resource": false
     },
     {
+      "name": "Artifact of Chaos",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "artifact_of_chaos.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of Growth",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "artifact_of_growth.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Artifact of the Void",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "artifact_of_the_void.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+
+    {
       "name": "Blue Crystalized Sap",
       "image_folder": "Extinction\/Resources\/",
       "image_file": "blue_crystalized_sap.webp",
@@ -3286,6 +3330,13 @@
       "name": "Corrupted Nodule",
       "image_folder": "Extinction\/Resources\/",
       "image_file": "corrupted_nodule.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Corrupt Heart",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "corrupt_heart.webp",
       "dlc_id": 5,
       "complex_resource": false
     },
@@ -3328,6 +3379,13 @@
       "name": "Gacha Crystal",
       "image_folder": "Extinction\/Resources\/",
       "image_file": "gacha_crystal.webp",
+      "dlc_id": 5,
+      "complex_resource": false
+    },
+    {
+      "name": "Gasbags Bladder",
+      "image_folder": "Extinction\/Resources\/",
+      "image_file": "gasbags_bladder.webp",
       "dlc_id": 5,
       "complex_resource": false
     },
@@ -31448,6 +31506,42 @@
       "station": [
         "City Terminal",
         "Tek Replicator"
+      ]
+    },
+
+    {
+      "name": "Summon Ice Titan",
+      "description": "Use this to summon the Ice Titan",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1607,
+      "image_folder": "Extinction\/Engrams\/",
+      "image_file": "summon_ice_titan.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 5,
+      "composition": [
+        {
+          "resource_id": "Artifact of the Void",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Corrupt Heart",
+          "quantity": 100
+        },
+        {
+          "resource_id": "Spinosaurus Sail",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Therizino Claws",
+          "quantity": 10
+        }
+      ],
+      "station": [
+        "Obelisk"
       ]
     }
   ],
