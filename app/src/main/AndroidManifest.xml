@@ -17,10 +17,6 @@
           android:name="com.google.android.gms.ads.APPLICATION_ID"
           android:value="ca-app-pub-8859801923918627~2903432190"/>
 
-        <meta-data
-          android:name="io.fabric.ApiKey"
-          android:value="9c0b5ee3544f870c0bd5def9b263b97a1cce8732" />
-
         <activity
             android:name=".LoadScreenActivity"
             android:theme="@style/AppTheme.NoActionBar.Splash">
