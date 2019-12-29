@@ -242,10 +242,11 @@
     <!-- Label for the DLC Version: Scorched Earth preference -->
     <string name="pref_dlc_label_scorched_earth">ARK:SE Scorched Earth</string>
 
-    <!-- Label for the DLC Version: Scorched Earth preference -->
+    <!-- Label for the DLC Version: Aberration preference -->
     <string name="pref_dlc_label_aberration">ARK:SE Aberration</string>
 
-    <!-- Label for the DLC Version: Vanilla preference -->
+    <!-- Label for the DLC Version: Extinction preference -->
+    <string name="pref_dlc_label_extinction">ARK:SE Extinction</string>
 
     <!-- Value in SharedPreferences for DLC Version: Vanilla -->
     <string name="pref_dlc_value_vanilla">1</string>
@@ -256,8 +257,11 @@
     <!-- Value in SharedPreferences for DLC Version: Scorched Earth -->
     <string name="pref_dlc_value_scorched_earth">3</string>
 
-    <!-- Value in SharedPreferences for DLC Version: Scorched Earth -->
+    <!-- Value in SharedPreferences for DLC Version: Aberration -->
     <string name="pref_dlc_value_aberration">4</string>
+
+    <!-- Value in SharedPreferences for DLC Version: Extinction -->
+    <string name="pref_dlc_value_extinction">5</string>
 
     <!-- Default value for DLC Version preference in SharedPreferences -->
     <string name="pref_dlc_value_default">@string/pref_dlc_value_vanilla</string>

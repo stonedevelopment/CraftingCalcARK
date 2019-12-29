@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "onCreate: ");
-
         // Check to see if database was updated
         boolean didUpdate = getIntent().getBooleanExtra(INTENT_KEY_DID_UPDATE, false);
 

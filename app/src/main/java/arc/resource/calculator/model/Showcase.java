@@ -27,6 +27,8 @@ import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.model.category.Category;
+import arc.resource.calculator.model.category.RootCategory;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
@@ -34,6 +36,8 @@ import arc.resource.calculator.model.resource.Resource;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
+
+import static arc.resource.calculator.adapters.CraftableAdapter.ROOT;
 
 public class Showcase {
     private static final String TAG = Showcase.class.getSimpleName();
@@ -136,7 +140,15 @@ public class Showcase {
 
     public String getCategoryHierarchy(Context context)
             throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
-        Category category = QueryForCategoryDetails(context, getShowcaseEntry().getDLCId(), getShowcaseEntry().getCraftable().getCategoryId());
+        long _dlcId = getShowcaseEntry().getDLCId();
+        long _categoryId = getShowcaseEntry().getCategoryId();
+
+        Category category;
+        if (_categoryId != ROOT) {
+            category = QueryForCategoryDetails(context, _dlcId, _categoryId);
+        } else {
+            category = new RootCategory();
+        }
 
         long parent_id = category.getParent();
 
@@ -383,7 +395,7 @@ public class Showcase {
             this.mStations = stations;
         }
 
-        DisplayEngram getCraftable() {
+        private DisplayEngram getCraftable() {
             return mCraftable;
         }
 
@@ -397,6 +409,10 @@ public class Showcase {
 
         long getDLCId() {
             return mDLCId;
+        }
+
+        long getCategoryId() {
+            return getCraftable().getCategoryId();
         }
 
         public LongSparseArray<CompositeResource> getComposition() {

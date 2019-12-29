@@ -1,7 +1,9 @@
 {
   "json": {
-    "version": "282.102r6",
+    "version": "304.4r1",
     "changelog": {
+      "304.4r1": "Removed Weapons/Melee from Self, except for on Primitive+.",
+      "304.4": "Added DLC: Extinction!",
       "282.102r6": "Updated Consumables/Food/Refined with Industrial Cooker, Removed Charcoal from Industrial Forge.",
       "282.102r5": "Updated Sweet Vegetable Cake.",
       "282.102r4": "Added Boss Arenas category to Tek Terminal, Changed Aberration Portal category to Boss Arenas, Added Stations to Total Conversion.",
@@ -857,7 +859,6 @@
       "parent_id": 300,
       "dlc_id": 1,
       "station": [
-        "Self",
         "Smithy",
         "Fabricator",
         "Grindstone"
@@ -890,6 +891,15 @@
       "dlc_id": 1,
       "station": [
         "Smithy"
+      ]
+    },
+    {
+      "_id": 311,
+      "name": "Melee",
+      "parent_id": 300,
+      "dlc_id": 2,
+      "station": [
+        "Self"
       ]
     },
     {
@@ -22901,7 +22911,7 @@
       "description": "Used for gaining extra hide.",
       "yield": 1,
       "level": 8,
-      "category_id": 306,
+      "category_id": 311,
       "image_folder": "Primitive Plus\/Engrams\/Weapons\/Melee\/",
       "image_file": "stone_hunting_knife.webp",
       "points": 0,

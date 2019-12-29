@@ -41,8 +41,8 @@ import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.NavigationObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.listeners.QueueObserver;
-import arc.resource.calculator.model.BackCategory;
-import arc.resource.calculator.model.Category;
+import arc.resource.calculator.model.category.BackCategory;
+import arc.resource.calculator.model.category.Category;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.model.SortableMap;
 import arc.resource.calculator.model.Station;
@@ -64,7 +64,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private static final String TAG = CraftableAdapter.class.getSimpleName();
 
-    private static final long ROOT = 0;
+    public static final long ROOT = 0;
     private static final long NO_STATION = -1;
     private static final long SEARCH_ROOT = -2;
 

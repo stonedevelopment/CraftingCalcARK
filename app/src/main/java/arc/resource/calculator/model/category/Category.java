@@ -13,7 +13,7 @@
  *  PO Box 1866,
  *  Mountain View, CA 94042, USA.
  */
-package arc.resource.calculator.model;
+package arc.resource.calculator.model.category;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

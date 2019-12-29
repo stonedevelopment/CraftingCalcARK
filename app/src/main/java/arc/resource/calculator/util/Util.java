@@ -23,7 +23,7 @@ import android.util.SparseArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import arc.resource.calculator.model.Category;
+import arc.resource.calculator.model.category.Category;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.resource.QueueResource;
 
