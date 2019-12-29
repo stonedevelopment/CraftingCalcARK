@@ -1,12 +1,30 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,54 +35,43 @@ import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.model.resource.QueueResource;
 
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
- */
 public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseResourceListAdapter.ViewHolder> {
     private static final String TAG = ShowcaseResourceListAdapter.class.getSimpleName();
 
     private Showcase mShowcase;
 
-    public ShowcaseResourceListAdapter( Showcase showcase ) {
-        setShowcase( showcase );
+    public ShowcaseResourceListAdapter(Showcase showcase) {
+        setShowcase(showcase);
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.list_item_resource, parent, false);
+
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
-        View itemView = LayoutInflater.from( parent.getContext() ).
-                inflate( R.layout.list_item_resource, parent, false );
-
-        return new ViewHolder( itemView );
-    }
-
-    @Override
-    public void onBindViewHolder( ViewHolder holder, int position ) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Context context = holder.getView().getContext();
 
         try {
-            QueueResource resource = getResource( position );
+            QueueResource resource = getResource(position);
 
             String imagePath = "file:///android_asset/" + resource.getImagePath();
-            Picasso.with( context ).load( imagePath ).into( holder.getThumbnail() );
+            Picasso.with(context).load(imagePath).into(holder.getThumbnail());
 
             String name = resource.getName();
-            holder.getName().setText( name );
+            holder.getName().setText(name);
 
             int productOfQuantities = resource.getProductOfQuantities();
             int quantity = resource.getQuantity();
 
-            holder.getQuantity().setText( String.format( Locale.getDefault(), "%1$d (%2$d)", productOfQuantities, quantity ) );
-        } catch ( Exception e ) {
-            ExceptionObserver.getInstance().notifyFatalExceptionCaught( TAG, e );
+            holder.getQuantity().setText(String.format(Locale.getDefault(), "%1$d (%2$d)", productOfQuantities, quantity));
+        } catch (Exception e) {
+            ExceptionObserver.getInstance().notifyFatalExceptionCaught(TAG, e);
         }
     }
 
@@ -73,7 +80,7 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseRe
         return getShowcase().getShowcaseEntry().getQuantifiableComposition().size();
     }
 
-    private void setShowcase( Showcase showcase ) {
+    private void setShowcase(Showcase showcase) {
         this.mShowcase = showcase;
     }
 
@@ -81,8 +88,8 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseRe
         return mShowcase;
     }
 
-    private QueueResource getResource( int position ) throws Exception {
-        return getShowcase().getResource( position );
+    private QueueResource getResource(int position) throws Exception {
+        return getShowcase().getResource(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -92,21 +99,21 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseRe
         private final TextView mName;
         private final TextView mQuantity;
 
-        public ViewHolder( View view ) {
-            super( view );
+        ViewHolder(View view) {
+            super(view);
 
             mView = view;
 
-            mThumbnail = ( ImageView ) view.findViewById( R.id.resource_list_imageView );
-            mName = ( TextView ) view.findViewById( R.id.resource_list_nameText );
-            mQuantity = ( TextView ) view.findViewById( R.id.resource_list_quantityText );
+            mThumbnail = view.findViewById(R.id.resource_list_imageView);
+            mName = view.findViewById(R.id.resource_list_nameText);
+            mQuantity = view.findViewById(R.id.resource_list_quantityText);
         }
 
         public View getView() {
             return mView;
         }
 
-        public ImageView getThumbnail() {
+        ImageView getThumbnail() {
             return mThumbnail;
         }
 

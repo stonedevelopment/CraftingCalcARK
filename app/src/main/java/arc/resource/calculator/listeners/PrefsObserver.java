@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.listeners;
 
 import java.util.HashMap;
@@ -20,13 +36,13 @@ public class PrefsObserver {
                 boolean stationPrefChange,
                 boolean levelPrefChange,
                 boolean levelValueChange,
-                boolean refinedPrefChange ) {
+                boolean refinedPrefChange) {
             // do nothing
         }
     }
 
     public static PrefsObserver getInstance() {
-        if ( sInstance == null )
+        if (sInstance == null)
             sInstance = new PrefsObserver();
 
         return sInstance;
@@ -36,18 +52,18 @@ public class PrefsObserver {
         mListeners = new HashMap<>();
     }
 
-    public void registerListener( String key, Listener listener ) {
-        mListeners.put( key, listener );
+    public void registerListener(String key, Listener listener) {
+        mListeners.put(key, listener);
     }
 
-    public void unregisterListener( String key ) {
-        mListeners.remove( key );
+    public void unregisterListener(String key) {
+        mListeners.remove(key);
     }
 
-    public void notifyPreferencesChanged( boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange,
-                                          boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange ) {
-        for ( Listener listener : mListeners.values() ) {
-            listener.onPreferencesChanged( dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange );
+    public void notifyPreferencesChanged(boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange,
+                                         boolean levelPrefChange, boolean levelValueChange, boolean refinedPrefChange) {
+        for (Listener listener : mListeners.values()) {
+            listener.onPreferencesChanged(dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange, levelValueChange, refinedPrefChange);
         }
     }
 }

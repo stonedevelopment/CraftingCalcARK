@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.util;
 
 import android.util.Log;
@@ -11,21 +27,9 @@ import arc.resource.calculator.model.Category;
 import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.resource.QueueResource;
 
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
- */
 public class Util {
 
-    public static final int NO_POSITION = -1;
+    private static final int NO_POSITION = -1;
     public static final int NO_ID = -1;
     public static final int NO_SIZE = -1;
     public static final int NO_QUANTITY = 0;
@@ -34,30 +38,30 @@ public class Util {
 
     public static final int MIN = 0;
 
-    public static void Log( String tag, String message ) {
-        Log.d( tag, message );
+    public static void Log(String tag, String message) {
+        Log.d(tag, message);
     }
 
-    public static void Log( String tag, String tag2, String message ) {
-        Log.d( tag, tag2 + "> " + message );
+    public static void Log(String tag, String tag2, String message) {
+        Log.d(tag, tag2 + "> " + message);
     }
 
-    public static boolean isValidPosition( int position, int size ) {
+    public static boolean isValidPosition(int position, int size) {
         return position > NO_POSITION && position < size;
     }
 
-    public static LongSparseArray<QueueResource> sortResourcesByName( LongSparseArray<QueueResource> resources ) {
+    public static LongSparseArray<QueueResource> sortResourcesByName(LongSparseArray<QueueResource> resources) {
         boolean swapped = true;
-        while ( swapped ) {
+        while (swapped) {
             swapped = false;
-            for ( int i = 0; i < resources.size() - 1; i++ ) {
-                String first = resources.valueAt( i ).getName();
-                String second = resources.valueAt( i + 1 ).getName();
-                if ( first.compareTo( second ) > 0 ) {
+            for (int i = 0; i < resources.size() - 1; i++) {
+                String first = resources.valueAt(i).getName();
+                String second = resources.valueAt(i + 1).getName();
+                if (first.compareTo(second) > 0) {
                     // swap
-                    QueueResource tempResource = resources.valueAt( i + 1 );
-                    resources.put( i + 1, resources.valueAt( i ) );
-                    resources.put( i, tempResource );
+                    QueueResource tempResource = resources.valueAt(i + 1);
+                    resources.put(i + 1, resources.valueAt(i));
+                    resources.put(i, tempResource);
                     swapped = true;
                 }
             }
@@ -66,8 +70,8 @@ public class Util {
         return resources;
     }
 
-    public static List<Long> sortEngramsByName( LongSparseArray<DisplayEngram> engrams ) {
-        List<Long> keyList = new ArrayList<>( engrams.size() );
+    public static List<Long> sortEngramsByName(LongSparseArray<DisplayEngram> engrams) {
+        List<Long> keyList = new ArrayList<>(engrams.size());
 
 //        Long[] keySet = new Long[map.size()];
 //        map.keySet().toArray( keySet );
@@ -134,15 +138,15 @@ public class Util {
 //            }
 //        }
         boolean swapped = true;
-        while ( swapped ) {
+        while (swapped) {
             swapped = false;
-            for ( int i = 0; i < engrams.size() - 1; i++ ) {
-                DisplayEngram first = engrams.valueAt( i );
-                DisplayEngram second = engrams.valueAt( i + 1 );
-                if ( first.getName().compareTo( second.getName() ) > 0 ) {
+            for (int i = 0; i < engrams.size() - 1; i++) {
+                DisplayEngram first = engrams.valueAt(i);
+                DisplayEngram second = engrams.valueAt(i + 1);
+                if (first.getName().compareTo(second.getName()) > 0) {
                     // swap
-                    keyList.set( i + 1, first.getId() );
-                    keyList.set( i, second.getId() );
+                    keyList.set(i + 1, first.getId());
+                    keyList.set(i, second.getId());
                     swapped = true;
                 }
             }
@@ -151,19 +155,19 @@ public class Util {
         return keyList;
     }
 
-    public static SparseArray<Category> sortCategoriesByName( SparseArray<Category> categories ) {
+    public static SparseArray<Category> sortCategoriesByName(SparseArray<Category> categories) {
         boolean swapped = true;
-        while ( swapped ) {
+        while (swapped) {
 
             swapped = false;
-            for ( int i = 0; i < categories.size() - 1; i++ ) {
-                String first = categories.valueAt( i ).getName();
-                String second = categories.valueAt( i + 1 ).getName();
-                if ( first.compareTo( second ) > 0 ) {
+            for (int i = 0; i < categories.size() - 1; i++) {
+                String first = categories.valueAt(i).getName();
+                String second = categories.valueAt(i + 1).getName();
+                if (first.compareTo(second) > 0) {
                     // swap
-                    Category tempCategory = categories.valueAt( i + 1 );
-                    categories.put( i + 1, categories.valueAt( i ) );
-                    categories.put( i, tempCategory );
+                    Category tempCategory = categories.valueAt(i + 1);
+                    categories.put(i + 1, categories.valueAt(i));
+                    categories.put(i, tempCategory);
                     swapped = true;
                 }
             }
@@ -172,7 +176,7 @@ public class Util {
         return categories;
     }
 
-    private String addSpaces( int n ) {
-        return new String( new char[n * 2] ).replace( "\0", " " );
+    private String addSpaces(int n) {
+        return new String(new char[n * 2]).replace("\0", " ");
     }
 }

@@ -1,13 +1,30 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.util;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.ContextThemeWrapper;
 import android.widget.EditText;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import arc.resource.calculator.R;
 
@@ -41,61 +58,61 @@ public class FeedbackUtil {
             "Bug Report", "Correction for %1$s", "User Feedback"
     };
 
-    private static String getSubjectByType( TYPE type ) {
+    private static String getSubjectByType(TYPE type) {
         return subjectsByType[type.ordinal()];
     }
 
-    public static void composeFeedbackEmail( Context context ) {
-        composeEmail( context, FEEDBACK, getSubjectByType( FEEDBACK ) );
+    public static void composeFeedbackEmail(Context context) {
+        composeEmail(context, FEEDBACK, getSubjectByType(FEEDBACK));
     }
 
-    public static void composeBugReportEmail( Context context ) {
-        composeEmail( context, BUG_REPORT, getSubjectByType( BUG_REPORT ) );
+    public static void composeBugReportEmail(Context context) {
+        composeEmail(context, BUG_REPORT, getSubjectByType(BUG_REPORT));
     }
 
-    public static void composeCorrectionEmail( Context context, String name ) {
-        String subject = String.format( getSubjectByType( CORRECTION ), name );
-        composeEmail( context, CORRECTION, subject );
+    public static void composeCorrectionEmail(Context context, String name) {
+        String subject = String.format(getSubjectByType(CORRECTION), name);
+        composeEmail(context, CORRECTION, subject);
     }
 
-    private static void composeEmail( Context context, TYPE type, @Nullable String subject ) {
-        Intent intent = new Intent( Intent.ACTION_SENDTO );
+    private static void composeEmail(Context context, TYPE type, @Nullable String subject) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
 
-        intent.setData( Uri.parse( "mailto:" ) );
-        intent.putExtra( Intent.EXTRA_EMAIL, emailAddresses );
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, emailAddresses);
 
-        intent.putExtra( Intent.EXTRA_SUBJECT, subject );
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 
-        if ( intent.resolveActivity( context.getPackageManager() ) != null ) {
-            context.startActivity( intent );
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
         }
     }
 
-    public static AlertDialog Dialog( final Context context, final DialogUtil.Callback callback ) {
-        final EditText editText = new EditText( context );
-        editText.setTextColor( context.getResources().getColor( R.color.colorWhite ) );
+    public static AlertDialog Dialog(final Context context, final DialogUtil.Callback callback) {
+        final EditText editText = new EditText(context);
+        editText.setTextColor(context.getResources().getColor(R.color.colorWhite));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( context, R.style.AlertDialogCustom ) );
-        builder.setTitle( context.getString( R.string.dialog_feedback_full_title ) )
-                .setIcon( android.R.drawable.ic_menu_send )
-                .setView( editText )
-                .setNegativeButton( context.getString( R.string.dialog_feedback_negative_button ), new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AlertDialogCustom));
+        builder.setTitle(context.getString(R.string.dialog_feedback_full_title))
+                .setIcon(android.R.drawable.ic_menu_send)
+                .setView(editText)
+                .setNegativeButton(context.getString(R.string.dialog_feedback_negative_button), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick( DialogInterface dialog, int which ) {
+                    public void onClick(DialogInterface dialog, int which) {
                         callback.onCancel();
                     }
-                } )
-                .setPositiveButton( context.getString( R.string.dialog_feedback_positive_button ), new DialogInterface.OnClickListener() {
+                })
+                .setPositiveButton(context.getString(R.string.dialog_feedback_positive_button), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick( DialogInterface dialog, int which ) {
+                    public void onClick(DialogInterface dialog, int which) {
                         String text = editText.getText().toString();
 
-                        if ( !text.equals( "" ) )
-                            callback.onResult( text );
+                        if (!text.equals(""))
+                            callback.onResult(text);
                         else
                             callback.onCancel();
                     }
-                } );
+                });
 
         return builder.create();
     }

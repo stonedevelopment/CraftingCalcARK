@@ -3,14 +3,15 @@ package arc.resource.calculator;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 /**
  * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
@@ -21,24 +22,24 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     private AppCompatDelegate mDelegate;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
+    protected void onCreate(Bundle savedInstanceState) {
         getDelegate().installViewFactory();
-        getDelegate().onCreate( savedInstanceState );
-        super.onCreate( savedInstanceState );
+        getDelegate().onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void onPostCreate( Bundle savedInstanceState ) {
-        super.onPostCreate( savedInstanceState );
-        getDelegate().onPostCreate( savedInstanceState );
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        getDelegate().onPostCreate(savedInstanceState);
     }
 
     ActionBar getSupportActionBar() {
         return getDelegate().getSupportActionBar();
     }
 
-    public void setSupportActionBar( @Nullable Toolbar toolbar ) {
-        getDelegate().setSupportActionBar( toolbar );
+    public void setSupportActionBar(@Nullable Toolbar toolbar) {
+        getDelegate().setSupportActionBar(toolbar);
     }
 
     @Override
@@ -47,23 +48,23 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     }
 
     @Override
-    public void setContentView( @LayoutRes int layoutResID ) {
-        getDelegate().setContentView( layoutResID );
+    public void setContentView(@LayoutRes int layoutResID) {
+        getDelegate().setContentView(layoutResID);
     }
 
     @Override
-    public void setContentView( View view ) {
-        getDelegate().setContentView( view );
+    public void setContentView(View view) {
+        getDelegate().setContentView(view);
     }
 
     @Override
-    public void setContentView( View view, ViewGroup.LayoutParams params ) {
-        getDelegate().setContentView( view, params );
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        getDelegate().setContentView(view, params);
     }
 
     @Override
-    public void addContentView( View view, ViewGroup.LayoutParams params ) {
-        getDelegate().addContentView( view, params );
+    public void addContentView(View view, ViewGroup.LayoutParams params) {
+        getDelegate().addContentView(view, params);
     }
 
     @Override
@@ -73,15 +74,15 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     }
 
     @Override
-    protected void onTitleChanged( CharSequence title, int color ) {
-        super.onTitleChanged( title, color );
-        getDelegate().setTitle( title );
+    protected void onTitleChanged(CharSequence title, int color) {
+        super.onTitleChanged(title, color);
+        getDelegate().setTitle(title);
     }
 
     @Override
-    public void onConfigurationChanged( Configuration newConfig ) {
-        super.onConfigurationChanged( newConfig );
-        getDelegate().onConfigurationChanged( newConfig );
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getDelegate().onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -101,8 +102,8 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     }
 
     private AppCompatDelegate getDelegate() {
-        if ( mDelegate == null ) {
-            mDelegate = AppCompatDelegate.create( this, null );
+        if (mDelegate == null) {
+            mDelegate = AppCompatDelegate.create(this, null);
         }
         return mDelegate;
     }

@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.views;
 
 import android.content.Context;
@@ -15,54 +31,54 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
     private InventoryRecyclerView mRecyclerView;
 
     @Override
-    public void onError( Exception e ) {
-        if ( !isTextViewShown() )
+    public void onError(Exception e) {
+        if (!isTextViewShown())
             showNext();
 
-        onStatusUpdate( "An error occurred while fetching Inventory." );
+        onStatusUpdate("An error occurred while fetching Inventory.");
 
-        ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
+        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
     }
 
     @Override
     public void onInit() {
-        if ( !isTextViewShown() )
+        if (!isTextViewShown())
             showNext();
 
-        onStatusUpdate( "Fetching inventory.." );
+        onStatusUpdate("Fetching inventory..");
     }
 
     @Override
     public void onPopulated() {
         // switch view to recycler
-        if ( !isRecyclerViewShown() )
+        if (!isRecyclerViewShown())
             showNext();
     }
 
     @Override
     public void onEmpty() {
         // switch view to textview, display empty message
-        if ( !isTextViewShown() )
+        if (!isTextViewShown())
             showNext();
 
-        onStatusUpdate( "Inventory is empty." );
+        onStatusUpdate("Inventory is empty.");
     }
 
-    public InventorySwitcher( Context context ) {
-        super( context );
+    public InventorySwitcher(Context context) {
+        super(context);
     }
 
-    public InventorySwitcher( Context context, AttributeSet attrs ) {
-        super( context, attrs );
+    public InventorySwitcher(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     public void onCreate() {
         // instantiate our textview for status updates
-        mTextView = ( TextView ) findViewById( R.id.textview_inventory );
+        mTextView = findViewById(R.id.textview_inventory);
 
         // instantiate recyclerView
-        mRecyclerView = ( InventoryRecyclerView ) findViewById( R.id.gridview_inventory );
-        mRecyclerView.create( this );
+        mRecyclerView = findViewById(R.id.gridview_inventory);
+        mRecyclerView.create(this);
     }
 
     public void onResume() {
@@ -77,8 +93,8 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
         mRecyclerView.destroy();
     }
 
-    private void onStatusUpdate( String text ) {
-        mTextView.setText( text );
+    private void onStatusUpdate(String text) {
+        mTextView.setText(text);
     }
 
     private boolean isTextViewShown() {

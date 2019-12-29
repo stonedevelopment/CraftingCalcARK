@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.util;
 
 import android.util.Log;
@@ -13,7 +29,7 @@ public class DisplayUtil {
     private int mViewSize = Util.NO_SIZE;
 
     public static DisplayUtil getInstance() {
-        if ( sInstance == null )
+        if (sInstance == null)
             sInstance = new DisplayUtil();
 
         return sInstance;
@@ -22,8 +38,8 @@ public class DisplayUtil {
     private DisplayUtil() {
     }
 
-    public void setImageSize( int size ) {
-        Log.d( TAG, "setImageSize(): " + size );
+    public void setImageSize(int size) {
+        Log.d(TAG, "setImageSize(): " + size);
         mViewSize = size;
     }
 
@@ -32,6 +48,6 @@ public class DisplayUtil {
     }
 
     public LinearLayout.LayoutParams getParams() {
-        return new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, mViewSize );
+        return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mViewSize);
     }
 }

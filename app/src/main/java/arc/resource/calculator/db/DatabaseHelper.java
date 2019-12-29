@@ -1,14 +1,17 @@
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
  */
 package arc.resource.calculator.db;
 
@@ -39,17 +42,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     v1, Initial create
      */
     public static final int DATABASE_VERSION = 6;
-    public static final String DATABASE_NAME = "database.db";
+    private static final String DATABASE_NAME = "database.db";
 
     private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
 
-    public DatabaseHelper( Context context ) {
-        super( context, DATABASE_NAME, null, DATABASE_VERSION );
+    DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate( SQLiteDatabase database ) {
-        Util.Log( TAG, "** Database (" + DATABASE_NAME + " v" + DATABASE_VERSION + ") not found, creating it.." );
+    public void onCreate(SQLiteDatabase database) {
+        Util.Log(TAG, "** Database (" + DATABASE_NAME + " v" + DATABASE_VERSION + ") not found, creating it..");
 
         final String SQL_CREATE_ENGRAM_TABLE = "CREATE TABLE " + EngramEntry.TABLE_NAME + " (" +
                 EngramEntry._ID + " INTEGER NOT NULL, " +
@@ -126,45 +129,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + StationEntry.COLUMN_DLC_KEY + ") REFERENCES " + DLCEntry.TABLE_NAME + " (" + DLCEntry._ID + ")" +
                 ")";
 
-        CreateTable( database, DLCEntry.TABLE_NAME, SQL_CREATE_DLC_TABLE );
-        CreateTable( database, StationEntry.TABLE_NAME, SQL_CREATE_STATION_TABLE );
-        CreateTable( database, CategoryEntry.TABLE_NAME, SQL_CREATE_CATEGORY_TABLE );
-        CreateTable( database, ResourceEntry.TABLE_NAME, SQL_CREATE_RESOURCE_TABLE );
-        CreateTable( database, EngramEntry.TABLE_NAME, SQL_CREATE_ENGRAM_TABLE );
-        CreateTable( database, CompositionEntry.TABLE_NAME, SQL_CREATE_COMPOSITION_TABLE );
-        CreateTable( database, ComplexResourceEntry.TABLE_NAME, SQL_CREATE_COMPLEX_RESOURCE_TABLE );
-        CreateTable( database, QueueEntry.TABLE_NAME, SQL_CREATE_QUEUE_TABLE );
+        CreateTable(database, DLCEntry.TABLE_NAME, SQL_CREATE_DLC_TABLE);
+        CreateTable(database, StationEntry.TABLE_NAME, SQL_CREATE_STATION_TABLE);
+        CreateTable(database, CategoryEntry.TABLE_NAME, SQL_CREATE_CATEGORY_TABLE);
+        CreateTable(database, ResourceEntry.TABLE_NAME, SQL_CREATE_RESOURCE_TABLE);
+        CreateTable(database, EngramEntry.TABLE_NAME, SQL_CREATE_ENGRAM_TABLE);
+        CreateTable(database, CompositionEntry.TABLE_NAME, SQL_CREATE_COMPOSITION_TABLE);
+        CreateTable(database, ComplexResourceEntry.TABLE_NAME, SQL_CREATE_COMPLEX_RESOURCE_TABLE);
+        CreateTable(database, QueueEntry.TABLE_NAME, SQL_CREATE_QUEUE_TABLE);
 
-        Util.Log( TAG, "** Database successfully created." );
+        Util.Log(TAG, "** Database successfully created.");
     }
 
     @Override
-    public void onUpgrade( SQLiteDatabase database, int oldVersion, int newVersion ) {
-        Util.Log( TAG, "** Database (" + DATABASE_NAME + " v" + oldVersion + ") version has changed, upgrading.." );
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        Util.Log(TAG, "** Database (" + DATABASE_NAME + " v" + oldVersion + ") version has changed, upgrading..");
 
-        DropTable( database, QueueEntry.TABLE_NAME );
-        DropTable( database, ComplexResourceEntry.TABLE_NAME );
-        DropTable( database, CompositionEntry.TABLE_NAME );
-        DropTable( database, EngramEntry.TABLE_NAME );
-        DropTable( database, ResourceEntry.TABLE_NAME );
-        DropTable( database, CategoryEntry.TABLE_NAME );
-        DropTable( database, StationEntry.TABLE_NAME );
-        DropTable( database, DLCEntry.TABLE_NAME );
+        DropTable(database, QueueEntry.TABLE_NAME);
+        DropTable(database, ComplexResourceEntry.TABLE_NAME);
+        DropTable(database, CompositionEntry.TABLE_NAME);
+        DropTable(database, EngramEntry.TABLE_NAME);
+        DropTable(database, ResourceEntry.TABLE_NAME);
+        DropTable(database, CategoryEntry.TABLE_NAME);
+        DropTable(database, StationEntry.TABLE_NAME);
+        DropTable(database, DLCEntry.TABLE_NAME);
 
-        onCreate( database );
+        onCreate(database);
 
-        Util.Log( TAG, "** Database successfully upgraded from v" + oldVersion + " to v" + newVersion );
+        Util.Log(TAG, "** Database successfully upgraded from v" + oldVersion + " to v" + newVersion);
     }
 
-    private void CreateTable( SQLiteDatabase database, String table, String sql ) {
-        Util.Log( TAG, "-> Creating table: " + table );
+    private void CreateTable(SQLiteDatabase database, String table, String sql) {
+        Util.Log(TAG, "-> Creating table: " + table);
 
-        database.execSQL( sql );
+        database.execSQL(sql);
     }
 
-    private void DropTable( SQLiteDatabase database, String table ) {
-        Util.Log( TAG, "-> Dropping table: " + table );
+    private void DropTable(SQLiteDatabase database, String table) {
+        Util.Log(TAG, "-> Dropping table: " + table);
 
-        database.execSQL( DROP_TABLE_IF_EXISTS + table );
+        database.execSQL(DROP_TABLE_IF_EXISTS + table);
     }
 }

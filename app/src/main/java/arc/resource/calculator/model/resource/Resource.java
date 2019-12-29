@@ -1,16 +1,21 @@
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
  */
 package arc.resource.calculator.model.resource;
+
+import androidx.annotation.NonNull;
 
 /**
  * Base Resource object
@@ -28,7 +33,7 @@ public class Resource {
     // String literal of Resource's image filename
     private final String mFile;
 
-    public Resource( long id, String name, String folder, String file ) {
+    public Resource(long id, String name, String folder, String file) {
         mId = id;
         mFolder = folder;
         mFile = file;
@@ -55,6 +60,7 @@ public class Resource {
         return getFolder() + getFile();
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "mId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile;
