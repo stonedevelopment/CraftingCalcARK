@@ -1,7 +1,9 @@
 {
   "json": {
-    "version": "304.4r2",
+    "version": "304.4r4",
     "changelog": {
+      "304.4r4": "Added Hidden DLC, set old Kibble recipes and Events recipes to Hidden.",
+      "304.4r3": "Updated Kibble Engrams, added Focal Chili and Lazarus Chowder as complex resources.",
       "304.4r2": "Added Titan Terminal Engrams, Corrected City Terminal image.",
       "304.4r1": "Removed Weapons/Melee from Self, except for on Primitive+.",
       "304.4": "Added DLC: Extinction!",
@@ -54,6 +56,10 @@
     }
   },
   "dlc": [
+    {
+      "_id": 0,
+      "name": "Hidden"
+    },
     {
       "_id": 1,
       "name": "Vanilla"
@@ -1258,7 +1264,7 @@
       "_id": 1500,
       "name": "Events",
       "parent_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "station": [
         "Cooking Pot",
         "Industrial Cooker"
@@ -1268,7 +1274,7 @@
       "_id": 1501,
       "name": "Fear Evolved",
       "parent_id": 1500,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "station": [
         "Cooking Pot",
         "Industrial Cooker"
@@ -1278,7 +1284,7 @@
       "_id": 1502,
       "name": "Eggcellent Adventure",
       "parent_id": 1500,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "station": [
         "Cooking Pot",
         "Industrial Cooker"
@@ -1705,6 +1711,13 @@
       "complex_resource": false
     },
     {
+      "name": "Cooked Meat, Cooked Fish Meat, or Cooked Meat Jerky",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "cooked_meat_cooked_fish_meat_or_cooked_meat_jerky.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
       "name": "Cooked Meat or Meat Jerky",
       "image_folder": "Vanilla\/Resources\/",
       "image_file": "cooked_meat_or_meat_jerky.webp",
@@ -1857,6 +1870,13 @@
       "image_file": "flint.webp",
       "dlc_id": 1,
       "complex_resource": false
+    },
+    {
+      "name": "Focal Chili",
+      "image_folder": "Vanilla\/Engrams\/Consumables\/Food\/",
+      "image_file": "focal_chili.webp",
+      "dlc_id": 1,
+      "complex_resource": true
     },
     {
       "name": "Fresh Bacon",
@@ -2039,6 +2059,13 @@
       "image_file": "keratin.webp",
       "dlc_id": 1,
       "complex_resource": false
+    },
+    {
+      "name": "Lazarus Chowder",
+      "image_folder": "Vanilla\/Engrams\/Consumables\/Food\/",
+      "image_file": "lazarus_chowder.webp",
+      "dlc_id": 1,
+      "complex_resource": true
     },
     {
       "name": "Leech Blood",
@@ -3516,6 +3543,48 @@
       "image_file": "king_titan_trophy.webp",
       "dlc_id": 5,
       "complex_resource": false
+    },
+    {
+      "name": "Extra Small Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "dinosaur_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Small Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "dinosaur_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Medium Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "dinosaur_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Large Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "dinosaur_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Extra Large Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "dinosaur_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
+    },
+    {
+      "name": "Special Egg",
+      "image_folder": "Vanilla\/Resources\/",
+      "image_file": "golden_hesperonis_egg.webp",
+      "dlc_id": 1,
+      "complex_resource": false
     }
   ],
   "engram": [
@@ -4427,7 +4496,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -4530,7 +4599,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -4637,7 +4706,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -4713,7 +4782,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -5127,7 +5196,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Mejoberry",
@@ -6409,7 +6478,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -6694,7 +6763,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Bunny Egg",
@@ -7172,7 +7241,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -7248,7 +7317,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -8145,7 +8214,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "DodoWyvern Mask Skin",
@@ -8323,7 +8392,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -9315,7 +9384,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -9360,7 +9429,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -9405,7 +9474,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -9450,7 +9519,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Bunny Egg",
@@ -9540,7 +9609,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -9651,7 +9720,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -11538,7 +11607,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -12928,7 +12997,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Mejoberry",
@@ -13382,7 +13451,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -13458,7 +13527,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Mejoberry",
@@ -14430,7 +14499,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -14625,7 +14694,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 3,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Citronal",
@@ -14857,7 +14926,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Mejoberry",
@@ -16221,7 +16290,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -16556,7 +16625,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 3,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -16775,7 +16844,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -17482,7 +17551,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Pachy Egg",
@@ -17752,7 +17821,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -17865,7 +17934,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -17910,7 +17979,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Citronal",
@@ -18549,7 +18618,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Bunny Egg",
@@ -18640,7 +18709,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -18716,7 +18785,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -18934,7 +19003,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Quetzal Egg",
@@ -19011,7 +19080,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -19443,7 +19512,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -20409,7 +20478,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -22243,7 +22312,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -22568,7 +22637,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -23609,7 +23678,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Rockarrot",
@@ -24934,7 +25003,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -25130,7 +25199,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Citronal",
@@ -25210,7 +25279,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 3,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -25351,7 +25420,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -25900,7 +25969,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -26058,7 +26127,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 1,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Savoroot",
@@ -26417,7 +26486,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 3,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Fiber",
@@ -30473,7 +30542,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 4,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Auric Mushroom",
@@ -30518,7 +30587,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 4,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Aquatic Mushroom",
@@ -30563,7 +30632,7 @@
       "xp": 0,
       "steam_id": 0,
       "console_id": 0,
-      "dlc_id": 4,
+      "dlc_id": 0,
       "composition": [
         {
           "resource_id": "Ascerbic Mushroom",
@@ -31832,6 +31901,284 @@
       ],
       "station": [
         "Tribute Terminal"
+      ]
+    },
+    {
+      "name": "Basic Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to many smaller creatures. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "basic_kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Amarberry",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Cooked Meat, Cooked Fish Meat, or Cooked Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Extra Small Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Tintoberry",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Simple Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to many small creatures. Includes plant fibers to help with digestion and egg to bind the mix. Humans have difficulty digesting this.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "simple_kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cooked Fish Meat",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Small Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Rockarrot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Regular Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to many medium creatures. Containing only the finest natural ingredients, it provides pets with the balanced nutrition they need. And with a taste they can't resist, they'll warm up to you in no time! Not intended for human consumption.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "regular_kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Cooked Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Medium Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Longrass",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Savoroot",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Superior Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to many larger creatures. Containing only the finest natural ingredients, it provides pets with the balanced nutrition they need. And with a taste they can't resist, they'll warm up to you in no time! Not intended for human consumption.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "superior_kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Citronal",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Prime Meat Jerky",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Large Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Rare Mushroom",
+          "quantity": 2
+        },
+        {
+          "resource_id": "Sap",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Exceptional Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to many extra large creatures. Containing only the finest natural ingredients, it provides pets with the balanced nutrition they need. And with a taste they can't resist, they'll warm up to you in no time! Not intended for human consumption.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "exceptional_kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Focal Chili",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Extra Large Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Rare Flower",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
+      ]
+    },
+    {
+      "name": "Extraordinary Kibble",
+      "description": "This pet food recipe has been carefully designed to give balanced nutrition to many exotic creatures. Containing only the finest natural ingredients, it provides pets with the balanced nutrition they need. And with a taste they can't resist, they'll warm up to you in no time! Not intended for human consumption.",
+      "yield": 1,
+      "level": 1,
+      "category_id": 1200,
+      "image_folder": "Vanilla\/Engrams\/Kibble\/",
+      "image_file": "extraordinary_kibble.webp",
+      "points": 0,
+      "xp": 0,
+      "steam_id": 0,
+      "console_id": 0,
+      "dlc_id": 1,
+      "composition": [
+        {
+          "resource_id": "Lazarus Chowder",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Special Egg",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Fiber",
+          "quantity": 5
+        },
+        {
+          "resource_id": "Mejoberry",
+          "quantity": 10
+        },
+        {
+          "resource_id": "Giant Bee Honey",
+          "quantity": 1
+        },
+        {
+          "resource_id": "Water",
+          "quantity": 1
+        }
+      ],
+      "station": [
+        "Cooking Pot",
+        "Industrial Cooker",
+        "Cauldron"
       ]
     }
   ],

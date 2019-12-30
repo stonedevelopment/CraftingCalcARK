@@ -41,6 +41,9 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
 
     private final String _ID = DatabaseContract.EngramEntry._ID;
 
+    // id used to hide engrams from being seen
+    private final long HIDDEN_DLC_ID = 0;
+
     // column names
     private final String COLUMN_CATEGORY_KEY = DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY;
     private final String COLUMN_CONSOLE_ID = DatabaseContract.EngramEntry.COLUMN_CONSOLE_ID;
@@ -264,7 +267,11 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             JSONObject object = inArray.getJSONObject(i);
 
             long _id = object.getLong(_ID);
-            String name = object.getString(COLUMN_NAME);
+
+            //  if _id is not hidden
+            if (_id == HIDDEN_DLC_ID) {
+                continue;
+            }
 
             map.put(map.size(), _id);
         }
@@ -282,6 +289,11 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             String imageFolder = object.getString(COLUMN_IMAGE_FOLDER);
             String imageFile = object.getString(COLUMN_IMAGE_FILE);
             long dlc_id = object.getInt(COLUMN_DLC_KEY);
+
+            //  if dlc_id is not hidden
+            if (dlc_id == HIDDEN_DLC_ID) {
+                continue;
+            }
 
             // let's, first, create an array of qualified dlc versions, minus total conversions
             List<Long> dlc_ids = applyTotalConversionToStations(dlc_id, name);
@@ -338,6 +350,11 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             JSONArray stationArray = object.getJSONArray(STATION);
             long dlc_id = object.getInt(COLUMN_DLC_KEY);
 
+            //  if dlc_id is not hidden
+            if (dlc_id == HIDDEN_DLC_ID) {
+                continue;
+            }
+
             // let's, first, create an array of qualified dlc versions, minus total conversions
             List<Long> dlc_ids = applyTotalConversionToCategories(dlc_id, _id);
 
@@ -392,6 +409,11 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             String imageFile = object.getString(COLUMN_IMAGE_FILE);
             long dlc_id = object.getInt(COLUMN_DLC_KEY);
             boolean hasComplexity = object.getBoolean(DatabaseContract.ComplexResourceEntry.TABLE_NAME);
+
+            //  if dlc_id is not hidden
+            if (dlc_id == HIDDEN_DLC_ID) {
+                continue;
+            }
 
             // let's, first, create an array of qualified dlc versions, minus total conversions
             List<Long> dlc_ids = new ArrayList<>();
@@ -456,6 +478,11 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             JSONArray compositionArray = object.getJSONArray(COMPOSITION);
             JSONArray stationArray = object.getJSONArray(STATION);
             long dlc_id = object.getInt(COLUMN_DLC_KEY);
+
+            //  if dlc_id is not hidden
+            if (dlc_id == HIDDEN_DLC_ID) {
+                continue;
+            }
 
             // let's, first, create an array of qualified dlc versions, minus total conversions
             List<Long> dlc_ids = applyTotalConversionToEngrams(dlc_id, name);
