@@ -26,24 +26,24 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static final int REQUEST_CODE = 2000;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()
-                .replace( android.R.id.content, new SettingsFragment() )
+                .replace(android.R.id.content, new SettingsFragment())
                 .commit();
     }
 
     @Override
-    public boolean onMenuItemSelected( int featureId, MenuItem item ) {
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
         int id = item.getItemId();
-        if ( id == android.R.id.home ) {
+        if (id == android.R.id.home) {
             finish();
         }
-        return super.onMenuItemSelected( featureId, item );
+        return super.onMenuItemSelected(featureId, item);
     }
 
     public static class SettingsFragment extends PreferenceFragment
@@ -51,66 +51,66 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         private static final String TAG = SettingsFragment.class.getSimpleName();
 
         @Override
-        public void onCreate( Bundle savedInstanceState ) {
-            super.onCreate( savedInstanceState );
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
 
-            addPreferencesFromResource( R.xml.preferences );
+            addPreferencesFromResource(R.xml.preferences);
 
-            ListPreference pref = ( ListPreference ) findPreference( getString( R.string.pref_edit_text_level_key ) );
-            pref.setEntries( getEntries() );
-            pref.setEntryValues( pref.getEntries() );
+            ListPreference pref = (ListPreference) findPreference(getString(R.string.pref_edit_text_level_key));
+            pref.setEntries(getEntries());
+            pref.setEntryValues(pref.getEntries());
         }
 
         private String[] getEntries() {
-            int max = Integer.parseInt( getString( R.string.level_max_value ) );
+            int max = Integer.parseInt(getString(R.string.level_max_value));
 
             String[] entries = new String[max];
 
-            for ( int i = 0; i < max; i++ ) {
-                entries[i] = Integer.toString( i + 1 );
+            for (int i = 0; i < max; i++) {
+                entries[i] = Integer.toString(i + 1);
             }
 
             return entries;
         }
 
         @Override
-        public void onSharedPreferenceChanged( SharedPreferences sharedPreferences, String key ) {
-            Preference pref = findPreference( key );
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Preference pref = findPreference(key);
 
-            if ( pref instanceof ListPreference ) {
+            if (pref instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list (since they have separate labels/values).
-                ListPreference listPref = ( ListPreference ) pref;
-                int prefIndex = listPref.findIndexOfValue( key );
-                if ( prefIndex >= 0 ) {
-                    if ( key.equals( getString( R.string.pref_dlc_key ) ) ) {
-                        listPref.setSummary( String.format(
-                                getString( R.string.pref_dlc_description ),
-                                listPref.getEntries()[prefIndex] )
+                ListPreference listPref = (ListPreference) pref;
+                int prefIndex = listPref.findIndexOfValue(key);
+                if (prefIndex >= 0) {
+                    if (key.equals(getString(R.string.pref_dlc_key))) {
+                        listPref.setSummary(String.format(
+                                getString(R.string.pref_dlc_description),
+                                listPref.getEntries()[prefIndex])
                         );
-                    } else if ( key.equals( getString( R.string.pref_edit_text_level_key ) ) ) {
-                        listPref.setSummary( String.format(
-                                getString( R.string.pref_edit_text_level_description ),
-                                listPref.getEntries()[prefIndex] )
+                    } else if (key.equals(getString(R.string.pref_edit_text_level_key))) {
+                        listPref.setSummary(String.format(
+                                getString(R.string.pref_edit_text_level_description),
+                                listPref.getEntries()[prefIndex])
                         );
                     }
                 }
             }
 
-            getActivity().getIntent().putExtra( key, true );
-            getActivity().setResult( RESULT_OK, getActivity().getIntent() );
+            getActivity().getIntent().putExtra(key, true);
+            getActivity().setResult(RESULT_OK, getActivity().getIntent());
         }
 
         @Override
         public void onResume() {
             super.onResume();
-            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener( this );
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
         public void onPause() {
             super.onPause();
-            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener( this );
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         }
     }
 }

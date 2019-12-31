@@ -1,17 +1,22 @@
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
  */
 
 package arc.resource.calculator.model.engram;
+
+import androidx.annotation.NonNull;
 
 /**
  * Base Engram object
@@ -32,7 +37,7 @@ public class Engram {
     // Yield per crafted item
     private final int mYield;
 
-    Engram( long id, String name, String folder, String file, int yield ) {
+    Engram(long id, String name, String folder, String file, int yield) {
         mId = id;
         mName = name;
         mFolder = folder;
@@ -64,6 +69,7 @@ public class Engram {
         return mYield;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "mId=" + mId + ", mName=" + mName + ", mFolder=" + mFolder + ", mFile=" + mFile;

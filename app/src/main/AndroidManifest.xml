@@ -12,6 +12,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true">
+
+        <meta-data
+          android:name="com.google.android.gms.ads.APPLICATION_ID"
+          android:value="ca-app-pub-8859801923918627~2903432190"/>
+
         <activity
             android:name=".LoadScreenActivity"
             android:theme="@style/AppTheme.NoActionBar.Splash">
@@ -82,5 +87,4 @@
             android:enabled="true"
             android:exported="false"/>
     </application>
-
 </manifest>

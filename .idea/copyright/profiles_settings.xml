@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="" />
+  <settings default="by-nc-nd">
+    <module2copyright>
+      <element module="Project Files" copyright="by-nc-nd" />
+    </module2copyright>
+  </settings>
 </component>

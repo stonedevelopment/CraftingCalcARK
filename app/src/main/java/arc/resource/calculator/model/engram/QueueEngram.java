@@ -1,16 +1,21 @@
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
  */
 package arc.resource.calculator.model.engram;
+
+import androidx.annotation.NonNull;
 
 /**
  * Engram object that uses a yielded quantity for working with totals in the CraftingQueue
@@ -20,8 +25,8 @@ public class QueueEngram extends Engram {
     // Quantity used to keep track of how many Engrams in CraftingQueue
     private int mQuantity;
 
-    public QueueEngram( long id, String name, String folder, String file, int yield, int quantity ) {
-        super( id, name, folder, file, yield );
+    public QueueEngram(long id, String name, String folder, String file, int yield, int quantity) {
+        super(id, name, folder, file, yield);
 
         mQuantity = quantity;
     }
@@ -34,38 +39,38 @@ public class QueueEngram extends Engram {
         mQuantity++;
     }
 
-    public void increaseQuantity( int increment ) {
+    public void increaseQuantity(int increment) {
         int amount = getQuantity() + increment;
         int floor = amount / increment;
 
-        setQuantity( floor * increment );
+        setQuantity(floor * increment);
     }
 
     public void decreaseQuantity() {
-        if ( getQuantity() > 0 )
+        if (getQuantity() > 0)
             mQuantity--;
     }
 
-    public void decreaseQuantity( int decrement ) {
-        if ( getQuantity() >= decrement ) {
+    public void decreaseQuantity(int decrement) {
+        if (getQuantity() >= decrement) {
             int amount;
 
-            if ( getQuantity() % decrement == 0 )
+            if (getQuantity() % decrement == 0)
                 amount = getQuantity() - decrement;
             else
                 amount = getQuantity();
 
             int floor = amount / decrement;
 
-            setQuantity( floor * decrement );
+            setQuantity(floor * decrement);
         } else {
-            if ( getQuantity() > 1 ) {
-                setQuantity( 1 );
+            if (getQuantity() > 1) {
+                setQuantity(1);
             }
         }
     }
 
-    public void setQuantity( int quantity ) {
+    public void setQuantity(int quantity) {
         mQuantity = quantity;
     }
 
@@ -77,6 +82,7 @@ public class QueueEngram extends Engram {
         return mQuantity * getYield();
     }
 
+    @NonNull
     @Override
     public String toString() {
         return super.toString() + ", mQuantity=" + mQuantity;

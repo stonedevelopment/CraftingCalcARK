@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.listeners;
 
 import java.util.HashMap;
@@ -14,11 +30,11 @@ public class QueueObserver {
     private HashMap<String, Listener> mListeners;
 
     public static abstract class Listener {
-        public void onItemChanged( long craftableId, int quantity ) {
+        public void onItemChanged(long craftableId, int quantity) {
             // do nothing
         }
 
-        public void onItemRemoved( long craftableId ) {
+        public void onItemRemoved(long craftableId) {
             // do nothing
         }
 
@@ -32,7 +48,7 @@ public class QueueObserver {
     }
 
     public static QueueObserver getInstance() {
-        if ( sInstance == null )
+        if (sInstance == null)
             sInstance = new QueueObserver();
 
         return sInstance;
@@ -42,34 +58,34 @@ public class QueueObserver {
         mListeners = new HashMap<>();
     }
 
-    public void registerListener( String key, Listener listener ) {
-        mListeners.put( key, listener );
+    public void registerListener(String key, Listener listener) {
+        mListeners.put(key, listener);
     }
 
-    public void unregisterListener( String key ) {
-        mListeners.remove( key );
+    public void unregisterListener(String key) {
+        mListeners.remove(key);
     }
 
-    public void notifyItemChanged( long craftableId, int quantity ) {
-        for ( Listener listener : mListeners.values() ) {
-            listener.onItemChanged( craftableId, quantity );
+    public void notifyItemChanged(long craftableId, int quantity) {
+        for (Listener listener : mListeners.values()) {
+            listener.onItemChanged(craftableId, quantity);
         }
     }
 
-    public void notifyItemRemoved( long craftableId ) {
-        for ( Listener listener : mListeners.values() ) {
-            listener.onItemRemoved( craftableId );
+    public void notifyItemRemoved(long craftableId) {
+        for (Listener listener : mListeners.values()) {
+            listener.onItemRemoved(craftableId);
         }
     }
 
     public void notifyDataSetEmpty() {
-        for ( Listener listener : mListeners.values() ) {
+        for (Listener listener : mListeners.values()) {
             listener.onDataSetEmpty();
         }
     }
 
     public void notifyDataSetPopulated() {
-        for ( Listener listener : mListeners.values() ) {
+        for (Listener listener : mListeners.values()) {
             listener.onDataSetPopulated();
         }
     }

@@ -7,6 +7,7 @@
         <item>@string/pref_dlc_label_primitive_plus</item>
         <item>@string/pref_dlc_label_scorched_earth</item>
         <item>@string/pref_dlc_label_aberration</item>
+        <item>@string/pref_dlc_label_extinction</item>
     </string-array>
 
     <!-- SettingsActivity: DLC values -->
@@ -15,6 +16,7 @@
         <item>@string/pref_dlc_value_primitive_plus</item>
         <item>@string/pref_dlc_value_scorched_earth</item>
         <item>@string/pref_dlc_value_aberration</item>
+        <item>@string/pref_dlc_value_extinction</item>
     </string-array>
 
     <string-array name="content_first_use_descriptions">

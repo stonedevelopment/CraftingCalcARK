@@ -1,5 +1,4 @@
-package arc.resource.calculator;
-/**
+/*
  * Copyright (C) 2011-2013, Karsten Priegnitz
  * <p/>
  * Permission to use, copy, modify, and distribute this piece of software
@@ -13,6 +12,7 @@ package arc.resource.calculator;
  * @author: Karsten Priegnitz
  * @see: http://code.google.com/p/android-change-log/
  */
+package arc.resource.calculator;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,16 +20,18 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.webkit.WebView;
+
+import androidx.core.content.ContextCompat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+@SuppressWarnings("JavaDoc")
 public class ChangeLog {
 
     private final Context context;
@@ -47,8 +49,8 @@ public class ChangeLog {
      *
      * @param context
      */
-    public ChangeLog( Context context ) {
-        this( context, PreferenceManager.getDefaultSharedPreferences( context ) );
+    ChangeLog(Context context) {
+        this(context, PreferenceManager.getDefaultSharedPreferences(context));
     }
 
     /**
@@ -59,21 +61,21 @@ public class ChangeLog {
      * @param context
      * @param sp      the shared preferences to store the last version name into
      */
-    private ChangeLog( Context context, SharedPreferences sp ) {
+    private ChangeLog(Context context, SharedPreferences sp) {
         this.context = context;
 
         // get version numbers
-        this.lastVersion = sp.getString( VERSION_KEY, NO_VERSION );
-        Log.d( TAG, "lastVersion: " + lastVersion );
+        this.lastVersion = sp.getString(VERSION_KEY, NO_VERSION);
+        Log.d(TAG, "lastVersion: " + lastVersion);
         try {
-            this.thisVersion = context.getPackageManager().getPackageInfo( context.getPackageName(),
-                    0 ).versionName;
-        } catch ( NameNotFoundException e ) {
+            this.thisVersion = context.getPackageManager().getPackageInfo(context.getPackageName(),
+                    0).versionName;
+        } catch (NameNotFoundException e) {
             this.thisVersion = NO_VERSION;
-            Log.e( TAG, "could not get version name from manifest!" );
+            Log.e(TAG, "could not get version name from manifest!");
             e.printStackTrace();
         }
-        Log.d( TAG, "appVersion: " + this.thisVersion );
+        Log.d(TAG, "appVersion: " + this.thisVersion);
     }
 
     /**
@@ -97,7 +99,7 @@ public class ChangeLog {
      * @return <code>true</code> if this version of your app is started the first time
      */
     public boolean firstRun() {
-        return !this.lastVersion.equals( this.thisVersion );
+        return !this.lastVersion.equals(this.thisVersion);
     }
 
     /**
@@ -105,7 +107,7 @@ public class ChangeLog {
      * Also <code>true</code> if your app was deinstalled and installed again.
      */
     private boolean firstRunEver() {
-        return NO_VERSION.equals( this.lastVersion );
+        return NO_VERSION.equals(this.lastVersion);
     }
 
     /**
@@ -114,44 +116,44 @@ public class ChangeLog {
      * the full log dialog is onResume.
      */
     public AlertDialog getLogDialog() {
-        return this.getDialog( this.firstRunEver() );
+        return this.getDialog(this.firstRunEver());
     }
 
     /**
      * @return an AlertDialog with a full change log displayed
      */
     public AlertDialog getFullLogDialog() {
-        return this.getDialog( true );
+        return this.getDialog(true);
     }
 
-    private AlertDialog getDialog( boolean full ) {
-        WebView wv = new WebView( this.context );
+    private AlertDialog getDialog(boolean full) {
+        WebView wv = new WebView(this.context);
 
-        wv.setBackgroundColor( ContextCompat.getColor( this.context, android.R.color.black ) );
-        wv.loadDataWithBaseURL( null, this.getLog( full ), "text/html", "UTF-8", null );
+        wv.setBackgroundColor(ContextCompat.getColor(this.context, android.R.color.black));
+        wv.loadDataWithBaseURL(null, this.getLog(full), "text/html", "UTF-8", null);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper( this.context,
-                android.R.style.Theme_Dialog ) );
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this.context,
+                android.R.style.Theme_Dialog));
         builder.setTitle(
-                context.getResources().getString( full ? R.string.changelog_full_title : R.string.changelog_title ) )
-                .setView( wv )
-                .setCancelable( true )
+                context.getResources().getString(full ? R.string.changelog_full_title : R.string.changelog_title))
+                .setView(wv)
+                .setCancelable(true)
                 // OK button
-                .setPositiveButton( context.getResources().getString( R.string.changelog_ok_button ),
+                .setPositiveButton(context.getResources().getString(R.string.changelog_ok_button),
                         new DialogInterface.OnClickListener() {
-                            public void onClick( DialogInterface dialog, int which ) {
+                            public void onClick(DialogInterface dialog, int which) {
                                 updateVersionInPreferences();
                             }
-                        } );
+                        });
 
-        if ( !full ) {
+        if (!full) {
             // "more ..." button
-            builder.setNegativeButton( R.string.changelog_show_full,
+            builder.setNegativeButton(R.string.changelog_show_full,
                     new DialogInterface.OnClickListener() {
-                        public void onClick( DialogInterface dialog, int id ) {
+                        public void onClick(DialogInterface dialog, int id) {
                             getFullLogDialog().show();
                         }
-                    } );
+                    });
         }
 
         return builder.create();
@@ -159,9 +161,9 @@ public class ChangeLog {
 
     private void updateVersionInPreferences() {
         // save new version number to preferences
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences( context );
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString( VERSION_KEY, thisVersion );
+        editor.putString(VERSION_KEY, thisVersion);
         // // on SDK-Versions > 9 you should use this:
         // if(Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
         // editor.commit();
@@ -176,14 +178,14 @@ public class ChangeLog {
      * new)
      */
     public String getLog() {
-        return this.getLog( false );
+        return this.getLog(false);
     }
 
     /**
      * @return HTML which displays full change log
      */
     public String getFullLog() {
-        return this.getLog( true );
+        return this.getLog(true);
     }
 
     /**
@@ -197,91 +199,91 @@ public class ChangeLog {
     private StringBuffer sb = null;
     private static final String EOCL = "END_OF_CHANGE_LOG";
 
-    private String getLog( boolean full ) {
+    private String getLog(boolean full) {
         // read changelog.txt file
         sb = new StringBuffer();
         try {
-            InputStream ins = context.getResources().openRawResource( R.raw.changelog );
-            BufferedReader br = new BufferedReader( new InputStreamReader( ins ) );
+            InputStream ins = context.getResources().openRawResource(R.raw.changelog);
+            BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 
             String line = null;
             boolean advanceToEOVS = false; // if true: ignore further version
             // sections
-            while ( ( line = br.readLine() ) != null ) {
+            while ((line = br.readLine()) != null) {
                 line = line.trim();
-                char marker = line.length() > 0 ? line.charAt( 0 ) : 0;
-                if ( marker == '$' ) {
+                char marker = line.length() > 0 ? line.charAt(0) : 0;
+                if (marker == '$') {
                     // begin of a version section
                     this.closeList();
-                    String version = line.substring( 1 ).trim();
+                    String version = line.substring(1).trim();
                     // onPause output?
-                    if ( !full ) {
-                        if ( this.lastVersion.equals( version ) ) {
+                    if (!full) {
+                        if (this.lastVersion.equals(version)) {
                             advanceToEOVS = true;
-                        } else if ( version.equals( EOCL ) ) {
+                        } else if (version.equals(EOCL)) {
                             advanceToEOVS = false;
                         }
                     }
-                } else if ( !advanceToEOVS ) {
-                    switch ( marker ) {
+                } else if (!advanceToEOVS) {
+                    switch (marker) {
                         case '%':
                             // line contains version title
                             this.closeList();
-                            sb.append( "<div class='title'>" + line.substring( 1 ).trim() + "</div>\n" );
+                            sb.append("<div class='title'>" + line.substring(1).trim() + "</div>\n");
                             break;
                         case '_':
                             // line contains version title
                             this.closeList();
-                            sb.append( "<div class='subtitle'>" + line.substring( 1 ).trim() + "</div>\n" );
+                            sb.append("<div class='subtitle'>" + line.substring(1).trim() + "</div>\n");
                             break;
                         case '!':
                             // line contains free text
                             this.closeList();
-                            sb.append( "<div class='freetext'>" + line.substring( 1 ).trim() + "</div>\n" );
+                            sb.append("<div class='freetext'>" + line.substring(1).trim() + "</div>\n");
                             break;
                         case '#':
                             // line contains numbered list item
-                            this.openList( Listmode.ORDERED );
-                            sb.append( "<li>" + line.substring( 1 ).trim() + "</li>\n" );
+                            this.openList(Listmode.ORDERED);
+                            sb.append("<li>" + line.substring(1).trim() + "</li>\n");
                             break;
                         case '*':
                             // line contains bullet list item
-                            this.openList( Listmode.UNORDERED );
-                            sb.append( "<li>" + line.substring( 1 ).trim() + "</li>\n" );
+                            this.openList(Listmode.UNORDERED);
+                            sb.append("<li>" + line.substring(1).trim() + "</li>\n");
                             break;
                         default:
                             // no special character: just use line as is
                             this.closeList();
-                            sb.append( line + "\n" );
+                            sb.append(line + "\n");
                     }
                 }
             }
             this.closeList();
             br.close();
-        } catch ( IOException e ) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return sb.toString();
     }
 
-    private void openList( Listmode listMode ) {
-        if ( this.listMode != listMode ) {
+    private void openList(Listmode listMode) {
+        if (this.listMode != listMode) {
             closeList();
-            if ( listMode == Listmode.ORDERED ) {
-                sb.append( "<div class='list'><ol>\n" );
-            } else if ( listMode == Listmode.UNORDERED ) {
-                sb.append( "<div class='list'><ul>\n" );
+            if (listMode == Listmode.ORDERED) {
+                sb.append("<div class='list'><ol>\n");
+            } else if (listMode == Listmode.UNORDERED) {
+                sb.append("<div class='list'><ul>\n");
             }
             this.listMode = listMode;
         }
     }
 
     private void closeList() {
-        if ( this.listMode == Listmode.ORDERED ) {
-            sb.append( "</ol></div>\n" );
-        } else if ( this.listMode == Listmode.UNORDERED ) {
-            sb.append( "</ul></div>\n" );
+        if (this.listMode == Listmode.ORDERED) {
+            sb.append("</ol></div>\n");
+        } else if (this.listMode == Listmode.UNORDERED) {
+            sb.append("</ul></div>\n");
         }
         this.listMode = Listmode.NONE;
     }
@@ -293,7 +295,7 @@ public class ChangeLog {
      *
      * @param lastVersion
      */
-    public void dontuseSetLastVersion( String lastVersion ) {
+    public void dontuseSetLastVersion(String lastVersion) {
         this.lastVersion = lastVersion;
     }
 }

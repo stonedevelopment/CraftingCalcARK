@@ -1,14 +1,17 @@
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
  */
 package arc.resource.calculator.db;
 
@@ -19,8 +22,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.Objects;
 
 import arc.resource.calculator.db.DatabaseContract.CategoryEntry;
 import arc.resource.calculator.db.DatabaseContract.ComplexResourceEntry;
@@ -85,124 +91,124 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = new DatabaseHelper( getContext() );
+        mOpenHelper = new DatabaseHelper(getContext());
         mExceptionObserver = ExceptionObserver.getInstance();
         return true;
     }
 
     private static UriMatcher buildUriMatcher() {
-        final UriMatcher uriMatcher = new UriMatcher( UriMatcher.NO_MATCH );
+        final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String contentAuthority = DatabaseContract.CONTENT_AUTHORITY;
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY,
-                CATEGORY );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/#/" +
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_CATEGORY,
+                CATEGORY);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_CATEGORY + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                CATEGORY_ID_WITH_DLC );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" +
+                CATEGORY_ID_WITH_DLC);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_CATEGORY + "/" +
                         DatabaseContract.PATH_CATEGORY_PARENT + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                CATEGORY_WITH_PARENT );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_CATEGORY + "/" +
+                CATEGORY_WITH_PARENT);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_CATEGORY + "/" +
                         DatabaseContract.PATH_CATEGORY_PARENT + "/#/" +
                         DatabaseContract.PATH_STATION + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                CATEGORY_WITH_PARENT_AND_STATION );
+                CATEGORY_WITH_PARENT_AND_STATION);
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE,
-                COMPLEX_RESOURCE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/#",
-                COMPLEX_RESOURCE_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" +
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE,
+                COMPLEX_RESOURCE);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/#",
+                COMPLEX_RESOURCE_ID);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_COMPLEX_RESOURCE + "/" +
                         DatabaseContract.PATH_RESOURCE + "/#",
-                COMPLEX_RESOURCE_WITH_RESOURCE );
+                COMPLEX_RESOURCE_WITH_RESOURCE);
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION,
-                COMPOSITION );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/#",
-                COMPOSITION_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_COMPOSITION + "/" +
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_COMPOSITION,
+                COMPOSITION);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_COMPOSITION + "/#",
+                COMPOSITION_ID);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_COMPOSITION + "/" +
                         DatabaseContract.PATH_ENGRAM + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                COMPOSITION_WITH_ENGRAM );
+                COMPOSITION_WITH_ENGRAM);
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM,
-                ENGRAM );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/#/" +
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM,
+                ENGRAM);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_ID_WITH_DLC );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                ENGRAM_ID_WITH_DLC);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_DLC );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                ENGRAM_WITH_DLC);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_CATEGORY + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_CATEGORY );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                ENGRAM_WITH_CATEGORY);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_CATEGORY + "/#/" +
                         DatabaseContract.PATH_STATION + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_CATEGORY_AND_STATION );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                ENGRAM_WITH_CATEGORY_AND_STATION);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_STATION + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_STATION );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                ENGRAM_WITH_STATION);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_LEVEL + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_LEVEL );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                ENGRAM_WITH_LEVEL);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_CATEGORY + "/#/" +
                         DatabaseContract.PATH_LEVEL + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_LEVEL_AND_CATEGORY );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
-                        DatabaseContract.PATH_STATION + "/#/" +
-                        DatabaseContract.PATH_LEVEL + "/#/" +
-                        DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_LEVEL_AND_STATION );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
-                        DatabaseContract.PATH_CATEGORY + "/#/" +
+                ENGRAM_WITH_LEVEL_AND_CATEGORY);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_STATION + "/#/" +
                         DatabaseContract.PATH_LEVEL + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                ENGRAM_WITH_LEVEL_AND_STATION);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
+                        DatabaseContract.PATH_CATEGORY + "/#/" +
+                        DatabaseContract.PATH_STATION + "/#/" +
+                        DatabaseContract.PATH_LEVEL + "/#/" +
+                        DatabaseContract.PATH_DLC + "/#",
+                ENGRAM_WITH_LEVEL_CATEGORY_AND_STATION);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_SEARCH + "/*/" +
                         DatabaseContract.PATH_DLC + "/#",
-                ENGRAM_WITH_SEARCH );
+                ENGRAM_WITH_SEARCH);
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE,
-                QUEUE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE + "/#",
-                QUEUE_ID );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE + "/" +
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_QUEUE,
+                QUEUE);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_QUEUE + "/#",
+                QUEUE_ID);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_QUEUE + "/" +
                         DatabaseContract.PATH_ENGRAM + "/" +
                         DatabaseContract.PATH_DLC + "/#",
-                QUEUE_WITH_ENGRAM_TABLE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_QUEUE + "/" +
+                QUEUE_WITH_ENGRAM_TABLE);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_QUEUE + "/" +
                         DatabaseContract.PATH_ENGRAM + "/#",
-                QUEUE_WITH_ENGRAM_ID );
+                QUEUE_WITH_ENGRAM_ID);
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE,
-                RESOURCE );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_RESOURCE + "/#/" +
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_RESOURCE,
+                RESOURCE);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_RESOURCE + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                RESOURCE_ID_WITH_DLC );
+                RESOURCE_ID_WITH_DLC);
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC,
-                DLC );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_DLC + "/#",
-                DLC_ID );
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_DLC,
+                DLC);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_DLC + "/#",
+                DLC_ID);
 
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_STATION,
-                STATION );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_STATION + "/#/" +
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_STATION,
+                STATION);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_STATION + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
-                STATION_ID_WITH_DLC );
-        uriMatcher.addURI( contentAuthority, DatabaseContract.PATH_STATION + "/" +
+                STATION_ID_WITH_DLC);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_STATION + "/" +
                         DatabaseContract.PATH_DLC + "/#",
-                STATION_WITH_DLC );
+                STATION_WITH_DLC);
 
         return uriMatcher;
     }
@@ -216,9 +222,9 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     @Override
-    public String getType( @NonNull Uri uri ) {
+    public String getType(@NonNull Uri uri) {
         try {
-            switch ( sUriMatcher.match( uri ) ) {
+            switch (sUriMatcher.match(uri)) {
                 case ENGRAM:
                 case ENGRAM_WITH_CATEGORY:
                 case ENGRAM_WITH_CATEGORY_AND_STATION:
@@ -284,10 +290,10 @@ public class DatabaseProvider extends ContentProvider {
                     return StationEntry.CONTENT_ITEM_TYPE;
 
                 default:
-                    throw new URIUnknownException( uri );
+                    throw new URIUnknownException(uri);
             }
-        } catch ( URIUnknownException e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
+        } catch (URIUnknownException e) {
+            mExceptionObserver.notifyFatalExceptionCaught(TAG, e);
 
             return null;
         }
@@ -295,16 +301,16 @@ public class DatabaseProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert( @NonNull Uri uri, @Nullable ContentValues values ) {
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         return null;
     }
 
     @Override
-    public Cursor query( @NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder ) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
         try {
-            String tableName = getTableNameFromUriMatch( uri );
-            switch ( sUriMatcher.match( uri ) ) {
+            String tableName = getTableNameFromUriMatch(uri);
+            switch (sUriMatcher.match(uri)) {
                 case CATEGORY:
                     sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -337,7 +343,7 @@ public class DatabaseProvider extends ContentProvider {
                 case DLC_ID:
                     selection = DLCEntry.SQL_QUERY_WITH_ID;
                     selectionArgs = new String[]{
-                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                            Long.toString(DatabaseContract.getIdFromUri(uri))
                     };
                     break;
 
@@ -345,8 +351,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = CategoryEntry.SQL_QUERY_WITH_ID +
                             " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( CategoryEntry.getIdFromUri( uri ) ),
-                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(CategoryEntry.getIdFromUri(uri)),
+                            Long.toString(CategoryEntry.getDLCIdFromUri(uri))
                     };
                     break;
 
@@ -354,8 +360,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = CategoryEntry.SQL_QUERY_WITH_PARENT_ID +
                             " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
-                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(CategoryEntry.getParentIdFromUri(uri)),
+                            Long.toString(CategoryEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -365,9 +371,9 @@ public class DatabaseProvider extends ContentProvider {
                             " AND " + CategoryEntry.SQL_QUERY_WITH_STATION_KEY +
                             " AND " + CategoryEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( CategoryEntry.getParentIdFromUri( uri ) ),
-                            Long.toString( CategoryEntry.getStationIdFromUri( uri ) ),
-                            Long.toString( CategoryEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(CategoryEntry.getParentIdFromUri(uri)),
+                            Long.toString(CategoryEntry.getStationIdFromUri(uri)),
+                            Long.toString(CategoryEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = CategoryEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -375,14 +381,14 @@ public class DatabaseProvider extends ContentProvider {
                 case COMPLEX_RESOURCE_ID:
                     selection = ComplexResourceEntry.SQL_QUERY_WITH_ID;
                     selectionArgs = new String[]{
-                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                            Long.toString(DatabaseContract.getIdFromUri(uri))
                     };
                     break;
 
                 case COMPOSITION_ID:
                     selection = CompositionEntry.SQL_QUERY_WITH_ID;
                     selectionArgs = new String[]{
-                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                            Long.toString(DatabaseContract.getIdFromUri(uri))
                     };
                     break;
 
@@ -390,8 +396,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = CompositionEntry.SQL_QUERY_WITH_ENGRAM_KEY +
                             " AND " + CompositionEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( CompositionEntry.getEngramIdFromUri( uri ) ),
-                            Long.toString( CompositionEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(CompositionEntry.getEngramIdFromUri(uri)),
+                            Long.toString(CompositionEntry.getDLCIdFromUri(uri))
                     };
                     break;
 
@@ -399,8 +405,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = EngramEntry.SQL_QUERY_WITH_ID +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getIdFromUri( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getIdFromUri(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     break;
 
@@ -408,8 +414,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = EngramEntry.SQL_QUERY_WITH_CATEGORY_KEY +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getCategoryIdFromUri(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -419,9 +425,9 @@ public class DatabaseProvider extends ContentProvider {
                             " AND " + EngramEntry.SQL_QUERY_WITH_STATION_KEY +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                            Long.toString( EngramEntry.getStationIdFromUriWithCategory( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getCategoryIdFromUri(uri)),
+                            Long.toString(EngramEntry.getStationIdFromUriWithCategory(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -429,7 +435,7 @@ public class DatabaseProvider extends ContentProvider {
                 case ENGRAM_WITH_DLC:
                     selection = EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -438,8 +444,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = EngramEntry.SQL_QUERY_WITH_STATION_KEY +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getStationIdFromUri( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getStationIdFromUri(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -448,8 +454,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = EngramEntry.SQL_QUERY_WITH_LEVEL +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Integer.toString( EngramEntry.getLevelFromUri( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Integer.toString(EngramEntry.getLevelFromUri(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -459,9 +465,9 @@ public class DatabaseProvider extends ContentProvider {
                             " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                            Integer.toString( EngramEntry.getLevelFromUriWithCategory( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getCategoryIdFromUri(uri)),
+                            Integer.toString(EngramEntry.getLevelFromUriWithCategory(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -471,9 +477,9 @@ public class DatabaseProvider extends ContentProvider {
                             " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getStationIdFromUri( uri ) ),
-                            Integer.toString( EngramEntry.getLevelFromUriWithStation( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getStationIdFromUri(uri)),
+                            Integer.toString(EngramEntry.getLevelFromUriWithStation(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -484,10 +490,10 @@ public class DatabaseProvider extends ContentProvider {
                             " AND " + EngramEntry.SQL_QUERY_WITH_LEVEL +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( EngramEntry.getCategoryIdFromUri( uri ) ),
-                            Long.toString( EngramEntry.getStationIdFromUriWithCategory( uri ) ),
-                            Integer.toString( EngramEntry.getLevelFromUriWithCategoryAndStation( uri ) ),
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(EngramEntry.getCategoryIdFromUri(uri)),
+                            Long.toString(EngramEntry.getStationIdFromUriWithCategory(uri)),
+                            Integer.toString(EngramEntry.getLevelFromUriWithCategoryAndStation(uri)),
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -496,8 +502,8 @@ public class DatabaseProvider extends ContentProvider {
                     selection = EngramEntry.SQL_QUERY_WITH_SEARCH +
                             " AND " + EngramEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            "%" + EngramEntry.getSearchQueryFromUri( uri ) + "%",
-                            Long.toString( EngramEntry.getDLCIdFromUri( uri ) )
+                            "%" + EngramEntry.getSearchQueryFromUri(uri) + "%",
+                            Long.toString(EngramEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_SORT_ORDER_BY_NAME;
                     break;
@@ -505,14 +511,14 @@ public class DatabaseProvider extends ContentProvider {
                 case QUEUE_ID:
                     selection = QueueEntry.SQL_QUERY_WITH_ID;
                     selectionArgs = new String[]{
-                            Long.toString( DatabaseContract.getIdFromUri( uri ) )
+                            Long.toString(DatabaseContract.getIdFromUri(uri))
                     };
                     break;
 
                 case QUEUE_WITH_ENGRAM_ID:
                     selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( QueueEntry.getEngramIdFromUri( uri ) )
+                            Long.toString(QueueEntry.getEngramIdFromUri(uri))
                     };
                     break;
 
@@ -520,15 +526,15 @@ public class DatabaseProvider extends ContentProvider {
                     selection = ResourceEntry.SQL_QUERY_WITH_ID +
                             " AND " + ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( ResourceEntry.getIdFromUri( uri ) ),
-                            Long.toString( ResourceEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(ResourceEntry.getIdFromUri(uri)),
+                            Long.toString(ResourceEntry.getDLCIdFromUri(uri))
                     };
                     break;
 
                 case COMPLEX_RESOURCE_WITH_RESOURCE:
                     selection = ComplexResourceEntry.SQL_QUERY_WITH_RESOURCE_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( ComplexResourceEntry.getResourceIdFromUri( uri ) )
+                            Long.toString(ComplexResourceEntry.getResourceIdFromUri(uri))
                     };
                     break;
 
@@ -536,7 +542,7 @@ public class DatabaseProvider extends ContentProvider {
                     projection = QueueEntry.SQL_PROJECTION;
                     selection = QueueEntry.SQL_QUERY_WITH_ENGRAM_TABLE_SELECTION;
                     selectionArgs = new String[]{
-                            Long.toString( QueueEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(QueueEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = EngramEntry.SQL_COLUMN_NAME + " ASC";
                     break;
@@ -545,32 +551,32 @@ public class DatabaseProvider extends ContentProvider {
                     selection = StationEntry.SQL_QUERY_WITH_ID +
                             " AND " + StationEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( StationEntry.getIdFromUri( uri ) ),
-                            Long.toString( StationEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(StationEntry.getIdFromUri(uri)),
+                            Long.toString(StationEntry.getDLCIdFromUri(uri))
                     };
                     break;
 
                 case STATION_WITH_DLC:
                     selection = StationEntry.SQL_QUERY_WITH_DLC_KEY;
                     selectionArgs = new String[]{
-                            Long.toString( StationEntry.getDLCIdFromUri( uri ) )
+                            Long.toString(StationEntry.getDLCIdFromUri(uri))
                     };
                     sortOrder = StationEntry.SQL_COLUMN_NAME + " ASC";
                     break;
 
                 default:
-                    throw new URIUnknownException( uri );
+                    throw new URIUnknownException(uri);
             }
 
             // Query database with provided args, null or not.
             Cursor cursor = getReadableDatabase().query(
-                    tableName, projection, selection, selectionArgs, null, null, sortOrder );
+                    tableName, projection, selection, selectionArgs, null, null, sortOrder);
 
-            cursor.setNotificationUri( getContext().getContentResolver(), uri );
+            cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
 
             return cursor;
-        } catch ( Exception e ) {
-            mExceptionObserver.notifyExceptionCaught( TAG, e );
+        } catch (Exception e) {
+            mExceptionObserver.notifyExceptionCaught(TAG, e);
 
             return null;
         }
@@ -578,22 +584,22 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     @Override
-    public int delete( @NonNull Uri uri, String selection, String[] selectionArgs ) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
 
         try {
-            String tableName = getTableNameFromUriMatch( uri );
-            int rowsDeleted = getWritableDatabase().delete( tableName, selection, selectionArgs );
+            String tableName = getTableNameFromUriMatch(uri);
+            int rowsDeleted = getWritableDatabase().delete(tableName, selection, selectionArgs);
 
-            if ( rowsDeleted > 0 )
-                getContext().getContentResolver().notifyChange( uri, null );
+            if (rowsDeleted > 0)
+                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
 
             return rowsDeleted;
-        } catch ( URIUnknownException e ) {
-            mExceptionObserver.notifyExceptionCaught( TAG, e );
+        } catch (URIUnknownException e) {
+            mExceptionObserver.notifyExceptionCaught(TAG, e);
 
             return 0;
-        } catch ( NullPointerException | SQLiteException e ) {
-            mExceptionObserver.notifyFatalExceptionCaught( TAG, e );
+        } catch (NullPointerException | SQLiteException e) {
+            mExceptionObserver.notifyFatalExceptionCaught(TAG, e);
 
             return NO_SIZE;
         }
@@ -601,24 +607,24 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     @Override
-    public int update( @NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs ) {
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
     }
 
     @Override
-    public int bulkInsert( @NonNull Uri uri, @NonNull ContentValues[] values ) {
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         final SQLiteDatabase db = getWritableDatabase();
 
         try {
             db.beginTransaction();
 
-            String table = getTableNameFromUriMatch( uri );
+            String table = getTableNameFromUriMatch(uri);
 
             int rowsInserted = 0;
-            for ( ContentValues value : values ) {
-                long _id = db.insert( table, null, value );
+            for (ContentValues value : values) {
+                long _id = db.insert(table, null, value);
 
-                if ( _id == NO_ID )
+                if (_id == NO_ID)
                     throw new SQLiteException();
 
                 rowsInserted++;
@@ -626,10 +632,10 @@ public class DatabaseProvider extends ContentProvider {
 
             db.setTransactionSuccessful();
 
-            getContext().getContentResolver().notifyChange( uri, null );
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
 
             return rowsInserted;
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             return NO_SIZE;
         } finally {
             db.endTransaction();
@@ -637,8 +643,8 @@ public class DatabaseProvider extends ContentProvider {
 
     }
 
-    private String getTableNameFromUriMatch( @NonNull Uri uri ) throws URIUnknownException {
-        switch ( sUriMatcher.match( uri ) ) {
+    private String getTableNameFromUriMatch(@NonNull Uri uri) throws URIUnknownException {
+        switch (sUriMatcher.match(uri)) {
             case CATEGORY:
             case CATEGORY_ID_WITH_DLC:
             case CATEGORY_WITH_PARENT:
@@ -688,7 +694,7 @@ public class DatabaseProvider extends ContentProvider {
                 return StationEntry.TABLE_NAME;
 
             default:
-                throw new URIUnknownException( uri );
+                throw new URIUnknownException(uri);
         }
     }
 }

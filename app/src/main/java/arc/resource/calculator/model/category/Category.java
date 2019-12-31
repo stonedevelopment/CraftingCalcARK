@@ -1,18 +1,22 @@
-/**
- * Copyright (C) 2016, Jared Stone
- * -
- * Author: Jared Stone
- * Title: A:RC, a resource calculator for ARK:Survival Evolved
- * -
- * Web: https://github.com/jaredstone1982/CraftingCalcARK
- * Email: jaredstone1982@gmail.com
- * Twitter: @MasterxOfxNone
- * -
- * This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
  */
-package arc.resource.calculator.model;
+package arc.resource.calculator.model.category;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Base Category object
@@ -30,14 +34,14 @@ public class Category {
     // String literal of Resource Drawable to use for icon
     private final String mFile;
 
-    public Category( long _id, @Nullable String name, long parent ) {
+    public Category(long _id, @Nullable String name, long parent) {
         mId = _id;
         mName = name;
         mParent = parent;
         mFile = "folder.webp";
     }
 
-    public Category( long _id, @Nullable String name, long parent, String file ) {
+    public Category(long _id, @Nullable String name, long parent, String file) {
         mId = _id;
         mName = name;
         mParent = parent;
@@ -60,6 +64,7 @@ public class Category {
         return mFile;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "mId=" + mId + ", mName=" + mName + ", mParent=" + mParent;

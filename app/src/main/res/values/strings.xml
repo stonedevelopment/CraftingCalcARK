@@ -1,5 +1,6 @@
 <resources xmlns:x="urn:oasis:names:tc:xliff:document:1.2" xmlns:xliff="http://schemas.android.com/tools">
     <!-- LoadActivity -->
+    <string name="load_activity_image_description">load screen image</string>
 
     <!-- LoadActivity: Status Messages -->
     <string name="load_activity_status_message_error_with_message">
@@ -92,6 +93,7 @@
     <string name="content_detail_mock_text_category">Structures/Stone</string>
     <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and separates rooms.</string>
     <string name="content_detail_mock_text_station_and_level">Stone Wall can be crafted without a station, and can be crafted at any level.</string>
+    <string name="content_detail_image_description">thumbnail image of engram</string>
 
     <!-- AlertDialog -->
 
@@ -240,10 +242,11 @@
     <!-- Label for the DLC Version: Scorched Earth preference -->
     <string name="pref_dlc_label_scorched_earth">ARK:SE Scorched Earth</string>
 
-    <!-- Label for the DLC Version: Scorched Earth preference -->
+    <!-- Label for the DLC Version: Aberration preference -->
     <string name="pref_dlc_label_aberration">ARK:SE Aberration</string>
 
-    <!-- Label for the DLC Version: Vanilla preference -->
+    <!-- Label for the DLC Version: Extinction preference -->
+    <string name="pref_dlc_label_extinction">ARK:SE Extinction</string>
 
     <!-- Value in SharedPreferences for DLC Version: Vanilla -->
     <string name="pref_dlc_value_vanilla">1</string>
@@ -254,8 +257,11 @@
     <!-- Value in SharedPreferences for DLC Version: Scorched Earth -->
     <string name="pref_dlc_value_scorched_earth">3</string>
 
-    <!-- Value in SharedPreferences for DLC Version: Scorched Earth -->
+    <!-- Value in SharedPreferences for DLC Version: Aberration -->
     <string name="pref_dlc_value_aberration">4</string>
+
+    <!-- Value in SharedPreferences for DLC Version: Extinction -->
+    <string name="pref_dlc_value_extinction">5</string>
 
     <!-- Default value for DLC Version preference in SharedPreferences -->
     <string name="pref_dlc_value_default">@string/pref_dlc_value_vanilla</string>
@@ -368,6 +374,9 @@
     <string name="content_main_button_view_inventory">View Inventory</string>
 
     <!-- First Use -->
+    <string name="content_intro_image_description_background">tutorial background image</string>
+    <string name="content_intro_image_description_bob">tutorial image of bob</string>
+
     <!-- First Use: Titles -->
     <string name="content_intro_title_first">Tutorial</string>
     <string name="content_intro_title_crafting_stations">Tutorial: Crafting Stations</string>

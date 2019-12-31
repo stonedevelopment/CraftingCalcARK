@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019 Jared Stone
+ *
+ * This work is licensed under the Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0 International
+ * License. To view a copy of this license, visit
+ *
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ * or send a letter to
+ *
+ *  Creative Commons,
+ *  PO Box 1866,
+ *  Mountain View, CA 94042, USA.
+ */
+
 package arc.resource.calculator.views;
 
 import android.content.Context;
@@ -18,64 +34,64 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
     private QueueRecyclerView mRecyclerView;
 
     @Override
-    public void onError( Exception e ) {
+    public void onError(Exception e) {
         // switch view to textview, display error message
-        if ( !isTextViewShown() )
+        if (!isTextViewShown())
             showNext();
 
-        onStatusUpdate( "An error occurred while fetching crafting queue." );
+        onStatusUpdate("An error occurred while fetching crafting queue.");
 
-        ExceptionObserver.getInstance().notifyExceptionCaught( TAG, e );
+        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
     }
 
     @Override
     public void onInit() {
         // switch view to textview, display fetching message
-        if ( !isTextViewShown() )
+        if (!isTextViewShown())
             showNext();
 
-        onStatusUpdate( "Fetching crafting queue.." );
+        onStatusUpdate("Fetching crafting queue..");
     }
 
     @Override
     public void onPopulated() {
         // data is ready for viewing, switch view to recycler
-        if ( !isRecyclerViewShown() )
+        if (!isRecyclerViewShown())
             showNext();
     }
 
     @Override
     public void onEmpty() {
         // switch view to textview, display empty message
-        if ( !isTextViewShown() )
+        if (!isTextViewShown())
             showNext();
 
-        onStatusUpdate( "Crafting queue is empty." );
+        onStatusUpdate("Crafting queue is empty.");
     }
 
-    public QueueSwitcher( Context context ) {
-        super( context );
+    public QueueSwitcher(Context context) {
+        super(context);
     }
 
-    public QueueSwitcher( Context context, AttributeSet attrs ) {
-        super( context, attrs );
+    public QueueSwitcher(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     public void onCreate() {
-        Log.d( TAG, "onCreate: " );
+        Log.d(TAG, "onCreate: ");
         // set size (height) to that of 1/5 screen's width
-        int viewSize = PrefsUtil.getInstance( getContext() ).getCraftableViewSize();
-        setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, viewSize ) );
+        int viewSize = PrefsUtil.getInstance(getContext()).getCraftableViewSize();
+        setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, viewSize));
 
         // instantiate our textview for status updates
-        mTextView = ( TextView ) findViewById( R.id.textview_queue );
+        mTextView = findViewById(R.id.textview_queue);
 
         // instantiate recyclerView
-        mRecyclerView = ( QueueRecyclerView ) findViewById( R.id.gridview_queue );
+        mRecyclerView = findViewById(R.id.gridview_queue);
 
         // onResume view with switcher observer
         // set this as observer, initialize adapter, create crafting queue instance, query for saved data, if any.
-        mRecyclerView.create( this );
+        mRecyclerView.create(this);
     }
 
     public void onResume() {
@@ -83,17 +99,17 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
     }
 
     public void onPause() {
-        Log.d( TAG, "onPause: " );
+        Log.d(TAG, "onPause: ");
         mRecyclerView.pause();
     }
 
     public void onDestroy() {
-        Log.d( TAG, "onDestroy: " );
+        Log.d(TAG, "onDestroy: ");
         mRecyclerView.destroy();
     }
 
-    private void onStatusUpdate( String text ) {
-        mTextView.setText( text );
+    private void onStatusUpdate(String text) {
+        mTextView.setText(text);
     }
 
     private boolean isTextViewShown() {
