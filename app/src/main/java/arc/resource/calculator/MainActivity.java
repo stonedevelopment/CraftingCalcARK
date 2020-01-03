@@ -38,11 +38,10 @@ import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.FeedbackUtil;
-import arc.resource.calculator.views.ClearQueueButton;
 import arc.resource.calculator.views.CraftableRecyclerView;
+import arc.resource.calculator.views.CraftingQueueLayout;
 import arc.resource.calculator.views.MainSwitcher;
 import arc.resource.calculator.views.QueueRecyclerView;
-import arc.resource.calculator.views.QueueSwitcher;
 
 import static arc.resource.calculator.DetailActivity.ADD;
 import static arc.resource.calculator.DetailActivity.ERROR;
@@ -75,18 +74,15 @@ public class MainActivity extends AppCompatActivity
 
         ExceptionObserver.getInstance().registerListener(this);
 
-        QueueSwitcher queueSwitcher = findViewById(R.id.switcher_queue);
-        queueSwitcher.onCreate();
-
         MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
         mainSwitcher.onCreate();
-
-        ClearQueueButton button = findViewById(R.id.button_clear_queue);
-        button.onCreate();
 
         CraftableRecyclerView craftableRecyclerView = findViewById(
                 R.id.gridview_craftables);
         registerForContextMenu(craftableRecyclerView);
+
+        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
+        craftingQueueLayout.onCreate();
 
         QueueRecyclerView queueRecyclerView = findViewById(R.id.gridview_queue);
         registerForContextMenu(queueRecyclerView);
@@ -107,11 +103,8 @@ public class MainActivity extends AppCompatActivity
         MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
         mainSwitcher.onResume();
 
-        QueueSwitcher queueSwitcher = findViewById(R.id.switcher_queue);
-        queueSwitcher.onResume();
-
-        ClearQueueButton button = findViewById(R.id.button_clear_queue);
-        button.onResume();
+        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
+        craftingQueueLayout.onResume();
 
         mAdUtil.resume();
     }
@@ -123,11 +116,8 @@ public class MainActivity extends AppCompatActivity
         MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
         mainSwitcher.onPause();
 
-        QueueSwitcher queueSwitcher = findViewById(R.id.switcher_queue);
-        queueSwitcher.onPause();
-
-        ClearQueueButton button = findViewById(R.id.button_clear_queue);
-        button.onPause();
+        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
+        craftingQueueLayout.onPause();
 
         mAdUtil.pause();
 
@@ -143,11 +133,8 @@ public class MainActivity extends AppCompatActivity
         MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
         mainSwitcher.onDestroy();
 
-        QueueSwitcher queueSwitcher = findViewById(R.id.switcher_queue);
-        queueSwitcher.onDestroy();
-
-        ClearQueueButton button = findViewById(R.id.button_clear_queue);
-        button.onDestroy();
+        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
+        craftingQueueLayout.onDestroy();
 
         mAdUtil.destroy();
 

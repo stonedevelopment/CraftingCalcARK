@@ -47,25 +47,6 @@ public class ClearQueueButton extends AppCompatButton {
                 CraftingQueue.getInstance().clearQueue();
             }
         });
-
-        QueueObserver.getInstance().registerListener(TAG, new QueueObserver.Listener() {
-            @Override
-            public void onItemChanged(long craftableId, int quantity) {
-                if (!isEnabled())
-                    setEnabled(true);
-            }
-
-            @Override
-            public void onDataSetPopulated() {
-                if (!isEnabled())
-                    setEnabled(true);
-            }
-
-            @Override
-            public void onDataSetEmpty() {
-                setEnabled(false);
-            }
-        });
     }
 
     public void onResume() {
