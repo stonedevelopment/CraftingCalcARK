@@ -36,12 +36,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 2:
-                return new QueueFragment();
+                return QueueFragment.newInstance();
             case 1:
-                return new SearchFragment();
+                return SearchFragment.newInstance();
             case 0:
             default:
-                return new ExplorerFragment();
+                return ExplorerFragment.newInstance();
         }
     }
 

@@ -47,6 +47,7 @@ public class CraftingQueue {
 
         setQueue(new QueueMap());
 
+        //  TODO: move PrefsObserver out of CraftingQueue
         PrefsObserver.getInstance().registerListener(TAG, new PrefsObserver.Listener() {
             @Override
             public void onPreferencesChanged(boolean dlcValueChange, boolean categoryPrefChange, boolean stationPrefChange,

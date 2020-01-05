@@ -40,19 +40,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/frame_craftable_container"
-        app:layout_constraintBottom_toTopOf="@+id/explorerProgressBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/explorerNavigationTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/explorerNavigationTextView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/explorerProgressBar"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
+        style="?android:progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

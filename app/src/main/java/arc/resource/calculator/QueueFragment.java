@@ -17,6 +17,7 @@
 package arc.resource.calculator;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,11 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Objects;
 
 import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.QueueObserver;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.views.QueueRecyclerView;
+
+//  TODO:   Data states are not stable
 
 public class QueueFragment extends Fragment implements QueueRecyclerView.Listener {
     public static final String TAG = QueueFragment.class.getSimpleName();
@@ -45,6 +49,8 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
 
     private TextView mTextView;
     private QueueRecyclerView mRecyclerView;
+    private FloatingActionButton mFloatingActionButtonClear;
+    private FloatingActionButton mFloatingActionButtonStart;
     private ContentLoadingProgressBar mProgressBar;
 
     public static QueueFragment newInstance() {
@@ -60,21 +66,23 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
         mRecyclerView = rootView.findViewById(R.id.queueSwitcher);
         mProgressBar = rootView.findViewById(R.id.queueProgressBar);
 
-        FloatingActionButton fabStart = rootView.findViewById(R.id.queueFloatingActionButtonStart);
-        fabStart.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButtonStart = rootView.findViewById(R.id.queueFloatingActionButtonStart);
+        mFloatingActionButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mViewModel.setSnackBarMessage("Start crafting!");
             }
         });
 
-        FloatingActionButton fabClear = rootView.findViewById(R.id.queueFloatingActionButtonClear);
-        fabClear.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButtonClear = rootView.findViewById(R.id.queueFloatingActionButtonClear);
+        mFloatingActionButtonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CraftingQueue.getInstance().clearQueue();
             }
         });
+
+        showEmpty();
 
         return rootView;
     }
@@ -91,8 +99,21 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
             }
         });
 
+        QueueObserver.getInstance().registerListener(TAG, new QueueObserver.Listener() {
+            @Override
+            public void onDataSetPopulated() {
+                Log.d(TAG, "onDataSetPopulated: ");
+                showLoaded();
+            }
+
+            @Override
+            public void onDataSetEmpty() {
+                Log.d(TAG, "onDataSetEmpty: ");
+                showEmpty();
+            }
+        });
+
         mRecyclerView.onCreate(this);
-        mProgressBar.hide();
     }
 
     private void showSnackBar(String s) {
@@ -129,16 +150,37 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
 
     @Override
     public void onInit() {
-        mProgressBar.show();
+        Log.d(TAG, "onInit: ");
+        showLoading();
     }
 
     @Override
     public void onPopulated() {
-        mTextView.setVisibility(View.GONE);
+        Log.d(TAG, "onPopulated: ");
+        showLoaded();
     }
 
     @Override
     public void onEmpty() {
+        Log.d(TAG, "onEmpty: ");
+        showEmpty();
+    }
+
+    private void showLoading() {
+        mProgressBar.show();
+    }
+
+    private void showLoaded() {
+        mFloatingActionButtonClear.show();
+        mFloatingActionButtonStart.show();
+        mProgressBar.hide();
+        mTextView.setVisibility(View.GONE);
+    }
+
+    private void showEmpty() {
+        mFloatingActionButtonClear.hide();
+        mFloatingActionButtonStart.hide();
+        mProgressBar.hide();
         mTextView.setVisibility(View.VISIBLE);
     }
 }

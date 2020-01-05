@@ -82,13 +82,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
-//                int selectedItemId = mBottomNavigationView.getSelectedItemId();
-//                MenuItem selectedMenuItem = mBottomNavigationView.getMenu().findItem(selectedItemId);
-//                selectedMenuItem.setChecked(false);
-
                 MenuItem menuItem = mBottomNavigationView.getMenu().getItem(position);
                 int itemId = menuItem.getItemId();
-//                Log.d(TAG, "onPageSelected: menuItem: from " + selectedMenuItem.getTitle() + " to " + menuItem.getTitle());
                 mBottomNavigationView.setSelectedItemId(itemId);
             }
 

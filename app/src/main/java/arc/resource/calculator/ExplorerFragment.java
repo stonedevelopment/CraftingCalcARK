@@ -34,6 +34,8 @@ import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.views.ExplorerNavigationTextView;
 import arc.resource.calculator.views.ExplorerRecyclerView;
 
+//  TODO:   Data states are not stable
+
 public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.Listener {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
@@ -65,9 +67,9 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
         mViewModel = ViewModelProviders.of(this).get(ExplorerViewModel.class);
         // TODO: Use the ViewModel
 
+        mProgressBar.hide();
         mRecyclerView.onCreate(this);
         mTextView.onCreate();
-//        mProgressBar.hide();
     }
 
     @Override
@@ -82,7 +84,6 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
         mTextView.onResume();
         mRecyclerView.onResume();
         registerForContextMenu(mRecyclerView);
-        mProgressBar.show();
     }
 
     @Override
@@ -104,7 +105,7 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
 
     @Override
     public void onError(Exception e) {
-//        mProgressBar.hide();
+        mProgressBar.hide();
         ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
     }
 
@@ -115,12 +116,11 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
 
     @Override
     public void onPopulated() {
-//        mProgressBar.hide();
+        mProgressBar.hide();
     }
 
     @Override
     public void onEmpty() {
-        //  TODO    What to do with an empty data set in Browser?
-//        mProgressBar.hide();
+        mProgressBar.hide();
     }
 }
