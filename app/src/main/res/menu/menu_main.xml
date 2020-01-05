@@ -4,15 +4,6 @@
   tools:context=".MainActivity">
 
   <group
-    android:id="@+id/group_search">
-    <item
-      android:id="@+id/action_search"
-      android:icon="@android:drawable/ic_menu_search"
-      android:title="@string/action_title_search"
-      app:showAsAction="ifRoom"/>
-  </group>
-
-  <group
     android:id="@+id/group_settings">
     <item
       android:id="@+id/action_settings"

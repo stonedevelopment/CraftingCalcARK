@@ -23,7 +23,6 @@ import android.util.Log;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.views.MainSwitcher;
 
 // TODO: 5/16/2017 Why continue to use string resources instead of static constants?
 public class PrefsUtil {
@@ -231,10 +230,6 @@ public class PrefsUtil {
 
     public int getCraftableViewSize() {
         return getPreference(CraftableViewSizeKey, Util.NO_SIZE);
-    }
-
-    public int getMainSwitcherScreenId() {
-        return getPreference(MainSwitcherScreenIdKey, MainSwitcher.DEFAULT_SCREEN);
     }
 
     public String getSearchQuery() {

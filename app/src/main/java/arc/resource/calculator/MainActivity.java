@@ -19,17 +19,16 @@ package arc.resource.calculator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import arc.resource.calculator.adapters.ViewPagerAdapter;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.model.CraftingQueue;
@@ -38,10 +37,6 @@ import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.FeedbackUtil;
-import arc.resource.calculator.views.CraftableRecyclerView;
-import arc.resource.calculator.views.CraftingQueueLayout;
-import arc.resource.calculator.views.MainSwitcher;
-import arc.resource.calculator.views.QueueRecyclerView;
 
 import static arc.resource.calculator.DetailActivity.ADD;
 import static arc.resource.calculator.DetailActivity.ERROR;
@@ -69,26 +64,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Check to see if database was updated
-        boolean didUpdate = getIntent().getBooleanExtra(INTENT_KEY_DID_UPDATE, false);
-
+        //  Register with ExceptionObserver to catch exceptions at the highest level
         ExceptionObserver.getInstance().registerListener(this);
 
-        MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
-        mainSwitcher.onCreate();
+        //  ViewPager
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
 
-        CraftableRecyclerView craftableRecyclerView = findViewById(
-                R.id.gridview_craftables);
-        registerForContextMenu(craftableRecyclerView);
-
-        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
-        craftingQueueLayout.onCreate();
-
-        QueueRecyclerView queueRecyclerView = findViewById(R.id.gridview_queue);
-        registerForContextMenu(queueRecyclerView);
-
+        //  Set up ads
         mAdUtil = new AdUtil(this, R.id.content_main);
 
+        //  Show changeLog, if needed
         showChangeLog();
     }
 
@@ -100,24 +86,12 @@ public class MainActivity extends AppCompatActivity
 
         ExceptionObserver.getInstance().registerListener(this);
 
-        MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
-        mainSwitcher.onResume();
-
-        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
-        craftingQueueLayout.onResume();
-
         mAdUtil.resume();
     }
 
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause: ");
-
-        MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
-        mainSwitcher.onPause();
-
-        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
-        craftingQueueLayout.onPause();
 
         mAdUtil.pause();
 
@@ -129,12 +103,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: ");
-
-        MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
-        mainSwitcher.onDestroy();
-
-        CraftingQueueLayout craftingQueueLayout = findViewById(R.id.layout_crafting_queue);
-        craftingQueueLayout.onDestroy();
 
         mAdUtil.destroy();
 
@@ -160,23 +128,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-                DialogUtil.Search(MainActivity.this, new DialogUtil.Callback() {
-                    @Override
-                    public void onResult(@Nullable Object result) {
-                        String searchQuery = (String) result;
-
-                        MainSwitcher mainSwitcher = findViewById(R.id.switcher_main);
-                        mainSwitcher.onSearch(searchQuery);
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        showSnackBar(getString(R.string.toast_search_fail));
-                    }
-                }).show();
-                break;
-
             case R.id.action_settings:
                 startActivityForResult(new Intent(this, SettingsActivity.class),
                         SettingsActivity.REQUEST_CODE);
@@ -212,22 +163,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-
-        switch (v.getId()) {
-            case R.id.gridview_queue:
-                inflater.inflate(R.menu.craftable_in_queue_menu, menu);
-                break;
-
-            case R.id.gridview_craftables:
-                inflater.inflate(R.menu.displaycase_menu, menu);
-                break;
-        }
     }
 
     @Override

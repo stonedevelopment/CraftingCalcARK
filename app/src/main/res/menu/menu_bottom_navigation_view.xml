@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Jared Stone
+  ~
+  ~ This work is licensed under the Creative Commons
+  ~ Attribution-NonCommercial-NoDerivatives 4.0 International
+  ~ License. To view a copy of this license, visit
+  ~
+  ~ http://creativecommons.org/licenses/by-nc-nd/4.0/
+  ~
+  ~ or send a letter to
+  ~
+  ~  Creative Commons,
+  ~  PO Box 1866,
+  ~  Mountain View, CA 94042, USA.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuViewBrowser"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/menu_bottom_navigation_title_home" />
+    <item
+        android:id="@+id/menuSearch"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/menu_bottom_navigation_title_search" />
+    <item
+        android:id="@+id/menuViewQueue"
+        android:icon="@drawable/ic_list_black_24dp"
+        android:title="@string/menu_bottom_navigation_title" />
+</menu>

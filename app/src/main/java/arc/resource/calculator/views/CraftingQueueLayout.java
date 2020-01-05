@@ -24,7 +24,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.QueueObserver;
 
 public class CraftingQueueLayout extends LinearLayout {
@@ -51,11 +50,11 @@ public class CraftingQueueLayout extends LinearLayout {
     }
 
     public void onCreate() {
-        mQueueSwitcher = findViewById(R.id.switcher_queue);
-        mQueueSwitcher.onCreate();
-
-        mClearQueueButton = findViewById(R.id.button_clear_queue);
-        mClearQueueButton.onCreate();
+//        mQueueSwitcher = findViewById(R.id.switcher_queue);
+//        mQueueSwitcher.onCreate();
+//
+//        mClearQueueButton = findViewById(R.id.button_clear_queue);
+//        mClearQueueButton.onCreate();
 
         QueueObserver.getInstance().registerListener(TAG, new QueueObserver.Listener() {
             @Override

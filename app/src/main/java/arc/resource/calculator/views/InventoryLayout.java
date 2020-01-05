@@ -24,8 +24,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import arc.resource.calculator.R;
-
 public class InventoryLayout extends LinearLayout {
     InventorySwitcher mSwitcher;
     RawMaterialCheckBox mCheckBox;
@@ -48,11 +46,11 @@ public class InventoryLayout extends LinearLayout {
     }
 
     public void onCreate() {
-        mSwitcher = findViewById(R.id.switcher_inventory);
-        mSwitcher.onCreate();
-
-        mCheckBox = findViewById(R.id.checkbox_inventory_raw_materials);
-        mCheckBox.create();
+//        mSwitcher = findViewById(R.id.switcher_inventory);
+//        mSwitcher.onCreate();
+//
+//        mCheckBox = findViewById(R.id.checkbox_inventory_raw_materials);
+//        mCheckBox.create();
     }
 
     public void onResume() {

@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="rectangle">
     <solid android:color="@color/colorPrimary"/>
-    <stroke
-        android:width="@dimen/gridview_container_stroke_weight"
-        android:color="@color/colorAccent"/>
+<!--    <stroke-->
+<!--        android:width="@dimen/gridview_container_stroke_weight"-->
+<!--        android:color="@color/colorAccent"/>-->
 </shape>

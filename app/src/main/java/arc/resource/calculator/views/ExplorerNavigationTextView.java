@@ -23,8 +23,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import arc.resource.calculator.listeners.NavigationObserver;
 
-public class NavigationTextView extends AppCompatTextView {
-    private static final String TAG = NavigationTextView.class.getSimpleName();
+public class ExplorerNavigationTextView extends AppCompatTextView {
+    private static final String TAG = ExplorerNavigationTextView.class.getSimpleName();
 
     private NavigationObserver.Listener mListener = new NavigationObserver.Listener() {
         @Override
@@ -33,29 +33,29 @@ public class NavigationTextView extends AppCompatTextView {
         }
     };
 
-    public NavigationTextView(Context context) {
+    public ExplorerNavigationTextView(Context context) {
         super(context);
     }
 
-    public NavigationTextView(Context context, AttributeSet attrs) {
+    public ExplorerNavigationTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public NavigationTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ExplorerNavigationTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public void create() {
+    public void onCreate() {
         NavigationObserver.getInstance().registerListener(mListener);
     }
 
-    public void resume() {
+    public void onResume() {
     }
 
-    public void pause() {
+    public void onPause() {
     }
 
-    public void destroy() {
+    public void onDestroy() {
         NavigationObserver.getInstance().unregisterListener(mListener);
     }
 }

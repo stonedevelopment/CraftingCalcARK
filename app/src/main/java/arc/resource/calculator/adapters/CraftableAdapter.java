@@ -50,7 +50,7 @@ import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
-import arc.resource.calculator.views.CraftableRecyclerView;
+import arc.resource.calculator.views.ExplorerRecyclerView;
 
 import static arc.resource.calculator.adapters.CraftableAdapter.Status.HIDDEN;
 import static arc.resource.calculator.adapters.CraftableAdapter.Status.INIT;
@@ -80,7 +80,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private Context mContext;
 
-    private CraftableRecyclerView.Observer mViewObserver;
+    private ExplorerRecyclerView.Observer mViewObserver;
 
     private Status mViewStatus;
 
@@ -93,7 +93,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     enum Status {INIT, VISIBLE, HIDDEN}
 
-    public CraftableAdapter(Context context, CraftableRecyclerView.Observer observer) {
+    public CraftableAdapter(Context context, ExplorerRecyclerView.Observer observer) {
         setContext(context);
         setObserver(observer);
 
@@ -223,11 +223,11 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         this.mContext = context.getApplicationContext();
     }
 
-    private CraftableRecyclerView.Observer getObserver() {
+    private ExplorerRecyclerView.Observer getObserver() {
         return mViewObserver;
     }
 
-    private void setObserver(CraftableRecyclerView.Observer observer) {
+    private void setObserver(ExplorerRecyclerView.Observer observer) {
         mViewObserver = observer;
     }
 

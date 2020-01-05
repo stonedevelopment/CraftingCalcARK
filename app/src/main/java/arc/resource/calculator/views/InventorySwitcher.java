@@ -21,7 +21,6 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObserver;
 
 public class InventorySwitcher extends ViewSwitcher implements InventoryRecyclerView.Listener {
@@ -73,12 +72,12 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
     }
 
     public void onCreate() {
-        // instantiate our textview for status updates
-        mTextView = findViewById(R.id.textview_inventory);
-
-        // instantiate recyclerView
-        mRecyclerView = findViewById(R.id.gridview_inventory);
-        mRecyclerView.create(this);
+//        // instantiate our textview for status updates
+//        mTextView = findViewById(R.id.textview_inventory);
+//
+//        // instantiate recyclerView
+//        mRecyclerView = findViewById(R.id.gridview_inventory);
+//        mRecyclerView.create(this);
     }
 
     public void onResume() {

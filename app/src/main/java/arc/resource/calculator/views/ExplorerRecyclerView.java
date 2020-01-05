@@ -28,8 +28,8 @@ import java.util.Objects;
 import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.CraftableAdapter;
 
-public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
-    private static final String TAG = CraftableRecyclerView.class.getSimpleName();
+public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
+    private static final String TAG = ExplorerRecyclerView.class.getSimpleName();
 
     private AdapterDataObserver mDataObserver = new AdapterDataObserver() {
         @Override
@@ -47,7 +47,7 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
 
     private static Listener mListener;
 
-    interface Listener {
+    public interface Listener {
         void onError(Exception e);
 
         void onInit();
@@ -75,15 +75,15 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
         }
     }
 
-    public CraftableRecyclerView(Context context) {
+    public ExplorerRecyclerView(Context context) {
         super(context);
     }
 
-    public CraftableRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public ExplorerRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CraftableRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public ExplorerRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -95,29 +95,25 @@ public class CraftableRecyclerView extends RecyclerViewWithContextMenu {
         mListener = listener;
     }
 
-    public void create(Listener listener) {
+    public void onCreate(Listener listener) {
         int numCols = getResources().getInteger(R.integer.gridview_column_count);
         setLayoutManager(new GridLayoutManager(getContext(), numCols));
         setListener(listener);
         setAdapter(new CraftableAdapter(getContext(), new Observer()));
     }
 
-    public void resume() {
+    public void onResume() {
         Objects.requireNonNull(getAdapter()).registerAdapterDataObserver(mDataObserver);
         getAdapter().resume();
     }
 
-    public void pause() {
+    public void onPause() {
         Objects.requireNonNull(getAdapter()).unregisterAdapterDataObserver(mDataObserver);
         getAdapter().pause();
     }
 
-    public void destroy() {
+    public void onDestroy() {
         Objects.requireNonNull(getAdapter()).destroy();
-    }
-
-    public void search(String query) {
-        Objects.requireNonNull(getAdapter()).searchData(query);
     }
 
     @Override

@@ -444,5 +444,7 @@
         crafting machine! If you have any questions, suggestions,
         or just want to chat it up, don\'t be afraid to reach out. Thank you for using my app!!
     </string>
-
+    <string name="menu_bottom_navigation_title_home">Home</string>
+    <string name="menu_bottom_navigation_title_search">Search</string>
+    <string name="menu_bottom_navigation_title">Crafting Queue</string>
 </resources>

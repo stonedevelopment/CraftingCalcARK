@@ -23,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -83,11 +82,11 @@ public class QueueSwitcher extends ViewSwitcher implements QueueRecyclerView.Lis
         int viewSize = PrefsUtil.getInstance(getContext()).getCraftableViewSize();
         setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, viewSize));
 
-        // instantiate our textview for status updates
-        mTextView = findViewById(R.id.textview_queue);
-
-        // instantiate recyclerView
-        mRecyclerView = findViewById(R.id.gridview_queue);
+//        // instantiate our textview for status updates
+//        mTextView = findViewById(R.id.textview_queue);
+//
+//        // instantiate recyclerView
+//        mRecyclerView = findViewById(R.id.gridview_queue);
 
         // onResume view with switcher observer
         // set this as observer, initialize adapter, create crafting queue instance, query for saved data, if any.
