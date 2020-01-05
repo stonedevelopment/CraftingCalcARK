@@ -16,8 +16,18 @@
 
 package arc.resource.calculator;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class QueueViewModel extends ViewModel {
     // TODO: Implement the ViewModel
+    private MutableLiveData<String> mSnackBar = new MutableLiveData<>();
+
+    MutableLiveData<String> getSnackBar() {
+        return mSnackBar;
+    }
+
+    void setSnackBarMessage(String s) {
+        getSnackBar().setValue(s);
+    }
 }

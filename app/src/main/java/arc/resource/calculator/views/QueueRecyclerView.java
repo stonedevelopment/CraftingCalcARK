@@ -18,16 +18,32 @@ package arc.resource.calculator.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import java.util.Objects;
 
+import arc.resource.calculator.R;
 import arc.resource.calculator.adapters.QueueAdapter;
 
 public class QueueRecyclerView extends RecyclerViewWithContextMenu {
     private static final String TAG = QueueRecyclerView.class.getSimpleName();
+
+    private AdapterDataObserver mDataObserver = new AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            // TODO: 4/18/2017 When one is increasing quantity, have it scroll to position, but if its just updating due to data fetching
+            scrollToPosition(1);
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            Log.d(TAG, "onItemRangeChanged: " + positionStart + ", " + itemCount);
+            scrollToPosition(positionStart);
+        }
+    };
 
     private static Listener mListener;
 
@@ -80,17 +96,20 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     public void onCreate(Listener listener) {
-        setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+        int numCols = getResources().getInteger(R.integer.gridview_column_count);
+        setLayoutManager(new GridLayoutManager(getContext(), numCols));
         setListener(listener);
         setAdapter(new QueueAdapter(getContext(), new Observer()));
     }
 
     public void onResume() {
-        Objects.requireNonNull(getAdapter()).resume();
+        Objects.requireNonNull(getAdapter()).registerAdapterDataObserver(mDataObserver);
+        getAdapter().resume();
     }
 
     public void onPause() {
-        Objects.requireNonNull(getAdapter()).pause();
+        Objects.requireNonNull(getAdapter()).unregisterAdapterDataObserver(mDataObserver);
+        getAdapter().pause();
     }
 
     public void onDestroy() {

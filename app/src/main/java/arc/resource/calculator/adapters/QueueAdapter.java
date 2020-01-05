@@ -159,7 +159,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_item_queue, parent, false);
+                inflate(R.layout.list_item_craftable, parent, false);
 
         return new ViewHolder(itemView);
     }
