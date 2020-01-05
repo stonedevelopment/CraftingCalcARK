@@ -23,12 +23,23 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-public class QueueFragment extends Fragment {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.views.QueueRecyclerView;
+
+public class QueueFragment extends Fragment implements QueueRecyclerView.Listener {
+    public static final String TAG = QueueFragment.class.getSimpleName();
 
     private QueueViewModel mViewModel;
+
+    private QueueRecyclerView mRecyclerView;
+    private FloatingActionButton mFloatingActionButton;
+    private ContentLoadingProgressBar mProgressBar;
 
     public static QueueFragment newInstance() {
         return new QueueFragment();
@@ -37,7 +48,14 @@ public class QueueFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.queue_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.queue_fragment, container, false);
+
+        mRecyclerView = rootView.findViewById(R.id.queueSwitcher);
+        mProgressBar = rootView.findViewById(R.id.queueProgressBar);
+
+        mFloatingActionButton = rootView.findViewById(R.id.queueFloatingActionButton);
+
+        return rootView;
     }
 
     @Override
@@ -45,6 +63,51 @@ public class QueueFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(QueueViewModel.class);
         // TODO: Use the ViewModel
+
+        mRecyclerView.onCreate(this);
+        mProgressBar.hide();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mRecyclerView.onResume();
+        registerForContextMenu(mRecyclerView);
+    }
+
+    @Override
+    public void onPause() {
+        mRecyclerView.onPause();
+        unregisterForContextMenu(mRecyclerView);
+
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mRecyclerView.onDestroy();
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void onError(Exception e) {
+        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+    }
+
+    @Override
+    public void onInit() {
+
+    }
+
+    @Override
+    public void onPopulated() {
+
+    }
+
+    @Override
+    public void onEmpty() {
+
+    }
 }

@@ -31,7 +31,7 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
 
     private static Listener mListener;
 
-    interface Listener {
+    public interface Listener {
         void onError(Exception e);
 
         void onInit();
@@ -79,21 +79,21 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
         mListener = listener;
     }
 
-    public void create(Listener listener) {
+    public void onCreate(Listener listener) {
         setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
         setListener(listener);
         setAdapter(new QueueAdapter(getContext(), new Observer()));
     }
 
-    public void resume() {
+    public void onResume() {
         Objects.requireNonNull(getAdapter()).resume();
     }
 
-    public void pause() {
+    public void onPause() {
         Objects.requireNonNull(getAdapter()).pause();
     }
 
-    public void destroy() {
+    public void onDestroy() {
         Objects.requireNonNull(getAdapter()).destroy();
     }
 

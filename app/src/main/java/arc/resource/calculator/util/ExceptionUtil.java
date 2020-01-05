@@ -21,7 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.Arrays;
 
@@ -47,14 +47,14 @@ public class ExceptionUtil {
 
     public static void SendErrorReport(String tag, Exception e) {
         if (e.getCause() != null)
-            FirebaseCrash.logcat(Log.ERROR, tag, e.getCause().toString());
+            Crashlytics.log(Log.ERROR, tag, e.getCause().toString());
 
-        FirebaseCrash.logcat(Log.ERROR, tag, e.toString());
-        FirebaseCrash.logcat(Log.ERROR, tag, e.getMessage());
-        FirebaseCrash.logcat(Log.ERROR, tag, Arrays.toString(e.getStackTrace()));
-//        FirebaseCrash.logcat(Log.ERROR, tag, BuildErrorReportPreferencesBundle().toString());
+        Crashlytics.log(Log.ERROR, tag, e.toString());
+        Crashlytics.log(Log.ERROR, tag, e.getMessage());
+        Crashlytics.log(Log.ERROR, tag, Arrays.toString(e.getStackTrace()));
+//        Crashlytics.log(Log.ERROR, tag, BuildErrorReportPreferencesBundle().toString());
 
-        FirebaseCrash.report(e);
+        Crashlytics.logException(e);
     }
 
     // if position of requested list is out of bounds, then throw this exception

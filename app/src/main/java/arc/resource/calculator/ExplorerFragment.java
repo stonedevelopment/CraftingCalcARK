@@ -37,11 +37,11 @@ import arc.resource.calculator.views.ExplorerRecyclerView;
 public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.Listener {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
+    private ExplorerViewModel mViewModel;
+
     private ExplorerRecyclerView mRecyclerView;
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
-
-    private ExplorerViewModel mViewModel;
 
     public static ExplorerFragment newInstance() {
         return new ExplorerFragment();
@@ -67,7 +67,7 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
 
         mRecyclerView.onCreate(this);
         mTextView.onCreate();
-        mProgressBar.hide();
+//        mProgressBar.hide();
     }
 
     @Override
@@ -82,6 +82,7 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
         mTextView.onResume();
         mRecyclerView.onResume();
         registerForContextMenu(mRecyclerView);
+        mProgressBar.show();
     }
 
     @Override
@@ -103,7 +104,7 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
 
     @Override
     public void onError(Exception e) {
-        mProgressBar.hide();
+//        mProgressBar.hide();
         ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
     }
 
@@ -114,12 +115,12 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
 
     @Override
     public void onPopulated() {
-        mProgressBar.hide();
+//        mProgressBar.hide();
     }
 
     @Override
     public void onEmpty() {
         //  TODO    What to do with an empty data set in Browser?
-        mProgressBar.hide();
+//        mProgressBar.hide();
     }
 }
