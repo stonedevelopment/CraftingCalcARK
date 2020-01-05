@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorAccent">#bbffff</color>
     <color name="colorPrimary">#006670</color>
     <color name="colorPrimaryDark">#002e35</color>
-    <color name="colorAccent">#0dfdf2</color>
+
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="textColorPrimary">@color/colorWhite</color>
+    <color name="windowBackground">@color/colorPrimaryDark</color>
+
     <color name="backgroundCraftable">#383838</color>
     <color name="backgroundInventory">#383838</color>
     <color name="backgroundQueue">#969696</color>
     <color name="backgroundQueue_50">#64002e35</color>
     <color name="backgroundTranslucent">#00000000</color>
+
+    <color name="bnvBackgroundColor">@color/colorPrimary</color>
+    <color name="bnvActiveMenuItemColor">@color/colorAccent</color>
+    <color name="bnvInactiveMenuItemColor">@color/colorPrimaryDark</color>
 </resources>

@@ -22,10 +22,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import arc.resource.calculator.adapters.ViewPagerAdapter;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
 
+    private ViewPager mViewPager;
+    private BottomNavigationView mBottomNavigationView;
     private AdUtil mAdUtil;
 
     // Purchase flow -> disable menu option to disable ads
@@ -68,8 +72,42 @@ public class MainActivity extends AppCompatActivity
         ExceptionObserver.getInstance().registerListener(this);
 
         //  ViewPager
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+        mViewPager = findViewById(R.id.viewPager);
+        mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                int selectedItemId = mBottomNavigationView.getSelectedItemId();
+//                MenuItem selectedMenuItem = mBottomNavigationView.getMenu().findItem(selectedItemId);
+//                selectedMenuItem.setChecked(false);
+
+                MenuItem menuItem = mBottomNavigationView.getMenu().getItem(position);
+                int itemId = menuItem.getItemId();
+//                Log.d(TAG, "onPageSelected: menuItem: from " + selectedMenuItem.getTitle() + " to " + menuItem.getTitle());
+                mBottomNavigationView.setSelectedItemId(itemId);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        //  BottomNavigationView
+        mBottomNavigationView = findViewById(R.id.bottomNavigationView);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int index = menuItem.getOrder();
+                mViewPager.setCurrentItem(index);
+                return true;
+            }
+        });
 
         //  Set up ads
         mAdUtil = new AdUtil(this, R.id.content_main);

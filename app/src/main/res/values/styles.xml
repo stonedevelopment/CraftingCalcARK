@@ -3,12 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="AppTheme.BottomNavigationTheme">
+        <item name="colorPrimary">@color/bnvActiveMenuItemColor</item>
+        <item name="android:textColorSecondary">@color/bnvInactiveMenuItemColor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -31,11 +36,9 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay">
-    </style>
+    <style name="AppTheme.AppBarOverlay"></style>
 
-    <style name="AppTheme.PopupOverlay">
-    </style>
+    <style name="AppTheme.PopupOverlay"></style>
 
     <style name="AppTheme.Text">
         <item name="android:fontFamily">sans-serif-condensed</item>
@@ -47,7 +50,7 @@
         <item name="android:textColor">@color/backgroundQueue</item>
     </style>
 
-    <style name="AppTheme.Text.DisplayCase"/>
+    <style name="AppTheme.Text.DisplayCase" />
 
     <style name="AppTheme.Text.DisplayCase.Hierarchy">
         <!--<item name="android:textSize">@dimen/text_size_small</item>-->
@@ -88,7 +91,7 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Text.Detail"/>
+    <style name="AppTheme.Text.Detail" />
 
     <style name="AppTheme.Text.Detail.Name">
         <item name="android:textSize">@dimen/text_size_extra_large</item>
@@ -124,7 +127,7 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
-    <style name="AppTheme.Text.Detail.Resource.Name"/>
+    <style name="AppTheme.Text.Detail.Resource.Name" />
 
     <style name="AppTheme.Text.Detail.Resource.Quantity">
         <item name="android:textStyle">bold</item>
