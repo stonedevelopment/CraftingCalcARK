@@ -17,10 +17,10 @@
 package arc.resource.calculator;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +32,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.model.CraftingQueue;
 import arc.resource.calculator.views.QueueRecyclerView;
@@ -41,9 +43,8 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
 
     private QueueViewModel mViewModel;
 
+    private TextView mTextView;
     private QueueRecyclerView mRecyclerView;
-    private FloatingActionButton mFloatingActionButtonStart;
-    private FloatingActionButton mFloatingActionButtonClear;
     private ContentLoadingProgressBar mProgressBar;
 
     public static QueueFragment newInstance() {
@@ -55,19 +56,20 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.queue_fragment, container, false);
 
+        mTextView = rootView.findViewById(R.id.queueTextView);
         mRecyclerView = rootView.findViewById(R.id.queueSwitcher);
         mProgressBar = rootView.findViewById(R.id.queueProgressBar);
 
-        mFloatingActionButtonStart = rootView.findViewById(R.id.queueFloatingActionButtonStart);
-        mFloatingActionButtonStart.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabStart = rootView.findViewById(R.id.queueFloatingActionButtonStart);
+        fabStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mViewModel.setSnackBarMessage("Start crafting!");
             }
         });
 
-        mFloatingActionButtonClear = rootView.findViewById(R.id.queueFloatingActionButtonClear);
-        mFloatingActionButtonClear.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabClear = rootView.findViewById(R.id.queueFloatingActionButtonClear);
+        fabClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CraftingQueue.getInstance().clearQueue();
@@ -94,8 +96,7 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
     }
 
     private void showSnackBar(String s) {
-        Log.d(TAG, "showSnackBar: " + s);
-        Snackbar.make(getActivity().findViewById(R.id.queueCoordinatorLayout), s, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.queueCoordinatorLayout), s, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -133,11 +134,11 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
 
     @Override
     public void onPopulated() {
-
+        mTextView.setVisibility(View.GONE);
     }
 
     @Override
     public void onEmpty() {
-
+        mTextView.setVisibility(View.VISIBLE);
     }
 }

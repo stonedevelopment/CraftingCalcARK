@@ -39,6 +39,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/queueTextView"
+            style="@style/AppTheme.Text.Status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="Crafting queue is empty."
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/queueProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/queueProgressBar"
             android:layout_width="0dp"
@@ -64,9 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
+        app:fabSize="mini"
         app:layout_anchor="@id/queueFloatingActionButtonStart"
         app:layout_anchorGravity="center"
-        app:fabSize="mini"
         app:srcCompat="@drawable/ic_clear_black_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
