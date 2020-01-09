@@ -18,13 +18,14 @@ package arc.resource.calculator;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,8 +34,6 @@ import com.google.android.material.snackbar.Snackbar;
 import arc.resource.calculator.adapters.ViewPagerAdapter;
 import arc.resource.calculator.listeners.ExceptionObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.model.CraftingQueue;
-import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -54,6 +53,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
 
+    private MainViewModel mViewModel;
+
     private ViewPager mViewPager;
     private BottomNavigationView mBottomNavigationView;
     private AdUtil mAdUtil;
@@ -68,77 +69,36 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //  Register with ExceptionObserver to catch exceptions at the highest level
-        ExceptionObserver.getInstance().registerListener(this);
+        setupViewModel();
 
-        //  ViewPager
-        mViewPager = findViewById(R.id.viewPager);
-        mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        registerListeners();
 
-            }
+        setupViewPager();
 
-            @Override
-            public void onPageSelected(int position) {
-                MenuItem menuItem = mBottomNavigationView.getMenu().getItem(position);
-                int itemId = menuItem.getItemId();
-                mBottomNavigationView.setSelectedItemId(itemId);
-            }
+        setupBottomNavigation();
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+        setupAds();
 
-            }
-        });
-
-        //  BottomNavigationView
-        mBottomNavigationView = findViewById(R.id.bottomNavigationView);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int index = menuItem.getOrder();
-                mViewPager.setCurrentItem(index);
-                return true;
-            }
-        });
-
-        //  Set up ads
-        mAdUtil = new AdUtil(this, R.id.content_main);
-
-        //  Show changeLog, if needed
         showChangeLog();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        Log.d(TAG, "onResume: ");
-
-        ExceptionObserver.getInstance().registerListener(this);
-
+        registerListeners();
         mAdUtil.resume();
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause: ");
-
         mAdUtil.pause();
-
-        ExceptionObserver.getInstance().unregisterListener(this);
-
+        unregisterListeners();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG, "onDestroy: ");
-
         mAdUtil.destroy();
-
         super.onDestroy();
     }
 
@@ -152,8 +112,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onPrepareOptionsMenu(Menu menu) {
         final boolean show = super.onPrepareOptionsMenu(menu);
 
-        // set up menu to enable/disable remove ads button
-        menu.findItem(R.id.action_remove_ads).setEnabled(!mAdUtil.mRemoveAds);
+        // set up menu to enable/disable remove ads button (toggled)
+        menu.findItem(R.id.action_remove_ads).setEnabled(!mAdUtil.isRemovingAds());
 
         return show;
     }
@@ -196,52 +156,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        RecyclerContextMenuInfo menuInfo = (RecyclerContextMenuInfo) item.getMenuInfo();
-
-        final long id = menuInfo.getId();
-
-        final String name;
-
-        switch (item.getItemId()) {
-            case R.id.floating_action_remove_from_queue:
-                name = CraftingQueue.getInstance().getCraftable(id).getName();
-
-                CraftingQueue.getInstance().delete(id);
-
-                showSnackBar(
-                        String.format(getString(R.string.toast_remove_from_queue_success_format), name));
-                break;
-
-            case R.id.floating_action_edit_quantity:
-                name = CraftingQueue.getInstance().getCraftable(id).getName();
-
-                DialogUtil.EditQuantity(MainActivity.this, name, new DialogUtil.Callback() {
-                    @Override
-                    public void onResult(Object result) {
-                        int quantity = (int) result;
-                        CraftingQueue.getInstance().setQuantity(getApplicationContext(), id, quantity);
-
-                        showSnackBar(
-                                String.format(getString(R.string.toast_edit_quantity_success_format), name));
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        showSnackBar(String.format(getString(R.string.toast_edit_quantity_fail_format), name));
-                    }
-                }).show();
-                break;
-
-            case R.id.floating_action_view_details:
-                startDetailActivity(id);
-                break;
-        }
-
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -329,11 +243,17 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //  Soft Exception
+    //      Report exception
+    //      Allow app to continue operation as normal
     @Override
     public void onException(String tag, Exception e) {
         ExceptionUtil.SendErrorReport(tag, e);
     }
 
+    //  Hard Exception
+    //      Report exception
+    //      Show Error Dialog window
     @Override
     public void onFatalException(final String tag, final Exception e) {
         runOnUiThread(new Runnable() {
@@ -344,10 +264,62 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void startDetailActivity(long id) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(DetailActivity.REQUEST_ID, id);
-        startActivityForResult(intent, DetailActivity.REQUEST_CODE);
+    private void setupViewModel() {
+        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mViewModel.getStartActivityForResultTrigger().observe(this, new Observer<Intent>() {
+            @Override
+            public void onChanged(Intent intent) {
+                int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
+                startActivityForResult(intent, requestCode);
+            }
+        });
+    }
+
+    private void registerListeners() {
+        ExceptionObserver.getInstance().registerListener(this);
+    }
+
+    private void unregisterListeners() {
+        ExceptionObserver.getInstance().unregisterListener(this);
+    }
+
+    private void setupViewPager() {
+        mViewPager = findViewById(R.id.viewPager);
+        mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                MenuItem menuItem = mBottomNavigationView.getMenu().getItem(position);
+                int itemId = menuItem.getItemId();
+                mBottomNavigationView.setSelectedItemId(itemId);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void setupBottomNavigation() {
+        mBottomNavigationView = findViewById(R.id.bottomNavigationView);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int position = menuItem.getOrder();
+                mViewPager.setCurrentItem(position);
+                return true;
+            }
+        });
+    }
+
+    private void setupAds() {
+        mAdUtil = new AdUtil(this, R.id.content_main);
     }
 
     private void showChangeLog() {

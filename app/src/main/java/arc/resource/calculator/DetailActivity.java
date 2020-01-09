@@ -16,6 +16,7 @@
 
 package arc.resource.calculator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -44,11 +45,12 @@ import arc.resource.calculator.util.FeedbackUtil;
 
 public class DetailActivity extends AppCompatActivity
         implements ExceptionObserver.Listener {
-    private static final String TAG = DetailActivity.class.getSimpleName();
+    public static final String TAG = DetailActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE = 1000;
 
-    public static final String REQUEST_ID = "ID";
+    public static final String REQUEST_EXTRA_CODE = "REQUEST_CODE";
+    public static final String REQUEST_EXTRA_ID = "ID";
 
     public static final String RESULT_CODE = "CODE";
     public static final String RESULT_EXTRA_NAME = "EXTRA_NAME";
@@ -71,6 +73,13 @@ public class DetailActivity extends AppCompatActivity
 
     private boolean mIsInQueue;
 
+    public static Intent buildIntentWithId(Context context, long id) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(REQUEST_EXTRA_CODE, REQUEST_CODE);
+        intent.putExtra(REQUEST_EXTRA_ID, id);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +95,7 @@ public class DetailActivity extends AppCompatActivity
                 id = savedInstanceState.getLong(DatabaseContract.EngramEntry._ID);
                 quantity = savedInstanceState.getInt(DatabaseContract.QueueEntry.COLUMN_QUANTITY);
             } else {
-                id = Objects.requireNonNull(getIntent().getExtras()).getLong(REQUEST_ID);
+                id = Objects.requireNonNull(getIntent().getExtras()).getLong(REQUEST_EXTRA_ID);
                 quantity = 0;
             }
 

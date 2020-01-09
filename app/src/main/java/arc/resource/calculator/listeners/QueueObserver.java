@@ -29,22 +29,11 @@ public class QueueObserver {
 
     private HashMap<String, Listener> mListeners;
 
-    public static abstract class Listener {
-        public void onItemChanged(long craftableId, int quantity) {
-            // do nothing
-        }
-
-        public void onItemRemoved(long craftableId) {
-            // do nothing
-        }
-
-        public void onDataSetPopulated() {
-            // do nothing
-        }
-
-        public void onDataSetEmpty() {
-            // do nothing
-        }
+    public interface Listener {
+        void onItemChanged(long craftableId, int quantity);
+        void onItemRemoved(long craftableId);
+        void onDataSetPopulated();
+        void onDataSetEmpty();
     }
 
     public static QueueObserver getInstance() {

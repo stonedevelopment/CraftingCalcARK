@@ -73,12 +73,4 @@ public class ExceptionObserver {
             ExceptionUtil.SendErrorReport(tag, e);
         }
     }
-
-    public void throwException() {
-        notifyExceptionCaught(TAG, new Exception("Manually thrown exception."));
-    }
-
-    public void throwFatalException() {
-        notifyFatalExceptionCaught(TAG, new Exception("Manually thrown exception."));
-    }
 }

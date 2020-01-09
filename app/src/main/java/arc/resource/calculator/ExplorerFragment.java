@@ -16,9 +16,11 @@
 
 package arc.resource.calculator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,11 +30,22 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Objects;
 
 import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.views.ExplorerNavigationTextView;
 import arc.resource.calculator.views.ExplorerRecyclerView;
+
+import static android.app.Activity.RESULT_OK;
+import static arc.resource.calculator.DetailActivity.ADD;
+import static arc.resource.calculator.DetailActivity.ERROR;
+import static arc.resource.calculator.DetailActivity.REMOVE;
+import static arc.resource.calculator.DetailActivity.RESULT_CODE;
+import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
+import static arc.resource.calculator.DetailActivity.UPDATE;
 
 //  TODO:   Data states are not stable
 
@@ -75,6 +88,67 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         Objects.requireNonNull(getActivity()).getMenuInflater().inflate(R.menu.displaycase_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        RecyclerContextMenuInfo menuInfo = (RecyclerContextMenuInfo) item.getMenuInfo();
+
+
+        final long id = menuInfo.getId();
+
+        switch (item.getItemId()) {
+            case R.id.floating_action_view_details:
+                //  TODO:   Engram detail screen should be popup window?
+                startActivityForResult(DetailActivity.buildIntentWithId(getActivity(), id), DetailActivity.REQUEST_CODE);
+                break;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Bundle extras = Objects.requireNonNull(data).getExtras();
+
+        if (requestCode == DetailActivity.REQUEST_CODE) {
+            assert extras != null;
+            int extraResultCode = extras.getInt(RESULT_CODE);
+
+            if (resultCode == RESULT_OK) {
+                String name = extras.getString(RESULT_EXTRA_NAME);
+
+                switch (extraResultCode) {
+                    case REMOVE:
+                        showSnackBar(
+                                String.format(getString(R.string.toast_details_removed_format), name));
+                        break;
+
+                    case UPDATE:
+                        showSnackBar(
+                                String.format(getString(R.string.toast_details_updated_format), name));
+                        break;
+
+                    case ADD:
+                        showSnackBar(String.format(getString(R.string.toast_details_added_format), name));
+                        break;
+                }
+            } else {
+                if (extraResultCode == ERROR) {
+                    Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
+
+                    if (e != null) {
+                        showSnackBar(getString(R.string.toast_details_error));
+
+                        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+                    }
+                } else {
+                    showSnackBar(getString(R.string.toast_details_no_change));
+                }
+            }
+        }
     }
 
     @Override
@@ -122,5 +196,9 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
     @Override
     public void onEmpty() {
         mProgressBar.hide();
+    }
+
+    private void showSnackBar(String s) {
+        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.explorerCoordinatorLayout), s, Snackbar.LENGTH_SHORT).show();
     }
 }

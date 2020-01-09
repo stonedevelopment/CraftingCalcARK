@@ -49,7 +49,7 @@ public class AdUtil {
     private final AdView mAdView;
     private ActivityCheckout mCheckout;
     private boolean mLoaded = false;
-    public boolean mRemoveAds = true;
+    private boolean mRemoveAds = true;
 
     public AdUtil(Activity activity, int layoutId) {
         mAdView = new AdView(activity);
@@ -77,6 +77,10 @@ public class AdUtil {
             mAdView.destroy();
 
         mCheckout.stop();
+    }
+
+    public boolean isRemovingAds() {
+        return mRemoveAds;
     }
 
     private void loadAdView() {

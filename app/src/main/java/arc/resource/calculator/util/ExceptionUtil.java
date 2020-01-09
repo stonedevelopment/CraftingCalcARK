@@ -40,7 +40,7 @@ public class ExceptionUtil {
             @Override
             public void onCancel() {
                 // forcibly close app
-                throw new RuntimeException("Force closing.");
+                Crashlytics.getInstance().crash();
             }
         }).show();
     }
