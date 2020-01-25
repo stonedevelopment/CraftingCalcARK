@@ -14,10 +14,12 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
+package arc.resource.calculator.repository.explorer;
 
-import androidx.lifecycle.ViewModel;
-
-public class SearchViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+/**
+ * Repository for Explorer
+ *
+ * Communicates changes to explorer navigation through {@ExplorerObserver}.
+ */
+public class ExplorerRepository {
 }

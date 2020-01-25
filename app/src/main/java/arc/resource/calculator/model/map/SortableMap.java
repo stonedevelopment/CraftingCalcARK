@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jared Stone
+ * Copyright (c) 2020 Jared Stone
  *
  * This work is licensed under the Creative Commons
  * Attribution-NonCommercial-NoDerivatives 4.0 International
@@ -14,14 +14,14 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.model;
+package arc.resource.calculator.model.map;
 
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.util.ExceptionUtil;
 
 public abstract class SortableMap {
@@ -66,7 +66,7 @@ public abstract class SortableMap {
         try {
             return mValues.get(position);
         } catch (IndexOutOfBoundsException e) {
-            ExceptionObserver.getInstance().notifyFatalExceptionCaught(TAG, new
+            ExceptionObservable.getInstance().notifyFatalExceptionCaught(TAG, new
                     ExceptionUtil.PositionOutOfBoundsException(position, mValues.size(), mValues.toString()));
             return null;
         }
@@ -76,7 +76,7 @@ public abstract class SortableMap {
         set(position, keyAt(position), value);
     }
 
-    void removeAt(int position) {
+    public void removeAt(int position) {
         mKeys.remove(position);
         mValues.remove(position);
         mSize--;

@@ -25,8 +25,7 @@ import org.solovyev.android.checkout.PlayStoreListener;
 import javax.annotation.Nonnull;
 
 import arc.resource.calculator.model.Encryption;
-
-import static arc.resource.calculator.util.PurchaseUtil.buildPublicKey;
+import arc.resource.calculator.util.PurchaseUtil;
 
 public class MainApplication extends Application {
 
@@ -35,7 +34,7 @@ public class MainApplication extends Application {
         @Nonnull
         @Override
         public String getPublicKey() {
-            return Encryption.decrypt(buildPublicKey(), BuildConfig.APPLICATION_ID);
+            return Encryption.decrypt(PurchaseUtil.buildPublicKey(), BuildConfig.APPLICATION_ID);
         }
     });
 
@@ -49,7 +48,7 @@ public class MainApplication extends Application {
         mBilling.addPlayStoreListener(new PlayStoreListener() {
             @Override
             public void onPurchasesChanged() {
-
+                //  TODO    What happens after onPurchasesChanged?
             }
         });
     }

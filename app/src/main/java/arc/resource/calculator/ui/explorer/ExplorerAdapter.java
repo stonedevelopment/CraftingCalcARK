@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jared Stone
+ * Copyright (c) 2020 Jared Stone
  *
  * This work is licensed under the Creative Commons
  * Attribution-NonCommercial-NoDerivatives 4.0 International
@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.adapters;
+package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -37,32 +37,30 @@ import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.listeners.NavigationObserver;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.listeners.QueueObserver;
+import arc.resource.calculator.repository.queue.QueueObserver;
+import arc.resource.calculator.model.map.CategoryMap;
+import arc.resource.calculator.model.map.CraftableMap;
+import arc.resource.calculator.model.Station;
+import arc.resource.calculator.model.map.StationMap;
 import arc.resource.calculator.model.category.BackCategory;
 import arc.resource.calculator.model.category.Category;
-import arc.resource.calculator.model.CraftingQueue;
-import arc.resource.calculator.model.SortableMap;
-import arc.resource.calculator.model.Station;
 import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
-import arc.resource.calculator.views.ExplorerRecyclerView;
 
-import static arc.resource.calculator.adapters.CraftableAdapter.Status.HIDDEN;
-import static arc.resource.calculator.adapters.CraftableAdapter.Status.INIT;
-import static arc.resource.calculator.adapters.CraftableAdapter.Status.VISIBLE;
+import static android.view.View.VISIBLE;
 import static arc.resource.calculator.util.Util.NO_ID;
 import static arc.resource.calculator.util.Util.NO_NAME;
 import static arc.resource.calculator.util.Util.NO_PATH;
 import static arc.resource.calculator.util.Util.NO_QUANTITY;
 
-public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.ViewHolder> {
-
-    private static final String TAG = CraftableAdapter.class.getSimpleName();
+public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> {
+    private static final String TAG = ExplorerAdapter.class.getSimpleName();
 
     public static final long ROOT = 0;
     private static final long NO_STATION = -1;
@@ -82,88 +80,50 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
     private ExplorerRecyclerView.Observer mViewObserver;
 
-    private Status mViewStatus;
-
     private FetchDataTask mFetchDataTask;
     private SearchDataTask mSearchDataTask;
 
-    private boolean mNeedsUpdate;
+    private QueueRepository mQueueRepository;
 
-    private boolean mNeedsFullUpdate;
+    @Override
+    public void onDataSetPopulated() {
+        updateQuantities();
+    }
 
-    enum Status {INIT, VISIBLE, HIDDEN}
+    @Override
+    public void onDataSetEmpty() {
+        clearQuantities();
+    }
 
-    public CraftableAdapter(Context context, ExplorerRecyclerView.Observer observer) {
+    @Override
+    public void onItemChanged(long craftableId, int quantity) {
+        if (getCraftableMap().contains(craftableId)) {
+            int position = getCraftableMap().indexOfKey(craftableId);
+            getCraftable(position).setQuantity(quantity);
+            notifyItemChanged(adjustPositionFromCraftable(position));
+        }
+    }
+
+    @Override
+    public void onItemRemoved(long craftableId) {
+        if (getCraftableMap().contains(craftableId)) {
+            int position = getCraftableMap().indexOfKey(craftableId);
+            getCraftable(position).resetQuantity();
+            notifyItemChanged(adjustPositionFromCraftable(position));
+        }
+    }
+
+    ExplorerAdapter(Context context, ExplorerRecyclerView.Observer observer) {
         setContext(context);
         setObserver(observer);
 
-        PrefsUtil prefs = PrefsUtil.getInstance(context);
+        setupMaps();
 
-        // Retrieve last viewed category level and parent from previous use
-        setCurrentCategoryLevels(prefs.getLastCategoryLevel(), prefs.getLastCategoryParent());
+        setupPrefs();
 
-        // Retrieve last viewed Station id
-        setCurrentStationId(prefs.getLastStationId());
+        setupRepository();
 
-        // Setup custom SparseArrays
-        setStations(new StationMap());
-        setCategories(new CategoryMap());
-        setCraftables(new CraftableMap());
-
-        String searchQuery = PrefsUtil.getInstance(context).getSearchQuery();
-        setSearchQuery(searchQuery);
-
-        mNeedsUpdate = false;
-
-        QueueObserver.getInstance().registerListener(TAG, new QueueObserver.Listener() {
-            public void onDataSetPopulated() {
-                if (mViewStatus == VISIBLE) {
-                    updateQuantities();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onItemChanged(long craftableId, int quantity) {
-                Log.d(TAG, "onItemChanged: ");
-                if (mViewStatus == VISIBLE) {
-                    Log.d(TAG, "onItemChanged: visible");
-                    if (getCraftableMap().contains(craftableId)) {
-                        int position = getCraftableMap().indexOfKey(craftableId);
-                        getCraftable(position).setQuantity(quantity);
-                        notifyItemChanged(adjustPositionFromCraftable(position));
-                    }
-                } else {
-                    Log.d(TAG, "onItemChanged: not visible: needs  updating");
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onItemRemoved(long craftableId) {
-                Log.d(TAG, "onItemRemoved: ");
-                if (mViewStatus == VISIBLE) {
-                    if (getCraftableMap().contains(craftableId)) {
-                        int position = getCraftableMap().indexOfKey(craftableId);
-                        getCraftable(position).resetQuantity();
-                        notifyItemChanged(adjustPositionFromCraftable(position));
-                    }
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onDataSetEmpty() {
-                Log.d(TAG, "onDataSetEmpty: ");
-                if (mViewStatus == VISIBLE) {
-                    clearQuantities();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-        });
+        setupSearch();
 
         PrefsObserver.getInstance().registerListener(TAG, new PrefsObserver.Listener() {
             @Override
@@ -197,12 +157,35 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
     }
 
+    private void setupSearch() {
+        String searchQuery = PrefsUtil.getInstance(getContext()).getSearchQuery();
+        setSearchQuery(searchQuery);
+    }
+
+    private void setupPrefs() {
+        PrefsUtil prefs = PrefsUtil.getInstance(getContext());
+
+        // Retrieve last viewed category level and parent from previous use
+        setCurrentCategoryLevels(prefs.getLastCategoryLevel(), prefs.getLastCategoryParent());
+
+        // Retrieve last viewed Station id
+        setCurrentStationId(prefs.getLastStationId());
+
+    }
+
+    private void setupMaps() {
+        setStations(new StationMap());
+        setCategories(new CategoryMap());
+        setCraftables(new CraftableMap());
+
+    }
+
     @Override
     public void registerAdapterDataObserver(@NonNull RecyclerView.AdapterDataObserver observer) {
         try {
             super.registerAdapterDataObserver(observer);
         } catch (IllegalStateException e) {
-            // do nothing
+            ExceptionUtil.SendErrorReport(TAG, e);
         }
     }
 
@@ -211,8 +194,57 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         try {
             super.unregisterAdapterDataObserver(observer);
         } catch (IllegalStateException e) {
-            // do nothing
+            ExceptionUtil.SendErrorReport(TAG, e);
         }
+    }
+
+    private void setupRepository() {
+        mQueueRepository = QueueRepository.getInstance();
+        mQueueRepository.addObserver(TAG, new QueueObserver() {
+            public void onQueueDataPopulated() {
+                updateQuantities();
+            }
+
+            @Override
+            public void onItemChanged(long craftableId, int quantity) {
+                Log.d(TAG, "onItemChanged: ");
+                if (mViewStatus == VISIBLE) {
+                    Log.d(TAG, "onItemChanged: visible");
+                    if (getCraftableMap().contains(craftableId)) {
+                        int position = getCraftableMap().indexOfKey(craftableId);
+                        getCraftable(position).setQuantity(quantity);
+                        notifyItemChanged(adjustPositionFromCraftable(position));
+                    }
+                } else {
+                    Log.d(TAG, "onItemChanged: not visible: needs  updating");
+                    mNeedsUpdate = true;
+                }
+            }
+
+            @Override
+            public void onItemRemoved(long craftableId) {
+                Log.d(TAG, "onItemRemoved: ");
+                if (mViewStatus == VISIBLE) {
+                    if (getCraftableMap().contains(craftableId)) {
+                        int position = getCraftableMap().indexOfKey(craftableId);
+                        getCraftable(position).resetQuantity();
+                        notifyItemChanged(adjustPositionFromCraftable(position));
+                    }
+                } else {
+                    mNeedsUpdate = true;
+                }
+            }
+
+            @Override
+            public void onQueueDataEmpty() {
+                Log.d(TAG, "onQueueDataEmpty: ");
+                if (mViewStatus == VISIBLE) {
+                    clearQuantities();
+                } else {
+                    mNeedsUpdate = true;
+                }
+            }
+        });
     }
 
     private Context getContext() {
@@ -432,7 +464,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             throw new ExceptionUtil.PositionOutOfBoundsException(position, getItemCount(),
                     getItemContents());
         } catch (ExceptionUtil.PositionOutOfBoundsException e) {
-            ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+            ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
 
             return NO_ID;
         }
@@ -455,7 +487,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             throw new ExceptionUtil.PositionOutOfBoundsException(position, getItemCount(),
                     getItemContents());
         } catch (ExceptionUtil.PositionOutOfBoundsException e) {
-            ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+            ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
 
             return NO_PATH;
         }
@@ -478,7 +510,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
             throw new ExceptionUtil.PositionOutOfBoundsException(position, getItemCount(),
                     getItemContents());
         } catch (ExceptionUtil.PositionOutOfBoundsException e) {
-            ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+            ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
 
             return NO_NAME;
         }
@@ -513,13 +545,13 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
     }
 
     private void increaseQuantity(int position) {
-        CraftingQueue.getInstance()
-                .increaseQuantity(getCraftable(adjustPositionForCraftable(position)));
+        mQueueRepository.increaseQuantity(getCraftable(adjustPositionForCraftable(position)));
     }
 
+    /**
+     * Updates quantity of Craftable if it exists in Crafting Queue, notifies adapter of changes.
+     */
     private void updateQuantities() {
-        CraftingQueue craftingQueue = CraftingQueue.getInstance();
-
         for (int i = 0; i < getCraftableMap().size(); i++) {
             DisplayEngram craftable = getCraftable(i);
 
@@ -527,8 +559,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
             // if queue contains this craftable's _id, check if quantity is different, if so, update
             // if queue does not contain and if quantity is above 0, reset quantity back to 0, update
-            if (craftingQueue.contains(id)) {
-                int quantity = craftingQueue.getCraftable(id).getQuantity();
+            if (mQueueRepository.containsCraftable(id)) {
+                int quantity = mQueueRepository.getQuantity(id);
 
                 if (craftable.getQuantity() != quantity) {
                     craftable.setQuantity(quantity);
@@ -543,10 +575,12 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
 
         notifyDataSetChanged();
-
-        mNeedsUpdate = false;
     }
 
+    /**
+     * Zeroes out the quantities of all Craftables being displayed on screen. Notifies adapter of
+     * changes, if changes were made.
+     */
     private void clearQuantities() {
         boolean didUpdate = false;
 
@@ -571,8 +605,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 return new CraftableMap();
             }
 
-            CraftingQueue craftingQueue = CraftingQueue.getInstance();
-
             CraftableMap craftables = new CraftableMap();
             while (cursor.moveToNext()) {
                 long _id = cursor.getLong(cursor.getColumnIndex(DatabaseContract.EngramEntry._ID));
@@ -588,8 +620,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
                 int quantity = 0;
 
-                if (craftingQueue.contains(_id)) {
-                    quantity = craftingQueue.getCraftable(_id).getQuantity();
+                if (mQueueRepository.containsCraftable(_id)) {
+                    quantity = mQueueRepository.getQuantity(_id);
                 }
 
                 craftables
@@ -609,8 +641,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                 return new CraftableMap();
             }
 
-            CraftingQueue craftingQueue = CraftingQueue.getInstance();
-
             CraftableMap craftables = new CraftableMap();
             while (cursor.moveToNext()) {
                 long _id = cursor.getLong(cursor.getColumnIndex(DatabaseContract.EngramEntry._ID));
@@ -626,8 +656,8 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
                 int quantity = 0;
 
-                if (craftingQueue.contains(_id)) {
-                    quantity = craftingQueue.getCraftable(_id).getQuantity();
+                if (mQueueRepository.containsCraftable(_id)) {
+                    quantity = mQueueRepository.getQuantity(_id);
                 }
 
                 craftables
@@ -744,7 +774,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     cursor.getString(cursor.getColumnIndex(DatabaseContract.CategoryEntry.COLUMN_NAME)),
                     cursor.getLong(cursor.getColumnIndex(DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY)));
         }
-
     }
 
     private CategoryMap queryForCategories(Uri uri) {
@@ -914,7 +943,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
 
             NavigationObserver.getInstance().update(builder.toString());
         } catch (ExceptionUtil.CursorNullException | ExceptionUtil.CursorEmptyException e) {
-            ExceptionObserver.getInstance().notifyFatalExceptionCaught(TAG, e);
+            ExceptionObservable.getInstance().notifyFatalExceptionCaught(TAG, e);
         }
 
     }
@@ -957,163 +986,6 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         new SearchDataTask().execute();
     }
 
-    private class FetchDataTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String TAG = FetchDataTask.class.getSimpleName();
-
-        private StationMap mTempStationMap;
-        private CategoryMap mTempCategoryMap;
-        private CraftableMap mTempCraftableMap;
-
-        private Exception mException;
-
-        FetchDataTask() {
-        }
-
-        @Override
-        protected void onPreExecute() {
-            if (getObserver() != null) {
-                getObserver().notifyInitializing();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean querySuccessful) {
-            if (querySuccessful) {
-                setStations(mTempStationMap);
-                setCategories(mTempCategoryMap);
-                setCraftables(mTempCraftableMap);
-
-                notifyDataSetChanged();
-
-                if (getObserver() != null) {
-                    getObserver().notifyDataSetPopulated();
-                }
-
-                mNeedsFullUpdate = false;
-
-                if (mViewStatus == INIT) {
-                    mViewStatus = VISIBLE;
-
-                    updateQuantities();
-                }
-
-                buildHierarchy();
-            } else {
-                if (mException == null) {
-                    mException = new Exception("Nullified Exception caught.");
-                }
-
-                if (getObserver() != null) {
-                    getObserver().notifyExceptionCaught(mException);
-                }
-            }
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            try {
-                long dlc_id = PrefsUtil.getInstance(getContext()).getDLCPreference();
-
-                mTempStationMap = new StationMap();
-                mTempCategoryMap = new CategoryMap();
-                mTempCraftableMap = new CraftableMap();
-
-                Uri craftableUri = null;
-                Uri categoryUri = null;
-                Uri stationUri = null;
-                Category backCategory = null;
-                if (isFilteredByCategory()) {
-                    if (isFilteredByStation()) {
-                        if (isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION) {
-                            stationUri = DatabaseContract.StationEntry.buildUriWithDLCId(dlc_id);
-                        } else {
-                            if (isFilteredByLevel()) {
-                                craftableUri = DatabaseContract.EngramEntry.buildUriWithCategoryIdStationIdAndLevel(
-                                        dlc_id,
-                                        getCurrentCategoryLevel(),
-                                        getCurrentStationId(),
-                                        getRequiredLevelPref());
-                            } else {
-                                craftableUri = DatabaseContract.EngramEntry.buildUriWithCategoryIdAndStationId(
-                                        dlc_id,
-                                        getCurrentCategoryLevel(),
-                                        getCurrentStationId());
-                            }
-
-                            if (isCurrentCategoryLevelRoot()) {
-                                backCategory = BuildBackCategoryToStationRoot();
-                            } else {
-                                backCategory = BuildBackCategory();
-                            }
-
-                            categoryUri = DatabaseContract.CategoryEntry
-                                    .buildUriWithStationId(dlc_id, getCurrentCategoryLevel(), getCurrentStationId());
-                        }
-                    } else {
-                        if (isFilteredByLevel()) {
-                            craftableUri = DatabaseContract.EngramEntry.buildUriWithCategoryIdAndLevel(
-                                    dlc_id,
-                                    getCurrentCategoryLevel(),
-                                    getRequiredLevelPref());
-                        } else {
-                            craftableUri = DatabaseContract.EngramEntry.buildUriWithCategoryId(
-                                    dlc_id,
-                                    getCurrentCategoryLevel());
-                        }
-
-                        if (!isCurrentCategoryLevelRoot()) {
-                            backCategory = BuildBackCategory();
-                        }
-
-                        categoryUri = DatabaseContract.CategoryEntry
-                                .buildUriWithParentId(dlc_id, getCurrentCategoryLevel());
-                    }
-                } else {
-                    if (isFilteredByStation()) {
-                        if (isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION) {
-                            stationUri = DatabaseContract.StationEntry.buildUriWithDLCId(dlc_id);
-                        } else {
-                            if (isFilteredByLevel()) {
-                                craftableUri = DatabaseContract.EngramEntry.buildUriWithStationIdAndLevel(
-                                        dlc_id,
-                                        getCurrentStationId(),
-                                        getRequiredLevelPref());
-                            } else {
-                                craftableUri = DatabaseContract.EngramEntry.buildUriWithStationId(
-                                        dlc_id,
-                                        getCurrentStationId());
-                            }
-
-                            backCategory = BuildBackCategoryToStationRoot();
-                        }
-                    } else {
-                        if (isFilteredByLevel()) {
-                            craftableUri = DatabaseContract.EngramEntry
-                                    .buildUriWithLevel(dlc_id, getRequiredLevelPref());
-                        } else {
-                            craftableUri = DatabaseContract.EngramEntry.buildUriWithDLCId(dlc_id);
-                        }
-                    }
-                }
-
-                mTempStationMap = queryForStations(stationUri);
-
-                if (backCategory != null) {
-                    mTempCategoryMap.add(backCategory.getId(), backCategory);
-                }
-
-                mTempCategoryMap.addAll(queryForCategories(categoryUri));
-
-                mTempCraftableMap = queryForEngrams(craftableUri);
-                return true;
-            } catch (Exception e) {
-                mException = e;
-                return false;
-            }
-        }
-    }
 
     private class SearchDataTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -1299,7 +1171,7 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
                     changeStation(position);
                 }
             } catch (ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e) {
-                ExceptionObserver.getInstance().notifyFatalExceptionCaught(TAG, e);
+                ExceptionObservable.getInstance().notifyFatalExceptionCaught(TAG, e);
             }
         }
 
@@ -1309,54 +1181,4 @@ public class CraftableAdapter extends RecyclerView.Adapter<CraftableAdapter.View
         }
     }
 
-    private class CraftableMap extends SortableMap {
-
-        CraftableMap() {
-            super();
-        }
-
-        @Override
-        public DisplayEngram valueAt(int position) {
-            return (DisplayEngram) super.valueAt(position);
-        }
-
-        @Override
-        public Comparable getComparable(int position) {
-            return valueAt(position).getName();
-        }
-    }
-
-    private class StationMap extends SortableMap {
-
-        StationMap() {
-            super();
-        }
-
-        @Override
-        public Station valueAt(int position) {
-            return (Station) super.valueAt(position);
-        }
-
-        @Override
-        public Comparable getComparable(int position) {
-            return valueAt(position).getName();
-        }
-    }
-
-    private class CategoryMap extends SortableMap {
-
-        CategoryMap() {
-            super();
-        }
-
-        @Override
-        public Category valueAt(int position) {
-            return (Category) super.valueAt(position);
-        }
-
-        @Override
-        public Comparable getComparable(int position) {
-            return valueAt(position).getName();
-        }
-    }
 }

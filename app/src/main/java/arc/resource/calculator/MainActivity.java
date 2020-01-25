@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,7 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import arc.resource.calculator.adapters.ViewPagerAdapter;
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
@@ -47,7 +46,7 @@ import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
 import static arc.resource.calculator.DetailActivity.UPDATE;
 
 public class MainActivity extends AppCompatActivity
-        implements ExceptionObserver.Listener {
+        implements ExceptionObservable.Observer {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -178,21 +177,21 @@ public class MainActivity extends AppCompatActivity
 
                             switch (extraResultCode) {
                                 case REMOVE:
-//                                    CraftingQueue.getInstance().delete( id );
+//                                    QueueRepository.getInstance().delete( id );
 
                                     showSnackBar(
                                             String.format(getString(R.string.toast_details_removed_format), name));
                                     break;
 
                                 case UPDATE:
-//                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
+//                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
 
                                     showSnackBar(
                                             String.format(getString(R.string.toast_details_updated_format), name));
                                     break;
 
                                 case ADD:
-//                                    CraftingQueue.getInstance().setQuantity( this, id, quantity );
+//                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
 
                                     showSnackBar(String.format(getString(R.string.toast_details_added_format), name));
                                     break;
@@ -204,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                                 if (e != null) {
                                     showSnackBar(getString(R.string.toast_details_error));
 
-                                    ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+                                    ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
                                 }
                             } else {
                                 showSnackBar(getString(R.string.toast_details_no_change));
@@ -266,7 +265,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewModel() {
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mViewModel.getStartActivityForResultTrigger().observe(this, new Observer<Intent>() {
+        mViewModel.getStartActivityForResultTrigger().observe(this, new androidx.lifecycle.Observer() {
             @Override
             public void onChanged(Intent intent) {
                 int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
@@ -276,11 +275,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void registerListeners() {
-        ExceptionObserver.getInstance().registerListener(this);
+        ExceptionObservable.getInstance().registerListener(this);
     }
 
     private void unregisterListeners() {
-        ExceptionObserver.getInstance().unregisterListener(this);
+        ExceptionObservable.getInstance().unregisterListener(this);
     }
 
     private void setupViewPager() {

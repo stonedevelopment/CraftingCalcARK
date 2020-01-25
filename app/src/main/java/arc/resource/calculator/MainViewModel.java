@@ -32,7 +32,7 @@ public class MainViewModel extends ViewModel {
         return mStartActivityForResultTrigger;
     }
 
-    void startActivityForResult(Intent intent) {
+    public void startActivityForResult(Intent intent) {
         Bundle bundle = new Bundle();
         getStartActivityForResultTrigger().setValue(intent);
     }

@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
+package arc.resource.calculator.ui.explorer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,10 +34,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.DetailActivity;
+import arc.resource.calculator.R;
+import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
-import arc.resource.calculator.views.ExplorerNavigationTextView;
-import arc.resource.calculator.views.ExplorerRecyclerView;
 
 import static android.app.Activity.RESULT_OK;
 import static arc.resource.calculator.DetailActivity.ADD;
@@ -94,14 +94,11 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
     public boolean onContextItemSelected(MenuItem item) {
         RecyclerContextMenuInfo menuInfo = (RecyclerContextMenuInfo) item.getMenuInfo();
 
-
         final long id = menuInfo.getId();
 
-        switch (item.getItemId()) {
-            case R.id.floating_action_view_details:
-                //  TODO:   Engram detail screen should be popup window?
-                startActivityForResult(DetailActivity.buildIntentWithId(getActivity(), id), DetailActivity.REQUEST_CODE);
-                break;
+        if (item.getItemId() == R.id.floating_action_view_details) {
+            //  TODO:   Engram detail screen should be popup window?
+            startActivityForResult(DetailActivity.buildIntentWithId(getActivity(), id), DetailActivity.REQUEST_CODE);
         }
 
         return super.onContextItemSelected(item);
@@ -142,7 +139,7 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
                     if (e != null) {
                         showSnackBar(getString(R.string.toast_details_error));
 
-                        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+                        ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
                     }
                 } else {
                     showSnackBar(getString(R.string.toast_details_no_change));
@@ -180,11 +177,11 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
     @Override
     public void onError(Exception e) {
         mProgressBar.hide();
-        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+        ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
     }
 
     @Override
-    public void onInit() {
+    public void onLoading() {
         mProgressBar.show();
     }
 

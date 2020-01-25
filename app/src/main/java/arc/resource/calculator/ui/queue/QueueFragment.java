@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
+package arc.resource.calculator.ui.queue;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -37,16 +37,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
-import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.listeners.QueueObserver;
-import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.DetailActivity;
+import arc.resource.calculator.MainViewModel;
+import arc.resource.calculator.R;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
+import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.util.DialogUtil;
-import arc.resource.calculator.views.QueueRecyclerView;
 
-//  TODO:   Data states are not stable
-
-public class QueueFragment extends Fragment implements QueueRecyclerView.Listener, QueueObserver.Listener {
+public class QueueFragment extends Fragment {
     public static final String TAG = QueueFragment.class.getSimpleName();
 
     private QueueViewModel mViewModel;
@@ -74,7 +72,7 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
         mFloatingActionButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSnackBar("Start Crafting!");    //  TODO:   String resource for hard-coded string "Start Crafting!"
+                mViewModel.startCrafting();
             }
         });
 
@@ -82,15 +80,9 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
         mFloatingActionButtonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  TODO:   Create request system for CraftingQueue, instead of communicating directly with it
-                CraftingQueue.getInstance().clearQueue();   //  TODO:   Show confirmation dialog for clearing the queue?
-
-                //  Lazy display a message to user
-                showSnackBar("Crafting Queue has been cleared.");
+                mViewModel.requestToClearQueue();   //  TODO:   Show confirmation dialog for clearing the queue?
             }
         });
-
-        showEmpty();
 
         return rootView;
     }
@@ -101,7 +93,7 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
 
         setupViewModel();
 
-        mRecyclerView.onCreate(this);
+        mRecyclerView.onCreate();
     }
 
     @Override
@@ -135,126 +127,124 @@ public class QueueFragment extends Fragment implements QueueRecyclerView.Listene
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        RecyclerContextMenuInfo menuInfo = (RecyclerContextMenuInfo) item.getMenuInfo();
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        RecyclerContextMenuInfo menuInfo = (RecyclerContextMenuInfo) menuItem.getMenuInfo();
 
-        final long id = menuInfo.getId();
+        final long engramId = menuInfo.getId();
 
-        final String name = CraftingQueue.getInstance().getCraftable(id).getName();
-
-        switch (item.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.floating_action_remove_from_queue:
-                CraftingQueue.getInstance().delete(id);
-
-                showSnackBar(
-                        String.format(getString(R.string.toast_remove_from_queue_success_format), name));
+                mViewModel.requestToRemoveEngram(engramId);
                 break;
 
             case R.id.floating_action_edit_quantity:
-                DialogUtil.EditQuantity(getActivity(), name, new DialogUtil.Callback() {
-                    @Override
-                    public void onResult(Object result) {
-                        int quantity = (int) result;
-                        CraftingQueue.getInstance().setQuantity(Objects.requireNonNull(getActivity()).getApplicationContext(), id, quantity);
-
-                        showSnackBar(
-                                String.format(getString(R.string.toast_edit_quantity_success_format), name));
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        showSnackBar(String.format(getString(R.string.toast_edit_quantity_fail_format), name));
-                    }
-                }).show();
+                showEditQuantityDialog(engramId);
                 break;
             case R.id.floating_action_view_details:
                 MainViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MainViewModel.class);
-                viewModel.startActivityForResult(DetailActivity.buildIntentWithId(getActivity(), id));
+                viewModel.startActivityForResult(DetailActivity.buildIntentWithId(getActivity(), engramId));
                 break;
         }
 
-        return super.onContextItemSelected(item);
-    }
-
-    @Override
-    public void onError(Exception e) {
-        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
-    }
-
-    @Override
-    public void onInit() {
-        showLoading();
-    }
-
-    @Override
-    public void onPopulated() {
-        showLoaded();
-    }
-
-    @Override
-    public void onEmpty() {
-        showEmpty();
-    }
-
-    @Override
-    public void onItemChanged(long craftableId, int quantity) {
-        //  intentionally left blank
-    }
-
-    @Override
-    public void onItemRemoved(long craftableId) {
-        // intentionally left blank
-    }
-
-    @Override
-    public void onDataSetPopulated() {
-        showLoaded();
-    }
-
-    @Override
-    public void onDataSetEmpty() {
-        showEmpty();
+        return super.onContextItemSelected(menuItem);
     }
 
     private void setupViewModel() {
         mViewModel = ViewModelProviders.of(this).get(QueueViewModel.class);
-        mViewModel.getSnackBar().observe(this, new Observer<String>() {
+        mViewModel.getSnackBarMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 showSnackBar(s);
             }
         });
+        mViewModel.getViewModelState().observe(this, new Observer<QueueViewModelState>() {
+            @Override
+            public void onChanged(QueueViewModelState viewModelState) {
+                switch (viewModelState) {
+                    case POPULATING:
+                        showLoading();
+                        break;
+                    case POPULATED:
+                        showLoaded();
+                        break;
+                    case EMPTY:
+                        showEmpty();
+                        break;
+                }
+            }
+        });
     }
 
     private void registerListeners() {
-        QueueObserver.getInstance().registerListener(TAG, this);
+        mViewModel.registerListeners();
     }
 
     private void unregisterListeners() {
-        QueueObserver.getInstance().unregisterListener(TAG);
+        mViewModel.unregisterListeners();
     }
 
     private void showLoading() {
+        Log.d(TAG, "showLoading: ");
+
+        //  hide views
+        mTextView.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
+        mFloatingActionButtonClear.hide();
+        mFloatingActionButtonStart.hide();
+
+        //  show views
         mProgressBar.show();
     }
 
     private void showLoaded() {
         Log.d(TAG, "showLoaded: ");
-        mFloatingActionButtonClear.show();
-        mFloatingActionButtonStart.show();
+
+        //  hide views
         mProgressBar.hide();
         mTextView.setVisibility(View.GONE);
+
+        //  show views
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mFloatingActionButtonClear.show();
+        mFloatingActionButtonStart.show();
     }
 
     private void showEmpty() {
         Log.d(TAG, "showEmpty: ");
+
+        //  hide views
+        mProgressBar.hide();
+        mRecyclerView.setVisibility(View.GONE);
         mFloatingActionButtonClear.hide();
         mFloatingActionButtonStart.hide();
-        mProgressBar.hide();
+
+        //  show views
         mTextView.setVisibility(View.VISIBLE);
     }
 
-    private void showSnackBar(String s) {
-        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.queueCoordinatorLayout), s, Snackbar.LENGTH_SHORT).show();
+    private void showEditQuantityDialog(final long engramId) {
+        DialogUtil.EditQuantity(getActivity(), engramId, new DialogUtil.Callback() {
+            @Override
+            public void onResult(Object result) {
+                int quantity = (int) result;
+
+                mViewModel.requestToUpdateEngramQuantity(engramId, quantity);
+            }
+
+            @Override
+            public void onCancel(Object obj) {
+                QueueEngram engram = (QueueEngram) obj;
+
+                if (engram != null)
+                    showSnackBar(String.format(getString(R.string.snackbar_message_edit_quantity_fail_format), engram.getName()));
+                else
+                    showSnackBar(getString(R.string.snackbar_message_edit_quantity_fail));
+
+            }
+        }).show();
+    }
+
+    private void showSnackBar(String message) {
+        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.queueCoordinatorLayout), message, Snackbar.LENGTH_SHORT).show();
     }
 }

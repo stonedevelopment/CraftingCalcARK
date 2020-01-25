@@ -18,11 +18,11 @@ package arc.resource.calculator.model.engram;
 import androidx.annotation.NonNull;
 
 /**
- * Engram object that uses a yielded quantity for working with totals in the CraftingQueue
+ * Engram object that uses a yielded quantity for working with totals in the QueueRepository
  */
 public class QueueEngram extends Engram {
 
-    // Quantity used to keep track of how many Engrams in CraftingQueue
+    // Quantity used to keep track of how many Engrams in QueueRepository
     private int mQuantity;
 
     public QueueEngram(long id, String name, String folder, String file, int yield, int quantity) {

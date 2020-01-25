@@ -22,8 +22,8 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import arc.resource.calculator.listeners.QueueObserver;
-import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.repository.queue.QueueRepository;
+import arc.resource.calculator.repository.queue.QueueObserver;
 
 public class ClearQueueButton extends AppCompatButton {
     private static final String TAG = ClearQueueButton.class.getSimpleName();
@@ -44,7 +44,7 @@ public class ClearQueueButton extends AppCompatButton {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CraftingQueue.getInstance().clearQueue();
+                QueueRepository.getInstance().requestToClearQueue();
             }
         });
     }

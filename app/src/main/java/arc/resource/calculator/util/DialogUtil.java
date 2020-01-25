@@ -28,6 +28,8 @@ import androidx.appcompat.app.AlertDialog;
 import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseHelper;
+import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.repository.queue.QueueRepository;
 
 public class DialogUtil {
     public abstract static class Callback {
@@ -39,7 +41,7 @@ public class DialogUtil {
             // do nothing
         }
 
-        public void onCancel() {
+        public void onCancel(@Nullable Object obj) {
             // do nothing
         }
     }
@@ -58,27 +60,29 @@ public class DialogUtil {
                 .setNegativeButton(c.getString(R.string.dialog_error_button_negative), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        cb.onCancel();
+                        cb.onCancel(null);
                     }
                 });
 
         return builder.create();
     }
 
-    public static AlertDialog EditQuantity(final Context context, String name, final Callback callback) {
+    public static AlertDialog EditQuantity(final Context context, long engramId, final Callback callback) {
         final EditText editText = new EditText(context);
         editText.setTextColor(context.getResources().getColor(R.color.colorWhite));
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
+        final QueueEngram engram = QueueRepository.getInstance().getEngram(engramId);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AlertDialogCustom));
-        builder.setTitle(name)
+        builder.setTitle(engram.getName())
                 .setIcon(android.R.drawable.ic_menu_edit)
-                .setMessage("Enter new quantity")
+                .setMessage(context.getString(R.string.dialog_edit_quantity_message))
                 .setView(editText)
                 .setNegativeButton(context.getString(R.string.dialog_edit_quantity_negative_button), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        callback.onCancel();
+                        callback.onCancel(engram);
                     }
                 })
                 .setPositiveButton(context.getString(R.string.dialog_edit_quantity_positive_button), new DialogInterface.OnClickListener() {
@@ -90,11 +94,11 @@ public class DialogUtil {
                             int quantity = Integer.parseInt(quantityText);
 
                             if (quantity > 0)
-                                callback.onResult(quantity);
+                                callback.onResult(engram);
                             else
-                                callback.onCancel();
+                                callback.onCancel(engram);
                         } else {
-                            callback.onCancel();
+                            callback.onCancel(engram);
                         }
                     }
                 });
@@ -113,7 +117,7 @@ public class DialogUtil {
                 .setNegativeButton(context.getString(R.string.search_dialog_negative_button), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        callback.onCancel();
+                        callback.onCancel(null);
                     }
                 })
                 .setPositiveButton(context.getString(R.string.search_dialog_positive_button), new DialogInterface.OnClickListener() {

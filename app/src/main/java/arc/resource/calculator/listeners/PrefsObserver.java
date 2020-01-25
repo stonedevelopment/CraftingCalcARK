@@ -19,7 +19,7 @@ package arc.resource.calculator.listeners;
 import java.util.HashMap;
 
 /**
- * Observing class helper for CraftableAdapter and CraftingQueue
+ * Observing class helper for ExplorerAdapter and QueueRepository
  * <p>
  * Alerts listeners of changes to SharedPreferences - onChanged and alerts listeners to save its local preference values
  */

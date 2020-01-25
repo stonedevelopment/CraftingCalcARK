@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.ExceptionObservable;
 
 public class InventorySwitcher extends ViewSwitcher implements InventoryRecyclerView.Listener {
     private static final String TAG = InventorySwitcher.class.getSimpleName();
@@ -36,7 +36,7 @@ public class InventorySwitcher extends ViewSwitcher implements InventoryRecycler
 
         onStatusUpdate("An error occurred while fetching Inventory.");
 
-        ExceptionObserver.getInstance().notifyExceptionCaught(TAG, e);
+        ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
     }
 
     @Override

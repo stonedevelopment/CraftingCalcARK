@@ -21,9 +21,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import arc.resource.calculator.ExplorerFragment;
-import arc.resource.calculator.QueueFragment;
-import arc.resource.calculator.SearchFragment;
+import arc.resource.calculator.ui.explorer.ExplorerFragment;
+import arc.resource.calculator.ui.queue.QueueFragment;
+import arc.resource.calculator.ui.search.SearchFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 

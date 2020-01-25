@@ -21,7 +21,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/frame_craftable_container">
 
-    <arc.resource.calculator.views.QueueRecyclerView
+    <arc.resource.calculator.ui.queue.QueueRecyclerView
         android:id="@+id/gridviewQueue"
         android:layout_width="0dp"
         android:layout_height="0dp"

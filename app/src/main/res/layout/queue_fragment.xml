@@ -25,9 +25,9 @@
         android:id="@+id/queueConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".QueueFragment">
+        tools:context=".ui.queue.QueueFragment">
 
-        <arc.resource.calculator.views.QueueRecyclerView
+        <arc.resource.calculator.ui.queue.QueueRecyclerView
             android:id="@+id/queueSwitcher"
             android:layout_width="0dp"
             android:layout_height="0dp"

@@ -36,15 +36,15 @@ import java.util.Objects;
 
 import arc.resource.calculator.adapters.ShowcaseResourceListAdapter;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.listeners.ExceptionObserver;
-import arc.resource.calculator.model.CraftingQueue;
+import arc.resource.calculator.listeners.ExceptionObservable;
+import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.FeedbackUtil;
 
 public class DetailActivity extends AppCompatActivity
-        implements ExceptionObserver.Listener {
+        implements ExceptionObservable.Observer {
     public static final String TAG = DetailActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE = 1000;
@@ -227,7 +227,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        CraftingQueue.getInstance().resume();
+        QueueRepository.getInstance().resume();
         mAdUtil.resume();
     }
 
@@ -235,7 +235,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
 
-        CraftingQueue.getInstance().pause(this);
+        QueueRepository.getInstance().pause(this);
         mAdUtil.pause();
     }
 
@@ -243,7 +243,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
-        CraftingQueue.getInstance().destroy();
+        QueueRepository.getInstance().destroy();
         mAdUtil.destroy();
     }
 
@@ -337,7 +337,7 @@ public class DetailActivity extends AppCompatActivity
 
         switch (resultCode) {
             case REMOVE:
-                CraftingQueue.getInstance().delete(getShowcase().getId());
+                QueueRepository.getInstance().delete(getShowcase().getId());
                 break;
 
             case ADD:
@@ -347,7 +347,7 @@ public class DetailActivity extends AppCompatActivity
                 if (quantity == 0 && !mIsInQueue)
                     quantity++;
 
-                CraftingQueue.getInstance().setQuantity(this, getShowcase().getId(), quantity);
+                QueueRepository.getInstance().requestToUpdateQuantity(this, getShowcase().getId(), quantity);
 
                 returnIntent.putExtra(RESULT_EXTRA_QUANTITY, quantity);
                 break;

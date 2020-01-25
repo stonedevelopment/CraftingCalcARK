@@ -14,19 +14,19 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
-
-import androidx.lifecycle.ViewModelProviders;
+package arc.resource.calculator.ui.search;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import arc.resource.calculator.R;
 
 public class SearchFragment extends Fragment {
 

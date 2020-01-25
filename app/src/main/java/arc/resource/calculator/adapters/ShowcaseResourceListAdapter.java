@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.Showcase;
 import arc.resource.calculator.model.resource.QueueResource;
 
@@ -71,7 +71,7 @@ public class ShowcaseResourceListAdapter extends RecyclerView.Adapter<ShowcaseRe
 
             holder.getQuantity().setText(String.format(Locale.getDefault(), "%1$d (%2$d)", productOfQuantities, quantity));
         } catch (Exception e) {
-            ExceptionObserver.getInstance().notifyFatalExceptionCaught(TAG, e);
+            ExceptionObservable.getInstance().notifyFatalExceptionCaught(TAG, e);
         }
     }
 

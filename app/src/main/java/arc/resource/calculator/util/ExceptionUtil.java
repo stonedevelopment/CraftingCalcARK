@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 public class ExceptionUtil {
 
-    public static void SendErrorReportWithAlertDialog(final Context context, String tag, final Exception e) {
+    void SendErrorReportWithAlertDialog(final Context context, String tag, final Exception e) {
         SendErrorReport(tag, e);
 
         DialogUtil.Error(context, new DialogUtil.Callback() {

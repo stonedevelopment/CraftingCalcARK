@@ -14,20 +14,10 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
+package arc.resource.calculator.ui.search;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class QueueViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-    private MutableLiveData<String> mSnackBar = new MutableLiveData<>();
-
-    MutableLiveData<String> getSnackBar() {
-        return mSnackBar;
-    }
-
-    void setSnackBarMessage(String s) {
-        getSnackBar().setValue(s);
-    }
 }

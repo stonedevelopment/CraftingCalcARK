@@ -36,7 +36,7 @@ import arc.resource.calculator.db.DatabaseContract.EngramEntry;
 import arc.resource.calculator.db.DatabaseContract.QueueEntry;
 import arc.resource.calculator.db.DatabaseContract.ResourceEntry;
 import arc.resource.calculator.db.DatabaseContract.StationEntry;
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.util.ExceptionUtil.URIUnknownException;
 
 import static arc.resource.calculator.util.Util.NO_ID;
@@ -47,7 +47,7 @@ public class DatabaseProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private DatabaseHelper mOpenHelper;
-    private ExceptionObserver mExceptionObserver;
+    private ExceptionObservable mExceptionObservable;
 
     private static final int ENGRAM = 100;
     private static final int ENGRAM_ID_WITH_DLC = 101;
@@ -92,7 +92,7 @@ public class DatabaseProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = new DatabaseHelper(getContext());
-        mExceptionObserver = ExceptionObserver.getInstance();
+        mExceptionObservable = ExceptionObservable.getInstance();
         return true;
     }
 
@@ -293,7 +293,7 @@ public class DatabaseProvider extends ContentProvider {
                     throw new URIUnknownException(uri);
             }
         } catch (URIUnknownException e) {
-            mExceptionObserver.notifyFatalExceptionCaught(TAG, e);
+            mExceptionObservable.notifyFatalExceptionCaught(TAG, e);
 
             return null;
         }
@@ -576,7 +576,7 @@ public class DatabaseProvider extends ContentProvider {
 
             return cursor;
         } catch (Exception e) {
-            mExceptionObserver.notifyExceptionCaught(TAG, e);
+            mExceptionObservable.notifyExceptionCaught(TAG, e);
 
             return null;
         }
@@ -595,11 +595,11 @@ public class DatabaseProvider extends ContentProvider {
 
             return rowsDeleted;
         } catch (URIUnknownException e) {
-            mExceptionObserver.notifyExceptionCaught(TAG, e);
+            mExceptionObservable.notifyExceptionCaught(TAG, e);
 
             return 0;
         } catch (NullPointerException | SQLiteException e) {
-            mExceptionObserver.notifyFatalExceptionCaught(TAG, e);
+            mExceptionObservable.notifyFatalExceptionCaught(TAG, e);
 
             return NO_SIZE;
         }

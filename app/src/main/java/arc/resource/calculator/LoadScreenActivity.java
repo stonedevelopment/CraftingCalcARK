@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import arc.resource.calculator.listeners.ExceptionObserver;
+import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.tasks.InitializationTask;
 import arc.resource.calculator.tasks.ParseConvertTask;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -39,7 +39,7 @@ import arc.resource.calculator.util.PrefsUtil;
 
 import static arc.resource.calculator.LoadScreenActivity.EVENT.INIT;
 
-public class LoadScreenActivity extends AppCompatActivity implements ExceptionObserver.Listener {
+public class LoadScreenActivity extends AppCompatActivity implements ExceptionObservable.Observer {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
 
     private final String BUNDLE_EVENT = "EVENT";
@@ -284,7 +284,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         break;
 
                     case PREPARATION:
-                        // create instances of DisplayCase and CraftingQueue
+                        // create instances of DisplayCase and QueueRepository
                         updateStatusMessages(getString(R.string.initialization_app_init_event_started));
 
                         int width = getResources().getDisplayMetrics().widthPixels;
@@ -342,19 +342,19 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     protected void onResume() {
         super.onResume();
 
-        ExceptionObserver.getInstance().registerListener(this);
+        ExceptionObservable.getInstance().registerListener(this);
     }
 
     @Override
     protected void onPause() {
-        ExceptionObserver.getInstance().unregisterListener(this);
+        ExceptionObservable.getInstance().unregisterListener(this);
 
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        ExceptionObserver.getInstance().unregisterListener(this);
+        ExceptionObservable.getInstance().unregisterListener(this);
 
         super.onDestroy();
     }

@@ -18,7 +18,7 @@ package arc.resource.calculator.model.resource;
 import androidx.annotation.NonNull;
 
 /**
- * QueueResource object that uses an external quantity for working with totals in the CraftingQueue
+ * QueueResource object that uses an external quantity for working with totals in the QueueRepository
  */
 public class QueueResource extends CompositeResource {
     // External quantity used to compute the 'actual' quantity per Engram's Composition

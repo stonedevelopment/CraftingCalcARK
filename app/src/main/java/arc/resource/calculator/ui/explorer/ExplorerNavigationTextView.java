@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jared Stone
+ * Copyright (c) 2020 Jared Stone
  *
  * This work is licensed under the Creative Commons
  * Attribution-NonCommercial-NoDerivatives 4.0 International
@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.views;
+package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -15,7 +15,7 @@
  */
 package arc.resource.calculator.model.category;
 
-import static arc.resource.calculator.adapters.CraftableAdapter.ROOT;
+import static arc.resource.calculator.ui.explorer.ExplorerAdapter.ROOT;
 
 /**
  * A helper Category object used to provide root category details for Engrams without a Category

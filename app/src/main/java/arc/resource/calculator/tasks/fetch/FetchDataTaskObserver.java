@@ -14,10 +14,18 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
+package arc.resource.calculator.tasks.fetch;
 
-import androidx.lifecycle.ViewModel;
+import arc.resource.calculator.model.map.SortableMap;
 
-public class ExplorerViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+public interface FetchDataTaskObserver {
+    void onPreFetch();
+
+    void onFetching();
+
+    void onFetchSuccess(SortableMap fetchedQueue);
+
+    void onFetchException(Exception e);
+
+    void onFetchFail();
 }

@@ -30,6 +30,7 @@ import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.model.category.Category;
 import arc.resource.calculator.model.category.RootCategory;
 import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.QueueResource;
 import arc.resource.calculator.model.resource.Resource;
@@ -37,7 +38,7 @@ import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
 
-import static arc.resource.calculator.adapters.CraftableAdapter.ROOT;
+import static arc.resource.calculator.ui.explorer.ExplorerAdapter.ROOT;
 
 public class Showcase {
     private static final String TAG = Showcase.class.getSimpleName();
@@ -223,8 +224,8 @@ public class Showcase {
 
             // Next, let's grab matching Queue details, if there are any.
             if (quantity == 0)
-                if (CraftingQueue.getInstance().contains(_id))
-                    quantity = CraftingQueue.getInstance().getCraftable(_id).getQuantity();
+                if (QueueRepository.getInstance().contains(_id))
+                    quantity = QueueRepository.getInstance().getEngram(_id).getQuantity();
 
             // Finally, let's grab Composition details.
             LongSparseArray<CompositeResource> composition = QueryForComposition(context, dlc_id, _id);

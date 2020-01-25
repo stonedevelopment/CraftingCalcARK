@@ -114,8 +114,11 @@
 
     <!-- AlertDialog: Edit Quantity -->
     <string name="dialog_edit_quantity_full_title">Edit Quantity</string>
-    <string name="dialog_edit_quantity_positive_button">Update</string>
+    <string name="dialog_edit_quantity_message">"Enter new quantity"</string>
+    <string name="dialog_edit_quantity_positive_button">Update Quantity</string>
     <string name="dialog_edit_quantity_negative_button">Cancel</string>
+    <string name="snackbar_message_edit_quantity_fail">Engram\'s quantity was not changed.</string>
+    <string name="snackbar_message_edit_quantity_fail_format"><x:g>%1$s</x:g>\'s quantity was not changed.</string>
 
     <!-- AlertDialog: Search -->
     <string name="search_dialog_full_title">Search</string>
@@ -139,39 +142,40 @@
     <string name="dialog_feedback_positive_button">Send</string>
     <string name="dialog_feedback_negative_button">Cancel</string>
 
-    <!-- Toast Messages -->
+    <!-- SnackBar Messages -->
 
-    <!-- Toast: Edit Quantity -->
-    <string name="toast_edit_quantity_success">Engram\'s quantity was updated.</string>
-    <string name="toast_edit_quantity_success_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
-    <string name="toast_edit_quantity_fail">Engram\'s quantity wasn\'t changed.</string>
-    <string name="toast_edit_quantity_fail_format"><x:g>%1$s</x:g>\'s quantity wasn\'t changed.</string>
+    <!-- SnackBar: Item Added -->
+    <string name="snackbar_message_item_added_success_format"><x:g>%1$s</x:g> was added successfully.</string>
+    <string name="snackbar_message_item_added_fail_format"><x:g>%1$s</x:g> was not added successfully.</string>
 
-    <!-- Toast: Remove From Queue -->
-    <string name="toast_remove_from_queue_success">Engram was removed from Crafting Queue.</string>
-    <string name="toast_remove_from_queue_success_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
-    <string name="toast_remove_from_queue_fail">Engram was not removed from Crafting Queue.</string>
-    <string name="toast_remove_from_queue_fail_format"><x:g>%1$s</x:g> was not removed from Crafting Queue.</string>
+    <!-- SnackBar: Item Updated -->
+    <string name="snackbar_message_item_updated_success_format"><x:g>%1$s</x:g> was updated successfully.</string>
+    <string name="snackbar_message_item_updated_fail_format"><x:g>%1$s</x:g> was not updated successfully.</string>
 
-    <!-- Toast: Settings -->
-    <string name="toast_settings_success">Settings were changed.</string>
-    <string name="toast_settings_fail">No changes were made.</string>
+    <!-- SnackBar: Item Removed -->
+    <string name="snackbar_message_item_removed_success_format"><x:g>%1$s</x:g> was removed successfully.</string>
+    <string name="snackbar_message_item_removed_fail">Engram was not removed.</string>
+    <string name="snackbar_message_item_removed_fail_format"><x:g>%1$s</x:g> was not removed successfully.</string>
 
-    <!-- Toast: Details -->
-    <string name="toast_details_error">Engram details closed with an error.</string>
-    <string name="toast_details_added">Engram was added to Crafting Queue.</string>
-    <string name="toast_details_added_format"><x:g>%1$s</x:g> was added to Crafting Queue.</string>
-    <string name="toast_details_removed">Engram was removed from Crafting Queue.</string>
-    <string name="toast_details_removed_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
-    <string name="toast_details_updated">Engram\'s quantity was updated.</string>
-    <string name="toast_details_updated_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
-    <string name="toast_details_no_change">No changes were made.</string>
+    <!-- SnackBar: Settings -->
+    <string name="snackbar_message_settings_success">Settings were changed.</string>
+    <string name="snackbar_message_settings_fail">No changes were made.</string>
 
-    <!-- Toast: Search -->
-    <string name="toast_search_fail">Search cancelled.</string>
+    <!-- SnackBar: Details -->
+    <string name="snackbar_message_details_error">Engram details closed with an error.</string>
+    <string name="snackbar_message_details_added">Engram was added to Crafting Queue.</string>
+    <string name="snackbar_message_details_added_format"><x:g>%1$s</x:g> was added to Crafting Queue.</string>
+    <string name="snackbar_message_details_removed">Engram was removed from Crafting Queue.</string>
+    <string name="snackbar_message_details_removed_format"><x:g>%1$s</x:g> was removed from Crafting Queue.</string>
+    <string name="snackbar_message_details_updated">Engram\'s quantity was updated.</string>
+    <string name="snackbar_message_details_updated_format"><x:g>%1$s</x:g>\'s quantity was updated.</string>
+    <string name="snackbar_message_details_no_change">No changes were made.</string>
 
-    <!-- Toast: Feedback -->
-    <string name="toast_feedback_fail">Feedback not sent.</string>
+    <!-- SnackBar: Search -->
+    <string name="snackbar_message_search_fail">Search cancelled.</string>
+
+    <!-- SnackBar: Feedback -->
+    <string name="snackbar_message_feedback_fail">Feedback not sent.</string>
 
     <!-- Strings related to Go Back -->
     <string name="go_back">Go back</string>
@@ -366,6 +370,8 @@
     <string name="context_menu_view_details">View Details</string>
     <string name="context_menu_edit_quantity">Edit Quantity</string>
     <string name="context_menu_remove_from_queue">Remove From Queue</string>
+    <string name="snackbar_message_clear_queue_success">Crafting queue was cleared successfully.</string>
+    <string name="snackbar_message_clear_queue_fail">Crafting queue was not cleared successfully.</string>
 
     <!-- In-App Purchases Strings -->
     <string name="action_title_remove_ads">Remove Ads</string>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jared Stone
+ * Copyright (c) 2020 Jared Stone
  *
  * This work is licensed under the Creative Commons
  * Attribution-NonCommercial-NoDerivatives 4.0 International
@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.views;
+package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -26,10 +26,40 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import java.util.Objects;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.adapters.CraftableAdapter;
+import arc.resource.calculator.views.RecyclerViewWithContextMenu;
 
 public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
     private static final String TAG = ExplorerRecyclerView.class.getSimpleName();
+
+    interface Listener {
+        void onError(Exception e);
+
+        void onLoading();
+
+        void onPopulated();
+
+        void onEmpty();
+    }
+
+    static class Observer {
+        void notifyExceptionCaught(Exception e) {
+            getListener().onError(e);
+        }
+
+        void notifyInitializing() {
+            getListener().onLoading();
+        }
+
+        void notifyDataSetPopulated() {
+            getListener().onPopulated();
+        }
+
+        void notifyDataSetEmpty() {
+            getListener().onEmpty();
+        }
+    }
+
+    private static Listener mListener;
 
     private AdapterDataObserver mDataObserver = new AdapterDataObserver() {
         @Override
@@ -45,36 +75,6 @@ public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
         }
     };
 
-    private static Listener mListener;
-
-    public interface Listener {
-        void onError(Exception e);
-
-        void onInit();
-
-        void onPopulated();
-
-        void onEmpty();
-    }
-
-    public static class Observer {
-        public void notifyExceptionCaught(Exception e) {
-            getListener().onError(e);
-        }
-
-        public void notifyInitializing() {
-            getListener().onInit();
-        }
-
-        public void notifyDataSetPopulated() {
-            getListener().onPopulated();
-        }
-
-        public void notifyDataSetEmpty() {
-            getListener().onEmpty();
-        }
-    }
-
     public ExplorerRecyclerView(Context context) {
         super(context);
     }
@@ -87,19 +87,11 @@ public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
         super(context, attrs, defStyle);
     }
 
-    private static Listener getListener() {
-        return mListener;
-    }
-
-    private void setListener(Listener listener) {
-        mListener = listener;
-    }
-
     public void onCreate(Listener listener) {
         int numCols = getResources().getInteger(R.integer.gridview_column_count);
         setLayoutManager(new GridLayoutManager(getContext(), numCols));
         setListener(listener);
-        setAdapter(new CraftableAdapter(getContext(), new Observer()));
+        setAdapter(new ExplorerAdapter(getContext(), new Observer()));
     }
 
     public void onResume() {
@@ -117,7 +109,15 @@ public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     @Override
-    public CraftableAdapter getAdapter() {
-        return (CraftableAdapter) super.getAdapter();
+    public ExplorerAdapter getAdapter() {
+        return (ExplorerAdapter) super.getAdapter();
+    }
+
+    private static Listener getListener() {
+        return mListener;
+    }
+
+    private void setListener(Listener listener) {
+        mListener = listener;
     }
 }

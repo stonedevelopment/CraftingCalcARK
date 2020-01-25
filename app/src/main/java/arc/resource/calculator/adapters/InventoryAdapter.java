@@ -37,9 +37,9 @@ import java.util.Locale;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.listeners.QueueObserver;
-import arc.resource.calculator.model.CraftingQueue;
-import arc.resource.calculator.model.SortableMap;
+import arc.resource.calculator.repository.queue.QueueRepository;
+import arc.resource.calculator.repository.queue.QueueObserver;
+import arc.resource.calculator.model.map.SortableMap;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.Resource;
@@ -80,7 +80,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         mShowRawMaterials = PrefsUtil.getInstance(context).getRefinedFilterPreference();
 
         QueueObserver.getInstance().registerListener(TAG, new QueueObserver.Listener() {
-            public void onDataSetPopulated() {
+            public void onQueueDataPopulated() {
                 if (mViewStatus == VISIBLE) {
                     fetchInventory();
                 } else {
@@ -89,7 +89,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             }
 
             @Override
-            public void onItemChanged(long craftableId, int quantity) {
+            public void onQuantityChanged(long craftableId, int quantity) {
                 if (mViewStatus == VISIBLE) {
                     fetchInventory();
                 } else {
@@ -98,7 +98,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             }
 
             @Override
-            public void onItemRemoved(long craftableId) {
+            public void onEngramRemoved(long craftableId) {
                 if (mViewStatus == VISIBLE) {
                     fetchInventory();
                 } else {
@@ -107,7 +107,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             }
 
             @Override
-            public void onDataSetEmpty() {
+            public void onQueueDataEmpty() {
                 if (mViewStatus == VISIBLE) {
                     fetchInventory();
                 } else {
@@ -329,13 +329,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             try {
                 long dlc_id = PrefsUtil.getInstance(mContext).getDLCPreference();
 
-                CraftingQueue craftingQueue = CraftingQueue.getInstance();
+                QueueRepository queueRepository = QueueRepository.getInstance();
 
-                for (int i = 0; i < craftingQueue.getSize(); i++) {
+                for (int i = 0; i < queueRepository.getItemCount(); i++) {
                     if (isCancelled())
                         return false;
 
-                    QueueEngram queueEngram = craftingQueue.getCraftable(i);
+                    QueueEngram queueEngram = queueRepository.getEngram(i);
 
                     InventoryMap composition =
                             QueryForComposition(DatabaseContract.CompositionEntry.buildUriWithEngramId(dlc_id, queueEngram.getId()));
