@@ -16,38 +16,40 @@
 
 package arc.resource.calculator.tasks.fetch;
 
-import arc.resource.calculator.model.map.SortableMap;
-
-class FetchDataTaskObservable {
+public class FetchDataTaskObservable {
 
     private FetchDataTaskObserver mObserver;
 
-    FetchDataTaskObservable(FetchDataTaskObserver observer) {
+    public FetchDataTaskObservable(FetchDataTaskObserver observer) {
         mObserver = observer;
     }
 
-    void notifyPreFetch() {
-        if (mObserver != null)
-            mObserver.onPreFetch();
+    public FetchDataTaskObserver getObserver() {
+        return mObserver;
     }
 
-    void notifyFetching() {
-        if (mObserver != null)
-            mObserver.onFetching();
+    public void notifyPreFetch() {
+        if (getObserver() != null)
+            getObserver().onPreFetch();
     }
 
-    void notifyFetchSuccess(SortableMap fetchedMap) {
-        if (mObserver != null)
-            mObserver.onFetchSuccess(fetchedMap);
+    public void notifyFetching() {
+        if (getObserver() != null)
+            getObserver().onFetching();
     }
 
-    void notifyFetchExceptionCaught(Exception e) {
-        if (mObserver != null)
-            mObserver.onFetchException(e);
+    public void notifyFetchSuccess() {
+        if (getObserver() != null)
+            getObserver().onFetchSuccess();
     }
 
-    void notifyFetchFail() {
-        if (mObserver != null)
-            mObserver.onFetchFail();
+    public void notifyFetchExceptionCaught(Exception e) {
+        if (getObserver() != null)
+            getObserver().onFetchException(e);
+    }
+
+    public void notifyFetchFail() {
+        if (getObserver() != null)
+            getObserver().onFetchFail();
     }
 }

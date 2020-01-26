@@ -15,8 +15,12 @@
  */
 package arc.resource.calculator.model.category;
 
+import android.database.Cursor;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import arc.resource.calculator.db.DatabaseContract;
 
 /**
  * Base Category object
@@ -46,6 +50,15 @@ public class Category {
         mName = name;
         mParent = parent;
         mFile = file;
+    }
+
+    public static Category fromCursor(Cursor cursor) {
+        long _id = cursor.getLong(cursor.getColumnIndex(DatabaseContract.CategoryEntry._ID));
+        String name = cursor
+                .getString(cursor.getColumnIndex(DatabaseContract.CategoryEntry.COLUMN_NAME));
+        long parent_id = cursor
+                .getLong(cursor.getColumnIndex(DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY));
+        return new Category(_id, name, parent_id);
     }
 
     public long getId() {

@@ -39,8 +39,7 @@ class QueueViewModel extends AndroidViewModel implements QueueObserver, Exceptio
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<QueueViewModelState> mViewModelState = new MutableLiveData<>();
 
-    private QueueRepository mRepository = QueueRepository.getInstance();
-    private ExceptionObservable mExceptionObservable = ExceptionObservable.getInstance();
+    private QueueRepository mQueueRepository = QueueRepository.getInstance();
 
     public QueueViewModel(@NonNull Application application) {
         super(application);
@@ -62,22 +61,19 @@ class QueueViewModel extends AndroidViewModel implements QueueObserver, Exceptio
         mViewModelState.setValue(viewModelState);
     }
 
-    QueueRepository getRepository() {
-        return mRepository;
-    }
-
     void registerListeners() {
-        mExceptionObservable.registerObserver(this);
-        mRepository.addObserver(TAG, this);
+        // TODO: 1/26/2020 Do we need to register/unregister listeners with each lifestyle change?
+        ExceptionObservable.getInstance().registerObserver(this);
+        mQueueRepository.addObserver(TAG, this);
     }
 
     void unregisterListeners() {
-        mRepository.removeObserver(TAG);
-        mExceptionObservable.unregisterObserver();
+        mQueueRepository.removeObserver(TAG);
+        ExceptionObservable.getInstance().unregisterObserver();
     }
 
     void requestToUpdateEngramQuantity(long engramId, int quantity) {
-        boolean updated = mRepository.requestToUpdateQuantity(getApplication(), engramId, quantity);
+        boolean updated = mQueueRepository.requestToUpdateQuantity(getApplication(), engramId, quantity);
         if (!updated) {
             String message = getApplication().getString(R.string.snackbar_message_edit_quantity_fail);
             setSnackBarMessage(message);
@@ -85,7 +81,7 @@ class QueueViewModel extends AndroidViewModel implements QueueObserver, Exceptio
     }
 
     void requestToRemoveEngram(long engramId) {
-        boolean removed = mRepository.requestToRemoveEngram(engramId);
+        boolean removed = mQueueRepository.requestToRemoveEngram(engramId);
         if (!removed) {
             String message = getApplication().getString(R.string.snackbar_message_item_removed_fail);
             setSnackBarMessage(message);
@@ -93,7 +89,7 @@ class QueueViewModel extends AndroidViewModel implements QueueObserver, Exceptio
     }
 
     void requestToClearQueue() {
-        boolean cleared = mRepository.requestToClearQueue();
+        boolean cleared = mQueueRepository.requestToClearQueue();
 
         String message;
         if (cleared) {

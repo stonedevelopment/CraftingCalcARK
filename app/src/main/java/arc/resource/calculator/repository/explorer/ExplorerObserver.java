@@ -14,16 +14,12 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.tasks.fetch;
+package arc.resource.calculator.repository.explorer;
 
-public interface FetchDataTaskObserver {
-    void onPreFetch();
+public interface ExplorerObserver {
+    void onExplorerDataPopulating();
 
-    void onFetching();
+    void onExplorerDataPopulated();
 
-    void onFetchSuccess();
-
-    void onFetchException(Exception e);
-
-    void onFetchFail();
+    void onExplorerDataEmpty();
 }

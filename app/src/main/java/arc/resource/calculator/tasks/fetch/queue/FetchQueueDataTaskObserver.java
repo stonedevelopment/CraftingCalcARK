@@ -14,16 +14,11 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.tasks.fetch;
+package arc.resource.calculator.tasks.fetch.queue;
 
-public interface FetchDataTaskObserver {
-    void onPreFetch();
+import arc.resource.calculator.model.map.QueueMap;
+import arc.resource.calculator.tasks.fetch.FetchDataTaskObserver;
 
-    void onFetching();
-
-    void onFetchSuccess();
-
-    void onFetchException(Exception e);
-
-    void onFetchFail();
+public interface FetchQueueDataTaskObserver extends FetchDataTaskObserver {
+    void onFetchSuccess(QueueMap queueMap);
 }

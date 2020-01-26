@@ -14,43 +14,34 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.tasks.fetch;
+package arc.resource.calculator.tasks.fetch.queue;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.LongSparseArray;
 
-import java.lang.ref.WeakReference;
-
-import arc.resource.calculator.model.map.QueueMap;
 import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.model.map.QueueMap;
 import arc.resource.calculator.repository.queue.QueueRepository;
+import arc.resource.calculator.tasks.fetch.FetchDataTask;
 
-public class FetchQueueDataTask extends AsyncTask<Void, Void, Boolean> {
+public class FetchQueueDataTask extends FetchDataTask {
     private final String TAG = FetchQueueDataTask.class.getSimpleName();
 
-    private WeakReference<Context> mContext;
     private QueueMap mQueueMap;
-    private FetchDataTaskObservable mDataTaskObservable;
 
-    public FetchQueueDataTask(Context context, FetchDataTaskObserver observer) {
-        mContext = new WeakReference<>(context);
+    public FetchQueueDataTask(Context context, FetchQueueDataTaskObserver observer) {
+        super(context, observer);
         mQueueMap = new QueueMap();
-        mDataTaskObservable = new FetchDataTaskObservable(observer);
-    }
-
-    Context getContext() {
-        return mContext.get();
     }
 
     @Override
-    protected void onPreExecute() {
-        mDataTaskObservable.notifyPreFetch();
+    public FetchQueueDataTaskObservable getObservable() {
+        return (FetchQueueDataTaskObservable) super.getObservable();
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        mDataTaskObservable.notifyFetching();
+        getObservable().notifyFetching();
 
         LongSparseArray<Integer> savedQueue = QueueRepository.convertJSONStringToQueue(getContext());
         if (savedQueue.size() > 0) {
@@ -59,12 +50,12 @@ public class FetchQueueDataTask extends AsyncTask<Void, Void, Boolean> {
                 int quantity = savedQueue.valueAt(i);
 
                 try {
-                    QueueEngram craftable = QueueRepository.query(getContext(), id, quantity);
-                    mQueueMap.add(id, craftable);
+                    QueueEngram engram = QueueRepository.query(getContext(), id, quantity);
+                    mQueueMap.add(id, engram);
 
                     if (isCancelled()) return false;
                 } catch (Exception e) {
-                    mDataTaskObservable.notifyFetchExceptionCaught(e);
+                    getObservable().notifyFetchExceptionCaught(e);
                     return false;
                 }
             }
@@ -75,9 +66,9 @@ public class FetchQueueDataTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean querySuccessful) {
         if (querySuccessful) {
-            mDataTaskObservable.notifyFetchSuccess(mQueueMap);
+            getObservable().notifyFetchSuccess(mQueueMap);
         } else {
-            mDataTaskObservable.notifyFetchFail();
+            getObservable().notifyFetchFail();
         }
     }
 }

@@ -30,11 +30,10 @@ import org.json.JSONObject;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.model.map.QueueMap;
 import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.model.map.SortableMap;
-import arc.resource.calculator.tasks.fetch.FetchDataTaskObserver;
-import arc.resource.calculator.tasks.fetch.FetchQueueDataTask;
+import arc.resource.calculator.model.map.QueueMap;
+import arc.resource.calculator.tasks.fetch.queue.FetchQueueDataTask;
+import arc.resource.calculator.tasks.fetch.queue.FetchQueueDataTaskObserver;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -104,8 +103,16 @@ public class QueueRepository {
         mExceptionObservable = ExceptionObservable.getInstance();
     }
 
+    public void addObserver(String key, QueueObserver observer) {
+        mQueueObservable.addObserver(key, observer);
+    }
+
+    public void removeObserver(String key) {
+        mQueueObservable.removeObserver(key);
+    }
+
     private void setupFetchDataTask(Context context) {
-        mFetchDataTask = new FetchQueueDataTask(context, new FetchDataTaskObserver() {
+        mFetchDataTask = new FetchQueueDataTask(context, new FetchQueueDataTaskObserver() {
             @Override
             public void onPreFetch() {
                 //  do nothing
@@ -117,8 +124,13 @@ public class QueueRepository {
             }
 
             @Override
-            public void onFetchSuccess(SortableMap fetchedQueue) {
-                setQueueMap((QueueMap) fetchedQueue);
+            public void onFetchSuccess() {
+                //  do nothing
+            }
+
+            @Override
+            public void onFetchSuccess(QueueMap fetchedQueue) {
+                setQueueMap(fetchedQueue);
 
                 if (isQueueEmpty())
                     mQueueObservable.notifyQueueDataEmpty();
@@ -150,14 +162,6 @@ public class QueueRepository {
         return mDataChanged;
     }
 
-    public void addObserver(String key, QueueObserver observer) {
-        mQueueObservable.addObserver(key, observer);
-    }
-
-    public void removeObserver(String key) {
-        mQueueObservable.removeObserver(key);
-    }
-
     public int getItemCount() {
         return mQueueMap.size();
     }
@@ -170,7 +174,7 @@ public class QueueRepository {
         return mQueueMap.contains(engramId);
     }
 
-    public QueueEngram getEngram(int position) {
+    private QueueEngram getEngram(int position) {
         return mQueueMap.valueAt(position);
     }
 
@@ -178,12 +182,17 @@ public class QueueRepository {
         return mQueueMap.get(engramId);
     }
 
-    public int getItemPosition(long engramId) {
-        return mQueueMap.indexOfKey(engramId);
+    public int getEngramQuantity(long engramId) {
+        if (doesContainEngram(engramId)) return getEngram(engramId).getQuantity();
+        return 0;
     }
 
-    public int getItemPosition(@NonNull QueueEngram item) {
-        return getItemPosition(item.getId());
+    public int getItemPosition(@NonNull QueueEngram engram) {
+        return getItemPosition(engram.getId());
+    }
+
+    public int getItemPosition(long engramId) {
+        return mQueueMap.indexOfKey(engramId);
     }
 
     private void updateEngram(int position, @NonNull QueueEngram item) {

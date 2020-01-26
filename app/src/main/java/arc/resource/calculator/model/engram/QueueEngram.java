@@ -35,6 +35,10 @@ public class QueueEngram extends Engram {
         return mQuantity;
     }
 
+    public void setQuantity(int quantity) {
+        mQuantity = quantity;
+    }
+
     public void increaseQuantity() {
         mQuantity++;
     }
@@ -70,12 +74,8 @@ public class QueueEngram extends Engram {
         }
     }
 
-    public void setQuantity(int quantity) {
-        mQuantity = quantity;
-    }
-
     public void resetQuantity() {
-        mQuantity = 0;
+        setQuantity(0);
     }
 
     public Integer getQuantityWithYield() {

@@ -15,7 +15,11 @@
  */
 package arc.resource.calculator.model.engram;
 
+import android.database.Cursor;
+
 import androidx.annotation.NonNull;
+
+import arc.resource.calculator.db.DatabaseContract;
 
 /**
  * Engram object that holds the id of the category (level) it lies on
@@ -23,10 +27,32 @@ import androidx.annotation.NonNull;
 public class DisplayEngram extends QueueEngram {
     private long mCategoryId;
 
+    private DisplayEngram(long id, String name, String folder, String file, int yield, long categoryId) {
+        super(id, name, folder, file, yield, 0);
+
+        setCategoryId(categoryId);
+    }
+
     public DisplayEngram(long id, String name, String folder, String file, int yield, long categoryId, int quantity) {
         super(id, name, folder, file, yield, quantity);
 
         setCategoryId(categoryId);
+    }
+
+    public static DisplayEngram fromCursor(Cursor cursor) {
+        long _id = cursor.getLong(cursor.getColumnIndex(DatabaseContract.EngramEntry._ID));
+        String name = cursor
+                .getString(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_NAME));
+        String folder = cursor
+                .getString(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER));
+        String file = cursor
+                .getString(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE));
+        int yield = cursor
+                .getInt(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_YIELD));
+        long category_id = cursor
+                .getLong(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY));
+
+        return new DisplayEngram(_id, name, folder, file, yield, category_id);
     }
 
     private void setCategoryId(long category_id) {

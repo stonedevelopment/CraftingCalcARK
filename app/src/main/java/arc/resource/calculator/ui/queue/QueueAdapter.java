@@ -39,7 +39,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     private static final String TAG = QueueAdapter.class.getSimpleName();
 
     private Context mContext;
-    private QueueRepository mRepository;
+    private QueueRepository mQueueRepository;
 
     QueueAdapter(Context context) {
         setContext(context);
@@ -55,19 +55,29 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     }
 
     private void setupRepository() {
-        mRepository = QueueRepository.getInstance();
+        mQueueRepository = QueueRepository.getInstance();
     }
 
     public void resume() {
-        mRepository.resume(getContext());
+        registerListeners();
+        mQueueRepository.resume(getContext());
     }
 
     public void pause() {
-        mRepository.pause(getContext());
+        mQueueRepository.pause(getContext());
+        unregisterListeners();
     }
 
     public void destroy() {
         //  do nothing
+    }
+
+    private void registerListeners() {
+        mQueueRepository.addObserver(TAG, this);
+    }
+
+    private void unregisterListeners() {
+        mQueueRepository.removeObserver(TAG);
     }
 
     @NonNull
@@ -81,7 +91,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        QueueEngram craftable = mRepository.getEngram(position);
+        QueueEngram craftable = mQueueRepository.getEngram(position);
 
         String imagePath = "file:///android_asset/" + craftable.getImagePath();
         Picasso.with(getContext())
@@ -98,17 +108,17 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     @Override
     public long getItemId(int position) {
-        return mRepository.getEngram(position).getId();
+        return mQueueRepository.getEngram(position).getId();
     }
 
     @Override
     public int getItemCount() {
-        return mRepository.getItemCount();
+        return mQueueRepository.getItemCount();
     }
 
     @Override
-    public void onItemChanged(@NonNull QueueEngram item) {
-        int position = mRepository.getItemPosition(item);
+    public void onItemChanged(@NonNull QueueEngram engram) {
+        int position = mQueueRepository.getItemPosition(engram);
 
         notifyItemRangeChanged(position, 1);
     }
@@ -120,14 +130,14 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
     @Override
     public void onItemAdded(@NonNull QueueEngram engram) {
-        int position = mRepository.getItemPosition(engram.getId());
+        int position = mQueueRepository.getItemPosition(engram.getId());
 
         notifyItemRangeInserted(position, 1);
     }
 
     @Override
     public void onItemRemoved(@NonNull QueueEngram engram) {
-        int position = mRepository.getItemPosition(engram.getId());
+        int position = mQueueRepository.getItemPosition(engram.getId());
 
         notifyItemRangeRemoved(position, 1);
     }
@@ -181,7 +191,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         @Override
         public void onClick(View view) {
-            mRepository.increaseQuantity(mPosition);
+            mQueueRepository.increaseQuantity(mPosition);
         }
 
         @Override

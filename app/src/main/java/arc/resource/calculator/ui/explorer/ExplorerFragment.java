@@ -47,7 +47,7 @@ import static arc.resource.calculator.DetailActivity.RESULT_CODE;
 import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
 import static arc.resource.calculator.DetailActivity.UPDATE;
 
-//  TODO:   Data states are not stable
+// TODO: 1/26/2020 Extract out ExplorerRepository features, give view model more control
 
 public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.Listener {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
@@ -152,6 +152,8 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
     public void onResume() {
         super.onResume();
 
+        mViewModel.registerListeners();
+
         mTextView.onResume();
         mRecyclerView.onResume();
         registerForContextMenu(mRecyclerView);
@@ -162,6 +164,8 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
         mTextView.onPause();
         mRecyclerView.onPause();
         unregisterForContextMenu(mRecyclerView);
+
+        mViewModel.unregisterListeners();
 
         super.onPause();
     }

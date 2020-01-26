@@ -25,6 +25,11 @@ public class CraftableMap extends SortableMap {
     }
 
     @Override
+    public DisplayEngram get(long key) {
+        return (DisplayEngram) super.get(key);
+    }
+
+    @Override
     public DisplayEngram valueAt(int position) {
         return (DisplayEngram) super.valueAt(position);
     }

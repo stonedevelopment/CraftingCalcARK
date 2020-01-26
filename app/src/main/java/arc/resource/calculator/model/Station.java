@@ -15,7 +15,11 @@
  */
 package arc.resource.calculator.model;
 
+import android.database.Cursor;
+
 import androidx.annotation.NonNull;
+
+import arc.resource.calculator.db.DatabaseContract;
 
 /**
  * Base Station object
@@ -38,6 +42,18 @@ public class Station {
         mName = name;
         mFolder = folder;
         mFile = file;
+    }
+
+    public static Station fromCursor(Cursor cursor) {
+        long _id = cursor.getLong(cursor.getColumnIndex(DatabaseContract.StationEntry._ID));
+        String name = cursor
+                .getString(cursor.getColumnIndex(DatabaseContract.StationEntry.COLUMN_NAME));
+        String folder = cursor
+                .getString(cursor.getColumnIndex(DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER));
+        String file = cursor
+                .getString(cursor.getColumnIndex(DatabaseContract.StationEntry.COLUMN_IMAGE_FILE));
+
+        return new Station(_id, name, folder, file);
     }
 
     public long getId() {
