@@ -38,7 +38,7 @@ import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.util.Util;
 
-import static arc.resource.calculator.ui.explorer.ExplorerAdapter.ROOT;
+import static arc.resource.calculator.repository.explorer.ExplorerRepository.ROOT;
 
 public class Showcase {
     private static final String TAG = Showcase.class.getSimpleName();
@@ -224,7 +224,7 @@ public class Showcase {
 
             // Next, let's grab matching Queue details, if there are any.
             if (quantity == 0)
-                if (QueueRepository.getInstance().contains(_id))
+                if (QueueRepository.getInstance().doesContainEngram(_id))
                     quantity = QueueRepository.getInstance().getEngram(_id).getQuantity();
 
             // Finally, let's grab Composition details.

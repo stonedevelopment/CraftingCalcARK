@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -180,20 +181,20 @@ public class MainActivity extends AppCompatActivity
 //                                    QueueRepository.getInstance().delete( id );
 
                                     showSnackBar(
-                                            String.format(getString(R.string.toast_details_removed_format), name));
+                                            String.format(getString(R.string.snackbar_message_details_removed_format), name));
                                     break;
 
                                 case UPDATE:
 //                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
 
                                     showSnackBar(
-                                            String.format(getString(R.string.toast_details_updated_format), name));
+                                            String.format(getString(R.string.snackbar_message_details_updated_format), name));
                                     break;
 
                                 case ADD:
 //                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
 
-                                    showSnackBar(String.format(getString(R.string.toast_details_added_format), name));
+                                    showSnackBar(String.format(getString(R.string.snackbar_message_details_added_format), name));
                                     break;
                             }
                         } else {
@@ -201,12 +202,12 @@ public class MainActivity extends AppCompatActivity
                                 Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
 
                                 if (e != null) {
-                                    showSnackBar(getString(R.string.toast_details_error));
+                                    showSnackBar(getString(R.string.snackbar_message_details_error));
 
                                     ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
                                 }
                             } else {
-                                showSnackBar(getString(R.string.toast_details_no_change));
+                                showSnackBar(getString(R.string.snackbar_message_details_no_change));
                             }
                         }
                         break;
@@ -226,18 +227,18 @@ public class MainActivity extends AppCompatActivity
                             boolean refinedPrefChange = extras
                                     .getBoolean(getString(R.string.pref_filter_refined_key));
 
-                            showSnackBar(getString(R.string.toast_settings_success));
+                            showSnackBar(getString(R.string.snackbar_message_settings_success));
 
                             PrefsObserver.getInstance().notifyPreferencesChanged(
                                     dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange,
                                     levelValueChange, refinedPrefChange);
                         } else {
-                            showSnackBar(getString(R.string.toast_settings_fail));
+                            showSnackBar(getString(R.string.snackbar_message_settings_fail));
                         }
                         break;
                 }
             } else {
-                showSnackBar(getString(R.string.toast_settings_fail));
+                showSnackBar(getString(R.string.snackbar_message_settings_fail));
             }
         }
     }
@@ -265,7 +266,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewModel() {
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mViewModel.getStartActivityForResultTrigger().observe(this, new androidx.lifecycle.Observer() {
+        mViewModel.getStartActivityForResultTrigger().observe(this, new Observer<Intent>() {
             @Override
             public void onChanged(Intent intent) {
                 int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
@@ -275,11 +276,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void registerListeners() {
-        ExceptionObservable.getInstance().registerListener(this);
+        ExceptionObservable.getInstance().registerObserver(this); // TODO: 1/27/2020 Does MainActivity need to listen to exceptions?
     }
 
     private void unregisterListeners() {
-        ExceptionObservable.getInstance().unregisterListener(this);
+        ExceptionObservable.getInstance().unregisterObserver(); // TODO: 1/27/2020 Does MainActivity need to listen to exceptions?
     }
 
     private void setupViewPager() {

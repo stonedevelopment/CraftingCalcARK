@@ -19,6 +19,7 @@ package arc.resource.calculator.repository.queue;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 import android.util.LongSparseArray;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.map.QueueMap;
 import arc.resource.calculator.tasks.fetch.queue.FetchQueueDataTask;
+import arc.resource.calculator.tasks.fetch.queue.FetchQueueDataTaskObservable;
 import arc.resource.calculator.tasks.fetch.queue.FetchQueueDataTaskObserver;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
@@ -49,7 +51,7 @@ public class QueueRepository {
     private QueueMap mQueueMap;
     private QueueObservable mQueueObservable;
     private ExceptionObservable mExceptionObservable;
-    private boolean mDataChanged;
+    private boolean mIsFetching;
     private FetchQueueDataTask mFetchDataTask;
 
     private static QueueRepository sInstance;
@@ -69,9 +71,17 @@ public class QueueRepository {
         setupQueueObservable();
     }
 
-    public void resume(Context context) {
+    /**
+     * Initialization method called by LoadScreenActivity
+     *
+     * @param context Application context
+     */
+    public void init(Context context) {
         setupFetchDataTask(context);
+        fetch();
+    }
 
+    public void resume(Context context) {
         //  TODO: move PrefsObserver out of QueueRepository
         PrefsObserver.getInstance().registerListener(TAG, new PrefsObserver.Listener() {
             @Override
@@ -81,8 +91,6 @@ public class QueueRepository {
                     clear();
             }
         });
-
-        if (dataHasChanged()) fetch();
     }
 
     public void pause(Context context) {
@@ -92,7 +100,6 @@ public class QueueRepository {
 
     private void setupQueueMap() {
         setQueueMap(new QueueMap());
-        setDataHasChanged();
     }
 
     private void setupQueueObservable() {
@@ -112,10 +119,12 @@ public class QueueRepository {
     }
 
     private void setupFetchDataTask(Context context) {
-        mFetchDataTask = new FetchQueueDataTask(context, new FetchQueueDataTaskObserver() {
+        if (mFetchDataTask != null) return;
+        Log.d(TAG, "setupFetchDataTask: ");
+        mFetchDataTask = new FetchQueueDataTask(context, new FetchQueueDataTaskObservable(new FetchQueueDataTaskObserver() {
             @Override
             public void onPreFetch() {
-                //  do nothing
+                mIsFetching = true;
             }
 
             @Override
@@ -125,11 +134,12 @@ public class QueueRepository {
 
             @Override
             public void onFetchSuccess() {
-                //  do nothing
+                mIsFetching = false;
             }
 
             @Override
             public void onFetchSuccess(QueueMap fetchedQueue) {
+                mIsFetching = false;
                 setQueueMap(fetchedQueue);
 
                 if (isQueueEmpty())
@@ -140,26 +150,29 @@ public class QueueRepository {
 
             @Override
             public void onFetchException(Exception e) {
+                mIsFetching = false;
                 mExceptionObservable.notifyExceptionCaught(TAG, e);
             }
 
             @Override
             public void onFetchFail() {
-                //  do nothing
+                // TODO: 1/27/2020 handle onFetchFail()
+                mIsFetching = false;
             }
-        });
+
+            @Override
+            public void onFetchCancel(boolean didCancel) {
+                //  attempt to fetch again
+                if (mIsFetching) {
+                    mIsFetching = false;
+                    fetch();
+                }
+            }
+        }));
     }
 
     private void setQueueMap(QueueMap queueMap) {
         mQueueMap = queueMap;
-    }
-
-    private void setDataHasChanged() {
-        mDataChanged = true;
-    }
-
-    private boolean dataHasChanged() {
-        return mDataChanged;
     }
 
     public int getItemCount() {
@@ -170,7 +183,7 @@ public class QueueRepository {
         return getItemCount() == 0;
     }
 
-    private boolean doesContainEngram(long engramId) {
+    public boolean doesContainEngram(long engramId) {
         return mQueueMap.contains(engramId);
     }
 
@@ -288,9 +301,6 @@ public class QueueRepository {
         // sort list by name
         mQueueMap.sort();
 
-        //  set flag that data has changed
-        setDataHasChanged();
-
         // notify outside listeners of changes
         mQueueObservable.notifyEngramAdded(engram);
     }
@@ -308,18 +318,14 @@ public class QueueRepository {
         } else {
             insert(engram);
         }
-
     }
 
     private void update(int position, @NonNull QueueEngram engram) {
         // update engram in list
         updateEngram(position, engram);
 
-        //  set flag that data has changed
-        setDataHasChanged();
-
         // notify outside listeners of changes
-        mQueueObservable.notifyItemChanged(engram);
+        mQueueObservable.notifyEngramChanged(engram);
     }
 
     private void delete(int position) {
@@ -329,14 +335,10 @@ public class QueueRepository {
         // remove engram from list
         removeEngram(position);
 
-        //  set flag that data has changed
-        setDataHasChanged();
-
+        //  check if queue is empty, if so: notify empty, if not: notify that engram was removed
         if (!isQueueEmpty()) {
-            // notify outside listeners of changes
             mQueueObservable.notifyEngramRemoved(engram);
         } else {
-            // notify outside listeners of changes
             mQueueObservable.notifyQueueDataEmpty();
         }
     }
@@ -354,16 +356,13 @@ public class QueueRepository {
             return true;
         }
 
-        //  engram was not deleted successfully, does not exist
+        //  engram was not deleted successfully, does not exist in list
         return false;
     }
 
     private void clear() {
         // clear list of values
         removeAllCraftables();
-
-        //  set flag that data has changed
-        setDataHasChanged();
 
         // notify outside listeners of changes
         mQueueObservable.notifyQueueDataEmpty();
@@ -448,7 +447,11 @@ public class QueueRepository {
     }
 
     private void fetch() {
-        mFetchDataTask.cancel(true);
-        mFetchDataTask.execute();
+        Log.d(TAG, "fetch: " + mIsFetching);
+        if (mIsFetching) {
+            mFetchDataTask.cancel(true);
+        } else {
+            mFetchDataTask.execute();
+        }
     }
 }

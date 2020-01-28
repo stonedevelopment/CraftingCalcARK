@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 public class ExceptionUtil {
 
-    void SendErrorReportWithAlertDialog(final Context context, String tag, final Exception e) {
+    public static void SendErrorReportWithAlertDialog(final Context context, String tag, final Exception e) {
         SendErrorReport(tag, e);
 
         DialogUtil.Error(context, new DialogUtil.Callback() {
@@ -38,7 +38,7 @@ public class ExceptionUtil {
             }
 
             @Override
-            public void onCancel() {
+            public void onCancel(Object o) {
                 // forcibly close app
                 Crashlytics.getInstance().crash();
             }

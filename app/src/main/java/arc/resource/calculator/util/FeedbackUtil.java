@@ -99,7 +99,7 @@ public class FeedbackUtil {
                 .setNegativeButton(context.getString(R.string.dialog_feedback_negative_button), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        callback.onCancel();
+                        callback.onCancel(null);
                     }
                 })
                 .setPositiveButton(context.getString(R.string.dialog_feedback_positive_button), new DialogInterface.OnClickListener() {
@@ -110,7 +110,7 @@ public class FeedbackUtil {
                         if (!text.equals(""))
                             callback.onResult(text);
                         else
-                            callback.onCancel();
+                            callback.onCancel(null);
                     }
                 });
 

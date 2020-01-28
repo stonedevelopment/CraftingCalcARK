@@ -227,7 +227,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        QueueRepository.getInstance().resume();
+//        QueueRepository.getInstance().resume();
         mAdUtil.resume();
     }
 
@@ -235,7 +235,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
 
-        QueueRepository.getInstance().pause(this);
+//        QueueRepository.getInstance().pause(this);
         mAdUtil.pause();
     }
 
@@ -243,7 +243,7 @@ public class DetailActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
-        QueueRepository.getInstance().destroy();
+//        QueueRepository.getInstance().destroy();
         mAdUtil.destroy();
     }
 
@@ -337,7 +337,7 @@ public class DetailActivity extends AppCompatActivity
 
         switch (resultCode) {
             case REMOVE:
-                QueueRepository.getInstance().delete(getShowcase().getId());
+                QueueRepository.getInstance().requestToRemoveEngram(getShowcase().getId());
                 break;
 
             case ADD:

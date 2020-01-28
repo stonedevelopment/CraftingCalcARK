@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -49,7 +50,7 @@ import static arc.resource.calculator.DetailActivity.UPDATE;
 
 // TODO: 1/26/2020 Extract out ExplorerRepository features, give view model more control
 
-public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.Listener {
+public class ExplorerFragment extends Fragment implements ExceptionObservable.Observer {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
     private ExplorerViewModel mViewModel;
@@ -57,6 +58,8 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
     private ExplorerRecyclerView mRecyclerView;
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
+
+    private ExceptionObservable mExceptionObservable;
 
     public static ExplorerFragment newInstance() {
         return new ExplorerFragment();
@@ -77,12 +80,39 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ExplorerViewModel.class);
-        // TODO: Use the ViewModel
 
-        mProgressBar.hide();
-        mRecyclerView.onCreate(this);
+        mRecyclerView.onCreate();
         mTextView.onCreate();
+        mExceptionObservable = ExceptionObservable.getInstance();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setupViewModel();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        registerListeners();
+
+        mTextView.onResume();
+        mRecyclerView.onResume();
+        registerForContextMenu(mRecyclerView);
+    }
+
+    @Override
+    public void onPause() {
+        mTextView.onPause();
+        mRecyclerView.onPause();
+        unregisterForContextMenu(mRecyclerView);
+
+        unregisterListeners();
+
+        super.onPause();
     }
 
     @Override
@@ -120,16 +150,16 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
                 switch (extraResultCode) {
                     case REMOVE:
                         showSnackBar(
-                                String.format(getString(R.string.toast_details_removed_format), name));
+                                String.format(getString(R.string.snackbar_message_item_removed_success_format), name));
                         break;
 
                     case UPDATE:
                         showSnackBar(
-                                String.format(getString(R.string.toast_details_updated_format), name));
+                                String.format(getString(R.string.snackbar_message_item_updated_success_format), name));
                         break;
 
                     case ADD:
-                        showSnackBar(String.format(getString(R.string.toast_details_added_format), name));
+                        showSnackBar(String.format(getString(R.string.snackbar_message_item_added_success_format), name));
                         break;
                 }
             } else {
@@ -137,69 +167,76 @@ public class ExplorerFragment extends Fragment implements ExplorerRecyclerView.L
                     Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
 
                     if (e != null) {
-                        showSnackBar(getString(R.string.toast_details_error));
+                        showSnackBar(getString(R.string.snackbar_message_details_error));
 
                         ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
                     }
                 } else {
-                    showSnackBar(getString(R.string.toast_details_no_change));
+                    showSnackBar(getString(R.string.snackbar_message_details_no_change));
                 }
             }
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        mViewModel.registerListeners();
-
-        mTextView.onResume();
-        mRecyclerView.onResume();
-        registerForContextMenu(mRecyclerView);
+    private void setupViewModel() {
+        mViewModel = ViewModelProviders.of(this).get(ExplorerViewModel.class);
+        mViewModel.getSnackBarMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                showSnackBar(s);
+            }
+        });
+        mViewModel.getViewModelState().observe(this, new Observer<ExplorerViewModelState>() {
+            @Override
+            public void onChanged(ExplorerViewModelState viewModelState) {
+                switch (viewModelState) {
+                    case POPULATING:
+                        showLoading();
+                        break;
+                    case POPULATED:
+                        showLoaded();
+                        break;
+                    case EMPTY:
+                        showEmpty();
+                        break;
+                }
+            }
+        });
     }
 
-    @Override
-    public void onPause() {
-        mTextView.onPause();
-        mRecyclerView.onPause();
-        unregisterForContextMenu(mRecyclerView);
-
-        mViewModel.unregisterListeners();
-
-        super.onPause();
+    private void registerListeners() {
+        mExceptionObservable.registerObserver(this);
     }
 
-    @Override
-    public void onDestroy() {
-        mTextView.onDestroy();
-        mRecyclerView.onDestroy();
-
-        super.onDestroy();
+    private void unregisterListeners() {
+        mExceptionObservable.unregisterObserver();
     }
 
-    @Override
-    public void onError(Exception e) {
-        mProgressBar.hide();
-        ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
-    }
-
-    @Override
-    public void onLoading() {
+    private void showLoading() {
         mProgressBar.show();
     }
 
-    @Override
-    public void onPopulated() {
+    private void showLoaded() {
         mProgressBar.hide();
     }
 
-    @Override
-    public void onEmpty() {
-        mProgressBar.hide();
+    private void showEmpty() {
+        mProgressBar.hide();    // TODO: 1/27/2020 what do we do with an empty explorer data set?
     }
 
     private void showSnackBar(String s) {
         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.explorerCoordinatorLayout), s, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onException(String tag, Exception e) {
+        // TODO: 1/25/2020 handle exception
+        mViewModel.showSnackBarMessage("An error occurred.");
+    }
+
+    @Override
+    public void onFatalException(String tag, Exception e) {
+        // TODO: 1/25/2020 handle fatal exception
+        mViewModel.showSnackBarMessage("A fatal error occurred.");
     }
 }

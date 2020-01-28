@@ -37,12 +37,11 @@ import java.util.Locale;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.repository.queue.QueueRepository;
-import arc.resource.calculator.repository.queue.QueueObserver;
-import arc.resource.calculator.model.map.SortableMap;
 import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.model.map.SortableMap;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.Resource;
+import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
 import arc.resource.calculator.views.InventoryRecyclerView;
@@ -79,42 +78,42 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
         mShowRawMaterials = PrefsUtil.getInstance(context).getRefinedFilterPreference();
 
-        QueueObserver.getInstance().registerListener(TAG, new QueueObserver.Listener() {
-            public void onQueueDataPopulated() {
-                if (mViewStatus == VISIBLE) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onQuantityChanged(long craftableId, int quantity) {
-                if (mViewStatus == VISIBLE) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onEngramRemoved(long craftableId) {
-                if (mViewStatus == VISIBLE) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-
-            @Override
-            public void onQueueDataEmpty() {
-                if (mViewStatus == VISIBLE) {
-                    fetchInventory();
-                } else {
-                    mNeedsUpdate = true;
-                }
-            }
-        });
+//        QueueObserver.getInstance().registerListener(TAG, new QueueObserver.Listener() {
+//            public void onQueueDataPopulated() {
+//                if (mViewStatus == VISIBLE) {
+//                    fetchInventory();
+//                } else {
+//                    mNeedsUpdate = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onQuantityChanged(long craftableId, int quantity) {
+//                if (mViewStatus == VISIBLE) {
+//                    fetchInventory();
+//                } else {
+//                    mNeedsUpdate = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onEngramRemoved(long craftableId) {
+//                if (mViewStatus == VISIBLE) {
+//                    fetchInventory();
+//                } else {
+//                    mNeedsUpdate = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onQueueDataEmpty() {
+//                if (mViewStatus == VISIBLE) {
+//                    fetchInventory();
+//                } else {
+//                    mNeedsUpdate = true;
+//                }
+//            }
+//        });
 
         PrefsObserver.getInstance().registerListener(TAG, new PrefsObserver.Listener() {
             @Override
@@ -173,7 +172,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     }
 
     public void destroy() {
-        QueueObserver.getInstance().unregisterListener(TAG);
+//        QueueObserver.getInstance().unregisterListener(TAG);
     }
 
     private CompositeResource getResource(int position) {

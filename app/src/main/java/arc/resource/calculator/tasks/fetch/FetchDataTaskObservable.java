@@ -52,4 +52,8 @@ public class FetchDataTaskObservable {
         if (getObserver() != null)
             getObserver().onFetchFail();
     }
+    public void notifyFetchCancel(boolean didCancel) {
+        if (getObserver() != null)
+            getObserver().onFetchCancel(didCancel);
+    }
 }

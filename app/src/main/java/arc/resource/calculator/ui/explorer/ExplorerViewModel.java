@@ -34,22 +34,29 @@ enum ExplorerViewModelState {
     POPULATING, POPULATED, EMPTY
 }
 
-class ExplorerViewModel extends AndroidViewModel implements ExceptionObservable.Observer, QueueObserver, ExplorerObserver {
+public class ExplorerViewModel extends AndroidViewModel implements QueueObserver, ExplorerObserver {
     // TODO: Maintain filters?
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
 
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
 
-    private ExplorerRepository mExplorerRepository = ExplorerRepository.getInstance();
+    private ExceptionObservable mExceptionRepository = ExceptionObservable.getInstance();
     private QueueRepository mQueueRepository = QueueRepository.getInstance();
+    private ExplorerRepository mExplorerRepository = ExplorerRepository.getInstance();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
+
+        registerListeners();
     }
 
     MutableLiveData<String> getSnackBarMessage() {
         return mSnackBarMessage;
+    }
+
+    public void showSnackBarMessage(String message) {
+        setSnackBarMessage(message);
     }
 
     private void setSnackBarMessage(String s) {
@@ -64,16 +71,9 @@ class ExplorerViewModel extends AndroidViewModel implements ExceptionObservable.
         mViewModelState.setValue(viewModelState);
     }
 
-    void registerListeners() {
-        // TODO: 1/26/2020 Do we need to register/unregister listeners with each lifestyle change?
-        ExceptionObservable.getInstance().registerObserver(this);
-        QueueRepository.getInstance().addObserver(TAG, this);
-        ExplorerRepository.getInstance().addObserver(TAG, this);
-    }
-
-    void unregisterListeners() {
-        mQueueRepository.removeObserver(TAG);
-        ExceptionObservable.getInstance().unregisterObserver();
+    private void registerListeners() {
+        mQueueRepository.addObserver(TAG, this);
+        mExplorerRepository.addObserver(TAG, this);
     }
 
     void requestToUpdateEngramQuantity(long engramId, int quantity) {
@@ -126,6 +126,11 @@ class ExplorerViewModel extends AndroidViewModel implements ExceptionObservable.
     }
 
     @Override
+    public void onEngramUpdated(int position) {
+        //  do nothing
+    }
+
+    @Override
     public void onExplorerDataPopulating() {
         setViewModelState(ExplorerViewModelState.POPULATING);
     }
@@ -139,17 +144,4 @@ class ExplorerViewModel extends AndroidViewModel implements ExceptionObservable.
     public void onExplorerDataEmpty() {
         setViewModelState(ExplorerViewModelState.EMPTY);
     }
-
-    @Override
-    public void onException(String tag, Exception e) {
-        // TODO: 1/25/2020 handle exception
-        setSnackBarMessage("An error occurred.");
-    }
-
-    @Override
-    public void onFatalException(String tag, Exception e) {
-        // TODO: 1/25/2020 handle fatal exception
-        setSnackBarMessage("A fatal error occurred.");
-    }
-
 }

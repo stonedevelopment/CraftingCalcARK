@@ -39,6 +39,12 @@
     <string name="initialization_pref_event_started">\nChecking preferences..</string>
     <string name="initialization_pref_event_finished">.done!</string>
 
+    <!-- LoadActivity: Events: Queue Repository phase -->
+    <string name="initialization_queue_event_started">\nFetching crafting queue data..</string>
+    <string name="initialization_queue_event_fetching">.</string>
+    <string name="initialization_queue_event_finished">.done!</string>
+    <string name="initialization_queue_event_error">.failed!</string>
+
     <!-- LoadActivity: Events: Model Preparation phase -->
     <string name="initialization_app_init_event_started">\nPreparing initial app data..</string>
     <string name="initialization_app_init_event_finished">.done!</string>

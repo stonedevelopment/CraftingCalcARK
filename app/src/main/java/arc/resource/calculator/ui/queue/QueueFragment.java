@@ -91,9 +91,13 @@ public class QueueFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setupViewModel();
-
         mRecyclerView.onCreate();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupViewModel();
     }
 
     @Override
@@ -112,13 +116,6 @@ public class QueueFragment extends Fragment {
         unregisterListeners();
 
         super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        mRecyclerView.onDestroy();
-
-        super.onDestroy();
     }
 
     @Override

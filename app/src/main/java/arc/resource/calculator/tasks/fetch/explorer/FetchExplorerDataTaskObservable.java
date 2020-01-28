@@ -18,13 +18,12 @@ package arc.resource.calculator.tasks.fetch.explorer;
 
 import arc.resource.calculator.model.map.CategoryMap;
 import arc.resource.calculator.model.map.CraftableMap;
-import arc.resource.calculator.model.map.QueueMap;
 import arc.resource.calculator.model.map.StationMap;
 import arc.resource.calculator.tasks.fetch.FetchDataTaskObservable;
 import arc.resource.calculator.tasks.fetch.FetchDataTaskObserver;
 
-class FetchExplorerDataTaskObservable extends FetchDataTaskObservable {
-    FetchExplorerDataTaskObservable(FetchDataTaskObserver observer) {
+public class FetchExplorerDataTaskObservable extends FetchDataTaskObservable {
+    public FetchExplorerDataTaskObservable(FetchDataTaskObserver observer) {
         super(observer);
     }
 

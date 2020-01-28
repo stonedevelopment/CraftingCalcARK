@@ -17,6 +17,13 @@
 package arc.resource.calculator.repository.explorer;
 
 public interface ExplorerObserver {
+    /**
+     * Event for when an Engram is updated in the list
+     *
+     * @param position global position of Engram
+     */
+    void onEngramUpdated(int position);
+
     void onExplorerDataPopulating();
 
     void onExplorerDataPopulated();

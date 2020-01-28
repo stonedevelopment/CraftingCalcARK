@@ -20,20 +20,30 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+
+import java.lang.ref.WeakReference;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.listeners.NavigationObserver;
+import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.model.Station;
 import arc.resource.calculator.model.category.BackCategory;
 import arc.resource.calculator.model.category.Category;
 import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.map.CategoryMap;
 import arc.resource.calculator.model.map.CraftableMap;
 import arc.resource.calculator.model.map.StationMap;
+import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.tasks.fetch.explorer.FetchExplorerDataTask;
+import arc.resource.calculator.tasks.fetch.explorer.FetchExplorerDataTaskObservable;
 import arc.resource.calculator.tasks.fetch.explorer.FetchExplorerDataTaskObserver;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.PrefsUtil;
@@ -49,11 +59,11 @@ import static arc.resource.calculator.util.Util.NO_QUANTITY;
  * <p>
  * Communicates changes to explorer navigation through {@ExplorerObserver}.
  */
-public class ExplorerRepository {
+public class ExplorerRepository implements QueueObserver {
     public static final String TAG = ExplorerRepository.class.getSimpleName();
 
-    private static final long ROOT = 0;
-    private static final long NO_STATION = -1;
+    public static final long ROOT = 0;
+    public static final long NO_STATION = -1;
 
     private long mLastCategoryLevel;
     private long mLastCategoryParent;
@@ -65,9 +75,11 @@ public class ExplorerRepository {
 
     private ExceptionObservable mExceptionObservable;
     private ExplorerObservable mExplorerObservable;
-    private boolean mDataChanged;
     private PrefsUtil mPrefs;
     private FetchExplorerDataTask mFetchDataTask;
+    private boolean mIsFetching;
+
+    private WeakReference<Context> mContext;
 
     private static ExplorerRepository sInstance;
 
@@ -80,7 +92,6 @@ public class ExplorerRepository {
 
     private ExplorerRepository() {
         setupMaps();
-
         setupObservables();
     }
 
@@ -109,43 +120,56 @@ public class ExplorerRepository {
         mExplorerObservable.removeObserver(key);
     }
 
-    private void setupFetchDataTask(Context context) {
-        mFetchDataTask = new FetchExplorerDataTask(context, new FetchExplorerDataTaskObserver() {
+    private void resetFetchDataTask() {
+        mFetchDataTask = new FetchExplorerDataTask(getContext(), new FetchExplorerDataTaskObservable(new FetchExplorerDataTaskObserver() {
             @Override
             public void onPreFetch() {
-                //  do nothing
+                mIsFetching = true;
             }
 
             @Override
+            @MainThread
             public void onFetching() {
                 mExplorerObservable.notifyExplorerDataPopulating();
             }
 
             @Override
             public void onFetchSuccess() {
-                //  do nothing
+                mIsFetching = false;
             }
 
             @Override
             public void onFetchSuccess(StationMap stationMap, CategoryMap categoryMap, CraftableMap craftableMap) {
+                mIsFetching = false;
                 setupMaps(stationMap, categoryMap, craftableMap);
                 mExplorerObservable.notifyExplorerDataPopulated();
             }
 
             @Override
             public void onFetchException(Exception e) {
+                mIsFetching = false;
                 mExceptionObservable.notifyExceptionCaught(TAG, e);
             }
 
             @Override
             public void onFetchFail() {
-                //  do nothing
+                // TODO: 1/27/2020 handle onFetchFail()
+                mIsFetching = false;
             }
-        });
+
+            @Override
+            public void onFetchCancel(boolean didCancel) {
+                //  attempt to fetch again
+                if (mIsFetching) {
+                    mIsFetching = false;
+                    fetch();
+                }
+            }
+        }));
     }
 
-    private void setupPrefs(Context context) {
-        mPrefs = PrefsUtil.getInstance(context);
+    private void setupPrefs() {
+        mPrefs = PrefsUtil.getInstance(getContext());
 
         // Retrieve last viewed category level and parent from previous use
         setCurrentCategoryLevels(mPrefs.getLastCategoryLevel(), mPrefs.getLastCategoryParent());
@@ -164,19 +188,48 @@ public class ExplorerRepository {
         }
     }
 
+    private void registerListeners() {
+        QueueRepository.getInstance().addObserver(TAG, this);
+
+        PrefsObserver.getInstance().registerListener(TAG, new PrefsObserver.Listener() {
+            @Override
+            public void onPreferencesChanged(boolean dlcValueChange, boolean categoryPrefChange,
+                                             boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange,
+                                             boolean refinedPrefChange) {
+                if (dlcValueChange || categoryPrefChange || stationPrefChange || levelPrefChange
+                        || levelValueChange) {
+                    setCategoryLevelsToRoot();
+                    fetch();
+                }
+            }
+        });
+    }
+
+    private void unregisterListeners() {
+        PrefsObserver.getInstance().unregisterListener(TAG);
+        QueueRepository.getInstance().removeObserver(TAG);
+    }
 
     public void resume(Context context) {
-        setupPrefs(context);
-        setupFetchDataTask(context);
+        setContext(context);
+        setupPrefs();
+        registerListeners();
 
-        if (mDataChanged)
-            fetch();
+        fetch();
     }
 
     public void pause() {
         savePrefs();
+        unregisterListeners();
     }
 
+    private void setContext(Context context) {
+        mContext = new WeakReference<>(context);
+    }
+
+    private Context getContext() {
+        return mContext.get();
+    }
 
     private StationMap getStationMap() {
         return mStationMap;
@@ -324,7 +377,7 @@ public class ExplorerRepository {
         }
     }
 
-    private String getImagePathByPosition(int position) {
+    public String getImagePathByPosition(int position) {
         try {
             if (isStation(position)) {
                 return getStation(position).getImagePath();
@@ -347,7 +400,7 @@ public class ExplorerRepository {
         }
     }
 
-    private String getNameByPosition(int position) {
+    public String getNameByPosition(int position) {
         try {
             if (isStation(position)) {
                 return getStation(position).getName();
@@ -370,7 +423,7 @@ public class ExplorerRepository {
         }
     }
 
-    private int getQuantityWithYieldByPosition(int position) {
+    public int getQuantityWithYieldByPosition(int position) {
         try {
             return getCraftable(adjustPositionForCraftable(position)).getQuantityWithYield();
         } catch (Exception e) {
@@ -398,12 +451,16 @@ public class ExplorerRepository {
         return getAdjustedPositionFromCraftable(getPositionOfCraftable(engramId));
     }
 
-    private boolean isCraftable(int position) {
+    public boolean isCraftable(int position) {
         return Util.isValidPosition(adjustPositionForCraftable(position), getCraftableMap().size());
     }
 
-    public boolean doesContainCraftable(long engramId) {
+    private boolean doesContainCraftable(long engramId) {
         return mCraftableMap.contains(engramId);
+    }
+
+    public DisplayEngram getCraftableByGlobalPosition(int globalPosition) {
+        return getCraftable(adjustPositionForCraftable(globalPosition));
     }
 
     private DisplayEngram getCraftable(int position) {
@@ -418,80 +475,75 @@ public class ExplorerRepository {
         mCraftableMap.setValueAt(position, engram);
     }
 
-    public void updateQuantity(long engramId, int quantity) {
-        if (doesContainCraftable(engramId)) {
-            int position = getPositionOfCraftable(engramId);
-            DisplayEngram engram = getCraftable(position);
+    private void update(@NonNull QueueEngram engram) {
+        //  get engram id
+        long engramId = engram.getId();
+        int quantity = engram.getQuantity();
 
-            if (engram.getQuantity() == quantity) return;
+        //  get engram position in list
+        int position = getPositionOfCraftable(engramId);
 
-            engram.setQuantity(quantity);
-            updateCraftable(position, engram);
-            // TODO: 1/26/2020 notify adapter per engram update? Follow how QueueRepository updates its map
+        //  check if engram position is valid, if so: update, if not: disregard
+        if (position > -1) {
+            update(position, quantity);
+        } else {
+            //  do nothing
         }
+    }
+
+    private void update(int engramPosition, int quantity) {
+        //  get engram from list by position
+        DisplayEngram engram = getCraftable(engramPosition);
+
+        //  set engram quantity
+        engram.setQuantity(quantity);
+
+        // update engram in craftable list
+        updateCraftable(engramPosition, engram);
+
+        //  get global position of engram
+        int position = getAdjustedPositionFromCraftable(engramPosition);
+
+        // notify outside listeners of changes
+        mExplorerObservable.notifyEngramUpdated(position);
     }
 
     public void increaseQuantity(int position) {
         QueueRepository.getInstance().increaseQuantity(getCraftable(adjustPositionForCraftable(position)));
     }
 
-    /**
-     * Updates quantity of Craftable if it exists in Crafting Queue, notifies adapter of changes.
-     */
-    public void updateQuantities() {
+    private void updateQuantities() {
         QueueRepository queueRepository = QueueRepository.getInstance();
 
         for (int i = 0; i < getCraftableMap().size(); i++) {
             DisplayEngram engram = getCraftable(i);
 
-            int quantity = queueRepository.getEngramQuantity(engram.getId());
-            updateQuantity(engram.getId(), quantity);
-        }
+            if (queueRepository.doesContainEngram(engram.getId())) {
+                int quantity = queueRepository.getEngramQuantity(engram.getId());
 
-        mExplorerObservable.notifyExplorerDataPopulated();
+                update(i, quantity);
+            }
+        }
     }
 
-    /**
-     * Zeroes out the quantities of all Craftables being displayed on screen. Notifies adapter of
-     * changes, if changes were made.
-     */
-    public void clearQuantities() {
-        boolean didUpdate = false;
-
+    private void clearQuantities() {
         for (int i = 0; i < getCraftableMap().size(); i++) {
-            getCraftable(i).resetQuantity();
+            DisplayEngram engram = getCraftable(i);
 
-            didUpdate = true;
-        }
-
-        if (didUpdate) {
-            notifyDataSetChanged();
+            if (engram.getQuantity() > 0)
+                update(i, 0);
         }
     }
 
-    private DisplayEngram queryForEngram(Uri uri, int quantity) {
-        try (Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null)) {
+    private DisplayEngram queryForEngram(Context context, Uri uri, int quantity) {
+        try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor == null) return null;
+            if (!cursor.moveToFirst()) return null;
 
-            if (cursor == null) {
-                return null;
-            }
+            DisplayEngram engram = DisplayEngram.fromCursor(cursor);
+            engram.setQuantity(quantity);
 
-            if (!cursor.moveToFirst()) {
-                return null;
-            }
-
-            long _id = cursor.getLong(cursor.getColumnIndex(DatabaseContract.EngramEntry._ID));
-            String name = cursor
-                    .getString(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_NAME));
-            String folder = cursor
-                    .getString(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_IMAGE_FOLDER));
-            String file = cursor
-                    .getString(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_IMAGE_FILE));
-            int yield = cursor.getInt(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_YIELD));
-            long category_id = cursor
-                    .getLong(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_CATEGORY_KEY));
-
-            return new DisplayEngram(_id, name, folder, file, yield, category_id, quantity);
+            return engram;
         }
     }
 
@@ -503,46 +555,40 @@ public class ExplorerRepository {
         return position - getStationMap().size();
     }
 
-    private boolean isCategory(int position) {
+    public boolean isCategory(int position) {
         return Util.isValidPosition(adjustPositionForCategory(position), getCategoryMap().size());
     }
 
-    private Category getCategory(int position) {
+    public Category getCategory(int position) {
         return getCategoryMap().valueAt(position);
     }
 
-    private void changeCategory(int position)
+    public void changeCategory(int position)
             throws ExceptionUtil.CursorEmptyException, ExceptionUtil.CursorNullException {
         Category category = getCategory(position);
 
-        long dlc_id = PrefsUtil.getInstance(getContext()).getDLCPreference();
+        long dlc_id = mPrefs.getDLCPreference();
         if (position == 0) {
             // position 0 will always be a back category to the previous level
             long parent = category.getParent();
-            if (isCategoryParentLevelSearchRoot(parent)) {
-                // backing out of search view
-                unsetSearchQuery();
+            if (isCategoryParentLevelStationRoot(parent)) {
+                // Back button to station list
+                setCurrentStationId(NO_STATION);
+                setCurrentCategoryLevelsToStationRoot();
             } else {
-                if (isCategoryParentLevelStationRoot(parent)) {
-                    // Back button to station list
-                    setCurrentStationId(NO_STATION);
-                    setCurrentCategoryLevelsToStationRoot();
+                if (isCurrentCategoryLevelRoot()) {
+                    // Normal Category object
+                    // Grabbing ID is the best way to track its location.
+                    setCurrentCategoryLevels(category.getId(), category.getParent());
+                } else if (isCategoryParentLevelRoot(parent)) {
+                    // Back button to category list
+                    setCurrentCategoryLevelsToRoot();
                 } else {
-                    if (isCurrentCategoryLevelRoot()) {
-                        // Normal Category object
-                        // Grabbing ID is the best way to track its location.
-                        setCurrentCategoryLevels(category.getId(), category.getParent());
-                    } else if (isCategoryParentLevelRoot(parent)) {
-                        // Back button to category list
-                        setCurrentCategoryLevelsToRoot();
-                    } else {
-                        // Normal Back Category object
-                        // Query for details via its Parent Level
-                        setCurrentCategoryLevels(category.getParent(),
-                                queryForCategory(
-                                        DatabaseContract.CategoryEntry.buildUriWithId(dlc_id, category.getParent()))
-                                        .getParent());
-                    }
+                    // Normal Back Category object
+                    // Query for details via its Parent Level
+                    setCurrentCategoryLevels(category.getParent(),
+                            queryForCategory(DatabaseContract.CategoryEntry.buildUriWithId(
+                                    dlc_id, category.getParent())).getParent());
                 }
             }
         } else {
@@ -552,26 +598,17 @@ public class ExplorerRepository {
         }
 
         savePrefs();
-
-        fetchData();
+        fetch();
     }
 
     private Category queryForCategory(Uri uri)
             throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
-
         try (Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null)) {
-            if (cursor == null) {
-                throw new ExceptionUtil.CursorNullException(uri);
-            }
+            if (cursor == null) throw new ExceptionUtil.CursorNullException(uri);
 
-            if (!cursor.moveToFirst()) {
-                throw new ExceptionUtil.CursorEmptyException(uri);
-            }
+            if (!cursor.moveToFirst()) throw new ExceptionUtil.CursorEmptyException(uri);
 
-            return new Category(
-                    DatabaseContract.CategoryEntry.getIdFromUri(uri),
-                    cursor.getString(cursor.getColumnIndex(DatabaseContract.CategoryEntry.COLUMN_NAME)),
-                    cursor.getLong(cursor.getColumnIndex(DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY)));
+            return Category.fromCursor(cursor);
         }
     }
 
@@ -587,94 +624,74 @@ public class ExplorerRepository {
      * STATION METHODS
      */
 
-    private boolean isStation(int position) {
+    public boolean isStation(int position) {
         return Util.isValidPosition(position, getStationMap().size());
     }
 
-    private Station getStation(int position) {
+    public Station getStation(int position) {
         return getStationMap().valueAt(position);
     }
 
-    private void changeStation(int position) {
+    public void changeStation(int position) {
         Station station = getStation(position);
 
         setCurrentStationId(station.getId());
         setCurrentCategoryLevelsToRoot();
 
         savePrefs();
-
-        fetchData();
+        fetch();
     }
 
     private Station queryForStation(Uri uri)
             throws ExceptionUtil.CursorNullException, ExceptionUtil.CursorEmptyException {
 
         try (Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null)) {
-            if (cursor == null) {
-                throw new ExceptionUtil.CursorNullException(uri);
-            }
+            if (cursor == null) throw new ExceptionUtil.CursorNullException(uri);
 
-            if (!cursor.moveToFirst()) {
-                throw new ExceptionUtil.CursorEmptyException(uri);
-            }
-
-            return new Station(
-                    DatabaseContract.StationEntry.getIdFromUri(uri),
-                    cursor.getString(cursor.getColumnIndex(DatabaseContract.StationEntry.COLUMN_NAME)),
-                    cursor
-                            .getString(cursor.getColumnIndex(DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseContract.StationEntry.COLUMN_IMAGE_FILE)));
+            if (!cursor.moveToFirst()) throw new ExceptionUtil.CursorEmptyException(uri);
+            return Station.fromCursor(cursor);
         }
 
     }
 
     private void buildHierarchy() {
-
         try {
-            long dlc_id = PrefsUtil.getInstance(getContext()).getDLCPreference();
+            long dlc_id = mPrefs.getDLCPreference();
 
             StringBuilder builder = new StringBuilder();
-            if (getSearchQuery() == null) {
-                if (isFilteredByStation()) {
-                    if (isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION) {
-                        builder
-                                .append(getContext().getString(R.string.display_case_hierarchy_text_all_stations));
-                    } else {
-                        String name = queryForStation(
-                                DatabaseContract.StationEntry.buildUriWithId(dlc_id, getCurrentStationId()))
-                                .getName();
-                        if (isFilteredByCategory()) {
-                            if (isCurrentCategoryLevelRoot()) {
-                                builder.append(String.format(getContext()
-                                        .getString(R.string.display_case_hierarchy_text_contents_of_station), name));
-                            } else {
-                                builder.append(
-                                        String.format(getContext().getString(
-                                                R.string.display_case_hierarchy_text_contents_of_station_in_folder),
-                                                name, buildCategoryHierarchy(DatabaseContract.CategoryEntry
-                                                        .buildUriWithId(dlc_id, getCurrentCategoryLevel()))));
-                            }
-                        } else {
-                            builder.append(String.format(
-                                    getContext().getString(R.string.display_case_hierarchy_text_contents_of_station),
-                                    name));
-                        }
-                    }
-                } else if (isFilteredByCategory()) {
-                    if (isCurrentCategoryLevelRoot()) {
-                        builder.append(
-                                getContext().getString(R.string.display_case_hierarchy_text_all_categories));
-                    } else {
-                        builder.append("/").append(buildCategoryHierarchy(
-                                DatabaseContract.CategoryEntry.buildUriWithId(dlc_id, getCurrentCategoryLevel())));
-                    }
+            if (isFilteredByStation()) {
+                if (isCurrentCategoryLevelStationRoot() || getCurrentStationId() == NO_STATION) {
+                    builder
+                            .append(getContext().getString(R.string.display_case_hierarchy_text_all_stations));
                 } else {
-                    builder.append(getContext().getString(R.string.display_case_hierarchy_text_all_engrams));
+                    String name = queryForStation(DatabaseContract.StationEntry.buildUriWithId(dlc_id, getCurrentStationId()))
+                            .getName();
+                    if (isFilteredByCategory()) {
+                        if (isCurrentCategoryLevelRoot()) {
+                            builder.append(String.format(getContext()
+                                    .getString(R.string.display_case_hierarchy_text_contents_of_station), name));
+                        } else {
+                            builder.append(
+                                    String.format(getContext().getString(
+                                            R.string.display_case_hierarchy_text_contents_of_station_in_folder),
+                                            name, buildCategoryHierarchy(DatabaseContract.CategoryEntry
+                                                    .buildUriWithId(dlc_id, getCurrentCategoryLevel()))));
+                        }
+                    } else {
+                        builder.append(String.format(
+                                getContext().getString(R.string.display_case_hierarchy_text_contents_of_station),
+                                name));
+                    }
+                }
+            } else if (isFilteredByCategory()) {
+                if (isCurrentCategoryLevelRoot()) {
+                    builder.append(
+                            getContext().getString(R.string.display_case_hierarchy_text_all_categories));
+                } else {
+                    builder.append("/").append(buildCategoryHierarchy(DatabaseContract.CategoryEntry.buildUriWithId(dlc_id, getCurrentCategoryLevel())));
                 }
             } else {
-                builder.append(String.format(
-                        getContext().getString(R.string.display_case_hierarchy_text_search_results_format),
-                        (getItemCount() - 1), getSearchQuery()));
+                builder.append(getContext().getString(R.string.display_case_hierarchy_text_all_engrams));
             }
 
             NavigationObserver.getInstance().update(builder.toString());
@@ -848,7 +865,7 @@ public class ExplorerRepository {
         Bundle bundle = new Bundle();
         bundle.putParcelable("station", stationUri);
         bundle.putParcelable("category", categoryUri);
-        bundle.putParcelable("engram", craftableUri);
+        bundle.putParcelable("craftable", craftableUri);
         if (backCategory != null) {
             bundle.putLong("backCategoryId", backCategory.getId());
             bundle.putLong("backCategoryParent", backCategory.getParent());
@@ -856,4 +873,45 @@ public class ExplorerRepository {
 
         return bundle;
     }
+
+    private void fetch() {
+        Log.d(TAG, "fetch: " + mIsFetching);
+        if (mIsFetching) {
+            mFetchDataTask.cancel(true);
+        } else {
+            resetFetchDataTask();
+            mFetchDataTask.execute();
+        }
+    }
+
+    @Override
+    public void onItemAdded(@NonNull QueueEngram engram) {
+        update(engram);
+    }
+
+    @Override
+    public void onItemRemoved(@NonNull QueueEngram engram) {
+        update(engram);
+    }
+
+    @Override
+    public void onItemChanged(@NonNull QueueEngram engram) {
+        update(engram);
+    }
+
+    @Override
+    public void onQueueDataPopulating() {
+        //  do nothing
+    }
+
+    @Override
+    public void onQueueDataPopulated() {
+        updateQuantities();
+    }
+
+    @Override
+    public void onQueueDataEmpty() {
+        clearQuantities();
+    }
+
 }

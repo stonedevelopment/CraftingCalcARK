@@ -18,10 +18,9 @@ package arc.resource.calculator.tasks.fetch.queue;
 
 import arc.resource.calculator.model.map.QueueMap;
 import arc.resource.calculator.tasks.fetch.FetchDataTaskObservable;
-import arc.resource.calculator.tasks.fetch.FetchDataTaskObserver;
 
-class FetchQueueDataTaskObservable extends FetchDataTaskObservable {
-    FetchQueueDataTaskObservable(FetchDataTaskObserver observer) {
+public class FetchQueueDataTaskObservable extends FetchDataTaskObservable {
+    public FetchQueueDataTaskObservable(FetchQueueDataTaskObserver observer) {
         super(observer);
     }
 

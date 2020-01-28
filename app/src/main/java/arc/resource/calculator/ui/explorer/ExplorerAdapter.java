@@ -17,9 +17,6 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,97 +32,25 @@ import com.squareup.picasso.Picasso;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.listeners.ExceptionObservable;
-import arc.resource.calculator.listeners.NavigationObserver;
-import arc.resource.calculator.listeners.PrefsObserver;
-import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
-import arc.resource.calculator.repository.queue.QueueObserver;
-import arc.resource.calculator.model.map.CategoryMap;
-import arc.resource.calculator.model.map.CraftableMap;
-import arc.resource.calculator.model.Station;
-import arc.resource.calculator.model.map.StationMap;
-import arc.resource.calculator.model.category.BackCategory;
-import arc.resource.calculator.model.category.Category;
-import arc.resource.calculator.model.engram.DisplayEngram;
-import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.PrefsUtil;
-import arc.resource.calculator.util.Util;
 
-import static android.view.View.VISIBLE;
-import static arc.resource.calculator.util.Util.NO_ID;
-import static arc.resource.calculator.util.Util.NO_NAME;
-import static arc.resource.calculator.util.Util.NO_PATH;
-import static arc.resource.calculator.util.Util.NO_QUANTITY;
-
-public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> implements ExplorerObserver, QueueObserver {
+public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> implements ExplorerObserver {
     private static final String TAG = ExplorerAdapter.class.getSimpleName();
 
     private Context mContext;
     private ExplorerRepository mExplorerRepository;
-    private QueueRepository mQueueRepository;
-
-    @Override
-    public void onDataSetPopulated() {
-        updateQuantities();
-    }
-
-    @Override
-    public void onDataSetEmpty() {
-        clearQuantities();
-    }
-
-    @Override
-    public void onItemChanged(long craftableId, int quantity) {
-        if (getCraftableMap().contains(craftableId)) {
-            int position = getCraftableMap().indexOfKey(craftableId);
-            getCraftable(position).setQuantity(quantity);
-            notifyItemChanged(adjustPositionFromCraftable(position));
-        }
-    }
-
-    @Override
-    public void onItemRemoved(long craftableId) {
-        if (getCraftableMap().contains(craftableId)) {
-            int position = getCraftableMap().indexOfKey(craftableId);
-            getCraftable(position).resetQuantity();
-            notifyItemChanged(adjustPositionFromCraftable(position));
-        }
-    }
 
     ExplorerAdapter(Context context) {
         setContext(context);
 
         setupRepositories();
-
-        PrefsObserver.getInstance().registerListener(TAG, new PrefsObserver.Listener() {
-            @Override
-            public void onPreferencesChanged(boolean dlcValueChange, boolean categoryPrefChange,
-                                             boolean stationPrefChange, boolean levelPrefChange, boolean levelValueChange,
-                                             boolean refinedPrefChange) {
-                if (dlcValueChange || categoryPrefChange || stationPrefChange || levelPrefChange
-                        || levelValueChange) {
-                    setCategoryLevelsToRoot();
-
-                    unsetSearchQuery();
-
-                    if (mViewStatus == VISIBLE) {
-                        fetchData();
-                    } else {
-                        mNeedsFullUpdate = true;
-                    }
-                }
-            }
-        });
-
     }
 
     private void setupRepositories() {
         mExplorerRepository = ExplorerRepository.getInstance();
-        mQueueRepository = QueueRepository.getInstance();
     }
 
     private Context getContext() {
@@ -148,59 +73,10 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
     private void registerListeners() {
         mExplorerRepository.addObserver(TAG, this);
-        mQueueRepository.addObserver(TAG, this);
     }
 
     private void unregisterListeners() {
-        mQueueRepository.removeObserver(TAG);
         mExplorerRepository.removeObserver(TAG);
-    }
-
-    @Override
-    public void onItemAdded(@NonNull QueueEngram engram) {
-        if (mExplorerRepository.doesContainCraftable(engram.getId())) {
-            mExplorerRepository.updateQuantity(engram.getId(), engram.getQuantity());
-            notifyItemChanged(mExplorerRepository.getAdjustedPositionFromCraftable(engram.getId()));
-        } else {
-            //  do nothing, engram not in list
-        }
-    }
-
-    @Override
-    public void onItemRemoved(@NonNull QueueEngram engram) {
-        if (mExplorerRepository.doesContainCraftable(engram.getId())) {
-            mExplorerRepository.updateQuantity(engram.getId(), 0);
-            notifyItemChanged(mExplorerRepository.getAdjustedPositionFromCraftable(engram.getId()));
-        } else {
-            //  do nothing, engram not in list
-        }
-    }
-
-    @Override
-    public void onItemChanged(@NonNull QueueEngram engram) {
-        if (mExplorerRepository.doesContainCraftable(engram.getId())) {
-            mExplorerRepository.updateQuantity(engram.getId(), engram.getQuantity());
-            notifyItemChanged(mExplorerRepository.getAdjustedPositionFromCraftable(engram.getId()));
-        } else {
-            //  do nothing, engram not in list
-        }
-    }
-
-    @Override
-    public void onQueueDataPopulating() {
-        //  do nothing
-    }
-
-    @Override
-    public void onQueueDataPopulated() {
-        // TODO: 1/26/2020 Update engram maps and adjust all quantities
-        mExplorerRepository.updateQuantities();
-    }
-
-    @Override
-    public void onQueueDataEmpty() {
-        // TODO: 1/26/2020 Update engram maps and clear all quantities
-        mExplorerRepository.clearQuantities();
     }
 
     @NonNull
@@ -218,17 +94,17 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
         // TODO: 1/26/2020 Change how Engrams are displayed to make their names easier to read
 
-        final String imagePath = "file:///android_asset/" + getImagePathByPosition(position);
+        final String imagePath = "file:///android_asset/" + mExplorerRepository.getImagePathByPosition(position);
         Picasso.with(getContext())
                 .load(imagePath)
                 .error(R.drawable.placeholder_empty)
                 .placeholder(R.drawable.placeholder_empty)
                 .into(holder.getImageView());
 
-        holder.getNameView().setText(getNameByPosition(position));
+        holder.getNameView().setText(mExplorerRepository.getNameByPosition(position));
 
-        if (isCraftable(position)) {
-            int quantity = getQuantityWithYieldByPosition(position);
+        if (mExplorerRepository.isCraftable(position)) {
+            int quantity = mExplorerRepository.getQuantityWithYieldByPosition(position);
 
             if (quantity > 0) {
                 view.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.frame_queue_item));
@@ -247,16 +123,16 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
     @Override
     public long getItemId(int position) {
-        if (isStation(position)) {
-            return getStation(position).getId();
+        if (mExplorerRepository.isStation(position)) {
+            return mExplorerRepository.getStation(position).getId();
         }
 
-        if (isCategory(position)) {
-            return getCategory(position).getId();
+        if (mExplorerRepository.isCategory(position)) {
+            return mExplorerRepository.getCategory(position).getId();
         }
 
-        if (isCraftable(position)) {
-            return getCraftable(adjustPositionForCraftable(position)).getId();
+        if (mExplorerRepository.isCraftable(position)) {
+            return mExplorerRepository.getCraftableByGlobalPosition(position).getId();
         }
 
         return super.getItemId(position);
@@ -265,6 +141,11 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
     @Override
     public int getItemCount() {
         return mExplorerRepository.getItemCount();
+    }
+
+    @Override
+    public void onEngramUpdated(int position) {
+        notifyItemChanged(position);
     }
 
     @Override
@@ -319,12 +200,12 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
             int position = getAdapterPosition();
 
             try {
-                if (isCraftable(position)) {
-                    increaseQuantity(position);
-                } else if (isCategory(position)) {
-                    changeCategory(position);
-                } else if (isStation(position)) {
-                    changeStation(position);
+                if (mExplorerRepository.isCraftable(position)) {
+                    mExplorerRepository.increaseQuantity(position);
+                } else if (mExplorerRepository.isCategory(position)) {
+                    mExplorerRepository.changeCategory(position);
+                } else if (mExplorerRepository.isStation(position)) {
+                    mExplorerRepository.changeStation(position);
                 }
             } catch (ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e) {
                 ExceptionObservable.getInstance().notifyFatalExceptionCaught(TAG, e);
@@ -333,7 +214,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
         @Override
         public boolean onLongClick(View view) {
-            return !isCraftable(getAdapterPosition());
+            return !mExplorerRepository.isCraftable(getAdapterPosition());
         }
     }
 

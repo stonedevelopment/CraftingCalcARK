@@ -23,7 +23,6 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatButton;
 
 import arc.resource.calculator.repository.queue.QueueRepository;
-import arc.resource.calculator.repository.queue.QueueObserver;
 
 public class ClearQueueButton extends AppCompatButton {
     private static final String TAG = ClearQueueButton.class.getSimpleName();
@@ -53,9 +52,5 @@ public class ClearQueueButton extends AppCompatButton {
     }
 
     public void onPause() {
-    }
-
-    public void onDestroy() {
-        QueueObserver.getInstance().unregisterListener(TAG);
     }
 }

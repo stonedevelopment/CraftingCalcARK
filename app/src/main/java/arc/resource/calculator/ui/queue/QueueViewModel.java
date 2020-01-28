@@ -32,7 +32,7 @@ enum QueueViewModelState {
     POPULATING, POPULATED, EMPTY
 }
 
-class QueueViewModel extends AndroidViewModel implements QueueObserver, ExceptionObservable.Observer {
+public class QueueViewModel extends AndroidViewModel implements QueueObserver, ExceptionObservable.Observer {
     // TODO: Maintain filters? (if DLC filter changes, check for conflicts, remove conflicts)
     public static final String TAG = QueueViewModel.class.getSimpleName();
 

@@ -48,8 +48,15 @@ class ExplorerObservable {
         mObservers.remove(key);
     }
 
-    public void removeObservers() {
-        mObservers.clear();
+    /**
+     * Notifies observers when an Engram was updated in list.
+     *
+     * @param position global position of Engram
+     */
+    void notifyEngramUpdated(int position) {
+        for (ExplorerObserver explorerObserver : mObservers.values()) {
+            explorerObserver.onEngramUpdated(position);
+        }
     }
 
     void notifyExplorerDataPopulating() {

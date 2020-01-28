@@ -31,18 +31,6 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
 
     private QueueAdapter mAdapter;
 
-    private AdapterDataObserver mDataObserver = new AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            scrollToPosition(1);
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount) {
-            scrollToPosition(positionStart);
-        }
-    };
-
     public QueueRecyclerView(Context context) {
         super(context);
     }
@@ -61,17 +49,11 @@ public class QueueRecyclerView extends RecyclerViewWithContextMenu {
     }
 
     public void onResume() {
-        getAdapter().registerAdapterDataObserver(mDataObserver);
         getAdapter().resume();
     }
 
     public void onPause() {
-        getAdapter().unregisterAdapterDataObserver(mDataObserver);
         getAdapter().pause();
-    }
-
-    public void onDestroy() {
-        getAdapter().destroy();
     }
 
     void setupLayout() {

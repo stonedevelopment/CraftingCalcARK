@@ -35,8 +35,8 @@ public class FetchExplorerDataTask extends FetchDataTask {
     private CategoryMap mCategoryMap;
     private CraftableMap mCraftableMap;
 
-    public FetchExplorerDataTask(Context context, FetchExplorerDataTaskObserver observer) {
-        super(context, observer);
+    public FetchExplorerDataTask(Context context, FetchExplorerDataTaskObservable observable) {
+        super(context, observable);
 
         setupMaps();
     }
@@ -53,9 +53,13 @@ public class FetchExplorerDataTask extends FetchDataTask {
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected void onPreExecute() {
+        getObservable().notifyPreFetch();
         getObservable().notifyFetching();
+    }
 
+    @Override
+    protected Boolean doInBackground(Void... params) {
         long dlc_id = PrefsUtil.getInstance(getContext()).getDLCPreference();
 
         Bundle bundle = ExplorerRepository.getInstance().gatherUrisForDataTask(dlc_id);

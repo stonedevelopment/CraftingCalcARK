@@ -25,6 +25,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
@@ -32,6 +33,9 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import arc.resource.calculator.listeners.ExceptionObservable;
+import arc.resource.calculator.model.engram.QueueEngram;
+import arc.resource.calculator.repository.queue.QueueObserver;
+import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.tasks.InitializationTask;
 import arc.resource.calculator.tasks.ParseConvertTask;
 import arc.resource.calculator.util.ExceptionUtil;
@@ -54,6 +58,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         JSON,
         DATABASE,
         PREFERENCES,
+        QUEUE,
         PREPARATION
     }
 
@@ -283,8 +288,50 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         mListener.onEndEvent();
                         break;
 
+                    case QUEUE:
+                        // create instance of QueueRepository
+                        updateStatusMessages(getString(R.string.initialization_queue_event_started));
+
+                        final QueueRepository queueRepository = QueueRepository.getInstance();
+                        queueRepository.addObserver(TAG, new QueueObserver() {
+                            @Override
+                            public void onItemAdded(@NonNull QueueEngram engram) {
+                                //  do nothing
+                            }
+
+                            @Override
+                            public void onItemRemoved(@NonNull QueueEngram engram) {
+                                //  do nothing
+                            }
+
+                            @Override
+                            public void onItemChanged(@NonNull QueueEngram engram) {
+                                //  do nothing
+                            }
+
+                            @Override
+                            public void onQueueDataPopulating() {
+                                updateStatusMessages(getString(R.string.initialization_queue_event_fetching));
+                            }
+
+                            @Override
+                            public void onQueueDataPopulated() {
+                                updateStatusMessages(getString(R.string.initialization_queue_event_finished));
+                                queueRepository.removeObserver(TAG);
+                                mListener.onEndEvent();
+                            }
+
+                            @Override
+                            public void onQueueDataEmpty() {
+                                updateStatusMessages(getString(R.string.initialization_queue_event_finished));
+                                queueRepository.removeObserver(TAG);
+                                mListener.onEndEvent();
+                            }
+                        });
+                        queueRepository.init(getApplicationContext());
+                        break;
+
                     case PREPARATION:
-                        // create instances of DisplayCase and QueueRepository
                         updateStatusMessages(getString(R.string.initialization_app_init_event_started));
 
                         int width = getResources().getDisplayMetrics().widthPixels;
@@ -342,21 +389,14 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     protected void onResume() {
         super.onResume();
 
-        ExceptionObservable.getInstance().registerListener(this);
+        ExceptionObservable.getInstance().registerObserver(this);
     }
 
     @Override
     protected void onPause() {
-        ExceptionObservable.getInstance().unregisterListener(this);
+        ExceptionObservable.getInstance().unregisterObserver();
 
         super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        ExceptionObservable.getInstance().unregisterListener(this);
-
-        super.onDestroy();
     }
 
     @Override

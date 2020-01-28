@@ -16,9 +16,12 @@
 
 package arc.resource.calculator.tasks.fetch;
 
+import androidx.annotation.MainThread;
+
 public interface FetchDataTaskObserver {
     void onPreFetch();
 
+    @MainThread
     void onFetching();
 
     void onFetchSuccess();
@@ -26,4 +29,6 @@ public interface FetchDataTaskObserver {
     void onFetchException(Exception e);
 
     void onFetchFail();
+
+    void onFetchCancel(boolean didCancel);
 }

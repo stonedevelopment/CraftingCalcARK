@@ -17,6 +17,7 @@
 package arc.resource.calculator.tasks.fetch.queue;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.LongSparseArray;
 
 import arc.resource.calculator.model.engram.QueueEngram;
@@ -29,8 +30,8 @@ public class FetchQueueDataTask extends FetchDataTask {
 
     private QueueMap mQueueMap;
 
-    public FetchQueueDataTask(Context context, FetchQueueDataTaskObserver observer) {
-        super(context, observer);
+    public FetchQueueDataTask(Context context, FetchQueueDataTaskObservable observable) {
+        super(context, observable);
         mQueueMap = new QueueMap();
     }
 
@@ -41,6 +42,7 @@ public class FetchQueueDataTask extends FetchDataTask {
 
     @Override
     protected Boolean doInBackground(Void... params) {
+        Log.d(TAG, "doInBackground: notifyFetching");
         getObservable().notifyFetching();
 
         LongSparseArray<Integer> savedQueue = QueueRepository.convertJSONStringToQueue(getContext());

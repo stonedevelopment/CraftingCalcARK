@@ -23,6 +23,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import arc.resource.calculator.listeners.NavigationObserver;
 
+// TODO: 1/27/2020 Create ExplorerNavigationTextView ViewModel
 public class ExplorerNavigationTextView extends AppCompatTextView {
     private static final String TAG = ExplorerNavigationTextView.class.getSimpleName();
 
@@ -46,16 +47,18 @@ public class ExplorerNavigationTextView extends AppCompatTextView {
     }
 
     public void onCreate() {
-        NavigationObserver.getInstance().registerListener(mListener);
+        //  do nothing
     }
 
     public void onResume() {
+        NavigationObserver.getInstance().registerListener(mListener);
     }
 
     public void onPause() {
+        NavigationObserver.getInstance().unregisterListener(mListener);
     }
 
     public void onDestroy() {
-        NavigationObserver.getInstance().unregisterListener(mListener);
+        //  do nothing
     }
 }

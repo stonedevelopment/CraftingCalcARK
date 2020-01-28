@@ -66,7 +66,7 @@ class QueueObservable {
         }
     }
 
-    void notifyItemChanged(QueueEngram engram) {
+    void notifyEngramChanged(QueueEngram engram) {
         for (QueueObserver queueObserver : mObservers.values()) {
             queueObserver.onItemChanged(engram);
         }

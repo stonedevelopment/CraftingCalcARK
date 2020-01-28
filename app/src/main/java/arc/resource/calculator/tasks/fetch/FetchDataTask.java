@@ -18,6 +18,7 @@ package arc.resource.calculator.tasks.fetch;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -27,9 +28,9 @@ public class FetchDataTask extends AsyncTask<Void, Void, Boolean> {
     private WeakReference<Context> mContext;
     private FetchDataTaskObservable mDataTaskObservable;
 
-    public FetchDataTask(Context context, FetchDataTaskObserver observer) {
+    public FetchDataTask(Context context, FetchDataTaskObservable observable) {
         mContext = new WeakReference<>(context);
-        mDataTaskObservable = new FetchDataTaskObservable(observer);
+        mDataTaskObservable = observable;
     }
 
     protected Context getContext() {
@@ -52,7 +53,13 @@ public class FetchDataTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
+    protected void onCancelled(Boolean didCancel) {
+        mDataTaskObservable.notifyFetchCancel(didCancel);
+    }
+
+    @Override
     protected void onPostExecute(Boolean querySuccessful) {
+        Log.d(TAG, "onPostExecute: ");
         if (querySuccessful) {
             mDataTaskObservable.notifyFetchSuccess();
         } else {

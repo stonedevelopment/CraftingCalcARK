@@ -68,10 +68,6 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
         unregisterListeners();
     }
 
-    public void destroy() {
-        //  do nothing
-    }
-
     private void registerListeners() {
         mQueueRepository.addObserver(TAG, this);
     }
