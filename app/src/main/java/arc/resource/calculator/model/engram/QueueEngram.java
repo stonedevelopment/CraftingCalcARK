@@ -17,6 +17,9 @@ package arc.resource.calculator.model.engram;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Engram object that uses a yielded quantity for working with totals in the QueueRepository
  */
@@ -80,6 +83,11 @@ public class QueueEngram extends Engram {
 
     public Integer getQuantityWithYield() {
         return mQuantity * getYield();
+    }
+
+    @Override
+    public JSONObject toJSON() throws JSONException {
+        return super.toJSON();
     }
 
     @NonNull

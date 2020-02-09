@@ -20,6 +20,9 @@ import android.database.Cursor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import arc.resource.calculator.db.DatabaseContract;
 
 /**
@@ -59,6 +62,14 @@ public class Category {
         long parent_id = cursor
                 .getLong(cursor.getColumnIndex(DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY));
         return new Category(_id, name, parent_id);
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("name", getName());
+
+        return jsonObject;
     }
 
     public long getId() {

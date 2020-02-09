@@ -63,6 +63,8 @@ public class DatabaseProvider extends ContentProvider {
 
     private static final int RESOURCE = 200;
     private static final int RESOURCE_ID_WITH_DLC = 201;
+    private static final int RESOURCE_WITH_DLC = 202;
+    private static final int RESOURCE_ID_WITHOUT_DLC = 203;
 
     private static final int COMPLEX_RESOURCE = 300;
     private static final int COMPLEX_RESOURCE_ID = 301;
@@ -195,6 +197,11 @@ public class DatabaseProvider extends ContentProvider {
         uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_RESOURCE + "/#/" +
                         DatabaseContract.PATH_DLC + "/#",
                 RESOURCE_ID_WITH_DLC);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_RESOURCE + "/#/",
+                RESOURCE_ID_WITHOUT_DLC);
+        uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_RESOURCE + "/" +
+                        DatabaseContract.PATH_DLC + "/#",
+                RESOURCE_WITH_DLC);
 
         uriMatcher.addURI(contentAuthority, DatabaseContract.PATH_DLC,
                 DLC);
@@ -238,6 +245,7 @@ public class DatabaseProvider extends ContentProvider {
                     return EngramEntry.CONTENT_DIR_TYPE;
 
                 case RESOURCE:
+                case RESOURCE_WITH_DLC:
                     return ResourceEntry.CONTENT_DIR_TYPE;
 
                 case COMPLEX_RESOURCE:
@@ -266,6 +274,7 @@ public class DatabaseProvider extends ContentProvider {
                     return EngramEntry.CONTENT_ITEM_TYPE;
 
                 case RESOURCE_ID_WITH_DLC:
+                case RESOURCE_ID_WITHOUT_DLC:
                     return ResourceEntry.CONTENT_ITEM_TYPE;
 
                 case COMPLEX_RESOURCE_ID:
@@ -531,6 +540,21 @@ public class DatabaseProvider extends ContentProvider {
                     };
                     break;
 
+                case RESOURCE_ID_WITHOUT_DLC:
+                    selection = ResourceEntry.SQL_QUERY_WITH_ID;
+                    selectionArgs = new String[]{
+                            Long.toString(ResourceEntry.getIdFromUri(uri))
+                    };
+                    break;
+
+                case RESOURCE_WITH_DLC:
+                    selection = ResourceEntry.SQL_QUERY_WITH_DLC_KEY;
+                    selectionArgs = new String[]{
+                            Long.toString(ResourceEntry.getDLCIdFromUri(uri))
+                    };
+                    sortOrder = ResourceEntry.SQL_SORT_ORDER_BY_NAME;
+                    break;
+
                 case COMPLEX_RESOURCE_WITH_RESOURCE:
                     selection = ComplexResourceEntry.SQL_QUERY_WITH_RESOURCE_KEY;
                     selectionArgs = new String[]{
@@ -686,6 +710,8 @@ public class DatabaseProvider extends ContentProvider {
 
             case RESOURCE:
             case RESOURCE_ID_WITH_DLC:
+            case RESOURCE_ID_WITHOUT_DLC:
+            case RESOURCE_WITH_DLC:
                 return ResourceEntry.TABLE_NAME;
 
             case STATION:

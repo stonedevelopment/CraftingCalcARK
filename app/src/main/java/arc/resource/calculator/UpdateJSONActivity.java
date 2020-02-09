@@ -210,8 +210,7 @@ public class UpdateJSONActivity extends AppCompatActivity {
             String[] CC = {""};
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
-            emailIntent.setData(Uri.parse("mailto:"));
-            emailIntent.setType("text/plain");
+            emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
             emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
             emailIntent.putExtra(Intent.EXTRA_CC, CC);
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New JSON Update " + mVersion);

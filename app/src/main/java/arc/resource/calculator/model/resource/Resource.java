@@ -15,7 +15,11 @@
  */
 package arc.resource.calculator.model.resource;
 
+import android.database.Cursor;
+
 import androidx.annotation.NonNull;
+
+import arc.resource.calculator.db.DatabaseContract;
 
 /**
  * Base Resource object
@@ -58,6 +62,15 @@ public class Resource {
 
     public String getImagePath() {
         return getFolder() + getFile();
+    }
+
+    public static Resource fromCursor(@NonNull Cursor cursor) {
+        long _id = cursor.getLong(cursor.getColumnIndex(DatabaseContract.ResourceEntry._ID));
+        String name = cursor.getString(cursor.getColumnIndex(DatabaseContract.ResourceEntry.COLUMN_NAME));
+        String folder = cursor.getString(cursor.getColumnIndex(DatabaseContract.ResourceEntry.COLUMN_IMAGE_FOLDER));
+        String file = cursor.getString(cursor.getColumnIndex(DatabaseContract.ResourceEntry.COLUMN_IMAGE_FILE));
+
+        return new Resource(_id, name, folder, file);
     }
 
     @NonNull

@@ -19,6 +19,9 @@ import android.database.Cursor;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import arc.resource.calculator.db.DatabaseContract;
 
 /**
@@ -56,6 +59,16 @@ public class Station {
         return new Station(_id, name, folder, file);
     }
 
+    public JSONObject toJSON() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("name", getName());
+        jsonObject.put("description", getName());
+        jsonObject.put("image_file", getFile());
+
+        return jsonObject;
+    }
+
     public long getId() {
         return mId;
     }
@@ -68,7 +81,7 @@ public class Station {
         return mFolder;
     }
 
-    private String getFile() {
+    public String getFile() {
         return mFile;
     }
 

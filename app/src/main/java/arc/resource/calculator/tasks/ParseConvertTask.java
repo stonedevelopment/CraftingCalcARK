@@ -18,6 +18,7 @@ package arc.resource.calculator.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 
@@ -296,6 +297,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             }
 
             // let's, first, create an array of qualified dlc versions, minus total conversions
+//            List<Long> dlc_ids = singleDlcIdList(dlc_id);
             List<Long> dlc_ids = applyTotalConversionToStations(dlc_id, name);
 
             // next, let's create an id based on counter variable, i
@@ -314,11 +316,19 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             convertedObject.put(COLUMN_IMAGE_FILE, imageFile);
             convertedObject.put(COLUMN_DLC_KEY, new JSONArray(dlc_ids.toArray()));
 
+            Log.d(TAG, "convertStationJSONArrayToIds: " + convertedObject.toString());
+
             // insert converted object into converted array
             outArray.put(convertedObject);
         }
 
         return outArray;
+    }
+
+    private List<Long> singleDlcIdList(long dlc_id) {
+        List<Long> dlc_ids = new ArrayList<>();
+        dlc_ids.add(dlc_id);
+        return dlc_ids;
     }
 
     private List<Long> applyTotalConversionToStations(long dlc_id, String name) {
@@ -356,6 +366,7 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             }
 
             // let's, first, create an array of qualified dlc versions, minus total conversions
+//            List<Long> dlc_ids = singleDlcIdList(dlc_id);
             List<Long> dlc_ids = applyTotalConversionToCategories(dlc_id, _id);
 
             // instantiate a new json object used to be converted into new layout
@@ -373,6 +384,8 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             // insert converted station array into engram json object
             convertedObject.put(DatabaseContract.CategoryEntry.COLUMN_STATION_KEY,
                     new JSONArray(stations.toArray()));
+
+            Log.d(TAG, "convertCategoryJSONArrayToIds: " + convertedObject.toString());
 
             // insert converted object into converted array
             outArray.put(convertedObject);
@@ -416,19 +429,20 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             }
 
             // let's, first, create an array of qualified dlc versions, minus total conversions
-            List<Long> dlc_ids = new ArrayList<>();
-            if (dlc_id == mDlcIds.valueAt(0)) {
-                for (int j = 0; j < mDlcIds.size(); j++) {
-                    long _id = mDlcIds.valueAt(j);
-                    if (mTotalConversion.get(_id) == null) {
-                        dlc_ids.add(_id);
-                    } else if (mTotalConversion.get(_id).resources.get(name) == null) {
-                        dlc_ids.add(_id);
-                    }
-                }
-            } else {
-                dlc_ids.add(dlc_id);
-            }
+            List<Long> dlc_ids = singleDlcIdList(dlc_id);
+//            List<Long> dlc_ids = new ArrayList<>();
+//            if (dlc_id == mDlcIds.valueAt(0)) {
+//                for (int j = 0; j < mDlcIds.size(); j++) {
+//                    long _id = mDlcIds.valueAt(j);
+//                    if (mTotalConversion.get(_id) == null) {
+//                        dlc_ids.add(_id);
+//                    } else if (mTotalConversion.get(_id).resources.get(name) == null) {
+//                        dlc_ids.add(_id);
+//                    }
+//                }
+//            } else {
+//                dlc_ids.add(dlc_id);
+//            }
 
             // let's, first, create an id based on counter variable, i
             long _id = i;
@@ -485,7 +499,8 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             }
 
             // let's, first, create an array of qualified dlc versions, minus total conversions
-            List<Long> dlc_ids = applyTotalConversionToEngrams(dlc_id, name);
+            List<Long> dlc_ids = singleDlcIdList(dlc_id);
+//            List<Long> dlc_ids = applyTotalConversionToEngrams(dlc_id, name);
 
             // next, let's create an id based on counter variable, i
             long _id = i;
@@ -552,6 +567,8 @@ public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
             // insert converted station array into engram json object
             convertedObject
                     .put(DatabaseContract.EngramEntry.COLUMN_STATION_KEY, new JSONArray(stations.toArray()));
+
+            Log.d(TAG, "convertEngramJSONArrayToIds: " + convertedObject.toString());
 
             // insert converted object into converted array
             outArray.put(convertedObject);
