@@ -14,19 +14,8 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.entity;
+package arc.resource.calculator.db;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+public class AppDatabaseTest {
 
-@Entity(tableName = "folders")
-public class FolderEntity {
-    @PrimaryKey
-    int id;
-
-    String name;
-
-    int parentId;
-
-    int stationId;
 }

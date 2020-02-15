@@ -24,7 +24,9 @@ public class StationEntity {
     @PrimaryKey(autoGenerate = true)
     int id;
 
-    int nameId;
+    String name;
 
-    int dlcId;
+    String description;
+
+    String imageFile;
 }
