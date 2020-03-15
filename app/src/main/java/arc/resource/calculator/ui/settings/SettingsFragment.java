@@ -14,47 +14,40 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.search;
+package arc.resource.calculator.ui.settings;
+
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import arc.resource.calculator.R;
 
-public class SearchFragment extends Fragment {
-    public static final String TAG = SearchFragment.class.getCanonicalName();
+public class SettingsFragment extends Fragment {
 
-    private SearchViewModel mViewModel;
+    private SettingsViewModel mViewModel;
 
-    private TextView mTextView;
-
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.search_fragment, container, false);
-
-        mTextView = rootView.findViewById(R.id.textView);
-        mTextView.setText(TAG);
-
-        return rootView;
+        return inflater.inflate(R.layout.settings_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(SettingsViewModel.class);
         // TODO: Use the ViewModel
     }
 

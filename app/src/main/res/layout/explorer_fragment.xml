@@ -29,10 +29,11 @@
 
         <arc.resource.calculator.ui.explorer.ExplorerNavigationTextView
             android:id="@+id/explorerNavigationTextView"
-            style="@style/AppTheme.Text.DisplayCase.Hierarchy"
+            style="@style/AppTheme.Text.Navigation"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/frame_switcher_main"
+            android:background="@drawable/frame_craftable_container"
+            android:text="ExplorerNavigationTextView"
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

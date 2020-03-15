@@ -22,8 +22,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import arc.resource.calculator.ui.explorer.ExplorerFragment;
-import arc.resource.calculator.ui.queue.QueueFragment;
+import arc.resource.calculator.ui.favorites.FavoritesFragment;
 import arc.resource.calculator.ui.search.SearchFragment;
+import arc.resource.calculator.ui.settings.SettingsFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -35,18 +36,20 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
+            case 3:
+                return SettingsFragment.newInstance();
             case 2:
-                return QueueFragment.newInstance();
+                return FavoritesFragment.newInstance();
             case 1:
                 return SearchFragment.newInstance();
             case 0:
             default:
-                return ExplorerFragment.newInstance();
+                return ExplorerFragment.getInstance();
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 }

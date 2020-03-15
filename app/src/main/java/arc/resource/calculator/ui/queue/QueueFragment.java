@@ -38,7 +38,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Objects;
 
 import arc.resource.calculator.DetailActivity;
-import arc.resource.calculator.MainViewModel;
+import arc.resource.calculator.ui.main.MainViewModel;
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.model.engram.QueueEngram;

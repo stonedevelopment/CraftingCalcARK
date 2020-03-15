@@ -458,7 +458,9 @@
     </string>
     <string name="menu_bottom_navigation_title_home">Home</string>
     <string name="menu_bottom_navigation_title_search">Search</string>
-    <string name="menu_bottom_navigation_title">Crafting Queue</string>
+    <string name="menu_bottom_navigation_title_crafting_queue">Crafting Queue</string>
+    <string name="menu_bottom_navigation_title_favorites">Favorites</string>
+    <string name="menu_bottom_navigation_title_settings">Settings</string>
     <string name="queue_fragment_text_view">Your crafting queue is empty.</string>
     <string name="queue_fragment_fab_clear_content_description">Clear the crafting queue</string>
     <string name="queue_fragment_fab_start_content_description">Start crafting!</string>

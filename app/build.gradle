@@ -70,7 +70,16 @@ dependencies {
     implementation 'org.solovyev.android:checkout:1.0.0'
     implementation 'com.github.paolorotolo:appintro:4.1.0'
 
-    //  Testing libraries
+    //  Instrumentation Unit Tests
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+
+    //  Local Unit Tests
+    testImplementation 'androidx.test:core:1.2.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "com.google.truth:truth:1.0.1"
+
+
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:1.10.19'
 }

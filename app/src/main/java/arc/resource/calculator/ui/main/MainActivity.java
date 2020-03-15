@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jared Stone
+ * Copyright (c) 2020 Jared Stone
  *
  * This work is licensed under the Creative Commons
  * Attribution-NonCommercial-NoDerivatives 4.0 International
@@ -14,12 +14,14 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
+package arc.resource.calculator.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,8 +31,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import arc.resource.calculator.ChangeLog;
+import arc.resource.calculator.DetailActivity;
+import arc.resource.calculator.FirstUseActivity;
+import arc.resource.calculator.R;
+import arc.resource.calculator.SettingsActivity;
 import arc.resource.calculator.adapters.ViewPagerAdapter;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.listeners.PrefsObserver;
@@ -49,14 +57,13 @@ import static arc.resource.calculator.DetailActivity.UPDATE;
 public class MainActivity extends AppCompatActivity
         implements ExceptionObservable.Observer {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
     public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
-
+    private static final String TAG = MainActivity.class.getSimpleName();
     private MainViewModel mViewModel;
 
-    private ViewPager mViewPager;
+    private NoSwipeViewPager mViewPager;
     private BottomNavigationView mBottomNavigationView;
+    private FloatingActionButton mFAB;
     private AdUtil mAdUtil;
 
     // Purchase flow -> disable menu option to disable ads
@@ -76,6 +83,8 @@ public class MainActivity extends AppCompatActivity
         setupViewPager();
 
         setupBottomNavigation();
+
+        setupFloatingActionButton();
 
         setupAds();
 
@@ -180,21 +189,21 @@ public class MainActivity extends AppCompatActivity
                                 case REMOVE:
 //                                    QueueRepository.getInstance().delete( id );
 
-                                    showSnackBar(
+                                    mViewModel.setSnackBarMessage(
                                             String.format(getString(R.string.snackbar_message_details_removed_format), name));
                                     break;
 
                                 case UPDATE:
 //                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
 
-                                    showSnackBar(
+                                    mViewModel.setSnackBarMessage(
                                             String.format(getString(R.string.snackbar_message_details_updated_format), name));
                                     break;
 
                                 case ADD:
 //                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
 
-                                    showSnackBar(String.format(getString(R.string.snackbar_message_details_added_format), name));
+                                    mViewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_details_added_format), name));
                                     break;
                             }
                         } else {
@@ -202,12 +211,12 @@ public class MainActivity extends AppCompatActivity
                                 Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
 
                                 if (e != null) {
-                                    showSnackBar(getString(R.string.snackbar_message_details_error));
+                                    mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_error));
 
                                     ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
                                 }
                             } else {
-                                showSnackBar(getString(R.string.snackbar_message_details_no_change));
+                                mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_no_change));
                             }
                         }
                         break;
@@ -227,18 +236,18 @@ public class MainActivity extends AppCompatActivity
                             boolean refinedPrefChange = extras
                                     .getBoolean(getString(R.string.pref_filter_refined_key));
 
-                            showSnackBar(getString(R.string.snackbar_message_settings_success));
+                            mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_settings_success));
 
                             PrefsObserver.getInstance().notifyPreferencesChanged(
                                     dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange,
                                     levelValueChange, refinedPrefChange);
                         } else {
-                            showSnackBar(getString(R.string.snackbar_message_settings_fail));
+                            mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_settings_fail));
                         }
                         break;
                 }
             } else {
-                showSnackBar(getString(R.string.snackbar_message_settings_fail));
+                mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_settings_fail));
             }
         }
     }
@@ -273,6 +282,18 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(intent, requestCode);
             }
         });
+        mViewModel.getNavigationPosition().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer position) {
+                mViewPager.setCurrentItem(position, false);
+            }
+        });
+        mViewModel.getSnackBarMessage() .observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String message) {
+                showSnackBar(message);
+            }
+        });
     }
 
     private void registerListeners() {
@@ -286,24 +307,6 @@ public class MainActivity extends AppCompatActivity
     private void setupViewPager() {
         mViewPager = findViewById(R.id.viewPager);
         mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                MenuItem menuItem = mBottomNavigationView.getMenu().getItem(position);
-                int itemId = menuItem.getItemId();
-                mBottomNavigationView.setSelectedItemId(itemId);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private void setupBottomNavigation() {
@@ -312,8 +315,18 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int position = menuItem.getOrder();
-                mViewPager.setCurrentItem(position);
+                mViewModel.setNavigationPosition(position);
                 return true;
+            }
+        });
+    }
+
+    private void setupFloatingActionButton() {
+        mFAB = findViewById(R.id.floatingActionButton);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.setSnackBarMessage("Open Crafting Queue!");
             }
         });
     }

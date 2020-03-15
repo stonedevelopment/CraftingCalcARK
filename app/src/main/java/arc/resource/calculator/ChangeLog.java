@@ -49,7 +49,7 @@ public class ChangeLog {
      *
      * @param context
      */
-    ChangeLog(Context context) {
+    public ChangeLog(Context context) {
         this(context, PreferenceManager.getDefaultSharedPreferences(context));
     }
 

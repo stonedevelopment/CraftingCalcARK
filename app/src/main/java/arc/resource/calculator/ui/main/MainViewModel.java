@@ -14,10 +14,9 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator;
+package arc.resource.calculator.ui.main;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -27,13 +26,30 @@ import androidx.lifecycle.ViewModel;
  */
 public class MainViewModel extends ViewModel {
     private MutableLiveData<Intent> mStartActivityForResultTrigger = new MutableLiveData<>();
+    private MutableLiveData<Integer> mNavigationPosition = new MutableLiveData<>();
+    private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
 
     MutableLiveData<Intent> getStartActivityForResultTrigger() {
         return mStartActivityForResultTrigger;
     }
 
     public void startActivityForResult(Intent intent) {
-        Bundle bundle = new Bundle();
-        getStartActivityForResultTrigger().setValue(intent);
+        mStartActivityForResultTrigger.setValue(intent);
+    }
+
+    MutableLiveData<Integer> getNavigationPosition() {
+        return mNavigationPosition;
+    }
+
+    void setNavigationPosition(int position) {
+        mNavigationPosition.setValue(position);
+    }
+
+    MutableLiveData<String> getSnackBarMessage() {
+        return mSnackBarMessage;
+    }
+
+    void setSnackBarMessage(String message) {
+        mSnackBarMessage.setValue(message);
     }
 }

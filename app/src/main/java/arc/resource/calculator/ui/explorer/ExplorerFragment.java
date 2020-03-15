@@ -53,6 +53,8 @@ import static arc.resource.calculator.DetailActivity.UPDATE;
 public class ExplorerFragment extends Fragment implements ExceptionObservable.Observer {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
+    private static ExplorerFragment sInstance;
+
     private ExplorerViewModel mViewModel;
 
     private ExplorerRecyclerView mRecyclerView;
@@ -61,7 +63,13 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private ExceptionObservable mExceptionObservable;
 
-    public static ExplorerFragment newInstance() {
+    public static ExplorerFragment getInstance() {
+        if (sInstance == null) sInstance = newInstance();
+
+        return sInstance;
+    }
+
+    private static ExplorerFragment newInstance() {
         return new ExplorerFragment();
     }
 

@@ -338,10 +338,13 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         try (Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null)) {
             if (cursor == null) return new ArrayList<>();
 
+            List<Long> resourceIds = new ArrayList<>();
             List<CompositeResource> composition = new ArrayList<>();
             while (cursor.moveToNext()) {
                 long resourceId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY));
                 int quantity = cursor.getInt(cursor.getColumnIndex(DatabaseContract.CompositionEntry.COLUMN_QUANTITY));
+
+                if (resourceIds.contains(resourceId)) continue;
 
                 Resource resource = queryForResource(DatabaseContract.ResourceEntry.buildUriWithOnlyId(resourceId));
                 if (resource == null) {
@@ -349,6 +352,7 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
                     continue;
                 }
 
+                resourceIds.add(resourceId);
                 composition.add(new CompositeResource(resource, quantity));
             }
 

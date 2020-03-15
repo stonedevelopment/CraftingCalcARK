@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Jared Stone
   ~
   ~ This work is licensed under the Creative Commons
@@ -20,10 +19,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.search.SearchFragment">
+    tools:context=".ui.settings.SettingsFragment">
 
     <TextView
-        android:id="@+id/textView"
         style="@style/AppIntroDefaultHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,6 +29,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="SearchFragment" />
+        tools:text="SettingsFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
