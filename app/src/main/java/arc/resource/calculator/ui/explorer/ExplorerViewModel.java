@@ -30,10 +30,6 @@ import arc.resource.calculator.repository.explorer.ExplorerRepository;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
 
-enum ExplorerViewModelState {
-    POPULATING, POPULATED, EMPTY
-}
-
 public class ExplorerViewModel extends AndroidViewModel implements QueueObserver, ExplorerObserver {
     // TODO: Maintain filters?
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
@@ -55,12 +51,12 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         return mSnackBarMessage;
     }
 
-    public void showSnackBarMessage(String message) {
-        setSnackBarMessage(message);
-    }
-
     private void setSnackBarMessage(String s) {
         mSnackBarMessage.setValue(s);
+    }
+
+    public void showSnackBarMessage(String message) {
+        setSnackBarMessage(message);
     }
 
     MutableLiveData<ExplorerViewModelState> getViewModelState() {
