@@ -25,6 +25,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
+import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
@@ -38,7 +39,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
-    private MutableLiveData<Integer> mShowDialogFragment = new MutableLiveData<>();
+    private MutableLiveData<DisplayEngram> mShowDialogFragment = new MutableLiveData<DisplayEngram>();
 
     private ExceptionObservable mExceptionRepository = ExceptionObservable.getInstance();
     private QueueRepository mQueueRepository = QueueRepository.getInstance();
@@ -70,11 +71,11 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         mViewModelState.setValue(viewModelState);
     }
 
-    MutableLiveData<Integer> getShowDialogFragment() {
+    MutableLiveData<DisplayEngram> getShowDialogFragment() {
         return mShowDialogFragment;
     }
 
-    public void setDialogFragment(Integer id) {
+    public void setDialogFragment(DisplayEngram id) {
         mShowDialogFragment.setValue(id);
     }
 
@@ -99,7 +100,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     void handleViewHolderClick(int position) {
         try {
             if (mExplorerRepository.isCraftable(position)) {
-                setDialogFragment(position);
+                setDialogFragment(mExplorerRepository.getCraftableByGlobalPosition(position));
             } else if (mExplorerRepository.isCategory(position)) {
                 mExplorerRepository.changeCategory(position);
             } else if (mExplorerRepository.isStation(position)) {

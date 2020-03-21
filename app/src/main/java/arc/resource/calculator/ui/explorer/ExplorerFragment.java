@@ -28,13 +28,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -44,6 +41,7 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
+import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.ui.detail.DetailFragment;
 
 import static android.app.Activity.RESULT_OK;
@@ -211,10 +209,10 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
                 showSnackBar(s);
             }
         });
-        mViewModel.getShowDialogFragment().observe(this, new Observer<Integer>() {
+        mViewModel.getShowDialogFragment().observe(this, new Observer<DisplayEngram>() {
             @Override
-            public void onChanged(Integer position) {
-                showDialogFragment(DetailFragment.newInstance());
+            public void onChanged(DisplayEngram position) {
+                showDialogFragment(DetailFragment.newInstance(position));
             }
         });
     }
@@ -250,8 +248,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     }
 
     private void showDialogFragment(DetailFragment fragment) {
-        Log.d(TAG, "showDialogFragment: ");
-        fragment.show(getChildFragmentManager(), DetailActivity.TAG);
+        fragment.show(getChildFragmentManager(), DetailFragment.TAG);
     }
 
     @Override

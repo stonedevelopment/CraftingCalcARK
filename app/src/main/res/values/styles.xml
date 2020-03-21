@@ -34,6 +34,20 @@
         <item name="android:windowBackground">@color/colorWhite</item>
     </style>
 
+    <style name="AppTheme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.CustomBottomSheetDialogTheme">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay"></style>
 
     <style name="AppTheme.PopupOverlay"></style>
