@@ -16,21 +16,21 @@
 
 package arc.resource.calculator.ui.detail;
 
-import androidx.lifecycle.ViewModelProviders;
-
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import arc.resource.calculator.R;
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends DialogFragment {
+    public static final String TAG = DetailFragment.class.getCanonicalName();
 
     private DetailViewModel mViewModel;
 
@@ -38,17 +38,16 @@ public class DetailFragment extends Fragment {
         return new DetailFragment();
     }
 
+    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.detail_fragment, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        // TODO: 3/21/2020 insert data into views here
+    }
 }

@@ -19,6 +19,7 @@ package arc.resource.calculator.ui.explorer;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
@@ -36,6 +37,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
+    private MutableLiveData<DialogFragment> mShowDialogFragment = new MutableLiveData<>();
 
     private ExceptionObservable mExceptionRepository = ExceptionObservable.getInstance();
     private QueueRepository mQueueRepository = QueueRepository.getInstance();
@@ -65,6 +67,14 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     private void setViewModelState(ExplorerViewModelState viewModelState) {
         mViewModelState.setValue(viewModelState);
+    }
+
+    MutableLiveData<DialogFragment> getShowDialogFragment() {
+        return mShowDialogFragment;
+    }
+
+    public void setDialogFragment(DialogFragment fragment) {
+        mShowDialogFragment.setValue(fragment);
     }
 
     private void registerListeners() {

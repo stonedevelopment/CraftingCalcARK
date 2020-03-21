@@ -20,8 +20,6 @@ import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import org.junit.Test;
 
 public class SimpleInstrumentationUnitTest {
@@ -29,6 +27,5 @@ public class SimpleInstrumentationUnitTest {
     @Test
     public void useAppContext() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertThat();
     }
 }

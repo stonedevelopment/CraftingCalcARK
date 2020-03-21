@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -35,6 +37,7 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
+import arc.resource.calculator.ui.detail.DetailFragment;
 import arc.resource.calculator.util.ExceptionUtil;
 
 public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> implements ExplorerObserver {
@@ -42,11 +45,18 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
     private Context mContext;
     private ExplorerRepository mExplorerRepository;
+    private ExplorerViewModel mExplorerViewModel;
 
     ExplorerAdapter(Context context) {
         setContext(context);
 
+        setupViewModel(context);
+
         setupRepositories();
+    }
+
+    private void setupViewModel(Context context) {
+        mExplorerViewModel = ViewModelProviders.of((FragmentActivity) context).get(ExplorerViewModel.class);
     }
 
     private void setupRepositories() {
@@ -201,7 +211,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
             try {
                 if (mExplorerRepository.isCraftable(position)) {
-                    mExplorerRepository.increaseQuantity(position);
+                    mExplorerViewModel.setDialogFragment(new DetailFragment());
                 } else if (mExplorerRepository.isCategory(position)) {
                     mExplorerRepository.changeCategory(position);
                 } else if (mExplorerRepository.isStation(position)) {
@@ -210,6 +220,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
             } catch (ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e) {
                 ExceptionObservable.getInstance().notifyFatalExceptionCaught(TAG, e);
             }
+
         }
 
         @Override
