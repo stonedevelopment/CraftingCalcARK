@@ -25,8 +25,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -34,11 +32,8 @@ import com.squareup.picasso.Picasso;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
-import arc.resource.calculator.ui.detail.DetailFragment;
-import arc.resource.calculator.util.ExceptionUtil;
 
 public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> implements ExplorerObserver {
     private static final String TAG = ExplorerAdapter.class.getSimpleName();
@@ -47,16 +42,16 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
     private ExplorerRepository mExplorerRepository;
     private ExplorerViewModel mExplorerViewModel;
 
-    ExplorerAdapter(Context context) {
+    ExplorerAdapter(Context context, ExplorerViewModel viewModel) {
         setContext(context);
 
-        setupViewModel(context);
+        setupViewModel(viewModel);
 
         setupRepositories();
     }
 
-    private void setupViewModel(Context context) {
-        mExplorerViewModel = ViewModelProviders.of((FragmentActivity) context).get(ExplorerViewModel.class);
+    private void setupViewModel(ExplorerViewModel viewModel) {
+        mExplorerViewModel = viewModel;
     }
 
     private void setupRepositories() {
@@ -133,19 +128,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
     @Override
     public long getItemId(int position) {
-        if (mExplorerRepository.isStation(position)) {
-            return mExplorerRepository.getStation(position).getId();
-        }
-
-        if (mExplorerRepository.isCategory(position)) {
-            return mExplorerRepository.getCategory(position).getId();
-        }
-
-        if (mExplorerRepository.isCraftable(position)) {
-            return mExplorerRepository.getCraftableByGlobalPosition(position).getId();
-        }
-
-        return super.getItemId(position);
+        return mExplorerRepository.getItemIdByPosition(position);
     }
 
     @Override
@@ -207,25 +190,12 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-
-            try {
-                if (mExplorerRepository.isCraftable(position)) {
-                    mExplorerViewModel.setDialogFragment(new DetailFragment());
-                } else if (mExplorerRepository.isCategory(position)) {
-                    mExplorerRepository.changeCategory(position);
-                } else if (mExplorerRepository.isStation(position)) {
-                    mExplorerRepository.changeStation(position);
-                }
-            } catch (ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e) {
-                ExceptionObservable.getInstance().notifyFatalExceptionCaught(TAG, e);
-            }
-
+            mExplorerViewModel.handleViewHolderClick(getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View view) {
-            return !mExplorerRepository.isCraftable(getAdapterPosition());
+            return mExplorerViewModel.handleViewHolderLongClick(getAdapterPosition());
         }
     }
 

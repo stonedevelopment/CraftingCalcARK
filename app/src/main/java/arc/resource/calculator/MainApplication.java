@@ -21,7 +21,6 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
 
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.PlayStoreListener;
@@ -31,7 +30,7 @@ import javax.annotation.Nonnull;
 import arc.resource.calculator.model.Encryption;
 import arc.resource.calculator.util.PurchaseUtil;
 
-public class MainApplication extends MultiDexApplication {
+public class MainApplication extends Application {
 
     @Nonnull
     private final Billing mBilling = new Billing(this, new Billing.DefaultConfiguration() {
@@ -55,6 +54,12 @@ public class MainApplication extends MultiDexApplication {
                 //  TODO    What happens after onPurchasesChanged?
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     @Nonnull

@@ -354,7 +354,7 @@ public class ExplorerRepository implements QueueObserver {
         return (getStationMap().size() + getCategoryMap().size() + getCraftableMap().size());
     }
 
-    private long getIdByPosition(int position) {
+    public long getItemIdByPosition(int position) {
         try {
             if (isStation(position)) {
                 return getStation(position).getId();

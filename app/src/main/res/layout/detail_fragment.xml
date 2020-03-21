@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frame_transparent"
+    android:background="@android:color/transparent"
     tools:context=".ui.detail.DetailFragment">
 
     <FrameLayout
@@ -108,7 +108,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_vert75"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/metal_door" />
+        android:src="@drawable/metal_door" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/titleTextView"
@@ -126,7 +126,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_vert75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_horiz5"
-        tools:text="Metal Door" />
+        android:text="Metal Door" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/craftingStationLabel"
@@ -137,7 +137,7 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        tools:text="Crafting Station:" />
+        android:text="Crafting Station:" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/craftingStationTextView"
@@ -150,7 +150,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_vert95"
         app:layout_constraintStart_toEndOf="@+id/craftingStationLabel"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        tools:text="Smithy sdjfklj sdfkjklsd dfsdfasdf" />
+        android:text="Smithy sdjfklj sdfkjklsd dfsdfasdf" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/folderLabel"
@@ -161,7 +161,7 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/craftingStationTextView"
-        tools:text="Folder:" />
+        android:text="Folder:" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/folderTextView"
@@ -174,7 +174,7 @@
         app:layout_constraintEnd_toEndOf="@+id/guideline_vert95"
         app:layout_constraintStart_toEndOf="@+id/folderLabel"
         app:layout_constraintTop_toBottomOf="@+id/craftingStationTextView"
-        tools:text="Structures/Metal/sdjfjlkjkljasdf/sadfskjdk/sdfasdfasdf sdfsdf/" />
+        android:text="Structures/Metal/sdjfjlkjkljasdf/sadfskjdk/sdfasdfasdf sdfsdf/" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/descriptionTextView"
@@ -189,7 +189,7 @@
         app:layout_constraintEnd_toEndOf="@+id/guideline_vert95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/folderTextView"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
     <Button
         android:id="@+id/button3"
@@ -223,7 +223,7 @@
         app:layout_constraintBottom_toTopOf="@+id/negativeButton"
         app:layout_constraintEnd_toStartOf="@+id/guideline_vert65"
         app:layout_constraintStart_toStartOf="@+id/guideline_vert30"
-        tools:text="0" />
+        android:text="1" />
 
     <Button
         android:id="@+id/button5"
@@ -256,7 +256,7 @@
         app:layout_constraintEnd_toEndOf="@id/guideline_vert95"
         app:layout_constraintStart_toStartOf="@+id/guideline_vert50"
         app:layout_constraintTop_toTopOf="@+id/negativeButton"
-        tools:text="@string/detail_content_save_button_add_to_queue" />
+        android:text="@string/detail_content_save_button_add_to_queue" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/negativeButton"
@@ -268,6 +268,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/guideline_vert50"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Remove from Queue" />
+        android:text="Remove from Queue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

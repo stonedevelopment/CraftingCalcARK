@@ -18,6 +18,7 @@ package arc.resource.calculator.ui.explorer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,6 +33,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -92,16 +95,10 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mRecyclerView.onCreate();
+        setupViewModel();
+        mRecyclerView.onCreate(mViewModel);
         mTextView.onCreate();
         mExceptionObservable = ExceptionObservable.getInstance();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setupViewModel();
     }
 
     @Override
@@ -110,15 +107,15 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
         registerListeners();
 
-        mTextView.onResume();
         mRecyclerView.onResume();
+        mTextView.onResume();
         registerForContextMenu(mRecyclerView);
     }
 
     @Override
     public void onPause() {
-        mTextView.onPause();
         mRecyclerView.onPause();
+        mTextView.onPause();
         unregisterForContextMenu(mRecyclerView);
 
         unregisterListeners();
@@ -210,15 +207,22 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         mViewModel.getSnackBarMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                Log.d(TAG, "onChanged: getSnackBarMessage");
                 showSnackBar(s);
             }
         });
-        mViewModel.getShowDialogFragment().observe(this, new Observer<DialogFragment>() {
+        mViewModel.getShowDialogFragment().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(DialogFragment dialogFragment) {
-                showDialogFragment(dialogFragment);
+            public void onChanged(Integer position) {
+                showDialogFragment(DetailFragment.newInstance());
             }
         });
+    }
+
+    private void setupRecyclerView() {
+        int numCols = getResources().getInteger(R.integer.gridview_column_count);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
+        mRecyclerView.setAdapter(new ExplorerAdapter(getContext(), mViewModel));
     }
 
     private void registerListeners() {
@@ -245,10 +249,9 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.explorerCoordinatorLayout), s, Snackbar.LENGTH_SHORT).show();
     }
 
-    private void showDialogFragment(DialogFragment fragment) {
-        FragmentManager fm = getFragmentManager();
-        DetailFragment detailFragment = DetailFragment.newInstance();
-        detailFragment.show(fm, DetailActivity.TAG);
+    private void showDialogFragment(DetailFragment fragment) {
+        Log.d(TAG, "showDialogFragment: ");
+        fragment.show(getChildFragmentManager(), DetailActivity.TAG);
     }
 
     @Override

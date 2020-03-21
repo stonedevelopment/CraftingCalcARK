@@ -16,8 +16,6 @@
 
 package arc.resource.calculator.ui.detail;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,19 +33,15 @@ public class DetailFragment extends DialogFragment {
     private DetailViewModel mViewModel;
 
     public static DetailFragment newInstance() {
-        return new DetailFragment();
+        DetailFragment fragment = new DetailFragment();
+        fragment.setStyle(STYLE_NO_FRAME, R.style.AppTheme);
+        fragment.setShowsDialog(true);
+        return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.detail_fragment, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        // TODO: 3/21/2020 insert data into views here
     }
 }

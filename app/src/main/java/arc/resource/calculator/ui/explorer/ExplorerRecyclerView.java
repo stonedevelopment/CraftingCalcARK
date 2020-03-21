@@ -29,6 +29,7 @@ import arc.resource.calculator.views.RecyclerViewWithContextMenu;
 public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
     private static final String TAG = ExplorerRecyclerView.class.getSimpleName();
 
+    private ExplorerViewModel mExplorerViewModel;
     private ExplorerAdapter mAdapter;
 
     public ExplorerRecyclerView(Context context) {
@@ -43,19 +44,23 @@ public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
         super(context, attrs, defStyle);
     }
 
-    public void onCreate() {
-        setupLayout();
-        setupAdapter();
-    }
-
     private void setupLayout() {
         int numCols = getResources().getInteger(R.integer.gridview_column_count);
         setLayoutManager(new GridLayoutManager(getContext(), numCols));
     }
 
     private void setupAdapter() {
-        mAdapter = new ExplorerAdapter(getContext());
+        mAdapter = new ExplorerAdapter(getContext(), mExplorerViewModel);
         setAdapter(mAdapter);
+    }
+
+    public void onCreate(ExplorerViewModel viewModel) {
+        setupLayout();
+        setupViewModel(viewModel);
+    }
+
+    private void setupViewModel(ExplorerViewModel viewModel) {
+        mExplorerViewModel = viewModel;
     }
 
     public void onResume() {
@@ -70,6 +75,7 @@ public class ExplorerRecyclerView extends RecyclerViewWithContextMenu {
     @Override
     public ExplorerAdapter getAdapter() {
         if (mAdapter == null) setupAdapter();
+
         return mAdapter;
     }
 }

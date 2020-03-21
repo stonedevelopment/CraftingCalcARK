@@ -17,9 +17,9 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
@@ -30,6 +30,7 @@ import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
+import arc.resource.calculator.util.ExceptionUtil;
 
 public class ExplorerViewModel extends AndroidViewModel implements QueueObserver, ExplorerObserver {
     // TODO: Maintain filters?
@@ -37,7 +38,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
-    private MutableLiveData<DialogFragment> mShowDialogFragment = new MutableLiveData<>();
+    private MutableLiveData<Integer> mShowDialogFragment = new MutableLiveData<>();
 
     private ExceptionObservable mExceptionRepository = ExceptionObservable.getInstance();
     private QueueRepository mQueueRepository = QueueRepository.getInstance();
@@ -69,17 +70,48 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         mViewModelState.setValue(viewModelState);
     }
 
-    MutableLiveData<DialogFragment> getShowDialogFragment() {
+    MutableLiveData<Integer> getShowDialogFragment() {
         return mShowDialogFragment;
     }
 
-    public void setDialogFragment(DialogFragment fragment) {
-        mShowDialogFragment.setValue(fragment);
+    public void setDialogFragment(Integer id) {
+        mShowDialogFragment.setValue(id);
     }
 
     private void registerListeners() {
+        Log.d(TAG, "registerListeners: " + this);
         mQueueRepository.addObserver(TAG, this);
         mExplorerRepository.addObserver(TAG, this);
+    }
+
+    long getItemId(int position) {
+        if (mExplorerRepository.isStation(position)) {
+            return mExplorerRepository.getStation(position).getId();
+        }
+
+        if (mExplorerRepository.isCategory(position)) {
+            return mExplorerRepository.getCategory(position).getId();
+        }
+
+        return mExplorerRepository.getCraftableByGlobalPosition(position).getId();
+    }
+
+    void handleViewHolderClick(int position) {
+        try {
+            if (mExplorerRepository.isCraftable(position)) {
+                setDialogFragment(position);
+            } else if (mExplorerRepository.isCategory(position)) {
+                mExplorerRepository.changeCategory(position);
+            } else if (mExplorerRepository.isStation(position)) {
+                mExplorerRepository.changeStation(position);
+            }
+        } catch (ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e) {
+            mExceptionRepository.notifyFatalExceptionCaught(TAG, e);
+        }
+    }
+
+    boolean handleViewHolderLongClick(int position) {
+        return !mExplorerRepository.isCraftable(position);
     }
 
     void requestToUpdateEngramQuantity(long engramId, int quantity) {
