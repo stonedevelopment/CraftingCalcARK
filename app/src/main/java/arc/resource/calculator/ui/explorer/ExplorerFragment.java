@@ -30,7 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -41,7 +41,6 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.RecyclerContextMenuInfo;
-import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.ui.detail.DetailFragment;
 
 import static android.app.Activity.RESULT_OK;
@@ -57,8 +56,6 @@ import static arc.resource.calculator.DetailActivity.UPDATE;
 public class ExplorerFragment extends Fragment implements ExceptionObservable.Observer {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
-    private static ExplorerFragment sInstance;
-
     private ExplorerViewModel mViewModel;
 
     private ExplorerRecyclerView mRecyclerView;
@@ -66,16 +63,6 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     private ContentLoadingProgressBar mProgressBar;
 
     private ExceptionObservable mExceptionObservable;
-
-    public static ExplorerFragment getInstance() {
-        if (sInstance == null) sInstance = newInstance();
-
-        return sInstance;
-    }
-
-    private static ExplorerFragment newInstance() {
-        return new ExplorerFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -185,8 +172,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     }
 
     private void setupViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(ExplorerViewModel.class);
-        mViewModel.getViewModelState().observe(this, new Observer<ExplorerViewModelState>() {
+        mViewModel = new ViewModelProvider(this).get(ExplorerViewModel.class);
+        mViewModel.getViewModelState().observe(getViewLifecycleOwner(), new Observer<ExplorerViewModelState>() {
             @Override
             public void onChanged(ExplorerViewModelState viewModelState) {
                 switch (viewModelState) {
@@ -202,19 +189,19 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
                 }
             }
         });
-        mViewModel.getSnackBarMessage().observe(this, new Observer<String>() {
+        mViewModel.getSnackBarMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 Log.d(TAG, "onChanged: getSnackBarMessage");
                 showSnackBar(s);
             }
         });
-        mViewModel.getShowDialogFragment().observe(this, new Observer<DisplayEngram>() {
-            @Override
-            public void onChanged(DisplayEngram position) {
-                showDialogFragment(DetailFragment.newInstance(position));
-            }
-        });
+//        mViewModel.getShowDialogFragment().observe(this, new Observer<DisplayEngram>() {
+//            @Override
+//            public void onChanged(DisplayEngram position) {
+//                showDialogFragment(DetailFragment.newInstance(position));
+//            }
+//        });
     }
 
     private void setupRecyclerView() {

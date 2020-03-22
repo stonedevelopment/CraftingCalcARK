@@ -20,16 +20,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.ViewPager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,7 +37,6 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.FirstUseActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.SettingsActivity;
-import arc.resource.calculator.adapters.ViewPagerAdapter;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.util.AdUtil;
@@ -62,9 +58,6 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = MainActivity.class.getSimpleName();
     private MainViewModel mViewModel;
 
-    private NoSwipeViewPager mViewPager;
-    private BottomNavigationView mBottomNavigationView;
-    private FloatingActionButton mFAB;
     private AdUtil mAdUtil;
 
     // Purchase flow -> disable menu option to disable ads
@@ -81,11 +74,7 @@ public class MainActivity extends AppCompatActivity
 
         registerListeners();
 
-        setupViewPager();
-
-        setupBottomNavigation();
-
-        setupFloatingActionButton();
+        setupNavigation();
 
         setupAds();
 
@@ -283,12 +272,6 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(intent, requestCode);
             }
         });
-        mViewModel.getNavigationPosition().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer position) {
-                mViewPager.setCurrentItem(position, false);
-            }
-        });
         mViewModel.getSnackBarMessage() .observe(this, new Observer<String>() {
             @Override
             public void onChanged(String message) {
@@ -305,31 +288,10 @@ public class MainActivity extends AppCompatActivity
         ExceptionObservable.getInstance().unregisterObserver(); // TODO: 1/27/2020 Does MainActivity need to listen to exceptions?
     }
 
-    private void setupViewPager() {
-        mViewPager = findViewById(R.id.viewPager);
-        mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
-    }
-
-    private void setupBottomNavigation() {
-        mBottomNavigationView = findViewById(R.id.bottomNavigationView);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int position = menuItem.getOrder();
-                mViewModel.setNavigationPosition(position);
-                return true;
-            }
-        });
-    }
-
-    private void setupFloatingActionButton() {
-        mFAB = findViewById(R.id.floatingActionButton);
-        mFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.setSnackBarMessage("Open Crafting Queue!");
-            }
-        });
+    private void setupNavigation() {
+        NavController navController = Navigation.findNavController(this, R.id.navHostContainer);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+        NavigationUI.setupWithNavController(bottomNav, navController);
     }
 
     private void setupAds() {

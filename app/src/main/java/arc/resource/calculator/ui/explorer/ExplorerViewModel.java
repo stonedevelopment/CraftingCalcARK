@@ -94,6 +94,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     void handleViewHolderClick(int position) {
         try {
             if (mExplorerRepository.isCraftable(position)) {
+                // TODO: 3/22/2020 navigate to detail fragment using navigation host controller
                 MainViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getApplication()).get(MainViewModel.class);
                 viewModel.setDialogFragment(mExplorerRepository.getCraftableByGlobalPosition(position));
             } else if (mExplorerRepository.isCategory(position)) {

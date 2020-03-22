@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Jared Stone
+  ~
+  ~ This work is licensed under the Creative Commons
+  ~ Attribution-NonCommercial-NoDerivatives 4.0 International
+  ~ License. To view a copy of this license, visit
+  ~
+  ~ http://creativecommons.org/licenses/by-nc-nd/4.0/
+  ~
+  ~ or send a letter to
+  ~
+  ~  Creative Commons,
+  ~  PO Box 1866,
+  ~  Mountain View, CA 94042, USA.
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/explorerFragment">
+    <fragment
+        android:id="@+id/explorerFragment"
+        android:name="arc.resource.calculator.ui.explorer.ExplorerFragment"
+        android:label="explorer_fragment"
+        tools:layout="@layout/explorer_fragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="arc.resource.calculator.ui.search.SearchFragment"
+        android:label="search_fragment"
+        tools:layout="@layout/search_fragment" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="arc.resource.calculator.ui.favorites.FavoritesFragment"
+        android:label="favorites_fragment"
+        tools:layout="@layout/favorites_fragment" />
+</navigation>
