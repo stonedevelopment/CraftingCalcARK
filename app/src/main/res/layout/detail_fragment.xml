@@ -46,14 +46,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.15" />
+            app:layout_constraintGuide_percent="0.2" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vert30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.4" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vert50"
@@ -74,14 +74,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".85" />
+            app:layout_constraintGuide_percent=".8" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vert65"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".7" />
+            app:layout_constraintGuide_percent=".6" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vert95"
@@ -157,7 +157,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
@@ -166,22 +166,24 @@
             app:layout_constraintTop_toBottomOf="@+id/folderTextView" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/decreaseBy10Button"
             style="?attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="-10"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vert15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/quantityTextView" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/decreaseButton"
             style="?attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="-1"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vert30"
             app:layout_constraintStart_toStartOf="@+id/guideline_vert15"
@@ -190,23 +192,25 @@
         <TextView
             android:id="@+id/quantityTextView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="1"
+            android:gravity="center"
+            android:text="1000"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toBottomOf="@+id/decreaseBy10Button"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vert65"
             app:layout_constraintStart_toStartOf="@+id/guideline_vert30"
             app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/increaseButton"
             style="?attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="+1"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vert80"
@@ -214,10 +218,11 @@
             app:layout_constraintTop_toTopOf="@+id/quantityTextView" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/increaseBy10Button"
             style="?attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="+10"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vert95"
@@ -235,7 +240,7 @@
             android:text="Cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
+            app:layout_constraintTop_toBottomOf="@+id/decreaseBy10Button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/positiveButton"

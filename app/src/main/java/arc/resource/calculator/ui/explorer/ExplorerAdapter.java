@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -34,6 +36,7 @@ import java.util.Locale;
 import arc.resource.calculator.R;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
+import arc.resource.calculator.ui.main.MainViewModel;
 
 public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> implements ExplorerObserver {
     private static final String TAG = ExplorerAdapter.class.getSimpleName();

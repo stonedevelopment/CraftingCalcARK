@@ -21,6 +21,8 @@ import android.content.Intent;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import arc.resource.calculator.model.engram.DisplayEngram;
+
 /**
  * ViewModel for MainActivity
  */
@@ -28,6 +30,7 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Intent> mStartActivityForResultTrigger = new MutableLiveData<>();
     private MutableLiveData<Integer> mNavigationPosition = new MutableLiveData<>();
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
+    private MutableLiveData<DisplayEngram> mShowDialogFragment = new MutableLiveData<>();
 
     MutableLiveData<Intent> getStartActivityForResultTrigger() {
         return mStartActivityForResultTrigger;
@@ -50,6 +53,15 @@ public class MainViewModel extends ViewModel {
     }
 
     void setSnackBarMessage(String message) {
-        mSnackBarMessage.setValue(message);
+        mSnackBarMessage.postValue(message);
     }
+
+    MutableLiveData<DisplayEngram> getShowDialogFragment() {
+        return mShowDialogFragment;
+    }
+
+    public void setDialogFragment(DisplayEngram id) {
+        mShowDialogFragment.setValue(id);
+    }
+
 }

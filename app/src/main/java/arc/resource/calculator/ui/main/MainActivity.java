@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -274,7 +275,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mViewModel.getStartActivityForResultTrigger().observe(this, new Observer<Intent>() {
             @Override
             public void onChanged(Intent intent) {

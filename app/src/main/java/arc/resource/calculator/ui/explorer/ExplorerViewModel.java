@@ -22,6 +22,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
@@ -31,6 +33,7 @@ import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
+import arc.resource.calculator.ui.main.MainViewModel;
 import arc.resource.calculator.util.ExceptionUtil;
 
 public class ExplorerViewModel extends AndroidViewModel implements QueueObserver, ExplorerObserver {
@@ -39,7 +42,6 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
-    private MutableLiveData<DisplayEngram> mShowDialogFragment = new MutableLiveData<DisplayEngram>();
 
     private ExceptionObservable mExceptionRepository = ExceptionObservable.getInstance();
     private QueueRepository mQueueRepository = QueueRepository.getInstance();
@@ -51,16 +53,16 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         registerListeners();
     }
 
+    public void showSnackBarMessage(String message) {
+        setSnackBarMessage(message);
+    }
+
     MutableLiveData<String> getSnackBarMessage() {
         return mSnackBarMessage;
     }
 
     private void setSnackBarMessage(String s) {
-        mSnackBarMessage.setValue(s);
-    }
-
-    public void showSnackBarMessage(String message) {
-        setSnackBarMessage(message);
+        mSnackBarMessage.postValue(s);
     }
 
     MutableLiveData<ExplorerViewModelState> getViewModelState() {
@@ -69,14 +71,6 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     private void setViewModelState(ExplorerViewModelState viewModelState) {
         mViewModelState.setValue(viewModelState);
-    }
-
-    MutableLiveData<DisplayEngram> getShowDialogFragment() {
-        return mShowDialogFragment;
-    }
-
-    public void setDialogFragment(DisplayEngram id) {
-        mShowDialogFragment.setValue(id);
     }
 
     private void registerListeners() {
@@ -100,7 +94,8 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     void handleViewHolderClick(int position) {
         try {
             if (mExplorerRepository.isCraftable(position)) {
-                setDialogFragment(mExplorerRepository.getCraftableByGlobalPosition(position));
+                MainViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getApplication()).get(MainViewModel.class);
+                viewModel.setDialogFragment(mExplorerRepository.getCraftableByGlobalPosition(position));
             } else if (mExplorerRepository.isCategory(position)) {
                 mExplorerRepository.changeCategory(position);
             } else if (mExplorerRepository.isStation(position)) {
