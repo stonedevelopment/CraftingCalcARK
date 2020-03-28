@@ -16,10 +16,26 @@
 
 package arc.resource.calculator.db.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import java.util.List;
+
+import arc.resource.calculator.db.entity.FolderEntity;
 
 @Dao
-public class FolderDao {
-    public static final String tableName = "folders";
-    public static final String columnName = "folder_id";
+public interface FolderDao {
+    String tableName = "folders";
+    String columnName = "folder_id";
+
+    @Insert()
+    void insert(FolderEntity folderEntity);
+
+    @Query("DELETE from folders")
+    void deleteAll();
+
+    @Query("SELECT * from folders ORDER BY name ASC")
+    LiveData<List<FolderEntity>> getFolders();
 }

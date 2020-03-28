@@ -24,119 +24,55 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
-import arc.resource.calculator.repository.explorer.ExplorerRepository;
-import arc.resource.calculator.ui.main.MainViewModel;
 
-public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> implements ExplorerObserver {
+import static androidx.core.content.ContextCompat.getDrawable;
+
+public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ExplorerItemViewHolder> implements ExplorerObserver {
     private static final String TAG = ExplorerAdapter.class.getSimpleName();
 
-    private Context mContext;
-    private ExplorerRepository mExplorerRepository;
-    private ExplorerViewModel mExplorerViewModel;
+    private List<ExplorerItem> mItems = new ArrayList<>();
+    private LayoutInflater mInflater;
 
-    ExplorerAdapter(Context context, ExplorerViewModel viewModel) {
-        setContext(context);
-
-        setupViewModel(viewModel);
-
-        setupRepositories();
+    ExplorerAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
     }
 
-    private void setupViewModel(ExplorerViewModel viewModel) {
-        mExplorerViewModel = viewModel;
+    Context getContext() {
+        return mInflater.getContext();
     }
 
-    private void setupRepositories() {
-        mExplorerRepository = ExplorerRepository.getInstance();
-    }
-
-    private Context getContext() {
-        return mContext;
-    }
-
-    private void setContext(Context context) {
-        mContext = context;
-    }
-
-    public void resume(Context context) {
-        registerListeners();
-        mExplorerRepository.resume(context);
-    }
-
-    public void pause() {
-        mExplorerRepository.pause();
-        unregisterListeners();
-    }
-
-    private void registerListeners() {
-        mExplorerRepository.addObserver(TAG, this);
-    }
-
-    private void unregisterListeners() {
-        mExplorerRepository.removeObserver(TAG);
+    void setItems(List<ExplorerItem> items) {
+        mItems = items;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.list_item_craftable, parent, false);
-
-        return new ViewHolder(itemView);
+    public ExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // TODO: 3/28/2020 refactor names of list item layouts, see issue #35
+        View itemView = mInflater.inflate(R.layout.list_item_craftable, parent, false);
+        return new ExplorerItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        View view = holder.itemView;
-
-        // TODO: 1/26/2020 Change how Engrams are displayed to make their names easier to read
-
-        final String imagePath = "file:///android_asset/" + mExplorerRepository.getImagePathByPosition(position);
-        Picasso.with(getContext())
-                .load(imagePath)
-                .error(R.drawable.placeholder_empty)
-                .placeholder(R.drawable.placeholder_empty)
-                .into(holder.getImageView());
-
-        holder.getNameView().setText(mExplorerRepository.getNameByPosition(position));
-
-        if (mExplorerRepository.isCraftable(position)) {
-            int quantity = mExplorerRepository.getQuantityWithYieldByPosition(position);
-
-            if (quantity > 0) {
-                view.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.frame_queue_item));
-                holder.getQuantityView().setText(String.format(Locale.getDefault(), "x%d", quantity));
-            } else {
-                view.setBackground(
-                        ContextCompat.getDrawable(getContext(), R.drawable.frame_craftable_item));
-                holder.getQuantityView().setText(null);
-            }
-        } else {
-            view.setBackground(
-                    ContextCompat.getDrawable(getContext(), R.drawable.frame_craftable_folder));
-            holder.getQuantityView().setText(null);
-        }
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return mExplorerRepository.getItemIdByPosition(position);
+    public void onBindViewHolder(final ExplorerItemViewHolder holder, int position) {
+        ExplorerItem explorerItem = mItems.get(position);
+        holder.bindView(explorerItem);
     }
 
     @Override
     public int getItemCount() {
-        return mExplorerRepository.getItemCount();
+        return mItems.size();
     }
 
     @Override
@@ -159,16 +95,14 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
         // TODO: 1/26/2020 what to do with an empty explorer repository?
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder
+    class ExplorerItemViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener {
-
-        private final String TAG = ViewHolder.class.getSimpleName();
-
+        private final String TAG = ExplorerItemViewHolder.class.getSimpleName();
         private final ImageView mImageView;
         private final TextView mNameView;
         private final TextView mQuantityView;
 
-        ViewHolder(View view) {
+        ExplorerItemViewHolder(View view) {
             super(view);
 
             mImageView = view.findViewById(R.id.image_view);
@@ -191,14 +125,41 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
             return mQuantityView;
         }
 
+        void bindView(ExplorerItem explorerItem) {
+            final String imagePath = "file:///android_asset/" + explorerItem.getImagePath();
+            Picasso.with(getContext())
+                    .load(imagePath)
+                    .error(R.drawable.placeholder_empty)
+                    .placeholder(R.drawable.placeholder_empty)
+                    .into(getImageView());
+
+            getNameView().setText(explorerItem.getTitle());
+
+            if (explorerItem.getItemType() == ExplorerItemType.Engram) {
+                int quantity = explorerItem.getQuantity();
+
+                if (quantity > 0) {
+                    itemView.setBackground(getDrawable(getContext(), R.drawable.frame_queue_item));
+                    getQuantityView().setText(String.format(Locale.getDefault(), "x%d", quantity));
+                } else {
+                    itemView.setBackground(getDrawable(getContext(), R.drawable.frame_craftable_item));
+                    getQuantityView().setText(null);
+                }
+            } else {
+                itemView.setBackground(getDrawable(getContext(), R.drawable.frame_craftable_folder));
+                getQuantityView().setText(null);
+            }
+        }
+
         @Override
         public void onClick(View view) {
-            mExplorerViewModel.handleViewHolderClick(getAdapterPosition());
+//            mExplorerViewModel.handleViewHolderClick(getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View view) {
-            return mExplorerViewModel.handleViewHolderLongClick(getAdapterPosition());
+//            return mExplorerViewModel.handleViewHolderLongClick(getAdapterPosition());
+            return true;
         }
     }
 

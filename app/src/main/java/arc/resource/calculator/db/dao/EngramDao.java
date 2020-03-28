@@ -16,10 +16,26 @@
 
 package arc.resource.calculator.db.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import java.util.List;
+
+import arc.resource.calculator.db.entity.EngramEntity;
 
 @Dao
-public class EngramDao {
-    public static final String tableName = "engrams";
-    public static final String columnName = "engram_id";
+public interface EngramDao {
+    String tableName = "engrams";
+    String columnName = "engram_id";
+
+    @Insert()
+    void insert(EngramEntity engramEntity);
+
+    @Query("DELETE from engrams")
+    void deleteAll();
+
+    @Query("SELECT * from engrams ORDER BY name ASC")
+    LiveData<List<EngramEntity>> getEngrams();
 }

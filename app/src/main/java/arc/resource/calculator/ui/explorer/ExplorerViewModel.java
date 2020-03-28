@@ -17,25 +17,18 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
-import arc.resource.calculator.repository.explorer.ExplorerRepository;
 import arc.resource.calculator.repository.queue.QueueObserver;
-import arc.resource.calculator.repository.queue.QueueRepository;
-import arc.resource.calculator.ui.main.MainViewModel;
-import arc.resource.calculator.util.ExceptionUtil;
 
 public class ExplorerViewModel extends AndroidViewModel implements QueueObserver, ExplorerObserver {
     // TODO: Maintain filters?
@@ -44,23 +37,15 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
 
-    private ExceptionObservable mExceptionRepository = ExceptionObservable.getInstance();
-    private QueueRepository mQueueRepository = QueueRepository.getInstance();
-    private ExplorerRepository mExplorerRepository = ExplorerRepository.getInstance();
+    private ExplorerRepository mRepository;
 
-    private MutableLiveData<List<ExplorerItem>> explorerItemList = mExplorerRepository.getExplorerItemList();
+    private LiveData<List<ExplorerItem>> mItemList;
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
 
-        registerListeners();
-    }
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-
-        unregisterListeners();
+        mRepository = new ExplorerRepository(application);
+        mItemList = mRepository.getExplorerItems();
     }
 
     public void showSnackBarMessage(String message) {
@@ -72,7 +57,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     }
 
     private void setSnackBarMessage(String s) {
-        mSnackBarMessage.postValue(s);
+        mSnackBarMessage.setValue(s);
     }
 
     MutableLiveData<ExplorerViewModelState> getViewModelState() {
@@ -83,74 +68,8 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         mViewModelState.setValue(viewModelState);
     }
 
-
-    public MutableLiveData<List<ExplorerItem>> getExplorerItemList() {
-        return explorerItemList;
-    }
-
-    public void setExplorerItemList(List<ExplorerItem> explorerItemList) {
-        this.explorerItemList = explorerItemList;
-    }
-
-    private void registerListeners() {
-        Log.d(TAG, "registerListeners: " + this);
-        mQueueRepository.addObserver(TAG, this);
-        mExplorerRepository.addObserver(TAG, this);
-    }
-
-    private void unregisterListeners() {
-        Log.d(TAG, "unregisterListeners: " + this);
-        mQueueRepository.removeObserver(TAG);
-        mExplorerRepository.removeObserver(TAG);
-
-    }
-
-    long getItemId(int position) {
-        if (mExplorerRepository.isStation(position)) {
-            return mExplorerRepository.getStation(position).getId();
-        }
-
-        if (mExplorerRepository.isCategory(position)) {
-            return mExplorerRepository.getCategory(position).getId();
-        }
-
-        return mExplorerRepository.getCraftableByGlobalPosition(position).getId();
-    }
-
-    void handleViewHolderClick(int position) {
-        try {
-            if (mExplorerRepository.isCraftable(position)) {
-                // TODO: 3/22/2020 navigate to detail fragment using navigation host controller
-                MainViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getApplication()).get(MainViewModel.class);
-                viewModel.setDialogFragment(mExplorerRepository.getCraftableByGlobalPosition(position));
-            } else if (mExplorerRepository.isCategory(position)) {
-                mExplorerRepository.changeCategory(position);
-            } else if (mExplorerRepository.isStation(position)) {
-                mExplorerRepository.changeStation(position);
-            }
-        } catch (ExceptionUtil.CursorEmptyException | ExceptionUtil.CursorNullException e) {
-            mExceptionRepository.notifyFatalExceptionCaught(TAG, e);
-        }
-    }
-
-    boolean handleViewHolderLongClick(int position) {
-        return !mExplorerRepository.isCraftable(position);
-    }
-
-    void requestToUpdateEngramQuantity(long engramId, int quantity) {
-        boolean updated = mQueueRepository.requestToUpdateQuantity(getApplication(), engramId, quantity);
-        if (!updated) {
-            String message = getApplication().getString(R.string.snackbar_message_edit_quantity_fail);
-            setSnackBarMessage(message);
-        }
-    }
-
-    void requestToRemoveEngram(long engramId) {
-        boolean removed = mQueueRepository.requestToRemoveEngram(engramId);
-        if (!removed) {
-            String message = getApplication().getString(R.string.snackbar_message_item_removed_fail);
-            setSnackBarMessage(message);
-        }
+    public LiveData<List<ExplorerItem>> getItemList() {
+        return mItemList;
     }
 
     @Override

@@ -19,9 +19,7 @@ package arc.resource.calculator.ui.explorer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,9 +27,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -40,7 +38,6 @@ import java.util.Objects;
 import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
-import arc.resource.calculator.model.RecyclerContextMenuInfo;
 import arc.resource.calculator.ui.detail.DetailFragment;
 
 import static android.app.Activity.RESULT_OK;
@@ -58,18 +55,25 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private ExplorerViewModel mViewModel;
 
-    private ExplorerRecyclerView mRecyclerView;
+    private ExplorerAdapter mAdapter;
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
-
-    private ExceptionObservable mExceptionObservable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.explorer_fragment, container, false);
 
-        mRecyclerView = rootView.findViewById(R.id.explorerRecyclerView);
+        RecyclerView recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
+
+        //  setup layout manager
+        int numCols = getResources().getInteger(R.integer.gridview_column_count);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
+
+        //  setup view adapter
+        mAdapter = new ExplorerAdapter(getContext());
+        recyclerView.setAdapter(mAdapter);
+
         mTextView = rootView.findViewById(R.id.explorerNavigationTextView);
         mProgressBar = rootView.findViewById(R.id.explorerProgressBar);
 
@@ -81,50 +85,6 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         super.onActivityCreated(savedInstanceState);
 
         setupViewModel();
-        mRecyclerView.onCreate(mViewModel);
-        mTextView.onCreate();
-        mExceptionObservable = ExceptionObservable.getInstance();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        registerListeners();
-
-        mRecyclerView.onResume();
-        mTextView.onResume();
-        registerForContextMenu(mRecyclerView);
-    }
-
-    @Override
-    public void onPause() {
-        mRecyclerView.onPause();
-        mTextView.onPause();
-        unregisterForContextMenu(mRecyclerView);
-
-        unregisterListeners();
-
-        super.onPause();
-    }
-
-    @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        Objects.requireNonNull(getActivity()).getMenuInflater().inflate(R.menu.displaycase_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        RecyclerContextMenuInfo menuInfo = (RecyclerContextMenuInfo) item.getMenuInfo();
-
-        final long id = menuInfo.getId();
-
-        if (item.getItemId() == R.id.floating_action_view_details) {
-            //  TODO:   Engram detail screen should be popup window?
-            startActivityForResult(DetailActivity.buildIntentWithId(getActivity(), id), DetailActivity.REQUEST_CODE);
-        }
-
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -133,6 +93,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
         Bundle extras = Objects.requireNonNull(data).getExtras();
 
+
+        // TODO: 3/28/2020 connect with new DetailFragment
         if (requestCode == DetailActivity.REQUEST_CODE) {
             assert extras != null;
             int extraResultCode = extras.getInt(RESULT_CODE);
@@ -173,49 +135,26 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private void setupViewModel() {
         mViewModel = new ViewModelProvider(this).get(ExplorerViewModel.class);
-        mViewModel.getViewModelState().observe(getViewLifecycleOwner(), new Observer<ExplorerViewModelState>() {
-            @Override
-            public void onChanged(ExplorerViewModelState viewModelState) {
-                switch (viewModelState) {
-                    case POPULATING:
-                        showLoading();
-                        break;
-                    case POPULATED:
-                        showLoaded();
-                        break;
-                    case EMPTY:
-                        showEmpty();
-                        break;
-                }
+        mViewModel.getViewModelState().observe(getViewLifecycleOwner(), viewModelState -> {
+            switch (viewModelState) {
+                case POPULATING:
+                    showLoading();
+                    break;
+                case POPULATED:
+                    showLoaded();
+                    break;
+                case EMPTY:
+                    showEmpty();
+                    break;
             }
         });
-        mViewModel.getSnackBarMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.d(TAG, "onChanged: getSnackBarMessage");
-                showSnackBar(s);
-            }
+        mViewModel.getSnackBarMessage().observe(getViewLifecycleOwner(), s -> {
+            Log.d(TAG, "onChanged: getSnackBarMessage");
+            showSnackBar(s);
         });
-//        mViewModel.getShowDialogFragment().observe(this, new Observer<DisplayEngram>() {
-//            @Override
-//            public void onChanged(DisplayEngram position) {
-//                showDialogFragment(DetailFragment.newInstance(position));
-//            }
-//        });
-    }
-
-    private void setupRecyclerView() {
-        int numCols = getResources().getInteger(R.integer.gridview_column_count);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
-        mRecyclerView.setAdapter(new ExplorerAdapter(getContext(), mViewModel));
-    }
-
-    private void registerListeners() {
-        mExceptionObservable.registerObserver(this);
-    }
-
-    private void unregisterListeners() {
-        mExceptionObservable.unregisterObserver();
+        mViewModel.getItemList().observe(getViewLifecycleOwner(), explorerItems -> {
+            mAdapter.setItems(explorerItems);
+        });
     }
 
     private void showLoading() {

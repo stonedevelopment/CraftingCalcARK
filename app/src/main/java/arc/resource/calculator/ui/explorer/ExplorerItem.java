@@ -16,6 +16,12 @@
 
 package arc.resource.calculator.ui.explorer;
 
+import javax.annotation.Nullable;
+
+import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.StationEntity;
+
 enum ExplorerItemType {CraftingStation, Folder, Engram}
 
 public class ExplorerItem {
@@ -23,12 +29,26 @@ public class ExplorerItem {
     private final String title;
     private final String imagePath;
     private final ExplorerItemType itemType;
+    private Integer quantity;
 
-    ExplorerItem(long id, String title, String imagePath, ExplorerItemType itemType) {
+    ExplorerItem(long id, String title, String imagePath, ExplorerItemType itemType, @Nullable Integer quantity) {
         this.id = id;
         this.title = title;
         this.imagePath = imagePath;
         this.itemType = itemType;
+        this.quantity = quantity;
+    }
+
+    public static ExplorerItem fromStation(StationEntity stationEntity) {
+        return new ExplorerItem(stationEntity.getRowId(), stationEntity.getName(), stationEntity.getImage(), ExplorerItemType.CraftingStation, null);
+    }
+
+    public static ExplorerItem fromFolder(FolderEntity folderEntity) {
+        return new ExplorerItem(folderEntity.getRowId(), folderEntity.getName(), folderEntity.getImage(), ExplorerItemType.Folder, null);
+    }
+
+    public static ExplorerItem fromEngram(EngramEntity engramEntity) {
+        return new ExplorerItem(engramEntity.getRowId(), engramEntity.getName(), engramEntity.getImage(), ExplorerItemType.Engram, 0);
     }
 
     public long getId() {
@@ -46,48 +66,8 @@ public class ExplorerItem {
     public ExplorerItemType getItemType() {
         return itemType;
     }
-}
 
-class StationExplorerItem extends ExplorerItem {
-
-    public StationExplorerItem(long id, String title, String imagePath) {
-        super(id, title, imagePath, ExplorerItemType.CraftingStation);
-    }
-}
-
-class ChildExplorerItem extends ExplorerItem {
-
-    private final ExplorerItem parentExplorerItem;
-
-    ChildExplorerItem(long id, String title, String imagePath, ExplorerItemType itemType, ExplorerItem parentExplorerItem) {
-        super(id, title, imagePath, itemType);
-        this.parentExplorerItem = parentExplorerItem;
-    }
-
-    public ExplorerItem getParentExplorerItem() {
-        return parentExplorerItem;
-    }
-}
-
-class FolderExplorerItem extends ChildExplorerItem {
-
-    public FolderExplorerItem(long id, String title, String imagePath, ExplorerItem parentExplorerItem) {
-        super(id, title, imagePath, ExplorerItemType.Folder, parentExplorerItem);
-    }
-}
-
-class EngramExplorerItem extends ChildExplorerItem {
-    private int quantity;
-
-    public EngramExplorerItem(long id, String title, String imagePath, ExplorerItem parentExplorerItem) {
-        super(id, title, imagePath, ExplorerItemType.Engram, parentExplorerItem);
-    }
-
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }

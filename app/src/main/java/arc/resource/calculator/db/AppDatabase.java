@@ -18,22 +18,37 @@ package arc.resource.calculator.db;
 
 import android.content.Context;
 
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import arc.resource.calculator.db.dao.EngramDao;
+import arc.resource.calculator.db.dao.FolderDao;
+import arc.resource.calculator.db.dao.StationDao;
+import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.StationEntity;
+
+@Database(entities = {
+        StationEntity.class,
+        FolderEntity.class,
+        EngramEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-    private static final String DatabaseName = "ark_database";
+    private static final String cDatabaseName = "ark_database";
+    private static final int cNumberOfThreads = 4;
+    private static final ExecutorService mDatabaseWriteExecutor =
+            Executors.newFixedThreadPool(cNumberOfThreads);
+    private static volatile AppDatabase sInstance;
 
-    private static AppDatabase sInstance;
-
-    static AppDatabase getInstance(Context context) {
+    public static AppDatabase getInstance(final Context context) {
         if (sInstance == null) {
             synchronized (AppDatabase.class) {
                 if (sInstance == null) {
-                    sInstance = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            AppDatabase.class,
-                            DatabaseName)
+                    sInstance = Room.databaseBuilder(context.getApplicationContext(),
+                            AppDatabase.class, cDatabaseName)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
@@ -42,4 +57,14 @@ public abstract class AppDatabase extends RoomDatabase {
 
         return sInstance;
     }
+
+    public static ExecutorService writeTo() {
+        return mDatabaseWriteExecutor;
+    }
+
+    public abstract StationDao stationDao();
+
+    public abstract FolderDao folderDao();
+
+    public abstract EngramDao engramDao();
 }

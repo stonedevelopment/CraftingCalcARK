@@ -60,6 +60,10 @@ public class FolderEntity {
         return name;
     }
 
+    public String getImage() {
+        return "folder.webp";
+    }
+
     public int getParentId() {
         return folderId;
     }
