@@ -16,17 +16,52 @@
 
 package arc.resource.calculator.db.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity
+import arc.resource.calculator.db.dao.ResourceDao;
+
+/**
+ * Resource object for base game data (vanilla)
+ * <p>
+ * Resources for DLC game data should extend from this class
+ */
+@Entity(tableName = ResourceDao.tableName)
 public class ResourceEntity {
-    int id;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "rowid")
+    private final int rowId;
 
-    int nameId;
+    //  name of resource
+    private final String name;
 
-    int descriptionId;
+    //  description of resource TODO: 3/28/2020 add descriptions for resources from website
+    private final String description;
 
-    int dlcId;
+    //  filename of image in /assets folder
+    private final String image;
 
-    String imagePath;
+    public ResourceEntity(int rowId, String name, String description, String image) {
+        this.rowId = rowId;
+        this.name = name;
+        this.description = description;
+        this.image = image;
+    }
+
+    public int getRowId() {
+        return rowId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImage() {
+        return image;
+    }
 }

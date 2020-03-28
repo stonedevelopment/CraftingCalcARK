@@ -20,32 +20,26 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import arc.resource.calculator.db.dao.DescriptionDao;
 import arc.resource.calculator.db.dao.FolderDao;
-import arc.resource.calculator.db.dao.NameDao;
 import arc.resource.calculator.db.dao.StationDao;
 
+/**
+ * Engram object for base game data (vanilla)
+ * <p>
+ * Engrams for DLC game data should extend from this class
+ */
 @Entity(tableName = "engrams")
 public class EngramEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private final int id;
+    @ColumnInfo(name = "rowid")
+    private final int rowId;
 
-    //  rowid of name table
-    @ColumnInfo(name = NameDao.columnName)
-    private final int nameId;
+    //  name of this engram
+    private final String name;
 
-    //  rowid of description table
-    @ColumnInfo(name = DescriptionDao.columnName)
-    private final int descriptionId;
-
-    //  rowid of folders table, used as its parent location in app: NOT per in-game navigation
-    @ColumnInfo(name = FolderDao.columnName)
-    private final int folderId;
-
-    //  rowid of stations table, crafting station per in-game
-    @ColumnInfo(name = StationDao.columnName)
-    private final int stationId;
+    //  description for this engram
+    private final String description;
 
     //  filename of image in /assets folder
     private final String image;
@@ -62,41 +56,46 @@ public class EngramEntity {
     //  crafting time in seconds    // TODO: 2/2/2020 will be used when calculating fuel usages
     private final int time;
 
-    public EngramEntity(int id, int nameId, int descriptionId, int folderId, int stationId, String image, String location, int yield, int level, int time) {
-        this.id = id;
-        this.nameId = nameId;
-        this.descriptionId = descriptionId;
-        this.folderId = folderId;
-        this.stationId = stationId;
+    //  rowid of folders table, used as its parent location in app // TODO: NOT per in-game navigation
+    @ColumnInfo(name = FolderDao.columnName)
+    private final int folderId;
+
+    //  rowid of stations table, crafting station per in-game
+    @ColumnInfo(name = StationDao.columnName)
+    private final int stationId;
+
+    public EngramEntity(int rowId, String name, String description, String image, String location,
+                        int yield, int level, int time, int folderId, int stationId) {
+        this.rowId = rowId;
+        this.name = name;
+        this.description = description;
         this.image = image;
         this.location = location;
         this.yield = yield;
         this.level = level;
         this.time = time;
+        this.folderId = folderId;
+        this.stationId = stationId;
     }
 
-    public int getId() {
-        return id;
+    public int getRowId() {
+        return rowId;
     }
 
-    public int getNameId() {
-        return nameId;
+    public String getName() {
+        return name;
     }
 
-    public int getDescriptionId() {
-        return descriptionId;
-    }
-
-    public int getFolderId() {
-        return folderId;
-    }
-
-    public int getStationId() {
-        return stationId;
+    public String getDescription() {
+        return description;
     }
 
     public String getImage() {
         return image;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public int getYield() {
@@ -111,7 +110,11 @@ public class EngramEntity {
         return time;
     }
 
-    public String getLocation() {
-        return location;
+    public int getFolderId() {
+        return folderId;
+    }
+
+    public int getStationId() {
+        return stationId;
     }
 }

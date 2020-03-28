@@ -25,9 +25,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import java.util.List;
+
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
-import arc.resource.calculator.model.engram.DisplayEngram;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.explorer.ExplorerRepository;
@@ -47,10 +48,19 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     private QueueRepository mQueueRepository = QueueRepository.getInstance();
     private ExplorerRepository mExplorerRepository = ExplorerRepository.getInstance();
 
+    private MutableLiveData<List<ExplorerItem>> explorerItemList = mExplorerRepository.getExplorerItemList();
+
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
 
         registerListeners();
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        unregisterListeners();
     }
 
     public void showSnackBarMessage(String message) {
@@ -73,10 +83,26 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         mViewModelState.setValue(viewModelState);
     }
 
+
+    public MutableLiveData<List<ExplorerItem>> getExplorerItemList() {
+        return explorerItemList;
+    }
+
+    public void setExplorerItemList(List<ExplorerItem> explorerItemList) {
+        this.explorerItemList = explorerItemList;
+    }
+
     private void registerListeners() {
         Log.d(TAG, "registerListeners: " + this);
         mQueueRepository.addObserver(TAG, this);
         mExplorerRepository.addObserver(TAG, this);
+    }
+
+    private void unregisterListeners() {
+        Log.d(TAG, "unregisterListeners: " + this);
+        mQueueRepository.removeObserver(TAG);
+        mExplorerRepository.removeObserver(TAG);
+
     }
 
     long getItemId(int position) {
@@ -179,4 +205,5 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     public void onExplorerDataEmpty() {
         setViewModelState(ExplorerViewModelState.EMPTY);
     }
+
 }

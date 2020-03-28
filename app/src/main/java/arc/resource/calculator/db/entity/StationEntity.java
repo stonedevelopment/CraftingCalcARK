@@ -16,17 +16,52 @@
 
 package arc.resource.calculator.db.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "stations")
+import arc.resource.calculator.db.dao.StationDao;
+
+/**
+ * Station object for base game data (vanilla)
+ * <p>
+ * Stations for DLC game data should extend from this class
+ */
+@Entity(tableName = StationDao.tableName)
 public class StationEntity {
     @PrimaryKey(autoGenerate = true)
-    int id;
+    @ColumnInfo(name = "rowid")
+    private final int rowId;
 
-    String name;
+    //  name of crafting station
+    private final String name;
 
-    String description;
+    //  description of crafting station, pulled from engram description
+    private final String description;
 
-    String imageFile;
+    //  filename of image in /assets folder
+    private final String image;
+
+    public StationEntity(int rowId, String name, String description, String image) {
+        this.rowId = rowId;
+        this.name = name;
+        this.description = description;
+        this.image = image;
+    }
+
+    public int getRowId() {
+        return rowId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImage() {
+        return image;
+    }
 }

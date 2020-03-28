@@ -16,22 +16,51 @@
 
 package arc.resource.calculator.db.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import arc.resource.calculator.db.dao.CompositionDao;
+import arc.resource.calculator.db.dao.EngramDao;
+import arc.resource.calculator.db.dao.ResourceDao;
 
 @Entity(tableName = CompositionDao.tableName)
 public class CompositionEntity {
-    @PrimaryKey
-    int id;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "rowid")
+    private final int rowId;
 
-    //  rowid from resources table
-    int resourceId;
+    //  rowid from engrams table
+    @ColumnInfo(name = EngramDao.columnName)
+    private final int engramId;
 
-    //  rowid from resources table, used as a substitute for engram recipe
-    int substitutionId;
+    //  rowid from resources table  // TODO: 3/28/2020 determine how to show substitute items
+    @ColumnInfo(name = ResourceDao.columnName)
+    private final int resourceId;
 
     //  amount required
-    int quantity;
+    private final int quantity;
+
+    public CompositionEntity(int rowId, int engramId, int resourceId, int quantity) {
+        this.rowId = rowId;
+        this.engramId = engramId;
+        this.resourceId = resourceId;
+        this.quantity = quantity;
+    }
+
+    public int getRowId() {
+        return rowId;
+    }
+
+    public int getEngramId() {
+        return engramId;
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }

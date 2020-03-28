@@ -16,17 +16,55 @@
 
 package arc.resource.calculator.db.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "folders")
+import arc.resource.calculator.db.dao.FolderDao;
+import arc.resource.calculator.db.dao.StationDao;
+
+/**
+ * Folder object for base game data (vanilla)
+ * <p>
+ * Folders for DLC game data should extend from this class
+ */
+@Entity(tableName = FolderDao.tableName)
 public class FolderEntity {
     @PrimaryKey
-    int id;
+    @ColumnInfo(name = "rowid")
+    private final int rowId;
 
-    String name;
+    //  name of folder
+    private final String name;
 
-    int parentId;
+    //  rowid of folders table, used as its parent location in app // TODO: NOT per in-game navigation
+    @ColumnInfo(name = FolderDao.columnName)
+    private final int folderId;
 
-    int stationId;
+    //  rowid of stations table, crafting station per in-game
+    @ColumnInfo(name = StationDao.columnName)
+    private final int stationId;
+
+    public FolderEntity(int rowId, String name, int parentId, int stationId) {
+        this.rowId = rowId;
+        this.name = name;
+        this.folderId = parentId;
+        this.stationId = stationId;
+    }
+
+    public int getRowId() {
+        return rowId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getParentId() {
+        return folderId;
+    }
+
+    public int getStationId() {
+        return stationId;
+    }
 }

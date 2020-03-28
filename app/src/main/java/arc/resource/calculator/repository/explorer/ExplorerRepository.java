@@ -40,6 +40,7 @@ import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.map.CategoryMap;
 import arc.resource.calculator.model.map.CraftableMap;
 import arc.resource.calculator.model.map.StationMap;
+import arc.resource.calculator.repository.StationRepository;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.tasks.fetch.explorer.FetchExplorerDataTask;
@@ -64,24 +65,27 @@ public class ExplorerRepository implements QueueObserver {
 
     public static final long ROOT = 0;
     public static final long NO_STATION = -1;
-
+    private static ExplorerRepository sInstance;
     private long mLastCategoryLevel;
     private long mLastCategoryParent;
     private long mStationId;
-
     private StationMap mStationMap;
     private CategoryMap mCategoryMap;
     private CraftableMap mCraftableMap;
-
     private ExceptionObservable mExceptionObservable;
     private ExplorerObservable mExplorerObservable;
     private PrefsUtil mPrefs;
     private FetchExplorerDataTask mFetchDataTask;
     private boolean mIsFetching;
-
+    private StationRepository stationRepository = StationRepository.getInstance();
+    private FolderRepository folderRepository;
+    private EngramRepository engramRepository;
     private WeakReference<Context> mContext;
 
-    private static ExplorerRepository sInstance;
+    private ExplorerRepository() {
+        setupMaps();
+        setupObservables();
+    }
 
     public static ExplorerRepository getInstance() {
         if (sInstance == null)
@@ -90,9 +94,68 @@ public class ExplorerRepository implements QueueObserver {
         return sInstance;
     }
 
-    private ExplorerRepository() {
-        setupMaps();
-        setupObservables();
+    public static StationMap queryForStations(Context context, Uri uri)
+            throws ExceptionUtil.CursorNullException {
+
+        if (uri == null) return new StationMap();
+
+        try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor == null)
+                throw new ExceptionUtil.CursorNullException(uri);   // TODO: 1/26/2020 Why do we throw exception here, but not other full map queries?
+
+            StationMap stationMap = new StationMap();
+            while (cursor.moveToNext()) {
+                Station station = Station.fromCursor(cursor);
+                stationMap.put(station.getId(), station);
+            }
+
+            stationMap.sort();  // TODO: 1/26/2020 Sort during query?
+
+            return stationMap;
+        }
+
+    }
+
+    public static CategoryMap queryForCategories(Context context, Uri uri) {
+        if (uri == null) return new CategoryMap();
+
+        try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor == null)
+                return new CategoryMap();   // TODO: 1/26/2020 Why don't we throw exception here, but we do during station query?
+
+            CategoryMap categoryMap = new CategoryMap();
+            while (cursor.moveToNext()) {
+                Category category = Category.fromCursor(cursor);
+                categoryMap.add(category.getId(), category);
+            }
+
+            categoryMap.sort(); // TODO: 1/26/2020 Sort during query, or as we inserted?
+
+            return categoryMap;
+        }
+    }
+
+    public static CraftableMap queryForEngrams(Context context, Uri uri) {
+        if (uri == null) return new CraftableMap();
+
+        try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor == null)
+                return new CraftableMap();   // TODO: 1/26/2020 Why don't we throw exception here, but we do during station query?
+
+            QueueRepository queueRepository = QueueRepository.getInstance();
+
+            CraftableMap craftables = new CraftableMap();
+            while (cursor.moveToNext()) {
+                DisplayEngram engram = DisplayEngram.fromCursor(cursor);
+                engram.setQuantity(queueRepository.getEngramQuantity(engram.getId()));
+
+                craftables.add(engram.getId(), engram);
+            }
+
+            craftables.sort();  // TODO: 4/30/2017 What if we sorted as we inserted?
+
+            return craftables;
+        }
     }
 
     private void setupMaps() {
@@ -223,12 +286,12 @@ public class ExplorerRepository implements QueueObserver {
         unregisterListeners();
     }
 
-    private void setContext(Context context) {
-        mContext = new WeakReference<>(context);
-    }
-
     private Context getContext() {
         return mContext.get();
+    }
+
+    private void setContext(Context context) {
+        mContext = new WeakReference<>(context);
     }
 
     private StationMap getStationMap() {
@@ -716,70 +779,6 @@ public class ExplorerRepository implements QueueObserver {
         }
 
         return builder.toString();
-    }
-
-    public static StationMap queryForStations(Context context, Uri uri)
-            throws ExceptionUtil.CursorNullException {
-
-        if (uri == null) return new StationMap();
-
-        try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
-            if (cursor == null)
-                throw new ExceptionUtil.CursorNullException(uri);   // TODO: 1/26/2020 Why do we throw exception here, but not other full map queries?
-
-            StationMap stationMap = new StationMap();
-            while (cursor.moveToNext()) {
-                Station station = Station.fromCursor(cursor);
-                stationMap.put(station.getId(), station);
-            }
-
-            stationMap.sort();  // TODO: 1/26/2020 Sort during query?
-
-            return stationMap;
-        }
-
-    }
-
-    public static CategoryMap queryForCategories(Context context, Uri uri) {
-        if (uri == null) return new CategoryMap();
-
-        try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
-            if (cursor == null)
-                return new CategoryMap();   // TODO: 1/26/2020 Why don't we throw exception here, but we do during station query?
-
-            CategoryMap categoryMap = new CategoryMap();
-            while (cursor.moveToNext()) {
-                Category category = Category.fromCursor(cursor);
-                categoryMap.add(category.getId(), category);
-            }
-
-            categoryMap.sort(); // TODO: 1/26/2020 Sort during query, or as we inserted?
-
-            return categoryMap;
-        }
-    }
-
-    public static CraftableMap queryForEngrams(Context context, Uri uri) {
-        if (uri == null) return new CraftableMap();
-
-        try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
-            if (cursor == null)
-                return new CraftableMap();   // TODO: 1/26/2020 Why don't we throw exception here, but we do during station query?
-
-            QueueRepository queueRepository = QueueRepository.getInstance();
-
-            CraftableMap craftables = new CraftableMap();
-            while (cursor.moveToNext()) {
-                DisplayEngram engram = DisplayEngram.fromCursor(cursor);
-                engram.setQuantity(queueRepository.getEngramQuantity(engram.getId()));
-
-                craftables.add(engram.getId(), engram);
-            }
-
-            craftables.sort();  // TODO: 4/30/2017 What if we sorted as we inserted?
-
-            return craftables;
-        }
     }
 
     public Bundle gatherUrisForDataTask(long dlc_id) {
