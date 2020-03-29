@@ -40,7 +40,6 @@ import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.map.CategoryMap;
 import arc.resource.calculator.model.map.CraftableMap;
 import arc.resource.calculator.model.map.StationMap;
-import arc.resource.calculator.repository.StationRepository;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.tasks.fetch.explorer.FetchExplorerDataTask;
@@ -77,9 +76,6 @@ public class ExplorerRepository implements QueueObserver {
     private PrefsUtil mPrefs;
     private FetchExplorerDataTask mFetchDataTask;
     private boolean mIsFetching;
-    private StationRepository stationRepository = StationRepository.getInstance();
-    private FolderRepository folderRepository;
-    private EngramRepository engramRepository;
     private WeakReference<Context> mContext;
 
     private ExplorerRepository() {

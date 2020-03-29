@@ -19,8 +19,8 @@ package arc.resource.calculator.db.dao;
 import androidx.room.Dao;
 
 @Dao
-public class CompositionDao {
-    public static final String tableName = "compositions";
-    public static final String columnName = "composition_id";
+public interface CompositionDao {
+    String tableName = "compositions";
+    String columnName = "composition_id";
 
 }

@@ -45,7 +45,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         super(application);
 
         mRepository = new ExplorerRepository(application);
-        mItemList = mRepository.getExplorerItems();
+        mItemList = mRepository.getItemList();
     }
 
     public void showSnackBarMessage(String message) {
@@ -70,6 +70,10 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     public LiveData<List<ExplorerItem>> getItemList() {
         return mItemList;
+    }
+
+    public void onExplorerItemClick(int position, ExplorerItem explorerItem) {
+        mRepository.onExplorerItemClick(position, explorerItem);
     }
 
     @Override

@@ -35,11 +35,10 @@ public class FolderEntity {
     private final int rowId;
 
     //  name of folder
-    private final String name;
+    private final String title;
 
-    //  rowid of folders table, used as its parent location in app // TODO: NOT per in-game navigation
-    @ColumnInfo(name = FolderDao.columnName)
-    private final int folderId;
+    //  rowid of parent; station or folder
+    private final int parentId;
 
     //  rowid of stations table, crafting station per in-game
     @ColumnInfo(name = StationDao.columnName)
@@ -47,8 +46,8 @@ public class FolderEntity {
 
     public FolderEntity(int rowId, String name, int parentId, int stationId) {
         this.rowId = rowId;
-        this.name = name;
-        this.folderId = parentId;
+        this.title = name;
+        this.parentId = parentId;
         this.stationId = stationId;
     }
 
@@ -56,8 +55,8 @@ public class FolderEntity {
         return rowId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getImage() {
@@ -65,7 +64,7 @@ public class FolderEntity {
     }
 
     public int getParentId() {
-        return folderId;
+        return parentId;
     }
 
     public int getStationId() {

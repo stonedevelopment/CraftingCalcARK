@@ -14,14 +14,6 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.repository;
+package arc.resource.calculator.ui.explorer;
 
-import androidx.lifecycle.MutableLiveData;
-
-import java.util.Stack;
-
-import arc.resource.calculator.db.entity.FolderEntity;
-
-public class FolderRepository {
-    MutableLiveData<Stack<FolderEntity>> folderEntityStack = new MutableLiveData<>();
-}
+public enum ExplorerItemType {CraftingStation, Folder, Engram}

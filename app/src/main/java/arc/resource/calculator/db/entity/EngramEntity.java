@@ -20,7 +20,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import arc.resource.calculator.db.dao.FolderDao;
 import arc.resource.calculator.db.dao.StationDao;
 
 /**
@@ -35,8 +34,8 @@ public class EngramEntity {
     @ColumnInfo(name = "rowid")
     private final int rowId;
 
-    //  name of this engram
-    private final String name;
+    //  title of this engram
+    private final String title;
 
     //  description for this engram
     private final String description;
@@ -56,9 +55,8 @@ public class EngramEntity {
     //  crafting time in seconds    // TODO: 2/2/2020 will be used when calculating fuel usages
     private final int time;
 
-    //  rowid of folders table, used as its parent location in app // TODO: NOT per in-game navigation
-    @ColumnInfo(name = FolderDao.columnName)
-    private final int folderId;
+    //  rowid of parent; station or folder
+    private final int parentId;
 
     //  rowid of stations table, crafting station per in-game
     @ColumnInfo(name = StationDao.columnName)
@@ -67,14 +65,14 @@ public class EngramEntity {
     public EngramEntity(int rowId, String name, String description, String image, String location,
                         int yield, int level, int time, int folderId, int stationId) {
         this.rowId = rowId;
-        this.name = name;
+        this.title = name;
         this.description = description;
         this.image = image;
         this.location = location;
         this.yield = yield;
         this.level = level;
         this.time = time;
-        this.folderId = folderId;
+        this.parentId = folderId;
         this.stationId = stationId;
     }
 
@@ -82,8 +80,8 @@ public class EngramEntity {
         return rowId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
@@ -110,8 +108,8 @@ public class EngramEntity {
         return time;
     }
 
-    public int getFolderId() {
-        return folderId;
+    public int getParentId() {
+        return parentId;
     }
 
     public int getStationId() {

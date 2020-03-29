@@ -36,6 +36,6 @@ public interface EngramDao {
     @Query("DELETE from engrams")
     void deleteAll();
 
-    @Query("SELECT * from engrams ORDER BY name ASC")
+    @Query("SELECT * from engrams ORDER BY title ASC")
     LiveData<List<EngramEntity>> getEngrams();
 }

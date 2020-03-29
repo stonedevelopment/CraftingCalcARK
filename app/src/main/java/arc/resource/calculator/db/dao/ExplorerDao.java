@@ -18,27 +18,26 @@ package arc.resource.calculator.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
+import arc.resource.calculator.db.entity.FolderEntityWithChildren;
 import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.db.entity.StationEntityWithChildren;
 
 @Dao
-public interface StationDao {
-    String tableName = "stations";
-    String columnName = "station_id";
+public abstract class ExplorerDao {
 
-    @Insert()
-    void insertAll(StationEntity... stationEntities);
+    @Query("SELECT * from stations")
+    public abstract LiveData<List<StationEntity>> getStations();
 
-    @Query("DELETE from stations")
-    void deleteAll();
-
+    @Transaction
     @Query("SELECT * from stations where rowid = :stationId")
-    LiveData<StationEntity> getStation(int stationId);
+    public abstract LiveData<StationEntityWithChildren> getChildrenItemsFromStation(int stationId);
 
-    @Query("SELECT * from stations ORDER BY name ASC")
-    LiveData<List<StationEntity>> getStations();
+    @Transaction
+    @Query("SELECT * from folders where rowid = :folderId")
+    public abstract LiveData<FolderEntityWithChildren> getChildrenItemsFromFolder(int folderId);
 }

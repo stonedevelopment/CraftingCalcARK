@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -102,6 +104,8 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.Explor
         private final TextView mNameView;
         private final TextView mQuantityView;
 
+        private ExplorerItem mExplorerItem;
+
         ExplorerItemViewHolder(View view) {
             super(view);
 
@@ -126,7 +130,9 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.Explor
         }
 
         void bindView(ExplorerItem explorerItem) {
-            final String imagePath = "file:///android_asset/" + explorerItem.getImagePath();
+            mExplorerItem = explorerItem;
+
+            final String imagePath = "file:///android_asset/" + explorerItem.getImage();
             Picasso.with(getContext())
                     .load(imagePath)
                     .error(R.drawable.placeholder_empty)
@@ -153,7 +159,9 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.Explor
 
         @Override
         public void onClick(View view) {
-//            mExplorerViewModel.handleViewHolderClick(getAdapterPosition());
+            ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).
+                    get(ExplorerViewModel.class);
+            viewModel.onExplorerItemClick(getAdapterPosition(), mExplorerItem);
         }
 
         @Override

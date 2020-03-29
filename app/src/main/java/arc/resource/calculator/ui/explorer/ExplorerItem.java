@@ -16,51 +16,86 @@
 
 package arc.resource.calculator.ui.explorer;
 
-import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 import arc.resource.calculator.db.entity.EngramEntity;
 import arc.resource.calculator.db.entity.FolderEntity;
 import arc.resource.calculator.db.entity.StationEntity;
 
-enum ExplorerItemType {CraftingStation, Folder, Engram}
-
 public class ExplorerItem {
-    private final long id;
+    private final int rowid;
     private final String title;
-    private final String imagePath;
+    private final String image;
     private final ExplorerItemType itemType;
-    private Integer quantity;
+    private int quantity;
 
-    ExplorerItem(long id, String title, String imagePath, ExplorerItemType itemType, @Nullable Integer quantity) {
-        this.id = id;
+    private ExplorerItem(int rowid, String title, String image, ExplorerItemType itemType) {
+        this.rowid = rowid;
         this.title = title;
-        this.imagePath = imagePath;
+        this.image = image;
+        this.itemType = itemType;
+        this.quantity = 0;
+    }
+
+    private ExplorerItem(int rowid, String title, String image, ExplorerItemType itemType, int quantity) {
+        this.rowid = rowid;
+        this.title = title;
+        this.image = image;
         this.itemType = itemType;
         this.quantity = quantity;
     }
 
     public static ExplorerItem fromStation(StationEntity stationEntity) {
-        return new ExplorerItem(stationEntity.getRowId(), stationEntity.getName(), stationEntity.getImage(), ExplorerItemType.CraftingStation, null);
+        return new ExplorerItem(stationEntity.getRowId(), stationEntity.getName(), stationEntity.getImage(), ExplorerItemType.CraftingStation);
     }
 
-    public static ExplorerItem fromFolder(FolderEntity folderEntity) {
-        return new ExplorerItem(folderEntity.getRowId(), folderEntity.getName(), folderEntity.getImage(), ExplorerItemType.Folder, null);
+    public static List<ExplorerItem> fromStations(List<StationEntity> stationEntities) {
+        List<ExplorerItem> items = new ArrayList<>();
+        for (StationEntity stationEntity : stationEntities) {
+            items.add(ExplorerItem.fromStation(stationEntity));
+        }
+        return items;
     }
 
-    public static ExplorerItem fromEngram(EngramEntity engramEntity) {
-        return new ExplorerItem(engramEntity.getRowId(), engramEntity.getName(), engramEntity.getImage(), ExplorerItemType.Engram, 0);
+    static ExplorerItem fromFolder(FolderEntity folderEntity) {
+        return new ExplorerItem(folderEntity.getRowId(), folderEntity.getTitle(), folderEntity.getImage(), ExplorerItemType.Folder);
     }
 
-    public long getId() {
-        return id;
+    public static List<ExplorerItem> fromFolders(List<FolderEntity> folderEntities) {
+        List<ExplorerItem> items = new ArrayList<>();
+        for (FolderEntity folderEntity : folderEntities) {
+            items.add(ExplorerItem.fromFolder(folderEntity));
+        }
+        return items;
+    }
+
+    public static ExplorerItem backFolder(ExplorerItem explorerItem) {
+        return new ExplorerItem(explorerItem.getId(), String.format("Back to %s", explorerItem.getTitle()), "back_folder.webp", ExplorerItemType.Folder);
+    }
+
+    static ExplorerItem fromEngram(EngramEntity engramEntity) {
+        return new ExplorerItem(engramEntity.getRowId(), engramEntity.getTitle(), engramEntity.getImage(), ExplorerItemType.Engram, 0);
+    }
+
+    public static List<ExplorerItem> fromEngrams(List<EngramEntity> engramEntities) {
+        List<ExplorerItem> items = new ArrayList<>();
+        for (EngramEntity engramEntity : engramEntities) {
+            items.add(ExplorerItem.fromEngram(engramEntity));
+        }
+        return items;
+    }
+
+    public int getId() {
+        return rowid;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getImage() {
+        return image;
     }
 
     public ExplorerItemType getItemType() {

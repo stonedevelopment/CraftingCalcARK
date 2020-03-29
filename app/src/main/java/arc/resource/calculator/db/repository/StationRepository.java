@@ -40,7 +40,11 @@ public class StationRepository {
         return mEntities;
     }
 
-    void insert(StationEntity stationEntity) {
-        AppDatabase.writeTo().execute(() -> mDao.insert(stationEntity));
+    void insertAll(StationEntity... stationEntities) {
+        AppDatabase.writeTo().execute(() -> mDao.insertAll(stationEntities));
+    }
+
+    void deleteAll() {
+        AppDatabase.writeTo().execute(() -> mDao.deleteAll());
     }
 }

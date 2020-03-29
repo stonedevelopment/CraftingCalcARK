@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import arc.resource.calculator.db.dao.EngramDao;
+import arc.resource.calculator.db.dao.ExplorerDao;
 import arc.resource.calculator.db.dao.FolderDao;
 import arc.resource.calculator.db.dao.StationDao;
 import arc.resource.calculator.db.entity.EngramEntity;
@@ -61,6 +62,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public static ExecutorService writeTo() {
         return mDatabaseWriteExecutor;
     }
+
+    public abstract ExplorerDao explorerDao();
 
     public abstract StationDao stationDao();
 
