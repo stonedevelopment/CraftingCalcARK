@@ -26,6 +26,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.recyclerview.widget.MergeAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -39,7 +40,7 @@ import arc.resource.calculator.repository.explorer.ExplorerObserver;
 
 import static androidx.core.content.ContextCompat.getDrawable;
 
-public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ExplorerItemViewHolder> implements ExplorerObserver {
+public class ExplorerAdapter extends MergeAdapter implements ExplorerObserver {
     private static final String TAG = ExplorerAdapter.class.getSimpleName();
 
     private List<ExplorerItem> mItems = new ArrayList<>();

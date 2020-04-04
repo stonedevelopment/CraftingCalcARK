@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -63,5 +64,17 @@ public class StationEntity {
 
     public String getImage() {
         return image;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof StationEntity)) return false;
+
+        StationEntity stationEntity = (StationEntity) obj;
+        return getRowId() == stationEntity.getRowId() &&
+                getName().equals(stationEntity.getName()) &&
+                getDescription().equals(stationEntity.getDescription()) &&
+                getImage().equals(stationEntity.getImage());
     }
 }

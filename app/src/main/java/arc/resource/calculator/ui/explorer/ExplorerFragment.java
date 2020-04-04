@@ -29,6 +29,7 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.MergeAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -39,6 +40,8 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.ui.detail.DetailFragment;
+import arc.resource.calculator.ui.explorer.folder.FolderExplorerAdapter;
+import arc.resource.calculator.ui.explorer.station.StationExplorerAdapter;
 
 import static android.app.Activity.RESULT_OK;
 import static arc.resource.calculator.DetailActivity.ADD;
@@ -55,7 +58,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private ExplorerViewModel mViewModel;
 
-    private ExplorerAdapter mAdapter;
+    private StationExplorerAdapter mStationAdapter;
+    private FolderExplorerAdapter mFolderAdapter;
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
 
@@ -71,8 +75,11 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
 
         //  setup view adapter
-        mAdapter = new ExplorerAdapter(getContext());
-        recyclerView.setAdapter(mAdapter);
+        mStationAdapter = new StationExplorerAdapter(getContext());
+        mFolderAdapter = new FolderExplorerAdapter(getContext());
+
+        MergeAdapter adapter = new MergeAdapter(mStationAdapter, mFolderAdapter);
+        recyclerView.setAdapter(adapter);
 
         mTextView = rootView.findViewById(R.id.explorerNavigationTextView);
         mProgressBar = rootView.findViewById(R.id.explorerProgressBar);
@@ -152,9 +159,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
             Log.d(TAG, "onChanged: getSnackBarMessage");
             showSnackBar(s);
         });
-        mViewModel.getItemList().observe(getViewLifecycleOwner(), explorerItems -> {
-            mAdapter.setItems(explorerItems);
-        });
+        mViewModel.getStations().observe(getViewLifecycleOwner(), stationEntities -> mStationAdapter.submitList(stationEntities));
+        mViewModel.getFolders().observe(getViewLifecycleOwner(), folderEntities -> mFolderAdapter.submitList(folderEntities));
     }
 
     private void showLoading() {

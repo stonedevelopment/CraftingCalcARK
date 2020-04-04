@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -35,7 +36,7 @@ public class FolderEntity {
     private final int rowId;
 
     //  name of folder
-    private final String title;
+    private final String name;
 
     //  rowid of parent; station or folder
     private final int parentId;
@@ -46,7 +47,7 @@ public class FolderEntity {
 
     public FolderEntity(int rowId, String name, int parentId, int stationId) {
         this.rowId = rowId;
-        this.title = name;
+        this.name = name;
         this.parentId = parentId;
         this.stationId = stationId;
     }
@@ -55,8 +56,8 @@ public class FolderEntity {
         return rowId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     public String getImage() {
@@ -69,5 +70,17 @@ public class FolderEntity {
 
     public int getStationId() {
         return stationId;
+    }
+
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof FolderEntity)) return false;
+
+        FolderEntity folderEntity = (FolderEntity) obj;
+        return getRowId() == folderEntity.getRowId() &&
+                getName().equals(folderEntity.getName()) &&
+                getImage().equals(folderEntity.getImage());
     }
 }

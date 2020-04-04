@@ -22,30 +22,32 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.StationEntity;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.queue.QueueObserver;
+import arc.resource.calculator.ui.explorer.folder.FolderExplorerViewModel;
+import arc.resource.calculator.ui.explorer.station.StationExplorerViewModel;
 
 public class ExplorerViewModel extends AndroidViewModel implements QueueObserver, ExplorerObserver {
     // TODO: Maintain filters?
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
-
+    private final StationExplorerViewModel mStationExplorerViewModel;
+    private final FolderExplorerViewModel mFolderExplorerViewModel;
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
-
-    private ExplorerRepository mRepository;
-
-    private LiveData<List<ExplorerItem>> mItemList;
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
 
-        mRepository = new ExplorerRepository(application);
-        mItemList = mRepository.getItemList();
+        mStationExplorerViewModel = new ViewModelProvider(getApplication()).get(StationExplorerViewModel.class);
+        mFolderExplorerViewModel = new ViewModelProvider(getApplication()).get(FolderExplorerViewModel.class);
     }
 
     public void showSnackBarMessage(String message) {
@@ -68,12 +70,12 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
         mViewModelState.setValue(viewModelState);
     }
 
-    public LiveData<List<ExplorerItem>> getItemList() {
-        return mItemList;
+    LiveData<List<StationEntity>> getStations() {
+        return mStationExplorerViewModel.getStations();
     }
 
-    public void onExplorerItemClick(int position, ExplorerItem explorerItem) {
-        mRepository.onExplorerItemClick(position, explorerItem);
+    LiveData<List<FolderEntity>> getFolders() {
+        return mFolderExplorerViewModel.getFolders();
     }
 
     @Override
