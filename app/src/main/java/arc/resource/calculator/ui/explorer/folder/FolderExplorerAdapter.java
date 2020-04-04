@@ -22,38 +22,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.textview.MaterialTextView;
-import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.FolderEntity;
 
-public class FolderExplorerAdapter extends ListAdapter<FolderEntity, FolderExplorerAdapter.FolderExplorerViewHolder> {
-    private static final DiffUtil.ItemCallback<FolderEntity> cDiffCallback = new DiffUtil.ItemCallback<FolderEntity>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull FolderEntity oldItem, @NonNull FolderEntity newItem) {
-            return oldItem.getRowId() == newItem.getRowId();
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull FolderEntity oldItem, @NonNull FolderEntity newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
+public class FolderExplorerAdapter extends ListAdapter<FolderEntity, FolderExplorerViewHolder> {
     private final LayoutInflater mInflater;
 
-    public FolderExplorerAdapter(Context context) {
-        super(cDiffCallback);
+    public FolderExplorerAdapter(Context context, @NonNull DiffUtil.ItemCallback<FolderEntity> diffCallback) {
+        super(diffCallback);
 
         mInflater = LayoutInflater.from(context);
     }
 
-    Context getContext() {
+    private Context getContext() {
         return mInflater.getContext();
     }
 
@@ -66,30 +50,6 @@ public class FolderExplorerAdapter extends ListAdapter<FolderEntity, FolderExplo
 
     @Override
     public void onBindViewHolder(@NonNull FolderExplorerViewHolder holder, int position) {
-        holder.bindTo(getItem(position));
-    }
-
-    class FolderExplorerViewHolder extends RecyclerView.ViewHolder {
-        private final AppCompatImageView mThumbnail;
-        private final MaterialTextView mTitle;
-
-        FolderExplorerViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            mThumbnail = itemView.findViewById(R.id.thumbnail);
-            mTitle = itemView.findViewById(R.id.title);
-        }
-
-        void bindTo(FolderEntity folderEntity) {
-            final String imagePath = "file:///android_asset/" + folderEntity.getImage();
-
-            Picasso.with(getContext())
-                    .load(imagePath)
-                    .error(R.drawable.placeholder_empty)
-                    .placeholder(R.drawable.placeholder_empty)
-                    .into(mThumbnail);
-
-            mTitle.setText(folderEntity.getName());
-        }
+        holder.bind(getContext(), getItem(position));
     }
 }

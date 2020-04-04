@@ -72,15 +72,15 @@ public class FolderEntity {
         return stationId;
     }
 
-
     @Override
     public boolean equals(@Nullable Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof FolderEntity)) return false;
 
         FolderEntity folderEntity = (FolderEntity) obj;
-        return getRowId() == folderEntity.getRowId() &&
-                getName().equals(folderEntity.getName()) &&
-                getImage().equals(folderEntity.getImage());
+        return rowId == folderEntity.getRowId() &&
+                name.equals(folderEntity.getName()) &&
+                parentId == folderEntity.getParentId() &&
+                stationId == folderEntity.getStationId();
     }
 }

@@ -40,8 +40,12 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.ui.detail.DetailFragment;
+import arc.resource.calculator.ui.explorer.engram.EngramExplorerAdapter;
+import arc.resource.calculator.ui.explorer.engram.EngramExplorerItemCallback;
 import arc.resource.calculator.ui.explorer.folder.FolderExplorerAdapter;
+import arc.resource.calculator.ui.explorer.folder.FolderExplorerItemCallback;
 import arc.resource.calculator.ui.explorer.station.StationExplorerAdapter;
+import arc.resource.calculator.ui.explorer.station.StationExplorerItemCallback;
 
 import static android.app.Activity.RESULT_OK;
 import static arc.resource.calculator.DetailActivity.ADD;
@@ -60,6 +64,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private StationExplorerAdapter mStationAdapter;
     private FolderExplorerAdapter mFolderAdapter;
+    private EngramExplorerAdapter mEngramAdapter;
+
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
 
@@ -75,10 +81,11 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
 
         //  setup view adapter
-        mStationAdapter = new StationExplorerAdapter(getContext());
-        mFolderAdapter = new FolderExplorerAdapter(getContext());
+        mStationAdapter = new StationExplorerAdapter(getContext(), new StationExplorerItemCallback());
+        mFolderAdapter = new FolderExplorerAdapter(getContext(), new FolderExplorerItemCallback());
+        mEngramAdapter = new EngramExplorerAdapter(getContext(), new EngramExplorerItemCallback());
 
-        MergeAdapter adapter = new MergeAdapter(mStationAdapter, mFolderAdapter);
+        MergeAdapter adapter = new MergeAdapter(mStationAdapter, mFolderAdapter, mEngramAdapter);
         recyclerView.setAdapter(adapter);
 
         mTextView = rootView.findViewById(R.id.explorerNavigationTextView);
@@ -161,6 +168,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         });
         mViewModel.getStations().observe(getViewLifecycleOwner(), stationEntities -> mStationAdapter.submitList(stationEntities));
         mViewModel.getFolders().observe(getViewLifecycleOwner(), folderEntities -> mFolderAdapter.submitList(folderEntities));
+        mViewModel.getEngrams().observe(getViewLifecycleOwner(), engramEntities -> mEngramAdapter.submitList(engramEntities));
     }
 
     private void showLoading() {

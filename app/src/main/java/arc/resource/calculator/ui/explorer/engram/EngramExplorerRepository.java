@@ -18,23 +18,22 @@ package arc.resource.calculator.ui.explorer.engram;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import arc.resource.calculator.db.AppDatabase;
+import arc.resource.calculator.db.dao.EngramDao;
 import arc.resource.calculator.db.entity.EngramEntity;
 
-public class EngramExplorerViewModel extends AndroidViewModel {
+public class EngramExplorerRepository {
+    private final EngramDao mDao;
     private final LiveData<List<EngramEntity>> mEngrams;
-    private final EngramExplorerRepository mRepository;
 
-    public EngramExplorerViewModel(@NonNull Application application) {
-        super(application);
-
-        mRepository = new EngramExplorerRepository(application);
-        mEngrams = mRepository.getEngrams();
+    public EngramExplorerRepository(Application application) {
+        AppDatabase db = AppDatabase.getInstance(application);
+        mDao = db.engramDao();
+        mEngrams = mDao.getEngrams();
     }
 
     public LiveData<List<EngramEntity>> getEngrams() {

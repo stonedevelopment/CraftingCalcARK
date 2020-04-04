@@ -30,7 +30,6 @@ public class FolderExplorerViewModel extends AndroidViewModel {
     private final LiveData<List<FolderEntity>> mFolders;
     private final FolderExplorerRepository mRepository;
 
-
     public FolderExplorerViewModel(@NonNull Application application) {
         super(application);
 

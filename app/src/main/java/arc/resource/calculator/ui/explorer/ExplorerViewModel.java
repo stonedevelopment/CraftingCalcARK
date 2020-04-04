@@ -27,11 +27,13 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.db.entity.EngramEntity;
 import arc.resource.calculator.db.entity.FolderEntity;
 import arc.resource.calculator.db.entity.StationEntity;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.explorer.ExplorerObserver;
 import arc.resource.calculator.repository.queue.QueueObserver;
+import arc.resource.calculator.ui.explorer.engram.EngramExplorerViewModel;
 import arc.resource.calculator.ui.explorer.folder.FolderExplorerViewModel;
 import arc.resource.calculator.ui.explorer.station.StationExplorerViewModel;
 
@@ -40,6 +42,8 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
     private final StationExplorerViewModel mStationExplorerViewModel;
     private final FolderExplorerViewModel mFolderExplorerViewModel;
+    private final EngramExplorerViewModel mEngramExplorerViewModel;
+
     private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
 
@@ -48,6 +52,7 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
         mStationExplorerViewModel = new ViewModelProvider(getApplication()).get(StationExplorerViewModel.class);
         mFolderExplorerViewModel = new ViewModelProvider(getApplication()).get(FolderExplorerViewModel.class);
+        mEngramExplorerViewModel = new ViewModelProvider(getApplication()).get(EngramExplorerViewModel.class);
     }
 
     public void showSnackBarMessage(String message) {
@@ -76,6 +81,10 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
 
     LiveData<List<FolderEntity>> getFolders() {
         return mFolderExplorerViewModel.getFolders();
+    }
+
+    LiveData<List<EngramEntity>> getEngrams() {
+        return mEngramExplorerViewModel.getEngrams();
     }
 
     @Override

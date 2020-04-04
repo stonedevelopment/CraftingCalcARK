@@ -22,34 +22,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.textview.MaterialTextView;
-import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.StationEntity;
 
-public class StationExplorerAdapter extends ListAdapter<StationEntity, StationExplorerAdapter.StationExplorerViewHolder> {
-    private static final DiffUtil.ItemCallback<StationEntity> cDiffCallback = new DiffUtil.ItemCallback<StationEntity>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull StationEntity oldItem, @NonNull StationEntity newItem) {
-            return oldItem.getRowId() == newItem.getRowId();
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull StationEntity oldItem, @NonNull StationEntity newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
+public class StationExplorerAdapter extends ListAdapter<StationEntity, StationExplorerViewHolder> {
     private final LayoutInflater mInflater;
 
-    public StationExplorerAdapter(Context context) {
-        super(cDiffCallback);
-
+    public StationExplorerAdapter(Context context, @NonNull DiffUtil.ItemCallback<StationEntity> diffCallback) {
+        super(diffCallback);
         mInflater = LayoutInflater.from(context);
     }
 
@@ -66,30 +49,6 @@ public class StationExplorerAdapter extends ListAdapter<StationEntity, StationEx
 
     @Override
     public void onBindViewHolder(@NonNull StationExplorerViewHolder holder, int position) {
-        holder.bindTo(getItem(position));
-    }
-
-    class StationExplorerViewHolder extends RecyclerView.ViewHolder {
-        private final AppCompatImageView mThumbnail;
-        private final MaterialTextView mTitle;
-
-        StationExplorerViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            mThumbnail = itemView.findViewById(R.id.thumbnail);
-            mTitle = itemView.findViewById(R.id.title);
-        }
-
-        void bindTo(StationEntity stationEntity) {
-            final String imagePath = "file:///android_asset/" + stationEntity.getImage();
-
-            Picasso.with(getContext())
-                    .load(imagePath)
-                    .error(R.drawable.placeholder_empty)
-                    .placeholder(R.drawable.placeholder_empty)
-                    .into(mThumbnail);
-
-            mTitle.setText(stationEntity.getName());
-        }
+        holder.bind(getContext(), getItem(position));
     }
 }

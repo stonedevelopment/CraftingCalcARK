@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -35,7 +36,7 @@ public class EngramEntity {
     private final int rowId;
 
     //  title of this engram
-    private final String title;
+    private final String name;
 
     //  description for this engram
     private final String description;
@@ -65,7 +66,7 @@ public class EngramEntity {
     public EngramEntity(int rowId, String name, String description, String image, String location,
                         int yield, int level, int time, int folderId, int stationId) {
         this.rowId = rowId;
-        this.title = name;
+        this.name = name;
         this.description = description;
         this.image = image;
         this.location = location;
@@ -80,8 +81,8 @@ public class EngramEntity {
         return rowId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
@@ -114,5 +115,18 @@ public class EngramEntity {
 
     public int getStationId() {
         return stationId;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof EngramEntity)) return false;
+
+        EngramEntity engramEntity = (EngramEntity) obj;
+        return rowId == engramEntity.getRowId() &&
+                name.equals(engramEntity.getName()) &&
+                parentId == engramEntity.getParentId() &&
+                stationId == engramEntity.getStationId();
+
     }
 }
