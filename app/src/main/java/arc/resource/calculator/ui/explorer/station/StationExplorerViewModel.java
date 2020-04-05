@@ -33,7 +33,17 @@ public class StationExplorerViewModel extends AndroidViewModel {
         super(application);
 
         mRepository = new StationExplorerRepository(application);
+        mRepository.init();
+
         mStations = mRepository.getStations();
+    }
+
+    public void select(StationEntity stationEntity) {
+        mRepository.select(stationEntity);
+    }
+
+    public void deselect() {
+        mRepository.deselect();
     }
 
     public LiveData<List<StationEntity>> getStations() {

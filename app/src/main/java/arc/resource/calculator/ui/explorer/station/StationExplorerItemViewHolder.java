@@ -14,36 +14,40 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.engram;
+package arc.resource.calculator.ui.explorer.station;
 
 import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 
-public class EngramExplorerViewHolder extends RecyclerView.ViewHolder {
+class StationExplorerItemViewHolder extends RecyclerView.ViewHolder {
+    private final MaterialCardView mCardView;
     private final AppCompatImageView mThumbnail;
     private final MaterialTextView mTitle;
-    private final MaterialTextView mQuantity;
 
-    public EngramExplorerViewHolder(@NonNull View itemView) {
+    StationExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        mCardView = itemView.findViewById(R.id.cardView);
         mThumbnail = itemView.findViewById(R.id.thumbnail);
         mTitle = itemView.findViewById(R.id.title);
-        mQuantity = itemView.findViewById(R.id.quantity);
     }
 
-    void bind(Context context, EngramEntity engramEntity) {
-        final String imagePath = "file:///android_asset/" + engramEntity.getImage();
+    void bind(Context context, StationEntity stationEntity) {
+        final String imagePath = "file:///android_asset/" + stationEntity.getImage();
 
         Picasso.with(context)
                 .load(imagePath)
@@ -51,6 +55,11 @@ public class EngramExplorerViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.placeholder_empty)
                 .into(mThumbnail);
 
-        mTitle.setText(engramEntity.getName());
+        mTitle.setText(stationEntity.getName());
+
+        mCardView.setOnClickListener(v -> {
+            ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
+            viewModel.selectStation(stationEntity);
+        });
     }
 }

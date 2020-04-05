@@ -26,7 +26,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import arc.resource.calculator.db.dao.EngramDao;
-import arc.resource.calculator.db.dao.ExplorerDao;
 import arc.resource.calculator.db.dao.FolderDao;
 import arc.resource.calculator.db.dao.StationDao;
 import arc.resource.calculator.db.entity.EngramEntity;
@@ -38,6 +37,8 @@ import arc.resource.calculator.db.entity.StationEntity;
         FolderEntity.class,
         EngramEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
+    public static final int cParentId = 0;
+
     private static final String cDatabaseName = "ark_database";
     private static final int cNumberOfThreads = 4;
     private static final ExecutorService mDatabaseWriteExecutor =
@@ -62,8 +63,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public static ExecutorService writeTo() {
         return mDatabaseWriteExecutor;
     }
-
-    public abstract ExplorerDao explorerDao();
 
     public abstract StationDao stationDao();
 

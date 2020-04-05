@@ -25,6 +25,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.StationEntity;
 
 public class FolderExplorerViewModel extends AndroidViewModel {
     private final LiveData<List<FolderEntity>> mFolders;
@@ -39,5 +40,13 @@ public class FolderExplorerViewModel extends AndroidViewModel {
 
     public LiveData<List<FolderEntity>> getFolders() {
         return mFolders;
+    }
+
+    public void update(StationEntity stationEntity) {
+        mRepository.update(stationEntity);
+    }
+
+    public void update(FolderEntity folderEntity) {
+        mRepository.update(folderEntity);
     }
 }

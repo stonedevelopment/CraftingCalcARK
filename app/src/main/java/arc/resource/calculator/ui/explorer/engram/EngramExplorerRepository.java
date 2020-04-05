@@ -25,18 +25,24 @@ import java.util.List;
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.EngramDao;
 import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.StationEntity;
+
+import static arc.resource.calculator.db.AppDatabase.cParentId;
 
 public class EngramExplorerRepository {
     private final EngramDao mDao;
-    private final LiveData<List<EngramEntity>> mEngrams;
+    private LiveData<List<EngramEntity>> mEngrams;
 
     public EngramExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         mDao = db.engramDao();
-        mEngrams = mDao.getEngrams();
     }
 
     public LiveData<List<EngramEntity>> getEngrams() {
         return mEngrams;
+    }
+
+    public void update(StationEntity stationEntity) {
+        mEngrams = mDao.getEngrams(stationEntity.getId(), cParentId);
     }
 }

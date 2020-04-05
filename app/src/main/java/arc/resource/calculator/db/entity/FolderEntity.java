@@ -33,43 +33,45 @@ import arc.resource.calculator.db.dao.StationDao;
 public class FolderEntity {
     @PrimaryKey
     @ColumnInfo(name = "rowid")
-    private final int rowId;
+    private final int mId;
 
     //  name of folder
-    private final String name;
+    @ColumnInfo(name = "name")
+    private final String mName;
 
     //  rowid of parent; station or folder
-    private final int parentId;
+    @ColumnInfo(name = "parentid")
+    private final int mParentId;
 
     //  rowid of stations table, crafting station per in-game
     @ColumnInfo(name = StationDao.columnName)
-    private final int stationId;
+    private final int mStationId;
 
     public FolderEntity(int rowId, String name, int parentId, int stationId) {
-        this.rowId = rowId;
-        this.name = name;
-        this.parentId = parentId;
-        this.stationId = stationId;
+        mId = rowId;
+        mName = name;
+        mParentId = parentId;
+        mStationId = stationId;
     }
 
-    public int getRowId() {
-        return rowId;
+    public int getId() {
+        return mId;
     }
 
     public String getName() {
-        return name;
+        return mName;
+    }
+
+    public int getParentId() {
+        return mParentId;
+    }
+
+    public int getStationId() {
+        return mStationId;
     }
 
     public String getImage() {
         return "folder.webp";
-    }
-
-    public int getParentId() {
-        return parentId;
-    }
-
-    public int getStationId() {
-        return stationId;
     }
 
     @Override
@@ -78,9 +80,9 @@ public class FolderEntity {
         if (!(obj instanceof FolderEntity)) return false;
 
         FolderEntity folderEntity = (FolderEntity) obj;
-        return rowId == folderEntity.getRowId() &&
-                name.equals(folderEntity.getName()) &&
-                parentId == folderEntity.getParentId() &&
-                stationId == folderEntity.getStationId();
+        return mId == folderEntity.getId() &&
+                mName.equals(folderEntity.getName()) &&
+                mParentId == folderEntity.getParentId() &&
+                mStationId == folderEntity.getStationId();
     }
 }

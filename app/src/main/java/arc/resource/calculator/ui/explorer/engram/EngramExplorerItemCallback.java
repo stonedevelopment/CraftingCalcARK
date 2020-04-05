@@ -20,12 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 import arc.resource.calculator.db.entity.EngramEntity;
-import arc.resource.calculator.db.entity.FolderEntity;
 
 public class EngramExplorerItemCallback extends DiffUtil.ItemCallback<EngramEntity> {
     @Override
     public boolean areItemsTheSame(@NonNull EngramEntity oldItem, @NonNull EngramEntity newItem) {
-        return oldItem.getRowId() == newItem.getRowId();
+        return oldItem.getId() == newItem.getId();
     }
 
     @Override

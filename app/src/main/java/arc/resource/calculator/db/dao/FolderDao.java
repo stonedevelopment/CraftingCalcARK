@@ -28,14 +28,13 @@ import arc.resource.calculator.db.entity.FolderEntity;
 @Dao
 public interface FolderDao {
     String tableName = "folders";
-    String columnName = "folder_id";
 
     @Insert()
     void insert(FolderEntity folderEntity);
 
-    @Query("DELETE from folders")
+    @Query("delete from folders")
     void deleteAll();
 
-    @Query("SELECT * from folders ORDER BY name ASC")
-    LiveData<List<FolderEntity>> getFolders();
+    @Query("select * from folders where stationid = :stationId and parentid = :parentId order by name asc")
+    LiveData<List<FolderEntity>> getFolders(int stationId, int parentId);
 }

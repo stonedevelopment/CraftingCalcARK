@@ -24,7 +24,7 @@ import arc.resource.calculator.db.entity.StationEntity;
 public class StationExplorerItemCallback extends DiffUtil.ItemCallback<StationEntity> {
     @Override
     public boolean areItemsTheSame(@NonNull StationEntity oldItem, @NonNull StationEntity newItem) {
-        return oldItem.getRowId() == newItem.getRowId();
+        return oldItem.getId() == newItem.getId();
     }
 
     @Override

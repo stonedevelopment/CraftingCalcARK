@@ -25,10 +25,11 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.StationEntity;
 
 public class EngramExplorerViewModel extends AndroidViewModel {
-    private final LiveData<List<EngramEntity>> mEngrams;
     private final EngramExplorerRepository mRepository;
+    private LiveData<List<EngramEntity>> mEngrams;
 
     public EngramExplorerViewModel(@NonNull Application application) {
         super(application);
@@ -39,5 +40,9 @@ public class EngramExplorerViewModel extends AndroidViewModel {
 
     public LiveData<List<EngramEntity>> getEngrams() {
         return mEngrams;
+    }
+
+    public void update(StationEntity stationEntity) {
+        mRepository.update(stationEntity);
     }
 }

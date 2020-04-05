@@ -33,88 +33,96 @@ public class EngramEntity {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rowid")
-    private final int rowId;
+    private final int mId;
 
     //  title of this engram
-    private final String name;
+    @ColumnInfo(name = "name")
+    private final String mName;
 
     //  description for this engram
-    private final String description;
+    @ColumnInfo(name = "description")
+    private final String mDescription;
 
     //  filename of image in /assets folder
-    private final String image;
+    @ColumnInfo(name = "image")
+    private final String mImage;
 
     //  in-game location where users can craft this engram
-    private final String location;
+    @ColumnInfo(name = "location")
+    private final String mLocation;
 
     //  amount produced per craft, multiply this by crafting quantity
-    private final int yield;
+    @ColumnInfo(name = "yield")
+    private final int mYield;
 
     //  value of required level to craft engram
-    private final int level;
+    @ColumnInfo(name = "level")
+    private final int mLevel;
 
     //  crafting time in seconds    // TODO: 2/2/2020 will be used when calculating fuel usages
-    private final int time;
+    @ColumnInfo(name = "time")
+    private final int mTime;
 
     //  rowid of parent; station or folder
-    private final int parentId;
+    @ColumnInfo(name = "parentid")
+    private final int mParentId;
 
     //  rowid of stations table, crafting station per in-game
     @ColumnInfo(name = StationDao.columnName)
-    private final int stationId;
+    private final int mStationId;
 
     public EngramEntity(int rowId, String name, String description, String image, String location,
-                        int yield, int level, int time, int folderId, int stationId) {
-        this.rowId = rowId;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.location = location;
-        this.yield = yield;
-        this.level = level;
-        this.time = time;
-        this.parentId = folderId;
-        this.stationId = stationId;
+                        int yield, int level, int time, int parentId, int stationId) {
+        this.mId = rowId;
+        this.mName = name;
+        this.mDescription = description;
+        this.mImage = image;
+        this.mLocation = location;
+        this.mYield = yield;
+        this.mLevel = level;
+        this.mTime = time;
+        this.mParentId = parentId;
+        this.mStationId = stationId;
     }
 
-    public int getRowId() {
-        return rowId;
+    public int getId() {
+        return mId;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     public String getImage() {
-        return image;
+        return mImage;
     }
 
     public String getLocation() {
-        return location;
+        return mLocation;
     }
 
     public int getYield() {
-        return yield;
+        return mYield;
     }
 
     public int getLevel() {
-        return level;
+        return mLevel;
     }
 
     public int getTime() {
-        return time;
+        return mTime;
     }
 
     public int getParentId() {
-        return parentId;
+        return mParentId;
     }
 
     public int getStationId() {
-        return stationId;
+        return mStationId;
     }
 
     @Override
@@ -123,10 +131,10 @@ public class EngramEntity {
         if (!(obj instanceof EngramEntity)) return false;
 
         EngramEntity engramEntity = (EngramEntity) obj;
-        return rowId == engramEntity.getRowId() &&
-                name.equals(engramEntity.getName()) &&
-                parentId == engramEntity.getParentId() &&
-                stationId == engramEntity.getStationId();
+        return mId == engramEntity.getId() &&
+                mName.equals(engramEntity.getName()) &&
+                mParentId == engramEntity.getParentId() &&
+                mStationId == engramEntity.getStationId();
 
     }
 }

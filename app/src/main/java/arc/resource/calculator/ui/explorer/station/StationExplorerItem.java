@@ -30,7 +30,7 @@ public class StationExplorerItem extends ExplorerItem {
     }
 
     public static StationExplorerItem fromEntity(StationEntity stationEntity) {
-        return new StationExplorerItem(stationEntity.getRowId(), stationEntity.getName(), stationEntity.getImage());
+        return new StationExplorerItem(stationEntity.getId(), stationEntity.getName(), stationEntity.getImage());
     }
 
     public static List<StationExplorerItem> fromEntities(List<StationEntity> stationEntities) {

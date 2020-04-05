@@ -265,19 +265,11 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewModel() {
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.getStartActivityForResultTrigger().observe(this, new Observer<Intent>() {
-            @Override
-            public void onChanged(Intent intent) {
-                int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
-                startActivityForResult(intent, requestCode);
-            }
+        mViewModel.getStartActivityForResultTrigger().observe(this, intent -> {
+            int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
+            startActivityForResult(intent, requestCode);
         });
-        mViewModel.getSnackBarMessage() .observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String message) {
-                showSnackBar(message);
-            }
-        });
+        mViewModel.getSnackBarMessage() .observe(this, message -> showSnackBar(message));
     }
 
     private void registerListeners() {

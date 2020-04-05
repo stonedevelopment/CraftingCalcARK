@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.engram;
+package arc.resource.calculator.ui.explorer.back;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,13 +26,13 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.EngramEntity;
 
-public class EngramExplorerAdapter extends ListAdapter<EngramEntity, EngramExplorerViewHolder> {
+public class BackFolderExplorerItemAdapter extends ListAdapter<BackFolderExplorerItem, BackFolderExplorerItemViewHolder> {
     private final LayoutInflater mInflater;
 
-    public EngramExplorerAdapter(Context context, @NonNull DiffUtil.ItemCallback<EngramEntity> diffCallback) {
+    public BackFolderExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<BackFolderExplorerItem> diffCallback) {
         super(diffCallback);
+
         mInflater = LayoutInflater.from(context);
     }
 
@@ -42,13 +42,13 @@ public class EngramExplorerAdapter extends ListAdapter<EngramEntity, EngramExplo
 
     @NonNull
     @Override
-    public EngramExplorerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.explorer_item_engram, parent);
-        return new EngramExplorerViewHolder(itemView);
+    public BackFolderExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = mInflater.inflate(R.layout.explorer_item_folder, parent);
+        return new BackFolderExplorerItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EngramExplorerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BackFolderExplorerItemViewHolder holder, int position) {
         holder.bind(getContext(), getItem(position));
     }
 }

@@ -18,7 +18,6 @@ package arc.resource.calculator.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
@@ -28,17 +27,8 @@ import arc.resource.calculator.db.entity.StationEntity;
 @Dao
 public interface StationDao {
     String tableName = "stations";
-    String columnName = "station_id";
+    String columnName = "stationid";
 
-    @Insert()
-    void insertAll(StationEntity... stationEntities);
-
-    @Query("DELETE from stations")
-    void deleteAll();
-
-    @Query("SELECT * from stations where rowid = :stationId")
-    LiveData<StationEntity> getStation(int stationId);
-
-    @Query("SELECT * from stations ORDER BY name ASC")
+    @Query("select * from stations order by name asc")
     LiveData<List<StationEntity>> getStations();
 }

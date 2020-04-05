@@ -14,34 +14,39 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.folder;
+package arc.resource.calculator.ui.explorer.back;
 
 import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 
-class FolderExplorerViewHolder extends RecyclerView.ViewHolder {
+class BackFolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
+    private final MaterialCardView mCardView;
     private final AppCompatImageView mThumbnail;
     private final MaterialTextView mTitle;
 
-    FolderExplorerViewHolder(@NonNull View itemView) {
+    BackFolderExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        mCardView = itemView.findViewById(R.id.cardView);
         mThumbnail = itemView.findViewById(R.id.thumbnail);
         mTitle = itemView.findViewById(R.id.title);
     }
 
-    void bind(Context context, FolderEntity folderEntity) {
-        final String imagePath = "file:///android_asset/" + folderEntity.getImage();
+    void bind(Context context, BackFolderExplorerItem explorerItem) {
+        final String imagePath = "file:///android_asset/" + explorerItem.getImage();
 
         Picasso.with(context)
                 .load(imagePath)
@@ -49,6 +54,11 @@ class FolderExplorerViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.placeholder_empty)
                 .into(mThumbnail);
 
-        mTitle.setText(folderEntity.getName());
+        mTitle.setText(explorerItem.getTitle());
+
+        mCardView.setOnClickListener(v -> {
+            ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
+            viewModel.goBack(explorerItem);
+        });
     }
 }

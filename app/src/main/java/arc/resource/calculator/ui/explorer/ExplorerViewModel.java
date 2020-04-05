@@ -22,49 +22,33 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
-import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.EngramEntity;
 import arc.resource.calculator.db.entity.FolderEntity;
 import arc.resource.calculator.db.entity.StationEntity;
-import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.repository.explorer.ExplorerObserver;
-import arc.resource.calculator.repository.queue.QueueObserver;
-import arc.resource.calculator.ui.explorer.engram.EngramExplorerViewModel;
-import arc.resource.calculator.ui.explorer.folder.FolderExplorerViewModel;
-import arc.resource.calculator.ui.explorer.station.StationExplorerViewModel;
+import arc.resource.calculator.ui.explorer.back.BackFolderExplorerItem;
+import arc.resource.calculator.ui.explorer.engram.EngramExplorerRepository;
+import arc.resource.calculator.ui.explorer.folder.FolderExplorerRepository;
+import arc.resource.calculator.ui.explorer.station.StationExplorerRepository;
 
-public class ExplorerViewModel extends AndroidViewModel implements QueueObserver, ExplorerObserver {
+public class ExplorerViewModel extends AndroidViewModel {
     // TODO: Maintain filters?
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
-    private final StationExplorerViewModel mStationExplorerViewModel;
-    private final FolderExplorerViewModel mFolderExplorerViewModel;
-    private final EngramExplorerViewModel mEngramExplorerViewModel;
+    private final StationExplorerRepository mStationExplorerRepository;
+    private final FolderExplorerRepository mFolderExplorerRepository;
+    private final EngramExplorerRepository mEngramExplorerRepository;
 
-    private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
     private MutableLiveData<ExplorerViewModelState> mViewModelState = new MutableLiveData<>();
+    private MutableLiveData<BackFolderExplorerItem> mBackFolderExplorerItem = new MutableLiveData<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
 
-        mStationExplorerViewModel = new ViewModelProvider(getApplication()).get(StationExplorerViewModel.class);
-        mFolderExplorerViewModel = new ViewModelProvider(getApplication()).get(FolderExplorerViewModel.class);
-        mEngramExplorerViewModel = new ViewModelProvider(getApplication()).get(EngramExplorerViewModel.class);
-    }
-
-    public void showSnackBarMessage(String message) {
-        setSnackBarMessage(message);
-    }
-
-    MutableLiveData<String> getSnackBarMessage() {
-        return mSnackBarMessage;
-    }
-
-    private void setSnackBarMessage(String s) {
-        mSnackBarMessage.setValue(s);
+        mStationExplorerRepository = new StationExplorerRepository(application);
+        mFolderExplorerRepository = new FolderExplorerRepository(application);
+        mEngramExplorerRepository = new EngramExplorerRepository(application);
     }
 
     MutableLiveData<ExplorerViewModelState> getViewModelState() {
@@ -76,68 +60,56 @@ public class ExplorerViewModel extends AndroidViewModel implements QueueObserver
     }
 
     LiveData<List<StationEntity>> getStations() {
-        return mStationExplorerViewModel.getStations();
+        return mStationExplorerRepository.getStations();
     }
 
     LiveData<List<FolderEntity>> getFolders() {
-        return mFolderExplorerViewModel.getFolders();
+        return mFolderExplorerRepository.getFolders();
     }
 
     LiveData<List<EngramEntity>> getEngrams() {
-        return mEngramExplorerViewModel.getEngrams();
+        return mEngramExplorerRepository.getEngrams();
     }
 
-    @Override
-    public void onItemAdded(@NonNull QueueEngram engram) {
-        String message = String.format(getApplication().getString(R.string.snackbar_message_item_added_success_format), engram.getName());
-        setSnackBarMessage(message);
+    /**
+     * User-controlled action to select a crafting station to view its contents
+     * (change station as current destination container)
+     *
+     * @param stationEntity Station to select (change to)
+     */
+    public void selectStation(StationEntity stationEntity) {
+        mStationExplorerRepository.select(stationEntity);
     }
 
-    @Override
-    public void onItemRemoved(@NonNull QueueEngram engram) {
-        String message = String.format(getApplication().getString(R.string.snackbar_message_item_removed_success_format), engram.getName());
-        setSnackBarMessage(message);
+    /**
+     * User-derived action to traverse backwards from a folder into a list of stations
+     */
+    public void deselectStation() {
+        mStationExplorerRepository.deselect();
     }
 
-    @Override
-    public void onItemChanged(@NonNull QueueEngram engram) {
-        String message = String.format(getApplication().getString(R.string.snackbar_message_item_updated_success_format), engram.getName());
-        setSnackBarMessage(message);
+    /**
+     * User-derived action to select a folder location to view its contents
+     * (adds selected folder for a stack of folders to track history)
+     *
+     * @param folderEntity Folder to select (change to)
+     */
+    public void selectFolder(FolderEntity folderEntity) {
+        mFolderExplorerRepository.select(folderEntity);
     }
 
-    @Override
-    public void onQueueDataPopulating() {
-        //  do nothing
+    /**
+     * User-derived action to traverse backwards from current folders into a list of folders
+     * (back action for folders: back button or tapping a back folder)
+     */
+    public void deselectFolder() {
+        mFolderExplorerRepository.deselect();
     }
 
-    @Override
-    public void onQueueDataPopulated() {
-        //  do nothing
+    public void goBack(BackFolderExplorerItem explorerItem) {
+        if (explorerItem.getItemType() == ExplorerItemType.CraftingStation) {
+            deselectStation();
+            // TODO: 4/5/2020 tell back folder adapter they are no longer needed 
+        }
     }
-
-    @Override
-    public void onQueueDataEmpty() {
-        // do nothing
-    }
-
-    @Override
-    public void onEngramUpdated(int position) {
-        //  do nothing
-    }
-
-    @Override
-    public void onExplorerDataPopulating() {
-        setViewModelState(ExplorerViewModelState.POPULATING);
-    }
-
-    @Override
-    public void onExplorerDataPopulated() {
-        setViewModelState(ExplorerViewModelState.POPULATED);
-    }
-
-    @Override
-    public void onExplorerDataEmpty() {
-        setViewModelState(ExplorerViewModelState.EMPTY);
-    }
-
 }

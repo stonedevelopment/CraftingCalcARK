@@ -28,14 +28,13 @@ import arc.resource.calculator.db.entity.EngramEntity;
 @Dao
 public interface EngramDao {
     String tableName = "engrams";
-    String columnName = "engram_id";
 
     @Insert()
     void insert(EngramEntity engramEntity);
 
-    @Query("DELETE from engrams")
+    @Query("delete from engrams")
     void deleteAll();
 
-    @Query("SELECT * from engrams ORDER BY title ASC")
-    LiveData<List<EngramEntity>> getEngrams();
+    @Query("select * from engrams where stationid = :stationId and parentid = :parentId order by name asc")
+    LiveData<List<EngramEntity>> getEngrams(int stationId, int parentId);
 }

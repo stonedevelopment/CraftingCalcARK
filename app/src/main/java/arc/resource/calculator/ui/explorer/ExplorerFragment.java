@@ -18,7 +18,6 @@ package arc.resource.calculator.ui.explorer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +39,11 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.ui.detail.DetailFragment;
-import arc.resource.calculator.ui.explorer.engram.EngramExplorerAdapter;
+import arc.resource.calculator.ui.explorer.engram.EngramExplorerItemAdapter;
 import arc.resource.calculator.ui.explorer.engram.EngramExplorerItemCallback;
-import arc.resource.calculator.ui.explorer.folder.FolderExplorerAdapter;
+import arc.resource.calculator.ui.explorer.folder.FolderExplorerItemAdapter;
 import arc.resource.calculator.ui.explorer.folder.FolderExplorerItemCallback;
-import arc.resource.calculator.ui.explorer.station.StationExplorerAdapter;
+import arc.resource.calculator.ui.explorer.station.StationExplorerItemAdapter;
 import arc.resource.calculator.ui.explorer.station.StationExplorerItemCallback;
 
 import static android.app.Activity.RESULT_OK;
@@ -62,9 +61,9 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private ExplorerViewModel mViewModel;
 
-    private StationExplorerAdapter mStationAdapter;
-    private FolderExplorerAdapter mFolderAdapter;
-    private EngramExplorerAdapter mEngramAdapter;
+    private StationExplorerItemAdapter mStationAdapter;
+    private FolderExplorerItemAdapter mFolderAdapter;
+    private EngramExplorerItemAdapter mEngramAdapter;
 
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
@@ -81,9 +80,9 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
 
         //  setup view adapter
-        mStationAdapter = new StationExplorerAdapter(getContext(), new StationExplorerItemCallback());
-        mFolderAdapter = new FolderExplorerAdapter(getContext(), new FolderExplorerItemCallback());
-        mEngramAdapter = new EngramExplorerAdapter(getContext(), new EngramExplorerItemCallback());
+        mStationAdapter = new StationExplorerItemAdapter(getContext(), new StationExplorerItemCallback());
+        mFolderAdapter = new FolderExplorerItemAdapter(getContext(), new FolderExplorerItemCallback());
+        mEngramAdapter = new EngramExplorerItemAdapter(getContext(), new EngramExplorerItemCallback());
 
         MergeAdapter adapter = new MergeAdapter(mStationAdapter, mFolderAdapter, mEngramAdapter);
         recyclerView.setAdapter(adapter);
@@ -162,10 +161,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
                     break;
             }
         });
-        mViewModel.getSnackBarMessage().observe(getViewLifecycleOwner(), s -> {
-            Log.d(TAG, "onChanged: getSnackBarMessage");
-            showSnackBar(s);
-        });
+
         mViewModel.getStations().observe(getViewLifecycleOwner(), stationEntities -> mStationAdapter.submitList(stationEntities));
         mViewModel.getFolders().observe(getViewLifecycleOwner(), folderEntities -> mFolderAdapter.submitList(folderEntities));
         mViewModel.getEngrams().observe(getViewLifecycleOwner(), engramEntities -> mEngramAdapter.submitList(engramEntities));

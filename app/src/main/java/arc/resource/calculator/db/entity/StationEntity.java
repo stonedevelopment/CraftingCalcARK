@@ -32,38 +32,41 @@ import arc.resource.calculator.db.dao.StationDao;
 public class StationEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rowid")
-    private final int rowId;
+    private final int mId;
 
     //  name of crafting station
-    private final String name;
+    @ColumnInfo(name = "name")
+    private final String mName;
 
     //  description of crafting station, pulled from engram description
-    private final String description;
+    @ColumnInfo(name = "description")
+    private final String mDescription;
 
     //  filename of image in /assets folder
-    private final String image;
+    @ColumnInfo(name = "image")
+    private final String mImage;
 
     public StationEntity(int rowId, String name, String description, String image) {
-        this.rowId = rowId;
-        this.name = name;
-        this.description = description;
-        this.image = image;
+        mId = rowId;
+        mName = name;
+        mDescription = description;
+        mImage = image;
     }
 
-    public int getRowId() {
-        return rowId;
+    public int getId() {
+        return mId;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     public String getImage() {
-        return image;
+        return mImage;
     }
 
     @Override
@@ -72,7 +75,7 @@ public class StationEntity {
         if (!(obj instanceof StationEntity)) return false;
 
         StationEntity stationEntity = (StationEntity) obj;
-        return getRowId() == stationEntity.getRowId() &&
+        return getId() == stationEntity.getId() &&
                 getName().equals(stationEntity.getName()) &&
                 getDescription().equals(stationEntity.getDescription()) &&
                 getImage().equals(stationEntity.getImage());

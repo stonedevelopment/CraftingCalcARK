@@ -28,10 +28,10 @@ import androidx.recyclerview.widget.ListAdapter;
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.StationEntity;
 
-public class StationExplorerAdapter extends ListAdapter<StationEntity, StationExplorerViewHolder> {
+public class StationExplorerItemAdapter extends ListAdapter<StationEntity, StationExplorerItemViewHolder> {
     private final LayoutInflater mInflater;
 
-    public StationExplorerAdapter(Context context, @NonNull DiffUtil.ItemCallback<StationEntity> diffCallback) {
+    public StationExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<StationEntity> diffCallback) {
         super(diffCallback);
         mInflater = LayoutInflater.from(context);
     }
@@ -42,13 +42,14 @@ public class StationExplorerAdapter extends ListAdapter<StationEntity, StationEx
 
     @NonNull
     @Override
-    public StationExplorerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public StationExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.explorer_item_station, parent);
-        return new StationExplorerViewHolder(itemView);
+        return new StationExplorerItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StationExplorerViewHolder holder, int position) {
-        holder.bind(getContext(), getItem(position));
+    public void onBindViewHolder(@NonNull StationExplorerItemViewHolder holder, int position) {
+        StationEntity stationEntity = getItem(position);
+        holder.bind(getContext(), stationEntity);
     }
 }

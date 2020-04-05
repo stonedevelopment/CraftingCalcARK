@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.station;
+package arc.resource.calculator.ui.explorer.folder;
 
 import android.content.Context;
 import android.view.View;
@@ -27,21 +27,21 @@ import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.db.entity.FolderEntity;
 
-class StationExplorerViewHolder extends RecyclerView.ViewHolder {
+class FolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
     private final AppCompatImageView mThumbnail;
     private final MaterialTextView mTitle;
 
-    StationExplorerViewHolder(@NonNull View itemView) {
+    FolderExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
         mThumbnail = itemView.findViewById(R.id.thumbnail);
         mTitle = itemView.findViewById(R.id.title);
     }
 
-    void bind(Context context, StationEntity stationEntity) {
-        final String imagePath = "file:///android_asset/" + stationEntity.getImage();
+    void bind(Context context, FolderEntity folderEntity) {
+        final String imagePath = "file:///android_asset/" + folderEntity.getImage();
 
         Picasso.with(context)
                 .load(imagePath)
@@ -49,6 +49,6 @@ class StationExplorerViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.placeholder_empty)
                 .into(mThumbnail);
 
-        mTitle.setText(stationEntity.getName());
+        mTitle.setText(folderEntity.getName());
     }
 }
