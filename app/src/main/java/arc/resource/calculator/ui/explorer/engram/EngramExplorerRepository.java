@@ -19,19 +19,22 @@ package arc.resource.calculator.ui.explorer.engram;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.EngramDao;
 import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.FolderEntity;
 import arc.resource.calculator.db.entity.StationEntity;
 
 import static arc.resource.calculator.db.AppDatabase.cParentId;
 
 public class EngramExplorerRepository {
     private final EngramDao mDao;
-    private LiveData<List<EngramEntity>> mEngrams;
+    private MutableLiveData<List<EngramEntity>> mEngrams;
 
     public EngramExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
@@ -42,7 +45,32 @@ public class EngramExplorerRepository {
         return mEngrams;
     }
 
-    public void update(StationEntity stationEntity) {
-        mEngrams = mDao.getEngrams(stationEntity.getId(), cParentId);
+    /**
+     * User-derived action to "open" a crafting station and view its contents
+     */
+    public void selectStation(StationEntity stationEntity) {
+        fetchEngrams(stationEntity.getId(), cParentId);
+    }
+
+    /**
+     * User-derived "back" action to "close" current station and view all stations
+     */
+    public void deselectStation() {
+        clearEngrams();
+    }
+
+    /**
+     * User-derived action to "open" a folder and view its contents
+     */
+    public void selectFolder(FolderEntity folderEntity) {
+        fetchEngrams(folderEntity.getStationId(), folderEntity.getParentId());
+    }
+
+    private void fetchEngrams(int stationId, int parentId) {
+        mEngrams = mDao.getEngrams(stationId, parentId);
+    }
+
+    private void clearEngrams() {
+        mEngrams.setValue(new ArrayList<>());
     }
 }

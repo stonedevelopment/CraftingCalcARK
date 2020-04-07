@@ -16,7 +16,7 @@
 
 package arc.resource.calculator.db.dao;
 
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 
@@ -30,5 +30,5 @@ public interface StationDao {
     String columnName = "stationid";
 
     @Query("select * from stations order by name asc")
-    LiveData<List<StationEntity>> getStations();
+    MutableLiveData<List<StationEntity>> getStations();
 }

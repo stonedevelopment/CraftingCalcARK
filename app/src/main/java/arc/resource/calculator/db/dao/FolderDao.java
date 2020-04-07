@@ -16,7 +16,7 @@
 
 package arc.resource.calculator.db.dao;
 
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -36,5 +36,5 @@ public interface FolderDao {
     void deleteAll();
 
     @Query("select * from folders where stationid = :stationId and parentid = :parentId order by name asc")
-    LiveData<List<FolderEntity>> getFolders(int stationId, int parentId);
+    MutableLiveData<List<FolderEntity>> getFolders(int stationId, int parentId);
 }

@@ -17,31 +17,31 @@
 package arc.resource.calculator.ui.explorer;
 
 public class ExplorerItem {
-    private final int rowid;
-    private final String title;
-    private final String image;
-    private final ExplorerItemType itemType;
+    private final int mId;
+    private final String mTitle;
+    private final String mImage;
+    private final ExplorerItemType mType;
 
     public ExplorerItem(int rowid, String title, String image, ExplorerItemType itemType) {
-        this.rowid = rowid;
-        this.title = title;
-        this.image = image;
-        this.itemType = itemType;
+        mId = rowid;
+        mTitle = title;
+        mImage = image;
+        mType = itemType;
     }
 
     public int getId() {
-        return rowid;
+        return mId;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public String getImage() {
-        return image;
+        return mImage;
     }
 
     public ExplorerItemType getItemType() {
-        return itemType;
+        return mType;
     }
 }

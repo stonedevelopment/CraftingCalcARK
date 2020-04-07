@@ -23,16 +23,17 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.FolderDao;
 import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.StationEntity;
+
+import static arc.resource.calculator.db.AppDatabase.cParentId;
 
 public class FolderExplorerRepository {
     private final FolderDao mDao;
-    private final MutableLiveData<List<FolderEntity>> mFolders = new MutableLiveData<>();
-    private Stack<FolderEntity> mFolderStack = new Stack<>();
+    private MutableLiveData<List<FolderEntity>> mFolders = new MutableLiveData<>();
 
     public FolderExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
@@ -43,60 +44,32 @@ public class FolderExplorerRepository {
         return mFolders;
     }
 
-    private void setFolders(LiveData<List<FolderEntity>> folders) {
-        setFolders(folders.getValue());
-    }
-
-    private void setFolders(List<FolderEntity> folderEntities) {
-        mFolders.setValue(folderEntities);
-    }
-
-    private FolderEntity getCurrentFolder() {
-        return mFolderStack.peek();
-    }
-
-    public void select(FolderEntity folderEntity) {
-        addToFolderStack(folderEntity);
-        settle();
-    }
-
-    public void deselect() {
-        removeFromFolderStack();
-        settle();
-    }
-
-    private boolean isFolderStackEmpty() {
-        return mFolderStack.isEmpty();
-    }
-
-    private void addToFolderStack(FolderEntity folderEntity) {
-        mFolderStack.push(folderEntity);
-    }
-
-    private void removeFromFolderStack() {
-        mFolderStack.pop();
-    }
-
-    private void fetchFolders() {
-        FolderEntity folderEntity = getCurrentFolder();
-        setFolders(mDao.getFolders(folderEntity.getStationId(), folderEntity.getParentId()));
-    }
-
-    private void clearFolders() {
-        setFolders(new ArrayList<>());
+    /**
+     * User-derived action to "open" a crafting station and view its contents
+     */
+    public void selectStation(StationEntity station) {
+        fetchFolders(station.getId(), cParentId);
     }
 
     /**
-     * Final step in executing changes to {@see ExplorerViewModel}
-     * <p>
-     * If the folder stack is empty, clear list of folders
-     * If the folder stack is not empty, fetch list of folders for last added value
+     * User-derived "back" action to "close" current station and view all stations
      */
-    private void settle() {
-        if (isFolderStackEmpty()) {
-            clearFolders();
-        } else {
-            fetchFolders();
-        }
+    public void deselectStation() {
+        clearFolders();
+    }
+
+    /**
+     * User-derived action to "open" a folder and view its contents
+     */
+    public void selectFolder(FolderEntity folder) {
+        fetchFolders(folder.getStationId(), folder.getParentId());
+    }
+
+    private void fetchFolders(int stationId, int parentId) {
+        mFolders = mDao.getFolders(stationId, parentId);
+    }
+
+    private void clearFolders() {
+        mFolders.setValue(new ArrayList<>());
     }
 }

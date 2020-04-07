@@ -21,21 +21,27 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 
 class FolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
+    private final MaterialCardView mCardView;
     private final AppCompatImageView mThumbnail;
     private final MaterialTextView mTitle;
 
     FolderExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        mCardView = itemView.findViewById(R.id.cardView);
         mThumbnail = itemView.findViewById(R.id.thumbnail);
         mTitle = itemView.findViewById(R.id.title);
     }
@@ -50,5 +56,10 @@ class FolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
                 .into(mThumbnail);
 
         mTitle.setText(folderEntity.getName());
+
+        mCardView.setOnClickListener(v -> {
+            ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
+            viewModel.selectFolder(folderEntity);
+        });
     }
 }

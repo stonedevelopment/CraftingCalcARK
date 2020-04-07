@@ -19,6 +19,7 @@ package arc.resource.calculator.ui.explorer.station;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -29,9 +30,8 @@ import arc.resource.calculator.db.dao.StationDao;
 import arc.resource.calculator.db.entity.StationEntity;
 
 public class StationExplorerRepository {
-    private final MutableLiveData<List<StationEntity>> mStations = new MutableLiveData<>();
     private final StationDao mDao;
-    private StationEntity mCurrentStation;
+    private MutableLiveData<List<StationEntity>> mStations = new MediatorLiveData<>();
 
     public StationExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
@@ -42,92 +42,25 @@ public class StationExplorerRepository {
         return mStations;
     }
 
-    private void setStations(LiveData<List<StationEntity>> stations) {
-        setStations(stations.getValue());
-    }
-
-    private void setStations(List<StationEntity> stationEntities) {
-        mStations.setValue(stationEntities);
-    }
-
-    private void setCurrentStation(StationEntity stationEntity) {
-        mCurrentStation = stationEntity;
-    }
-
-    private void unsetCurrentStation() {
-        setCurrentStation(null);
+    /**
+     * User-derived action to "open" a crafting station and view its contents
+     */
+    public void selectStation() {
+        clearStations();
     }
 
     /**
-     * ViewModel-derived action used to initialize repository data. This method will allow
-     * the repository to set any retained data ahead of settling changes.
-     * <p>
-     * Instantiate variables
-     * Settle changes
+     * User-derived "back" action to "close" current station and view all stations
      */
-    void init() {
-        /* instantiate variables here */
-        settle();
+    public void deselectStation() {
+        fetchStations();
     }
 
-    /**
-     * User-derived action to select a crafting station and view its contents
-     * <p>
-     * Update current station
-     * Settle changes
-     *
-     * @param stationEntity Station to change to
-     */
-    public void select(StationEntity stationEntity) {
-        setCurrentStation(stationEntity);
-        settle();
-    }
-
-    /**
-     * User-derived action to deselect a crafting station and view all crafting stations
-     * <p>
-     * Clear current station
-     * Settle changes
-     */
-    public void deselect() {
-        unsetCurrentStation();
-        settle();
-    }
-
-    /**
-     * Helper method to satisfy inquiry on if the current station has value
-     *
-     * @return true/false if current station has value
-     */
-    private boolean currentStationHasValue() {
-        return mCurrentStation != null;
-    }
-
-    /**
-     * Fetches new data from DAO
-     */
     private void fetchStations() {
-        setStations(mDao.getStations());
+        mStations = mDao.getStations();
     }
 
-    /**
-     * Clears list of crafting stations
-     */
     private void clearStations() {
-        setStations(new ArrayList<>());
-    }
-
-    /**
-     * Final step in executing changes to ViewModel
-     * <p>
-     * If the current station has value, clear list of stations
-     * If the current station is null, fetch full list of stations
-     */
-    private void settle() {
-        if (currentStationHasValue()) {
-            clearStations();
-        } else {
-            fetchStations();
-        }
+        mStations.setValue(new ArrayList<>());
     }
 }

@@ -39,6 +39,8 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.ui.detail.DetailFragment;
+import arc.resource.calculator.ui.explorer.back.BackFolderExplorerItemAdapter;
+import arc.resource.calculator.ui.explorer.back.BackFolderExplorerItemCallback;
 import arc.resource.calculator.ui.explorer.engram.EngramExplorerItemAdapter;
 import arc.resource.calculator.ui.explorer.engram.EngramExplorerItemCallback;
 import arc.resource.calculator.ui.explorer.folder.FolderExplorerItemAdapter;
@@ -64,6 +66,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     private StationExplorerItemAdapter mStationAdapter;
     private FolderExplorerItemAdapter mFolderAdapter;
     private EngramExplorerItemAdapter mEngramAdapter;
+    private BackFolderExplorerItemAdapter mBackFolderAdapter;
 
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
@@ -83,8 +86,9 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         mStationAdapter = new StationExplorerItemAdapter(getContext(), new StationExplorerItemCallback());
         mFolderAdapter = new FolderExplorerItemAdapter(getContext(), new FolderExplorerItemCallback());
         mEngramAdapter = new EngramExplorerItemAdapter(getContext(), new EngramExplorerItemCallback());
+        mBackFolderAdapter = new BackFolderExplorerItemAdapter((getContext()), new BackFolderExplorerItemCallback());
 
-        MergeAdapter adapter = new MergeAdapter(mStationAdapter, mFolderAdapter, mEngramAdapter);
+        MergeAdapter adapter = new MergeAdapter(mStationAdapter, mBackFolderAdapter, mFolderAdapter, mEngramAdapter);
         recyclerView.setAdapter(adapter);
 
         mTextView = rootView.findViewById(R.id.explorerNavigationTextView);
@@ -165,6 +169,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         mViewModel.getStations().observe(getViewLifecycleOwner(), stationEntities -> mStationAdapter.submitList(stationEntities));
         mViewModel.getFolders().observe(getViewLifecycleOwner(), folderEntities -> mFolderAdapter.submitList(folderEntities));
         mViewModel.getEngrams().observe(getViewLifecycleOwner(), engramEntities -> mEngramAdapter.submitList(engramEntities));
+        mViewModel.getBackFolderExplorerItem().observe(getViewLifecycleOwner(), explorerItem ->);
     }
 
     private void showLoading() {
