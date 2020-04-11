@@ -30,16 +30,15 @@ import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.EngramEntity;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 
-public class EngramExplorerItemViewHolder extends RecyclerView.ViewHolder {
+class EngramExplorerItemViewHolder extends RecyclerView.ViewHolder {
     private final MaterialCardView mCardView;
     private final AppCompatImageView mThumbnail;
     private final MaterialTextView mTitle;
     private final MaterialTextView mQuantity;
 
-    public EngramExplorerItemViewHolder(@NonNull View itemView) {
+    EngramExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
         mCardView = itemView.findViewById(R.id.cardView);
@@ -48,8 +47,8 @@ public class EngramExplorerItemViewHolder extends RecyclerView.ViewHolder {
         mQuantity = itemView.findViewById(R.id.quantity);
     }
 
-    void bind(Context context, EngramEntity engramEntity) {
-        final String imagePath = "file:///android_asset/" + engramEntity.getImage();
+    void bind(Context context, EngramExplorerItem explorerItem) {
+        final String imagePath = "file:///android_asset/" + explorerItem.getImage();
 
         Picasso.with(context)
                 .load(imagePath)
@@ -57,11 +56,11 @@ public class EngramExplorerItemViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.placeholder_empty)
                 .into(mThumbnail);
 
-        mTitle.setText(engramEntity.getName());
+        mTitle.setText(explorerItem.getTitle());
 
         mCardView.setOnClickListener(v -> {
             ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
-            viewModel.selectEngram(engramEntity);
+            viewModel.selectEngram(explorerItem);
         });
     }
 }

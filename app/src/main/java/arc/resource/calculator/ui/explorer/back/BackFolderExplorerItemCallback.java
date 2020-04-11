@@ -22,11 +22,11 @@ import androidx.recyclerview.widget.DiffUtil;
 public class BackFolderExplorerItemCallback extends DiffUtil.ItemCallback<BackFolderExplorerItem> {
     @Override
     public boolean areItemsTheSame(@NonNull BackFolderExplorerItem oldItem, @NonNull BackFolderExplorerItem newItem) {
-        return oldItem.getId() == newItem.getId();
+        return false;
     }
 
     @Override
     public boolean areContentsTheSame(@NonNull BackFolderExplorerItem oldItem, @NonNull BackFolderExplorerItem newItem) {
-        return oldItem.equals(newItem);
+        return false;
     }
 }

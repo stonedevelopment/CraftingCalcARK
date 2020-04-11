@@ -20,22 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.entity.EngramEntity;
-import arc.resource.calculator.ui.explorer.ExplorerItem;
-import arc.resource.calculator.ui.explorer.ExplorerItemType;
+import arc.resource.calculator.ui.explorer.ChildExplorerItem;
 
-public class EngramExplorerItem extends ExplorerItem {
-    private int quantity;
+public class EngramExplorerItem extends ChildExplorerItem {
+    private int mQuantity;
 
-    private EngramExplorerItem(int rowid, String title, String image, int quantity) {
-        super(rowid, title, image, ExplorerItemType.Engram);
-        this.quantity = quantity;
+    private EngramExplorerItem(int rowId, String title, String image, int stationId, int parentId, int quantity) {
+        super(rowId, title, image, stationId, parentId);
+        mQuantity = quantity;
     }
 
-    public static EngramExplorerItem fromEntity(EngramEntity engramEntity) {
-        return new EngramExplorerItem(engramEntity.getId(), engramEntity.getTitle(), engramEntity.getImage(), 0);
+    private static EngramExplorerItem fromEntity(EngramEntity engramEntity) {
+        return new EngramExplorerItem(engramEntity.getId(), engramEntity.getName(),
+                engramEntity.getImage(), engramEntity.getStationId(), engramEntity.getParentId(), 0);
     }
 
-    public static List<EngramExplorerItem> fromEntities(List<EngramEntity> engramEntities) {
+    static List<EngramExplorerItem> fromEntities(List<EngramEntity> engramEntities) {
         List<EngramExplorerItem> items = new ArrayList<>();
         for (EngramEntity engramEntity : engramEntities) {
             items.add(EngramExplorerItem.fromEntity(engramEntity));
@@ -44,6 +44,10 @@ public class EngramExplorerItem extends ExplorerItem {
     }
 
     public int getQuantity() {
-        return quantity;
+        return mQuantity;
+    }
+
+    public void setQuantity(int quantity) {
+        mQuantity = quantity;
     }
 }

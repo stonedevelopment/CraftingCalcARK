@@ -22,8 +22,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import arc.resource.calculator.R;
 
@@ -50,5 +54,15 @@ public class BackFolderExplorerItemAdapter extends ListAdapter<BackFolderExplore
     @Override
     public void onBindViewHolder(@NonNull BackFolderExplorerItemViewHolder holder, int position) {
         holder.bind(getContext(), getItem(position));
+    }
+
+    public void submit(@Nullable BackFolderExplorerItem backFolder) {
+        if (backFolder == null) {
+            submitList(new ArrayList<>());
+        } else {
+            List<BackFolderExplorerItem> list = new ArrayList<>();
+            list.add(backFolder);
+            submitList(list);
+        }
     }
 }

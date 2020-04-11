@@ -152,24 +152,11 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private void setupViewModel() {
         mViewModel = new ViewModelProvider(this).get(ExplorerViewModel.class);
-        mViewModel.getViewModelState().observe(getViewLifecycleOwner(), viewModelState -> {
-            switch (viewModelState) {
-                case POPULATING:
-                    showLoading();
-                    break;
-                case POPULATED:
-                    showLoaded();
-                    break;
-                case EMPTY:
-                    showEmpty();
-                    break;
-            }
-        });
 
-        mViewModel.getStations().observe(getViewLifecycleOwner(), stationEntities -> mStationAdapter.submitList(stationEntities));
-        mViewModel.getFolders().observe(getViewLifecycleOwner(), folderEntities -> mFolderAdapter.submitList(folderEntities));
-        mViewModel.getEngrams().observe(getViewLifecycleOwner(), engramEntities -> mEngramAdapter.submitList(engramEntities));
-        mViewModel.getBackFolderExplorerItem().observe(getViewLifecycleOwner(), explorerItem ->);
+        mViewModel.getStations().observe(getViewLifecycleOwner(), stations -> mStationAdapter.submitList(stations));
+        mViewModel.getFolders().observe(getViewLifecycleOwner(), folders -> mFolderAdapter.submitList(folders));
+        mViewModel.getEngrams().observe(getViewLifecycleOwner(), engrams -> mEngramAdapter.submitList(engrams));
+        mViewModel.getBackFolderExplorerItem().observe(getViewLifecycleOwner(), backFolder -> mBackFolderAdapter.submit(backFolder));
     }
 
     private void showLoading() {
@@ -195,12 +182,12 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     @Override
     public void onException(String tag, Exception e) {
         // TODO: 1/25/2020 handle exception
-        mViewModel.showSnackBarMessage("An error occurred.");
+//        mViewModel.showSnackBarMessage("An error occurred.");
     }
 
     @Override
     public void onFatalException(String tag, Exception e) {
         // TODO: 1/25/2020 handle fatal exception
-        mViewModel.showSnackBarMessage("A fatal error occurred.");
+//        mViewModel.showSnackBarMessage("A fatal error occurred.");
     }
 }

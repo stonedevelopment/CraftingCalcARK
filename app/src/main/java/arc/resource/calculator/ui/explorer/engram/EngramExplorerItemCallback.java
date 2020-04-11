@@ -19,16 +19,14 @@ package arc.resource.calculator.ui.explorer.engram;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-import arc.resource.calculator.db.entity.EngramEntity;
-
-public class EngramExplorerItemCallback extends DiffUtil.ItemCallback<EngramEntity> {
+public class EngramExplorerItemCallback extends DiffUtil.ItemCallback<EngramExplorerItem> {
     @Override
-    public boolean areItemsTheSame(@NonNull EngramEntity oldItem, @NonNull EngramEntity newItem) {
+    public boolean areItemsTheSame(@NonNull EngramExplorerItem oldItem, @NonNull EngramExplorerItem newItem) {
         return oldItem.getId() == newItem.getId();
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull EngramEntity oldItem, @NonNull EngramEntity newItem) {
+    public boolean areContentsTheSame(@NonNull EngramExplorerItem oldItem, @NonNull EngramExplorerItem newItem) {
         return oldItem.equals(newItem);
     }
 }

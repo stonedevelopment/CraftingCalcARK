@@ -19,48 +19,35 @@ package arc.resource.calculator.ui.explorer.station;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.StationDao;
-import arc.resource.calculator.db.entity.StationEntity;
 
 public class StationExplorerRepository {
     private final StationDao mDao;
-    private MutableLiveData<List<StationEntity>> mStations = new MediatorLiveData<>();
+    private MutableLiveData<List<StationExplorerItem>> mStations = new MutableLiveData<>();
 
     public StationExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         mDao = db.stationDao();
-    }
-
-    public LiveData<List<StationEntity>> getStations() {
-        return mStations;
-    }
-
-    /**
-     * User-derived action to "open" a crafting station and view its contents
-     */
-    public void selectStation() {
-        clearStations();
-    }
-
-    /**
-     * User-derived "back" action to "close" current station and view all stations
-     */
-    public void deselectStation() {
         fetchStations();
     }
 
-    private void fetchStations() {
-        mStations = mDao.getStations();
+    public LiveData<List<StationExplorerItem>> getStations() {
+        return mStations;
     }
 
-    private void clearStations() {
+    public void fetchStations() {
+        mStations = (MutableLiveData<List<StationExplorerItem>>)
+                Transformations.map(mDao.getStations(), StationExplorerItem::fromEntities);
+    }
+
+    public void clearStations() {
         mStations.setValue(new ArrayList<>());
     }
 }

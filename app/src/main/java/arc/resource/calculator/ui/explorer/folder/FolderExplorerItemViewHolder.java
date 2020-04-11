@@ -46,8 +46,8 @@ class FolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
         mTitle = itemView.findViewById(R.id.title);
     }
 
-    void bind(Context context, FolderEntity folderEntity) {
-        final String imagePath = "file:///android_asset/" + folderEntity.getImage();
+    void bind(Context context, FolderExplorerItem explorerItem) {
+        final String imagePath = "file:///android_asset/" + explorerItem.getImage();
 
         Picasso.with(context)
                 .load(imagePath)
@@ -55,11 +55,11 @@ class FolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.placeholder_empty)
                 .into(mThumbnail);
 
-        mTitle.setText(folderEntity.getName());
+        mTitle.setText(explorerItem.getTitle());
 
         mCardView.setOnClickListener(v -> {
             ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
-            viewModel.selectFolder(folderEntity);
+            viewModel.goForward(explorerItem);
         });
     }
 }

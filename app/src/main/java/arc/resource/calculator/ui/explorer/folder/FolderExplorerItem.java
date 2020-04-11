@@ -20,21 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.entity.FolderEntity;
-import arc.resource.calculator.ui.explorer.ExplorerItem;
-import arc.resource.calculator.ui.explorer.ExplorerItemType;
+import arc.resource.calculator.ui.explorer.ChildExplorerItem;
 
-public class FolderExplorerItem extends ExplorerItem {
-    private FolderExplorerItem(int rowid, String title, String image) {
-        super(rowid, title, image, ExplorerItemType.Folder);
+public class FolderExplorerItem extends ChildExplorerItem {
+
+    private FolderExplorerItem(int rowId, String title, String image, int stationId, int parentId) {
+        super(rowId, title, image, stationId, parentId);
     }
 
-    public static FolderExplorerItem fromEntity(FolderEntity folderEntity) {
-        return new FolderExplorerItem(folderEntity.getId(), folderEntity.getName(), folderEntity.getImage());
+    private static FolderExplorerItem fromEntity(FolderEntity folder) {
+        return new FolderExplorerItem(folder.getId(), folder.getName(),
+                folder.getImage(), folder.getStationId(), folder.getParentId());
     }
 
-    public static List<FolderExplorerItem> fromEntities(List<FolderEntity> folderEntities) {
+    static List<FolderExplorerItem> fromEntities(List<FolderEntity> folders) {
         List<FolderExplorerItem> items = new ArrayList<>();
-        for (FolderEntity folderEntity : folderEntities) {
+        for (FolderEntity folderEntity : folders) {
             items.add(fromEntity(folderEntity));
         }
         return items;

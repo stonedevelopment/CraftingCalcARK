@@ -19,16 +19,14 @@ package arc.resource.calculator.ui.explorer.station;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-import arc.resource.calculator.db.entity.StationEntity;
-
-public class StationExplorerItemCallback extends DiffUtil.ItemCallback<StationEntity> {
+public class StationExplorerItemCallback extends DiffUtil.ItemCallback<StationExplorerItem> {
     @Override
-    public boolean areItemsTheSame(@NonNull StationEntity oldItem, @NonNull StationEntity newItem) {
+    public boolean areItemsTheSame(@NonNull StationExplorerItem oldItem, @NonNull StationExplorerItem newItem) {
         return oldItem.getId() == newItem.getId();
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull StationEntity oldItem, @NonNull StationEntity newItem) {
+    public boolean areContentsTheSame(@NonNull StationExplorerItem oldItem, @NonNull StationExplorerItem newItem) {
         return oldItem.equals(newItem);
     }
 }

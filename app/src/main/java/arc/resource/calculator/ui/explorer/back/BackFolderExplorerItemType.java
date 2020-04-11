@@ -16,10 +16,6 @@
 
 package arc.resource.calculator.ui.explorer.back;
 
-import arc.resource.calculator.ui.explorer.ExplorerItem;
-
-public class BackFolderExplorerItem extends ExplorerItem {
-    public BackFolderExplorerItem(int rowId, String title, String image) {
-        super(rowId, title, image);
-    }
+public enum BackFolderExplorerItemType {
+    CraftingStation, Folder
 }

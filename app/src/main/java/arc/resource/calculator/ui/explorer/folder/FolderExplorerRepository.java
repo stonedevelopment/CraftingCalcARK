@@ -20,56 +20,33 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.FolderDao;
-import arc.resource.calculator.db.entity.FolderEntity;
-import arc.resource.calculator.db.entity.StationEntity;
-
-import static arc.resource.calculator.db.AppDatabase.cParentId;
 
 public class FolderExplorerRepository {
     private final FolderDao mDao;
-    private MutableLiveData<List<FolderEntity>> mFolders = new MutableLiveData<>();
+    private MutableLiveData<List<FolderExplorerItem>> mFolders = new MutableLiveData<>();
 
     public FolderExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         mDao = db.folderDao();
     }
 
-    public LiveData<List<FolderEntity>> getFolders() {
+    public LiveData<List<FolderExplorerItem>> getFolders() {
         return mFolders;
     }
 
-    /**
-     * User-derived action to "open" a crafting station and view its contents
-     */
-    public void selectStation(StationEntity station) {
-        fetchFolders(station.getId(), cParentId);
+    public void fetchFolders(int stationId, int parentId) {
+        mFolders = (MutableLiveData<List<FolderExplorerItem>>)
+                Transformations.map(mDao.getFolders(stationId, parentId), FolderExplorerItem::fromEntities);
     }
 
-    /**
-     * User-derived "back" action to "close" current station and view all stations
-     */
-    public void deselectStation() {
-        clearFolders();
-    }
-
-    /**
-     * User-derived action to "open" a folder and view its contents
-     */
-    public void selectFolder(FolderEntity folder) {
-        fetchFolders(folder.getStationId(), folder.getParentId());
-    }
-
-    private void fetchFolders(int stationId, int parentId) {
-        mFolders = mDao.getFolders(stationId, parentId);
-    }
-
-    private void clearFolders() {
+    public void clearFolders() {
         mFolders.setValue(new ArrayList<>());
     }
 }

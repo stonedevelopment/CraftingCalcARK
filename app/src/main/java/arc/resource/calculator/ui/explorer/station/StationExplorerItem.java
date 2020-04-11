@@ -21,19 +21,18 @@ import java.util.List;
 
 import arc.resource.calculator.db.entity.StationEntity;
 import arc.resource.calculator.ui.explorer.ExplorerItem;
-import arc.resource.calculator.ui.explorer.ExplorerItemType;
 
 public class StationExplorerItem extends ExplorerItem {
 
     private StationExplorerItem(int rowid, String title, String image) {
-        super(rowid, title, image, ExplorerItemType.CraftingStation);
+        super(rowid, title, image);
     }
 
-    public static StationExplorerItem fromEntity(StationEntity stationEntity) {
+    private static StationExplorerItem fromEntity(StationEntity stationEntity) {
         return new StationExplorerItem(stationEntity.getId(), stationEntity.getName(), stationEntity.getImage());
     }
 
-    public static List<StationExplorerItem> fromEntities(List<StationEntity> stationEntities) {
+    static List<StationExplorerItem> fromEntities(List<StationEntity> stationEntities) {
         List<StationExplorerItem> items = new ArrayList<>();
         for (StationEntity stationEntity : stationEntities) {
             items.add(fromEntity(stationEntity));

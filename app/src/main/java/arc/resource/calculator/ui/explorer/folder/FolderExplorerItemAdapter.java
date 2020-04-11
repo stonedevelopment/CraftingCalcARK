@@ -26,12 +26,11 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.FolderEntity;
 
-public class FolderExplorerItemAdapter extends ListAdapter<FolderEntity, FolderExplorerItemViewHolder> {
+public class FolderExplorerItemAdapter extends ListAdapter<FolderExplorerItem, FolderExplorerItemViewHolder> {
     private final LayoutInflater mInflater;
 
-    public FolderExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<FolderEntity> diffCallback) {
+    public FolderExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<FolderExplorerItem> diffCallback) {
         super(diffCallback);
 
         mInflater = LayoutInflater.from(context);

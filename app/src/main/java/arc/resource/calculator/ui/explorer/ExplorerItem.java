@@ -16,17 +16,17 @@
 
 package arc.resource.calculator.ui.explorer;
 
+import androidx.annotation.Nullable;
+
 public class ExplorerItem {
     private final int mId;
     private final String mTitle;
     private final String mImage;
-    private final ExplorerItemType mType;
 
-    public ExplorerItem(int rowid, String title, String image, ExplorerItemType itemType) {
+    public ExplorerItem(int rowid, String title, String image) {
         mId = rowid;
         mTitle = title;
         mImage = image;
-        mType = itemType;
     }
 
     public int getId() {
@@ -41,7 +41,14 @@ public class ExplorerItem {
         return mImage;
     }
 
-    public ExplorerItemType getItemType() {
-        return mType;
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof ExplorerItem)) return false;
+
+        ExplorerItem explorerItem = (ExplorerItem) obj;
+        return getId() == explorerItem.getId() &&
+                getTitle().equals(explorerItem.getTitle()) &&
+                getImage().equals(explorerItem.getImage());
     }
 }

@@ -26,12 +26,11 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.StationEntity;
 
-public class StationExplorerItemAdapter extends ListAdapter<StationEntity, StationExplorerItemViewHolder> {
+public class StationExplorerItemAdapter extends ListAdapter<StationExplorerItem, StationExplorerItemViewHolder> {
     private final LayoutInflater mInflater;
 
-    public StationExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<StationEntity> diffCallback) {
+    public StationExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<StationExplorerItem> diffCallback) {
         super(diffCallback);
         mInflater = LayoutInflater.from(context);
     }
@@ -49,7 +48,6 @@ public class StationExplorerItemAdapter extends ListAdapter<StationEntity, Stati
 
     @Override
     public void onBindViewHolder(@NonNull StationExplorerItemViewHolder holder, int position) {
-        StationEntity stationEntity = getItem(position);
-        holder.bind(getContext(), stationEntity);
+        holder.bind(getContext(), getItem(position));
     }
 }

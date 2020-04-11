@@ -19,16 +19,14 @@ package arc.resource.calculator.ui.explorer.folder;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-import arc.resource.calculator.db.entity.FolderEntity;
-
-public class FolderExplorerItemCallback extends DiffUtil.ItemCallback<FolderEntity> {
+public class FolderExplorerItemCallback extends DiffUtil.ItemCallback<FolderExplorerItem> {
     @Override
-    public boolean areItemsTheSame(@NonNull FolderEntity oldItem, @NonNull FolderEntity newItem) {
-        return oldItem.getRowId() == newItem.getRowId();
+    public boolean areItemsTheSame(@NonNull FolderExplorerItem oldItem, @NonNull FolderExplorerItem newItem) {
+        return oldItem.getId() == newItem.getId();
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull FolderEntity oldItem, @NonNull FolderEntity newItem) {
+    public boolean areContentsTheSame(@NonNull FolderExplorerItem oldItem, @NonNull FolderExplorerItem newItem) {
         return oldItem.equals(newItem);
     }
 }

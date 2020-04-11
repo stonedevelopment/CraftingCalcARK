@@ -26,12 +26,11 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.EngramEntity;
 
-public class EngramExplorerItemAdapter extends ListAdapter<EngramEntity, EngramExplorerItemViewHolder> {
+public class EngramExplorerItemAdapter extends ListAdapter<EngramExplorerItem, EngramExplorerItemViewHolder> {
     private final LayoutInflater mInflater;
 
-    public EngramExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<EngramEntity> diffCallback) {
+    public EngramExplorerItemAdapter(Context context, @NonNull DiffUtil.ItemCallback<EngramExplorerItem> diffCallback) {
         super(diffCallback);
         mInflater = LayoutInflater.from(context);
     }

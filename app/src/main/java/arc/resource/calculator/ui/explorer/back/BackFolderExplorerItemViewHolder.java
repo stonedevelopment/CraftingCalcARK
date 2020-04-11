@@ -46,7 +46,7 @@ class BackFolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bind(Context context, BackFolderExplorerItem explorerItem) {
-        final String imagePath = "file:///android_asset/" + explorerItem.getImage();
+        final String imagePath = "file:///android_asset/back_folder.webp";
 
         Picasso.with(context)
                 .load(imagePath)
@@ -54,11 +54,11 @@ class BackFolderExplorerItemViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.placeholder_empty)
                 .into(mThumbnail);
 
-        mTitle.setText(explorerItem.getTitle());
+        mTitle.setText(String.format(context.getString(R.string.go_back_format), explorerItem.getTitle()));
 
         mCardView.setOnClickListener(v -> {
             ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
-            viewModel.goBack(explorerItem);
+            viewModel.goBack();
         });
     }
 }

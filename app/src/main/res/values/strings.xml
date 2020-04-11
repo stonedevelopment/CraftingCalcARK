@@ -185,14 +185,8 @@
 
     <!-- Strings related to Go Back -->
     <string name="go_back">Go back</string>
+    <string name="go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
     <string name="go_back_to_stations">Go back to Crafting Stations</string>
-
-    <!-- Strings related to Categories -->
-    <string name="category_go_back">Go back</string>
-    <string name="category_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
-
-    <!-- Strings related to Stations -->
-    <string name="station_go_back_format">Go back to <xliff:g>%1$s</xliff:g></string>
 
     <!-- Strings related to Required Level -->
     <string name="level_max_value">105</string>

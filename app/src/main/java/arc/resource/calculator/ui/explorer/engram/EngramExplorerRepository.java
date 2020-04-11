@@ -20,57 +20,33 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.EngramDao;
-import arc.resource.calculator.db.entity.EngramEntity;
-import arc.resource.calculator.db.entity.FolderEntity;
-import arc.resource.calculator.db.entity.StationEntity;
-
-import static arc.resource.calculator.db.AppDatabase.cParentId;
 
 public class EngramExplorerRepository {
     private final EngramDao mDao;
-    private MutableLiveData<List<EngramEntity>> mEngrams;
+    private MutableLiveData<List<EngramExplorerItem>> mEngrams = new MutableLiveData<>();
 
     public EngramExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         mDao = db.engramDao();
     }
 
-    public LiveData<List<EngramEntity>> getEngrams() {
+    public LiveData<List<EngramExplorerItem>> getEngrams() {
         return mEngrams;
     }
 
-    /**
-     * User-derived action to "open" a crafting station and view its contents
-     */
-    public void selectStation(StationEntity stationEntity) {
-        fetchEngrams(stationEntity.getId(), cParentId);
+    public void fetchEngrams(int stationId, int parentId) {
+        mEngrams = (MutableLiveData<List<EngramExplorerItem>>)
+                Transformations.map(mDao.getEngrams(stationId, parentId), EngramExplorerItem::fromEntities);
     }
 
-    /**
-     * User-derived "back" action to "close" current station and view all stations
-     */
-    public void deselectStation() {
-        clearEngrams();
-    }
-
-    /**
-     * User-derived action to "open" a folder and view its contents
-     */
-    public void selectFolder(FolderEntity folderEntity) {
-        fetchEngrams(folderEntity.getStationId(), folderEntity.getParentId());
-    }
-
-    private void fetchEngrams(int stationId, int parentId) {
-        mEngrams = mDao.getEngrams(stationId, parentId);
-    }
-
-    private void clearEngrams() {
+    public void clearEngrams() {
         mEngrams.setValue(new ArrayList<>());
     }
 }
