@@ -11,6 +11,16 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
+    <style name="AppTheme.SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/secondaryColor</item>
+        <item name="colorPrimaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorOnPrimary">@color/secondaryTextColor</item>
+        <item name="colorSecondary">@color/primaryColor</item>
+        <item name="colorSecondaryVariant">@color/primaryLightColor</item>
+        <item name="colorOnSecondary">@color/primaryTextColor</item>
+        <item name="android:background">@color/secondaryDarkColor</item>
+    </style>
+
     <style name="AppTheme.BottomNavigationTheme">
         <item name="colorPrimary">@color/bnvActiveMenuItemColor</item>
         <item name="android:textColorSecondary">@color/bnvInactiveMenuItemColor</item>

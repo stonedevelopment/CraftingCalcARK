@@ -97,10 +97,6 @@
                     {
                       "name": "Raw Fish Meat",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Raw Fish Meat",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -114,10 +110,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Raw Mutton",
-                      "quantity": 1
-                    },
                     {
                       "name": "Raw Mutton",
                       "quantity": 1
@@ -137,10 +129,6 @@
                     {
                       "name": "Raw Meat",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Raw Meat",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -157,10 +145,6 @@
                     {
                       "name": "Raw Prime Fish Meat",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Raw Prime Fish Meat",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -174,10 +158,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Raw Prime Meat",
-                      "quantity": 1
-                    },
                     {
                       "name": "Raw Prime Meat",
                       "quantity": 1
@@ -202,14 +182,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Wood",
-                  "quantity": 1
-                },
-                {
-                  "name": "Wood",
-                  "quantity": 1
-                },
                 {
                   "name": "Wood",
                   "quantity": 1
@@ -299,22 +271,6 @@
                     {
                       "name": "Narcotic",
                       "quantity": 2
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 4
-                    },
-                    {
-                      "name": "Pelt, Hair, or Wool",
-                      "quantity": 6
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 4
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
                     }
                   ]
                 },
@@ -328,22 +284,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Rare Flower",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Leech Blood or Horns",
-                      "quantity": 3
-                    },
-                    {
-                      "name": "Rare Mushroom",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 1
-                    },
                     {
                       "name": "Rare Flower",
                       "quantity": 10
@@ -379,14 +319,6 @@
                     {
                       "name": "Narcoberry",
                       "quantity": 5
-                    },
-                    {
-                      "name": "Spoiled Meat",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Narcoberry",
-                      "quantity": 5
                     }
                   ]
                 },
@@ -400,14 +332,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Stimberry",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Sparkpowder",
-                      "quantity": 2
-                    },
                     {
                       "name": "Stimberry",
                       "quantity": 5
@@ -467,14 +391,6 @@
                 {
                   "name": "Stone",
                   "quantity": 8
-                },
-                {
-                  "name": "Chitin or Keratin",
-                  "quantity": 4
-                },
-                {
-                  "name": "Stone",
-                  "quantity": 8
                 }
               ]
             },
@@ -495,14 +411,6 @@
                 {
                   "name": "Charcoal",
                   "quantity": 1
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 1
                 }
               ]
             },
@@ -516,14 +424,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Flint",
-                  "quantity": 2
-                },
-                {
-                  "name": "Stone",
-                  "quantity": 1
-                },
                 {
                   "name": "Flint",
                   "quantity": 2
@@ -623,34 +523,6 @@
                     {
                       "name": "Stimulant",
                       "quantity": 8
-                    },
-                    {
-                      "name": "Raw Prime Meat",
-                      "quantity": 3
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rare Flower",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 8
                     }
                   ]
                 },
@@ -664,38 +536,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Savoroot",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Black Pearl",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Deathworm or Woolly Rhino Horn",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 2
-                    },
                     {
                       "name": "Mejoberry",
                       "quantity": 10
@@ -763,30 +603,6 @@
                     {
                       "name": "Amarberry",
                       "quantity": 20
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Tintoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Amarberry",
-                      "quantity": 20
                     }
                   ]
                 },
@@ -800,30 +616,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Savoroot",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Cooked Meat or Fish Meat",
-                      "quantity": 9
-                    },
                     {
                       "name": "Savoroot",
                       "quantity": 5
@@ -871,18 +663,6 @@
                     {
                       "name": "Water",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Azulberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -896,34 +676,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Citronal",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Tintoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Azulberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Cooked Meat",
-                      "quantity": 9
-                    },
-                    {
-                      "name": "Amarberry",
-                      "quantity": 20
-                    },
                     {
                       "name": "Citronal",
                       "quantity": 5
@@ -987,30 +739,6 @@
                     {
                       "name": "Rockarrot",
                       "quantity": 5
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Azulberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 5
                     }
                   ]
                 },
@@ -1047,30 +775,6 @@
                     {
                       "name": "Narcotic",
                       "quantity": 2
-                    },
-                    {
-                      "name": "Savoroot",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Cooked Meat",
-                      "quantity": 9
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
                     }
                   ]
                 },
@@ -1084,14 +788,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Tintoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
-                    },
                     {
                       "name": "Tintoberry",
                       "quantity": 20
@@ -1139,34 +835,6 @@
                     {
                       "name": "Cooked Prime Meat",
                       "quantity": 24
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 200
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rare Mushroom",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 72
-                    },
-                    {
-                      "name": "Rare Flower",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 72
-                    },
-                    {
-                      "name": "Cooked Prime Meat",
-                      "quantity": 24
                     }
                   ]
                 },
@@ -1180,34 +848,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Savoroot",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rare Mushroom",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 8
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Cooked Prime Meat",
-                      "quantity": 3
-                    },
                     {
                       "name": "Savoroot",
                       "quantity": 1
@@ -1279,38 +919,6 @@
                     {
                       "name": "Rockarrot",
                       "quantity": 2
-                    },
-                    {
-                      "name": "Savoroot",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Giant Bee Honey",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Fiber",
-                      "quantity": 25
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 4
-                    },
-                    {
-                      "name": "Sap",
-                      "quantity": 7
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 2
                     }
                   ]
                 }
@@ -1343,18 +951,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -1368,18 +964,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Charcoal",
                   "quantity": 2
@@ -1419,22 +1003,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -1448,26 +1016,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 3
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 6
-                },
                 {
                   "name": "Tintoberry",
                   "quantity": 9
@@ -1519,26 +1067,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 7
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 7
                 }
               ]
             },
@@ -1552,22 +1080,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 6
-                },
                 {
                   "name": "Sparkpowder",
                   "quantity": 1
@@ -1615,26 +1127,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 7
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 7
                 }
               ]
             },
@@ -1663,22 +1155,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 9
                 }
               ]
             },
@@ -1692,22 +1168,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Sparkpowder",
                   "quantity": 1
@@ -1759,30 +1219,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 4
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 4
                 }
               ]
             },
@@ -1796,22 +1232,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Narcoberry",
                   "quantity": 6
@@ -1855,22 +1275,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 12
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 12
                 }
               ]
             },
@@ -1884,22 +1288,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 9
-                },
                 {
                   "name": "Tintoberry",
                   "quantity": 9
@@ -1943,22 +1331,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 12
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 12
                 }
               ]
             },
@@ -1972,22 +1344,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Stimberry",
                   "quantity": 6
@@ -2031,22 +1387,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -2071,18 +1411,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -2096,26 +1424,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Narcoberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Narcoberry",
                   "quantity": 4
@@ -2163,22 +1471,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -2192,22 +1484,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Stimberry",
                   "quantity": 6
@@ -2251,22 +1527,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -2280,30 +1540,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 4
-                },
                 {
                   "name": "Gunpowder",
                   "quantity": 1
@@ -2359,26 +1595,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 7
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 7
                 }
               ]
             },
@@ -2392,18 +1608,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Stimberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Stimberry",
                   "quantity": 15
@@ -2439,18 +1643,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 15
                 }
               ]
             }
@@ -2470,34 +1662,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Amarberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Cooked Meat, Cooked Fish Meat, or Cooked Meat Jerky",
-                  "quantity": 1
-                },
-                {
-                  "name": "Extra Small Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 5
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Amarberry",
                   "quantity": 10
@@ -2561,30 +1725,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Focal Chili",
-                  "quantity": 1
-                },
-                {
-                  "name": "Extra Large Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Rare Flower",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -2598,30 +1738,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Lazarus Chowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Special Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Giant Bee Honey",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Lazarus Chowder",
                   "quantity": 1
@@ -2681,30 +1797,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Cooked Meat Jerky",
-                  "quantity": 1
-                },
-                {
-                  "name": "Medium Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Longrass",
-                  "quantity": 2
-                },
-                {
-                  "name": "Savoroot",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -2718,30 +1810,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Cooked Fish Meat",
-                  "quantity": 1
-                },
-                {
-                  "name": "Small Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 5
-                },
-                {
-                  "name": "Rockarrot",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Cooked Fish Meat",
                   "quantity": 1
@@ -2805,34 +1873,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Citronal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Prime Meat Jerky",
-                  "quantity": 1
-                },
-                {
-                  "name": "Large Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Rare Mushroom",
-                  "quantity": 2
-                },
-                {
-                  "name": "Sap",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             }
@@ -2855,14 +1895,6 @@
                 {
                   "name": "Wood",
                   "quantity": 1
-                },
-                {
-                  "name": "Wood",
-                  "quantity": 1
-                },
-                {
-                  "name": "Wood",
-                  "quantity": 1
                 }
               ]
             },
@@ -2876,18 +1908,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Oil",
-                  "quantity": 2
-                },
-                {
-                  "name": "Polymer",
-                  "quantity": 3
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Oil",
                   "quantity": 2
@@ -4932,34 +3952,6 @@
                     {
                       "name": "Stimulant",
                       "quantity": 8
-                    },
-                    {
-                      "name": "Raw Prime Meat",
-                      "quantity": 3
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rare Flower",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 8
                     }
                   ]
                 },
@@ -4973,38 +3965,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Savoroot",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Black Pearl",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Deathworm or Woolly Rhino Horn",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 2
-                    },
                     {
                       "name": "Mejoberry",
                       "quantity": 10
@@ -5072,30 +4032,6 @@
                     {
                       "name": "Amarberry",
                       "quantity": 20
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Tintoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Amarberry",
-                      "quantity": 20
                     }
                   ]
                 },
@@ -5109,30 +4045,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Savoroot",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Cooked Meat or Fish Meat",
-                      "quantity": 9
-                    },
                     {
                       "name": "Savoroot",
                       "quantity": 5
@@ -5180,18 +4092,6 @@
                     {
                       "name": "Water",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Azulberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -5205,34 +4105,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Citronal",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Tintoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Azulberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Cooked Meat",
-                      "quantity": 9
-                    },
-                    {
-                      "name": "Amarberry",
-                      "quantity": 20
-                    },
                     {
                       "name": "Citronal",
                       "quantity": 5
@@ -5296,30 +4168,6 @@
                     {
                       "name": "Rockarrot",
                       "quantity": 5
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Azulberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 5
                     }
                   ]
                 },
@@ -5356,30 +4204,6 @@
                     {
                       "name": "Narcotic",
                       "quantity": 2
-                    },
-                    {
-                      "name": "Savoroot",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Cooked Meat",
-                      "quantity": 9
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
                     }
                   ]
                 },
@@ -5393,14 +4217,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Tintoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
-                    },
                     {
                       "name": "Tintoberry",
                       "quantity": 20
@@ -5448,34 +4264,6 @@
                     {
                       "name": "Cooked Prime Meat",
                       "quantity": 24
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 200
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rare Mushroom",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 72
-                    },
-                    {
-                      "name": "Rare Flower",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 72
-                    },
-                    {
-                      "name": "Cooked Prime Meat",
-                      "quantity": 24
                     }
                   ]
                 },
@@ -5489,34 +4277,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Savoroot",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Mejoberry",
-                      "quantity": 20
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Rare Mushroom",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 8
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Cooked Prime Meat",
-                      "quantity": 3
-                    },
                     {
                       "name": "Savoroot",
                       "quantity": 1
@@ -5588,38 +4348,6 @@
                     {
                       "name": "Rockarrot",
                       "quantity": 2
-                    },
-                    {
-                      "name": "Savoroot",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Giant Bee Honey",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Fiber",
-                      "quantity": 25
-                    },
-                    {
-                      "name": "Water",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Longrass",
-                      "quantity": 2
-                    },
-                    {
-                      "name": "Stimulant",
-                      "quantity": 4
-                    },
-                    {
-                      "name": "Sap",
-                      "quantity": 7
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 2
                     }
                   ]
                 }
@@ -5652,18 +4380,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -5677,18 +4393,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Charcoal",
                   "quantity": 2
@@ -5728,22 +4432,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -5757,26 +4445,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 3
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 6
-                },
                 {
                   "name": "Tintoberry",
                   "quantity": 9
@@ -5828,26 +4496,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 7
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 7
                 }
               ]
             },
@@ -5861,22 +4509,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 6
-                },
                 {
                   "name": "Sparkpowder",
                   "quantity": 1
@@ -5924,26 +4556,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 7
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 7
                 }
               ]
             },
@@ -5972,22 +4584,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 9
                 }
               ]
             },
@@ -6001,22 +4597,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Sparkpowder",
                   "quantity": 1
@@ -6068,30 +4648,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 4
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 4
                 }
               ]
             },
@@ -6105,22 +4661,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Narcoberry",
                   "quantity": 6
@@ -6164,22 +4704,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 12
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 12
                 }
               ]
             },
@@ -6193,22 +4717,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 9
-                },
                 {
                   "name": "Tintoberry",
                   "quantity": 9
@@ -6252,22 +4760,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 12
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 12
                 }
               ]
             },
@@ -6281,22 +4773,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Stimberry",
                   "quantity": 6
@@ -6340,22 +4816,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 9
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -6380,18 +4840,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -6405,26 +4853,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Narcoberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Narcoberry",
                   "quantity": 4
@@ -6472,22 +4900,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -6501,22 +4913,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Stimberry",
                   "quantity": 6
@@ -6560,22 +4956,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 12
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -6589,30 +4969,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Azulberry",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Stimberry",
-                  "quantity": 6
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 4
-                },
                 {
                   "name": "Gunpowder",
                   "quantity": 1
@@ -6668,26 +5024,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 7
-                },
-                {
-                  "name": "Narcoberry",
-                  "quantity": 4
-                },
-                {
-                  "name": "Gunpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 7
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 7
                 }
               ]
             },
@@ -6701,18 +5037,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Stimberry",
-                  "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Stimberry",
                   "quantity": 15
@@ -6748,18 +5072,6 @@
                 {
                   "name": "Amarberry",
                   "quantity": 15
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
-                {
-                  "name": "Amarberry",
-                  "quantity": 15
                 }
               ]
             }
@@ -6779,34 +5091,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Amarberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Cooked Meat, Cooked Fish Meat, or Cooked Meat Jerky",
-                  "quantity": 1
-                },
-                {
-                  "name": "Extra Small Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 5
-                },
-                {
-                  "name": "Tintoberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Amarberry",
                   "quantity": 10
@@ -6870,30 +5154,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Focal Chili",
-                  "quantity": 1
-                },
-                {
-                  "name": "Extra Large Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Rare Flower",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -6907,30 +5167,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Lazarus Chowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Special Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 10
-                },
-                {
-                  "name": "Giant Bee Honey",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Lazarus Chowder",
                   "quantity": 1
@@ -6990,30 +5226,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Cooked Meat Jerky",
-                  "quantity": 1
-                },
-                {
-                  "name": "Medium Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Longrass",
-                  "quantity": 2
-                },
-                {
-                  "name": "Savoroot",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             },
@@ -7027,30 +5239,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Cooked Fish Meat",
-                  "quantity": 1
-                },
-                {
-                  "name": "Small Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Mejoberry",
-                  "quantity": 5
-                },
-                {
-                  "name": "Rockarrot",
-                  "quantity": 2
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Cooked Fish Meat",
                   "quantity": 1
@@ -7114,34 +5302,6 @@
                 {
                   "name": "Water",
                   "quantity": 1
-                },
-                {
-                  "name": "Citronal",
-                  "quantity": 2
-                },
-                {
-                  "name": "Prime Meat Jerky",
-                  "quantity": 1
-                },
-                {
-                  "name": "Large Egg",
-                  "quantity": 1
-                },
-                {
-                  "name": "Fiber",
-                  "quantity": 5
-                },
-                {
-                  "name": "Rare Mushroom",
-                  "quantity": 2
-                },
-                {
-                  "name": "Sap",
-                  "quantity": 1
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
                 }
               ]
             }
@@ -7161,18 +5321,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Oil",
-                  "quantity": 2
-                },
-                {
-                  "name": "Polymer",
-                  "quantity": 3
-                },
-                {
-                  "name": "Water",
-                  "quantity": 1
-                },
                 {
                   "name": "Oil",
                   "quantity": 2
@@ -7218,14 +5366,6 @@
                 {
                   "name": "Hide",
                   "quantity": 5
-                },
-                {
-                  "name": "Oil",
-                  "quantity": 6
-                },
-                {
-                  "name": "Hide",
-                  "quantity": 5
                 }
               ]
             },
@@ -7239,10 +5379,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Metal Ore",
-                  "quantity": 2
-                },
                 {
                   "name": "Metal Ore",
                   "quantity": 2
@@ -7280,10 +5416,6 @@
                     {
                       "name": "Raw Fish Meat",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Raw Fish Meat",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -7297,10 +5429,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Raw Mutton",
-                      "quantity": 1
-                    },
                     {
                       "name": "Raw Mutton",
                       "quantity": 1
@@ -7320,10 +5448,6 @@
                     {
                       "name": "Raw Meat",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Raw Meat",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -7340,10 +5464,6 @@
                     {
                       "name": "Raw Prime Fish Meat",
                       "quantity": 1
-                    },
-                    {
-                      "name": "Raw Prime Fish Meat",
-                      "quantity": 1
                     }
                   ]
                 },
@@ -7357,10 +5477,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Raw Prime Meat",
-                      "quantity": 1
-                    },
                     {
                       "name": "Raw Prime Meat",
                       "quantity": 1
@@ -7412,22 +5528,6 @@
                     {
                       "name": "Narcotic",
                       "quantity": 2
-                    },
-                    {
-                      "name": "Citronal",
-                      "quantity": 4
-                    },
-                    {
-                      "name": "Pelt, Hair, or Wool",
-                      "quantity": 6
-                    },
-                    {
-                      "name": "Rockarrot",
-                      "quantity": 4
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 2
                     }
                   ]
                 },
@@ -7441,22 +5541,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Rare Flower",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Leech Blood or Horns",
-                      "quantity": 3
-                    },
-                    {
-                      "name": "Rare Mushroom",
-                      "quantity": 10
-                    },
-                    {
-                      "name": "Narcotic",
-                      "quantity": 1
-                    },
                     {
                       "name": "Rare Flower",
                       "quantity": 10
@@ -7492,14 +5576,6 @@
                     {
                       "name": "Narcoberry",
                       "quantity": 5
-                    },
-                    {
-                      "name": "Spoiled Meat",
-                      "quantity": 1
-                    },
-                    {
-                      "name": "Narcoberry",
-                      "quantity": 5
                     }
                   ]
                 },
@@ -7513,14 +5589,6 @@
                   "xp": 0,
                   "crafting_time": 0,
                   "composition": [
-                    {
-                      "name": "Stimberry",
-                      "quantity": 5
-                    },
-                    {
-                      "name": "Sparkpowder",
-                      "quantity": 2
-                    },
                     {
                       "name": "Stimberry",
                       "quantity": 5
@@ -7556,14 +5624,6 @@
                 {
                   "name": "Stone",
                   "quantity": 8
-                },
-                {
-                  "name": "Chitin or Keratin",
-                  "quantity": 4
-                },
-                {
-                  "name": "Stone",
-                  "quantity": 8
                 }
               ]
             },
@@ -7584,14 +5644,6 @@
                 {
                   "name": "Charcoal",
                   "quantity": 1
-                },
-                {
-                  "name": "Sparkpowder",
-                  "quantity": 1
-                },
-                {
-                  "name": "Charcoal",
-                  "quantity": 1
                 }
               ]
             },
@@ -7605,14 +5657,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Flint",
-                  "quantity": 2
-                },
-                {
-                  "name": "Stone",
-                  "quantity": 1
-                },
                 {
                   "name": "Flint",
                   "quantity": 2
@@ -8594,14 +6638,6 @@
                 {
                   "name": "Wood",
                   "quantity": 1
-                },
-                {
-                  "name": "Wood",
-                  "quantity": 1
-                },
-                {
-                  "name": "Wood",
-                  "quantity": 1
                 }
               ]
             },
@@ -8622,14 +6658,6 @@
                 {
                   "name": "Hide",
                   "quantity": 5
-                },
-                {
-                  "name": "Oil",
-                  "quantity": 6
-                },
-                {
-                  "name": "Hide",
-                  "quantity": 5
                 }
               ]
             },
@@ -8643,10 +6671,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Metal Ore",
-                  "quantity": 2
-                },
                 {
                   "name": "Metal Ore",
                   "quantity": 2
@@ -9293,18 +7317,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Fiber",
-                  "quantity": 30
-                },
-                {
-                  "name": "Metal Ore",
-                  "quantity": 5
-                },
-                {
-                  "name": "Flint",
-                  "quantity": 5
-                },
                 {
                   "name": "Fiber",
                   "quantity": 30
@@ -13030,18 +11042,6 @@
               "xp": 0,
               "crafting_time": 0,
               "composition": [
-                {
-                  "name": "Fiber",
-                  "quantity": 30
-                },
-                {
-                  "name": "Metal Ore",
-                  "quantity": 5
-                },
-                {
-                  "name": "Flint",
-                  "quantity": 5
-                },
                 {
                   "name": "Fiber",
                   "quantity": 30

@@ -17,12 +17,10 @@
 package arc.resource.calculator.db.entity;
 
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import arc.resource.calculator.db.dao.FolderDao;
-import arc.resource.calculator.db.dao.StationDao;
 
 /**
  * Folder object for base game data (vanilla)
@@ -32,42 +30,38 @@ import arc.resource.calculator.db.dao.StationDao;
 @Entity(tableName = FolderDao.tableName)
 public class FolderEntity {
     @PrimaryKey
-    @ColumnInfo(name = "rowid")
-    private final int mId;
+    private final int rowId;
 
     //  name of folder
-    @ColumnInfo(name = "name")
-    private final String mName;
+    private final String name;
 
     //  rowid of parent; station or folder
-    @ColumnInfo(name = "parentid")
-    private final int mParentId;
+    private final int parentId;
 
     //  rowid of stations table, crafting station per in-game
-    @ColumnInfo(name = StationDao.columnName)
-    private final int mStationId;
+    private final int stationId;
 
     public FolderEntity(int rowId, String name, int parentId, int stationId) {
-        mId = rowId;
-        mName = name;
-        mParentId = parentId;
-        mStationId = stationId;
+        this.rowId = rowId;
+        this.name = name;
+        this.parentId = parentId;
+        this.stationId = stationId;
     }
 
-    public int getId() {
-        return mId;
+    public int getRowId() {
+        return rowId;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public int getParentId() {
-        return mParentId;
+        return parentId;
     }
 
     public int getStationId() {
-        return mStationId;
+        return stationId;
     }
 
     public String getImage() {
@@ -80,9 +74,9 @@ public class FolderEntity {
         if (!(obj instanceof FolderEntity)) return false;
 
         FolderEntity folderEntity = (FolderEntity) obj;
-        return mId == folderEntity.getId() &&
-                mName.equals(folderEntity.getName()) &&
-                mParentId == folderEntity.getParentId() &&
-                mStationId == folderEntity.getStationId();
+        return rowId == folderEntity.getRowId() &&
+                name.equals(folderEntity.getName()) &&
+                parentId == folderEntity.getParentId() &&
+                stationId == folderEntity.getStationId();
     }
 }

@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.SparseArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,13 +33,16 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.model.Station;
 import arc.resource.calculator.model.category.Category;
 import arc.resource.calculator.model.engram.Engram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.Resource;
+import arc.resource.calculator.util.JSONUtil;
 
 public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
     public static final String TAG = DbToJSONTask.class.getSimpleName();
@@ -76,36 +80,26 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
 
     private ArrayList<Uri> mAttachmentUriList = new ArrayList<>();
 
-    public interface Listener {
-        void onError(Exception e);
-
-        void onStart();
-
-        void onUpdate(String message);
-
-        void onFinish(ArrayList<Uri> jsonAttachmentUriList);
-    }
-
     public DbToJSONTask(Context context, JSONObject jsonObject, Listener listener) {
         setContext(context);
         setListener(listener);
         mJSONObject = jsonObject;
     }
 
-    private void setContext(Context context) {
-        mContext = new WeakReference<>(context);
-    }
-
     private Context getContext() {
         return mContext.get();
     }
 
-    private void setListener(Listener listener) {
-        mListener = listener;
+    private void setContext(Context context) {
+        mContext = new WeakReference<>(context);
     }
 
     private Listener getListener() {
         return mListener;
+    }
+
+    private void setListener(Listener listener) {
+        mListener = listener;
     }
 
     private void updateStatus(String statusMessage) {
@@ -137,9 +131,11 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
 
             try {
                 for (long dlcId = 1; dlcId <= 5; dlcId++) {
-                    mAttachmentUriList.add(writeJSONObjectToFile(
-                            getNameByDlcId(dlcId),
-                            createJSONObjectForDLC(dlcId)));
+                    String jsonString = JSONUtil.readRawJsonFileToJsonString(getContext(), R.raw.data_editable);
+                    mJSONObject = new JSONObject(jsonString);
+
+                    Uri uri = writeJSONObjectToFile(getNameByDlcId(dlcId), createJSONObjectForDLC(dlcId));
+                    mAttachmentUriList.add(uri);
                 }
             } catch (JSONException e) {
                 getListener().onError(e);
@@ -161,6 +157,10 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         jsonObject.put(COLUMN_IMAGE_PATH, buildImagePathByDLCId(dlcId));
         jsonObject.put(LOGO_IMAGE_FILE, LOGO_IMAGE_NAME);
         jsonObject.put(FOLDER_IMAGE_FILE, FOLDER_IMAGE_NAME);
+
+        //  start with stations by dlcId
+        //  next, check folders by station and parent of 0
+        //  next, check engrams by station and parent of 0
 
         jsonObject.put(ENGRAMS, createJSONArrayForDLCEngrams(dlcId));
         jsonObject.put(RESOURCES, createJSONArrayForResources(dlcId));
@@ -338,12 +338,14 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         try (Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null)) {
             if (cursor == null) return new ArrayList<>();
 
+            List<String> resourceNames = new ArrayList<>();
             List<Long> resourceIds = new ArrayList<>();
             List<CompositeResource> composition = new ArrayList<>();
             while (cursor.moveToNext()) {
                 long resourceId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY));
                 int quantity = cursor.getInt(cursor.getColumnIndex(DatabaseContract.CompositionEntry.COLUMN_QUANTITY));
 
+                //  skip ids already added
                 if (resourceIds.contains(resourceId)) continue;
 
                 Resource resource = queryForResource(DatabaseContract.ResourceEntry.buildUriWithOnlyId(resourceId));
@@ -352,7 +354,12 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
                     continue;
                 }
 
+                //  skip names already added (duplicates arise with each station id)
+                if (resourceNames.contains(resource.getName())) continue;
+
                 resourceIds.add(resourceId);
+                resourceNames.add(resource.getName());
+
                 composition.add(new CompositeResource(resource, quantity));
             }
 
@@ -407,6 +414,16 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         return "DLC/" + getNameByDlcId(dlcId) + "/";
     }
 
+    public interface Listener {
+        void onError(Exception e);
+
+        void onStart();
+
+        void onUpdate(String message);
+
+        void onFinish(ArrayList<Uri> jsonAttachmentUriList);
+    }
+
     static class ConversionEngram extends Engram {
         private String description;
         private int requiredLevel;
@@ -415,14 +432,6 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
             super(id, name, folder, file, yield);
             this.description = description;
             this.requiredLevel = requiredLevel;
-        }
-
-        String getDescription() {
-            return description;
-        }
-
-        int getRequiredLevel() {
-            return requiredLevel;
         }
 
         public static ConversionEngram fromCursor(Cursor cursor) {
@@ -439,6 +448,14 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
             int requiredLevel = cursor.getInt(cursor.getColumnIndex(DatabaseContract.EngramEntry.COLUMN_LEVEL));
 
             return new ConversionEngram(_id, name, folder, file, yield, description, requiredLevel);
+        }
+
+        String getDescription() {
+            return description;
+        }
+
+        int getRequiredLevel() {
+            return requiredLevel;
         }
     }
 }

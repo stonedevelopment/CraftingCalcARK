@@ -14,12 +14,8 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao;
+package arc.resource.calculator.ui.splash;
 
-import androidx.room.Dao;
-
-@Dao
-public interface ResourceDao {
-    String tableName = "resources";
-    String columnName = "resourceid";
+public enum SplashScreenViewPhase {
+    CheckVersion, UpdateDatabase, UpdatePreferences
 }

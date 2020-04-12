@@ -17,7 +17,6 @@
 package arc.resource.calculator.db.entity;
 
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -31,42 +30,22 @@ import arc.resource.calculator.db.dao.StationDao;
 @Entity(tableName = StationDao.tableName)
 public class StationEntity {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "rowid")
-    private final int mId;
+    private final int rowId;
 
     //  name of crafting station
-    @ColumnInfo(name = "name")
-    private final String mName;
+    private final String name;
 
     //  description of crafting station, pulled from engram description
-    @ColumnInfo(name = "description")
-    private final String mDescription;
+    private final String description;
 
     //  filename of image in /assets folder
-    @ColumnInfo(name = "image")
-    private final String mImage;
+    private final String image;
 
     public StationEntity(int rowId, String name, String description, String image) {
-        mId = rowId;
-        mName = name;
-        mDescription = description;
-        mImage = image;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public String getImage() {
-        return mImage;
+        this.rowId = rowId;
+        this.name = name;
+        this.description = description;
+        this.image = image;
     }
 
     @Override
@@ -75,9 +54,25 @@ public class StationEntity {
         if (!(obj instanceof StationEntity)) return false;
 
         StationEntity stationEntity = (StationEntity) obj;
-        return getId() == stationEntity.getId() &&
+        return getRowId() == stationEntity.getRowId() &&
                 getName().equals(stationEntity.getName()) &&
                 getDescription().equals(stationEntity.getDescription()) &&
                 getImage().equals(stationEntity.getImage());
+    }
+
+    public int getRowId() {
+        return rowId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

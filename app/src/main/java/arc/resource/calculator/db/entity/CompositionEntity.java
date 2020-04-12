@@ -27,15 +27,12 @@ import arc.resource.calculator.db.dao.ResourceDao;
 @Entity(tableName = CompositionDao.tableName)
 public class CompositionEntity {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "rowid")
     private final int rowId;
 
     //  rowid from engrams table
-    @ColumnInfo(name = EngramDao.columnName)
     private final int engramId;
 
     //  rowid from resources table  // TODO: 3/28/2020 determine how to show substitute items
-    @ColumnInfo(name = ResourceDao.columnName)
     private final int resourceId;
 
     //  amount required

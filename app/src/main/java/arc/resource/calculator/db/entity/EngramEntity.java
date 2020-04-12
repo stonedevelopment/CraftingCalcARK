@@ -17,112 +17,93 @@
 package arc.resource.calculator.db.entity;
 
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import arc.resource.calculator.db.dao.StationDao;
+import arc.resource.calculator.db.dao.EngramDao;
 
 /**
  * Engram object for base game data (vanilla)
  * <p>
  * Engrams for DLC game data should extend from this class
  */
-@Entity(tableName = "engrams")
+@Entity(tableName = EngramDao.tableName)
 public class EngramEntity {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "rowid")
-    private final int mId;
+    private final int rowId;
 
     //  title of this engram
-    @ColumnInfo(name = "name")
-    private final String mName;
+    private final String name;
 
     //  description for this engram
-    @ColumnInfo(name = "description")
-    private final String mDescription;
+    private final String description;
 
     //  filename of image in /assets folder
-    @ColumnInfo(name = "image")
-    private final String mImage;
-
-    //  in-game location where users can craft this engram
-    @ColumnInfo(name = "location")
-    private final String mLocation;
+    private final String image;
 
     //  amount produced per craft, multiply this by crafting quantity
-    @ColumnInfo(name = "yield")
-    private final int mYield;
+    private final int yield;
 
     //  value of required level to craft engram
-    @ColumnInfo(name = "level")
-    private final int mLevel;
+    private final int level;
 
     //  crafting time in seconds    // TODO: 2/2/2020 will be used when calculating fuel usages
-    @ColumnInfo(name = "time")
-    private final int mTime;
+    private final int time;
 
     //  rowid of parent; station or folder
-    @ColumnInfo(name = "parentid")
-    private final int mParentId;
+    private final int parentId;
 
     //  rowid of stations table, crafting station per in-game
-    @ColumnInfo(name = StationDao.columnName)
-    private final int mStationId;
+    private final int stationId;
 
-    public EngramEntity(int rowId, String name, String description, String image, String location,
+    public EngramEntity(int rowId, String name, String description, String image,
                         int yield, int level, int time, int parentId, int stationId) {
-        this.mId = rowId;
-        this.mName = name;
-        this.mDescription = description;
-        this.mImage = image;
-        this.mLocation = location;
-        this.mYield = yield;
-        this.mLevel = level;
-        this.mTime = time;
-        this.mParentId = parentId;
-        this.mStationId = stationId;
+        this.rowId = rowId;
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.yield = yield;
+        this.level = level;
+        this.time = time;
+        this.parentId = parentId;
+        this.stationId = stationId;
     }
 
-    public int getId() {
-        return mId;
+    public int getRowId() {
+        return rowId;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public String getImage() {
-        return mImage;
-    }
-
-    public String getLocation() {
-        return mLocation;
+        return image;
     }
 
     public int getYield() {
-        return mYield;
+        return yield;
     }
 
     public int getLevel() {
-        return mLevel;
+        return level;
     }
 
     public int getTime() {
-        return mTime;
+        return time;
     }
 
     public int getParentId() {
-        return mParentId;
+        return parentId;
     }
 
     public int getStationId() {
-        return mStationId;
+        return stationId;
     }
 
     @Override
@@ -131,10 +112,10 @@ public class EngramEntity {
         if (!(obj instanceof EngramEntity)) return false;
 
         EngramEntity engramEntity = (EngramEntity) obj;
-        return mId == engramEntity.getId() &&
-                mName.equals(engramEntity.getName()) &&
-                mParentId == engramEntity.getParentId() &&
-                mStationId == engramEntity.getStationId();
+        return rowId == engramEntity.getRowId() &&
+                name.equals(engramEntity.getName()) &&
+                parentId == engramEntity.getParentId() &&
+                stationId == engramEntity.getStationId();
 
     }
 }

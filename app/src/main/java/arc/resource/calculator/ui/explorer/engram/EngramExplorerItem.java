@@ -31,7 +31,7 @@ public class EngramExplorerItem extends ChildExplorerItem {
     }
 
     private static EngramExplorerItem fromEntity(EngramEntity engramEntity) {
-        return new EngramExplorerItem(engramEntity.getId(), engramEntity.getName(),
+        return new EngramExplorerItem(engramEntity.getRowId(), engramEntity.getName(),
                 engramEntity.getImage(), engramEntity.getStationId(), engramEntity.getParentId(), 0);
     }
 

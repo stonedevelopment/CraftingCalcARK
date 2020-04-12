@@ -29,7 +29,7 @@ public class FolderExplorerItem extends ChildExplorerItem {
     }
 
     private static FolderExplorerItem fromEntity(FolderEntity folder) {
-        return new FolderExplorerItem(folder.getId(), folder.getName(),
+        return new FolderExplorerItem(folder.getRowId(), folder.getName(),
                 folder.getImage(), folder.getStationId(), folder.getParentId());
     }
 

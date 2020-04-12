@@ -29,7 +29,7 @@ public class StationExplorerItem extends ExplorerItem {
     }
 
     private static StationExplorerItem fromEntity(StationEntity stationEntity) {
-        return new StationExplorerItem(stationEntity.getId(), stationEntity.getName(), stationEntity.getImage());
+        return new StationExplorerItem(stationEntity.getRowId(), stationEntity.getName(), stationEntity.getImage());
     }
 
     static List<StationExplorerItem> fromEntities(List<StationEntity> stationEntities) {

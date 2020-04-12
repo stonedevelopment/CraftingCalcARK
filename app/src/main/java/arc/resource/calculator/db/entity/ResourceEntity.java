@@ -30,7 +30,6 @@ import arc.resource.calculator.db.dao.ResourceDao;
 @Entity(tableName = ResourceDao.tableName)
 public class ResourceEntity {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "rowid")
     private final int rowId;
 
     //  name of resource

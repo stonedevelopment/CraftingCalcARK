@@ -15,8 +15,10 @@
  */
 package arc.resource.calculator;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -24,6 +26,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,10 +35,13 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
+import arc.resource.calculator.tasks.DbToJSONTask;
 import arc.resource.calculator.tasks.InitializationTask;
 import arc.resource.calculator.tasks.ParseConvertTask;
 import arc.resource.calculator.ui.main.MainActivity;
@@ -309,57 +315,57 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         mListener.onEndEvent();
                         break;
 
-//                    case DBTOJSON:
-//                        new DbToJSONTask(getApplicationContext(), mJSONObject, new DbToJSONTask.Listener() {
-//                            @Override
-//                            public void onError(Exception e) {
-//                                // alert status window of error
-//                                updateStatusMessages("Convert database failed.");
-//
-//                                // trigger activity error event handler
-//                                mListener.onError(e);
-//                            }
-//
-//                            @Override
-//                            public void onStart() {
-//                                // alert status window that database initialization has begun
-//                                updateStatusMessages("Converting database into JSON file...");
-//                            }
-//
-//                            @Override
-//                            public void onUpdate(String message) {
-//                                // alert status window with a new message
-//                                updateStatusMessages(message);
-//                            }
-//
-//                            @Override
-//                            public void onFinish(ArrayList<Uri> jsonAttachmentUri) {
-//                                updateStatusMessages("Attaching converted JSON file to email...");
-//
-//                                Log.i(TAG, "Send email");
-//                                String[] TO = {"jaredstone1982@gmail.com"};
-//                                String[] CC = {""};
-//                                Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-//
-//                                emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
-//                                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-//                                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-//                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New DB to JSON File");
-//                                emailIntent.putExtra(Intent.EXTRA_TEXT, "New DB to JSON File");
-//                                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, jsonAttachmentUri);
-//
-//                                try {
-//                                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-//                                    Log.i(TAG, "Finished sending email...");
-//                                } catch (ActivityNotFoundException ex) {
-//                                    Toast.makeText(LoadScreenActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-//                                }
-//
-//                                // trigger next event (in-app purchases?)
-//                                mListener.onEndEvent();
-//                            }
-//                        }).execute();
-//                        break;
+                    case DBTOJSON:
+                        new DbToJSONTask(getApplicationContext(), mJSONObject, new DbToJSONTask.Listener() {
+                            @Override
+                            public void onError(Exception e) {
+                                // alert status window of error
+                                updateStatusMessages("Convert database failed.");
+
+                                // trigger activity error event handler
+                                mListener.onError(e);
+                            }
+
+                            @Override
+                            public void onStart() {
+                                // alert status window that database initialization has begun
+                                updateStatusMessages("Converting database into JSON file...");
+                            }
+
+                            @Override
+                            public void onUpdate(String message) {
+                                // alert status window with a new message
+                                updateStatusMessages(message);
+                            }
+
+                            @Override
+                            public void onFinish(ArrayList<Uri> jsonAttachmentUri) {
+                                updateStatusMessages("Attaching converted JSON file to email...");
+
+                                Log.i(TAG, "Send email");
+                                String[] TO = {"jaredstone1982@gmail.com"};
+                                String[] CC = {""};
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+
+                                emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New DB to JSON File");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, "New DB to JSON File");
+                                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, jsonAttachmentUri);
+
+                                try {
+                                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                                    Log.i(TAG, "Finished sending email...");
+                                } catch (ActivityNotFoundException ex) {
+                                    Toast.makeText(LoadScreenActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                                }
+
+                                // trigger next event (in-app purchases?)
+                                mListener.onEndEvent();
+                            }
+                        }).execute();
+                        break;
                 }
             }
 
@@ -517,7 +523,8 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         DATABASE,
         PREFERENCES,
         QUEUE,
-        PREPARATION
+        PREPARATION,
+        DBTOJSON
     }
 
     private interface Listener {
