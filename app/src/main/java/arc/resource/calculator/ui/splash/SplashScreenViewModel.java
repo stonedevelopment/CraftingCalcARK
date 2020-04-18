@@ -21,33 +21,85 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import arc.resource.calculator.model.SingleLiveEvent;
+import arc.resource.calculator.util.JSONUtil;
+import arc.resource.calculator.util.PrefsUtil;
 
 public class SplashScreenViewModel extends AndroidViewModel {
-    private SingleLiveEvent<SplashScreenViewState> viewState = new SingleLiveEvent<>();
-    private SingleLiveEvent<SplashScreenViewPhase> viewPhase = new SingleLiveEvent<>();
+    private SingleLiveEvent<SplashScreenPhaseType> phaseEvent = new SingleLiveEvent<>();
+    private List<SplashScreenPhaseType> phaseTypes = new ArrayList<>(Arrays.asList(SplashScreenPhaseType.values()));
+    private int phaseIndex;
 
     public SplashScreenViewModel(@NonNull Application application) {
         super(application);
+
+        initializePhases();
     }
 
-    SingleLiveEvent<SplashScreenViewState> getViewState() {
-        return viewState;
+    SingleLiveEvent<SplashScreenPhaseType> getPhaseEvent() {
+        return phaseEvent;
     }
 
-    private void setViewState(SingleLiveEvent<SplashScreenViewState> viewState) {
-        this.viewState = viewState;
+    private void setPhaseEvent(SplashScreenPhaseType viewPhase) {
+        getPhaseEvent().setValue(viewPhase);
     }
 
-    SingleLiveEvent<SplashScreenViewPhase> getViewPhase() {
-        return viewPhase;
+    int getPhaseIndex() {
+        return phaseIndex;
     }
 
-    private void setViewPhase(SplashScreenViewPhase viewPhase) {
-        this.viewPhase.setValue(viewPhase);
+    int getPhaseTotal() {
+        return phaseTypes.size();
     }
 
-    void beginPhases() {
-        setViewPhase(SplashScreenViewPhase.CheckVersion);
+    private void initializePhases() {
+        phaseIndex = 0;
+        startPhase();
+    }
+
+    private void startPhase() {
+        SplashScreenPhaseType phaseType = phaseTypes.get(phaseIndex);
+        setPhaseEvent(phaseType);
+
+        switch (phaseType) {
+            case CheckVersion:
+                checkVersion();
+                break;
+            case UpdateDatabase:
+                break;
+            case UpdatePreferences:
+                break;
+            case Finalize:
+                break;
+        }
+    }
+
+    private void nextPhase() {
+        phaseIndex++;
+        startPhase();
+    }
+
+    private void endPhase() {
+        nextPhase();
+    }
+
+    private void checkVersion() {
+        try {
+            String json = JSONUtil.readRawJsonFileToJsonString(getApplication(), "Primary/data.json");
+            JSONObject jsonObject = new JSONObject(json);
+            String newVersion = jsonObject.getString("version");
+            String oldVersion = PrefsUtil.getInstance(getApplication()).getJSONVersion();
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -17,7 +17,6 @@
 package arc.resource.calculator.db.dao;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -31,7 +30,7 @@ public interface FolderDao {
     String tableName = "folders";
 
     @Insert()
-    void insert(FolderEntity folderEntity);
+    FolderEntity insert(FolderEntity folderEntity);
 
     @Query("delete from folders")
     void deleteAll();

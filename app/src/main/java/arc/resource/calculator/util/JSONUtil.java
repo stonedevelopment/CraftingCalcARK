@@ -22,8 +22,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class JSONUtil {
+    public static final String cPrimaryFilePath = "Primary/";
+    public static final String cCommonJsonFileName = "data.json";
+    public static final String cVersioning = "versioning";
+    public static final String cVersion = "version";
+    public static final String cChangeLog = "changelog";
     private static final String TAG = JSONUtil.class.getSimpleName();
 
     public static String readRawJsonFileToJsonString(Context context, int json_resource_file) throws IOException {
@@ -44,10 +50,10 @@ public class JSONUtil {
         return jsonString;
     }
 
-    public static String readRawJsonFileToJsonString(Context context, String json_resource_file) throws IOException {
+    private static String readRawJsonFileToJsonString(Context context, String fileName) throws IOException {
         String jsonString;
 
-        InputStream fileStream = context.getAssets().open(json_resource_file);
+        InputStream fileStream = context.getAssets().open(fileName);
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(fileStream))) {
             StringBuilder buffer = new StringBuilder();
 
@@ -60,5 +66,14 @@ public class JSONUtil {
         }
 
         return jsonString;
+    }
+
+    public static String readPrimaryJsonFileToJsonString(Context context) throws IOException {
+        String fileName = cPrimaryFilePath + cCommonJsonFileName;
+        return readRawJsonFileToJsonString(context, fileName);
+    }
+
+    public static boolean isNewVersion(String oldVersion, String newVersion) {
+        return !Objects.equals(oldVersion, newVersion);
     }
 }

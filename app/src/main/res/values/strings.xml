@@ -18,12 +18,10 @@
     <string name="initialization_error_event">\nInitialization failed.</string>
 
     <!-- LoadActivity: Events: JSON -->
-    <string name="initialization_json_event_init">\nChecking for new data..</string>
-    <string name="initialization_json_event_new_version">\nNew items found! Upgrading from <x:g>%1$s</x:g> to <x:g>%2$s</x:g>!</string>
-    <string name="initialization_json_event_new_version_first_install">\nNew items found! Upgrading to v<x:g>%1$s</x:g>!</string>
-    <string name="initialization_json_event_started">\nConverting new items..</string>
-    <string name="initialization_json_event_finished_with_update">.done!</string>
-    <string name="initialization_json_event_finished_without_update">.no new items found. :(</string>
+    <string name="initialization_json_event_init">\nChecking for new data...</string>
+    <string name="initialization_json_event_finished_new_version">\nNew items found! Upgrading from v<x:g>%1$s</x:g> to v<x:g>%2$s</x:g>!</string>
+    <string name="initialization_json_event_finished_first_install">\nNew items found! Upgrading to v<x:g>%1$s</x:g>!</string>
+    <string name="initialization_json_event_finished_without_update">no new items found. :(</string>
 
     <!-- LoadActivity: Events: Database Initialization -->
     <string name="initialization_db_event_started">\nInitializing database with new stuff and things..</string>

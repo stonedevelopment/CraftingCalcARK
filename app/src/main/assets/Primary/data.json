@@ -4,7 +4,13 @@
   "image_path": "Primary\/",
   "logo_image_file": "logo.webp",
   "folder_image_file": "folder.webp",
-  "engrams": [
+  "versioning": {
+    "version": "testing.1",
+    "changelog": {
+      "testing.1": "converted old json format to new json format"
+    }
+  },
+  "stations": [
     {
       "name": "Beer Barrel",
       "description": "",

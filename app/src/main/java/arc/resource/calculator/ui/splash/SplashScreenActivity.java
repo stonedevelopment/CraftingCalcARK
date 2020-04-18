@@ -50,21 +50,9 @@ public class SplashScreenActivity extends AppCompatActivity {
     @SuppressLint("DefaultLocale")
     private void setupViewModel() {
         viewModel = new ViewModelProvider(this).get(SplashScreenViewModel.class);
-        viewModel.getViewState().observe(this, viewState -> {
-            switch (viewState) {
-                case Init:
-                    //  start view phase system
-                    viewModel.beginPhases();
-                    break;
-                case Done:
-                    //  phases have completed, start app
-                    //  finishActivity();
-                    break;
-            }
-        });
-        viewModel.getViewPhase().observe(this, viewPhase -> {
-            int phaseIndex = viewPhase.ordinal();
-            int phaseTotal = SplashScreenViewPhase.values().length;
+        viewModel.getPhaseEvent().observe(this, viewPhase -> {
+            int phaseIndex = viewModel.getPhaseIndex();
+            int phaseTotal = viewModel.getPhaseTotal();
             int phasePercentage = phaseIndex / phaseTotal;
 
             //  update text views of current phase

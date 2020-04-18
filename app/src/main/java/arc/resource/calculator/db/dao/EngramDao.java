@@ -28,10 +28,9 @@ import arc.resource.calculator.db.entity.EngramEntity;
 @Dao
 public interface EngramDao {
     String tableName = "engrams";
-    String columnName = "engramid";
 
     @Insert()
-    void insert(EngramEntity engramEntity);
+    EngramEntity insert(EngramEntity engramEntity);
 
     @Query("delete from engrams")
     void deleteAll();

@@ -28,65 +28,60 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.Vector;
 
+import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.DatabaseContract;
+import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.StationEntity;
 
+import static arc.resource.calculator.db.AppDatabase.cParentId;
 import static arc.resource.calculator.util.Util.NO_ID;
 
 public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG = InitializationTask.class.getSimpleName();
-
-    private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>(0);
     private final SparseArray<Long> mDlcIds = new SparseArray<>(0);
-
+    private LongSparseArray<TotalConversion> mTotalConversion = new LongSparseArray<>(0);
     private Listener mListener;
     private JSONObject mJSONObject;
-    private Context mContext;
+    private WeakReference<Context> mContext;
+    private AppDatabase database;
 
     // caught exception
     private Exception mException;
 
-    public interface Listener {
-        void onError(Exception e);
-
-        void onInit();
-
-        void onStart();
-
-        void onUpdate(String message);
-
-        void onFinish(boolean didUpdate);
-    }
-
     public InitializationTask(Context context, JSONObject object, Listener listener) {
+        database = AppDatabase.getInstance(context);
+
         setContext(context);
         setJSONObject(object);
         setListener(listener);
     }
 
-    private void setContext(Context context) {
-        mContext = context;
-    }
-
     private Context getContext() {
-        return mContext;
+        return mContext.get();
     }
 
-    private void setJSONObject(JSONObject object) {
-        mJSONObject = object;
+    private void setContext(Context context) {
+        mContext = new WeakReference<>(context);
     }
 
     private JSONObject getJSONObject() {
         return mJSONObject;
     }
 
-    private void setListener(Listener listener) {
-        mListener = listener;
+    private void setJSONObject(JSONObject object) {
+        mJSONObject = object;
     }
 
     private Listener getListener() {
         return mListener;
+    }
+
+    private void setListener(Listener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -109,18 +104,13 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             getListener().onStart();
 
             // first, let's remove all records from database
-            deleteAllRecordsFromProvider();
-
-            // map "total conversion" ids to assist methods with injecting converted ids
-            mTotalConversion = mapTotalConversion(getJSONObject().getJSONArray(DatabaseContract.TotalConversionEntry.TABLE_NAME));
+            deleteAllRecords();
 
             // finally, let's onResume inserting some json data into our database!
-            insertDLC(getJSONObject().getJSONArray(DatabaseContract.DLCEntry.TABLE_NAME));
-            insertStations(getJSONObject().getJSONArray(DatabaseContract.StationEntry.TABLE_NAME));
-            insertCategories(getJSONObject().getJSONArray(DatabaseContract.CategoryEntry.TABLE_NAME));
-            insertResources(getJSONObject().getJSONArray(DatabaseContract.ResourceEntry.TABLE_NAME));
-            insertEngrams(getJSONObject().getJSONArray(DatabaseContract.EngramEntry.TABLE_NAME));
-            insertComplexResources(getJSONObject().getJSONArray(DatabaseContract.ComplexResourceEntry.TABLE_NAME));
+            //  engrams > list of stations
+            //  station > list of folders, list of engrams
+            insertStations(getJSONObject().getJSONArray("stations"));
+            insertResources(getJSONObject().getJSONArray("resources"));
 
             return true;
         }
@@ -145,14 +135,10 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         return rowsDeleted;
     }
 
-    private void deleteAllRecordsFromProvider() throws Exception {
-        delete(DatabaseContract.DLCEntry.CONTENT_URI);
-        delete(DatabaseContract.ResourceEntry.CONTENT_URI);
-        delete(DatabaseContract.ComplexResourceEntry.CONTENT_URI);
-        delete(DatabaseContract.CompositionEntry.CONTENT_URI);
-        delete(DatabaseContract.CategoryEntry.CONTENT_URI);
-        delete(DatabaseContract.StationEntry.CONTENT_URI);
-        delete(DatabaseContract.EngramEntry.CONTENT_URI);
+    private void deleteAllRecords() {
+        database.stationDao().deleteAll();
+        database.folderDao().deleteAll();
+        database.engramDao().deleteAll();
     }
 
     private void bulkInsertWithUri(Uri uri, Vector<ContentValues> vector)
@@ -186,29 +172,6 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri(DatabaseContract.ComplexResourceEntry.CONTENT_URI, vector);
     }
 
-    private void insertDLC(JSONArray jsonArray) throws Exception {
-        updateStatus(".");
-
-        Vector<ContentValues> vector = new Vector<>(jsonArray.length());
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-            long _id = jsonObject.getLong(DatabaseContract.DLCEntry._ID);
-            String name = jsonObject.getString(DatabaseContract.DLCEntry.COLUMN_NAME);
-
-            ContentValues values = new ContentValues();
-            values.put(DatabaseContract.DLCEntry._ID, _id);
-            values.put(DatabaseContract.DLCEntry.COLUMN_NAME, name);
-
-            mDlcIds.put(mDlcIds.size(), _id);
-
-            vector.add(values);
-        }
-
-        bulkInsertWithUri(DatabaseContract.DLCEntry.CONTENT_URI, vector);
-    }
-
     private void insertResources(JSONArray jsonArray) throws Exception {
         updateStatus(".");
 
@@ -240,86 +203,49 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri(DatabaseContract.ResourceEntry.CONTENT_URI, vector);
     }
 
-    private void insertStations(JSONArray jsonArray) throws Exception {
+    private void insertStations(JSONArray stationArray) throws JSONException {
         updateStatus(".");
 
-        Vector<ContentValues> vector = new Vector<>(jsonArray.length());
+        for (int i = 0; i < stationArray.length(); i++) {
+            JSONObject stationObject = stationArray.getJSONObject(i);
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String name = stationObject.getString("name");
+            String description = stationObject.getString("description");
+            String imageFile = stationObject.getString("image_file");
 
-            long _id = jsonObject.getLong(DatabaseContract.StationEntry._ID);
-            String name = jsonObject.getString(DatabaseContract.StationEntry.COLUMN_NAME);
-            String imageFolder = jsonObject.getString(DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER);
-            String imageFile = jsonObject.getString(DatabaseContract.StationEntry.COLUMN_IMAGE_FILE);
-            JSONArray dlc_ids = jsonObject.getJSONArray(DatabaseContract.StationEntry.COLUMN_DLC_KEY);
+            StationEntity stationEntity = database.stationDao().insert(new StationEntity(name, description, imageFile));
 
-            for (int j = 0; j < dlc_ids.length(); j++) {
-                long dlc_id = dlc_ids.getLong(j);
-
-                ContentValues values = new ContentValues();
-                values.put(DatabaseContract.StationEntry._ID, _id);
-                values.put(DatabaseContract.StationEntry.COLUMN_NAME, name);
-                values.put(DatabaseContract.StationEntry.COLUMN_IMAGE_FOLDER, imageFolder);
-                values.put(DatabaseContract.StationEntry.COLUMN_IMAGE_FILE, imageFile);
-                values.put(DatabaseContract.StationEntry.COLUMN_DLC_KEY, dlc_id);
-
-                vector.add(values);
-            }
+            insertEngrams(stationEntity.getRowId(), cParentId, stationObject.getJSONArray("engrams");
+            insertFolders(stationEntity.getRowId(), cParentId, stationObject.getJSONArray("folders"));
         }
-
-        bulkInsertWithUri(DatabaseContract.StationEntry.CONTENT_URI, vector);
     }
 
-    private void insertCategories(JSONArray jsonArray) throws Exception {
-        updateStatus(".");
+    private void insertFolders(int stationId, int parentId, JSONArray folderArray) throws JSONException {
+        for (int i = 0; i < folderArray.length(); i++) {
+            JSONObject folderObject = folderArray.getJSONObject(i);
 
-        Vector<ContentValues> vector = new Vector<>(jsonArray.length());
+            String name = folderObject.getString("name");
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            FolderEntity folderEntity = database.folderDao().insert(new FolderEntity(name, stationId, parentId));
 
-            long _id = jsonObject.getLong(DatabaseContract.CategoryEntry._ID);
-            String name = jsonObject.getString(DatabaseContract.CategoryEntry.COLUMN_NAME);
-            long parent_id = jsonObject.getLong(DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY);
-            JSONArray station_ids = jsonObject.getJSONArray(DatabaseContract.CategoryEntry.COLUMN_STATION_KEY);
-            JSONArray dlc_ids = jsonObject.getJSONArray(DatabaseContract.CategoryEntry.COLUMN_DLC_KEY);
-
-            // first check dlc_id
-            for (int j = 0; j < dlc_ids.length(); j++) {
-                long dlc_id = dlc_ids.getLong(j);
-
-                // against station_ids
-                for (int s = 0; s < station_ids.length(); s++) {
-                    long station_id = station_ids.getLong(s);
-
-                    // check if dlc_id and station_id's dlc_id match
-                    Cursor cursor = getContext().getContentResolver().query(
-                            DatabaseContract.StationEntry.buildUriWithId(dlc_id, station_id),
-                            null, null, null, null);
-
-                    // no match found, try next station_id
-                    if (cursor == null)
-                        continue;
-
-                    // match found, adding values into vector
-                    if (cursor.moveToFirst()) {
-                        ContentValues values = new ContentValues();
-                        values.put(DatabaseContract.CategoryEntry._ID, _id);
-                        values.put(DatabaseContract.CategoryEntry.COLUMN_NAME, name);
-                        values.put(DatabaseContract.CategoryEntry.COLUMN_PARENT_KEY, parent_id);
-                        values.put(DatabaseContract.CategoryEntry.COLUMN_STATION_KEY, station_id);
-                        values.put(DatabaseContract.CategoryEntry.COLUMN_DLC_KEY, dlc_id);
-
-                        vector.add(values);
-                    }
-
-                    cursor.close();
-                }
-            }
+            insertEngrams(stationId, folderEntity.getRowId(), folderObject.getJSONArray("engrams");
+            insertFolders(stationId, folderEntity.getRowId(), folderObject.getJSONArray("folders"));
         }
+    }
 
-        bulkInsertWithUri(DatabaseContract.CategoryEntry.CONTENT_URI, vector);
+    private void insertEngrams(int stationId, int parentId, JSONArray engramArray) throws JSONException {
+        for (int i = 0; i < engramArray.length(); i++) {
+            JSONObject engramObject = engramArray.getJSONObject(i);
+
+            String name = engramObject.getString("name");
+            String description = engramObject.getString("description");
+            String imageFile = engramObject.getString("image_file");
+            int yield = engramObject.getInt("yield");
+            int level = engramObject.getInt("level");
+            int craftingTime = engramObject.getInt("crafting_time");
+
+            database.engramDao().insert(new EngramEntity(name, description, imageFile, yield, level, craftingTime, parentId, stationId));
+        }
     }
 
     private void insertEngrams(JSONArray jsonArray) throws Exception {
@@ -448,6 +374,18 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
 
     private long getConversion(long dlc_id, long resource_id) {
         return mTotalConversion.get(dlc_id).conversionIds.get(resource_id);
+    }
+
+    public interface Listener {
+        void onError(Exception e);
+
+        void onInit();
+
+        void onStart();
+
+        void onUpdate(String message);
+
+        void onFinish(boolean didUpdate);
     }
 
     private class TotalConversion {

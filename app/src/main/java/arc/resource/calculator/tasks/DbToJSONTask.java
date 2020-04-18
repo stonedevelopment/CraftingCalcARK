@@ -21,7 +21,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.util.SparseArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +32,6 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
@@ -396,13 +394,13 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         if (dlcId == 1) {
             return "Primary";
         } else if (dlcId == 2) {
-            return "Primitive Plus";
+            return "DLC/Primitive Plus";
         } else if (dlcId == 3) {
-            return "Scorched Earth";
+            return "DLC/Scorched Earth";
         } else if (dlcId == 4) {
-            return "Aberration";
+            return "DLC/Aberration";
         } else if (dlcId == 5) {
-            return "Extinction";
+            return "DLC/Extinction";
         }
         return null;
     }

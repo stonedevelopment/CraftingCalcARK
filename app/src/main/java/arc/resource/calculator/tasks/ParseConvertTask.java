@@ -37,8 +37,7 @@ import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
 public class ParseConvertTask extends AsyncTask<Void, Void, Boolean> {
-
-    private final String TAG = ParseConvertTask.class.getSimpleName();
+    public static final String TAG = ParseConvertTask.class.getSimpleName();
 
     private final String _ID = DatabaseContract.EngramEntry._ID;
 

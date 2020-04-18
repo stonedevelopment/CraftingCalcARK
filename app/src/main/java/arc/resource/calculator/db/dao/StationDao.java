@@ -17,8 +17,9 @@
 package arc.resource.calculator.db.dao;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -32,4 +33,13 @@ public interface StationDao {
 
     @Query("select * from stations order by name asc")
     LiveData<List<StationEntity>> getStations();
+
+    @Query("delete from stations")
+    public void deleteAll();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    StationEntity insert(StationEntity stationEntity);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<StationEntity> stationEntities);
 }

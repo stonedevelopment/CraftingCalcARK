@@ -31,35 +31,34 @@ import arc.resource.calculator.db.dao.EngramDao;
 public class EngramEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private final int rowId;
+    private int rowId;
 
     //  title of this engram
-    private final String name;
+    private String name;
 
     //  description for this engram
-    private final String description;
+    private String description;
 
     //  filename of image in /assets folder
-    private final String image;
+    private String image;
 
     //  amount produced per craft, multiply this by crafting quantity
-    private final int yield;
+    private int yield;
 
     //  value of required level to craft engram
-    private final int level;
+    private int level;
 
     //  crafting time in seconds    // TODO: 2/2/2020 will be used when calculating fuel usages
-    private final int time;
+    private int time;
 
     //  rowid of parent; station or folder
-    private final int parentId;
+    private int parentId;
 
     //  rowid of stations table, crafting station per in-game
-    private final int stationId;
+    private int stationId;
 
-    public EngramEntity(int rowId, String name, String description, String image,
+    public EngramEntity(String name, String description, String image,
                         int yield, int level, int time, int parentId, int stationId) {
-        this.rowId = rowId;
         this.name = name;
         this.description = description;
         this.image = image;

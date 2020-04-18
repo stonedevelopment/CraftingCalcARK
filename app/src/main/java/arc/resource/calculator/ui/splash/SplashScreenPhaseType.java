@@ -16,6 +16,6 @@
 
 package arc.resource.calculator.ui.splash;
 
-public enum SplashScreenViewPhase {
-    CheckVersion, UpdateDatabase, UpdatePreferences
+public enum SplashScreenPhaseType {
+    CheckVersion, UpdateDatabase, UpdatePreferences, Finalize
 }

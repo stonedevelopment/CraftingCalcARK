@@ -15,10 +15,8 @@
  */
 package arc.resource.calculator;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -26,29 +24,30 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
-import arc.resource.calculator.tasks.DbToJSONTask;
 import arc.resource.calculator.tasks.InitializationTask;
-import arc.resource.calculator.tasks.ParseConvertTask;
 import arc.resource.calculator.ui.main.MainActivity;
 import arc.resource.calculator.util.ExceptionUtil;
+import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
-import static arc.resource.calculator.LoadScreenActivity.EVENT.INIT;
+import static arc.resource.calculator.LoadScreenActivity.EVENT.Initialize;
+import static arc.resource.calculator.util.JSONUtil.cVersion;
+import static arc.resource.calculator.util.JSONUtil.cVersioning;
 
 // TODO: 3/15/2020  Wrap in ViewModel
 public class LoadScreenActivity extends AppCompatActivity implements ExceptionObservable.Observer {
@@ -64,7 +63,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     private TextView mTextView;
     private boolean mHasUpdate = false;
     private boolean mDidUpdate = false;
-    private EVENT mCurrentEvent = INIT;
+    private EVENT mCurrentEvent = Initialize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +90,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
             String text = (String) savedInstanceState.get(BUNDLE_TEXT);
             mTextView.setText(text);
         } else {
-            mCurrentEvent = INIT;
+            mCurrentEvent = Initialize;
             mStartElapsedTime = SystemClock.elapsedRealtime();
         }
 
@@ -107,7 +106,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
             @Override
             public void onInit() {
-                if (mCurrentEvent == INIT) {
+                if (mCurrentEvent == Initialize) {
                     mListener.onStartEvent();
                 }
             }
@@ -117,7 +116,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                 Log.d(TAG, "onStartEvent(): " + mCurrentEvent);
 
                 switch (mCurrentEvent) {
-                    case INIT:
+                    case Initialize:
                         updateStatusMessages(getString(R.string.initialization_init_event));
 
                         PrefsUtil.getInstance(getApplicationContext());
@@ -125,75 +124,45 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         mListener.onEndEvent();
                         break;
 
-                    case JSON:
-                        new ParseConvertTask(getApplicationContext(), new ParseConvertTask.Listener() {
-                            @Override
-                            public void onError(Exception e) {
-                                // alert status window of error
-                                updateStatusMessages(getString(R.string.initialization_error_event));
+                    case CheckVersion:
+                        try {
+                            updateStatusMessages(getString(R.string.initialization_json_event_init));
 
-                                // trigger activity error event handler
-                                mListener.onError(e);
-                            }
+                            PrefsUtil prefs = PrefsUtil.getInstance(getApplicationContext());
+                            String jsonString = JSONUtil.readPrimaryJsonFileToJsonString(getApplicationContext());
 
-                            @Override
-                            public void onInit() {
-                                // alert status window that database initialization is initializing
-                                updateStatusMessages(getString(R.string.initialization_json_event_init));
-                            }
+                            // build a json object based on the read json string
+                            mJSONObject = new JSONObject(jsonString);
 
-                            @Override
-                            public void onNewVersion(String oldVersion, String newVersion) {
-                                // alert status window of new version
-                                if (oldVersion == null)
+                            JSONObject versioning = mJSONObject.getJSONObject(cVersioning);
+                            String oldVersion = prefs.getJSONVersion();
+                            String newVersion = versioning.getString(cVersion);
+
+                            // now, let's check if we even need to update.
+                            mHasUpdate = JSONUtil.isNewVersion(oldVersion, newVersion);
+
+                            if (mHasUpdate) {
+                                if (oldVersion == null) {
                                     // first install
-                                    updateStatusMessages(String.format(getString(R.string.initialization_json_event_new_version_first_install), newVersion));
-                                else
+                                    updateStatusMessages(String.format(getString(R.string.initialization_json_event_finished_first_install), newVersion));
+                                } else {
                                     // updated install
-                                    updateStatusMessages(String.format(getString(R.string.initialization_json_event_new_version), oldVersion, newVersion));
+                                    updateStatusMessages(String.format(getString(R.string.initialization_json_event_finished_new_version), oldVersion, newVersion));
+                                }
 
                                 mNewVersion = newVersion;
-                            }
-
-                            @Override
-                            public void onStart() {
-                                // alert status window that database initialization has begun
-                                updateStatusMessages(getString(R.string.initialization_json_event_started));
-                            }
-
-                            @Override
-                            public void onUpdate(String message) {
-                                // alert status window with a new message
-                                updateStatusMessages(message);
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                // alert status window that database initialization has finished, no new update
+                            } else {
                                 updateStatusMessages(getString(R.string.initialization_json_event_finished_without_update));
-
-                                // trigger next event (database initialization)
-                                mListener.onEndEvent();
                             }
 
-                            @Override
-                            public void onFinish(JSONObject newObject) {
-                                // alert status window that database initialization has finished, with update
-                                updateStatusMessages(formatMessageWithElapsedTime(getString(R.string.initialization_json_event_finished_with_update)));
-
-                                // set global boolean to notify initialization task
-                                mHasUpdate = true;
-
-                                // set global json object for use in initialization task
-                                mJSONObject = newObject;
-
-                                // trigger next event (database initialization)
-                                mListener.onEndEvent();
-                            }
-                        }).execute();
+                            mListener.onEndEvent();
+                        } catch (JSONException | IOException e) {
+                            updateStatusMessages(getString(R.string.initialization_error_event));
+                            mListener.onError(e);
+                        }
                         break;
 
-                    case DATABASE:
+                    case UpdateDatabase:
                         if (mHasUpdate) {
                             new InitializationTask(getApplicationContext(), mJSONObject, new InitializationTask.Listener() {
                                 @Override
@@ -238,24 +207,25 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                                 }
                             }).execute();
                         } else {
-                            // trigger next event (in-app purchases?)
+                            // trigger next event
                             mListener.onEndEvent();
                         }
                         break;
 
-                    case PREFERENCES:
+                    case UpdatePreferences:
                         // if database updated, save new version to preferences, reset categories back to default
                         if (mHasUpdate) {
                             updateStatusMessages(getString(R.string.initialization_pref_event_started));
 
-                            PrefsUtil.getInstance(getApplicationContext()).updateJSONVersion(mNewVersion);
-                            PrefsUtil.getInstance(getApplicationContext()).saveCraftingQueueJSONString(null);
-                            PrefsUtil.getInstance(getApplicationContext()).saveToDefault();
+                            PrefsUtil prefsUtil = PrefsUtil.getInstance(getApplicationContext());
+                            prefsUtil.updateJSONVersion(mNewVersion);
+                            prefsUtil.saveCraftingQueueJSONString(null);
+                            prefsUtil.saveToDefault();
 
                             updateStatusMessages(getString(R.string.initialization_pref_event_finished));
                         }
 
-                        // trigger next event (end of events?)
+                        // trigger next event
                         mListener.onEndEvent();
                         break;
 
@@ -301,70 +271,11 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         });
                         queueRepository.init(getApplicationContext());
                         break;
+                    case Finalize:
+                        //  finalize any extra data for app
 
-                    case PREPARATION:
-                        updateStatusMessages(getString(R.string.initialization_app_init_event_started));
-
-                        int width = getResources().getDisplayMetrics().widthPixels;
-                        int numCols = getResources().getInteger(R.integer.gridview_column_count);
-
-//                        DisplayUtil.getInstance().setImageSize( width / numCols );
-                        PrefsUtil.getInstance(getApplicationContext()).saveCraftableViewSize(width / numCols);
-
-                        // trigger next event (end of events?)
+                        // trigger next event
                         mListener.onEndEvent();
-                        break;
-
-                    case DBTOJSON:
-                        new DbToJSONTask(getApplicationContext(), mJSONObject, new DbToJSONTask.Listener() {
-                            @Override
-                            public void onError(Exception e) {
-                                // alert status window of error
-                                updateStatusMessages("Convert database failed.");
-
-                                // trigger activity error event handler
-                                mListener.onError(e);
-                            }
-
-                            @Override
-                            public void onStart() {
-                                // alert status window that database initialization has begun
-                                updateStatusMessages("Converting database into JSON file...");
-                            }
-
-                            @Override
-                            public void onUpdate(String message) {
-                                // alert status window with a new message
-                                updateStatusMessages(message);
-                            }
-
-                            @Override
-                            public void onFinish(ArrayList<Uri> jsonAttachmentUri) {
-                                updateStatusMessages("Attaching converted JSON file to email...");
-
-                                Log.i(TAG, "Send email");
-                                String[] TO = {"jaredstone1982@gmail.com"};
-                                String[] CC = {""};
-                                Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-
-                                emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
-                                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-                                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New DB to JSON File");
-                                emailIntent.putExtra(Intent.EXTRA_TEXT, "New DB to JSON File");
-                                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, jsonAttachmentUri);
-
-                                try {
-                                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-                                    Log.i(TAG, "Finished sending email...");
-                                } catch (ActivityNotFoundException ex) {
-                                    Toast.makeText(LoadScreenActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-                                }
-
-                                // trigger next event (in-app purchases?)
-                                mListener.onEndEvent();
-                            }
-                        }).execute();
                         break;
                 }
             }
@@ -518,12 +429,12 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
      * Events in order of execution.
      */
     enum EVENT {
-        INIT,
-        JSON,
-        DATABASE,
-        PREFERENCES,
+        Initialize,
+        CheckVersion,
+        UpdateDatabase,
+        UpdatePreferences,
         QUEUE,
-        PREPARATION,
+        Finalize,
         DBTOJSON
     }
 

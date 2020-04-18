@@ -16,30 +16,30 @@
 
 package arc.resource.calculator.db.entity;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import arc.resource.calculator.db.dao.CompositionDao;
-import arc.resource.calculator.db.dao.EngramDao;
-import arc.resource.calculator.db.dao.ResourceDao;
 
 @Entity(tableName = CompositionDao.tableName)
 public class CompositionEntity {
     @PrimaryKey(autoGenerate = true)
-    private final int rowId;
+    private int rowId;
+
+    //  rowid from stations table
+    private int stationId;
 
     //  rowid from engrams table
-    private final int engramId;
+    private int engramId;
 
     //  rowid from resources table  // TODO: 3/28/2020 determine how to show substitute items
-    private final int resourceId;
+    private int resourceId;
 
     //  amount required
-    private final int quantity;
+    private int quantity;
 
-    public CompositionEntity(int rowId, int engramId, int resourceId, int quantity) {
-        this.rowId = rowId;
+    public CompositionEntity(int stationId, int engramId, int resourceId, int quantity) {
+        this.stationId = stationId;
         this.engramId = engramId;
         this.resourceId = resourceId;
         this.quantity = quantity;
@@ -47,6 +47,10 @@ public class CompositionEntity {
 
     public int getRowId() {
         return rowId;
+    }
+
+    public int getStationId() {
+        return stationId;
     }
 
     public int getEngramId() {

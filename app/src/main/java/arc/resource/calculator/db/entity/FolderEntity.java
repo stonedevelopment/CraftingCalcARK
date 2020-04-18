@@ -29,20 +29,19 @@ import arc.resource.calculator.db.dao.FolderDao;
  */
 @Entity(tableName = FolderDao.tableName)
 public class FolderEntity {
-    @PrimaryKey
-    private final int rowId;
+    @PrimaryKey(autoGenerate = true)
+    private int rowId;
 
     //  name of folder
-    private final String name;
+    private String name;
 
     //  rowid of parent; station or folder
-    private final int parentId;
+    private int parentId;
 
     //  rowid of stations table, crafting station per in-game
-    private final int stationId;
+    private int stationId;
 
-    public FolderEntity(int rowId, String name, int parentId, int stationId) {
-        this.rowId = rowId;
+    public FolderEntity(String name, int parentId, int stationId) {
         this.name = name;
         this.parentId = parentId;
         this.stationId = stationId;
