@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.UUID;
 import java.util.Vector;
 
 import arc.resource.calculator.db.AppDatabase;
@@ -106,12 +107,11 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             // first, let's remove all records from database
             deleteAllRecords();
 
-            // finally, let's onResume inserting some json data into our database!
-            //  engrams > list of stations
-            //  station > list of folders, list of engrams
-            insertStations(getJSONObject().getJSONArray("stations"));
+            //  next, let's insert all resources for look up tables later
             insertResources(getJSONObject().getJSONArray("resources"));
 
+            // finally, let's crawl through the hierarchically-formatted json data
+            insertStations(getJSONObject().getJSONArray("stations"));
             return true;
         }
 
@@ -122,8 +122,8 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         }
     }
 
-    private void updateStatus(String statusMessage) {
-        getListener().onUpdate(statusMessage);
+    private void updateStatus() {
+        getListener().onUpdate(".");
     }
 
     private int delete(Uri uri) throws Exception {
@@ -152,7 +152,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void insertComplexResources(JSONArray jsonArray) throws Exception {
-        updateStatus(".");
+        updateStatus();
 
         Vector<ContentValues> vector = new Vector<>(jsonArray.length());
 
@@ -172,13 +172,13 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         bulkInsertWithUri(DatabaseContract.ComplexResourceEntry.CONTENT_URI, vector);
     }
 
-    private void insertResources(JSONArray jsonArray) throws Exception {
-        updateStatus(".");
+    private void insertResources(JSONArray resourceArray) throws JSONException {
+        updateStatus();
 
-        Vector<ContentValues> vector = new Vector<>(jsonArray.length());
+        Vector<ContentValues> vector = new Vector<>(resourceArray.length());
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+        for (int i = 0; i < resourceArray.length(); i++) {
+            JSONObject jsonObject = resourceArray.getJSONObject(i);
 
             long _id = jsonObject.getLong(DatabaseContract.ResourceEntry._ID);
             String name = jsonObject.getString(DatabaseContract.ResourceEntry.COLUMN_NAME);
@@ -204,19 +204,20 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void insertStations(JSONArray stationArray) throws JSONException {
-        updateStatus(".");
+        updateStatus();
 
         for (int i = 0; i < stationArray.length(); i++) {
             JSONObject stationObject = stationArray.getJSONObject(i);
 
+            String uuid = UUID.randomUUID().toString();
             String name = stationObject.getString("name");
             String description = stationObject.getString("description");
             String imageFile = stationObject.getString("image_file");
 
-            StationEntity stationEntity = database.stationDao().insert(new StationEntity(name, description, imageFile));
+            StationEntity stationEntity = database.stationDao().insert(new StationEntity(uuid, name, description, imageFile));
 
-            insertEngrams(stationEntity.getRowId(), cParentId, stationObject.getJSONArray("engrams");
-            insertFolders(stationEntity.getRowId(), cParentId, stationObject.getJSONArray("folders"));
+            insertEngrams(uuid, cParentId, stationObject.getJSONArray("engrams");
+            insertFolders(uuid, cParentId, stationObject.getJSONArray("folders"));
         }
     }
 
@@ -233,10 +234,11 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
         }
     }
 
-    private void insertEngrams(int stationId, int parentId, JSONArray engramArray) throws JSONException {
+    private void insertEngrams(String stationId, String parentId, JSONArray engramArray) throws JSONException {
         for (int i = 0; i < engramArray.length(); i++) {
             JSONObject engramObject = engramArray.getJSONObject(i);
 
+            String uuid = UUID.randomUUID().toString();
             String name = engramObject.getString("name");
             String description = engramObject.getString("description");
             String imageFile = engramObject.getString("image_file");
@@ -246,6 +248,10 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
 
             database.engramDao().insert(new EngramEntity(name, description, imageFile, yield, level, craftingTime, parentId, stationId));
         }
+    }
+
+    private void insertComposition(int stationId, int engramId, JSONArray compositionArray) {
+
     }
 
     private void insertEngrams(JSONArray jsonArray) throws Exception {

@@ -25,11 +25,12 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 public class JSONUtil {
-    public static final String cPrimaryFilePath = "Primary/";
-    public static final String cCommonJsonFileName = "data.json";
     public static final String cVersioning = "versioning";
     public static final String cVersion = "version";
     public static final String cChangeLog = "changelog";
+    private static final String cJsonFilePath = "json/";
+    public static final String cPrimary = "Primary";
+    public static final String cDLC = "DLC";
     private static final String TAG = JSONUtil.class.getSimpleName();
 
     public static String readRawJsonFileToJsonString(Context context, int json_resource_file) throws IOException {
@@ -68,8 +69,8 @@ public class JSONUtil {
         return jsonString;
     }
 
-    public static String readPrimaryJsonFileToJsonString(Context context) throws IOException {
-        String fileName = cPrimaryFilePath + cCommonJsonFileName;
+    public static String readVersioningJsonToString(Context context) throws IOException {
+        String fileName = cJsonFilePath + "versioning.json";
         return readRawJsonFileToJsonString(context, fileName);
     }
 

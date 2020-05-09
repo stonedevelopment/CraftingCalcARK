@@ -31,7 +31,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.DatabaseContract;
@@ -55,6 +58,7 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
     private final String COLUMN_POINTS = DatabaseContract.EngramEntry.COLUMN_POINTS;
     private final String COLUMN_QUANTITY = DatabaseContract.CompositionEntry.COLUMN_QUANTITY;
     private final String COLUMN_TO = DatabaseContract.TotalConversionEntry.COLUMN_TO;
+    private final String COLUMN_UUID = "UUID";
     private final String COLUMN_YIELD = DatabaseContract.EngramEntry.COLUMN_YIELD;
     private final String COLUMN_XP = DatabaseContract.EngramEntry.COLUMN_XP;
 
@@ -62,13 +66,19 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
     private final String COMPOSITION = DatabaseContract.CompositionEntry.TABLE_NAME;
     private final String DATA = "data";
     private final String DETAILS = "details";
+    private final String STATIONS = "stations";
     private final String ENGRAMS = "engrams";
     private final String FOLDERS = "folders";
-    private final String LOGO_IMAGE_NAME = "logo.webp";
     private final String LOGO_IMAGE_FILE = "logo_image_file";
-    private final String FOLDER_IMAGE_NAME = "folder.webp";
+    private final String LOGO_IMAGE_NAME = "logo.webp";
     private final String FOLDER_IMAGE_FILE = "folder_image_file";
+    private final String FOLDER_IMAGE_NAME = "folder.webp";
+    private final String BACK_FOLDER_IMAGE_FILE = "back_folder_image_file";
+    private final String BACK_FOLDER_IMAGE_NAME = "back_folder.webp";
     private final String RESOURCES = "resources";
+
+    //  look up tables
+    private Map<Long, String> resourceLookUp = new HashMap<>();
 
     private WeakReference<Context> mContext;
     private Exception mException;
@@ -150,18 +160,20 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         Log.d(TAG, "createJSONObjectForDLC: " + getNameByDlcId(dlcId));
         JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put(COLUMN_UUID, UUID.randomUUID().toString());
         jsonObject.put(COLUMN_NAME, getNameByDlcId(dlcId));
-        jsonObject.put(COLUMN_DESCRIPTION, "");
+        jsonObject.put(COLUMN_DESCRIPTION, "Description placeholder for " + getNameByDlcId(dlcId));
         jsonObject.put(COLUMN_IMAGE_PATH, buildImagePathByDLCId(dlcId));
         jsonObject.put(LOGO_IMAGE_FILE, LOGO_IMAGE_NAME);
         jsonObject.put(FOLDER_IMAGE_FILE, FOLDER_IMAGE_NAME);
+        jsonObject.put(BACK_FOLDER_IMAGE_FILE, BACK_FOLDER_IMAGE_NAME);
 
         //  start with stations by dlcId
         //  next, check folders by station and parent of 0
         //  next, check engrams by station and parent of 0
 
-        jsonObject.put(ENGRAMS, createJSONArrayForDLCEngrams(dlcId));
         jsonObject.put(RESOURCES, createJSONArrayForResources(dlcId));
+        jsonObject.put(STATIONS, createJSONArrayForDLCEngrams(dlcId));
 
         return jsonObject;
     }
@@ -174,8 +186,9 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         for (Station station : stations) {
             JSONObject jsonObject = new JSONObject();
 
+            jsonObject.put(COLUMN_UUID, UUID.randomUUID().toString());
             jsonObject.put(COLUMN_NAME, station.getName());
-            jsonObject.put(COLUMN_DESCRIPTION, "");
+            jsonObject.put(COLUMN_DESCRIPTION, "Description placeholder for " + station.getName());
             jsonObject.put(COLUMN_IMAGE_FILE, station.getFile());
 
             JSONArray engramArray = createJSONArrayForEngrams(dlcId, 0, station.getId());
@@ -226,6 +239,7 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         for (ConversionEngram engram : engrams) {
             JSONObject jsonObject = new JSONObject();
 
+            jsonObject.put(COLUMN_UUID, UUID.randomUUID().toString());
             jsonObject.put(COLUMN_NAME, engram.getName());
             jsonObject.put(COLUMN_DESCRIPTION, engram.getDescription());
             jsonObject.put(COLUMN_IMAGE_FILE, engram.getFile());
@@ -261,6 +275,28 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         return jsonArray;
     }
 
+    private JSONArray createJSONArrayForComplexResources(long dlcId) throws JSONException {
+        Log.d(TAG, "createJSONArrayForComplexResources: ");
+        JSONArray jsonArray = new JSONArray();
+
+        List<Resource> resources = queryForResources(DatabaseContract.ResourceEntry.buildUriWithDLCId(dlcId));
+        for (Resource resource : resources) {
+            JSONObject jsonObject = new JSONObject();
+
+            String uuid = UUID.randomUUID().toString();
+            resourceLookUp.put(resource.getId(), UUID.randomUUID().toString());
+
+            jsonObject.put(COLUMN_UUID, uuid);
+            jsonObject.put(COLUMN_NAME, resource.getName());
+            jsonObject.put(COLUMN_DESCRIPTION, "");
+            jsonObject.put(COLUMN_IMAGE_FILE, resource.getFile());
+
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
+    }
+
     private JSONArray createJSONArrayForResources(long dlcId) throws JSONException {
         Log.d(TAG, "createJSONArrayForResources: ");
         JSONArray jsonArray = new JSONArray();
@@ -269,6 +305,10 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
         for (Resource resource : resources) {
             JSONObject jsonObject = new JSONObject();
 
+            String uuid = UUID.randomUUID().toString();
+            resourceLookUp.put(resource.getId(), UUID.randomUUID().toString());
+
+            jsonObject.put(COLUMN_UUID, uuid);
             jsonObject.put(COLUMN_NAME, resource.getName());
             jsonObject.put(COLUMN_DESCRIPTION, "");
             jsonObject.put(COLUMN_IMAGE_FILE, resource.getFile());
@@ -276,7 +316,6 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
             jsonArray.put(jsonObject);
         }
 
-        Log.d(TAG, jsonArray.toString());
         return jsonArray;
     }
 
@@ -333,6 +372,39 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
     }
 
     private List<CompositeResource> queryForComposition(long dlcId, Uri uri) {
+        try (Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor == null) return new ArrayList<>();
+
+            List<String> resourceNames = new ArrayList<>();
+            List<Long> resourceIds = new ArrayList<>();
+            List<CompositeResource> composition = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                long resourceId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.CompositionEntry.COLUMN_RESOURCE_KEY));
+                int quantity = cursor.getInt(cursor.getColumnIndex(DatabaseContract.CompositionEntry.COLUMN_QUANTITY));
+
+                //  skip ids already added
+                if (resourceIds.contains(resourceId)) continue;
+
+                Resource resource = queryForResource(DatabaseContract.ResourceEntry.buildUriWithOnlyId(resourceId));
+                if (resource == null) {
+                    Log.d(TAG, "queryForComposition: null: " + resourceId + "/ " + quantity);
+                    continue;
+                }
+
+                //  skip names already added (duplicates arise with each station id)
+                if (resourceNames.contains(resource.getName())) continue;
+
+                resourceIds.add(resourceId);
+                resourceNames.add(resource.getName());
+
+                composition.add(new CompositeResource(resource, quantity));
+            }
+
+            return composition;
+        }
+    }
+
+    private List<CompositeResource> queryForComplexResources(long dlcId, Uri uri) {
         try (Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null)) {
             if (cursor == null) return new ArrayList<>();
 

@@ -46,6 +46,7 @@ import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
 import static arc.resource.calculator.LoadScreenActivity.EVENT.Initialize;
+import static arc.resource.calculator.util.JSONUtil.cPrimary;
 import static arc.resource.calculator.util.JSONUtil.cVersion;
 import static arc.resource.calculator.util.JSONUtil.cVersioning;
 
@@ -56,6 +57,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     private final String BUNDLE_EVENT = "EVENT";
     private final String BUNDLE_TEXT = "TEXT";
     private final String BUNDLE_TIME = "TIME";
+    PrefsUtil prefs;
     private JSONObject mJSONObject;
     private Listener mListener;
     private String mNewVersion;
@@ -69,6 +71,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_screen);
+
 
         ImageView imageView = findViewById(R.id.content_init_image_view);
 
@@ -119,7 +122,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                     case Initialize:
                         updateStatusMessages(getString(R.string.initialization_init_event));
 
-                        PrefsUtil.getInstance(getApplicationContext());
+                        prefs = PrefsUtil.getInstance(getApplicationContext());
 
                         mListener.onEndEvent();
                         break;
@@ -128,15 +131,21 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         try {
                             updateStatusMessages(getString(R.string.initialization_json_event_init));
 
-                            PrefsUtil prefs = PrefsUtil.getInstance(getApplicationContext());
-                            String jsonString = JSONUtil.readPrimaryJsonFileToJsonString(getApplicationContext());
+                            //  load versioning.json
+                            String jsonString = JSONUtil.readVersioningJsonToString(getApplicationContext());
 
                             // build a json object based on the read json string
                             mJSONObject = new JSONObject(jsonString);
 
-                            JSONObject versioning = mJSONObject.getJSONObject(cVersioning);
+                            //  get Primary object
+                            //  test version
+                            //  TODO: 5/9/2020  how to update db? together with dlc or separate?
+                            JSONObject primary = mJSONObject.getJSONObject(cPrimary);
                             String oldVersion = prefs.getJSONVersion();
-                            String newVersion = versioning.getString(cVersion);
+                            String newVersion = primary.getString(cVersion);
+
+                            //  get DLC array
+                            //  iterate getting and testing versions
 
                             // now, let's check if we even need to update.
                             mHasUpdate = JSONUtil.isNewVersion(oldVersion, newVersion);
@@ -217,10 +226,9 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                         if (mHasUpdate) {
                             updateStatusMessages(getString(R.string.initialization_pref_event_started));
 
-                            PrefsUtil prefsUtil = PrefsUtil.getInstance(getApplicationContext());
-                            prefsUtil.updateJSONVersion(mNewVersion);
-                            prefsUtil.saveCraftingQueueJSONString(null);
-                            prefsUtil.saveToDefault();
+                            prefs.updateJSONVersion(mNewVersion);
+                            prefs.saveCraftingQueueJSONString(null);
+                            prefs.saveToDefault();
 
                             updateStatusMessages(getString(R.string.initialization_pref_event_finished));
                         }
@@ -434,8 +442,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         UpdateDatabase,
         UpdatePreferences,
         QUEUE,
-        Finalize,
-        DBTOJSON
+        Finalize
     }
 
     private interface Listener {

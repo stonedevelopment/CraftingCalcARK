@@ -29,22 +29,20 @@ import arc.resource.calculator.db.dao.StationDao;
  */
 @Entity(tableName = StationDao.tableName)
 public class StationEntity {
-    @PrimaryKey(autoGenerate = true)
-    private int rowId;
+    @PrimaryKey()
+    private final String rowId;
 
     //  name of crafting station
-    private String name;
+    private final String name;
 
     //  description of crafting station, pulled from engram description
-    private String description;
+    private final String description;
 
     //  filename of image in /assets folder
-    private String image;
+    private final String image;
 
-    public StationEntity() {
-    }
-
-    public StationEntity(String name, String description, String image) {
+    public StationEntity(String rowId, String name, String description, String image) {
+        this.rowId = rowId;
         this.name = name;
         this.description = description;
         this.image = image;
@@ -56,13 +54,13 @@ public class StationEntity {
         if (!(obj instanceof StationEntity)) return false;
 
         StationEntity stationEntity = (StationEntity) obj;
-        return getRowId() == stationEntity.getRowId() &&
+        return getRowId().equals(stationEntity.getRowId()) &&
                 getName().equals(stationEntity.getName()) &&
                 getDescription().equals(stationEntity.getDescription()) &&
                 getImage().equals(stationEntity.getImage());
     }
 
-    public int getRowId() {
+    public String getRowId() {
         return rowId;
     }
 
@@ -70,23 +68,11 @@ public class StationEntity {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }
