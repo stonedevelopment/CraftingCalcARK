@@ -26,58 +26,36 @@ import arc.resource.calculator.listeners.PrefsObserver;
 
 // TODO: 5/16/2017 Why continue to use string resources instead of static constants?
 public class PrefsUtil {
+    public static final String cVersionPrimary = "versionPrimary";
     private static final String TAG = PrefsUtil.class.getSimpleName();
-
+    public static String FirstUseKey = "first_use";
+    public static boolean FirstUseDefaultValue = true;
     private static PrefsUtil sInstance;
-
+    private static String JSONVersionKey;
     private final SharedPreferences mSharedPreferences;
-
     private String DLCIdKey;
     private long DLCIdDefaultValue;
-
     private String RefinedFilterKey;
     private boolean RefinedFilterDefaultValue;
-
     private String CategoryFilterKey;
     private boolean CategoryFilterDefaultValue;
-
     private String StationFilterKey;
     private boolean StationFilterDefaultValue;
-
     private String RequiredLevelFilterKey;
     private boolean RequiredLevelFilterDefaultValue;
-
     private String RequiredLevelKey;
     private int RequiredLevelDefaultValue;
-
-    private static String JSONVersionKey;
-
     private String LastCategoryLevelKey;
     private String LastCategoryParentKey;
     private long LastCategoryLevelDefaultValue;
-
     private String LastStationIdKey;
     private long LastStationIdDefaultValue;
-
     private String CraftingQueueKey;
-
     private String CraftableViewSizeKey;
     private String MainSwitcherScreenIdKey;
-
     private String SearchQueryKey;
-
     private String PurchasableRemoveAdsKey;
     private boolean PurchasableRemoveAdsDefaultValue;
-
-    public static String FirstUseKey = "first_use";
-    public static boolean FirstUseDefaultValue = true;
-
-    public static PrefsUtil getInstance(Context context) {
-        if (sInstance == null)
-            sInstance = new PrefsUtil(context);
-
-        return sInstance;
-    }
 
     private PrefsUtil(Context context) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -119,6 +97,13 @@ public class PrefsUtil {
 
         PurchasableRemoveAdsKey = context.getString(R.string.pref_purchasable_remove_ads_key);
         PurchasableRemoveAdsDefaultValue = Boolean.parseBoolean(context.getString(R.string.pref_purchasable_remove_ads_value_default));
+    }
+
+    public static PrefsUtil getInstance(Context context) {
+        if (sInstance == null)
+            sInstance = new PrefsUtil(context);
+
+        return sInstance;
     }
 
     private String getPreference(String key, String defaultValue) {
@@ -190,12 +175,12 @@ public class PrefsUtil {
         return getPreference(RequiredLevelFilterKey, RequiredLevelFilterDefaultValue);
     }
 
-    public String getJSONVersion() {
-        return getPreference(JSONVersionKey, null);
+    public String getVersionForPrimary() {
+        return getPreference(cVersionPrimary, null);
     }
 
-    public void updateJSONVersion(String value) {
-        editPreference(JSONVersionKey, value);
+    public void setVersionForPrimary(String newVersion) {
+        editPreference(cVersionPrimary, newVersion);
     }
 
     public String getCraftingQueueJSONString() {

@@ -27,6 +27,7 @@ import java.util.Objects;
 public class JSONUtil {
     public static final String cVersioning = "versioning";
     public static final String cVersion = "version";
+    public static final String cFilePath = "filePath";
     public static final String cChangeLog = "changelog";
     private static final String cJsonFilePath = "json/";
     public static final String cPrimary = "Primary";
@@ -51,7 +52,7 @@ public class JSONUtil {
         return jsonString;
     }
 
-    private static String readRawJsonFileToJsonString(Context context, String fileName) throws IOException {
+    public static String readRawJsonFileToJsonString(Context context, String fileName) throws IOException {
         String jsonString;
 
         InputStream fileStream = context.getAssets().open(fileName);

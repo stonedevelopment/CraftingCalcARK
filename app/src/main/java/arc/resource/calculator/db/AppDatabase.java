@@ -25,17 +25,27 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import arc.resource.calculator.db.dao.CompositionDao;
 import arc.resource.calculator.db.dao.EngramDao;
 import arc.resource.calculator.db.dao.FolderDao;
+import arc.resource.calculator.db.dao.ResourceDao;
 import arc.resource.calculator.db.dao.StationDao;
+import arc.resource.calculator.db.entity.CompositionEntity;
 import arc.resource.calculator.db.entity.EngramEntity;
 import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.ResourceEntity;
 import arc.resource.calculator.db.entity.StationEntity;
 
-@Database(entities = {
-        StationEntity.class,
-        FolderEntity.class,
-        EngramEntity.class}, version = 1, exportSchema = false)
+@Database(
+        entities = {
+                StationEntity.class,
+                FolderEntity.class,
+                EngramEntity.class,
+                ResourceEntity.class,
+                CompositionEntity.class
+        },
+        version = 1,
+        exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final int cParentId = 0;
 
@@ -69,4 +79,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract FolderDao folderDao();
 
     public abstract EngramDao engramDao();
+
+    public abstract ResourceDao resourceDao();
+
+    public abstract CompositionDao compositionDao();
 }

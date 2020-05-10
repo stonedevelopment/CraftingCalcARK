@@ -16,9 +16,10 @@
 
 package arc.resource.calculator.db.entity;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import arc.resource.calculator.db.dao.ResourceDao;
 
@@ -26,11 +27,17 @@ import arc.resource.calculator.db.dao.ResourceDao;
  * Resource object for base game data (vanilla)
  * <p>
  * Resources for DLC game data should extend from this class
+ * <p>
+ * Example fromJSON:
+ * "uuid": "a065cfa0-6a18-4a91-9848-d701484dd31e",
+ * "name": "Allosaurus Brain",
+ * "description": "",
+ * "imageFile": "allosaurus_brain.webp",
+ * "lastUpdated": 1589045798912
  */
 @Entity(tableName = ResourceDao.tableName)
 public class ResourceEntity {
-    @PrimaryKey(autoGenerate = true)
-    private final int rowId;
+    private final String uuid;
 
     //  name of resource
     private final String name;
@@ -41,15 +48,15 @@ public class ResourceEntity {
     //  filename of image in /assets folder
     private final String image;
 
-    public ResourceEntity(int rowId, String name, String description, String image) {
-        this.rowId = rowId;
+    public ResourceEntity(String uuid, String name, String description, String image) {
+        this.uuid = uuid;
         this.name = name;
         this.description = description;
         this.image = image;
     }
 
-    public int getRowId() {
-        return rowId;
+    public String getUuid() {
+        return uuid;
     }
 
     public String getName() {
@@ -62,5 +69,20 @@ public class ResourceEntity {
 
     public String getImage() {
         return image;
+    }
+
+    /**
+     * "uuid": "a065cfa0-6a18-4a91-9848-d701484dd31e",
+     * "name": "Allosaurus Brain",
+     * "description": "",
+     * "imageFile": "allosaurus_brain.webp",
+     * "lastUpdated": 1589045798912
+     */
+    public static ResourceEntity fromJSON(JSONObject jsonObject) throws JSONException {
+        String uuid = jsonObject.getString("uuid");
+        String name = jsonObject.getString("name");
+        String description = jsonObject.getString("description");
+        String imageFile = jsonObject.getString("imageFile");
+        return new ResourceEntity(uuid, name, description, imageFile);
     }
 }

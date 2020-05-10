@@ -3,10 +3,10 @@
     <item>
         <color android:color="@color/colorPrimary"/>
     </item>
-    <!--<item>-->
-        <!--<bitmap-->
-            <!--android:src="@drawable/splash_vert"-->
-            <!--android:gravity="fill"-->
-            <!--/>-->
-    <!--</item>-->
+<!--    <item>-->
+<!--        <bitmap-->
+<!--            android:src="@drawable/splash_vert"-->
+<!--            android:gravity="fill"-->
+<!--            />-->
+<!--    </item>-->
 </layer-list>

@@ -17,9 +17,18 @@
 package arc.resource.calculator.db.dao;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import arc.resource.calculator.db.entity.ResourceEntity;
 
 @Dao
 public interface ResourceDao {
     String tableName = "resources";
-    String columnName = "resourceid";
+
+    @Insert()
+    ResourceEntity insert(ResourceEntity resourceEntity);
+
+    @Query("delete from resources")
+    void deleteAll();
 }

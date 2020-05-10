@@ -20,7 +20,7 @@
             android:value="ca-app-pub-8859801923918627~2903432190" />
 
         <activity
-            android:name=".LoadScreenActivity"
+            android:name=".ui.load.LoadScreenActivity"
             android:theme="@style/AppTheme.NoActionBar.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,14 +44,17 @@
                 <!-- android:scheme="arc"/> -->
             </intent-filter>
         </activity>
+
         <activity
             android:name=".FirstUseActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name_full"
-            android:largeHeap="true"></activity>
+            android:largeHeap="true" />
+
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
@@ -63,6 +66,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
         </activity>
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -74,11 +78,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
         </activity>
-        <activity
-            android:name=".UpdateJSONActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
 
         <provider
             android:name=".db.DatabaseProvider"

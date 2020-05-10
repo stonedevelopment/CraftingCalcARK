@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import java.util.Vector;
@@ -37,6 +38,8 @@ import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.db.entity.EngramEntity;
 import arc.resource.calculator.db.entity.FolderEntity;
 import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.model.json.Versioning;
+import arc.resource.calculator.util.JSONUtil;
 
 import static arc.resource.calculator.db.AppDatabase.cParentId;
 import static arc.resource.calculator.util.Util.NO_ID;
@@ -53,12 +56,21 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
     // caught exception
     private Exception mException;
 
-    public InitializationTask(Context context, JSONObject object, Listener listener) {
+    public InitializationTask(Context context, Versioning versioning, Listener listener) {
         database = AppDatabase.getInstance(context);
 
         setContext(context);
-        setJSONObject(object);
         setListener(listener);
+        setupJSONObject(versioning);
+    }
+
+    private void setupJSONObject(Versioning versioning) {
+        try {
+            String jsonString = JSONUtil.readRawJsonFileToJsonString(getContext(), versioning.getFilePath());
+            mJSONObject = new JSONObject(jsonString);
+        } catch (IOException | JSONException e) {
+            mListener.onError(e);
+        }
     }
 
     private Context getContext() {
@@ -120,10 +132,6 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             mException = e;
             return false;
         }
-    }
-
-    private void updateStatus() {
-        getListener().onUpdate(".");
     }
 
     private int delete(Uri uri) throws Exception {

@@ -3,29 +3,25 @@
     <string name="load_activity_image_description">load screen image</string>
 
     <!-- LoadActivity: Status Messages -->
-    <string name="load_activity_status_message_error_with_message">
-        \nOh noes! It\'s a Meganeura!
-        \n\nOh, nevermind.. that\'s the wrong kind of bug. But good news! We\'ve caught it and are sending it off to be examined.
-        \n\nWhile we work on a fix, a workaround could simply be to restart the app or, if the problem persists, reinstall it.
-        \n\nWe truly apologize for any inconvenience caused. Rest assured a fix will be on the way. -Shane
-    </string>
     <string name="load_activity_status_message_elapsed_format"><x:g id="seconds">%1$s</x:g>s</string>
     <string name="load_activity_status_message_format_with_elapsed_time"><x:g id="message">%1$s</x:g> (<x:g id="elapsed">%2$s</x:g>)</string>
 
-    <!-- LoadActivity: Events: -->
-    <string name="initialization_init_event">Greetings Survivor!</string>
+    <!-- LoadActivity: Events: Initialize -->
+    <string name="initialization_event_init">Greetings Survivor!</string>
     <string name="initialization_finish_event">\nStarting app!\n\nCraft efficiently, my friend.</string>
     <string name="initialization_error_event">\nInitialization failed.</string>
+    <string name="initialization_event_check_version_error">\nInitialization failed while checking for new version.</string>
 
-    <!-- LoadActivity: Events: JSON -->
-    <string name="initialization_json_event_init">\nChecking for new data...</string>
-    <string name="initialization_json_event_finished_new_version">\nNew items found! Upgrading from v<x:g>%1$s</x:g> to v<x:g>%2$s</x:g>!</string>
-    <string name="initialization_json_event_finished_first_install">\nNew items found! Upgrading to v<x:g>%1$s</x:g>!</string>
-    <string name="initialization_json_event_finished_without_update">no new items found. :(</string>
+    <!-- LoadActivity: Events: CheckVersion -->
+    <string name="initialization_event_check_version_init">\nChecking for new data...</string>
+    <string name="initialization_event_check_version_new_version">New items found! Updating from v<x:g>%1$s</x:g> to v<x:g>%2$s</x:g>!</string>
+    <string name="initialization_event_check_version_first_install">New items found! Updating to v<x:g>%1$s</x:g>!</string>
+    <string name="initialization_event_check_version_finished_without_update">No new items found. :(</string>
 
-    <!-- LoadActivity: Events: Database Initialization -->
-    <string name="initialization_db_event_started">\nInitializing database with new stuff and things..</string>
-    <string name="initialization_db_event_finished">.done!</string>
+    <!-- LoadActivity: Events: UpdateDatabase -->
+    <string name="initialization_event_update_database_started">\nInitializing database with new stuff and things..</string>
+    <string name="initialization_event_update_database_finished">.done!</string>
+    <string name="initialization_event_update_database_error">Initialization failed while updating database.</string>
 
     <!-- LoadActivity: Events: In-App Purchases -->
     <string name="initialization_purchase_event_init">\nChecking Play Store for purchased items..</string>
@@ -33,7 +29,7 @@
     <string name="initialization_purchase_event_failure">.failed!</string>
     <string name="initialization_purchase_event_error">.error!</string>
 
-    <!-- LoadActivity: Events: Preferences -->
+    <!-- LoadActivity: Events: UpdatePreferences -->
     <string name="initialization_pref_event_started">\nChecking preferences..</string>
     <string name="initialization_pref_event_finished">.done!</string>
 
