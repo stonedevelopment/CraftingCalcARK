@@ -15,7 +15,7 @@
     <!-- LoadActivity: Events: CheckVersion -->
     <string name="initialization_event_check_version_init">\nChecking for new data...</string>
     <string name="initialization_event_check_version_new_version">New items found! Updating from v<x:g>%1$s</x:g> to v<x:g>%2$s</x:g>!</string>
-    <string name="initialization_event_check_version_first_install">New items found! Updating to v<x:g>%1$s</x:g>!</string>
+    <string name="initialization_event_check_version_first_install">Ooo, first time? Let us update you to v<x:g>%1$s</x:g>!</string>
     <string name="initialization_event_check_version_finished_without_update">No new items found. :(</string>
 
     <!-- LoadActivity: Events: UpdateDatabase -->

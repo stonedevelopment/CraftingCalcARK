@@ -46,6 +46,8 @@ import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.model.json.PrimaryVersioning;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
+import arc.resource.calculator.ui.load.versioning.CheckVersionListener;
+import arc.resource.calculator.ui.load.versioning.CheckVersionTask;
 import arc.resource.calculator.ui.main.MainActivity;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.JSONUtil;
@@ -207,9 +209,8 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         mViewModel = new ViewModelProvider(this).get(LoadScreenViewModel.class);
         mViewModel.getLoadScreenEvent().observe(this, this::eventUpdate);
         mViewModel.getStatusMessageEvent().observe(this, s -> mTextView.setText(s));
-        mViewModel.getProgressEvent().observe(this, progress -> {
-            mProgressBar.setProgress(progress);
-        });
+        mViewModel.getProgressEvent().observe(this, progress -> mProgressBar.setProgress(progress));
+        mViewModel.getProgressTotalEvent().observe(this, total -> mProgressBar.setMax(total));
     }
 
     private void setupViews() {
@@ -224,7 +225,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 
         mTextView = findViewById(R.id.content_init_status_text);
         mProgressBar = findViewById(R.id.content_init_progress_bar);
-        mProgressBar.setMax(LoadSceenEvent.values().length);
     }
 
     private void nextLoadScreenEvent() {
@@ -239,6 +239,38 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                 break;
             case CheckVersion:
                 updateStatusMessage(getString(R.string.initialization_event_check_version_init));
+
+                new CheckVersionTask(getApplicationContext(), new CheckVersionListener() {
+                    @Override
+                    public void onInit(int total) {
+
+                    }
+
+                    @Override
+                    public void onCheckPrimaryVersion() {
+
+                    }
+
+                    @Override
+                    public void onNewPrimaryVersion(String oldVersion, String newVersion) {
+
+                    }
+
+                    @Override
+                    public void onCheckDLCVersion(String dlcName) {
+
+                    }
+
+                    @Override
+                    public void onNewDLCVersion(String dlcName, String oldVersion, String newVersion) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                }).execute();
 
                 try {
                     //  load versioning.json
@@ -402,7 +434,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     }
 
     private void updateStatusMessage(final String message) {
-        mViewModel.setStatusMessage(message);
+        mViewModel.updateStatusMessage(message);
     }
 
     private String formatMessageWithElapsedTime(String message) {
@@ -467,7 +499,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         // triggers next event
         void onEndEvent();
 
-        // triggers onResume event
+        // triggers event
         void onNextEvent();
 
         // triggers app to onResume main activity

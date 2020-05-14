@@ -28,9 +28,12 @@ public class LoadScreenViewModel extends AndroidViewModel {
     public static final String TAG = LoadScreenViewModel.class.getCanonicalName();
 
     private SingleLiveEvent<LoadSceenEvent> loadScreenEvent = new SingleLiveEvent<>();
-    private SingleLiveEvent<Long> startTimeEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<String> statusMessageEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Integer> progressEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Integer> progressTotalEvent = new SingleLiveEvent<>();
+
+    private long startTimeInMillis;
+    private int loadScreenEventIndex = 0;
 
     public LoadScreenViewModel(@NonNull Application application) {
         super(application);
@@ -41,6 +44,7 @@ public class LoadScreenViewModel extends AndroidViewModel {
     private void initialize() {
         setLoadScreenEvent(LoadSceenEvent.Initialize);
         setStartTime();
+        setProgressTotal(LoadSceenEvent.values().length);
     }
 
     SingleLiveEvent<LoadSceenEvent> getLoadScreenEvent() {
@@ -52,26 +56,28 @@ public class LoadScreenViewModel extends AndroidViewModel {
     }
 
     void nextLoadScreenEvent() {
-        int index = loadScreenEvent.getValue().ordinal();
         LoadSceenEvent[] events = LoadSceenEvent.values();
-        Log.d(TAG, "nextLoadScreenEvent: " + events[index] + ", " + index);
-        setLoadScreenEvent(events[++index]);
+        Log.d(TAG, "nextLoadScreenEvent: " + events[loadScreenEventIndex] + ", " + loadScreenEventIndex);
+
+        loadScreenEventIndex++;
+
+        setProgress(loadScreenEventIndex);
+        setLoadScreenEvent(events[loadScreenEventIndex]);
     }
 
-    public SingleLiveEvent<Long> getStartTimeEvent() {
-        return startTimeEvent;
+    long getStartTime() {
+        return startTimeInMillis;
     }
 
     private void setStartTime() {
-        long currentTime = System.currentTimeMillis();
-        startTimeEvent.setValue(currentTime);
+        startTimeInMillis = System.currentTimeMillis();
     }
 
     SingleLiveEvent<String> getStatusMessageEvent() {
         return statusMessageEvent;
     }
 
-    void setStatusMessage(String message) {
+    void updateStatusMessage(String message) {
         statusMessageEvent.setValue(message);
     }
 
@@ -79,7 +85,15 @@ public class LoadScreenViewModel extends AndroidViewModel {
         return progressEvent;
     }
 
-    public void setProgress(int progressEvent) {
-        this.progressEvent.setValue(progressEvent);
+    private void setProgress(int progress) {
+        progressEvent.setValue(progress);
+    }
+
+    SingleLiveEvent<Integer> getProgressTotalEvent() {
+        return progressTotalEvent;
+    }
+
+    private void setProgressTotal(int progressTotal) {
+        progressTotalEvent.setValue(progressTotal);
     }
 }

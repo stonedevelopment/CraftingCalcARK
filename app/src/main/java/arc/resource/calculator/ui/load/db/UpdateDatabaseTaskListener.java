@@ -14,13 +14,12 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.load;
+package arc.resource.calculator.ui.load.db;
 
-import android.os.AsyncTask;
+public interface UpdateDatabaseTaskListener {
+    void onError(Exception e);
 
-public class LoadScreenTask extends AsyncTask<Void, Void, Void> {
-    @Override
-    protected Void doInBackground(Void... voids) {
-        return null;
-    }
+    void onInit(int progressTotal);
+
+    void onStart();
 }
