@@ -26,13 +26,14 @@ import java.util.Objects;
 
 public class JSONUtil {
     public static final String cVersioning = "versioning";
+    public static final String cName = "name";
     public static final String cVersion = "version";
     public static final String cFilePath = "filePath";
     public static final String cChangeLog = "changelog";
-    private static final String cJsonFilePath = "json/";
     public static final String cPrimary = "Primary";
     public static final String cDLC = "DLC";
-    private static final String TAG = JSONUtil.class.getSimpleName();
+    public static final String TAG = JSONUtil.class.getSimpleName();
+    public static final String cJsonFilePath = "json/";
 
     public static String readRawJsonFileToJsonString(Context context, int json_resource_file) throws IOException {
         String jsonString;

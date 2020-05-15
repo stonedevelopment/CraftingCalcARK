@@ -14,34 +14,31 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.model.json;
+package arc.resource.calculator.ui.load.check_version.versioning;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import static arc.resource.calculator.util.JSONUtil.cFilePath;
+import static arc.resource.calculator.util.JSONUtil.cName;
 import static arc.resource.calculator.util.JSONUtil.cVersion;
 
-public class Versioning {
-    private final String version;
-    private final String filePath;
+public class DLCVersioning extends Versioning {
+    private final String name;
 
-    public Versioning(String version, String filePath) {
-        this.version = version;
-        this.filePath = filePath;
+    public DLCVersioning(String name, String version, String filePath) {
+        super(version, filePath);
+        this.name = name;
     }
 
-    public static Versioning fromJSON(JSONObject jsonObject) throws JSONException {
+    public static DLCVersioning fromJSON(JSONObject jsonObject) throws JSONException {
+        String name = jsonObject.getString(cName);
         String version = jsonObject.getString(cVersion);
         String filePath = jsonObject.getString(cFilePath);
-        return new Versioning(version, filePath);
+        return new DLCVersioning(name, version, filePath);
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public String getFilePath() {
-        return filePath;
+    public String getName() {
+        return name;
     }
 }

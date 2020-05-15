@@ -14,20 +14,25 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.load.versioning;
+package arc.resource.calculator.ui.load.check_version;
+
+import arc.resource.calculator.ui.load.check_version.versioning.DLCVersioning;
+import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 
 public interface CheckVersionListener {
     void onError(Exception e);
 
     void onInit();
 
+    void onStart(int totalVersions);
+
     void onCheckPrimaryVersion();
 
-    void onNewPrimaryVersion(String oldVersion, String newVersion);
+    void onNewPrimaryVersion(String oldVersion, String newVersion, PrimaryVersioning versioning);
 
-    void onCheckDLCVersion(String dlcName);
+    void onCheckDLCVersion(DLCVersioning versioning);
 
-    void onNewDLCVersion(String dlcName, String oldVersion, String newVersion);
+    void onNewDLCVersion(String oldVersion, String newVersion, DLCVersioning versioning);
 
     void onFinish();
 }

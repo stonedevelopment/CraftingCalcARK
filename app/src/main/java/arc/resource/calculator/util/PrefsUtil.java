@@ -27,6 +27,7 @@ import arc.resource.calculator.listeners.PrefsObserver;
 // TODO: 5/16/2017 Why continue to use string resources instead of static constants?
 public class PrefsUtil {
     public static final String cVersionPrimary = "versionPrimary";
+    public static final String cVersionDLC = "versionDLC_";
     private static final String TAG = PrefsUtil.class.getSimpleName();
     public static String FirstUseKey = "first_use";
     public static boolean FirstUseDefaultValue = true;
@@ -181,6 +182,18 @@ public class PrefsUtil {
 
     public void setVersionForPrimary(String newVersion) {
         editPreference(cVersionPrimary, newVersion);
+    }
+
+    public String getVersionForDLC(String name) {
+        return getPreference(buildVersionKeyForDLC(name), null);
+    }
+
+    public void setVersionForDLC(String name, String newVersion) {
+        editPreference(buildVersionKeyForDLC(name), newVersion);
+    }
+
+    private String buildVersionKeyForDLC(String name) {
+        return cVersionDLC.concat(name);
     }
 
     public String getCraftingQueueJSONString() {

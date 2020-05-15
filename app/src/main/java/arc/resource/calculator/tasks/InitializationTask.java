@@ -38,7 +38,7 @@ import arc.resource.calculator.db.DatabaseContract;
 import arc.resource.calculator.db.entity.EngramEntity;
 import arc.resource.calculator.db.entity.FolderEntity;
 import arc.resource.calculator.db.entity.StationEntity;
-import arc.resource.calculator.model.json.Versioning;
+import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JSONUtil;
 
 import static arc.resource.calculator.db.AppDatabase.cParentId;

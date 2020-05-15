@@ -14,10 +14,12 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.model.json;
+package arc.resource.calculator.ui.load.update_database;
 
-public class PrimaryVersioning extends Versioning {
-    public PrimaryVersioning(String version, String filePath) {
-        super(version, filePath);
-    }
+public interface UpdateDatabaseTaskListener {
+    void onError(Exception e);
+
+    void onInit(int progressTotal);
+
+    void onStart();
 }

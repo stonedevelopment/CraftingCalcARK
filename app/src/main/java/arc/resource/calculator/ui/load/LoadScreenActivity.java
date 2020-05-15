@@ -43,11 +43,13 @@ import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.entity.ResourceEntity;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.model.json.PrimaryVersioning;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
-import arc.resource.calculator.ui.load.versioning.CheckVersionListener;
-import arc.resource.calculator.ui.load.versioning.CheckVersionTask;
+import arc.resource.calculator.ui.load.check_version.CheckVersionListener;
+import arc.resource.calculator.ui.load.check_version.CheckVersionTask;
+import arc.resource.calculator.ui.load.check_version.versioning.DLCVersioning;
+import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
+import arc.resource.calculator.ui.load.update_database.UpdateDatabaseTask;
 import arc.resource.calculator.ui.main.MainActivity;
 import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.JSONUtil;
@@ -240,9 +242,19 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
             case CheckVersion:
                 updateStatusMessage(getString(R.string.initialization_event_check_version_init));
 
-                new CheckVersionTask(getApplicationContext(), new CheckVersionListener() {
+                new CheckVersionTask(getApplicationContext(), prefsUtil, new CheckVersionListener() {
                     @Override
-                    public void onInit(int total) {
+                    public void onError(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onInit() {
+
+                    }
+
+                    @Override
+                    public void onStart(int totalVersions) {
 
                     }
 
@@ -252,17 +264,17 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                     }
 
                     @Override
-                    public void onNewPrimaryVersion(String oldVersion, String newVersion) {
+                    public void onNewPrimaryVersion(String oldVersion, String newVersion, PrimaryVersioning versioning) {
+                        new UpdateDatabaseTask(getApplicationContext(), versioning).execute();
+                    }
+
+                    @Override
+                    public void onCheckDLCVersion(DLCVersioning versioning) {
 
                     }
 
                     @Override
-                    public void onCheckDLCVersion(String dlcName) {
-
-                    }
-
-                    @Override
-                    public void onNewDLCVersion(String dlcName, String oldVersion, String newVersion) {
+                    public void onNewDLCVersion(String oldVersion, String newVersion, DLCVersioning versioning) {
 
                     }
 
