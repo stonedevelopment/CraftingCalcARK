@@ -26,6 +26,7 @@ import java.util.Objects;
 
 public class JSONUtil {
     public static final String cVersioning = "versioning";
+    public static final String cUUID = "uuid";
     public static final String cName = "name";
     public static final String cVersion = "version";
     public static final String cFilePath = "filePath";

@@ -17,12 +17,24 @@
 package arc.resource.calculator.ui.load.check_version.versioning;
 
 public class Versioning {
+    private final String uuid;
+    private final String name;
     private final String version;
     private final String filePath;
 
-    public Versioning(String version, String filePath) {
+    public Versioning(String uuid, String name, String version, String filePath) {
+        this.uuid = uuid;
+        this.name = name;
         this.version = version;
         this.filePath = filePath;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getVersion() {

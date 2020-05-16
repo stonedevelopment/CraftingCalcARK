@@ -16,23 +16,14 @@
 
 package arc.resource.calculator.ui.load.check_version;
 
-import arc.resource.calculator.ui.load.check_version.versioning.DLCVersioning;
-import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
+import java.util.List;
+
+import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 
 public interface CheckVersionListener {
     void onError(Exception e);
 
-    void onInit();
+    void onStart();
 
-    void onStart(int totalVersions);
-
-    void onCheckPrimaryVersion();
-
-    void onNewPrimaryVersion(String oldVersion, String newVersion, PrimaryVersioning versioning);
-
-    void onCheckDLCVersion(DLCVersioning versioning);
-
-    void onNewDLCVersion(String oldVersion, String newVersion, DLCVersioning versioning);
-
-    void onFinish();
+    void onFinish(List<Versioning> versionings);
 }

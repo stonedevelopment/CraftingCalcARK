@@ -1,5 +1,7 @@
 {
   "Primary": {
+    "uuid": "6db9ad94-ab73-4776-8225-c0d875e6e6bb",
+    "name": "ARK:Survival Evolved",
     "version": "304.5",
     "filePath": "Primary/Primary.json",
     "changelog": {
@@ -58,6 +60,7 @@
   },
   "DLC": [
     {
+      "uuid": "34ec5c66-6eb1-4ccb-8959-99c14ba4a418",
       "name": "Aberration",
       "version": "304.5",
       "filePath": "DLC/Aberration.json",
@@ -66,24 +69,25 @@
       }
     },
     {
+      "uuid": "ec417bc7-93f1-4488-a68c-8120408d9314",
       "name": "Extinction",
       "version": "304.5",
       "filePath": "DLC/Extinction.json",
       "changelog": {
         "304.5": "Converted single json file into separate json files"
       }
-
     },
     {
+      "uuid": "239adbbe-2558-442c-ba52-77359b77cf19",
       "name": "Primitive Plus",
       "version": "304.5",
       "filePath": "DLC/Primitive Plus.json",
       "changelog": {
         "304.5": "Converted single json file into separate json files"
       }
-
     },
     {
+      "uuid": "4c16a277-3e2a-4a97-a727-682c7f743c89",
       "name": "Scorched Earth",
       "version": "304.5",
       "filePath": "DLC/Scorched Earth.json",

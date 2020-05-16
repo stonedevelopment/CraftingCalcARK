@@ -176,24 +176,12 @@ public class PrefsUtil {
         return getPreference(RequiredLevelFilterKey, RequiredLevelFilterDefaultValue);
     }
 
-    public String getVersionForPrimary() {
-        return getPreference(cVersionPrimary, null);
+    public String getVersionByUUID(String uuid) {
+        return getPreference(uuid, null);
     }
 
-    public void setVersionForPrimary(String newVersion) {
-        editPreference(cVersionPrimary, newVersion);
-    }
-
-    public String getVersionForDLC(String name) {
-        return getPreference(buildVersionKeyForDLC(name), null);
-    }
-
-    public void setVersionForDLC(String name, String newVersion) {
-        editPreference(buildVersionKeyForDLC(name), newVersion);
-    }
-
-    private String buildVersionKeyForDLC(String name) {
-        return cVersionDLC.concat(name);
+    public void setVersionByUUID(String uuid, String newVersion) {
+        editPreference(uuid, newVersion);
     }
 
     public String getCraftingQueueJSONString() {

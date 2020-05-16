@@ -21,24 +21,19 @@ import org.json.JSONObject;
 
 import static arc.resource.calculator.util.JSONUtil.cFilePath;
 import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cUUID;
 import static arc.resource.calculator.util.JSONUtil.cVersion;
 
 public class DLCVersioning extends Versioning {
-    private final String name;
-
-    public DLCVersioning(String name, String version, String filePath) {
-        super(version, filePath);
-        this.name = name;
+    private DLCVersioning(String uuid, String name, String version, String filePath) {
+        super(uuid, name, version, filePath);
     }
 
     public static DLCVersioning fromJSON(JSONObject jsonObject) throws JSONException {
+        String uuid = jsonObject.getString(cUUID);
         String name = jsonObject.getString(cName);
         String version = jsonObject.getString(cVersion);
         String filePath = jsonObject.getString(cFilePath);
-        return new DLCVersioning(name, version, filePath);
-    }
-
-    public String getName() {
-        return name;
+        return new DLCVersioning(uuid, name, version, filePath);
     }
 }

@@ -24,20 +24,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import arc.resource.calculator.ui.load.check_version.versioning.DLCVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
+import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
 import static arc.resource.calculator.util.JSONUtil.cDLC;
 import static arc.resource.calculator.util.JSONUtil.cPrimary;
 
-public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
+public class CheckVersionTask extends AsyncTask<Void, Void, Versioning[]> {
     private CheckVersionListener listener;
     private PrefsUtil prefsUtil;
     private JSONObject versioningObject;
+    private List<Versioning> versioningList;
 
     public CheckVersionTask(Context context, PrefsUtil prefsUtil, CheckVersionListener listener) {
         setListener(listener);
@@ -55,65 +59,54 @@ public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
     }
 
     private void initialize(Context context) {
-        listener.onInit();
         try {
             String jsonString = JSONUtil.readVersioningJsonToString(context);
             // build a json object based on the read json string
             versioningObject = new JSONObject(jsonString);
+            versioningList = new ArrayList<>();
         } catch (IOException | JSONException e) {
             listener.onError(e);
         }
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Versioning[] doInBackground(Void... voids) {
         try {
-            JSONObject primaryObject = versioningObject.getJSONObject(cPrimary);
-            JSONArray dlcArray = versioningObject.getJSONArray(cDLC);
-
-            //  get total version counnt for progress bar
-            //      primary + length of dlc array
-            int totalVersions = 1 + dlcArray.length();
-
-            //  let listener know we're starting and how many versions we're checking
-            listener.onStart(totalVersions);
+            //  let listener know we're checking versions
+            listener.onStart();
 
             //  get Primary object
-            checkPrimaryVersion(primaryObject);
-
-            //  // TODO: 5/10/2020  get DLC array
-            //  iterate getting and testing versions
-            for (int i = 0; i < dlcArray.length(); i++) {
-                JSONObject dlcObject = (JSONObject) dlcArray.get(i);
-                checkDLCVersion(dlcObject);
+            JSONObject primaryObject = versioningObject.getJSONObject(cPrimary);
+            PrimaryVersioning primaryVersioning = PrimaryVersioning.fromJSON(primaryObject);
+            if (checkVersion(primaryVersioning)) {
+                versioningList.add(primaryVersioning);
             }
 
+            //  get DLC array
+            //  iterate getting and testing versions
+            JSONArray dlcArray = versioningObject.getJSONArray(cDLC);
+            for (int i = 0; i < dlcArray.length(); i++) {
+                JSONObject dlcObject = (JSONObject) dlcArray.get(i);
+                DLCVersioning dlcVersioning = DLCVersioning.fromJSON(dlcObject);
+                if (checkVersion(dlcVersioning)) {
+                    versioningList.add(dlcVersioning);
+                }
+            }
+
+            //  let listener know we're finished
+            //  send listener list of new versionings
+            listener.onFinish(versioningList);
         } catch (JSONException e) {
             listener.onError(e);
         }
         return null;
     }
 
-    private void checkPrimaryVersion(JSONObject primaryObject) throws JSONException {
-        PrimaryVersioning versioning = PrimaryVersioning.fromJSON(primaryObject);
-        listener.onCheckPrimaryVersion();
-
-        String oldVersion = prefsUtil.getVersionForPrimary();
+    private boolean checkVersion(Versioning versioning) {
+        String oldVersion = prefsUtil.getVersionByUUID(versioning.getUuid());
         String newVersion = versioning.getVersion();
-        if (hasUpdate(oldVersion, newVersion)) {
-            listener.onNewPrimaryVersion(oldVersion, newVersion, versioning);
-        }
-    }
 
-    private void checkDLCVersion(JSONObject dlcObject) throws JSONException {
-        DLCVersioning versioning = DLCVersioning.fromJSON(dlcObject);
-        listener.onCheckDLCVersion(versioning);
-
-        String oldVersion = prefsUtil.getVersionForDLC(versioning.getName());
-        String newVersion = versioning.getVersion();
-        if (hasUpdate(oldVersion, newVersion)) {
-            listener.onNewDLCVersion(oldVersion, newVersion, versioning);
-        }
+        return hasUpdate(oldVersion, newVersion);
     }
 
     private boolean hasUpdate(String oldVersion, String newVersion) {

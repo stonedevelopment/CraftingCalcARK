@@ -16,10 +16,14 @@
 
 package arc.resource.calculator.ui.load.update_database;
 
-public interface UpdateDatabaseTaskListener {
+import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
+
+public interface UpdateDatabaseListener {
     void onError(Exception e);
 
-    void onInit(int progressTotal);
-
     void onStart();
+
+    void onUpdate(Versioning versioning, int progress, int progressTotal);
+
+    void onFinish();
 }

@@ -8,20 +8,22 @@
 
     <!-- LoadActivity: Events: Initialize -->
     <string name="initialization_event_init">Greetings Survivor!</string>
-    <string name="initialization_finish_event">\nStarting app!\n\nCraft efficiently, my friend.</string>
-    <string name="initialization_error_event">\nInitialization failed.</string>
-    <string name="initialization_event_check_version_error">\nInitialization failed while checking for new version.</string>
+    <string name="initialization_finish_event">Starting app! Craft efficiently, my friend.</string>
+    <string name="initialization_error_event">Initialization failed.</string>
 
     <!-- LoadActivity: Events: CheckVersion -->
-    <string name="initialization_event_check_version_init">\nChecking for new data...</string>
-    <string name="initialization_event_check_version_new_version">New items found! Updating from v<x:g>%1$s</x:g> to v<x:g>%2$s</x:g>!</string>
-    <string name="initialization_event_check_version_first_install">Ooo, first time? Let us update you to v<x:g>%1$s</x:g>!</string>
+    <string name="initialization_event_check_version_error">Initialization failed while checking for new version.</string>
+    <string name="initialization_event_check_version_start">Checking for new data..</string>
+    <string name="initialization_event_check_version_new_version_single">Good news, Survivor! We found 1 new data file, preparing to update..</string>
+    <string name="initialization_event_check_version_new_version_multiple">Good news, Survivor! We found <x:g>%1$d</x:g> new data files, preparing to update..</string>
+    <string name="initialization_event_check_version_first_install">Ooo… a newbie, eh? Preparing to update..</string>
     <string name="initialization_event_check_version_finished_without_update">No new items found. :(</string>
 
     <!-- LoadActivity: Events: UpdateDatabase -->
-    <string name="initialization_event_update_database_started">\nInitializing database with new stuff and things..</string>
-    <string name="initialization_event_update_database_finished">.done!</string>
     <string name="initialization_event_update_database_error">Initialization failed while updating database.</string>
+    <string name="initialization_event_update_database_started">Initializing database with new stuff and things..</string>
+    <string name="initialization_event_update_database_progress_update">Updating <x:g>%1$s</x:g>.. (<x:g>%2$d</x:g>/<x:g>%3$d</x:g>)</string>
+    <string name="initialization_event_update_database_finished">Database initialized!</string>
 
     <!-- LoadActivity: Events: In-App Purchases -->
     <string name="initialization_purchase_event_init">\nChecking Play Store for purchased items..</string>

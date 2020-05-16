@@ -31,33 +31,25 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import java.util.List;
 
 import arc.resource.calculator.FirstUseActivity;
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.AppDatabase;
-import arc.resource.calculator.db.entity.ResourceEntity;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.queue.QueueObserver;
 import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.ui.load.check_version.CheckVersionListener;
 import arc.resource.calculator.ui.load.check_version.CheckVersionTask;
-import arc.resource.calculator.ui.load.check_version.versioning.DLCVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
+import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
+import arc.resource.calculator.ui.load.update_database.UpdateDatabaseListener;
 import arc.resource.calculator.ui.load.update_database.UpdateDatabaseTask;
 import arc.resource.calculator.ui.main.MainActivity;
 import arc.resource.calculator.util.ExceptionUtil;
-import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
-import static arc.resource.calculator.util.JSONUtil.cPrimary;
-
-public class LoadScreenActivity extends AppCompatActivity implements ExceptionObservable.Observer {
+public class LoadScreenActivity extends AppCompatActivity {
     private static final String TAG = LoadScreenActivity.class.getSimpleName();
     private static final long DELAY_MILLIS = 1500;
     private LoadScreenViewModel mViewModel;
@@ -67,8 +59,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     private long startTime;
     private TextView mTextView;
     private ProgressBar mProgressBar;
-    private boolean mHasUpdate = false;
-    private boolean mDidUpdate = false;
 
     private PrimaryVersioning primaryVersioning;
 
@@ -82,24 +72,12 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         setupViewModel();
 
         mListener = new Listener() {
-            @Override
-            public void onError(Exception e) {
-                // send error report
-                sendErrorReport(e);
-            }
-
-            @Override
-            public void onInit() {
-            }
 
             @Override
             public void onStartEvent() {
                 Log.d(TAG, "onStartEvent(): " + mCurrentEvent);
 
                 switch (mCurrentEvent) {
-
-                    case UpdateDatabase:
-                        break;
 
                     case UpdatePreferences:
                         // if database updated, save new version to preferences, reset categories back to default
@@ -169,29 +147,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
             }
 
             @Override
-            public void onEndEvent() {
-                mListener.onNextEvent();
-            }
-
-            @Override
-            public void onNextEvent() {
-                int index = mCurrentEvent.ordinal();
-
-                index++;
-
-                EVENT[] events = EVENT.values();
-
-                if (index < events.length) {
-                    mCurrentEvent = events[index];
-
-                    Log.d(TAG, "onNextEvent(): " + mCurrentEvent + ", " + index);
-                    mListener.onStartEvent();
-                } else {
-                    mListener.onFinish();
-                }
-            }
-
-            @Override
             public void onFinish() {
                 // say goodbye to user, onResume app
                 updateStatusMessage(formatMessageWithElapsedTime(getString(R.string.initialization_finish_event)));
@@ -210,7 +165,7 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
     private void setupViewModel() {
         mViewModel = new ViewModelProvider(this).get(LoadScreenViewModel.class);
         mViewModel.getLoadScreenEvent().observe(this, this::eventUpdate);
-        mViewModel.getStatusMessageEvent().observe(this, s -> mTextView.setText(s));
+        mViewModel.getStatusMessageEvent().observe(this, statusMessage -> mTextView.setText(statusMessage));
         mViewModel.getProgressEvent().observe(this, progress -> mProgressBar.setProgress(progress));
         mViewModel.getProgressTotalEvent().observe(this, total -> mProgressBar.setMax(total));
     }
@@ -240,123 +195,60 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
                 nextLoadScreenEvent();
                 break;
             case CheckVersion:
-                updateStatusMessage(getString(R.string.initialization_event_check_version_init));
-
                 new CheckVersionTask(getApplicationContext(), prefsUtil, new CheckVersionListener() {
                     @Override
                     public void onError(Exception e) {
-
+                        updateStatusMessage(getString(R.string.initialization_event_check_version_error));
+                        ExceptionUtil.SendErrorReport(TAG, e);
                     }
 
                     @Override
-                    public void onInit() {
-
+                    public void onStart() {
+                        updateStatusMessage(getString(R.string.initialization_event_check_version_start));
                     }
 
                     @Override
-                    public void onStart(int totalVersions) {
+                    public void onFinish(List<Versioning> versioningList) {
+                        int total = versioningList.size();
+                        if (total >= 1) {
+                            if (total > 1) {
+                                updateStatusMessage(String.format(getString(R.string.initialization_event_check_version_new_version_multiple), total));
+                            } else {
+                                updateStatusMessage(getString(R.string.initialization_event_check_version_new_version_single));
+                            }
+                        } else {
+                            updateStatusMessage(getString(R.string.initialization_event_check_version_finished_without_update));
+                        }
 
+                        mViewModel.setVersioningList(versioningList);
+                        nextLoadScreenEvent();
+                    }
+                }).execute();
+                break;
+            case UpdateDatabase:
+                new UpdateDatabaseTask(getApplicationContext(), prefsUtil, mViewModel.getVersioningList(), new UpdateDatabaseListener() {
+                    @Override
+                    public void onError(Exception e) {
+                        updateStatusMessage(getString(R.string.initialization_event_update_database_error));
+                        ExceptionUtil.SendErrorReport(TAG, e);
                     }
 
                     @Override
-                    public void onCheckPrimaryVersion() {
-
+                    public void onStart() {
+                        updateStatusMessage(getString(R.string.initialization_event_update_database_started));
                     }
 
                     @Override
-                    public void onNewPrimaryVersion(String oldVersion, String newVersion, PrimaryVersioning versioning) {
-                        new UpdateDatabaseTask(getApplicationContext(), versioning).execute();
-                    }
-
-                    @Override
-                    public void onCheckDLCVersion(DLCVersioning versioning) {
-
-                    }
-
-                    @Override
-                    public void onNewDLCVersion(String oldVersion, String newVersion, DLCVersioning versioning) {
-
+                    public void onUpdate(Versioning versioning, int progress, int progressTotal) {
+                        updateStatusMessage(String.format(getString(R.string.initialization_event_update_database_progress_update), versioning, progress, progressTotal));
                     }
 
                     @Override
                     public void onFinish() {
-
+                        updateStatusMessage(getString(R.string.initialization_event_update_database_finished));
+                        nextLoadScreenEvent();
                     }
                 }).execute();
-
-                try {
-                    //  load versioning.json
-                    String jsonString = JSONUtil.readVersioningJsonToString(getApplicationContext());
-
-                    // build a json object based on the read json string
-                    JSONObject versioningObject = new JSONObject(jsonString);
-
-                    //  get Primary object
-                    //  test version
-                    //  TODO: 5/9/2020  how to update db? together with dlc or separate?
-                    JSONObject primaryObject = versioningObject.getJSONObject(cPrimary);
-                    primaryVersioning = (PrimaryVersioning) PrimaryVersioning.fromJSON(primaryObject);
-                    String oldVersion = prefsUtil.getVersionForPrimary();
-                    String newVersion = primaryVersioning.getVersion();
-
-                    //  // TODO: 5/10/2020  get DLC array
-                    //  iterate getting and testing versions
-
-                    // now, let's check if we even need to update.
-                    mHasUpdate = JSONUtil.isNewVersion(oldVersion, newVersion);
-
-                    if (mHasUpdate) {
-                        if (oldVersion == null) {
-                            // first install
-                            updateStatusMessage(String.format(getString(R.string.initialization_event_check_version_first_install), newVersion));
-                        } else {
-                            // updated install
-                            updateStatusMessage(String.format(getString(R.string.initialization_event_check_version_new_version), oldVersion, newVersion));
-                        }
-
-                        mNewVersion = newVersion;
-                    } else {
-                        updateStatusMessage(getString(R.string.initialization_event_check_version_finished_without_update));
-                    }
-
-                    nextLoadScreenEvent();
-                } catch (JSONException | IOException e) {
-                    updateStatusMessage(getString(R.string.initialization_event_check_version_error));
-                    mListener.onError(e);
-                }
-                break;
-            case UpdateDatabase:
-                if (mHasUpdate) {
-                    updateStatusMessage(getString(R.string.initialization_event_update_database_started));
-
-                    try {
-                        String jsonString = JSONUtil.readRawJsonFileToJsonString(getApplicationContext(), primaryVersioning.getFilePath());
-                        JSONObject primaryObject = new JSONObject(jsonString);
-
-                        JSONArray resources = primaryObject.getJSONArray("resources");
-                        JSONArray stations = primaryObject.getJSONArray("stations");
-                        JSONArray folders = primaryObject.getJSONArray("folders");
-                        JSONArray engrams = primaryObject.getJSONArray("engrams");
-                        JSONArray composition = primaryObject.getJSONArray("composition");
-                        JSONArray directory = primaryObject.getJSONArray("directory");
-
-                        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-
-                        //  clear database for fresh data
-                        db.clearAllTables();
-
-                        for (int i = 0; i < resources.length(); i++) {
-                            JSONObject jsonObject = resources.getJSONObject(i);
-                            ResourceEntity entity = ResourceEntity.fromJSON(jsonObject);
-                            db.resourceDao().insert(entity);
-                        }
-
-                        // TODO: 5/10/2020 figure out wtf we are doing here
-                    } catch (IOException | JSONException e) {
-                        updateStatusMessage(getString(R.string.initialization_event_update_database_error));
-                        mListener.onError(e);
-                    }
-
 //                    new InitializationTask(getApplicationContext(), primaryVersioning, new InitializationTask.Listener() {
 //                        @Override
 //                        public void onError(Exception e) {
@@ -399,10 +291,6 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
 //                            mListener.onEndEvent();
 //                        }
 //                    }).execute();
-                } else {
-                    // trigger next event
-                    mListener.onEndEvent();
-                }
                 break;
             case UpdatePreferences:
                 break;
@@ -488,31 +376,12 @@ public class LoadScreenActivity extends AppCompatActivity implements ExceptionOb
         startActivityForResult(intent, FirstUseActivity.REQUEST_CODE);
     }
 
-    @Override
-    public void onException(String tag, Exception e) {
-        mListener.onError(e);
-    }
-
-    @Override
-    public void onFatalException(String tag, Exception e) {
-        mListener.onError(e);
-    }
-
     private interface Listener {
         // triggers upon any error found, alerts user via status screen, sends report, closes app
-        void onError(Exception e);
+        void onError(Exception e, String message);
 
         // sets current event id, triggers first event
         void onInit();
-
-        // onResume current event, triggers end event
-        void onStartEvent();
-
-        // triggers next event
-        void onEndEvent();
-
-        // triggers event
-        void onNextEvent();
 
         // triggers app to onResume main activity
         void onFinish();

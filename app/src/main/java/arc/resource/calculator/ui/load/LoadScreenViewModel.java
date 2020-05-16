@@ -22,7 +22,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import java.util.List;
+
 import arc.resource.calculator.model.SingleLiveEvent;
+import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 
 public class LoadScreenViewModel extends AndroidViewModel {
     public static final String TAG = LoadScreenViewModel.class.getCanonicalName();
@@ -34,6 +37,7 @@ public class LoadScreenViewModel extends AndroidViewModel {
 
     private long startTimeInMillis;
     private int loadScreenEventIndex = 0;
+    private List<Versioning> versioningList;
 
     public LoadScreenViewModel(@NonNull Application application) {
         super(application);
@@ -95,5 +99,13 @@ public class LoadScreenViewModel extends AndroidViewModel {
 
     private void setProgressTotal(int progressTotal) {
         progressTotalEvent.setValue(progressTotal);
+    }
+
+    List<Versioning> getVersioningList() {
+        return versioningList;
+    }
+
+    void setVersioningList(List<Versioning> versioningList) {
+        this.versioningList = versioningList;
     }
 }
