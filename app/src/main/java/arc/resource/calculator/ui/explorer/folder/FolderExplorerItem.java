@@ -19,7 +19,7 @@ package arc.resource.calculator.ui.explorer.folder;
 import java.util.ArrayList;
 import java.util.List;
 
-import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.ui.explorer.ChildExplorerItem;
 
 public class FolderExplorerItem extends ChildExplorerItem {

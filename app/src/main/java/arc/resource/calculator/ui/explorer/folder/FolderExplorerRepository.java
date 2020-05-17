@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
-import arc.resource.calculator.db.dao.FolderDao;
+import arc.resource.calculator.db.dao.primary.FolderDao;
 
 public class FolderExplorerRepository {
     private final FolderDao mDao;

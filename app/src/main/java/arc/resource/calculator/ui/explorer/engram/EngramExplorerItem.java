@@ -19,7 +19,7 @@ package arc.resource.calculator.ui.explorer.engram;
 import java.util.ArrayList;
 import java.util.List;
 
-import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.ui.explorer.ChildExplorerItem;
 
 public class EngramExplorerItem extends ChildExplorerItem {

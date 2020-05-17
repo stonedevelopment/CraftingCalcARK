@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao;
+package arc.resource.calculator.db.dao.primary;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -23,18 +23,18 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.FolderEntity;
+import arc.resource.calculator.db.entity.primary.CompositeEntity;
 
 @Dao
-public interface FolderDao {
-    String tableName = "folders";
+public interface CompositeDao {
+    String tableName = "composites";
 
-    @Insert()
-    FolderEntity insert(FolderEntity folderEntity);
+    @Insert
+    CompositeEntity insert(CompositeEntity entity);
 
-    @Query("delete from folders")
+    @Query("delete from composites")
     void deleteAll();
 
-    @Query("select * from folders where stationid = :stationId and parentid = :parentId order by name asc")
-    LiveData<List<FolderEntity>> getFolders(int stationId, int parentId);
+    @Query("select * from composites where engramId is :engramId")
+    LiveData<List<CompositeEntity>> getComposites(String engramId);
 }

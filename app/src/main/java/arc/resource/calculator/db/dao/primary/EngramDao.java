@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao;
+package arc.resource.calculator.db.dao.primary;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -23,14 +23,14 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.EngramEntity;
+import arc.resource.calculator.db.entity.primary.EngramEntity;
 
 @Dao
 public interface EngramDao {
     String tableName = "engrams";
 
     @Insert()
-    EngramEntity insert(EngramEntity engramEntity);
+    EngramEntity insert(EngramEntity entity);
 
     @Query("delete from engrams")
     void deleteAll();

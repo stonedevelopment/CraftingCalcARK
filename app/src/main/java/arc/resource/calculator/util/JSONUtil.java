@@ -18,6 +18,9 @@ package arc.resource.calculator.util;
 
 import android.content.Context;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +31,9 @@ public class JSONUtil {
     public static final String cVersioning = "versioning";
     public static final String cUUID = "uuid";
     public static final String cName = "name";
+    public static final String cDescription = "name";
+    public static final String cLogoFile = "name";
+    public static final String cFolderFile = "name";
     public static final String cVersion = "version";
     public static final String cFilePath = "filePath";
     public static final String cChangeLog = "changelog";
@@ -70,6 +76,12 @@ public class JSONUtil {
         }
 
         return jsonString;
+    }
+
+    public static JsonNode parseFileToNode(Context context, String fileName) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        InputStream fileStream = context.getAssets().open(fileName);
+        return mapper.readTree(fileStream);
     }
 
     public static String readVersioningJsonToString(Context context) throws IOException {

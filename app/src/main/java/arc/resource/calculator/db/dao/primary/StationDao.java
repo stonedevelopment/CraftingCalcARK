@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao;
+package arc.resource.calculator.db.dao.primary;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -24,7 +24,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.db.entity.primary.StationEntity;
 
 @Dao
 public interface StationDao {

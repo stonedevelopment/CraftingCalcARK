@@ -14,13 +14,13 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.entity;
+package arc.resource.calculator.db.entity.primary;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import arc.resource.calculator.db.dao.EngramDao;
+import arc.resource.calculator.db.dao.primary.EngramDao;
 
 /**
  * Engram object for base game data (vanilla)

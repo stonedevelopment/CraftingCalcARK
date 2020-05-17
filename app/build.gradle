@@ -87,6 +87,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'org.solovyev.android:checkout:1.0.0'
     implementation 'com.github.paolorotolo:appintro:4.1.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.10.4'
 
     //  Instrumentation Unit Tests
     androidTestImplementation 'androidx.test:runner:1.2.0'

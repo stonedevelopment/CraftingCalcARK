@@ -19,6 +19,10 @@ package arc.resource.calculator.ui.load.update_database;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,9 +32,11 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
-import arc.resource.calculator.db.entity.ResourceEntity;
+import arc.resource.calculator.db.entity.primary.GameEntity;
+import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
+import arc.resource.calculator.ui.load.update_database.game_data.GameObject;
 import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -77,6 +83,10 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
         return versioning instanceof PrimaryVersioning;
     }
 
+    private JsonNode getJsonNodeFromFilePath(String filePath) throws IOException {
+        return JSONUtil.parseFileToNode(getContext(), filePath);
+    }
+
     @Override
     protected Void doInBackground(Void... aVoid) {
         for (int i = 0; i < versioningList.size(); i++) {
@@ -95,29 +105,29 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
     }
 
     private void updatePrimary(Versioning versioning) {
-        String jsonString = null;
         try {
-            jsonString = JSONUtil.readRawJsonFileToJsonString(getContext(), versioning.getFilePath());
-            JSONObject primaryObject = new JSONObject(jsonString);
+            ObjectMapper mapper = new ObjectMapper();
 
-            JSONArray resources = primaryObject.getJSONArray("resources");
-            JSONArray stations = primaryObject.getJSONArray("stations");
-            JSONArray folders = primaryObject.getJSONArray("folders");
-            JSONArray engrams = primaryObject.getJSONArray("engrams");
-            JSONArray composition = primaryObject.getJSONArray("composition");
-            JSONArray directory = primaryObject.getJSONArray("directory");
+            JsonNode node = getJsonNodeFromFilePath(versioning.getFilePath());
+
+            GameEntity details = GameEntity.fromJSON(node.get("details"));
+
+            JsonNode resources = node.get("resources");
+            JsonNode stations = node.get("stations");
+            JsonNode folders = node.get("folders");
+            JsonNode engrams = node.get("engrams");
+            JsonNode composition = node.get("composition");
+            JsonNode directory = node.get("directory");
 
             //  clear database for fresh data
             database.clearAllTables();
 
-            for (int i = 0; i < resources.length(); i++) {
-                JSONObject jsonObject = resources.getJSONObject(i);
-                ResourceEntity entity = ResourceEntity.fromJSON(jsonObject);
+            for (JsonNode resourceNode : resources) {
+                ResourceEntity entity = ResourceEntity.fromJSON(resourceNode);
                 database.resourceDao().insert(entity);
             }
 
-
-        } catch (IOException | JSONException e) {
+        } catch (IOException e) {
             listener.onError(e);
         }
     }

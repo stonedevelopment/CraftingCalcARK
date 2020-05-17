@@ -35,9 +35,9 @@ import java.util.Vector;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.DatabaseContract;
-import arc.resource.calculator.db.entity.EngramEntity;
-import arc.resource.calculator.db.entity.FolderEntity;
-import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.db.entity.primary.EngramEntity;
+import arc.resource.calculator.db.entity.primary.FolderEntity;
+import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JSONUtil;
 
@@ -222,7 +222,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             String description = stationObject.getString("description");
             String imageFile = stationObject.getString("image_file");
 
-            StationEntity stationEntity = database.stationDao().insert(new StationEntity(uuid, name, description, imageFile));
+            StationEntity stationEntity = database.stationDao().insert(new StationEntity(uuid, name, description, imageFile, lastUpdated));
 
             insertEngrams(uuid, cParentId, stationObject.getJSONArray("engrams");
             insertFolders(uuid, cParentId, stationObject.getJSONArray("folders"));

@@ -16,19 +16,25 @@
 
 package arc.resource.calculator.db.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import arc.resource.calculator.db.entity.ResourceEntity;
+import java.util.List;
+
+import arc.resource.calculator.db.entity.primary.GameEntity;
 
 @Dao
-public interface ResourceDao {
-    String tableName = "resources";
+public interface GameDao {
+    String tableName = "games";
 
-    @Insert()
-    ResourceEntity insert(ResourceEntity resourceEntity);
+    @Insert
+    GameEntity insert(GameEntity entity);
 
-    @Query("delete from resources")
+    @Query("delete from games")
     void deleteAll();
+
+    @Query("select * from games order by name asc")
+    LiveData<List<GameEntity>> getGames();
 }

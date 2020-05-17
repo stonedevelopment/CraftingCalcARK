@@ -19,7 +19,7 @@ package arc.resource.calculator.ui.explorer.station;
 import java.util.ArrayList;
 import java.util.List;
 
-import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.ui.explorer.ExplorerItem;
 
 public class StationExplorerItem extends ExplorerItem {
@@ -29,7 +29,7 @@ public class StationExplorerItem extends ExplorerItem {
     }
 
     private static StationExplorerItem fromEntity(StationEntity stationEntity) {
-        return new StationExplorerItem(stationEntity.getRowId(), stationEntity.getName(), stationEntity.getImage());
+        return new StationExplorerItem(stationEntity.getUuid(), stationEntity.getName(), stationEntity.getImageFile());
     }
 
     static List<StationExplorerItem> fromEntities(List<StationEntity> stationEntities) {

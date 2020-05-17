@@ -25,16 +25,16 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import arc.resource.calculator.db.dao.CompositionDao;
-import arc.resource.calculator.db.dao.EngramDao;
-import arc.resource.calculator.db.dao.FolderDao;
-import arc.resource.calculator.db.dao.ResourceDao;
-import arc.resource.calculator.db.dao.StationDao;
-import arc.resource.calculator.db.entity.CompositionEntity;
-import arc.resource.calculator.db.entity.EngramEntity;
-import arc.resource.calculator.db.entity.FolderEntity;
-import arc.resource.calculator.db.entity.ResourceEntity;
-import arc.resource.calculator.db.entity.StationEntity;
+import arc.resource.calculator.db.dao.primary.CompositionDao;
+import arc.resource.calculator.db.dao.primary.EngramDao;
+import arc.resource.calculator.db.dao.primary.FolderDao;
+import arc.resource.calculator.db.dao.primary.ResourceDao;
+import arc.resource.calculator.db.dao.primary.StationDao;
+import arc.resource.calculator.db.entity.primary.CompositionEntity;
+import arc.resource.calculator.db.entity.primary.EngramEntity;
+import arc.resource.calculator.db.entity.primary.FolderEntity;
+import arc.resource.calculator.db.entity.primary.ResourceEntity;
+import arc.resource.calculator.db.entity.primary.StationEntity;
 
 @Database(
         entities = {

@@ -14,13 +14,8 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao;
+package arc.resource.calculator.ui.load.update_database.game_data;
 
-import androidx.room.Dao;
-
-@Dao
-public interface CompositionDao {
-    String tableName = "compositions";
-    String columnName = "composition_id";
-
+public class GameData {
+    private GameObject gameObject;
 }

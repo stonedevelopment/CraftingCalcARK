@@ -30,7 +30,6 @@ import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.FolderEntity;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 
 class FolderExplorerItemViewHolder extends RecyclerView.ViewHolder {

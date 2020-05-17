@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
-import arc.resource.calculator.db.dao.EngramDao;
+import arc.resource.calculator.db.dao.primary.EngramDao;
 
 public class EngramExplorerRepository {
     private final EngramDao mDao;
