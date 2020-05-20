@@ -60,9 +60,8 @@ public class ResourceEntity {
      * "lastUpdated": 1589732742758,
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static ResourceEntity fromJSON(JsonNode jsonObject) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonObject.toString(), ResourceEntity.class);
+    public static ResourceEntity fromJSON(JsonNode node) throws IOException {
+        return new ObjectMapper().treeToValue(node, ResourceEntity.class);
     }
 
     @Override
@@ -70,12 +69,12 @@ public class ResourceEntity {
         if (this == obj) return true;
         if (!(obj instanceof ResourceEntity)) return false;
 
-        ResourceEntity entity = (ResourceEntity) obj;
-        return uuid.equals(entity.getUuid()) &&
-                name.equals(entity.getName()) &&
-                description.equals(entity.getDescription()) &&
-                imageFile.equals(entity.getImageFile()) &&
-                gameId.equals(entity.getGameId());
+        ResourceEntity resource = (ResourceEntity) obj;
+        return uuid.equals(resource.getUuid()) &&
+                name.equals(resource.getName()) &&
+                description.equals(resource.getDescription()) &&
+                imageFile.equals(resource.getImageFile()) &&
+                gameId.equals(resource.getGameId());
     }
 
     public String getUuid() {

@@ -20,9 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -38,19 +37,32 @@ public class FolderEntity {
     @PrimaryKey
     private final String uuid;
     private final String name;
+    private final String gameId;
 
-    public FolderEntity(String uuid, String name) {
+    public FolderEntity(String uuid, String name, String gameId) {
         this.uuid = uuid;
         this.name = name;
+        this.gameId = gameId;
     }
 
     /**
-     * "uuid": "639795e0-5dbe-49c9-9264-95e202af1aab",
-     * "name": "Misc"
+     * "uuid": "16294807-c086-4977-ad87-899aed7ec199",
+     * "name": "Misc",
+     * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static FolderEntity fromJSON(JSONObject jsonObject) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonObject.toString(), FolderEntity.class);
+    public static FolderEntity fromJSON(JsonNode node) throws IOException {
+        return new ObjectMapper().treeToValue(node, FolderEntity.class);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof FolderEntity)) return false;
+
+        FolderEntity folder = (FolderEntity) obj;
+        return uuid.equals(folder.getUuid()) &&
+                name.equals(folder.getName()) &&
+                gameId.equals(folder.getGameId());
     }
 
     public String getUuid() {
@@ -61,13 +73,7 @@ public class FolderEntity {
         return name;
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof FolderEntity)) return false;
-
-        FolderEntity entity = (FolderEntity) obj;
-        return uuid.equals(entity.getUuid()) &&
-                name.equals(entity.getName());
+    public String getGameId() {
+        return gameId;
     }
 }

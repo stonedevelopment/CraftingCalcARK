@@ -32,7 +32,7 @@ public class EngramExplorerItem extends ChildExplorerItem {
 
     private static EngramExplorerItem fromEntity(EngramEntity engramEntity) {
         return new EngramExplorerItem(engramEntity.getRowId(), engramEntity.getName(),
-                engramEntity.getImage(), engramEntity.getStationId(), engramEntity.getParentId(), 0);
+                engramEntity.getImageFile(), engramEntity.getStationId(), engramEntity.getParentId(), 0);
     }
 
     static List<EngramExplorerItem> fromEntities(List<EngramEntity> engramEntities) {

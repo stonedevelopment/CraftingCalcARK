@@ -21,22 +21,19 @@ import android.os.AsyncTask;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
+import arc.resource.calculator.db.entity.primary.EngramEntity;
+import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.GameEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
+import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
-import arc.resource.calculator.ui.load.update_database.game_data.GameObject;
 import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
@@ -112,20 +109,35 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
 
             GameEntity details = GameEntity.fromJSON(node.get("details"));
 
-            JsonNode resources = node.get("resources");
-            JsonNode stations = node.get("stations");
-            JsonNode folders = node.get("folders");
-            JsonNode engrams = node.get("engrams");
-            JsonNode composition = node.get("composition");
-            JsonNode directory = node.get("directory");
-
             //  clear database for fresh data
             database.clearAllTables();
 
+            JsonNode resources = node.get("resources");
             for (JsonNode resourceNode : resources) {
-                ResourceEntity entity = ResourceEntity.fromJSON(resourceNode);
-                database.resourceDao().insert(entity);
+                ResourceEntity resource = ResourceEntity.fromJSON(resourceNode);
+                database.resourceDao().insert(resource);
             }
+
+            JsonNode stations = node.get("stations");
+            for (JsonNode stationNode : stations) {
+                StationEntity station = StationEntity.fromJSON(stationNode);
+                database.stationDao().insert(station);
+            }
+
+            JsonNode folders = node.get("folders");
+            for (JsonNode folderNode : folders) {
+                FolderEntity folder = FolderEntity.fromJSON(folderNode);
+                database.folderDao().insert(folder);
+            }
+
+            JsonNode engrams = node.get("engrams");
+            for (JsonNode engramNode : engrams) {
+                EngramEntity engram = EngramEntity.fromJSON(engramNode);
+                database.engramDao().insert(engram);
+            }
+
+            JsonNode composition = node.get("composition");
+            JsonNode directory = node.get("directory");
 
         } catch (IOException e) {
             listener.onError(e);

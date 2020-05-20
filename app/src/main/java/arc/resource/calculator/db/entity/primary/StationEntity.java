@@ -20,9 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Date;
@@ -39,16 +38,18 @@ public class StationEntity {
     @PrimaryKey
     private final String uuid;
     private final String name;
-    private final String description;
     private final String imageFile;
+    private final String engramId;
     private final Date lastUpdated;
+    private final String gameId;
 
-    public StationEntity(String rowId, String name, String description, String image, Date lastUpdated) {
-        this.uuid = rowId;
+    public StationEntity(String uuid, String name, String imageFile, String engramId, Date lastUpdated, String gameId) {
+        this.uuid = uuid;
         this.name = name;
-        this.description = description;
-        this.imageFile = image;
+        this.imageFile = imageFile;
+        this.engramId = engramId;
         this.lastUpdated = lastUpdated;
+        this.gameId = gameId;
     }
 
     /**
@@ -57,10 +58,10 @@ public class StationEntity {
      * "imageFile": "beer_barrel.webp",
      * "engramId": "8e572762-5b55-44c3-ae97-ef2087ae20e3",
      * "lastUpdated": 1589725368336
+     * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static StationEntity fromJSON(JSONObject jsonObject) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonObject.toString(), StationEntity.class);
+    public static StationEntity fromJSON(JsonNode node) throws IOException {
+        return new ObjectMapper().treeToValue(node, StationEntity.class);
     }
 
     @Override
@@ -68,11 +69,12 @@ public class StationEntity {
         if (this == obj) return true;
         if (!(obj instanceof StationEntity)) return false;
 
-        StationEntity stationEntity = (StationEntity) obj;
-        return getUuid().equals(stationEntity.getUuid()) &&
-                getName().equals(stationEntity.getName()) &&
-                getDescription().equals(stationEntity.getDescription()) &&
-                getImageFile().equals(stationEntity.getImageFile());
+        StationEntity station = (StationEntity) obj;
+        return uuid.equals(station.getUuid()) &&
+                name.equals(station.getName()) &&
+                engramId.equals(station.getEngramId()) &&
+                imageFile.equals(station.getImageFile()) &&
+                gameId.equals(station.getGameId());
     }
 
     public String getUuid() {
@@ -83,8 +85,8 @@ public class StationEntity {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getEngramId() {
+        return engramId;
     }
 
     public String getImageFile() {
@@ -93,5 +95,9 @@ public class StationEntity {
 
     public Date getLastUpdated() {
         return lastUpdated;
+    }
+
+    public String getGameId() {
+        return gameId;
     }
 }

@@ -20,6 +20,12 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Date;
+
 import arc.resource.calculator.db.dao.primary.EngramDao;
 
 /**
@@ -30,47 +36,73 @@ import arc.resource.calculator.db.dao.primary.EngramDao;
 @Entity(tableName = EngramDao.tableName)
 public class EngramEntity {
 
-    @PrimaryKey(autoGenerate = true)
-    private int rowId;
+    @PrimaryKey
+    private final String uuid;
+    private final String name;
+    private final String description;
+    private final String imageFile;
+    private final int level;
+    private final int yield;
+    private final int points;
+    private final int xp;
+    private final int craftingTime;
+    private final Date lastUpdated;
+    private final String gameId;
 
-    //  title of this engram
-    private String name;
-
-    //  description for this engram
-    private String description;
-
-    //  filename of image in /assets folder
-    private String image;
-
-    //  amount produced per craft, multiply this by crafting quantity
-    private int yield;
-
-    //  value of required level to craft engram
-    private int level;
-
-    //  crafting time in seconds    // TODO: 2/2/2020 will be used when calculating fuel usages
-    private int time;
-
-    //  rowid of parent; station or folder
-    private int parentId;
-
-    //  rowid of stations table, crafting station per in-game
-    private int stationId;
-
-    public EngramEntity(String name, String description, String image,
-                        int yield, int level, int time, int parentId, int stationId) {
+    public EngramEntity(String uuid, String name, String description, String imageFile, int level,
+                        int yield, int points, int xp, int craftingTime, Date lastUpdated, String gameId) {
+        this.uuid = uuid;
         this.name = name;
         this.description = description;
-        this.image = image;
-        this.yield = yield;
+        this.imageFile = imageFile;
         this.level = level;
-        this.time = time;
-        this.parentId = parentId;
-        this.stationId = stationId;
+        this.yield = yield;
+        this.points = points;
+        this.xp = xp;
+        this.craftingTime = craftingTime;
+        this.lastUpdated = lastUpdated;
+        this.gameId = gameId;
     }
 
-    public int getRowId() {
-        return rowId;
+    /**
+     * "uuid": "76d95c88-db9f-4fc0-936f-0c778ab499d4",
+     * "name": "Absorbent Substrate",
+     * "description": "This sticky compound excels at absorbing other chemicals.",
+     * "imageFile": "absorbent_substrate.webp",
+     * "level": 84,
+     * "yield": 1,
+     * "points": 0,
+     * "xp": 0,
+     * "craftingTime": 0,
+     * "lastUpdated": 1589732742789,
+     * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
+     */
+    public static EngramEntity fromJSON(JsonNode node) throws JsonProcessingException {
+        return new ObjectMapper().treeToValue(node, EngramEntity.class);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof EngramEntity)) return false;
+
+        EngramEntity engram = (EngramEntity) obj;
+        return uuid.equals(engram.uuid) &&
+                name.equals(engram.name) &&
+                description.equals(engram.description) &&
+                imageFile.equals(engram.imageFile) &&
+                level == engram.level &&
+                yield == engram.yield &&
+                points == engram.points &&
+                xp == engram.xp &&
+                craftingTime == engram.craftingTime &&
+                gameId.equals(engram.gameId);
+
+
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getName() {
@@ -81,40 +113,35 @@ public class EngramEntity {
         return description;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public int getYield() {
-        return yield;
+    public String getImageFile() {
+        return imageFile;
     }
 
     public int getLevel() {
         return level;
     }
 
-    public int getTime() {
-        return time;
+    public int getYield() {
+        return yield;
     }
 
-    public int getParentId() {
-        return parentId;
+    public int getPoints() {
+        return points;
     }
 
-    public int getStationId() {
-        return stationId;
+    public int getXp() {
+        return xp;
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof EngramEntity)) return false;
+    public int getCraftingTime() {
+        return craftingTime;
+    }
 
-        EngramEntity engramEntity = (EngramEntity) obj;
-        return rowId == engramEntity.getRowId() &&
-                name.equals(engramEntity.getName()) &&
-                parentId == engramEntity.getParentId() &&
-                stationId == engramEntity.getStationId();
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
 
+    public String getGameId() {
+        return gameId;
     }
 }

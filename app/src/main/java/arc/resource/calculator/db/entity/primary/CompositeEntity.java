@@ -26,16 +26,16 @@ public class CompositeEntity {
     @PrimaryKey
     private final String uuid;
     private final int quantity;
-    private final String engramId;
-    private final String resourceId;
+    private final String sourceId;
     private final boolean isEngram;
+    private final String compositionId;
 
-    public CompositeEntity(String uuid, int quantity, String engramId, String resourceId, boolean isEngram) {
+    public CompositeEntity(String uuid, int quantity, String sourceId, boolean isEngram, String compositionId) {
         this.uuid = uuid;
         this.quantity = quantity;
-        this.engramId = engramId;
-        this.resourceId = resourceId;
+        this.sourceId = sourceId;
         this.isEngram = isEngram;
+        this.compositionId = compositionId;
     }
 
     public String getUuid() {
@@ -46,15 +46,15 @@ public class CompositeEntity {
         return quantity;
     }
 
-    public String getEngramId() {
-        return engramId;
-    }
-
-    public String getResourceId() {
-        return resourceId;
+    public String getSourceId() {
+        return sourceId;
     }
 
     public boolean isEngram() {
         return isEngram;
+    }
+
+    public String getCompositionId() {
+        return compositionId;
     }
 }

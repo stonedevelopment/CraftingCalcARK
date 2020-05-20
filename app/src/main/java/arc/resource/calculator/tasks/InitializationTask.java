@@ -222,7 +222,7 @@ public class InitializationTask extends AsyncTask<Void, Void, Boolean> {
             String description = stationObject.getString("description");
             String imageFile = stationObject.getString("image_file");
 
-            StationEntity stationEntity = database.stationDao().insert(new StationEntity(uuid, name, description, imageFile, lastUpdated));
+            StationEntity stationEntity = database.stationDao().insert(new StationEntity(uuid, name, description, imageFile, lastUpdated, gameId));
 
             insertEngrams(uuid, cParentId, stationObject.getJSONArray("engrams");
             insertFolders(uuid, cParentId, stationObject.getJSONArray("folders"));
