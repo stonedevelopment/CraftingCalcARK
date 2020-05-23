@@ -16,24 +16,25 @@
 
 package arc.resource.calculator.db.dao.primary;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.primary.CompositionEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 
 @Dao
-public interface CompositionDao {
-    String tableName = "compositions";
+public interface DirectoryDao {
+    String tableName = "directory";
 
     @Insert
-    CompositionEntity insert(CompositionEntity entity);
+    void insert(DirectoryEntity entity);
 
-    @Query("delete from compositions")
+    @Query("delete from directory")
     void deleteAll();
 
-    @Query("select * from compositions where uuid is :compositionId")
-    CompositionEntity getComposition(String compositionId);
+    @Query("select * from directory where parentId is :parentId and gameId is :gameId")
+    LiveData<List<DirectoryEntity>> getDirectory(String parentId, String gameId);
 }

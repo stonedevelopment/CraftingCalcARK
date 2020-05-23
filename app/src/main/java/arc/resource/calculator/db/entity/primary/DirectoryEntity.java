@@ -23,46 +23,37 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import arc.resource.calculator.db.dao.primary.CompositeDao;
+import arc.resource.calculator.db.dao.primary.DirectoryDao;
 
-@Entity(tableName = CompositeDao.tableName)
-public class CompositeEntity {
-
+@Entity(tableName = DirectoryDao.tableName)
+public class DirectoryEntity {
     @PrimaryKey
     private final String uuid;
     private final String name;
     private final String imageFile;
-    private final int quantity;
+    private final String parentId;
     private final String sourceId;
-    private final String compositionId;
     private final String gameId;
-    private final boolean isEngram;
 
-    public CompositeEntity(String uuid, String name, String imageFile, int quantity,
-                           String sourceId, String compositionId, String gameId,
-                           boolean isEngram) {
+    private DirectoryEntity(String uuid, String name, String imageFile, String parentId, String sourceId, String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;
-        this.quantity = quantity;
+        this.parentId = parentId;
         this.sourceId = sourceId;
-        this.compositionId = compositionId;
         this.gameId = gameId;
-        this.isEngram = isEngram;
     }
 
     /**
-     * "uuid": "994f8240-f9e0-4dba-987f-de5c31287ef8",
+     * "uuid": "503ec34c-d61f-43d6-bf84-54d5a27f3a17",
      * "name": "Absorbent Substrate",
      * "imageFile": "absorbent_substrate.webp",
-     * "quantity": 10,
+     * "parentId": "6bf03190-f6ab-42f9-98b6-79094803dae0",
      * "sourceId": "72689ce4-92cc-47e2-95e3-05748c368983",
-     * "compositionId": "6693c091-aa97-4d77-8267-f163fe71ae1f",
-     * "gameId": "ce61547f-9ace-4a3b-b5c0-216f234339c7",
-     * "isEngram": true
+     * "gameId": "ce61547f-9ace-4a3b-b5c0-216f234339c7"
      */
-    public static CompositeEntity fromJSON(JsonNode node) throws JsonProcessingException {
-        return new ObjectMapper().treeToValue(node, CompositeEntity.class);
+    public static DirectoryEntity fromJSON(JsonNode node) throws JsonProcessingException {
+        return new ObjectMapper().treeToValue(node, DirectoryEntity.class);
     }
 
     public String getUuid() {
@@ -77,23 +68,15 @@ public class CompositeEntity {
         return imageFile;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getParentId() {
+        return parentId;
     }
 
     public String getSourceId() {
         return sourceId;
     }
 
-    public String getCompositionId() {
-        return compositionId;
-    }
-
     public String getGameId() {
         return gameId;
-    }
-
-    public boolean isEngram() {
-        return isEngram;
     }
 }

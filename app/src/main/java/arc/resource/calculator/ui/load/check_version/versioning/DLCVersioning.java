@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import static arc.resource.calculator.util.JSONUtil.cFilePath;
 import static arc.resource.calculator.util.JSONUtil.cName;
-import static arc.resource.calculator.util.JSONUtil.cUUID;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
 import static arc.resource.calculator.util.JSONUtil.cVersion;
 
 public class DLCVersioning extends Versioning {
@@ -30,7 +30,7 @@ public class DLCVersioning extends Versioning {
     }
 
     public static DLCVersioning fromJSON(JSONObject jsonObject) throws JSONException {
-        String uuid = jsonObject.getString(cUUID);
+        String uuid = jsonObject.getString(cUuid);
         String name = jsonObject.getString(cName);
         String version = jsonObject.getString(cVersion);
         String filePath = jsonObject.getString(cFilePath);

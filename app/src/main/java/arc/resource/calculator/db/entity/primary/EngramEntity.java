@@ -35,7 +35,6 @@ import arc.resource.calculator.db.dao.primary.EngramDao;
  */
 @Entity(tableName = EngramDao.tableName)
 public class EngramEntity {
-
     @PrimaryKey
     private final String uuid;
     private final String name;
@@ -73,6 +72,7 @@ public class EngramEntity {
      * "yield": 1,
      * "points": 0,
      * "xp": 0,
+     *
      * "craftingTime": 0,
      * "lastUpdated": 1589732742789,
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"

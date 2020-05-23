@@ -29,11 +29,11 @@ import java.util.Objects;
 
 public class JSONUtil {
     public static final String cVersioning = "versioning";
-    public static final String cUUID = "uuid";
+    public static final String cUuid = "uuid";
     public static final String cName = "name";
-    public static final String cDescription = "name";
-    public static final String cLogoFile = "name";
-    public static final String cFolderFile = "name";
+    public static final String cDescription = "description";
+    public static final String cLogoFile = "logoFile";
+    public static final String cFolderFile = "folderFile";
     public static final String cVersion = "version";
     public static final String cFilePath = "filePath";
     public static final String cChangeLog = "changelog";

@@ -25,12 +25,16 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import arc.resource.calculator.db.dao.primary.CompositeDao;
 import arc.resource.calculator.db.dao.primary.CompositionDao;
+import arc.resource.calculator.db.dao.primary.DirectoryDao;
 import arc.resource.calculator.db.dao.primary.EngramDao;
 import arc.resource.calculator.db.dao.primary.FolderDao;
 import arc.resource.calculator.db.dao.primary.ResourceDao;
 import arc.resource.calculator.db.dao.primary.StationDao;
+import arc.resource.calculator.db.entity.primary.CompositeEntity;
 import arc.resource.calculator.db.entity.primary.CompositionEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
@@ -42,7 +46,9 @@ import arc.resource.calculator.db.entity.primary.StationEntity;
                 FolderEntity.class,
                 EngramEntity.class,
                 ResourceEntity.class,
-                CompositionEntity.class
+                CompositionEntity.class,
+                CompositeEntity.class,
+                DirectoryEntity.class
         },
         version = 1,
         exportSchema = false)
@@ -83,4 +89,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ResourceDao resourceDao();
 
     public abstract CompositionDao compositionDao();
+
+    public abstract CompositeDao compositeDao();
+
+    public abstract DirectoryDao directoryDao();
 }

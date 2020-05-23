@@ -20,12 +20,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -35,13 +33,8 @@ import java.util.List;
 
 import arc.resource.calculator.FirstUseActivity;
 import arc.resource.calculator.R;
-import arc.resource.calculator.listeners.ExceptionObservable;
-import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.repository.queue.QueueObserver;
-import arc.resource.calculator.repository.queue.QueueRepository;
 import arc.resource.calculator.ui.load.check_version.CheckVersionListener;
 import arc.resource.calculator.ui.load.check_version.CheckVersionTask;
-import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.ui.load.update_database.UpdateDatabaseListener;
 import arc.resource.calculator.ui.load.update_database.UpdateDatabaseTask;
@@ -54,13 +47,9 @@ public class LoadScreenActivity extends AppCompatActivity {
     private static final long DELAY_MILLIS = 1500;
     private LoadScreenViewModel mViewModel;
     private PrefsUtil prefsUtil;
-    private Listener mListener;
-    private String mNewVersion;
-    private long startTime;
     private TextView mTextView;
     private ProgressBar mProgressBar;
-
-    private PrimaryVersioning primaryVersioning;
+    private boolean mDidUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,92 +59,6 @@ public class LoadScreenActivity extends AppCompatActivity {
         setupViews();
         setupPrefs();
         setupViewModel();
-
-        mListener = new Listener() {
-
-            @Override
-            public void onStartEvent() {
-                Log.d(TAG, "onStartEvent(): " + mCurrentEvent);
-
-                switch (mCurrentEvent) {
-
-                    case UpdatePreferences:
-                        // if database updated, save new version to preferences, reset categories back to default
-                        if (mHasUpdate) {
-                            updateStatusMessage(getString(R.string.initialization_pref_event_started));
-
-                            prefsUtil.setVersionForPrimary(mNewVersion);
-                            prefsUtil.saveCraftingQueueJSONString(null);
-                            prefsUtil.saveToDefault();
-
-                            updateStatusMessage(getString(R.string.initialization_pref_event_finished));
-                        }
-
-                        // trigger next event
-                        mListener.onEndEvent();
-                        break;
-
-                    case CraftingQueue:
-                        // create instance of QueueRepository
-                        updateStatusMessage(getString(R.string.initialization_queue_event_started));
-
-                        final QueueRepository queueRepository = QueueRepository.getInstance();
-                        queueRepository.addObserver(TAG, new QueueObserver() {
-                            @Override
-                            public void onItemAdded(@NonNull QueueEngram engram) {
-                                //  do nothing
-                            }
-
-                            @Override
-                            public void onItemRemoved(@NonNull QueueEngram engram) {
-                                //  do nothing
-                            }
-
-                            @Override
-                            public void onItemChanged(@NonNull QueueEngram engram) {
-                                //  do nothing
-                            }
-
-                            @Override
-                            public void onQueueDataPopulating() {
-                                updateStatusMessage(getString(R.string.initialization_queue_event_fetching));
-                            }
-
-                            @Override
-                            public void onQueueDataPopulated() {
-                                updateStatusMessage(getString(R.string.initialization_queue_event_finished));
-                                queueRepository.removeObserver(TAG);
-                                mListener.onEndEvent();
-                            }
-
-                            @Override
-                            public void onQueueDataEmpty() {
-                                updateStatusMessage(getString(R.string.initialization_queue_event_finished));
-                                queueRepository.removeObserver(TAG);
-                                mListener.onEndEvent();
-                            }
-                        });
-                        queueRepository.init(getApplicationContext());
-                        break;
-                    case Finalize:
-                        //  finalize any extra data for app
-
-                        // trigger next event
-                        mListener.onEndEvent();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                // say goodbye to user, onResume app
-                updateStatusMessage(formatMessageWithElapsedTime(getString(R.string.initialization_finish_event)));
-
-                finishActivity();
-            }
-        };
-
-        mListener.onInit();
     }
 
     private void setupPrefs() {
@@ -245,74 +148,17 @@ public class LoadScreenActivity extends AppCompatActivity {
 
                     @Override
                     public void onFinish() {
+                        mDidUpdate = true;
                         updateStatusMessage(getString(R.string.initialization_event_update_database_finished));
                         nextLoadScreenEvent();
                     }
                 }).execute();
-//                    new InitializationTask(getApplicationContext(), primaryVersioning, new InitializationTask.Listener() {
-//                        @Override
-//                        public void onError(Exception e) {
-//                            // alert status window of error
-//                            updateStatusMessage(getString(R.string.initialization_event_update_database_error));
-//
-//                            // trigger activity error event handler
-//                            mListener.onError(e);
-//                        }
-//
-//                        @Override
-//                        public void onInit() {
-//                            // alert status window that database initialization is initializing
-////                                updateStatusMessages( getString( R.string.initialization_db_event_init ) );
-//                        }
-//
-//                        @Override
-//                        public void onStart() {
-//                            // alert status window that database initialization has begun
-//                            updateStatusMessage(getString(R.string.initialization_event_update_database_started));
-//                        }
-//
-//                        @Override
-//                        public void onUpdate(String message) {
-//                            // alert status window with a new message
-//                            updateStatusMessage(message);
-//                        }
-//
-//                        @Override
-//                        public void onFinish(boolean didUpdate) {
-//                            // alert status window that database initialization has finished, with or without an error
-//                            if (didUpdate) {
-//                                updateStatusMessage(formatMessageWithElapsedTime(getString(R.string.initialization_event_update_database_finished)));
-//
-//                                // set global boolean used to notify main activity when called
-//                                mDidUpdate = true;
-//                            }
-//
-//                            // trigger next event (in-app purchases?)
-//                            mListener.onEndEvent();
-//                        }
-//                    }).execute();
-                break;
-            case UpdatePreferences:
-                break;
-            case CraftingQueue:
                 break;
             case Finalize:
+                updateStatusMessage(formatMessageWithElapsedTime(getString(R.string.initialization_finish_event)));
+                finishActivity();
                 break;
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        ExceptionObservable.getInstance().registerObserver(this);
-    }
-
-    @Override
-    protected void onPause() {
-        ExceptionObservable.getInstance().unregisterObserver();
-
-        super.onPause();
     }
 
     @Override
@@ -339,7 +185,7 @@ public class LoadScreenActivity extends AppCompatActivity {
 
     private String formatMessageWithElapsedTime(String message) {
         long endTime = System.currentTimeMillis();
-        long elapsedMilliseconds = endTime - startTime;
+        long elapsedMilliseconds = endTime - mViewModel.getStartTime();
         double elapsedSeconds = elapsedMilliseconds / 1000.0;
 
         String elapsedMessage = String.format(getString(R.string.load_activity_status_message_elapsed_format), Double.toString(elapsedSeconds));
@@ -374,16 +220,5 @@ public class LoadScreenActivity extends AppCompatActivity {
     private void startFirstUseActivity() {
         Intent intent = new Intent(getApplicationContext(), FirstUseActivity.class);
         startActivityForResult(intent, FirstUseActivity.REQUEST_CODE);
-    }
-
-    private interface Listener {
-        // triggers upon any error found, alerts user via status screen, sends report, closes app
-        void onError(Exception e, String message);
-
-        // sets current event id, triggers first event
-        void onInit();
-
-        // triggers app to onResume main activity
-        void onFinish();
     }
 }

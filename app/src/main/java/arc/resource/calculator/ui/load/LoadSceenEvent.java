@@ -23,7 +23,5 @@ public enum LoadSceenEvent {
     Initialize,
     CheckVersion,
     UpdateDatabase,
-    UpdatePreferences,
-    CraftingQueue,
     Finalize
 }

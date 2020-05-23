@@ -26,9 +26,12 @@ import arc.resource.calculator.db.entity.primary.ResourceEntity;
 public interface ResourceDao {
     String tableName = "resources";
 
-    @Insert()
-    ResourceEntity insert(ResourceEntity resourceEntity);
+    @Insert
+    void insert(ResourceEntity resourceEntity);
 
     @Query("delete from resources")
     void deleteAll();
+
+    @Query("select 1 from resources where uuid is :uuid")
+    ResourceEntity getResource(String uuid);
 }
