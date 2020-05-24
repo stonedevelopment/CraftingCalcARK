@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity.primary;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -35,20 +36,21 @@ import arc.resource.calculator.db.dao.primary.EngramDao;
  */
 @Entity(tableName = EngramDao.tableName)
 public class EngramEntity {
+    @NonNull
     @PrimaryKey
-    private final String uuid;
-    private final String name;
-    private final String description;
-    private final String imageFile;
-    private final int level;
-    private final int yield;
-    private final int points;
-    private final int xp;
-    private final int craftingTime;
-    private final Date lastUpdated;
-    private final String gameId;
+    private String uuid;
+    private String name;
+    private String description;
+    private String imageFile;
+    private int level;
+    private int yield;
+    private int points;
+    private int xp;
+    private int craftingTime;
+    private Date lastUpdated;
+    private String gameId;
 
-    public EngramEntity(String uuid, String name, String description, String imageFile, int level,
+    public EngramEntity(@NonNull String uuid, String name, String description, String imageFile, int level,
                         int yield, int points, int xp, int craftingTime, Date lastUpdated, String gameId) {
         this.uuid = uuid;
         this.name = name;
@@ -72,13 +74,101 @@ public class EngramEntity {
      * "yield": 1,
      * "points": 0,
      * "xp": 0,
-     *
      * "craftingTime": 0,
      * "lastUpdated": 1589732742789,
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
     public static EngramEntity fromJSON(JsonNode node) throws JsonProcessingException {
         return new ObjectMapper().treeToValue(node, EngramEntity.class);
+    }
+
+    @NonNull
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(@NonNull String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getYield() {
+        return yield;
+    }
+
+    public void setYield(int yield) {
+        this.yield = yield;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public int getCraftingTime() {
+        return craftingTime;
+    }
+
+    public void setCraftingTime(int craftingTime) {
+        this.craftingTime = craftingTime;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
     @Override
@@ -99,49 +189,5 @@ public class EngramEntity {
                 gameId.equals(engram.gameId);
 
 
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImageFile() {
-        return imageFile;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getYield() {
-        return yield;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public int getXp() {
-        return xp;
-    }
-
-    public int getCraftingTime() {
-        return craftingTime;
-    }
-
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public String getGameId() {
-        return gameId;
     }
 }

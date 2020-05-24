@@ -16,4 +16,12 @@
 
 package arc.resource.calculator.ui.explorer;
 
-public enum ExplorerItemType {CraftingStation, Folder, Engram}
+import java.util.List;
+
+import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+
+public class DirectorySnapshot {
+    private final ExplorerItem explorerItem;
+    private final List<DirectoryEntity>
+}

@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity.primary;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -27,18 +28,21 @@ import arc.resource.calculator.db.dao.primary.DirectoryDao;
 
 @Entity(tableName = DirectoryDao.tableName)
 public class DirectoryEntity {
+    @NonNull
     @PrimaryKey
-    private final String uuid;
-    private final String name;
-    private final String imageFile;
-    private final String parentId;
-    private final String sourceId;
-    private final String gameId;
+    private String uuid;
+    private String name;
+    private String imageFile;
+    private int viewType;
+    private String parentId;
+    private String sourceId;
+    private String gameId;
 
-    private DirectoryEntity(String uuid, String name, String imageFile, String parentId, String sourceId, String gameId) {
+    public DirectoryEntity(@NonNull String uuid, String name, String imageFile, int viewType, String parentId, String sourceId, String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;
+        this.viewType = viewType;
         this.parentId = parentId;
         this.sourceId = sourceId;
         this.gameId = gameId;
@@ -56,27 +60,60 @@ public class DirectoryEntity {
         return new ObjectMapper().treeToValue(node, DirectoryEntity.class);
     }
 
+    @NonNull
     public String getUuid() {
         return uuid;
+    }
+
+    public void setUuid(@NonNull String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getImageFile() {
         return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 
     public String getParentId() {
         return parentId;
     }
 
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
     public String getSourceId() {
         return sourceId;
     }
 
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+
     public String getGameId() {
         return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

@@ -31,7 +31,7 @@ public interface StationDao {
     String columnName = "stationid";
 
     @Insert
-    StationEntity insert(StationEntity entity);
+    void insert(StationEntity entity);
 
     @Query("delete from stations")
     void deleteAll();

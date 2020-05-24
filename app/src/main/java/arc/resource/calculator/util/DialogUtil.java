@@ -27,25 +27,10 @@ import androidx.appcompat.app.AlertDialog;
 
 import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.DatabaseHelper;
 import arc.resource.calculator.model.engram.QueueEngram;
 import arc.resource.calculator.repository.queue.QueueRepository;
 
 public class DialogUtil {
-    public abstract static class Callback {
-        public void onResult(@Nullable Object result) {
-            // do nothing
-        }
-
-        public void onOk() {
-            // do nothing
-        }
-
-        public void onCancel(@Nullable Object obj) {
-            // do nothing
-        }
-    }
-
     static AlertDialog Error(Context c, final Callback cb) {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.AlertDialogCustom));
         builder.setTitle(c.getString(R.string.dialog_error_title))
@@ -143,10 +128,22 @@ public class DialogUtil {
                                 "Steam:\n  MasterxOfxNone\n" +
                                 "Xbox Live:\n  MasterxOfxNone\n\n" +
                                 "App Version: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_CODE + "\n" +
-                                "Database Version: " + DatabaseHelper.DATABASE_VERSION + "\n" +
-                                "JSON File Version: " + PrefsUtil.getInstance(context).getVersionForPrimary() + "\n\n" +
                                 "Screen Size: " + context.getString(R.string.dimens));
 
         return builder.create();
+    }
+
+    public abstract static class Callback {
+        public void onResult(@Nullable Object result) {
+            // do nothing
+        }
+
+        public void onOk() {
+            // do nothing
+        }
+
+        public void onCancel(@Nullable Object obj) {
+            // do nothing
+        }
     }
 }

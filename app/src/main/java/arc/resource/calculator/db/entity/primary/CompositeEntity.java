@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity.primary;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -27,18 +28,18 @@ import arc.resource.calculator.db.dao.primary.CompositeDao;
 
 @Entity(tableName = CompositeDao.tableName)
 public class CompositeEntity {
-
+    @NonNull
     @PrimaryKey
-    private final String uuid;
-    private final String name;
-    private final String imageFile;
-    private final int quantity;
-    private final String sourceId;
-    private final String compositionId;
-    private final String gameId;
-    private final boolean isEngram;
+    private String uuid;
+    private String name;
+    private String imageFile;
+    private int quantity;
+    private String sourceId;
+    private String compositionId;
+    private String gameId;
+    private boolean isEngram;
 
-    public CompositeEntity(String uuid, String name, String imageFile, int quantity,
+    public CompositeEntity(@NonNull String uuid, String name, String imageFile, int quantity,
                            String sourceId, String compositionId, String gameId,
                            boolean isEngram) {
         this.uuid = uuid;
@@ -65,35 +66,68 @@ public class CompositeEntity {
         return new ObjectMapper().treeToValue(node, CompositeEntity.class);
     }
 
+    @NonNull
     public String getUuid() {
         return uuid;
+    }
+
+    public void setUuid(@NonNull String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getImageFile() {
         return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public String getSourceId() {
         return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getCompositionId() {
         return compositionId;
     }
 
+    public void setCompositionId(String compositionId) {
+        this.compositionId = compositionId;
+    }
+
     public String getGameId() {
         return gameId;
     }
 
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     public boolean isEngram() {
         return isEngram;
+    }
+
+    public void setIsEngram(boolean isEngram) {
+        this.isEngram = isEngram;
     }
 }

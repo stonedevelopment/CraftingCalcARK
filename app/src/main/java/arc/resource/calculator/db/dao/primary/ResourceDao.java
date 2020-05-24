@@ -32,6 +32,6 @@ public interface ResourceDao {
     @Query("delete from resources")
     void deleteAll();
 
-    @Query("select 1 from resources where uuid is :uuid")
+    @Query("select * from resources where uuid is :uuid")
     ResourceEntity getResource(String uuid);
 }

@@ -35,6 +35,6 @@ public interface DirectoryDao {
     @Query("delete from directory")
     void deleteAll();
 
-    @Query("select * from directory where parentId is :parentId and gameId is :gameId")
-    LiveData<List<DirectoryEntity>> getDirectory(String parentId, String gameId);
+    @Query("select * from directory where parentId is :parentId order by viewType asc, name asc")
+    LiveData<List<DirectoryEntity>> getDirectory(String parentId);
 }

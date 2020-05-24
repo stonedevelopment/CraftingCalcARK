@@ -30,7 +30,7 @@ public interface CompositeDao {
     String tableName = "composites";
 
     @Insert
-    CompositeEntity insert(CompositeEntity entity);
+    void insert(CompositeEntity entity);
 
     @Query("delete from composites")
     void deleteAll();

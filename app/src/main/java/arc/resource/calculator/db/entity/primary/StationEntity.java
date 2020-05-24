@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity.primary;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -35,15 +36,16 @@ import arc.resource.calculator.db.dao.primary.StationDao;
  */
 @Entity(tableName = StationDao.tableName)
 public class StationEntity {
+    @NonNull
     @PrimaryKey
-    private final String uuid;
-    private final String name;
-    private final String imageFile;
-    private final String engramId;
-    private final Date lastUpdated;
-    private final String gameId;
+    private String uuid;
+    private String name;
+    private String imageFile;
+    private String engramId;
+    private Date lastUpdated;
+    private String gameId;
 
-    public StationEntity(String uuid, String name, String imageFile, String engramId, Date lastUpdated, String gameId) {
+    public StationEntity(@NonNull String uuid, String name, String imageFile, String engramId, Date lastUpdated, String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;
@@ -64,6 +66,55 @@ public class StationEntity {
         return new ObjectMapper().treeToValue(node, StationEntity.class);
     }
 
+    @NonNull
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(@NonNull String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public String getEngramId() {
+        return engramId;
+    }
+
+    public void setEngramId(String engramId) {
+        this.engramId = engramId;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (this == obj) return true;
@@ -75,29 +126,5 @@ public class StationEntity {
                 engramId.equals(station.getEngramId()) &&
                 imageFile.equals(station.getImageFile()) &&
                 gameId.equals(station.getGameId());
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEngramId() {
-        return engramId;
-    }
-
-    public String getImageFile() {
-        return imageFile;
-    }
-
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public String getGameId() {
-        return gameId;
     }
 }

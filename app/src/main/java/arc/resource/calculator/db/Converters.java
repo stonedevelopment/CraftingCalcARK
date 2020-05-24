@@ -14,12 +14,20 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.back;
+package arc.resource.calculator.db;
 
-import arc.resource.calculator.ui.explorer.ExplorerItem;
+import androidx.room.TypeConverter;
 
-public class BackFolderExplorerItem extends ExplorerItem {
-    public BackFolderExplorerItem(int rowId, String title, String image) {
-        super(rowId, title, image);
+import java.util.Date;
+
+public class Converters {
+    @TypeConverter
+    public static Date valueToDate(Long value) {
+        return value == null ? null : new Date(value);
+    }
+
+    @TypeConverter
+    public static Long dateToValue(Date date) {
+        return date == null ? null : date.getTime();
     }
 }

@@ -17,175 +17,91 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 import java.util.Stack;
 
-import arc.resource.calculator.ui.explorer.back.BackFolderExplorerItem;
-import arc.resource.calculator.ui.explorer.engram.EngramExplorerItem;
-import arc.resource.calculator.ui.explorer.engram.EngramExplorerRepository;
-import arc.resource.calculator.ui.explorer.folder.FolderExplorerItem;
-import arc.resource.calculator.ui.explorer.folder.FolderExplorerRepository;
-import arc.resource.calculator.ui.explorer.station.StationExplorerItem;
-import arc.resource.calculator.ui.explorer.station.StationExplorerRepository;
-
-import static arc.resource.calculator.db.AppDatabase.cParentId;
+import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.model.SingleLiveEvent;
+import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerViewModel extends AndroidViewModel {
     // TODO: Maintain filters?
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
-    private final StationExplorerRepository mStationExplorerRepository;
-    private final FolderExplorerRepository mFolderExplorerRepository;
-    private final EngramExplorerRepository mEngramExplorerRepository;
-
-    private final LiveData<List<StationExplorerItem>> mStations;
-    private final LiveData<List<FolderExplorerItem>> mFolders;
-    private final LiveData<List<EngramExplorerItem>> mEngrams;
-
-    private final MutableLiveData<BackFolderExplorerItem> mBackFolderExplorerItem = new MutableLiveData<>();
-
-    private final Stack<ExplorerItem> mStack = new Stack<>();
+    private final ExplorerRepository mRepository;
+    private final SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
+    private final Stack<ExplorerItem> mHistoryStack = new Stack<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
-        mStationExplorerRepository = new StationExplorerRepository(application);
-        mFolderExplorerRepository = new FolderExplorerRepository(application);
-        mEngramExplorerRepository = new EngramExplorerRepository(application);
-
-        mStations = mStationExplorerRepository.getStations();
-        mFolders = mFolderExplorerRepository.getFolders();
-        mEngrams = mEngramExplorerRepository.getEngrams();
+        mRepository = new ExplorerRepository(application);
     }
 
-    LiveData<List<StationExplorerItem>> getStations() {
-        return mStations;
+    SingleLiveEvent<String> getSnackBarMessageEvent() {
+        return mSnackBarMessageEvent;
     }
 
-    LiveData<List<FolderExplorerItem>> getFolders() {
-        return mFolders;
+    void setSnackBarMessage(String message) {
+        mSnackBarMessageEvent.setValue(message);
     }
 
-    LiveData<List<EngramExplorerItem>> getEngrams() {
-        return mEngrams;
-    }
-
-    MutableLiveData<BackFolderExplorerItem> getBackFolderExplorerItem() {
-        return mBackFolderExplorerItem;
-    }
-
-    private void setBackFolderExplorerItem(@Nullable BackFolderExplorerItem explorerItem) {
-        mBackFolderExplorerItem.setValue(explorerItem);
+    LiveData<List<DirectoryEntity>> getDirectorySnapshot() {
+        return mRepository.getDirectorySnapshot();
     }
 
     @Nullable
     private ExplorerItem getCurrentExplorerItem() {
-        if (mStack.isEmpty()) return null;
-
-        return mStack.peek();
+        if (mHistoryStack.isEmpty()) return null;
+        return mHistoryStack.peek();
     }
 
     @Nullable
-    private BackFolderExplorerItem getParentExplorerItem() {
-        if (mStack.size() == 1) return null;
-
-        int parentPosition = mStack.size() - 2;
-        ExplorerItem parentExplorerItem = mStack.get(parentPosition);
-        return (BackFolderExplorerItem) parentExplorerItem;
+    private ExplorerItem getParentExplorerItem() {
+        if (mHistoryStack.size() == 1) return null;
+        int parentPosition = mHistoryStack.size() - 2;
+        return mHistoryStack.get(parentPosition);
     }
 
-    private void setupBackFolderExplorerItem() {
-        setBackFolderExplorerItem(getParentExplorerItem());
+    private void pushToStack(ExplorerItem explorerItem) {
+        mHistoryStack.push(explorerItem);
     }
 
-    private void addToStack(ExplorerItem explorerItem) {
-        mStack.push(explorerItem);
+    private void popFromStack() {
+        mHistoryStack.pop();
     }
 
-    private void removeLastFromStack() {
-        mStack.pop();
-    }
-
-    /**
-     * User-derived action that "opens" a crafting station to expose a list of its contents
-     * (change station as current destination container)
-     *
-     * @param stationExplorerItem Station to select (change to)
-     */
-    private void selectStation(StationExplorerItem stationExplorerItem) {
-        mStationExplorerRepository.clearStations();
-        mFolderExplorerRepository.fetchFolders(stationExplorerItem.getId(), cParentId);
-        mEngramExplorerRepository.fetchEngrams(stationExplorerItem.getId(), cParentId);
-    }
-
-    /**
-     * User-derived back action that "closes" a crafting station to expose the list of
-     * available crafting stations.
-     * (back action for folders: back button or tapping a back folder)
-     */
-    private void deselectStation() {
-        mStationExplorerRepository.fetchStations();
-        mFolderExplorerRepository.clearFolders();
-        mEngramExplorerRepository.clearEngrams();
-    }
-
-    /**
-     * User-derived action that "opens" a folder location to expose a list of its contents.
-     * (adds selected folder for a stack of folders to track history)
-     *
-     * @param folderExplorerItem Folder to select (change to)
-     */
-    private void selectFolder(FolderExplorerItem folderExplorerItem) {
-        mStationExplorerRepository.clearStations();
-        mFolderExplorerRepository.fetchFolders(folderExplorerItem.getStationId(), folderExplorerItem.getId());
-        mEngramExplorerRepository.fetchEngrams(folderExplorerItem.getStationId(), folderExplorerItem.getId());
-    }
-
-    /**
-     * ViewHolder-derived action triggered when User clicks on an engram thumbnail
-     *
-     * @param engramExplorerItem Engram to select (view)
-     */
-    public void selectEngram(EngramExplorerItem engramExplorerItem) {
-        //  navigate to details screen for engram
-    }
-
-    public void goForward(ExplorerItem explorerItem) {
-        addToStack(explorerItem);
-        setupBackFolderExplorerItem();
-
-        if (getCurrentExplorerItem() instanceof StationExplorerItem) {
-            selectStation((StationExplorerItem) getCurrentExplorerItem());
-        } else if (getCurrentExplorerItem() instanceof FolderExplorerItem) {
-            selectFolder((FolderExplorerItem) getCurrentExplorerItem());
+    void handleOnClickEvent(ExplorerItem explorerItem) {
+        if (explorerItem.getViewType() == 2 ||
+                explorerItem.getViewType() == 1) {
+            navigateTo(explorerItem);
+        } else if (explorerItem instanceof BackFolderExplorerItem) {
+            navigateFrom(explorerItem);
         } else {
-            //  throw exception
-            Log.d(TAG, "goForward: unknown instanceof (" + explorerItem.getClass() + ")");
+            viewDetails(explorerItem);
         }
     }
 
-    /**
-     * User-derived back action
-     */
-    public void goBack() {
-        removeLastFromStack();
-        setupBackFolderExplorerItem();
+    private void navigateTo(ExplorerItem explorerItem) {
+        pushToStack(explorerItem);
+        fetchDirectory(explorerItem.getUuid());
+    }
 
-        if (getCurrentExplorerItem() == null) {
-            deselectStation();
-        } else if (getCurrentExplorerItem() instanceof StationExplorerItem) {
-            selectStation((StationExplorerItem) getCurrentExplorerItem());
-        } else if (getCurrentExplorerItem() instanceof FolderExplorerItem) {
-            selectFolder((FolderExplorerItem) getCurrentExplorerItem());
-        } else {
-            //  throw exception
-            Log.d(TAG, "goForward: unknown instanceof (" + getCurrentExplorerItem().getClass() + ")");
-        }
+    private void navigateFrom(ExplorerItem explorerItem) {
+        popFromStack();
+        fetchDirectory(explorerItem.getParentId());
+    }
+
+    private void viewDetails(ExplorerItem explorerItem) {
+        //  request detail pop up
+    }
+
+    private void fetchDirectory(String parentId) {
+        mRepository.fetchDirectory(parentId);
     }
 }

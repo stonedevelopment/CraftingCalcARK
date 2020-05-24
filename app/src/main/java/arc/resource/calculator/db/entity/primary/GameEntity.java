@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity.primary;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -29,17 +30,18 @@ import arc.resource.calculator.db.dao.GameDao;
 
 @Entity(tableName = GameDao.tableName)
 public class GameEntity {
+    @NonNull
     @PrimaryKey
-    private final String uuid;
-    private final String name;
-    private final String description;
-    private final String filePath;
-    private final String logoFile;
-    private final String folderFile;
-    private final String backFolderFile;
-    private final Date lastUpdated;
+    private String uuid;
+    private String name;
+    private String description;
+    private String filePath;
+    private String logoFile;
+    private String folderFile;
+    private String backFolderFile;
+    private Date lastUpdated;
 
-    private GameEntity(String uuid, String name, String description, String filePath, String logoFile, String folderFile, String backFolderFile, Date lastUpdated) {
+    public GameEntity(@NonNull String uuid, String name, String description, String filePath, String logoFile, String folderFile, String backFolderFile, Date lastUpdated) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
@@ -64,35 +66,68 @@ public class GameEntity {
         return new ObjectMapper().treeToValue(node, GameEntity.class);
     }
 
+    @NonNull
     public String getUuid() {
         return uuid;
+    }
+
+    public void setUuid(@NonNull String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFilePath() {
         return filePath;
     }
 
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
     public String getLogoFile() {
         return logoFile;
+    }
+
+    public void setLogoFile(String logoFile) {
+        this.logoFile = logoFile;
     }
 
     public String getFolderFile() {
         return folderFile;
     }
 
+    public void setFolderFile(String folderFile) {
+        this.folderFile = folderFile;
+    }
+
     public String getBackFolderFile() {
         return backFolderFile;
     }
 
+    public void setBackFolderFile(String backFolderFile) {
+        this.backFolderFile = backFolderFile;
+    }
+
     public Date getLastUpdated() {
         return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

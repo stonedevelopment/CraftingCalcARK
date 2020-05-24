@@ -28,7 +28,6 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.MergeAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -39,14 +38,6 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.ui.detail.DetailFragment;
-import arc.resource.calculator.ui.explorer.back.BackFolderExplorerItemAdapter;
-import arc.resource.calculator.ui.explorer.back.BackFolderExplorerItemCallback;
-import arc.resource.calculator.ui.explorer.engram.EngramExplorerItemAdapter;
-import arc.resource.calculator.ui.explorer.engram.EngramExplorerItemCallback;
-import arc.resource.calculator.ui.explorer.folder.FolderExplorerItemAdapter;
-import arc.resource.calculator.ui.explorer.folder.FolderExplorerItemCallback;
-import arc.resource.calculator.ui.explorer.station.StationExplorerItemAdapter;
-import arc.resource.calculator.ui.explorer.station.StationExplorerItemCallback;
 
 import static android.app.Activity.RESULT_OK;
 import static arc.resource.calculator.DetailActivity.ADD;
@@ -63,10 +54,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private ExplorerViewModel mViewModel;
 
-    private StationExplorerItemAdapter mStationAdapter;
-    private FolderExplorerItemAdapter mFolderAdapter;
-    private EngramExplorerItemAdapter mEngramAdapter;
-    private BackFolderExplorerItemAdapter mBackFolderAdapter;
+    private ExplorerItemAdapter mAdapter;
 
     private ExplorerNavigationTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
@@ -76,23 +64,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.explorer_fragment, container, false);
 
-        RecyclerView recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
-
-        //  setup layout manager
-        int numCols = getResources().getInteger(R.integer.gridview_column_count);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
-
-        //  setup view adapter
-        mStationAdapter = new StationExplorerItemAdapter(getContext(), new StationExplorerItemCallback());
-        mFolderAdapter = new FolderExplorerItemAdapter(getContext(), new FolderExplorerItemCallback());
-        mEngramAdapter = new EngramExplorerItemAdapter(getContext(), new EngramExplorerItemCallback());
-        mBackFolderAdapter = new BackFolderExplorerItemAdapter((getContext()), new BackFolderExplorerItemCallback());
-
-        MergeAdapter adapter = new MergeAdapter(mStationAdapter, mBackFolderAdapter, mFolderAdapter, mEngramAdapter);
-        recyclerView.setAdapter(adapter);
-
-        mTextView = rootView.findViewById(R.id.explorerNavigationTextView);
-        mProgressBar = rootView.findViewById(R.id.explorerProgressBar);
+        setupAdapter();
+        setupViews(rootView);
 
         return rootView;
     }
@@ -102,6 +75,27 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         super.onActivityCreated(savedInstanceState);
 
         setupViewModel();
+    }
+
+    private void setupAdapter() {
+        mAdapter = new ExplorerItemAdapter(getContext());
+    }
+
+    private void setupViews(View rootView) {
+        RecyclerView recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
+        int numCols = getResources().getInteger(R.integer.gridview_column_count);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
+        recyclerView.setAdapter(mAdapter);
+
+        mTextView = rootView.findViewById(R.id.explorerNavigationTextView);
+        mProgressBar = rootView.findViewById(R.id.explorerProgressBar);
+    }
+
+    private void setupViewModel() {
+        mViewModel = new ViewModelProvider(this).get(ExplorerViewModel.class);
+
+        mViewModel.getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
+        mViewModel.getDirectorySnapshot().observe(getViewLifecycleOwner(), snapshot -> mAdapter.mapDirectorySnapshot(snapshot));
     }
 
     @Override
@@ -121,17 +115,14 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
                 switch (extraResultCode) {
                     case REMOVE:
-                        showSnackBar(
-                                String.format(getString(R.string.snackbar_message_item_removed_success_format), name));
+                        mViewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_item_removed_success_format), name));
                         break;
-
                     case UPDATE:
-                        showSnackBar(
-                                String.format(getString(R.string.snackbar_message_item_updated_success_format), name));
+                        mViewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_item_updated_success_format), name));
                         break;
 
                     case ADD:
-                        showSnackBar(String.format(getString(R.string.snackbar_message_item_added_success_format), name));
+                        mViewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_item_added_success_format), name));
                         break;
                 }
             } else {
@@ -139,24 +130,15 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
                     Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
 
                     if (e != null) {
-                        showSnackBar(getString(R.string.snackbar_message_details_error));
+                        mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_error));
 
                         ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
                     }
                 } else {
-                    showSnackBar(getString(R.string.snackbar_message_details_no_change));
+                    mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_no_change));
                 }
             }
         }
-    }
-
-    private void setupViewModel() {
-        mViewModel = new ViewModelProvider(this).get(ExplorerViewModel.class);
-
-        mViewModel.getStations().observe(getViewLifecycleOwner(), stations -> mStationAdapter.submitList(stations));
-        mViewModel.getFolders().observe(getViewLifecycleOwner(), folders -> mFolderAdapter.submitList(folders));
-        mViewModel.getEngrams().observe(getViewLifecycleOwner(), engrams -> mEngramAdapter.submitList(engrams));
-        mViewModel.getBackFolderExplorerItem().observe(getViewLifecycleOwner(), backFolder -> mBackFolderAdapter.submit(backFolder));
     }
 
     private void showLoading() {
@@ -171,8 +153,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         mProgressBar.hide();    // TODO: 1/27/2020 what do we do with an empty explorer data set?
     }
 
-    private void showSnackBar(String s) {
-        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.explorerCoordinatorLayout), s, Snackbar.LENGTH_SHORT).show();
+    private void showSnackBar(String message) {
+        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.explorerCoordinatorLayout), message, Snackbar.LENGTH_SHORT).show();
     }
 
     private void showDialogFragment(DetailFragment fragment) {

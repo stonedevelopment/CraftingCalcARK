@@ -29,7 +29,7 @@ public interface CompositionDao {
     String tableName = "compositions";
 
     @Insert
-    CompositionEntity insert(CompositionEntity entity);
+    void insert(CompositionEntity entity);
 
     @Query("delete from compositions")
     void deleteAll();

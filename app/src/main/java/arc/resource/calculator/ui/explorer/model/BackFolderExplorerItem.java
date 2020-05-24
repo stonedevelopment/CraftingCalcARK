@@ -14,8 +14,10 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.back;
+package arc.resource.calculator.ui.explorer.model;
 
-public enum BackFolderExplorerItemType {
-    CraftingStation, Folder
+public class BackFolderExplorerItem extends ExplorerItem {
+    public BackFolderExplorerItem(String uuid, String title, String imageFile, String sourceId, String parentId) {
+        super(uuid, title, imageFile, sourceId, parentId);
+    }
 }

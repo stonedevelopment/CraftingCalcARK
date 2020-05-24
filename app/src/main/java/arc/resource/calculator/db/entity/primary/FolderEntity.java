@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity.primary;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -34,12 +35,13 @@ import arc.resource.calculator.db.dao.primary.FolderDao;
  */
 @Entity(tableName = FolderDao.tableName)
 public class FolderEntity {
+    @NonNull
     @PrimaryKey
-    private final String uuid;
-    private final String name;
-    private final String gameId;
+    private String uuid;
+    private String name;
+    private String gameId;
 
-    public FolderEntity(String uuid, String name, String gameId) {
+    public FolderEntity(@NonNull String uuid, String name, String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.gameId = gameId;
@@ -54,6 +56,31 @@ public class FolderEntity {
         return new ObjectMapper().treeToValue(node, FolderEntity.class);
     }
 
+    @NonNull
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(@NonNull String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (this == obj) return true;
@@ -63,17 +90,5 @@ public class FolderEntity {
         return uuid.equals(folder.getUuid()) &&
                 name.equals(folder.getName()) &&
                 gameId.equals(folder.getGameId());
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getGameId() {
-        return gameId;
     }
 }

@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.entity.primary;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -29,13 +30,14 @@ import arc.resource.calculator.db.dao.primary.CompositionDao;
 
 @Entity(tableName = CompositionDao.tableName)
 public class CompositionEntity {
+    @NonNull
     @PrimaryKey
-    private final String uuid;
-    private final String engramId;
-    private final Date lastUpdated;
-    private final String gameId;
+    private String uuid;
+    private String engramId;
+    private Date lastUpdated;
+    private String gameId;
 
-    private CompositionEntity(String uuid, String engramId, Date lastUpdated, String gameId) {
+    public CompositionEntity(@NonNull String uuid, String engramId, Date lastUpdated, String gameId) {
         this.uuid = uuid;
         this.engramId = engramId;
         this.lastUpdated = lastUpdated;
@@ -52,19 +54,36 @@ public class CompositionEntity {
         return new ObjectMapper().treeToValue(node, CompositionEntity.class);
     }
 
+    @NonNull
     public String getUuid() {
         return uuid;
+    }
+
+    public void setUuid(@NonNull String uuid) {
+        this.uuid = uuid;
     }
 
     public String getEngramId() {
         return engramId;
     }
 
+    public void setEngramId(String engramId) {
+        this.engramId = engramId;
+    }
+
     public Date getLastUpdated() {
         return lastUpdated;
     }
 
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
     public String getGameId() {
         return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

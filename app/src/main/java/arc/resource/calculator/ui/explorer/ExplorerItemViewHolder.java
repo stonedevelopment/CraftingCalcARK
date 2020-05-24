@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.engram;
+package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
 import android.view.View;
@@ -30,25 +30,23 @@ import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.ui.explorer.ExplorerViewModel;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
-class EngramExplorerItemViewHolder extends RecyclerView.ViewHolder {
+class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
     private final MaterialCardView mCardView;
     private final AppCompatImageView mThumbnail;
     private final MaterialTextView mTitle;
-    private final MaterialTextView mQuantity;
 
-    EngramExplorerItemViewHolder(@NonNull View itemView) {
+    ExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
         mCardView = itemView.findViewById(R.id.cardView);
         mThumbnail = itemView.findViewById(R.id.thumbnail);
         mTitle = itemView.findViewById(R.id.title);
-        mQuantity = itemView.findViewById(R.id.quantity);
     }
 
-    void bind(Context context, EngramExplorerItem explorerItem) {
-        final String imagePath = "file:///android_asset/" + explorerItem.getImage();
+    void bind(Context context, ExplorerItem explorerItem) {
+        final String imagePath = "file:///android_asset/" + explorerItem.getImageFile();
 
         Picasso.with(context)
                 .load(imagePath)
@@ -60,7 +58,7 @@ class EngramExplorerItemViewHolder extends RecyclerView.ViewHolder {
 
         mCardView.setOnClickListener(v -> {
             ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
-            viewModel.selectEngram(explorerItem);
+            viewModel.handleOnClickEvent(explorerItem);
         });
     }
 }
