@@ -17,7 +17,6 @@
 package arc.resource.calculator.ui.load;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -26,47 +25,80 @@ import java.util.List;
 
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
+import arc.resource.calculator.util.ExceptionUtil;
 
 public class LoadScreenViewModel extends AndroidViewModel {
     public static final String TAG = LoadScreenViewModel.class.getCanonicalName();
 
-    private SingleLiveEvent<LoadSceenEvent> loadScreenEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<LoadScreenEvent> loadScreenEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<String> statusMessageEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Integer> progressEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Integer> progressTotalEvent = new SingleLiveEvent<>();
 
     private long startTimeInMillis;
-    private int loadScreenEventIndex = 0;
+    private int loadScreenEventIndex;
     private List<Versioning> versioningList;
+    private boolean didUpdate = false;
+    private boolean hasUpdate = false;
 
-    public LoadScreenViewModel(@NonNull Application application) {
+    public LoadScreenViewModel(@NonNull Application application) throws Exception {
         super(application);
 
         initialize();
     }
 
-    private void initialize() {
-        setLoadScreenEvent(LoadSceenEvent.Initialize);
+    private void initialize() throws Exception {
         setStartTime();
-        setProgressTotal(LoadSceenEvent.values().length);
+        setProgressTotal(LoadScreenEvent.values().length);
+        nextLoadScreenEvent();
     }
 
-    SingleLiveEvent<LoadSceenEvent> getLoadScreenEvent() {
+    private void setLoadScreenIndex(int index) {
+        loadScreenEventIndex = index;
+    }
+
+    SingleLiveEvent<LoadScreenEvent> getLoadScreenEvent() {
         return loadScreenEvent;
     }
 
-    private void setLoadScreenEvent(LoadSceenEvent event) {
+    private void setLoadScreenEvent(LoadScreenEvent event) {
         loadScreenEvent.setValue(event);
     }
 
+    private void updateLoadScreenEvent(LoadScreenEvent event) {
+        setLoadScreenIndex(event.ordinal());
+        setLoadScreenEvent(event);
+    }
+
     void nextLoadScreenEvent() {
-        LoadSceenEvent[] events = LoadSceenEvent.values();
-        Log.d(TAG, "nextLoadScreenEvent: " + events[loadScreenEventIndex] + ", " + loadScreenEventIndex);
+        LoadScreenEvent event = getLoadScreenEvent().getValue();
 
-        loadScreenEventIndex++;
-
-        setProgress(loadScreenEventIndex);
-        setLoadScreenEvent(events[loadScreenEventIndex]);
+        if (event != null) {
+            try {
+                switch (event) {
+                    case Initialize:
+                        updateLoadScreenEvent(LoadScreenEvent.CheckVersion);
+                        break;
+                    case CheckVersion:
+                        if (hasUpdate) {
+                            updateLoadScreenEvent(LoadScreenEvent.UpdateDatabase);
+                        } else {
+                            updateLoadScreenEvent(LoadScreenEvent.Finalize);
+                        }
+                        break;
+                    case UpdateDatabase:
+                        updateLoadScreenEvent(LoadScreenEvent.Finalize);
+                        break;
+                    case Finalize:
+                        throw new Exception("There are no other events after Finalize.");
+                }
+            } catch (Exception e) {
+                ExceptionUtil.SendErrorReport(TAG, e);
+                e.printStackTrace();
+            }
+        } else {
+            updateLoadScreenEvent(LoadScreenEvent.Initialize);
+        }
     }
 
     long getStartTime() {

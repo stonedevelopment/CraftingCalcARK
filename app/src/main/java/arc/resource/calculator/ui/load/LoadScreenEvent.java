@@ -19,7 +19,7 @@ package arc.resource.calculator.ui.load;
 /**
  * Events in order of execution.
  */
-public enum LoadSceenEvent {
+public enum LoadScreenEvent {
     Initialize,
     CheckVersion,
     UpdateDatabase,

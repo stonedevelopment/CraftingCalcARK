@@ -23,7 +23,7 @@ public interface UpdateDatabaseListener {
 
     void onStart();
 
-    void onUpdate(Versioning versioning, int progress, int progressTotal);
+    void onProgressUpdate(Versioning versioning, int progress, int progressTotal);
 
     void onFinish();
 }

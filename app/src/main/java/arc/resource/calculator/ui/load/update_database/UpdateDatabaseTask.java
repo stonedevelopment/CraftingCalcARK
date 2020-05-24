@@ -88,28 +88,28 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... aVoid) {
-        for (int i = 0; i < versioningList.size(); i++) {
-            //  get versioning object from list
-            Versioning versioning = versioningList.get(i);
+        try {
+            for (int i = 0; i < versioningList.size(); i++) {
+                //  get versioning object from list
+                Versioning versioning = versioningList.get(i);
 
-            //  tell listener we're starting a new versioning task
-            listener.onUpdate(versioning, i, versioningList.size());
+                //  tell listener we're starting a new versioning task
+                listener.onProgressUpdate(versioning, i, versioningList.size());
 
-            try {
                 if (isPrimary(versioning)) {
                     updatePrimary(versioning);
                 } else {
-                    continue;
+                    //  updateDlc(versioning);
                 }
 
                 prefsUtil.setVersionByUUID(versioning.getUuid(), versioning.getVersion());
-            } catch (IOException e) {
-                listener.onError(e);
-                return null;
             }
+        } catch (IOException e) {
+            listener.onError(e);
+        } finally {
+            prefsUtil.setDidUpdate(true);
+            listener.onFinish();
         }
-
-        listener.onFinish();
         return null;
     }
 

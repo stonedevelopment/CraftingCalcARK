@@ -49,7 +49,6 @@ public class LoadScreenActivity extends AppCompatActivity {
     private PrefsUtil prefsUtil;
     private TextView mTextView;
     private ProgressBar mProgressBar;
-    private boolean mDidUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +58,6 @@ public class LoadScreenActivity extends AppCompatActivity {
         setupViews();
         setupPrefs();
         setupViewModel();
-    }
-
-    private void setupPrefs() {
-        prefsUtil = PrefsUtil.getInstance(getApplicationContext());
-    }
-
-    private void setupViewModel() {
-        mViewModel = new ViewModelProvider(this).get(LoadScreenViewModel.class);
-        mViewModel.getLoadScreenEvent().observe(this, this::eventUpdate);
-        mViewModel.getStatusMessageEvent().observe(this, statusMessage -> mTextView.setText(statusMessage));
-        mViewModel.getProgressEvent().observe(this, progress -> mProgressBar.setProgress(progress));
-        mViewModel.getProgressTotalEvent().observe(this, total -> mProgressBar.setMax(total));
     }
 
     private void setupViews() {
@@ -87,11 +74,23 @@ public class LoadScreenActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.content_init_progress_bar);
     }
 
+    private void setupPrefs() {
+        prefsUtil = PrefsUtil.getInstance(getApplicationContext());
+    }
+
+    private void setupViewModel() {
+        mViewModel = new ViewModelProvider(this).get(LoadScreenViewModel.class);
+        mViewModel.getLoadScreenEvent().observe(this, this::eventUpdate);
+        mViewModel.getStatusMessageEvent().observe(this, statusMessage -> mTextView.setText(statusMessage));
+        mViewModel.getProgressEvent().observe(this, progress -> mProgressBar.setProgress(progress));
+        mViewModel.getProgressTotalEvent().observe(this, total -> mProgressBar.setMax(total));
+    }
+
     private void nextLoadScreenEvent() {
         mViewModel.nextLoadScreenEvent();
     }
 
-    private void eventUpdate(LoadSceenEvent event) {
+    private void eventUpdate(LoadScreenEvent event) {
         switch (event) {
             case Initialize:
                 updateStatusMessage(getString(R.string.initialization_event_init));
@@ -101,8 +100,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 new CheckVersionTask(getApplicationContext(), prefsUtil, new CheckVersionListener() {
                     @Override
                     public void onError(Exception e) {
-                        updateStatusMessage(getString(R.string.initialization_event_check_version_error));
-                        ExceptionUtil.SendErrorReport(TAG, e);
+                        handleExceptionWithMessage(getString(R.string.initialization_event_check_version_error), e);
                     }
 
                     @Override
@@ -122,7 +120,6 @@ public class LoadScreenActivity extends AppCompatActivity {
                         } else {
                             updateStatusMessage(getString(R.string.initialization_event_check_version_finished_without_update));
                         }
-
                         mViewModel.setVersioningList(versioningList);
                         nextLoadScreenEvent();
                     }
@@ -132,8 +129,7 @@ public class LoadScreenActivity extends AppCompatActivity {
                 new UpdateDatabaseTask(getApplicationContext(), prefsUtil, mViewModel.getVersioningList(), new UpdateDatabaseListener() {
                     @Override
                     public void onError(Exception e) {
-                        updateStatusMessage(getString(R.string.initialization_event_update_database_error));
-                        ExceptionUtil.SendErrorReport(TAG, e);
+                        handleExceptionWithMessage(getString(R.string.initialization_event_update_database_error), e);
                     }
 
                     @Override
@@ -142,13 +138,12 @@ public class LoadScreenActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onUpdate(Versioning versioning, int progress, int progressTotal) {
-                        updateStatusMessage(String.format(getString(R.string.initialization_event_update_database_progress_update), versioning, progress, progressTotal));
+                    public void onProgressUpdate(Versioning versioning, int progress, int progressTotal) {
+                        updateStatusMessage(String.format(getString(R.string.initialization_event_update_database_progress_update), versioning.getName(), progress, progressTotal));
                     }
 
                     @Override
                     public void onFinish() {
-                        mDidUpdate = true;
                         updateStatusMessage(getString(R.string.initialization_event_update_database_finished));
                         nextLoadScreenEvent();
                     }
@@ -177,6 +172,11 @@ public class LoadScreenActivity extends AppCompatActivity {
 
     private void sendErrorReport(Exception e) {
         ExceptionUtil.SendErrorReport(TAG, e);
+    }
+
+    private void handleExceptionWithMessage(String message, Exception e) {
+        updateStatusMessage(message);
+        sendErrorReport(e);
     }
 
     private void updateStatusMessage(final String message) {
@@ -210,8 +210,6 @@ public class LoadScreenActivity extends AppCompatActivity {
 
     private void startMainActivity() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(MainActivity.INTENT_KEY_DID_UPDATE, mDidUpdate);
-
         startActivity(intent);
 
         finish();

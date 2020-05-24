@@ -28,6 +28,7 @@ import arc.resource.calculator.listeners.PrefsObserver;
 public class PrefsUtil {
     public static final String cVersionPrimary = "versionPrimary";
     public static final String cVersionDLC = "versionDLC_";
+    private static final String cDidUpdate = "didUpdate";
     private static final String TAG = PrefsUtil.class.getSimpleName();
     public static String FirstUseKey = "first_use";
     public static boolean FirstUseDefaultValue = true;
@@ -182,6 +183,14 @@ public class PrefsUtil {
 
     public void setVersionByUUID(String uuid, String newVersion) {
         editPreference(uuid, newVersion);
+    }
+
+    public boolean getDidUpdate() {
+        return getPreference(cDidUpdate, false);
+    }
+
+    public void setDidUpdate(boolean didUpdate) {
+        editPreference(cDidUpdate, didUpdate);
     }
 
     public String getCraftingQueueJSONString() {
