@@ -17,7 +17,7 @@
 package arc.resource.calculator.ui.explorer.model;
 
 public class FolderExplorerItem extends ExplorerItem {
-    public FolderExplorerItem(String uuid, String title, String imageFile, String sourceId, String parentId) {
-        super(uuid, title, imageFile, sourceId, parentId);
+    FolderExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
+        super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
     }
 }

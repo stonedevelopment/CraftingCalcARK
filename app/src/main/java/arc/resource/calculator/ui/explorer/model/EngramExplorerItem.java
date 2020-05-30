@@ -19,9 +19,9 @@ package arc.resource.calculator.ui.explorer.model;
 public class EngramExplorerItem extends ExplorerItem {
     private int quantity;
 
-    public EngramExplorerItem(String uuid, String title, String imageFile, String sourceId, String parentId, int quantity) {
-        super(uuid, title, imageFile, sourceId, parentId);
-        this.quantity = quantity;
+    EngramExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId, int quantity) {
+        super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
+        setQuantity(quantity);
     }
 
     public int getQuantity() {
@@ -30,9 +30,5 @@ public class EngramExplorerItem extends ExplorerItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public void increaseQuantity() {
-        this.quantity++;
     }
 }
