@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 import java.util.Stack;
@@ -37,10 +38,12 @@ public class ExplorerViewModel extends AndroidViewModel {
     private final ExplorerRepository mRepository;
     private final SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
     private final Stack<ExplorerItem> mHistoryStack = new Stack<>();
+    private MutableLiveData<DirectorySnapshot> mDirectorySnapshot = new MutableLiveData<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
         mRepository = new ExplorerRepository(application);
+        mRepository.getDirectory().observe(getApplication(), this::setDirectorySnapshot);
     }
 
     SingleLiveEvent<String> getSnackBarMessageEvent() {
@@ -51,8 +54,14 @@ public class ExplorerViewModel extends AndroidViewModel {
         mSnackBarMessageEvent.setValue(message);
     }
 
-    LiveData<List<DirectoryEntity>> getDirectorySnapshot() {
-        return mRepository.getDirectorySnapshot();
+    LiveData<DirectorySnapshot> getDirectorySnapshot() {
+        return mDirectorySnapshot;
+    }
+
+    private void setDirectorySnapshot(List<DirectoryEntity> directory) {
+        ExplorerItem current = getCurrentExplorerItem();
+        DirectorySnapshot snapshot = new DirectorySnapshot(current, directory);
+        mDirectorySnapshot.setValue(snapshot);
     }
 
     @Nullable
@@ -61,15 +70,12 @@ public class ExplorerViewModel extends AndroidViewModel {
         return mHistoryStack.peek();
     }
 
-    @Nullable
-    private ExplorerItem getParentExplorerItem() {
-        if (mHistoryStack.size() == 1) return null;
-        int parentPosition = mHistoryStack.size() - 2;
-        return mHistoryStack.get(parentPosition);
-    }
-
     private void pushToStack(ExplorerItem explorerItem) {
         mHistoryStack.push(explorerItem);
+    }
+
+    private ExplorerItem peek() {
+        return mHistoryStack.peek();
     }
 
     private void popFromStack() {

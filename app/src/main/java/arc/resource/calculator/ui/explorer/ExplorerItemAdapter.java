@@ -29,6 +29,7 @@ import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
@@ -86,10 +87,12 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
         return mItems.size();
     }
 
-    void mapDirectorySnapshot(List<DirectoryEntity> directoryEntityList) {
+    void mapDirectorySnapshot(DirectorySnapshot directorySnapshot) {
         List<ExplorerItem> items = new ArrayList<>();
-        // TODO: 5/24/2020 Add back folder - need current explorerItem for instantiation
-        for (DirectoryEntity entity : directoryEntityList) {
+        if (directorySnapshot.hasParent()) {
+            items.add(BackFolderExplorerItem.fromExplorerItem(directorySnapshot.getParent()));
+        }
+        for (DirectoryEntity entity : directorySnapshot.getDirectory()) {
             items.add(ExplorerItem.fromDirectoryEntity(entity));
         }
         setItems(items);

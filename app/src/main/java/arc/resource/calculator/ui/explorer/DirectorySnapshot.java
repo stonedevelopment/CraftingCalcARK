@@ -18,10 +18,29 @@ package arc.resource.calculator.ui.explorer;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class DirectorySnapshot {
-    private final ExplorerItem explorerItem;
-    private final List<DirectoryEntity>
+    private final ExplorerItem parent;
+    private final List<DirectoryEntity> directory;
+
+    DirectorySnapshot(@Nullable ExplorerItem parent, List<DirectoryEntity> directory) {
+        this.parent = parent;
+        this.directory = directory;
+    }
+
+    public ExplorerItem getParent() {
+        return parent;
+    }
+
+    public List<DirectoryEntity> getDirectory() {
+        return directory;
+    }
+
+    boolean hasParent() {
+        return parent != null;
+    }
 }

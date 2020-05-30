@@ -29,12 +29,12 @@ import arc.resource.calculator.db.dao.primary.DirectoryDao;
 import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 
 public class ExplorerRepository {
-    private final DirectoryDao dao;
-    private LiveData<List<DirectoryEntity>> directorySnapshot;
+    private DirectoryDao dao;
+    private LiveData<List<DirectoryEntity>> directory;
 
     ExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
-        this.dao = db.directoryDao();
+        setDao(db.directoryDao());
         fetch();
     }
 
@@ -42,19 +42,19 @@ public class ExplorerRepository {
         return dao;
     }
 
-    LiveData<List<DirectoryEntity>> getDirectorySnapshot() {
-        return directorySnapshot;
+    private void setDao(DirectoryDao dao) {
+        this.dao = dao;
+    }
+
+    LiveData<List<DirectoryEntity>> getDirectory() {
+        return directory;
     }
 
     private void fetch() {
-        fetchDirectorySnapshot(null);
-    }
-
-    private void fetchDirectorySnapshot(String parentId) {
-        directorySnapshot = dao.getDirectory(parentId);
+        fetchDirectory(null);
     }
 
     void fetchDirectory(@Nullable String parentId) {
-        fetchDirectorySnapshot(parentId);
+        directory = dao.getDirectory(parentId);
     }
 }
