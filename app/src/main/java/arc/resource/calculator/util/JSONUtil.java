@@ -27,6 +27,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
+import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
+
 public class JSONUtil {
     public static final String cVersioning = "versioning";
     public static final String cUuid = "uuid";
@@ -78,15 +80,20 @@ public class JSONUtil {
         return jsonString;
     }
 
-    public static JsonNode parseFileToNode(Context context, String fileName) throws IOException {
+    private static JsonNode parseFileToNode(Context context, String fileName) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         InputStream fileStream = context.getAssets().open(fileName);
         return mapper.readTree(fileStream);
     }
 
-    public static JsonNode readVersioningJsonToString(Context context) throws IOException {
+    public static JsonNode convertVersioningJsonFileToNode(Context context) throws IOException {
         String fileName = cJsonFilePath + "versioning.json";
         return parseFileToNode(context, fileName);
+    }
+
+    public static JsonNode convertJsonFileToNode(Context context, Versioning versioning) throws IOException {
+        String filename = cJsonFilePath + versioning.getFilePath();
+        return parseFileToNode(context, filename);
     }
 
     public static boolean isNewVersion(String oldVersion, String newVersion) {

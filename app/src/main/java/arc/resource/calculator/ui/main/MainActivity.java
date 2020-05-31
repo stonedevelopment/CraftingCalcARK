@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity
     //      Allow app to continue operation as normal
     @Override
     public void onException(String tag, Exception e) {
-        ExceptionUtil.SendErrorReport(tag, e);
+        ExceptionUtil.SendErrorReport(tag, e, false);
     }
 
     //  Hard Exception

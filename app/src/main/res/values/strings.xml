@@ -13,7 +13,7 @@
 
     <!-- LoadActivity: Events: CheckVersion -->
     <string name="initialization_event_check_version_error">Initialization failed while checking for new version.</string>
-    <string name="initialization_event_check_version_start">Checking for new data..</string>
+    <string name="initialization_event_check_version_start">Checking for new stuff and things..</string>
     <string name="initialization_event_check_version_new_version_single">Good news, Survivor! We found 1 new data file, preparing to update..</string>
     <string name="initialization_event_check_version_new_version_multiple">Good news, Survivor! We found <x:g>%1$d</x:g> new data files, preparing to update..</string>
     <string name="initialization_event_check_version_first_install">Ooo… a newbie, eh? Preparing to update..</string>

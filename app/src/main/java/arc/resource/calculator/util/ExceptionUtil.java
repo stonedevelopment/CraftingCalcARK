@@ -21,40 +21,47 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
-
-import java.util.Arrays;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 public class ExceptionUtil {
 
     public static void SendErrorReportWithAlertDialog(final Context context, String tag, final Exception e) {
-        SendErrorReport(tag, e);
 
         DialogUtil.Error(context, new DialogUtil.Callback() {
             @Override
             public void onOk() {
                 // call reset to defaults!
                 PrefsUtil.getInstance(context).saveToDefaultFullReset();
+                SendErrorReport(tag, e, false);
             }
 
             @Override
             public void onCancel(Object o) {
                 // forcibly close app
-                Crashlytics.getInstance().crash();
+                SendErrorReport(tag, e, true);
             }
         }).show();
     }
 
-    public static void SendErrorReport(String tag, Exception e) {
-        if (e.getCause() != null)
-            Crashlytics.log(Log.ERROR, tag, e.getCause().toString());
+    public static void SendErrorReport(
+            String tag, Exception e, boolean isFatal) {
+        FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+        crashlytics.setCustomKey("TAG", tag);
+        crashlytics.recordException(e);
 
-        Crashlytics.log(Log.ERROR, tag, e.toString());
-        Crashlytics.log(Log.ERROR, tag, e.getMessage());
-        Crashlytics.log(Log.ERROR, tag, Arrays.toString(e.getStackTrace()));
-//        Crashlytics.log(Log.ERROR, tag, BuildErrorReportPreferencesBundle().toString());
+        if (isFatal) throw new RuntimeException(tag);
+    }
 
-        Crashlytics.logException(e);
+    public static void SendErrorReportWithMessage(
+            String tag, String message, Exception e, boolean isFatal) {
+        Log.e(tag, String.format("SendErrorReportWithMessage: %1$s", message), e);
+
+        FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+        crashlytics.setCustomKey("TAG", tag);
+        crashlytics.setCustomKey("Message", message);
+        crashlytics.recordException(e);
+
+        if (isFatal) throw new RuntimeException(tag);
     }
 
     // Bundle used to express an array's contents and the requested index

@@ -45,7 +45,7 @@ public class ExceptionObservable {
 
     public void notifyExceptionCaught(String tag, Exception e) {
         //  send silent error report
-        ExceptionUtil.SendErrorReport(tag, e);
+        ExceptionUtil.SendErrorReport(tag, e, false);
 
         //  notify observer that an exception was thrown, allow observer to decide action
         if (mObserver != null)
@@ -54,7 +54,7 @@ public class ExceptionObservable {
 
     public void notifyFatalExceptionCaught(String tag, Exception e) {
         //  send silent error report
-        ExceptionUtil.SendErrorReport(tag, e);
+        ExceptionUtil.SendErrorReport(tag, e, false);
 
         //  notify observer that a fatal exception was thrown, allow observer to decide action
         if (mObserver != null)

@@ -39,7 +39,9 @@ import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JSONUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
-public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
+public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
+    public static final String TAG = UpdateDatabaseTask.class.getCanonicalName();
+
     private AppDatabase database;
     private PrefsUtil prefsUtil;
     private List<Versioning> versioningList;
@@ -48,12 +50,13 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
     private Exception exception;
     private boolean hasException;
 
-    public UpdateDatabaseTask(Context context, PrefsUtil prefsUtil, List<Versioning> versioningList, UpdateDatabaseListener listener) {
+    public UpdateDatabaseTask(Context context, List<Versioning> versioningList, UpdateDatabaseListener listener) {
         setContext(context);
-        setDatabase();
-        setPrefsUtil(prefsUtil);
-        setVersioningList(versioningList);
         setListener(listener);
+        setVersioningList(versioningList);
+
+        setupDatabase();
+        setupPrefsUtil(context);
     }
 
     private Context getContext() {
@@ -64,12 +67,12 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
         this.context = new WeakReference<>(context);
     }
 
-    private void setDatabase() {
+    private void setupDatabase() {
         this.database = AppDatabase.getInstance(getContext());
     }
 
-    private void setPrefsUtil(PrefsUtil prefsUtil) {
-        this.prefsUtil = prefsUtil;
+    private void setupPrefsUtil(Context context) {
+        this.prefsUtil = PrefsUtil.getInstance(context);
     }
 
     private void setListener(UpdateDatabaseListener listener) {
@@ -80,42 +83,48 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
         this.versioningList = versioningList;
     }
 
-    private boolean isPrimary(Versioning versioning) {
-        return versioning instanceof PrimaryVersioning;
+    @Override
+    protected void onPreExecute() {
+        listener.onStart();
     }
 
-    private JsonNode getJsonNodeFromFilePath(String filePath) throws IOException {
-        return JSONUtil.parseFileToNode(getContext(), filePath);
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        int index = values[0];
+        Versioning versioning = versioningList.get(index);
+        int size = versioningList.size();
+
+        listener.onProgressUpdate(versioning, index, size);
     }
 
     @Override
     protected Void doInBackground(Void... aVoid) {
         try {
             for (int i = 0; i < versioningList.size(); i++) {
+                //  tell listener we're starting a new versioning task
+                publishProgress(i);
+
                 //  get versioning object from list
                 Versioning versioning = versioningList.get(i);
-
-                //  tell listener we're starting a new versioning task
-                listener.onProgressUpdate(versioning, i, versioningList.size());
 
                 if (isPrimary(versioning)) {
                     updatePrimary(versioning);
                 } else {
                     //  updateDlc(versioning);
                 }
-
-                prefsUtil.setVersionByUUID(versioning.getUuid(), versioning.getVersion());
             }
         } catch (IOException e) {
-            exception = e;
-            hasException = true;
+            listener.onError(e);
         }
-
         return null;
     }
 
+    private boolean isPrimary(Versioning versioning) {
+        return versioning instanceof PrimaryVersioning;
+    }
+
     private void updatePrimary(Versioning versioning) throws IOException {
-        JsonNode inNode = getJsonNodeFromFilePath(versioning.getFilePath());
+        JsonNode inNode = JSONUtil.convertJsonFileToNode(getContext(), versioning);
 
         GameEntity details = GameEntity.fromJSON(inNode.get("details"));
 

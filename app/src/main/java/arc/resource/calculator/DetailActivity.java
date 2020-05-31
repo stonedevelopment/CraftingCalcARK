@@ -364,7 +364,7 @@ public class DetailActivity extends AppCompatActivity
 
     @Override
     public void onException(String tag, Exception e) {
-        ExceptionUtil.SendErrorReport(tag, e);
+        ExceptionUtil.SendErrorReport(tag, e, true);
     }
 
     @Override
