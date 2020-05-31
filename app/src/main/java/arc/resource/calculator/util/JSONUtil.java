@@ -34,13 +34,24 @@ public class JSONUtil {
     public static final String cUuid = "uuid";
     public static final String cName = "name";
     public static final String cDescription = "description";
-    public static final String cLogoFile = "logoFile";
+    public static final String cQuantity = "quantity";
+    public static final String cIsEngram = "isEngram";
+    public static final String cLastUpdated = "lastUpdated";
+    public static final String cCompositionId = "compositionId";
+    public static final String cEngramId = "engramId";
+    public static final String cGameId = "gameId";
+    public static final String cParentId = "parentId";
+    public static final String cSourceId = "sourceId";
+    public static final String cBackFolderFile = "backFolderFile";
+    public static final String cImageFile = "imageFile";
     public static final String cFolderFile = "folderFile";
-    public static final String cVersion = "version";
+    public static final String cLogoFile = "logoFile";
     public static final String cFilePath = "filePath";
+    public static final String cViewType = "viewType";
     public static final String cChangeLog = "changelog";
     public static final String cPrimary = "Primary";
     public static final String cDLC = "DLC";
+    public static final String cVersion = "version";
     public static final String TAG = JSONUtil.class.getSimpleName();
     public static final String cJsonFilePath = "json/";
 

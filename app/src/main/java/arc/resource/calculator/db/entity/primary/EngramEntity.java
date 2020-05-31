@@ -21,13 +21,18 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.EngramDao;
+
+import static arc.resource.calculator.util.JSONUtil.cDescription;
+import static arc.resource.calculator.util.JSONUtil.cGameId;
+import static arc.resource.calculator.util.JSONUtil.cImageFile;
+import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
+import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 /**
  * Engram object for base game data (vanilla)
@@ -78,8 +83,19 @@ public class EngramEntity {
      * "lastUpdated": 1589732742789,
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static EngramEntity fromJSON(JsonNode node) throws JsonProcessingException {
-        return new ObjectMapper().treeToValue(node, EngramEntity.class);
+    public static EngramEntity fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String description = node.get(cDescription).asText();
+        String imageFile = node.get(cImageFile).asText();
+        int level = node.get(cImageFile).asInt();
+        int yield = node.get(cImageFile).asInt();
+        int points = node.get(cImageFile).asInt();
+        int xp = node.get(cImageFile).asInt();
+        int craftingTime = node.get(cImageFile).asInt();
+        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
+        String gameId = node.get(cGameId).asText();
+        return new EngramEntity(uuid, name, description, imageFile, level, yield, points, xp, craftingTime, lastUpdated, gameId);
     }
 
     @NonNull

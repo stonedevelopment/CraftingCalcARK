@@ -53,7 +53,7 @@ public class LoadScreenActivity extends AppCompatActivity {
     private void setupViews() {
         ImageView imageView = findViewById(R.id.content_init_image_view);
 
-        final String imagePath = "file:///android_asset/splash.png";
+        final String imagePath = "file:///android_asset/splash.webp";
         Picasso.with(this)
                 .load(imagePath)
                 .error(R.drawable.placeholder_empty)

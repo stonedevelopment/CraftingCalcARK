@@ -22,12 +22,17 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.StationDao;
+
+import static arc.resource.calculator.util.JSONUtil.cEngramId;
+import static arc.resource.calculator.util.JSONUtil.cGameId;
+import static arc.resource.calculator.util.JSONUtil.cImageFile;
+import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
+import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 /**
  * Station object for base game data (vanilla)
@@ -62,8 +67,14 @@ public class StationEntity {
      * "lastUpdated": 1589725368336
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static StationEntity fromJSON(JsonNode node) throws IOException {
-        return new ObjectMapper().treeToValue(node, StationEntity.class);
+    public static StationEntity fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String imageFile = node.get(cImageFile).asText();
+        String engramId = node.get(cEngramId).asText();
+        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
+        String gameId = node.get(cGameId).asText();
+        return new StationEntity(uuid, name, imageFile, engramId, lastUpdated, gameId);
     }
 
     @NonNull

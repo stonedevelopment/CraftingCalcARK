@@ -20,11 +20,17 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
+
+import static arc.resource.calculator.util.JSONUtil.cGameId;
+import static arc.resource.calculator.util.JSONUtil.cImageFile;
+import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cParentId;
+import static arc.resource.calculator.util.JSONUtil.cSourceId;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
+import static arc.resource.calculator.util.JSONUtil.cViewType;
 
 @Entity(tableName = DirectoryDao.tableName)
 public class DirectoryEntity {
@@ -56,8 +62,15 @@ public class DirectoryEntity {
      * "sourceId": "72689ce4-92cc-47e2-95e3-05748c368983",
      * "gameId": "ce61547f-9ace-4a3b-b5c0-216f234339c7"
      */
-    public static DirectoryEntity fromJSON(JsonNode node) throws JsonProcessingException {
-        return new ObjectMapper().treeToValue(node, DirectoryEntity.class);
+    public static DirectoryEntity fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String imageFile = node.get(cImageFile).asText();
+        int viewType = node.get(cViewType).asInt();
+        String parentId = node.get(cParentId).asText();
+        String sourceId = node.get(cSourceId).asText();
+        String gameId = node.get(cGameId).asText();
+        return new DirectoryEntity(uuid, name, imageFile, viewType, parentId, sourceId, gameId);
     }
 
     @NonNull

@@ -22,12 +22,17 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.ResourceDao;
+
+import static arc.resource.calculator.util.JSONUtil.cDescription;
+import static arc.resource.calculator.util.JSONUtil.cGameId;
+import static arc.resource.calculator.util.JSONUtil.cImageFile;
+import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
+import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 /**
  * Resource object for Primary game data
@@ -62,8 +67,14 @@ public class ResourceEntity {
      * "lastUpdated": 1589732742758,
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static ResourceEntity fromJSON(JsonNode node) throws IOException {
-        return new ObjectMapper().treeToValue(node, ResourceEntity.class);
+    public static ResourceEntity fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String description = node.get(cDescription).asText();
+        String imageFile = node.get(cImageFile).asText();
+        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
+        String gameId = node.get(cGameId).asText();
+        return new ResourceEntity(uuid, name, description, imageFile, lastUpdated, gameId);
     }
 
     @NonNull

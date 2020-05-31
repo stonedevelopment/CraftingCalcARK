@@ -22,9 +22,17 @@ import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import arc.resource.calculator.db.dao.primary.CompositeDao;
+
+import static arc.resource.calculator.util.JSONUtil.cCompositionId;
+import static arc.resource.calculator.util.JSONUtil.cGameId;
+import static arc.resource.calculator.util.JSONUtil.cImageFile;
+import static arc.resource.calculator.util.JSONUtil.cIsEngram;
+import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cQuantity;
+import static arc.resource.calculator.util.JSONUtil.cSourceId;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 @Entity(tableName = CompositeDao.tableName)
 public class CompositeEntity {
@@ -62,8 +70,16 @@ public class CompositeEntity {
      * "gameId": "ce61547f-9ace-4a3b-b5c0-216f234339c7",
      * "isEngram": true
      */
-    public static CompositeEntity fromJSON(JsonNode node) throws JsonProcessingException {
-        return new ObjectMapper().treeToValue(node, CompositeEntity.class);
+    public static CompositeEntity fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String imageFile = node.get(cImageFile).asText();
+        int quantity = node.get(cQuantity).asInt();
+        String sourceId = node.get(cSourceId).asText();
+        String compositionId = node.get(cCompositionId).asText();
+        String gameId = node.get(cGameId).asText();
+        boolean isEngram = node.get(cIsEngram).asBoolean();
+        return new CompositeEntity(uuid, name, imageFile, quantity, sourceId, compositionId, gameId, isEngram);
     }
 
     @NonNull

@@ -21,12 +21,19 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.GameDao;
+
+import static arc.resource.calculator.util.JSONUtil.cBackFolderFile;
+import static arc.resource.calculator.util.JSONUtil.cDescription;
+import static arc.resource.calculator.util.JSONUtil.cFilePath;
+import static arc.resource.calculator.util.JSONUtil.cFolderFile;
+import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
+import static arc.resource.calculator.util.JSONUtil.cLogoFile;
+import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 @Entity(tableName = GameDao.tableName)
 public class GameEntity {
@@ -62,8 +69,16 @@ public class GameEntity {
      * "backFolderFile": "backFolder.webp",
      * "lastUpdated": 1589725368121,
      */
-    public static GameEntity fromJSON(JsonNode node) throws IOException {
-        return new ObjectMapper().treeToValue(node, GameEntity.class);
+    public static GameEntity fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String description = node.get(cDescription).asText();
+        String filePath = node.get(cFilePath).asText();
+        String logoFile = node.get(cLogoFile).asText();
+        String folderFile = node.get(cFolderFile).asText();
+        String backFolderFile = node.get(cBackFolderFile).asText();
+        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
+        return new GameEntity(uuid, name, description, filePath, logoFile, folderFile, backFolderFile, lastUpdated);
     }
 
     @NonNull

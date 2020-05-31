@@ -22,11 +22,15 @@ import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.CompositionDao;
+
+import static arc.resource.calculator.util.JSONUtil.cEngramId;
+import static arc.resource.calculator.util.JSONUtil.cGameId;
+import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 @Entity(tableName = CompositionDao.tableName)
 public class CompositionEntity {
@@ -50,8 +54,12 @@ public class CompositionEntity {
      * "lastUpdated": 1590242216057,
      * "gameId": "d3ed5cd5-9dc7-4f10-b988-444b19abd554"
      */
-    public static CompositionEntity fromJSON(JsonNode node) throws JsonProcessingException {
-        return new ObjectMapper().treeToValue(node, CompositionEntity.class);
+    public static CompositionEntity fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String engramId = node.get(cEngramId).asText();
+        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
+        String gameId = node.get(cGameId).asText();
+        return new CompositionEntity(uuid, engramId, lastUpdated, gameId);
     }
 
     @NonNull
