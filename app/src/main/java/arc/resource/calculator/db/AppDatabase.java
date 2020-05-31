@@ -26,6 +26,7 @@ import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import arc.resource.calculator.db.dao.GameDao;
 import arc.resource.calculator.db.dao.primary.CompositeDao;
 import arc.resource.calculator.db.dao.primary.CompositionDao;
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
@@ -38,11 +39,13 @@ import arc.resource.calculator.db.entity.primary.CompositionEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
+import arc.resource.calculator.db.entity.primary.GameEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 
 @Database(
         entities = {
+                GameEntity.class,
                 StationEntity.class,
                 FolderEntity.class,
                 EngramEntity.class,
@@ -81,6 +84,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public static ExecutorService writeTo() {
         return mDatabaseWriteExecutor;
     }
+
+    public abstract GameDao gameDao();
 
     public abstract StationDao stationDao();
 

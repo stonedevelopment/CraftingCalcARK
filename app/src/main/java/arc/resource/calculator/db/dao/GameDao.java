@@ -30,11 +30,14 @@ public interface GameDao {
     String tableName = "games";
 
     @Insert
-    GameEntity insert(GameEntity entity);
+    void insert(GameEntity entity);
 
     @Query("delete from games")
     void deleteAll();
 
     @Query("select * from games order by name asc")
     LiveData<List<GameEntity>> getGames();
+
+    @Query("select * from games where uuid is :uuid")
+    GameEntity getGame(String uuid);
 }

@@ -126,10 +126,11 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     private void updatePrimary(Versioning versioning) throws IOException {
         JsonNode inNode = JSONUtil.convertJsonFileToNode(getContext(), versioning);
 
-        GameEntity details = GameEntity.fromJSON(inNode.get("details"));
-
         //  clear database for fresh data
         database.clearAllTables();
+
+        //  insert game object
+        database.gameDao().insert(GameEntity.fromJSON(inNode.get("details")));
 
         JsonNode resources = inNode.get("resources");
         for (JsonNode node : resources) {
