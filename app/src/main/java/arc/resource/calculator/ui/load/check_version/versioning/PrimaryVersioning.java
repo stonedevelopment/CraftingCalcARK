@@ -16,8 +16,7 @@
 
 package arc.resource.calculator.ui.load.check_version.versioning;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import static arc.resource.calculator.util.JSONUtil.cFilePath;
 import static arc.resource.calculator.util.JSONUtil.cName;
@@ -29,11 +28,11 @@ public class PrimaryVersioning extends Versioning {
         super(uuid, name, version, filePath);
     }
 
-    public static PrimaryVersioning fromJSON(JSONObject jsonObject) throws JSONException {
-        String uuid = jsonObject.getString(cUuid);
-        String name = jsonObject.getString(cName);
-        String version = jsonObject.getString(cVersion);
-        String filePath = jsonObject.getString(cFilePath);
+    public static PrimaryVersioning fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String version = node.get(cVersion).asText();
+        String filePath = node.get(cFilePath).asText();
         return new PrimaryVersioning(uuid, name, version, filePath);
     }
 }

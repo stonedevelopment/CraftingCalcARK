@@ -57,6 +57,43 @@ public class ExceptionUtil {
         Crashlytics.logException(e);
     }
 
+    // Bundle used to express an array's contents and the requested index
+    private static Bundle BuildExceptionMessageBundle(int index, String contents) {
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("array_index", index);
+        bundle.putString("array_contents", contents);
+
+        return bundle;
+    }
+
+    private static Bundle BuildExceptionMessageBundle(int index, int size, String contents) {
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("array_index", index);
+        bundle.putInt("array_size", size);
+        bundle.putString("array_contents", contents);
+
+        return bundle;
+    }
+
+    private static Bundle BuildErrorReportPreferencesBundle(Context context) {
+        try {
+            PrefsUtil prefs = PrefsUtil.getInstance(context);
+
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("filter_by_category", prefs.getCategoryFilterPreference());
+            bundle.putBoolean("filter_by_station", prefs.getStationFilterPreference());
+            bundle.putBoolean("filter_by_level", prefs.getLevelFilterPreference());
+            bundle.putInt("current_level", prefs.getRequiredLevel());
+            bundle.putBoolean("breakdown_resources", prefs.getRefinedFilterPreference());
+
+            return bundle;
+        } catch (Exception e) {
+            return new Bundle();
+        }
+    }
+
     // if position of requested list is out of bounds, then throw this exception
     public static class PositionOutOfBoundsException extends Exception {
         public PositionOutOfBoundsException(int index, int size, String contents) {
@@ -94,43 +131,6 @@ public class ExceptionUtil {
     public static class CursorEmptyException extends Exception {
         public CursorEmptyException(Uri uri) {
             super(uri.toString());
-        }
-    }
-
-    // Bundle used to express an array's contents and the requested index
-    private static Bundle BuildExceptionMessageBundle(int index, String contents) {
-        Bundle bundle = new Bundle();
-
-        bundle.putInt("array_index", index);
-        bundle.putString("array_contents", contents);
-
-        return bundle;
-    }
-
-    private static Bundle BuildExceptionMessageBundle(int index, int size, String contents) {
-        Bundle bundle = new Bundle();
-
-        bundle.putInt("array_index", index);
-        bundle.putInt("array_size", size);
-        bundle.putString("array_contents", contents);
-
-        return bundle;
-    }
-
-    private static Bundle BuildErrorReportPreferencesBundle(Context context) {
-        try {
-            PrefsUtil prefs = PrefsUtil.getInstance(context);
-
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("filter_by_category", prefs.getCategoryFilterPreference());
-            bundle.putBoolean("filter_by_station", prefs.getStationFilterPreference());
-            bundle.putBoolean("filter_by_level", prefs.getLevelFilterPreference());
-            bundle.putInt("current_level", prefs.getRequiredLevel());
-            bundle.putBoolean("breakdown_resources", prefs.getRefinedFilterPreference());
-
-            return bundle;
-        } catch (Exception e) {
-            return new Bundle();
         }
     }
 }

@@ -19,6 +19,7 @@ package arc.resource.calculator.ui.load;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
 import androidx.lifecycle.AndroidViewModel;
 
 import java.util.List;
@@ -113,6 +114,7 @@ public class LoadScreenViewModel extends AndroidViewModel {
         return statusMessageEvent;
     }
 
+    @UiThread
     void updateStatusMessage(String message) {
         statusMessageEvent.setValue(message);
     }

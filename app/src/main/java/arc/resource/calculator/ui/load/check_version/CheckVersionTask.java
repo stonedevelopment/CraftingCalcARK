@@ -19,9 +19,9 @@ package arc.resource.calculator.ui.load.check_version;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,11 +37,14 @@ import arc.resource.calculator.util.PrefsUtil;
 import static arc.resource.calculator.util.JSONUtil.cDLC;
 import static arc.resource.calculator.util.JSONUtil.cPrimary;
 
-public class CheckVersionTask extends AsyncTask<Void, Void, Versioning[]> {
+public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
     private CheckVersionListener listener;
     private PrefsUtil prefsUtil;
-    private JSONObject versioningObject;
+    private JsonNode versioningObject;
     private List<Versioning> versioningList;
+
+    private boolean hasException;
+    private Exception exception;
 
     public CheckVersionTask(Context context, PrefsUtil prefsUtil, CheckVersionListener listener) {
         setListener(listener);
@@ -60,46 +63,58 @@ public class CheckVersionTask extends AsyncTask<Void, Void, Versioning[]> {
 
     private void initialize(Context context) {
         try {
-            String jsonString = JSONUtil.readVersioningJsonToString(context);
+            versioningObject = JSONUtil.readVersioningJsonToString(context);
             // build a json object based on the read json string
-            versioningObject = new JSONObject(jsonString);
             versioningList = new ArrayList<>();
-        } catch (IOException | JSONException e) {
-            listener.onError(e);
+        } catch (IOException e) {
+            exception = e;
+            hasException = true;
         }
     }
 
     @Override
-    protected Versioning[] doInBackground(Void... voids) {
-        try {
-            //  let listener know we're checking versions
-            listener.onStart();
+    protected void onPreExecute() {
+        //  let listener know we're checking versions
+        listener.onStart();
+    }
 
-            //  get Primary object
-            JSONObject primaryObject = versioningObject.getJSONObject(cPrimary);
-            PrimaryVersioning primaryVersioning = PrimaryVersioning.fromJSON(primaryObject);
-            if (checkVersion(primaryVersioning)) {
-                versioningList.add(primaryVersioning);
-            }
+    @Override
+    protected Void doInBackground(Void... voids) {
+        if (hasException) return null;
 
-            //  get DLC array
-            //  iterate getting and testing versions
-            JSONArray dlcArray = versioningObject.getJSONArray(cDLC);
-            for (int i = 0; i < dlcArray.length(); i++) {
-                JSONObject dlcObject = (JSONObject) dlcArray.get(i);
-                DLCVersioning dlcVersioning = DLCVersioning.fromJSON(dlcObject);
-                if (checkVersion(dlcVersioning)) {
-                    versioningList.add(dlcVersioning);
-                }
-            }
-
-            //  let listener know we're finished
-            //  send listener list of new versionings
-            listener.onFinish(versioningList);
-        } catch (JSONException e) {
-            listener.onError(e);
+        //  get Primary object
+        JsonNode primaryNode = versioningObject.get(cPrimary);
+        PrimaryVersioning primaryVersioning = PrimaryVersioning.fromJSON(primaryNode);
+        if (checkVersion(primaryVersioning)) {
+            versioningList.add(primaryVersioning);
         }
+
+        //  get DLC array
+        //  iterate getting and testing versions
+        JsonNode dlcArray = versioningObject.get(cDLC);
+        for (int i = 0; i < dlcArray.size(); i++) {
+            JsonNode dlcObject = dlcArray.get(i);
+            DLCVersioning dlcVersioning = DLCVersioning.fromJSON(dlcObject);
+            if (checkVersion(dlcVersioning)) {
+                versioningList.add(dlcVersioning);
+            }
+        }
+
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
+        if (hasException) {
+            listener.onError(exception);
+            return;
+        }
+
+        //  let listener know we're finished
+        //  send listener list of new versionings
+        listener.onFinish(versioningList);
     }
 
     private boolean checkVersion(Versioning versioning) {

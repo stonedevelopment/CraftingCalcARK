@@ -45,6 +45,8 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
     private List<Versioning> versioningList;
     private UpdateDatabaseListener listener;
     private WeakReference<Context> context;
+    private Exception exception;
+    private boolean hasException;
 
     public UpdateDatabaseTask(Context context, PrefsUtil prefsUtil, List<Versioning> versioningList, UpdateDatabaseListener listener) {
         setContext(context);
@@ -105,11 +107,10 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
                 prefsUtil.setVersionByUUID(versioning.getUuid(), versioning.getVersion());
             }
         } catch (IOException e) {
-            listener.onError(e);
-        } finally {
-            prefsUtil.setDidUpdate(true);
-            listener.onFinish();
+            exception = e;
+            hasException = true;
         }
+
         return null;
     }
 
@@ -155,5 +156,16 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Void, Void> {
         for (JsonNode node : directory) {
             database.directoryDao().insert(DirectoryEntity.fromJSON(node));
         }
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        if (hasException) {
+            listener.onError(exception);
+            return;
+        }
+
+        prefsUtil.setDidUpdate(true);
+        listener.onFinish();
     }
 }

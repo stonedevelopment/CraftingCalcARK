@@ -24,9 +24,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -170,15 +172,17 @@ public class LoadScreenActivity extends AppCompatActivity {
         startMainActivity();
     }
 
-    private void sendErrorReport(Exception e) {
-        ExceptionUtil.SendErrorReport(TAG, e);
-    }
-
     private void handleExceptionWithMessage(String message, Exception e) {
         updateStatusMessage(message);
-        sendErrorReport(e);
+        ExceptionUtil.SendErrorReport(TAG, e);
+        Crashlytics.getInstance().crash();
     }
 
+    private void handleFatalException(Exception e) {
+
+    }
+
+    @UiThread
     private void updateStatusMessage(final String message) {
         mViewModel.updateStatusMessage(message);
     }

@@ -16,6 +16,13 @@
 
 package arc.resource.calculator.ui.load.check_version.versioning;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
+import static arc.resource.calculator.util.JSONUtil.cFilePath;
+import static arc.resource.calculator.util.JSONUtil.cName;
+import static arc.resource.calculator.util.JSONUtil.cUuid;
+import static arc.resource.calculator.util.JSONUtil.cVersion;
+
 public class Versioning {
     private final String uuid;
     private final String name;
@@ -27,6 +34,14 @@ public class Versioning {
         this.name = name;
         this.version = version;
         this.filePath = filePath;
+    }
+
+    public static Versioning fromJSON(JsonNode node) {
+        String uuid = node.get(cUuid).asText();
+        String name = node.get(cName).asText();
+        String version = node.get(cVersion).asText();
+        String filePath = node.get(cFilePath).asText();
+        return new Versioning(uuid, name, version, filePath);
     }
 
     public String getUuid() {

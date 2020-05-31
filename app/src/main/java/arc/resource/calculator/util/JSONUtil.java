@@ -84,9 +84,9 @@ public class JSONUtil {
         return mapper.readTree(fileStream);
     }
 
-    public static String readVersioningJsonToString(Context context) throws IOException {
+    public static JsonNode readVersioningJsonToString(Context context) throws IOException {
         String fileName = cJsonFilePath + "versioning.json";
-        return readRawJsonFileToJsonString(context, fileName);
+        return parseFileToNode(context, fileName);
     }
 
     public static boolean isNewVersion(String oldVersion, String newVersion) {

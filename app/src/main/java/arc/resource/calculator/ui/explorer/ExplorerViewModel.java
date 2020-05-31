@@ -29,7 +29,6 @@ import java.util.Stack;
 
 import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
-import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerViewModel extends AndroidViewModel {
@@ -66,15 +65,15 @@ public class ExplorerViewModel extends AndroidViewModel {
 
     @Nullable
     private ExplorerItem getCurrentExplorerItem() {
-        if (mHistoryStack.isEmpty()) return null;
-        return mHistoryStack.peek();
+        return peekAtStack();
     }
 
     private void pushToStack(ExplorerItem explorerItem) {
         mHistoryStack.push(explorerItem);
     }
 
-    private ExplorerItem peek() {
+    private ExplorerItem peekAtStack() {
+        if (mHistoryStack.isEmpty()) return null;
         return mHistoryStack.peek();
     }
 
@@ -83,11 +82,11 @@ public class ExplorerViewModel extends AndroidViewModel {
     }
 
     void handleOnClickEvent(ExplorerItem explorerItem) {
-        if (explorerItem.getViewType() == 2 ||
+        if (explorerItem.getViewType() == -1) {
+            navigateFrom(explorerItem);
+        } else if (explorerItem.getViewType() == 0 ||
                 explorerItem.getViewType() == 1) {
             navigateTo(explorerItem);
-        } else if (explorerItem instanceof BackFolderExplorerItem) {
-            navigateFrom(explorerItem);
         } else {
             viewDetails(explorerItem);
         }
