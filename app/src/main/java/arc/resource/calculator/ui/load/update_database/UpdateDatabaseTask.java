@@ -43,12 +43,9 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     public static final String TAG = UpdateDatabaseTask.class.getCanonicalName();
 
     private AppDatabase database;
-    private PrefsUtil prefsUtil;
     private List<Versioning> versioningList;
     private UpdateDatabaseListener listener;
     private WeakReference<Context> context;
-    private Exception exception;
-    private boolean hasException;
 
     public UpdateDatabaseTask(Context context, List<Versioning> versioningList, UpdateDatabaseListener listener) {
         setContext(context);
@@ -56,7 +53,6 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
         setVersioningList(versioningList);
 
         setupDatabase();
-        setupPrefsUtil(context);
     }
 
     private Context getContext() {
@@ -69,10 +65,6 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
 
     private void setupDatabase() {
         this.database = AppDatabase.getInstance(getContext());
-    }
-
-    private void setupPrefsUtil(Context context) {
-        this.prefsUtil = PrefsUtil.getInstance(context);
     }
 
     private void setListener(UpdateDatabaseListener listener) {
@@ -170,12 +162,6 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        if (hasException) {
-            listener.onError(exception);
-            return;
-        }
-
-        prefsUtil.setDidUpdate(true);
         listener.onFinish();
     }
 }

@@ -191,6 +191,8 @@ public class LoadScreenViewModel extends AndroidViewModel {
                 for (Versioning versioning : versioningList) {
                     prefsUtil.setVersionByUUID(versioning.getUuid(), versioning.getVersion());
                 }
+                prefsUtil.setDidUpdate(true);
+
                 startFinalizeEvent();
                 break;
             case Finalize:
