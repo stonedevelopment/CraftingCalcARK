@@ -30,12 +30,10 @@ import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 
 public class ExplorerRepository {
     private DirectoryDao dao;
-    private LiveData<List<DirectoryEntity>> directory;
 
     ExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         setDao(db.directoryDao());
-        fetch();
     }
 
     public DirectoryDao getDao() {
@@ -46,15 +44,9 @@ public class ExplorerRepository {
         this.dao = dao;
     }
 
-    LiveData<List<DirectoryEntity>> getDirectory() {
-        return directory;
-    }
+    LiveData<List<DirectoryEntity>> fetchDirectory(@Nullable String parentId) {
+        if (parentId == null) return dao.getRootDirectory();
 
-    private void fetch() {
-        fetchDirectory(null);
-    }
-
-    void fetchDirectory(@Nullable String parentId) {
-        directory = dao.getDirectory(parentId);
+        return dao.getDirectory(parentId);
     }
 }

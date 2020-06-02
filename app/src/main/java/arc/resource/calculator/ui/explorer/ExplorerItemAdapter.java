@@ -17,6 +17,7 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+
+import static arc.resource.calculator.repository.explorer.ExplorerRepository.TAG;
 
 public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
     private final LayoutInflater mInflater;
@@ -56,13 +59,16 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
     public ExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
 
+        Log.d(TAG, "onCreateViewHolder: " + viewType);
         if (viewType == 2) {
-            itemView = mInflater.inflate(R.layout.explorer_item_engram, parent);
+            itemView = mInflater.inflate(R.layout.explorer_item_engram, parent, false);
             return new EngramExplorerItemViewHolder(itemView);
         } else if (viewType == 1) {
-            itemView = mInflater.inflate(R.layout.explorer_item_folder, parent);
+            itemView = mInflater.inflate(R.layout.explorer_item_folder, parent, false);
+        } else if (viewType == 0) {
+            itemView = mInflater.inflate(R.layout.explorer_item_station, parent, false);
         } else {
-            itemView = mInflater.inflate(R.layout.explorer_item_station, parent);
+            itemView = mInflater.inflate(R.layout.explorer_item_folder, parent, false);
         }
 
         return new ExplorerItemViewHolder(itemView);

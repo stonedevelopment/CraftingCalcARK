@@ -17,12 +17,14 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.List;
 import java.util.Stack;
@@ -34,15 +36,37 @@ import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 public class ExplorerViewModel extends AndroidViewModel {
     // TODO: Maintain filters?
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
-    private final ExplorerRepository mRepository;
     private final SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
     private final Stack<ExplorerItem> mHistoryStack = new Stack<>();
-    private MutableLiveData<DirectorySnapshot> mDirectorySnapshot = new MutableLiveData<>();
+    private ExplorerRepository mRepository;
+    private MutableLiveData<ExplorerItem> mParentItem = new MutableLiveData<>();
+    private LiveData<String> mParentId;
+    private LiveData<List<DirectoryEntity>> mDirectoryEntityList;
+    private LiveData<DirectorySnapshot> mDirectorySnapshot;
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
-        mRepository = new ExplorerRepository(application);
-        mRepository.getDirectory().observe(getApplication(), this::setDirectorySnapshot);
+        mRepository = new ExplorerRepository(getApplication());
+        mParentId = Transformations.map(mParentItem, parentItem -> {
+            Log.d(TAG, "ExplorerViewModel: transforming parentItem: " + parentItem);
+            if (parentItem == null) return "fdc6a946-054d-41c3-80d4-a8868afabb24";
+            return parentItem.getUuid();
+        });
+        mDirectoryEntityList = Transformations.switchMap(mParentId, parentId -> {
+            Log.d(TAG, "ExplorerViewModel: transforming parentId: " + parentId);
+            return mRepository.fetchDirectory(parentId);
+        });
+        mDirectorySnapshot = Transformations.map(mDirectoryEntityList, directory -> {
+            Log.d(TAG, "ExplorerViewModel: transforming directorySnapshot: " + directory.size());
+            ExplorerItem current = getCurrentExplorerItem();
+            return new DirectorySnapshot(current, directory);
+        });
+
+        start();
+    }
+
+    private void start() {
+        setParentExplorerItem(peekAtStack());
     }
 
     SingleLiveEvent<String> getSnackBarMessageEvent() {
@@ -53,14 +77,12 @@ public class ExplorerViewModel extends AndroidViewModel {
         mSnackBarMessageEvent.setValue(message);
     }
 
-    LiveData<DirectorySnapshot> getDirectorySnapshot() {
-        return mDirectorySnapshot;
+    private void setParentExplorerItem(ExplorerItem explorerItem) {
+        mParentItem.setValue(explorerItem);
     }
 
-    private void setDirectorySnapshot(List<DirectoryEntity> directory) {
-        ExplorerItem current = getCurrentExplorerItem();
-        DirectorySnapshot snapshot = new DirectorySnapshot(current, directory);
-        mDirectorySnapshot.setValue(snapshot);
+    LiveData<DirectorySnapshot> getDirectorySnapshot() {
+        return mDirectorySnapshot;
     }
 
     @Nullable
@@ -83,30 +105,27 @@ public class ExplorerViewModel extends AndroidViewModel {
 
     void handleOnClickEvent(ExplorerItem explorerItem) {
         if (explorerItem.getViewType() == -1) {
-            navigateFrom(explorerItem);
+            goBack();
         } else if (explorerItem.getViewType() == 0 ||
                 explorerItem.getViewType() == 1) {
-            navigateTo(explorerItem);
+            goForward(explorerItem);
         } else {
             viewDetails(explorerItem);
         }
     }
 
-    private void navigateTo(ExplorerItem explorerItem) {
+    private void goForward(ExplorerItem explorerItem) {
         pushToStack(explorerItem);
-        fetchDirectory(explorerItem.getUuid());
+        setParentExplorerItem(explorerItem);
     }
 
-    private void navigateFrom(ExplorerItem explorerItem) {
+    private void goBack() {
         popFromStack();
-        fetchDirectory(explorerItem.getParentId());
+        setParentExplorerItem(peekAtStack());
     }
 
     private void viewDetails(ExplorerItem explorerItem) {
         //  request detail pop up
-    }
-
-    private void fetchDirectory(String parentId) {
-        mRepository.fetchDirectory(parentId);
+        setSnackBarMessage(explorerItem.getTitle());
     }
 }
