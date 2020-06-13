@@ -22,14 +22,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import arc.resource.calculator.ChangeLog;
@@ -41,7 +39,6 @@ import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.listeners.PrefsObserver;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
-import arc.resource.calculator.util.ExceptionUtil;
 import arc.resource.calculator.util.FeedbackUtil;
 
 import static arc.resource.calculator.DetailActivity.ADD;
@@ -51,8 +48,7 @@ import static arc.resource.calculator.DetailActivity.RESULT_CODE;
 import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
 import static arc.resource.calculator.DetailActivity.UPDATE;
 
-public class MainActivity extends AppCompatActivity
-        implements ExceptionObservable.Observer {
+public class MainActivity extends AppCompatActivity {
 
     public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -72,8 +68,6 @@ public class MainActivity extends AppCompatActivity
 
         setupViewModel();
 
-        registerListeners();
-
         setupNavigation();
 
         setupAds();
@@ -84,14 +78,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        registerListeners();
         mAdUtil.resume();
     }
 
     @Override
     protected void onPause() {
         mAdUtil.pause();
-        unregisterListeners();
         super.onPause();
     }
 
@@ -242,44 +234,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //  Soft Exception
-    //      Report exception
-    //      Allow app to continue operation as normal
-    @Override
-    public void onException(String tag, Exception e) {
-        ExceptionUtil.SendErrorReport(tag, e, false);
-    }
-
-    //  Hard Exception
-    //      Report exception
-    //      Show Error Dialog window
-    @Override
-    public void onFatalException(final String tag, final Exception e) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ExceptionUtil.SendErrorReportWithAlertDialog(MainActivity.this, tag, e);
-            }
-        });
-    }
-
     private void setupViewModel() {
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mViewModel.getStartActivityForResultTrigger().observe(this, intent -> {
             int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
             startActivityForResult(intent, requestCode);
         });
-        mViewModel.getSnackBarMessage() .observe(this, message -> showSnackBar(message));
+        mViewModel.getSnackBarMessageEvent().observe(this, this::showSnackBar);
     }
 
-    private void registerListeners() {
-        ExceptionObservable.getInstance().registerObserver(this); // TODO: 1/27/2020 Does MainActivity need to listen to exceptions?
-    }
-
-    private void unregisterListeners() {
-        ExceptionObservable.getInstance().unregisterObserver(); // TODO: 1/27/2020 Does MainActivity need to listen to exceptions?
-    }
-
+    // TODO: 6/13/2020 How to change navigation panes on demand, save position from preiouvs use
     private void setupNavigation() {
         NavController navController = Navigation.findNavController(this, R.id.navHostContainer);
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
@@ -290,16 +254,17 @@ public class MainActivity extends AppCompatActivity
         mAdUtil = new AdUtil(this, R.id.content_main);
     }
 
+    // TODO: 6/13/2020 Change changelog
     private void showChangeLog() {
-        try {
-            ChangeLog changeLog = new ChangeLog(this);
-
-            if (changeLog.firstRun()) {
-                changeLog.getLogDialog().show();
-            }
-        } catch (Exception e) {
-            // do nothing
-        }
+//        try {
+//            ChangeLog changeLog = new ChangeLog(this);
+//
+//            if (changeLog.firstRun()) {
+//                changeLog.getLogDialog().show();
+//            }
+//        } catch (Exception e) {
+//            // do nothing
+//        }
     }
 
     private void showSnackBar(String text) {

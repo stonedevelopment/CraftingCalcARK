@@ -21,16 +21,16 @@ import android.content.Intent;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import arc.resource.calculator.model.engram.DisplayEngram;
+import arc.resource.calculator.model.SingleLiveEvent;
 
 /**
  * ViewModel for MainActivity
  */
 public class MainViewModel extends ViewModel {
     private MutableLiveData<Intent> mStartActivityForResultTrigger = new MutableLiveData<>();
-    private MutableLiveData<Integer> mNavigationPosition = new MutableLiveData<>();
-    private MutableLiveData<String> mSnackBarMessage = new MutableLiveData<>();
-    private MutableLiveData<DisplayEngram> mShowDialogFragment = new MutableLiveData<>();
+    private SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
+
+    private int mNavigationPosition;
 
     MutableLiveData<Intent> getStartActivityForResultTrigger() {
         return mStartActivityForResultTrigger;
@@ -40,28 +40,20 @@ public class MainViewModel extends ViewModel {
         mStartActivityForResultTrigger.setValue(intent);
     }
 
-    MutableLiveData<Integer> getNavigationPosition() {
+    int getNavigationPosition() {
         return mNavigationPosition;
     }
 
     void setNavigationPosition(int position) {
-        mNavigationPosition.setValue(position);
+        mNavigationPosition = position;
     }
 
-    MutableLiveData<String> getSnackBarMessage() {
-        return mSnackBarMessage;
+    SingleLiveEvent<String> getSnackBarMessageEvent() {
+        return mSnackBarMessageEvent;
     }
 
     void setSnackBarMessage(String message) {
-        mSnackBarMessage.postValue(message);
-    }
-
-    MutableLiveData<DisplayEngram> getShowDialogFragment() {
-        return mShowDialogFragment;
-    }
-
-    public void setDialogFragment(DisplayEngram id) {
-        mShowDialogFragment.setValue(id);
+        mSnackBarMessageEvent.postValue(message);
     }
 
 }
