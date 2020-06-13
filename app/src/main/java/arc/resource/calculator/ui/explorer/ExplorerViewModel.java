@@ -23,7 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import java.util.List;
@@ -39,30 +38,38 @@ public class ExplorerViewModel extends AndroidViewModel {
     private final SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
     private final Stack<ExplorerItem> mHistoryStack = new Stack<>();
     private ExplorerRepository mRepository;
-    private MutableLiveData<ExplorerItem> mParentItem = new MutableLiveData<>();
-    private LiveData<String> mParentId;
-    private LiveData<List<DirectoryEntity>> mDirectoryEntityList;
+    private SingleLiveEvent<ExplorerItem> mParentItem = new SingleLiveEvent<>();
     private LiveData<DirectorySnapshot> mDirectorySnapshot;
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
         mRepository = new ExplorerRepository(getApplication());
-        mParentId = Transformations.map(mParentItem, parentItem -> {
+        mDirectorySnapshot = transformDirectoryListToSnapshot();
+
+        start();
+    }
+
+    private LiveData<String> transformParentItemToUUID() {
+        return Transformations.map(mParentItem, parentItem -> {
             Log.d(TAG, "ExplorerViewModel: transforming parentItem: " + parentItem);
-            if (parentItem == null) return "fdc6a946-054d-41c3-80d4-a8868afabb24";
+            if (parentItem == null) return "";
             return parentItem.getUuid();
         });
-        mDirectoryEntityList = Transformations.switchMap(mParentId, parentId -> {
+    }
+
+    private LiveData<List<DirectoryEntity>> transformParentIdToDirectoryList() {
+        return Transformations.switchMap(transformParentItemToUUID(), parentId -> {
             Log.d(TAG, "ExplorerViewModel: transforming parentId: " + parentId);
             return mRepository.fetchDirectory(parentId);
         });
-        mDirectorySnapshot = Transformations.map(mDirectoryEntityList, directory -> {
-            Log.d(TAG, "ExplorerViewModel: transforming directorySnapshot: " + directory.size());
+    }
+
+    private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {
+        return Transformations.map(transformParentIdToDirectoryList(), directory -> {
+            Log.d(TAG, "ExplorerViewModel: transforming directory entity list: " + directory.size());
             ExplorerItem current = getCurrentExplorerItem();
             return new DirectorySnapshot(current, directory);
         });
-
-        start();
     }
 
     private void start() {

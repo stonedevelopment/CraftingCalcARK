@@ -44,13 +44,17 @@ public class StationEntity {
     @NonNull
     @PrimaryKey
     private String uuid;
+    @NonNull
     private String name;
+    @NonNull
     private String imageFile;
+    @NonNull
     private String engramId;
     private Date lastUpdated;
+    @NonNull
     private String gameId;
 
-    public StationEntity(@NonNull String uuid, String name, String imageFile, String engramId, Date lastUpdated, String gameId) {
+    public StationEntity(@NonNull String uuid, @NonNull String name, @NonNull String imageFile, @NonNull String engramId, Date lastUpdated, @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;
@@ -72,6 +76,7 @@ public class StationEntity {
         String name = node.get(cName).asText();
         String imageFile = node.get(cImageFile).asText();
         String engramId = node.get(cEngramId).asText();
+        if (engramId == null) engramId = "";
         Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
         String gameId = node.get(cGameId).asText();
         return new StationEntity(uuid, name, imageFile, engramId, lastUpdated, gameId);
@@ -86,27 +91,30 @@ public class StationEntity {
         this.uuid = uuid;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
+    @NonNull
     public String getImageFile() {
         return imageFile;
     }
 
-    public void setImageFile(String imageFile) {
+    public void setImageFile(@NonNull String imageFile) {
         this.imageFile = imageFile;
     }
 
+    @NonNull
     public String getEngramId() {
         return engramId;
     }
 
-    public void setEngramId(String engramId) {
+    public void setEngramId(@NonNull String engramId) {
         this.engramId = engramId;
     }
 
@@ -118,11 +126,12 @@ public class StationEntity {
         this.lastUpdated = lastUpdated;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
     }
 

@@ -44,7 +44,7 @@ public class ExplorerRepository {
         this.dao = dao;
     }
 
-    LiveData<List<DirectoryEntity>> fetchDirectory(@Nullable String parentId) {
+    LiveData<List<DirectoryEntity>> fetchDirectory(String parentId) {
         if (parentId == null) return dao.getRootDirectory();
 
         return dao.getDirectory(parentId);

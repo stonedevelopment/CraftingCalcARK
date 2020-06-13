@@ -21,10 +21,12 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.google.android.material.textview.MaterialTextView;
+
 import arc.resource.calculator.listeners.NavigationObserver;
 
 // TODO: 1/27/2020 Create ExplorerNavigationTextView ViewModel
-public class ExplorerNavigationTextView extends AppCompatTextView {
+public class ExplorerNavigationTextView extends MaterialTextView {
     private static final String TAG = ExplorerNavigationTextView.class.getSimpleName();
 
     private NavigationObserver.Listener mListener = new NavigationObserver.Listener() {

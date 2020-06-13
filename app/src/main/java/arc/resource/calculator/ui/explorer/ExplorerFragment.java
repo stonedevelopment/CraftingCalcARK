@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Objects;
 
@@ -56,7 +57,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private ExplorerItemAdapter mAdapter;
 
-    private ExplorerNavigationTextView mTextView;
+    private MaterialTextView mTextView;
     private ContentLoadingProgressBar mProgressBar;
 
     @Override

@@ -37,14 +37,21 @@ public class DirectoryEntity {
     @NonNull
     @PrimaryKey
     private String uuid;
+    @NonNull
     private String name;
+    @NonNull
     private String imageFile;
     private int viewType;
+    @NonNull
     private String parentId;
+    @NonNull
     private String sourceId;
+    @NonNull
     private String gameId;
 
-    public DirectoryEntity(@NonNull String uuid, String name, String imageFile, int viewType, String parentId, String sourceId, String gameId) {
+    public DirectoryEntity(@NonNull String uuid, @NonNull String name, @NonNull String imageFile,
+                           int viewType, @NonNull String parentId, @NonNull String sourceId,
+                           @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;
@@ -68,6 +75,7 @@ public class DirectoryEntity {
         String imageFile = node.get(cImageFile).asText();
         int viewType = node.get(cViewType).asInt();
         String parentId = node.get(cParentId).asText();
+        if (parentId == null) parentId = "";
         String sourceId = node.get(cSourceId).asText();
         String gameId = node.get(cGameId).asText();
         return new DirectoryEntity(uuid, name, imageFile, viewType, parentId, sourceId, gameId);
@@ -82,19 +90,21 @@ public class DirectoryEntity {
         this.uuid = uuid;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
+    @NonNull
     public String getImageFile() {
         return imageFile;
     }
 
-    public void setImageFile(String imageFile) {
+    public void setImageFile(@NonNull String imageFile) {
         this.imageFile = imageFile;
     }
 
@@ -106,27 +116,30 @@ public class DirectoryEntity {
         this.viewType = viewType;
     }
 
+    @NonNull
     public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(@NonNull String parentId) {
         this.parentId = parentId;
     }
 
+    @NonNull
     public String getSourceId() {
         return sourceId;
     }
 
-    public void setSourceId(String sourceId) {
+    public void setSourceId(@NonNull String sourceId) {
         this.sourceId = sourceId;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
     }
 }
