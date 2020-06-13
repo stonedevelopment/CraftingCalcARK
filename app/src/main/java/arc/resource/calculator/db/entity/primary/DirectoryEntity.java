@@ -75,7 +75,7 @@ public class DirectoryEntity {
         String imageFile = node.get(cImageFile).asText();
         int viewType = node.get(cViewType).asInt();
         String parentId = node.get(cParentId).asText();
-        if (parentId == null) parentId = "";
+        if (parentId == null) parentId = "ROOT";    // TODO: 6/13/2020 CODE SMELL: hard coded ROOT for null parentId
         String sourceId = node.get(cSourceId).asText();
         String gameId = node.get(cGameId).asText();
         return new DirectoryEntity(uuid, name, imageFile, viewType, parentId, sourceId, gameId);

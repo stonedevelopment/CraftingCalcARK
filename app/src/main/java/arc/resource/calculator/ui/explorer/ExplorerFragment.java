@@ -84,7 +84,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private void setupViews(View rootView) {
         RecyclerView recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
-        int numCols = getResources().getInteger(R.integer.gridview_column_count);
+        int numCols = 4;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
         recyclerView.setAdapter(mAdapter);
 
@@ -96,6 +96,10 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         mViewModel = new ViewModelProvider(this).get(ExplorerViewModel.class);
 
         mViewModel.getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
+        mViewModel.getIsLoadingEvent().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading) showLoading();
+            else showLoaded();
+        });
         mViewModel.getDirectorySnapshot().observe(getViewLifecycleOwner(), snapshot -> mAdapter.mapDirectorySnapshot(snapshot));
     }
 

@@ -37,7 +37,4 @@ public interface DirectoryDao {
 
     @Query("select * from directory where parentId is :parentId order by viewType asc, name asc")
     LiveData<List<DirectoryEntity>> getDirectory(String parentId);
-
-    @Query("select * from directory where nullif(parentId, '') is null order by viewType asc, name asc")
-    LiveData<List<DirectoryEntity>> getRootDirectory();
 }

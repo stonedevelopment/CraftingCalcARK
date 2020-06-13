@@ -18,6 +18,7 @@ package arc.resource.calculator.ui.explorer;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -44,9 +45,7 @@ public class ExplorerRepository {
         this.dao = dao;
     }
 
-    LiveData<List<DirectoryEntity>> fetchDirectory(String parentId) {
-        if (parentId == null) return dao.getRootDirectory();
-
+    LiveData<List<DirectoryEntity>> fetchDirectory(@NonNull String parentId) {
         return dao.getDirectory(parentId);
     }
 }

@@ -40,6 +40,7 @@ public class ExplorerViewModel extends AndroidViewModel {
     private ExplorerRepository mRepository;
     private SingleLiveEvent<ExplorerItem> mParentItem = new SingleLiveEvent<>();
     private LiveData<DirectorySnapshot> mDirectorySnapshot;
+    private SingleLiveEvent<Boolean> mIsLoadingEvent = new SingleLiveEvent<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
@@ -51,8 +52,9 @@ public class ExplorerViewModel extends AndroidViewModel {
 
     private LiveData<String> transformParentItemToUUID() {
         return Transformations.map(mParentItem, parentItem -> {
+            setIsLoading(true);
             Log.d(TAG, "ExplorerViewModel: transforming parentItem: " + parentItem);
-            if (parentItem == null) return "";
+            if (parentItem == null) return "a2942aac-b904-468a-a887-78637c86aa1b";  // TODO: 6/13/2020 CODE SMELL: hard coded parent id
             return parentItem.getUuid();
         });
     }
@@ -66,6 +68,7 @@ public class ExplorerViewModel extends AndroidViewModel {
 
     private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {
         return Transformations.map(transformParentIdToDirectoryList(), directory -> {
+            setIsLoading(false);
             Log.d(TAG, "ExplorerViewModel: transforming directory entity list: " + directory.size());
             ExplorerItem current = getCurrentExplorerItem();
             return new DirectorySnapshot(current, directory);
@@ -82,6 +85,14 @@ public class ExplorerViewModel extends AndroidViewModel {
 
     void setSnackBarMessage(String message) {
         mSnackBarMessageEvent.setValue(message);
+    }
+
+    SingleLiveEvent<Boolean> getIsLoadingEvent() {
+        return mIsLoadingEvent;
+    }
+
+    void setIsLoading(boolean isLoading) {
+        mIsLoadingEvent.setValue(isLoading);
     }
 
     private void setParentExplorerItem(ExplorerItem explorerItem) {

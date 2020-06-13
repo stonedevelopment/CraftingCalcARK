@@ -37,7 +37,6 @@ import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JSONUtil;
-import arc.resource.calculator.util.PrefsUtil;
 
 public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     public static final String TAG = UpdateDatabaseTask.class.getCanonicalName();
@@ -84,9 +83,10 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     protected void onProgressUpdate(Integer... values) {
         int index = values[0];
         Versioning versioning = versioningList.get(index);
+        int visualPosition = index + 1;
         int size = versioningList.size();
 
-        listener.onProgressUpdate(versioning, index, size);
+        listener.onProgressUpdate(versioning, visualPosition, size);
     }
 
     @Override
