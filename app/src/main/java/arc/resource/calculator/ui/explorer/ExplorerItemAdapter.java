@@ -16,13 +16,12 @@
 
 package arc.resource.calculator.ui.explorer;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -33,20 +32,16 @@ import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
-import static arc.resource.calculator.repository.explorer.ExplorerRepository.TAG;
-
 public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
     private final LayoutInflater mInflater;
+    private final FragmentActivity mActivity;
     private List<ExplorerItem> mItems;
 
-    ExplorerItemAdapter(Context context) {
+    ExplorerItemAdapter(ExplorerFragment fragment) {
         super();
-        mInflater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(fragment.getContext());
+        mActivity = fragment.requireActivity();
         mItems = new ArrayList<>();
-    }
-
-    private Context getContext() {
-        return mInflater.getContext();
     }
 
     private void setItems(List<ExplorerItem> items) {
@@ -59,7 +54,6 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
     public ExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
 
-        Log.d(TAG, "onCreateViewHolder: " + viewType);
         if (viewType == 2) {
             itemView = mInflater.inflate(R.layout.explorer_item_engram, parent, false);
             return new EngramExplorerItemViewHolder(itemView);
@@ -76,7 +70,7 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ExplorerItemViewHolder holder, int position) {
-        holder.bind(getContext(), mItems.get(position));
+        holder.bind(mActivity, mItems.get(position));
     }
 
     private ExplorerItem getItem(int position) {

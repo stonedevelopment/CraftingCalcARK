@@ -17,12 +17,13 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -33,6 +34,8 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
+    public static final String TAG = ExplorerItemViewHolder.class.getSimpleName();
+
     private final MaterialCardView mCardView;
     private final AppCompatImageView mThumbnail;
     private final MaterialTextView mTitle;
@@ -45,8 +48,10 @@ class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
         mTitle = itemView.findViewById(R.id.title);
     }
 
-    void bind(Context context, ExplorerItem explorerItem) {
+    void bind(FragmentActivity activity, ExplorerItem explorerItem) {
         final String imagePath = "file:///android_asset/" + explorerItem.getImageFile();
+
+        Context context = activity.getApplicationContext();
 
         Picasso.with(context)
                 .load(imagePath)
@@ -57,7 +62,8 @@ class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
         mTitle.setText(explorerItem.getTitle());
 
         mCardView.setOnClickListener(v -> {
-            ExplorerViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExplorerViewModel.class);
+            Log.d(TAG, "cardView onClickListener: " + explorerItem.getTitle());
+            ExplorerViewModel viewModel = new ViewModelProvider(activity).get(ExplorerViewModel.class);
             viewModel.handleOnClickEvent(explorerItem);
         });
     }

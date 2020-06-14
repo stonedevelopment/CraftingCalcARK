@@ -16,10 +16,10 @@
 
 package arc.resource.calculator.ui.explorer;
 
-import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.textview.MaterialTextView;
 
@@ -34,8 +34,8 @@ class EngramExplorerItemViewHolder extends ExplorerItemViewHolder {
         mQuantity = itemView.findViewById(R.id.title);
     }
 
-    void bind(Context context, ExplorerItem explorerItem) {
-        super.bind(context, explorerItem);
+    void bind(FragmentActivity activity, ExplorerItem explorerItem) {
+        super.bind(activity, explorerItem);
 
         mQuantity.setText(explorerItem.getTitle());
     }

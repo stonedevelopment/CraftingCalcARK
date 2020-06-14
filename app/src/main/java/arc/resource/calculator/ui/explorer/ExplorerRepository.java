@@ -17,19 +17,20 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.app.Application;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
 import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 
 public class ExplorerRepository {
+    public static final String TAG = ExplorerRepository.class.getSimpleName();
+
     private DirectoryDao dao;
 
     ExplorerRepository(Application application) {
@@ -45,7 +46,10 @@ public class ExplorerRepository {
         this.dao = dao;
     }
 
-    LiveData<List<DirectoryEntity>> fetchDirectory(@NonNull String parentId) {
+    LiveData<List<DirectoryEntity>> fetchDirectory(@Nullable String parentId) {
+        Log.d(TAG, "fetchDirectory: " + parentId);
+        if (parentId == null) parentId = "a2942aac-b904-468a-a887-78637c86aa1b";
+
         return dao.getDirectory(parentId);
     }
 }

@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import java.util.List;
@@ -37,46 +38,25 @@ public class ExplorerViewModel extends AndroidViewModel {
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
     private final SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
     private final Stack<ExplorerItem> mHistoryStack = new Stack<>();
-    private ExplorerRepository mRepository;
-    private SingleLiveEvent<ExplorerItem> mParentItem = new SingleLiveEvent<>();
-    private LiveData<DirectorySnapshot> mDirectorySnapshot;
-    private SingleLiveEvent<Boolean> mIsLoadingEvent = new SingleLiveEvent<>();
+    private final ExplorerRepository mRepository;
+    private final MutableLiveData<String> mParentId = new MutableLiveData<>();
+    private final LiveData<DirectorySnapshot> mDirectorySnapshot;
+    private final SingleLiveEvent<Boolean> mIsLoadingEvent = new SingleLiveEvent<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
+        Log.d(TAG, "ExplorerViewModel: constructor");
+
         mRepository = new ExplorerRepository(getApplication());
         mDirectorySnapshot = transformDirectoryListToSnapshot();
+
+        //  retainStack();
 
         start();
     }
 
-    private LiveData<String> transformParentItemToUUID() {
-        return Transformations.map(mParentItem, parentItem -> {
-            setIsLoading(true);
-            Log.d(TAG, "ExplorerViewModel: transforming parentItem: " + parentItem);
-            if (parentItem == null) return "a2942aac-b904-468a-a887-78637c86aa1b";  // TODO: 6/13/2020 CODE SMELL: hard coded parent id
-            return parentItem.getUuid();
-        });
-    }
-
-    private LiveData<List<DirectoryEntity>> transformParentIdToDirectoryList() {
-        return Transformations.switchMap(transformParentItemToUUID(), parentId -> {
-            Log.d(TAG, "ExplorerViewModel: transforming parentId: " + parentId);
-            return mRepository.fetchDirectory(parentId);
-        });
-    }
-
-    private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {
-        return Transformations.map(transformParentIdToDirectoryList(), directory -> {
-            setIsLoading(false);
-            Log.d(TAG, "ExplorerViewModel: transforming directory entity list: " + directory.size());
-            ExplorerItem current = getCurrentExplorerItem();
-            return new DirectorySnapshot(current, directory);
-        });
-    }
-
     private void start() {
-        setParentExplorerItem(peekAtStack());
+        fetchDirectory();
     }
 
     SingleLiveEvent<String> getSnackBarMessageEvent() {
@@ -91,12 +71,8 @@ public class ExplorerViewModel extends AndroidViewModel {
         return mIsLoadingEvent;
     }
 
-    void setIsLoading(boolean isLoading) {
+    private void setIsLoading(boolean isLoading) {
         mIsLoadingEvent.setValue(isLoading);
-    }
-
-    private void setParentExplorerItem(ExplorerItem explorerItem) {
-        mParentItem.setValue(explorerItem);
     }
 
     LiveData<DirectorySnapshot> getDirectorySnapshot() {
@@ -122,6 +98,7 @@ public class ExplorerViewModel extends AndroidViewModel {
     }
 
     void handleOnClickEvent(ExplorerItem explorerItem) {
+        Log.d(TAG, "handleOnClickEvent: " + explorerItem.getTitle());
         if (explorerItem.getViewType() == -1) {
             goBack();
         } else if (explorerItem.getViewType() == 0 ||
@@ -133,17 +110,44 @@ public class ExplorerViewModel extends AndroidViewModel {
     }
 
     private void goForward(ExplorerItem explorerItem) {
+        Log.d(TAG, "goForward: " + explorerItem.getTitle());
         pushToStack(explorerItem);
-        setParentExplorerItem(explorerItem);
+        fetchDirectory();
     }
 
     private void goBack() {
+        Log.d(TAG, "goBack: ");
         popFromStack();
-        setParentExplorerItem(peekAtStack());
+        fetchDirectory();
+    }
+
+    private void fetchDirectory() {
+        setIsLoading(true);
+        ExplorerItem explorerItem = peekAtStack();
+        String parentId = explorerItem == null ? null : explorerItem.getUuid();
+
+        Log.d(TAG, "fetchDirectory: " + parentId);
+        mParentId.setValue(parentId);
     }
 
     private void viewDetails(ExplorerItem explorerItem) {
         //  request detail pop up
         setSnackBarMessage(explorerItem.getTitle());
+    }
+
+    private LiveData<List<DirectoryEntity>> transformParentIdToDirectoryList() {
+        return Transformations.switchMap(mParentId, parentId -> {
+            Log.d(TAG, "ExplorerViewModel: transforming parentId: " + parentId);
+            return mRepository.fetchDirectory(parentId);
+        });
+    }
+
+    private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {
+        return Transformations.map(transformParentIdToDirectoryList(), directory -> {
+            setIsLoading(false);
+            Log.d(TAG, "ExplorerViewModel: transforming directory entity list: " + directory.size());
+            ExplorerItem current = getCurrentExplorerItem();
+            return new DirectorySnapshot(current, directory);
+        });
     }
 }

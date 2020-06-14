@@ -18,6 +18,7 @@ package arc.resource.calculator.ui.explorer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,6 @@ import static arc.resource.calculator.DetailActivity.RESULT_CODE;
 import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
 import static arc.resource.calculator.DetailActivity.UPDATE;
 
-// TODO: 1/26/2020 Extract out ExplorerRepository features, give view model more control
-
 public class ExplorerFragment extends Fragment implements ExceptionObservable.Observer {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
@@ -79,7 +78,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     }
 
     private void setupAdapter() {
-        mAdapter = new ExplorerItemAdapter(getContext());
+        mAdapter = new ExplorerItemAdapter(this);
     }
 
     private void setupViews(View rootView) {
@@ -93,7 +92,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     }
 
     private void setupViewModel() {
-        mViewModel = new ViewModelProvider(this).get(ExplorerViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(ExplorerViewModel.class);
 
         mViewModel.getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
         mViewModel.getIsLoadingEvent().observe(getViewLifecycleOwner(), isLoading -> {
