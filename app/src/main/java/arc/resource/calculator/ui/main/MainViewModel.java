@@ -16,11 +16,13 @@
 
 package arc.resource.calculator.ui.main;
 
+import android.app.Application;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import arc.resource.calculator.db.entity.primary.GameEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
@@ -28,15 +30,20 @@ import arc.resource.calculator.model.SingleLiveEvent;
 /**
  * ViewModel for MainActivity
  */
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends AndroidViewModel {
+    private final MainRepository mRepository;
     private MutableLiveData<Intent> mStartActivityForResultTrigger = new MutableLiveData<>();
     private SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
     private LiveData<GameEntity> mGameEntityEvent;
-
+    private SingleLiveEvent<Boolean> mIsLoadingEvent = new SingleLiveEvent<>();
     private int mNavigationPosition;
 
-    MainViewModel() {
+    public MainViewModel(@NonNull Application application) {
+        super(application);
 
+        mRepository = new MainRepository(application);
+        setIsLoading(true);
+        mGameEntityEvent = mRepository.getGameEntity();
     }
 
     MutableLiveData<Intent> getStartActivityForResultTrigger() {
@@ -63,10 +70,15 @@ public class MainViewModel extends ViewModel {
         mSnackBarMessageEvent.postValue(message);
     }
 
-    LiveData<GameEntity> getGameEntityEvent() {
-        return mGameEntityEvent;
+    public SingleLiveEvent<Boolean> getLoadingEvent() {
+        return mIsLoadingEvent;
     }
 
-    void fetchGameEntity() {
+    void setIsLoading(boolean isLoading) {
+        mIsLoadingEvent.setValue(isLoading);
+    }
+
+    LiveData<GameEntity> getGameEntityEvent() {
+        return mGameEntityEvent;
     }
 }

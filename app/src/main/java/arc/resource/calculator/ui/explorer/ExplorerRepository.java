@@ -31,25 +31,17 @@ import arc.resource.calculator.db.entity.primary.DirectoryEntity;
 public class ExplorerRepository {
     public static final String TAG = ExplorerRepository.class.getSimpleName();
 
-    private DirectoryDao dao;
+    private final DirectoryDao mDirectoryDao;
 
     ExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
-        setDao(db.directoryDao());
-    }
-
-    public DirectoryDao getDao() {
-        return dao;
-    }
-
-    private void setDao(DirectoryDao dao) {
-        this.dao = dao;
+        mDirectoryDao = db.directoryDao();
     }
 
     LiveData<List<DirectoryEntity>> fetchDirectory(@Nullable String parentId) {
         Log.d(TAG, "fetchDirectory: " + parentId);
         if (parentId == null) parentId = "a2942aac-b904-468a-a887-78637c86aa1b";
 
-        return dao.getDirectory(parentId);
+        return mDirectoryDao.getDirectory(parentId);
     }
 }

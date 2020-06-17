@@ -39,5 +39,5 @@ public interface GameDao {
     LiveData<List<GameEntity>> getGames();
 
     @Query("select * from games where uuid is :uuid")
-    GameEntity getGame(String uuid);
+    LiveData<GameEntity> getGame(String uuid);
 }

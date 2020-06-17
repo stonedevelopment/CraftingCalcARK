@@ -20,8 +20,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,6 +31,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textview.MaterialTextView;
 
 import arc.resource.calculator.ChangeLog;
 import arc.resource.calculator.DetailActivity;
@@ -54,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel mViewModel;
     private AdUtil mAdUtil;
 
+    //  loading views
+    private ContentLoadingProgressBar mProgressBar;
+    private MaterialTextView mTextView;
+
+    //  content views
+    private BottomNavigationView mBottomNav;
+    private View mFragment;
+
     // Purchase flow -> disable menu option to disable ads
     // CreateOptionsMenu -> disable menu option to disable ads if purchased
 
@@ -64,13 +75,67 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupViewModel();
+        setupViews();
 
-        setupNavigation();
+        setupViewModel();
 
         setupAds();
 
         showChangeLog();
+    }
+
+    private void setupViews() {
+        mBottomNav = findViewById(R.id.bottomNavigationView);
+        mFragment = findViewById(R.id.navHostContainer);
+        mProgressBar = findViewById(R.id.loadingProgressBar);
+        mTextView = findViewById(R.id.loadingTextView);
+    }
+
+    private void setupViewModel() {
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mViewModel.getGameEntityEvent().observe(this, gameEntity -> {
+            mViewModel.setIsLoading(false);
+        });
+        mViewModel.getLoadingEvent().observe(this, isLoading -> {
+            if (isLoading) {
+                hideViews();
+            } else {
+                showViews();
+            }
+        });
+        mViewModel.getStartActivityForResultTrigger().observe(this, intent -> {
+            int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
+            startActivityForResult(intent, requestCode);
+        });
+        mViewModel.getSnackBarMessageEvent().observe(this, this::showSnackBar);
+    }
+
+    // TODO: 6/13/2020 How to change navigation panes on demand, save position from preiouvs use
+    private void setupNavigation() {
+        NavController navController = Navigation.findNavController(this, R.id.navHostContainer);
+        NavigationUI.setupWithNavController(mBottomNav, navController);
+    }
+
+    private void setupAds() {
+        mAdUtil = new AdUtil(this, R.id.content_main);
+    }
+
+    private void showViews() {
+        mProgressBar.hide();
+        mTextView.setVisibility(View.GONE);
+
+        mFragment.setVisibility(View.VISIBLE);
+        mBottomNav.setVisibility(View.VISIBLE);
+
+        setupNavigation();
+    }
+
+    private void hideViews() {
+        mProgressBar.show();
+        mTextView.setVisibility(View.VISIBLE);
+
+        mFragment.setVisibility(View.GONE);
+        mBottomNav.setVisibility(View.GONE);
     }
 
     @Override
@@ -230,26 +295,6 @@ public class MainActivity extends AppCompatActivity {
                 mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_settings_fail));
             }
         }
-    }
-
-    private void setupViewModel() {
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.getStartActivityForResultTrigger().observe(this, intent -> {
-            int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
-            startActivityForResult(intent, requestCode);
-        });
-        mViewModel.getSnackBarMessageEvent().observe(this, this::showSnackBar);
-    }
-
-    // TODO: 6/13/2020 How to change navigation panes on demand, save position from preiouvs use
-    private void setupNavigation() {
-        NavController navController = Navigation.findNavController(this, R.id.navHostContainer);
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
-        NavigationUI.setupWithNavController(bottomNav, navController);
-    }
-
-    private void setupAds() {
-        mAdUtil = new AdUtil(this, R.id.content_main);
     }
 
     // TODO: 6/13/2020 Change changelog
