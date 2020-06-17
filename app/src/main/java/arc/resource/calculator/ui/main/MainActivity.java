@@ -49,11 +49,9 @@ import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
 import static arc.resource.calculator.DetailActivity.UPDATE;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String INTENT_KEY_DID_UPDATE = "DID_UPDATE";
     private static final String TAG = MainActivity.class.getSimpleName();
-    private MainViewModel mViewModel;
 
+    private MainViewModel mViewModel;
     private AdUtil mAdUtil;
 
     // Purchase flow -> disable menu option to disable ads

@@ -18,9 +18,11 @@ package arc.resource.calculator.ui.main;
 
 import android.content.Intent;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import arc.resource.calculator.db.entity.primary.GameEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
 
 /**
@@ -29,8 +31,13 @@ import arc.resource.calculator.model.SingleLiveEvent;
 public class MainViewModel extends ViewModel {
     private MutableLiveData<Intent> mStartActivityForResultTrigger = new MutableLiveData<>();
     private SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
+    private LiveData<GameEntity> mGameEntityEvent;
 
     private int mNavigationPosition;
+
+    MainViewModel() {
+
+    }
 
     MutableLiveData<Intent> getStartActivityForResultTrigger() {
         return mStartActivityForResultTrigger;
@@ -56,4 +63,10 @@ public class MainViewModel extends ViewModel {
         mSnackBarMessageEvent.postValue(message);
     }
 
+    LiveData<GameEntity> getGameEntityEvent() {
+        return mGameEntityEvent;
+    }
+
+    void fetchGameEntity() {
+    }
 }
