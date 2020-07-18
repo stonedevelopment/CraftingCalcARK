@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/StudioProjects-craftingcalcark.iml" filepath="$PROJECT_DIR$/StudioProjects-craftingcalcark.iml" group="craftingcalcark" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/craftingcalcark.iml" filepath="$PROJECT_DIR$/craftingcalcark.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/craftingcalcark-app.iml" filepath="$PROJECT_DIR$/app/craftingcalcark-app.iml" group="craftingcalcark/app" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="craftingcalcark/app" />
+      <module fileurl="file://$PROJECT_DIR$/craftingcalcark.iml" filepath="$PROJECT_DIR$/craftingcalcark.iml" group="craftingcalcark" />
     </modules>
   </component>
 </project>
