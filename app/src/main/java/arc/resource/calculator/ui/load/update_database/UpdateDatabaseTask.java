@@ -135,27 +135,27 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
 
         JsonNode resources = inNode.get(cResources);
         for (JsonNode node : resources) {
-            database.resourceDao().insert(ResourceEntity.fromJSON(node));
+            database.resourceDao().insert(ResourceEntity.fromJson(node));
         }
 
         JsonNode stations = inNode.get(cStations);
         for (JsonNode node : stations) {
-            database.stationDao().insert(StationEntity.fromJSON(node));
+            database.stationDao().insert(StationEntity.fromJson(node));
         }
 
         JsonNode folders = inNode.get(cFolders);
         for (JsonNode node : folders) {
-            database.folderDao().insert(FolderEntity.fromJSON(node));
+            database.folderDao().insert(FolderEntity.fromJson(node));
         }
 
         JsonNode engrams = inNode.get(cEngrams);
         for (JsonNode node : engrams) {
-            database.engramDao().insert(EngramEntity.fromJSON(node));
+            database.engramDao().insert(EngramEntity.fromJson(node));
         }
 
         JsonNode compositions = inNode.get(cComposition);
         for (JsonNode node : compositions) {
-            database.compositionDao().insert(CompositionEntity.fromJSON(node));
+            database.compositionDao().insert(CompositionEntity.fromJson(node));
         }
 
         JsonNode composites = inNode.get(cComposites);

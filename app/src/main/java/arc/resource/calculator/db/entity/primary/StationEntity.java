@@ -22,6 +22,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
@@ -48,17 +49,16 @@ public class StationEntity {
     private String name;
     @NonNull
     private String imageFile;
-    @NonNull
-    private String engramId;
+    private String sourceId;
     private Date lastUpdated;
     @NonNull
     private String gameId;
 
-    public StationEntity(@NonNull String uuid, @NonNull String name, @NonNull String imageFile, @NonNull String engramId, Date lastUpdated, @NonNull String gameId) {
+    public StationEntity(@NonNull String uuid, @NonNull String name, @NonNull String imageFile, String sourceId, Date lastUpdated, @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;
-        this.engramId = engramId;
+        this.sourceId = sourceId;
         this.lastUpdated = lastUpdated;
         this.gameId = gameId;
     }
@@ -71,15 +71,8 @@ public class StationEntity {
      * "lastUpdated": 1589725368336
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static StationEntity fromJSON(JsonNode node) {
-        String uuid = node.get(cUuid).asText();
-        String name = node.get(cName).asText();
-        String imageFile = node.get(cImageFile).asText();
-        String engramId = node.get(cEngramId).asText();
-        if (engramId == null) engramId = "";
-        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
-        String gameId = node.get(cGameId).asText();
-        return new StationEntity(uuid, name, imageFile, engramId, lastUpdated, gameId);
+    public static StationEntity fromJson(JsonNode node) {
+        return new ObjectMapper().convertValue(node, StationEntity.class);
     }
 
     @NonNull
@@ -110,12 +103,12 @@ public class StationEntity {
     }
 
     @NonNull
-    public String getEngramId() {
-        return engramId;
+    public String getSourceId() {
+        return sourceId;
     }
 
-    public void setEngramId(@NonNull String engramId) {
-        this.engramId = engramId;
+    public void setSourceId(@NonNull String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public Date getLastUpdated() {
@@ -143,7 +136,7 @@ public class StationEntity {
         StationEntity station = (StationEntity) obj;
         return uuid.equals(station.getUuid()) &&
                 name.equals(station.getName()) &&
-                engramId.equals(station.getEngramId()) &&
+                sourceId.equals(station.getSourceId()) &&
                 imageFile.equals(station.getImageFile()) &&
                 gameId.equals(station.getGameId());
     }

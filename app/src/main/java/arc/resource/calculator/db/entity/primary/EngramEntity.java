@@ -17,22 +17,15 @@
 package arc.resource.calculator.db.entity.primary;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.EngramDao;
-
-import static arc.resource.calculator.util.JSONUtil.cDescription;
-import static arc.resource.calculator.util.JSONUtil.cGameId;
-import static arc.resource.calculator.util.JSONUtil.cImageFile;
-import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
-import static arc.resource.calculator.util.JSONUtil.cName;
-import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 /**
  * Engram object for base game data (vanilla)
@@ -83,19 +76,8 @@ public class EngramEntity {
      * "lastUpdated": 1589732742789,
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static EngramEntity fromJSON(JsonNode node) {
-        String uuid = node.get(cUuid).asText();
-        String name = node.get(cName).asText();
-        String description = node.get(cDescription).asText();
-        String imageFile = node.get(cImageFile).asText();
-        int level = node.get(cImageFile).asInt();
-        int yield = node.get(cImageFile).asInt();
-        int points = node.get(cImageFile).asInt();
-        int xp = node.get(cImageFile).asInt();
-        int craftingTime = node.get(cImageFile).asInt();
-        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
-        String gameId = node.get(cGameId).asText();
-        return new EngramEntity(uuid, name, description, imageFile, level, yield, points, xp, craftingTime, lastUpdated, gameId);
+    public static EngramEntity fromJson(JsonNode node) {
+        return new ObjectMapper().convertValue(node, EngramEntity.class);
     }
 
     @NonNull
@@ -187,12 +169,7 @@ public class EngramEntity {
         this.gameId = gameId;
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof EngramEntity)) return false;
-
-        EngramEntity engram = (EngramEntity) obj;
+    public boolean equals(EngramEntity engram) {
         return uuid.equals(engram.uuid) &&
                 name.equals(engram.name) &&
                 description.equals(engram.description) &&
@@ -203,7 +180,22 @@ public class EngramEntity {
                 xp == engram.xp &&
                 craftingTime == engram.craftingTime &&
                 gameId.equals(engram.gameId);
+    }
 
-
+    @Override
+    public String toString() {
+        return "EngramEntity{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", imageFile='" + imageFile + '\'' +
+                ", level=" + level +
+                ", yield=" + yield +
+                ", points=" + points +
+                ", xp=" + xp +
+                ", craftingTime=" + craftingTime +
+                ", lastUpdated=" + lastUpdated +
+                ", gameId='" + gameId + '\'' +
+                '}';
     }
 }

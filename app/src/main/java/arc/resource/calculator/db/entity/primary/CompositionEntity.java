@@ -20,17 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.CompositionDao;
-
-import static arc.resource.calculator.util.JSONUtil.cEngramId;
-import static arc.resource.calculator.util.JSONUtil.cGameId;
-import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
-import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 @Entity(tableName = CompositionDao.tableName)
 public class CompositionEntity {
@@ -51,15 +46,10 @@ public class CompositionEntity {
     /**
      * "uuid": "0cc0a7ff-e3e5-4f62-b5d1-4e049cd5dd95",
      * "engramId": "54fb9fa0-4e4f-4d3c-ba93-b5d5bc0a9d0d",
-     * "lastUpdated": 1590242216057,
      * "gameId": "d3ed5cd5-9dc7-4f10-b988-444b19abd554"
      */
-    public static CompositionEntity fromJSON(JsonNode node) {
-        String uuid = node.get(cUuid).asText();
-        String engramId = node.get(cEngramId).asText();
-        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
-        String gameId = node.get(cGameId).asText();
-        return new CompositionEntity(uuid, engramId, lastUpdated, gameId);
+    public static CompositionEntity fromJson(JsonNode node) {
+        return new ObjectMapper().convertValue(node, CompositionEntity.class);
     }
 
     @NonNull

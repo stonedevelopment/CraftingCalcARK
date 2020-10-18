@@ -20,19 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.CompositeDao;
-
-import static arc.resource.calculator.util.JSONUtil.cCompositionId;
-import static arc.resource.calculator.util.JSONUtil.cGameId;
-import static arc.resource.calculator.util.JSONUtil.cImageFile;
-import static arc.resource.calculator.util.JSONUtil.cIsEngram;
-import static arc.resource.calculator.util.JSONUtil.cName;
-import static arc.resource.calculator.util.JSONUtil.cQuantity;
-import static arc.resource.calculator.util.JSONUtil.cSourceId;
-import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 @Entity(tableName = CompositeDao.tableName)
 public class CompositeEntity {
@@ -43,43 +36,42 @@ public class CompositeEntity {
     private String imageFile;
     private int quantity;
     private String sourceId;
-    private String compositionId;
-    private String gameId;
     private boolean isEngram;
+    private String compositionId;
+    private Date lastUpdated;
+    private String gameId;
 
-    public CompositeEntity(@NonNull String uuid, String name, String imageFile, int quantity,
-                           String sourceId, String compositionId, String gameId,
-                           boolean isEngram) {
+    public CompositeEntity(@NonNull String uuid,
+                           String name,
+                           String imageFile,
+                           int quantity,
+                           @NonNull String sourceId,
+                           boolean isEngram,
+                           @NonNull String compositionId,
+                           @NonNull Date lastUpdated,
+                           @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;
         this.quantity = quantity;
         this.sourceId = sourceId;
-        this.compositionId = compositionId;
-        this.gameId = gameId;
         this.isEngram = isEngram;
+        this.compositionId = compositionId;
+        this.lastUpdated = lastUpdated;
+        this.gameId = gameId;
     }
 
     /**
-     * "uuid": "994f8240-f9e0-4dba-987f-de5c31287ef8",
+     * "uuid": "75212ac1-ca92-452e-bfe2-e45379c8261a",
      * "name": "Absorbent Substrate",
      * "imageFile": "absorbent_substrate.webp",
      * "quantity": 10,
-     * "sourceId": "72689ce4-92cc-47e2-95e3-05748c368983",
-     * "compositionId": "6693c091-aa97-4d77-8267-f163fe71ae1f",
-     * "gameId": "ce61547f-9ace-4a3b-b5c0-216f234339c7",
-     * "isEngram": true
+     * "sourceId": "c97e9642-5cb2-4df2-b18a-eb071aa24c0e",
+     * "isEngram": true,
+     * "compositionId": "e11a4d37-a887-439c-8075-fcd5bca196fc"
      */
     public static CompositeEntity fromJSON(JsonNode node) {
-        String uuid = node.get(cUuid).asText();
-        String name = node.get(cName).asText();
-        String imageFile = node.get(cImageFile).asText();
-        int quantity = node.get(cQuantity).asInt();
-        String sourceId = node.get(cSourceId).asText();
-        String compositionId = node.get(cCompositionId).asText();
-        String gameId = node.get(cGameId).asText();
-        boolean isEngram = node.get(cIsEngram).asBoolean();
-        return new CompositeEntity(uuid, name, imageFile, quantity, sourceId, compositionId, gameId, isEngram);
+        return new ObjectMapper().convertValue(node, CompositeEntity.class);
     }
 
     @NonNull
@@ -145,5 +137,13 @@ public class CompositeEntity {
 
     public void setIsEngram(boolean isEngram) {
         this.isEngram = isEngram;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

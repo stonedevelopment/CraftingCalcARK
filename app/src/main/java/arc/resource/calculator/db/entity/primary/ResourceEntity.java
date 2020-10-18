@@ -22,6 +22,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
@@ -67,14 +68,8 @@ public class ResourceEntity {
      * "lastUpdated": 1589732742758,
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static ResourceEntity fromJSON(JsonNode node) {
-        String uuid = node.get(cUuid).asText();
-        String name = node.get(cName).asText();
-        String description = node.get(cDescription).asText();
-        String imageFile = node.get(cImageFile).asText();
-        Date lastUpdated = new Date(node.get(cLastUpdated).asLong());
-        String gameId = node.get(cGameId).asText();
-        return new ResourceEntity(uuid, name, description, imageFile, lastUpdated, gameId);
+    public static ResourceEntity fromJson(JsonNode node) {
+        return new ObjectMapper().convertValue(node, ResourceEntity.class);
     }
 
     @NonNull

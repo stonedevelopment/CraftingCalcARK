@@ -25,16 +25,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.FolderDao;
-
-import static arc.resource.calculator.util.JSONUtil.cDescription;
-import static arc.resource.calculator.util.JSONUtil.cGameId;
-import static arc.resource.calculator.util.JSONUtil.cImageFile;
-import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
-import static arc.resource.calculator.util.JSONUtil.cName;
-import static arc.resource.calculator.util.JSONUtil.cUuid;
 
 /**
  * Folder object for base game data (vanilla)
@@ -60,11 +52,8 @@ public class FolderEntity {
      * "name": "Misc",
      * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
      */
-    public static FolderEntity fromJSON(JsonNode node) throws IOException {
-        String uuid = node.get(cUuid).asText();
-        String name = node.get(cName).asText();
-        String gameId = node.get(cGameId).asText();
-        return new FolderEntity(uuid, name, gameId);
+    public static FolderEntity fromJson(JsonNode node) throws IOException {
+        return new ObjectMapper().convertValue(node, FolderEntity.class);
     }
 
     @NonNull
