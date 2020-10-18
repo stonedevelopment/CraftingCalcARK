@@ -1,0 +1,39 @@
+{
+  "Primary": {
+    "name": "ARK:Survival Evolved",
+    "filePath": "Primary/updatified.json",
+    "lastUpdated": 1600828557526
+  },
+  "DLC": [
+    {
+      "name": "Primitive Plus",
+      "filePath": "DLC/Primitive Plus/updatified.json",
+      "lastUpdated": 1600828558437
+    },
+    {
+      "name": "Scorched Earth",
+      "filePath": "DLC/Scorched Earth/updatified.json",
+      "lastUpdated": 1600828559441
+    },
+    {
+      "name": "Aberration",
+      "filePath": "DLC/Aberration/updatified.json",
+      "lastUpdated": 1600828560026
+    },
+    {
+      "name": "Extinction",
+      "filePath": "DLC/Extinction/updatified.json",
+      "lastUpdated": 1600828560676
+    },
+    {
+      "name": "The Center",
+      "filePath": "DLC/The Center/updatified.json",
+      "lastUpdated": 1600828561142
+    },
+    {
+      "name": "Ragnarok",
+      "filePath": "DLC/Ragnarok/updatified.json",
+      "lastUpdated": 1600828561608
+    }
+  ]
+}
