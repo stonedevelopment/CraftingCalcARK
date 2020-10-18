@@ -23,10 +23,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
-import arc.resource.calculator.ui.load.check_version.versioning.DLCVersioning;
+import arc.resource.calculator.ui.load.check_version.versioning.DlcVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JSONUtil;
@@ -35,32 +35,32 @@ import arc.resource.calculator.util.PrefsUtil;
 import static arc.resource.calculator.util.JSONUtil.cDLC;
 import static arc.resource.calculator.util.JSONUtil.cPrimary;
 
-public class CheckVersionTask extends AsyncTask<Void, Integer, List<Versioning>> {
-    public static final String TAG = CheckVersionTask.class.getCanonicalName();
+public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning>> {
+    public static final String TAG = CheckForUpdateTask.class.getCanonicalName();
 
-    private CheckVersionListener listener;
+    private CheckForUpdateListener listener;
     private PrefsUtil prefsUtil;
-    private JsonNode versioningNode;
+    private JsonNode updatificationNode;
 
-    public CheckVersionTask(
-            Context context, PrefsUtil prefsUtil, CheckVersionListener listener) {
+    public CheckForUpdateTask(
+            Context context, PrefsUtil prefsUtil, CheckForUpdateListener listener) {
         setListener(listener);
         setPrefsUtil(prefsUtil);
 
-        setupVersioning(context);
+        setupUpdatificationNode(context);
     }
 
     private void setPrefsUtil(PrefsUtil prefsUtil) {
         this.prefsUtil = prefsUtil;
     }
 
-    private void setListener(CheckVersionListener listener) {
+    private void setListener(CheckForUpdateListener listener) {
         this.listener = listener;
     }
 
-    private void setupVersioning(Context context) {
+    private void setupUpdatificationNode(Context context) {
         try {
-            versioningNode = JSONUtil.convertVersioningJsonFileToNode(context);
+            updatificationNode = JSONUtil.parseUpdatificationFile(context);
         } catch (IOException e) {
             listener.onError(e);
         }
@@ -79,10 +79,10 @@ public class CheckVersionTask extends AsyncTask<Void, Integer, List<Versioning>>
         List<Versioning> versioningList = new ArrayList<>();
 
         //  get node for Primary game data
-        JsonNode primaryNode = versioningNode.get(cPrimary);
+        JsonNode primaryNode = updatificationNode.get(cPrimary);
 
         //  convert into Versioning object
-        PrimaryVersioning primaryVersioning = PrimaryVersioning.fromJSON(primaryNode);
+        PrimaryVersioning primaryVersioning = (PrimaryVersioning) Versioning.fromJSON(primaryNode);
 
         //  test version against previous, add if test passes
         if (isNewVersion(primaryVersioning)) {
@@ -90,13 +90,10 @@ public class CheckVersionTask extends AsyncTask<Void, Integer, List<Versioning>>
         }
 
         //  get DLC array
-        JsonNode dlcArray = versioningNode.get(cDLC);
-        for (int i = 0; i < dlcArray.size(); i++) {
-            //  get node for DLC game data
-            JsonNode dlcNode = dlcArray.get(i);
-
+        JsonNode dlcArray = updatificationNode.get(cDLC);
+        for (JsonNode dlcNode : dlcArray) {
             //  convert into Versioning object
-            DLCVersioning dlcVersioning = DLCVersioning.fromJSON(dlcNode);
+            DlcVersioning dlcVersioning = (DlcVersioning) Versioning.fromJSON(dlcNode);
 
             //  test version against previous, add if test passes
             if (isNewVersion(dlcVersioning)) {
@@ -113,26 +110,26 @@ public class CheckVersionTask extends AsyncTask<Void, Integer, List<Versioning>>
     }
 
     /**
-     * Used to test if incoming Versioning object matches saved version
+     * Used to test if incoming Versioning object's last update date matches saved date
      *
      * @param versioning Versioning object to test for
-     * @return if new version found
+     * @return if new date was found
      */
     private boolean isNewVersion(Versioning versioning) {
-        String oldVersion = prefsUtil.getVersionByUUID(versioning.getUuid());
-        String newVersion = versioning.getVersion();
+        Date oldDate = new Date(prefsUtil.getLastUpdateFromUuid(versioning.getUuid()));
+        Date newDate = versioning.getLastUpdate();
 
-        return hasUpdate(oldVersion, newVersion);
+        return hasUpdate(oldDate, newDate);
     }
 
     /**
      * Used to test if versions match
      *
-     * @param oldVersion previously-saved version
-     * @param newVersion version taken from json file
-     * @return if versions match
+     * @param oldDate previously-saved Date in ms
+     * @param newDate Date in ms taken from json file
+     * @return if times match
      */
-    private boolean hasUpdate(String oldVersion, String newVersion) {
-        return !Objects.equals(oldVersion, newVersion);
+    private boolean hasUpdate(Date oldDate, Date newDate) {
+        return !oldDate.equals(newDate);
     }
 }

@@ -26,8 +26,8 @@ import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.SingleLiveEvent;
-import arc.resource.calculator.ui.load.check_version.CheckVersionListener;
-import arc.resource.calculator.ui.load.check_version.CheckVersionTask;
+import arc.resource.calculator.ui.load.check_version.CheckForUpdateListener;
+import arc.resource.calculator.ui.load.check_version.CheckForUpdateTask;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.ui.load.update_database.UpdateDatabaseListener;
 import arc.resource.calculator.ui.load.update_database.UpdateDatabaseTask;
@@ -127,18 +127,18 @@ public class LoadScreenViewModel extends AndroidViewModel {
                 setProgressTotal(LoadScreenState.values().length);
                 startCheckVersionEvent();
                 break;
-            case CheckVersion:
-                new CheckVersionTask(getApplication(), PrefsUtil.getInstance(getApplication()), new CheckVersionListener() {
+            case CheckForUpdate:
+                new CheckForUpdateTask(getApplication(), PrefsUtil.getInstance(getApplication()), new CheckForUpdateListener() {
                     @Override
                     public void onError(Exception e) {
-                        String tag = CheckVersionTask.TAG;
-                        String message = getString(R.string.initialization_event_check_version_error);
+                        String tag = CheckForUpdateTask.TAG;
+                        String message = getString(R.string.initialization_event_check_for_update_error);
                         handleFatalException(tag, message, e);
                     }
 
                     @Override
                     public void onStart() {
-                        updateStatusMessage(state, getString(R.string.initialization_event_check_version_start));
+                        updateStatusMessage(state, getString(R.string.initialization_event_check_for_update_start));
                     }
 
                     @Override
@@ -147,14 +147,10 @@ public class LoadScreenViewModel extends AndroidViewModel {
 
                         int total = versioningList.size();
                         if (total >= 1) {
-                            if (total > 1) {
-                                updateStatusMessage(state, String.format(getString(R.string.initialization_event_check_version_new_version_multiple), total));
-                            } else {
-                                updateStatusMessage(state, getString(R.string.initialization_event_check_version_new_version_single));
-                            }
+                            updateStatusMessage(state, getString(R.string.initialization_event_check_for_update_has_update_single));
                             startUpdateDatabaseEvent();
                         } else {
-                            updateStatusMessage(state, getString(R.string.initialization_event_check_version_finished_without_update));
+                            updateStatusMessage(state, getString(R.string.initialization_event_check_for_update_no_update));
                             startFinalizeEvent();
                         }
                     }
@@ -189,7 +185,7 @@ public class LoadScreenViewModel extends AndroidViewModel {
             case SavePrefs:
                 PrefsUtil prefsUtil = PrefsUtil.getInstance(getApplication());
                 for (Versioning versioning : versioningList) {
-                    prefsUtil.setVersionByUUID(versioning.getUuid(), versioning.getVersion());
+                    prefsUtil.setLastUpdateByUuid(versioning.getUuid(), versioning.getLastUpdate());
                 }
                 prefsUtil.setDidUpdate(true);
 
@@ -206,7 +202,7 @@ public class LoadScreenViewModel extends AndroidViewModel {
     }
 
     private void startCheckVersionEvent() {
-        updateLoadScreenEvent(LoadScreenState.CheckVersion);
+        updateLoadScreenEvent(LoadScreenState.CheckForUpdate);
     }
 
     private void startUpdateDatabaseEvent() {

@@ -29,6 +29,8 @@ import java.util.Objects;
 
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 
+import static arc.resource.calculator.util.Constants.cUpdatificationFileName;
+
 public class JSONUtil {
     public static final String cVersioning = "versioning";
     public static final String cUuid = "uuid";
@@ -97,14 +99,12 @@ public class JSONUtil {
         return mapper.readTree(fileStream);
     }
 
-    public static JsonNode convertVersioningJsonFileToNode(Context context) throws IOException {
-        String fileName = cJsonFilePath + "versioning.json";
-        return parseFileToNode(context, fileName);
+    public static JsonNode parseUpdatificationFile(Context context) throws IOException {
+        return parseFileToNode(context, cUpdatificationFileName);
     }
 
-    public static JsonNode convertJsonFileToNode(Context context, Versioning versioning) throws IOException {
-        String filename = cJsonFilePath + versioning.getFilePath();
-        return parseFileToNode(context, filename);
+    public static JsonNode parseUpdatifiedFile(Context context, Versioning versioning) throws IOException {
+        return parseFileToNode(context, versioning.getFilePath());
     }
 
     public static boolean isNewVersion(String oldVersion, String newVersion) {

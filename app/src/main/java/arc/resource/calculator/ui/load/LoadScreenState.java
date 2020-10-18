@@ -21,7 +21,7 @@ package arc.resource.calculator.ui.load;
  */
 public enum LoadScreenState {
     Initialize,
-    CheckVersion,
+    CheckForUpdate,
     UpdateDatabase,
     SavePrefs,
     Finalize

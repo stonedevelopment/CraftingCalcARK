@@ -20,7 +20,7 @@ import java.util.List;
 
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 
-public interface CheckVersionListener {
+public interface CheckForUpdateListener {
     void onError(Exception e);
 
     void onStart();

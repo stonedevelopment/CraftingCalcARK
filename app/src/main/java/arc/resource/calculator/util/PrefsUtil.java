@@ -21,6 +21,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.Date;
+
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.PrefsObserver;
 
@@ -153,6 +155,10 @@ public class PrefsUtil {
         editPreference(key, String.valueOf(value));
     }
 
+    private void editPreference(String uuid, Date newDate) {
+        editPreference(uuid, newDate.getTime());
+    }
+
     private void removePreference(String key) {
         mSharedPreferences.edit().remove(key).commit();
     }
@@ -177,12 +183,12 @@ public class PrefsUtil {
         return getPreference(RequiredLevelFilterKey, RequiredLevelFilterDefaultValue);
     }
 
-    public String getVersionByUUID(String uuid) {
-        return getPreference(uuid, null);
+    public long getLastUpdateFromUuid(String uuid) {
+        return getPreference(uuid, 0L);
     }
 
-    public void setVersionByUUID(String uuid, String newVersion) {
-        editPreference(uuid, newVersion);
+    public void setLastUpdateByUuid(String uuid, Date lastUpdate) {
+        editPreference(uuid, lastUpdate);
     }
 
     public boolean getDidUpdate() {

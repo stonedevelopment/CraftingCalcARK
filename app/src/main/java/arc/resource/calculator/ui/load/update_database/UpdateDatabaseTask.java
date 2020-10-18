@@ -38,6 +38,15 @@ import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersionin
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JSONUtil;
 
+import static arc.resource.calculator.util.Constants.cComposites;
+import static arc.resource.calculator.util.Constants.cComposition;
+import static arc.resource.calculator.util.Constants.cDetails;
+import static arc.resource.calculator.util.Constants.cDirectory;
+import static arc.resource.calculator.util.Constants.cEngrams;
+import static arc.resource.calculator.util.Constants.cFolders;
+import static arc.resource.calculator.util.Constants.cResources;
+import static arc.resource.calculator.util.Constants.cStations;
+
 public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     public static final String TAG = UpdateDatabaseTask.class.getCanonicalName();
 
@@ -116,45 +125,45 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     }
 
     private void updatePrimary(Versioning versioning) throws IOException {
-        JsonNode inNode = JSONUtil.convertJsonFileToNode(getContext(), versioning);
+        JsonNode inNode = JSONUtil.parseUpdatifiedFile(getContext(), versioning);
 
         //  clear database for fresh data
         database.clearAllTables();
 
         //  insert game object
-        database.gameDao().insert(GameEntity.fromJSON(inNode.get("details")));
+        database.gameDao().insert(GameEntity.fromJSON(inNode.get(cDetails)));
 
-        JsonNode resources = inNode.get("resources");
+        JsonNode resources = inNode.get(cResources);
         for (JsonNode node : resources) {
             database.resourceDao().insert(ResourceEntity.fromJSON(node));
         }
 
-        JsonNode stations = inNode.get("stations");
+        JsonNode stations = inNode.get(cStations);
         for (JsonNode node : stations) {
             database.stationDao().insert(StationEntity.fromJSON(node));
         }
 
-        JsonNode folders = inNode.get("folders");
+        JsonNode folders = inNode.get(cFolders);
         for (JsonNode node : folders) {
             database.folderDao().insert(FolderEntity.fromJSON(node));
         }
 
-        JsonNode engrams = inNode.get("engrams");
+        JsonNode engrams = inNode.get(cEngrams);
         for (JsonNode node : engrams) {
             database.engramDao().insert(EngramEntity.fromJSON(node));
         }
 
-        JsonNode compositions = inNode.get("composition");
+        JsonNode compositions = inNode.get(cComposition);
         for (JsonNode node : compositions) {
             database.compositionDao().insert(CompositionEntity.fromJSON(node));
         }
 
-        JsonNode composites = inNode.get("composites");
+        JsonNode composites = inNode.get(cComposites);
         for (JsonNode node : composites) {
             database.compositeDao().insert(CompositeEntity.fromJSON(node));
         }
 
-        JsonNode directory = inNode.get("directory");
+        JsonNode directory = inNode.get(cDirectory);
         for (JsonNode node : directory) {
             database.directoryDao().insert(DirectoryEntity.fromJSON(node));
         }
