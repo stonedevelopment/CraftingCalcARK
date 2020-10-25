@@ -32,7 +32,5 @@ task clean(type: Delete) {
 }
 
 ext {
-    archLifecycleVersion = '2.2.0'
-    navVersion = '2.3.0-alpha04'
-    roomVersion = '2.2.5'
+
 }
