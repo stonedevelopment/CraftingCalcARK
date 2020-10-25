@@ -117,7 +117,7 @@ public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning
      */
     private boolean isNewVersion(Versioning versioning) {
         Date oldDate = new Date(prefsUtil.getLastUpdateFromUuid(versioning.getUuid()));
-        Date newDate = versioning.getLastUpdate();
+        Date newDate = versioning.getLastUpdated();
 
         return hasUpdate(oldDate, newDate);
     }

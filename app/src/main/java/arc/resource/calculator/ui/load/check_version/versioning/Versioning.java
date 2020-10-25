@@ -25,13 +25,13 @@ public class Versioning {
     private final String uuid;
     private final String name;
     private final String filePath;
-    private final Date lastUpdate;
+    private final Date lastUpdated;
 
-    public Versioning(String uuid, String name, String filePath, Date lastUpdate) {
+    public Versioning(String uuid, String name, String filePath, Date lastUpdated) {
         this.uuid = uuid;
         this.name = name;
         this.filePath = filePath;
-        this.lastUpdate = lastUpdate;
+        this.lastUpdated = lastUpdated;
     }
 
     public static Versioning fromJSON(JsonNode node) {
@@ -50,7 +50,7 @@ public class Versioning {
         return filePath;
     }
 
-    public Date getLastUpdate() {
-        return lastUpdate;
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 }

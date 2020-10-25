@@ -185,7 +185,7 @@ public class LoadScreenViewModel extends AndroidViewModel {
             case SavePrefs:
                 PrefsUtil prefsUtil = PrefsUtil.getInstance(getApplication());
                 for (Versioning versioning : versioningList) {
-                    prefsUtil.setLastUpdateByUuid(versioning.getUuid(), versioning.getLastUpdate());
+                    prefsUtil.setLastUpdateByUuid(versioning.getUuid(), versioning.getLastUpdated());
                 }
                 prefsUtil.setDidUpdate(true);
 
