@@ -34,6 +34,7 @@ public class CompositionEntity {
     private String uuid;
     private String engramId;
     private Date lastUpdated;
+    @NonNull
     private String gameId;
 
     public CompositionEntity(@NonNull String uuid,
@@ -75,6 +76,7 @@ public class CompositionEntity {
         this.lastUpdated = lastUpdated;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }

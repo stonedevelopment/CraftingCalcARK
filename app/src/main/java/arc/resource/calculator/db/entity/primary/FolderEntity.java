@@ -32,9 +32,11 @@ import arc.resource.calculator.db.dao.primary.FolderDao;
  */
 @Entity(tableName = FolderDao.tableName)
 public class FolderEntity {
+    @NonNull
     @PrimaryKey
     private String uuid;
     private String name;
+    @NonNull
     private String gameId;
 
     public FolderEntity(@NonNull String uuid,
@@ -49,6 +51,7 @@ public class FolderEntity {
         return new ObjectMapper().convertValue(node, FolderEntity.class);
     }
 
+    @NonNull
     public String getUuid() {
         return uuid;
     }
@@ -65,6 +68,7 @@ public class FolderEntity {
         this.name = name;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }

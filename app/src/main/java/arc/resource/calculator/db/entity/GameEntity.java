@@ -40,7 +40,14 @@ public class GameEntity {
     private String backFolderFile;
     private Date lastUpdated;
 
-    public GameEntity(@NonNull String uuid, String name, String description, String filePath, String logoFile, String folderFile, String backFolderFile, Date lastUpdated) {
+    public GameEntity(@NonNull String uuid,
+                      @NonNull String name,
+                      @NonNull String description,
+                      @NonNull String filePath,
+                      @NonNull String logoFile,
+                      @NonNull String folderFile,
+                      @NonNull String backFolderFile,
+                      @NonNull Date lastUpdated) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
@@ -51,17 +58,7 @@ public class GameEntity {
         this.lastUpdated = lastUpdated;
     }
 
-    /**
-     * "uuid": "9a26130d-a985-4bc6-b9da-2b092f22a277",
-     * "name": "ARK:Survival Evolved",
-     * "description": "As a man or woman stranded, naked, freezing, and starving on the unforgiving shores of a mysterious island called \"ARK\", use your skill and cunning to kill or tame and ride the plethora of leviathan dinosaurs and other primeval creatures roaming the land. Hunt, harvest resources, craft items, grow crops, research technologies, and build shelters to withstand the elements and store valuables, all while teaming up with (or preying upon) hundreds of other players to survive, dominate... and escape!",
-     * "filePath": "Primary/",
-     * "logoFile": "logo.webp",
-     * "folderFile": "folder.webp",
-     * "backFolderFile": "backFolder.webp",
-     * "lastUpdated": 1589725368121,
-     */
-    public static GameEntity fromJSON(JsonNode node) {
+    public static GameEntity fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, GameEntity.class);
     }
 
@@ -78,7 +75,7 @@ public class GameEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
@@ -86,7 +83,7 @@ public class GameEntity {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NonNull String description) {
         this.description = description;
     }
 
@@ -94,7 +91,7 @@ public class GameEntity {
         return filePath;
     }
 
-    public void setFilePath(String filePath) {
+    public void setFilePath(@NonNull String filePath) {
         this.filePath = filePath;
     }
 
@@ -102,7 +99,7 @@ public class GameEntity {
         return logoFile;
     }
 
-    public void setLogoFile(String logoFile) {
+    public void setLogoFile(@NonNull String logoFile) {
         this.logoFile = logoFile;
     }
 
@@ -110,7 +107,7 @@ public class GameEntity {
         return folderFile;
     }
 
-    public void setFolderFile(String folderFile) {
+    public void setFolderFile(@NonNull String folderFile) {
         this.folderFile = folderFile;
     }
 
@@ -118,7 +115,7 @@ public class GameEntity {
         return backFolderFile;
     }
 
-    public void setBackFolderFile(String backFolderFile) {
+    public void setBackFolderFile(@NonNull String backFolderFile) {
         this.backFolderFile = backFolderFile;
     }
 
@@ -126,7 +123,7 @@ public class GameEntity {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(@NonNull Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }

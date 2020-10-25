@@ -39,6 +39,7 @@ public class CompositeEntity {
     private boolean isEngram;
     private String compositionId;
     private Date lastUpdated;
+    @NonNull
     private String gameId;
 
     public CompositeEntity(@NonNull String uuid,
@@ -106,22 +107,6 @@ public class CompositeEntity {
         this.sourceId = sourceId;
     }
 
-    public String getCompositionId() {
-        return compositionId;
-    }
-
-    public void setCompositionId(@NonNull String compositionId) {
-        this.compositionId = compositionId;
-    }
-
-    public String getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(@NonNull String gameId) {
-        this.gameId = gameId;
-    }
-
     public boolean isEngram() {
         return isEngram;
     }
@@ -130,11 +115,28 @@ public class CompositeEntity {
         this.isEngram = isEngram;
     }
 
+    public String getCompositionId() {
+        return compositionId;
+    }
+
+    public void setCompositionId(@NonNull String compositionId) {
+        this.compositionId = compositionId;
+    }
+
     public Date getLastUpdated() {
         return lastUpdated;
     }
 
     public void setLastUpdated(@NonNull Date lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    @NonNull
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(@NonNull String gameId) {
+        this.gameId = gameId;
     }
 }

@@ -34,12 +34,15 @@ import arc.resource.calculator.db.dao.primary.StationDao;
  */
 @Entity(tableName = StationDao.tableName)
 public class StationEntity {
+    @NonNull
     @PrimaryKey
     private String uuid;
     private String name;
     private String imageFile;
+    @NonNull
     private String sourceId;
     private Date lastUpdated;
+    @NonNull
     private String gameId;
 
     public StationEntity(@NonNull String uuid,
@@ -60,6 +63,7 @@ public class StationEntity {
         return new ObjectMapper().convertValue(node, StationEntity.class);
     }
 
+    @NonNull
     public String getUuid() {
         return uuid;
     }
@@ -84,6 +88,7 @@ public class StationEntity {
         this.imageFile = imageFile;
     }
 
+    @NonNull
     public String getSourceId() {
         return sourceId;
     }
@@ -100,6 +105,7 @@ public class StationEntity {
         this.lastUpdated = lastUpdated;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }

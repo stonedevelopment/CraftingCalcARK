@@ -29,34 +29,25 @@ import arc.resource.calculator.db.dao.DlcDao;
 @Entity(tableName = DlcDao.tableName)
 public class DlcEntity extends GameEntity {
     private boolean totalConversion;
+    @NonNull
     private String gameId;
 
     public DlcEntity(@NonNull String uuid,
-                     String name,
-                     String description,
-                     String filePath,
-                     String logoFile,
-                     String folderFile,
-                     String backFolderFile,
-                     Date lastUpdated,
+                     @NonNull String name,
+                     @NonNull String description,
+                     @NonNull String filePath,
+                     @NonNull String logoFile,
+                     @NonNull String folderFile,
+                     @NonNull String backFolderFile,
+                     @NonNull Date lastUpdated,
                      boolean totalConversion,
-                     String gameId) {
+                     @NonNull String gameId) {
         super(uuid, name, description, filePath, logoFile, folderFile, backFolderFile, lastUpdated);
         this.totalConversion = totalConversion;
         this.gameId = gameId;
     }
 
-    /**
-     * "uuid": "9a26130d-a985-4bc6-b9da-2b092f22a277",
-     * "name": "ARK:Survival Evolved",
-     * "description": "As a man or woman stranded, naked, freezing, and starving on the unforgiving shores of a mysterious island called \"ARK\", use your skill and cunning to kill or tame and ride the plethora of leviathan dinosaurs and other primeval creatures roaming the land. Hunt, harvest resources, craft items, grow crops, research technologies, and build shelters to withstand the elements and store valuables, all while teaming up with (or preying upon) hundreds of other players to survive, dominate... and escape!",
-     * "filePath": "Primary/",
-     * "logoFile": "logo.webp",
-     * "folderFile": "folder.webp",
-     * "backFolderFile": "backFolder.webp",
-     * "lastUpdated": 1589725368121,
-     */
-    public static DlcEntity fromJSON(JsonNode node) {
+    public static DlcEntity fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, DlcEntity.class);
     }
 
@@ -68,11 +59,12 @@ public class DlcEntity extends GameEntity {
         this.totalConversion = totalConversion;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
     }
 }

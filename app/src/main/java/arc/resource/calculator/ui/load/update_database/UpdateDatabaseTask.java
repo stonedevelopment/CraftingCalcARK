@@ -131,7 +131,7 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
         database.clearAllTables();
 
         //  insert game object
-        database.gameDao().insert(GameEntity.fromJSON(inNode.get(cDetails)));
+        database.gameDao().insert(GameEntity.fromJson(inNode.get(cDetails)));
 
         JsonNode resources = inNode.get(cResources);
         for (JsonNode node : resources) {

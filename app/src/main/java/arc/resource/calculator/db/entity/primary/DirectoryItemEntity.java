@@ -35,6 +35,7 @@ public class DirectoryItemEntity {
     private int viewType;
     private String parentId;
     private String sourceId;
+    @NonNull
     private String gameId;
 
     public DirectoryItemEntity(@NonNull String uuid,
@@ -106,6 +107,7 @@ public class DirectoryItemEntity {
         this.sourceId = sourceId;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }

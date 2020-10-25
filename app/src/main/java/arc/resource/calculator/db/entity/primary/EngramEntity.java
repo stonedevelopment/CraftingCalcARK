@@ -46,6 +46,7 @@ public class EngramEntity {
     private int xp;
     private int craftingTime;
     private Date lastUpdated;
+    @NonNull
     private String gameId;
 
     public EngramEntity(@NonNull String uuid,
@@ -157,6 +158,7 @@ public class EngramEntity {
         this.lastUpdated = lastUpdated;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }

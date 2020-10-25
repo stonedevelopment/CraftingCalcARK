@@ -34,12 +34,14 @@ import arc.resource.calculator.db.dao.primary.ResourceDao;
  */
 @Entity(tableName = ResourceDao.tableName)
 public class ResourceEntity {
+    @NonNull
     @PrimaryKey
     private String uuid;
     private String name;
     private String description;
     private String imageFile;
     private Date lastUpdated;
+    @NonNull
     private String gameId;
 
     public ResourceEntity(@NonNull String uuid,
@@ -60,6 +62,7 @@ public class ResourceEntity {
         return new ObjectMapper().convertValue(node, ResourceEntity.class);
     }
 
+    @NonNull
     public String getUuid() {
         return uuid;
     }
@@ -100,6 +103,7 @@ public class ResourceEntity {
         this.lastUpdated = lastUpdated;
     }
 
+    @NonNull
     public String getGameId() {
         return gameId;
     }
