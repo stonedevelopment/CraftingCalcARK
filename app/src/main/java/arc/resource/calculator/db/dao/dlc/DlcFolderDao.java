@@ -23,19 +23,21 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.dlc.DlcEntity;
-import arc.resource.calculator.db.entity.primary.GameEntity;
+import arc.resource.calculator.db.entity.dlc.DlcFolderEntity;
 
 @Dao
-public interface DlcDao {
-    String tableName = "dlcs";
+public interface DlcFolderDao {
+    String tableName = "dlc_folders";
 
     @Insert
-    GameEntity insert(DlcEntity entity);
+    void insert(DlcFolderEntity entity);
 
-    @Query("delete from dlcs")
+    @Query("delete from dlc_folders")
     void deleteAll();
 
-    @Query("select * from dlcs where gameId is :gameId order by name asc")
-    LiveData<List<DlcEntity>> getDlcs(String gameId);
+    @Query("select * from dlc_folders where gameId is :gameId order by name asc")
+    LiveData<List<DlcFolderEntity>> getFolderList(String gameId);
+
+    @Query("select * from dlc_folders where uuid is :uuid")
+    LiveData<DlcFolderEntity> getFolder(String uuid);
 }

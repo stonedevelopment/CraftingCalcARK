@@ -22,7 +22,7 @@ import androidx.lifecycle.LiveData;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.GameDao;
-import arc.resource.calculator.db.entity.primary.GameEntity;
+import arc.resource.calculator.db.entity.GameEntity;
 
 public class MainRepository {
     private final GameDao mDao;

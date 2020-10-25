@@ -36,10 +36,10 @@ import arc.resource.calculator.db.dao.primary.ResourceDao;
 import arc.resource.calculator.db.dao.primary.StationDao;
 import arc.resource.calculator.db.entity.primary.CompositeEntity;
 import arc.resource.calculator.db.entity.primary.CompositionEntity;
-import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
-import arc.resource.calculator.db.entity.primary.GameEntity;
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 
@@ -52,7 +52,7 @@ import arc.resource.calculator.db.entity.primary.StationEntity;
                 ResourceEntity.class,
                 CompositionEntity.class,
                 CompositeEntity.class,
-                DirectoryEntity.class
+                DirectoryItemEntity.class
         },
         version = 1,
         exportSchema = false)

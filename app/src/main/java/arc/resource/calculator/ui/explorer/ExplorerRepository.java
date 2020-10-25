@@ -26,7 +26,7 @@ import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
-import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 
 public class ExplorerRepository {
     public static final String TAG = ExplorerRepository.class.getSimpleName();
@@ -38,10 +38,10 @@ public class ExplorerRepository {
         mDirectoryDao = db.directoryDao();
     }
 
-    LiveData<List<DirectoryEntity>> fetchDirectory(@Nullable String parentId) {
+    LiveData<List<DirectoryItemEntity>> fetchDirectory(@Nullable String parentId) {
         Log.d(TAG, "fetchDirectory: " + parentId);
         if (parentId == null) parentId = "a2942aac-b904-468a-a887-78637c86aa1b";
 
-        return mDirectoryDao.getDirectory(parentId);
+        return mDirectoryDao.getDirectoryItemList(parentId);
     }
 }

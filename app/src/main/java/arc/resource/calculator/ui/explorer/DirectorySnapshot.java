@@ -20,14 +20,14 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class DirectorySnapshot {
     private final ExplorerItem parent;
-    private final List<DirectoryEntity> directory;
+    private final List<DirectoryItemEntity> directory;
 
-    DirectorySnapshot(@Nullable ExplorerItem parent, List<DirectoryEntity> directory) {
+    DirectorySnapshot(@Nullable ExplorerItem parent, List<DirectoryItemEntity> directory) {
         this.parent = parent;
         this.directory = directory;
     }
@@ -36,7 +36,7 @@ public class DirectorySnapshot {
         return parent;
     }
 
-    public List<DirectoryEntity> getDirectory() {
+    public List<DirectoryItemEntity> getDirectory() {
         return directory;
     }
 

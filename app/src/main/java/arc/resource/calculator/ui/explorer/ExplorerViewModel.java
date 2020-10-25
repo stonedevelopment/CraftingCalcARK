@@ -29,7 +29,7 @@ import androidx.lifecycle.Transformations;
 import java.util.List;
 import java.util.Stack;
 
-import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
@@ -135,7 +135,7 @@ public class ExplorerViewModel extends AndroidViewModel {
         setSnackBarMessage(explorerItem.getTitle());
     }
 
-    private LiveData<List<DirectoryEntity>> transformParentIdToDirectoryList() {
+    private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {
         return Transformations.switchMap(mParentId, parentId -> {
             Log.d(TAG, "ExplorerViewModel: transforming parentId: " + parentId);
             return mRepository.fetchDirectory(parentId);

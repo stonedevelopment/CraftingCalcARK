@@ -24,7 +24,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import arc.resource.calculator.db.entity.primary.GameEntity;
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
 
 /**

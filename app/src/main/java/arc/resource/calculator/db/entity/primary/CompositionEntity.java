@@ -36,18 +36,16 @@ public class CompositionEntity {
     private Date lastUpdated;
     private String gameId;
 
-    public CompositionEntity(@NonNull String uuid, String engramId, Date lastUpdated, String gameId) {
+    public CompositionEntity(@NonNull String uuid,
+                             @NonNull String engramId,
+                             @NonNull Date lastUpdated,
+                             @NonNull String gameId) {
         this.uuid = uuid;
         this.engramId = engramId;
         this.lastUpdated = lastUpdated;
         this.gameId = gameId;
     }
 
-    /**
-     * "uuid": "0cc0a7ff-e3e5-4f62-b5d1-4e049cd5dd95",
-     * "engramId": "54fb9fa0-4e4f-4d3c-ba93-b5d5bc0a9d0d",
-     * "gameId": "d3ed5cd5-9dc7-4f10-b988-444b19abd554"
-     */
     public static CompositionEntity fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, CompositionEntity.class);
     }
@@ -65,7 +63,7 @@ public class CompositionEntity {
         return engramId;
     }
 
-    public void setEngramId(String engramId) {
+    public void setEngramId(@NonNull String engramId) {
         this.engramId = engramId;
     }
 
@@ -73,7 +71,7 @@ public class CompositionEntity {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(@NonNull Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -81,7 +79,7 @@ public class CompositionEntity {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
     }
 }

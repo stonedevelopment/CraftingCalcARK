@@ -16,9 +16,12 @@
 
 package arc.resource.calculator.db.dao.primary;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+
+import java.util.List;
 
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 
@@ -32,6 +35,9 @@ public interface EngramDao {
     @Query("delete from engrams")
     void deleteAll();
 
+    @Query("select * from engrams where gameId is :gameId order by name asc")
+    LiveData<List<EngramEntity>> getEngramList(String gameId);
+
     @Query("select * from engrams where uuid is :uuid")
-    EngramEntity getEngram(String uuid);
+    LiveData<EngramEntity> getEngram(String uuid);
 }

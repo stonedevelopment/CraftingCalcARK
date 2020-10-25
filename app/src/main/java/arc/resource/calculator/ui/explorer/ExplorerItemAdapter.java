@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
@@ -92,7 +92,7 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
         if (directorySnapshot.hasParent()) {
             items.add(BackFolderExplorerItem.fromExplorerItem(directorySnapshot.getParent()));
         }
-        for (DirectoryEntity entity : directorySnapshot.getDirectory()) {
+        for (DirectoryItemEntity entity : directorySnapshot.getDirectory()) {
             items.add(ExplorerItem.fromDirectoryEntity(entity));
         }
         setItems(items);

@@ -35,6 +35,10 @@ public interface CompositeDao {
     @Query("delete from composites")
     void deleteAll();
 
-    @Query("select * from composites where compositionId is :compositionId")
-    LiveData<List<CompositeEntity>> getComposites(String compositionId);
+    @Query("select * from composites " +
+            "where compositionId is :compositionId and gameId is :gameId")
+    LiveData<List<CompositeEntity>> getCompositeList(String compositionId, String gameId);
+
+    @Query("select * from composites where uuid is :uuid")
+    LiveData<CompositeEntity> getComposite(String uuid);
 }

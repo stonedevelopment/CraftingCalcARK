@@ -18,7 +18,7 @@ package arc.resource.calculator.ui.explorer.model;
 
 import androidx.annotation.Nullable;
 
-import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 
 public class ExplorerItem {
     private final String uuid;
@@ -39,7 +39,7 @@ public class ExplorerItem {
         this.gameId = gameId;
     }
 
-    public static ExplorerItem fromDirectoryEntity(DirectoryEntity entity) {
+    public static ExplorerItem fromDirectoryEntity(DirectoryItemEntity entity) {
         String uuid = entity.getUuid();
         String title = entity.getName();
         String imageFile = entity.getImageFile();

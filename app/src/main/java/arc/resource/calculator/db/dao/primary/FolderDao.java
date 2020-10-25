@@ -16,9 +16,12 @@
 
 package arc.resource.calculator.db.dao.primary;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+
+import java.util.List;
 
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 
@@ -27,11 +30,14 @@ public interface FolderDao {
     String tableName = "folders";
 
     @Insert
-    void insert(FolderEntity folderEntity);
+    void insert(FolderEntity entity);
 
     @Query("delete from folders")
     void deleteAll();
 
+    @Query("select * from folders where gameId is :gameId order by name asc")
+    LiveData<List<FolderEntity>> getFolderList(String gameId);
+
     @Query("select * from folders where uuid is :uuid")
-    FolderEntity getFolder(String uuid);
+    LiveData<FolderEntity> getFolder(String uuid);
 }

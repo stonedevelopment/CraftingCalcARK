@@ -14,46 +14,35 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.entity.primary;
+package arc.resource.calculator.db.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
-import arc.resource.calculator.db.dao.GameDao;
+import arc.resource.calculator.db.dao.DlcDao;
 
-import static arc.resource.calculator.util.JSONUtil.cBackFolderFile;
-import static arc.resource.calculator.util.JSONUtil.cDescription;
-import static arc.resource.calculator.util.JSONUtil.cFilePath;
-import static arc.resource.calculator.util.JSONUtil.cFolderFile;
-import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
-import static arc.resource.calculator.util.JSONUtil.cLogoFile;
-import static arc.resource.calculator.util.JSONUtil.cName;
-import static arc.resource.calculator.util.JSONUtil.cUuid;
-
-@Entity(tableName = GameDao.tableName)
-public class GameDlcEntity extends GameEntity {
-    @NonNull
-    @PrimaryKey
-    private String uuid;
-
+@Entity(tableName = DlcDao.tableName)
+public class DlcEntity extends GameEntity {
+    private boolean totalConversion;
     private String gameId;
 
-    public GameDlcEntity(@NonNull String uuid,
-                         String name,
-                         String description,
-                         String filePath,
-                         String logoFile,
-                         String folderFile,
-                         String backFolderFile,
-                         Date lastUpdated,
-                         String gameId) {
+    public DlcEntity(@NonNull String uuid,
+                     String name,
+                     String description,
+                     String filePath,
+                     String logoFile,
+                     String folderFile,
+                     String backFolderFile,
+                     Date lastUpdated,
+                     boolean totalConversion,
+                     String gameId) {
         super(uuid, name, description, filePath, logoFile, folderFile, backFolderFile, lastUpdated);
+        this.totalConversion = totalConversion;
         this.gameId = gameId;
     }
 
@@ -67,7 +56,23 @@ public class GameDlcEntity extends GameEntity {
      * "backFolderFile": "backFolder.webp",
      * "lastUpdated": 1589725368121,
      */
-    public static GameDlcEntity fromJSON(JsonNode node) {
-        return new ObjectMapper().convertValue(node, GameDlcEntity.class);
+    public static DlcEntity fromJSON(JsonNode node) {
+        return new ObjectMapper().convertValue(node, DlcEntity.class);
+    }
+
+    public boolean isTotalConversion() {
+        return totalConversion;
+    }
+
+    public void setTotalConversion(boolean totalConversion) {
+        this.totalConversion = totalConversion;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

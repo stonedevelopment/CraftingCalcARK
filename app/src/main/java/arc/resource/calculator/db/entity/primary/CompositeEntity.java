@@ -42,8 +42,8 @@ public class CompositeEntity {
     private String gameId;
 
     public CompositeEntity(@NonNull String uuid,
-                           String name,
-                           String imageFile,
+                           @NonNull String name,
+                           @NonNull String imageFile,
                            int quantity,
                            @NonNull String sourceId,
                            boolean isEngram,
@@ -61,16 +61,7 @@ public class CompositeEntity {
         this.gameId = gameId;
     }
 
-    /**
-     * "uuid": "75212ac1-ca92-452e-bfe2-e45379c8261a",
-     * "name": "Absorbent Substrate",
-     * "imageFile": "absorbent_substrate.webp",
-     * "quantity": 10,
-     * "sourceId": "c97e9642-5cb2-4df2-b18a-eb071aa24c0e",
-     * "isEngram": true,
-     * "compositionId": "e11a4d37-a887-439c-8075-fcd5bca196fc"
-     */
-    public static CompositeEntity fromJSON(JsonNode node) {
+    public static CompositeEntity fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, CompositeEntity.class);
     }
 
@@ -87,7 +78,7 @@ public class CompositeEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
@@ -95,7 +86,7 @@ public class CompositeEntity {
         return imageFile;
     }
 
-    public void setImageFile(String imageFile) {
+    public void setImageFile(@NonNull String imageFile) {
         this.imageFile = imageFile;
     }
 
@@ -111,7 +102,7 @@ public class CompositeEntity {
         return sourceId;
     }
 
-    public void setSourceId(String sourceId) {
+    public void setSourceId(@NonNull String sourceId) {
         this.sourceId = sourceId;
     }
 
@@ -119,7 +110,7 @@ public class CompositeEntity {
         return compositionId;
     }
 
-    public void setCompositionId(String compositionId) {
+    public void setCompositionId(@NonNull String compositionId) {
         this.compositionId = compositionId;
     }
 
@@ -127,7 +118,7 @@ public class CompositeEntity {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
     }
 
@@ -143,7 +134,7 @@ public class CompositeEntity {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(@NonNull Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }

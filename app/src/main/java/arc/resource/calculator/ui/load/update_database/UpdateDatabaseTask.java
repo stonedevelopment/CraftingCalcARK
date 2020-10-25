@@ -28,10 +28,10 @@ import java.util.List;
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.entity.primary.CompositeEntity;
 import arc.resource.calculator.db.entity.primary.CompositionEntity;
-import arc.resource.calculator.db.entity.primary.DirectoryEntity;
+import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
-import arc.resource.calculator.db.entity.primary.GameEntity;
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
@@ -160,12 +160,12 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
 
         JsonNode composites = inNode.get(cComposites);
         for (JsonNode node : composites) {
-            database.compositeDao().insert(CompositeEntity.fromJSON(node));
+            database.compositeDao().insert(CompositeEntity.fromJson(node));
         }
 
         JsonNode directory = inNode.get(cDirectory);
         for (JsonNode node : directory) {
-            database.directoryDao().insert(DirectoryEntity.fromJSON(node));
+            database.directoryDao().insert(DirectoryItemEntity.fromJson(node));
         }
     }
 

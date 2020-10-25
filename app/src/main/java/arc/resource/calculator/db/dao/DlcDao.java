@@ -23,21 +23,22 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import arc.resource.calculator.db.entity.DlcEntity;
 import arc.resource.calculator.db.entity.GameEntity;
 
 @Dao
-public interface GameDao {
-    String tableName = "games";
+public interface DlcDao {
+    String tableName = "dlc";
 
     @Insert
-    void insert(GameEntity entity);
+    void insert(DlcEntity entity);
 
-    @Query("delete from games")
+    @Query("delete from dlc")
     void deleteAll();
 
-    @Query("select * from games order by name asc")
-    LiveData<List<GameEntity>> getGameList();
+    @Query("select * from dlc where gameId is :gameId order by name asc")
+    LiveData<List<DlcEntity>> getDlcList(String gameId);
 
-    @Query("select * from games where uuid is :uuid")
-    LiveData<GameEntity> getGame(String uuid);
+    @Query("select * from dlc where uuid is :uuid")
+    LiveData<DlcEntity> getDlc(String uuid);
 }

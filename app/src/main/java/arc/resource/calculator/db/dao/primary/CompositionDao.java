@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.db.dao.primary;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -34,6 +35,9 @@ public interface CompositionDao {
     @Query("delete from compositions")
     void deleteAll();
 
-    @Query("select * from compositions where uuid is :compositionId")
-    CompositionEntity getComposition(String compositionId);
+    @Query("select * from compositions where gameId is :gameId")
+    LiveData<List<CompositionEntity>> getCompositionList(String gameId);
+
+    @Query("select * from compositions where uuid is :uuid")
+    LiveData<CompositionEntity> getComposition(String uuid);
 }

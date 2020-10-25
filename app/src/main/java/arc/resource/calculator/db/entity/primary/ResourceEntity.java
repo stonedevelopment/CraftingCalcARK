@@ -17,7 +17,6 @@
 package arc.resource.calculator.db.entity.primary;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -28,13 +27,6 @@ import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.ResourceDao;
 
-import static arc.resource.calculator.util.JSONUtil.cDescription;
-import static arc.resource.calculator.util.JSONUtil.cGameId;
-import static arc.resource.calculator.util.JSONUtil.cImageFile;
-import static arc.resource.calculator.util.JSONUtil.cLastUpdated;
-import static arc.resource.calculator.util.JSONUtil.cName;
-import static arc.resource.calculator.util.JSONUtil.cUuid;
-
 /**
  * Resource object for Primary game data
  * <p>
@@ -42,7 +34,6 @@ import static arc.resource.calculator.util.JSONUtil.cUuid;
  */
 @Entity(tableName = ResourceDao.tableName)
 public class ResourceEntity {
-    @NonNull
     @PrimaryKey
     private String uuid;
     private String name;
@@ -51,7 +42,12 @@ public class ResourceEntity {
     private Date lastUpdated;
     private String gameId;
 
-    public ResourceEntity(@NonNull String uuid, String name, String description, String imageFile, Date lastUpdated, String gameId) {
+    public ResourceEntity(@NonNull String uuid,
+                          @NonNull String name,
+                          @NonNull String description,
+                          @NonNull String imageFile,
+                          @NonNull Date lastUpdated,
+                          @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
@@ -60,19 +56,10 @@ public class ResourceEntity {
         this.gameId = gameId;
     }
 
-    /**
-     * "uuid": "8d6c5c32-0565-49cd-8f7c-fc5b73bd4021",
-     * "name": "Allosaurus Brain",
-     * "description": "",
-     * "imageFile": "allosaurus_brain.webp",
-     * "lastUpdated": 1589732742758,
-     * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
-     */
     public static ResourceEntity fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, ResourceEntity.class);
     }
 
-    @NonNull
     public String getUuid() {
         return uuid;
     }
@@ -85,7 +72,7 @@ public class ResourceEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
@@ -93,7 +80,7 @@ public class ResourceEntity {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NonNull String description) {
         this.description = description;
     }
 
@@ -101,7 +88,7 @@ public class ResourceEntity {
         return imageFile;
     }
 
-    public void setImageFile(String imageFile) {
+    public void setImageFile(@NonNull String imageFile) {
         this.imageFile = imageFile;
     }
 
@@ -109,7 +96,7 @@ public class ResourceEntity {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(@NonNull Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -117,20 +104,7 @@ public class ResourceEntity {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
-    }
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof ResourceEntity)) return false;
-
-        ResourceEntity resource = (ResourceEntity) obj;
-        return uuid.equals(resource.getUuid()) &&
-                name.equals(resource.getName()) &&
-                description.equals(resource.getDescription()) &&
-                imageFile.equals(resource.getImageFile()) &&
-                gameId.equals(resource.getGameId());
     }
 }

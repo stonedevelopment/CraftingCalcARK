@@ -48,8 +48,17 @@ public class EngramEntity {
     private Date lastUpdated;
     private String gameId;
 
-    public EngramEntity(@NonNull String uuid, String name, String description, String imageFile, int level,
-                        int yield, int points, int xp, int craftingTime, Date lastUpdated, String gameId) {
+    public EngramEntity(@NonNull String uuid,
+                        @NonNull String name,
+                        @NonNull String description,
+                        @NonNull String imageFile,
+                        int level,
+                        int yield,
+                        int points,
+                        int xp,
+                        int craftingTime,
+                        @NonNull Date lastUpdated,
+                        @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
@@ -63,19 +72,6 @@ public class EngramEntity {
         this.gameId = gameId;
     }
 
-    /**
-     * "uuid": "76d95c88-db9f-4fc0-936f-0c778ab499d4",
-     * "name": "Absorbent Substrate",
-     * "description": "This sticky compound excels at absorbing other chemicals.",
-     * "imageFile": "absorbent_substrate.webp",
-     * "level": 84,
-     * "yield": 1,
-     * "points": 0,
-     * "xp": 0,
-     * "craftingTime": 0,
-     * "lastUpdated": 1589732742789,
-     * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
-     */
     public static EngramEntity fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, EngramEntity.class);
     }
@@ -93,7 +89,7 @@ public class EngramEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
@@ -101,7 +97,7 @@ public class EngramEntity {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NonNull String description) {
         this.description = description;
     }
 
@@ -109,7 +105,7 @@ public class EngramEntity {
         return imageFile;
     }
 
-    public void setImageFile(String imageFile) {
+    public void setImageFile(@NonNull String imageFile) {
         this.imageFile = imageFile;
     }
 
@@ -157,7 +153,7 @@ public class EngramEntity {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(@NonNull Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -165,37 +161,7 @@ public class EngramEntity {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
-    }
-
-    public boolean equals(EngramEntity engram) {
-        return uuid.equals(engram.uuid) &&
-                name.equals(engram.name) &&
-                description.equals(engram.description) &&
-                imageFile.equals(engram.imageFile) &&
-                level == engram.level &&
-                yield == engram.yield &&
-                points == engram.points &&
-                xp == engram.xp &&
-                craftingTime == engram.craftingTime &&
-                gameId.equals(engram.gameId);
-    }
-
-    @Override
-    public String toString() {
-        return "EngramEntity{" +
-                "uuid='" + uuid + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", imageFile='" + imageFile + '\'' +
-                ", level=" + level +
-                ", yield=" + yield +
-                ", points=" + points +
-                ", xp=" + xp +
-                ", craftingTime=" + craftingTime +
-                ", lastUpdated=" + lastUpdated +
-                ", gameId='" + gameId + '\'' +
-                '}';
     }
 }

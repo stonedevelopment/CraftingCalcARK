@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao;
+package arc.resource.calculator.db.dao.dlc;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -23,21 +23,21 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.GameEntity;
+import arc.resource.calculator.db.entity.dlc.DlcEngramEntity;
 
 @Dao
-public interface GameDao {
-    String tableName = "games";
+public interface DlcEngramDao {
+    String tableName = "dlc_engrams";
 
     @Insert
-    void insert(GameEntity entity);
+    void insert(DlcEngramEntity entity);
 
-    @Query("delete from games")
+    @Query("delete from dlc_engrams")
     void deleteAll();
 
-    @Query("select * from games order by name asc")
-    LiveData<List<GameEntity>> getGameList();
+    @Query("select * from dlc_engrams where gameId is :gameId order by name asc")
+    LiveData<List<DlcEngramEntity>> getEngramList(String gameId);
 
-    @Query("select * from games where uuid is :uuid")
-    LiveData<GameEntity> getGame(String uuid);
+    @Query("select * from dlc_engrams where uuid is :uuid")
+    LiveData<DlcEngramEntity> getEngram(String uuid);
 }

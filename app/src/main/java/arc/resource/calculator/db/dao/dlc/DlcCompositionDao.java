@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao;
+package arc.resource.calculator.db.dao.dlc;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -23,21 +23,21 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.GameEntity;
+import arc.resource.calculator.db.entity.dlc.DlcCompositionEntity;
 
 @Dao
-public interface GameDao {
-    String tableName = "games";
+public interface DlcCompositionDao {
+    String tableName = "dlc_compositions";
 
     @Insert
-    void insert(GameEntity entity);
+    void insert(DlcCompositionEntity entity);
 
-    @Query("delete from games")
+    @Query("delete from dlc_compositions")
     void deleteAll();
 
-    @Query("select * from games order by name asc")
-    LiveData<List<GameEntity>> getGameList();
+    @Query("select * from dlc_compositions where dlcId is :dlcId")
+    LiveData<List<DlcCompositionEntity>> getCompositionList(String dlcId);
 
-    @Query("select * from games where uuid is :uuid")
-    LiveData<GameEntity> getGame(String uuid);
+    @Query("select * from dlc_compositions where uuid is :uuid")
+    LiveData<DlcCompositionEntity> getComposition(String uuid);
 }

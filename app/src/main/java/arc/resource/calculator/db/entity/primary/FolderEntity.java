@@ -17,14 +17,11 @@
 package arc.resource.calculator.db.entity.primary;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
 
 import arc.resource.calculator.db.dao.primary.FolderDao;
 
@@ -35,28 +32,23 @@ import arc.resource.calculator.db.dao.primary.FolderDao;
  */
 @Entity(tableName = FolderDao.tableName)
 public class FolderEntity {
-    @NonNull
     @PrimaryKey
     private String uuid;
     private String name;
     private String gameId;
 
-    public FolderEntity(@NonNull String uuid, String name, String gameId) {
+    public FolderEntity(@NonNull String uuid,
+                        @NonNull String name,
+                        @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.gameId = gameId;
     }
 
-    /**
-     * "uuid": "16294807-c086-4977-ad87-899aed7ec199",
-     * "name": "Misc",
-     * "gameId": "4fbb5cdf-9b17-4f03-a73a-038449b1bf32"
-     */
-    public static FolderEntity fromJson(JsonNode node) throws IOException {
+    public static FolderEntity fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, FolderEntity.class);
     }
 
-    @NonNull
     public String getUuid() {
         return uuid;
     }
@@ -69,7 +61,7 @@ public class FolderEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
@@ -77,18 +69,7 @@ public class FolderEntity {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(@NonNull String gameId) {
         this.gameId = gameId;
-    }
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof FolderEntity)) return false;
-
-        FolderEntity folder = (FolderEntity) obj;
-        return uuid.equals(folder.getUuid()) &&
-                name.equals(folder.getName()) &&
-                gameId.equals(folder.getGameId());
     }
 }

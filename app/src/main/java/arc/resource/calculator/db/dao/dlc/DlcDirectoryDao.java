@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao.primary;
+package arc.resource.calculator.db.dao.dlc;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -23,23 +23,24 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import arc.resource.calculator.db.entity.dlc.DlcDirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 
 @Dao
-public interface DirectoryDao {
-    String tableName = "directory";
+public interface DlcDirectoryDao {
+    String tableName = "dlc_directory";
 
     @Insert
-    void insert(DirectoryItemEntity entity);
+    void insert(DlcDirectoryItemEntity entity);
 
-    @Query("delete from directory")
+    @Query("delete from dlc_directory")
     void deleteAll();
 
-    @Query("select * from directory " +
-            "where parentId is :parentId and gameId is :gameId " +
+    @Query("select * from dlc_directory " +
+            "where parentId is :parentId and dlcId is :dlcId " +
             "order by viewType asc, name asc")
-    LiveData<List<DirectoryItemEntity>> getDirectoryItemList(String parentId, String gameId);
+    LiveData<List<DirectoryItemEntity>> getDirectoryItemList(String parentId, String dlcId);
 
-    @Query("select * from directory where uuid is :uuid")
+    @Query("select * from dlc_directory where uuid is :uuid")
     LiveData<DirectoryItemEntity> getDirectoryItem(String uuid);
 }
