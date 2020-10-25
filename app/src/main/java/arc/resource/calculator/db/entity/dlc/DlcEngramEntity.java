@@ -34,6 +34,7 @@ import arc.resource.calculator.db.entity.primary.EngramEntity;
  */
 @Entity(tableName = DlcEngramDao.tableName)
 public class DlcEngramEntity extends EngramEntity {
+    @NonNull
     private String dlcId;
 
     public DlcEngramEntity(@NonNull String uuid,
@@ -56,6 +57,7 @@ public class DlcEngramEntity extends EngramEntity {
         return new ObjectMapper().convertValue(node, DlcEngramEntity.class);
     }
 
+    @NonNull
     public String getDlcId() {
         return dlcId;
     }

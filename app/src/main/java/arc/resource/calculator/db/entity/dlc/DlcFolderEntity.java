@@ -32,6 +32,7 @@ import arc.resource.calculator.db.entity.primary.FolderEntity;
  */
 @Entity(tableName = DlcFolderDao.tableName)
 public class DlcFolderEntity extends FolderEntity {
+    @NonNull
     private String dlcId;
 
     public DlcFolderEntity(@NonNull String uuid,
@@ -46,6 +47,7 @@ public class DlcFolderEntity extends FolderEntity {
         return new ObjectMapper().convertValue(node, DlcFolderEntity.class);
     }
 
+    @NonNull
     public String getDlcId() {
         return dlcId;
     }

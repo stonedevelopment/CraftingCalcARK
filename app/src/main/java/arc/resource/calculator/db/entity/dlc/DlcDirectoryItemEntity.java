@@ -11,6 +11,7 @@ import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 
 @Entity(tableName = DlcDirectoryDao.tableName)
 public class DlcDirectoryItemEntity extends DirectoryItemEntity {
+    @NonNull
     private String dlcId;
 
     public DlcDirectoryItemEntity(@NonNull String uuid,
@@ -29,6 +30,7 @@ public class DlcDirectoryItemEntity extends DirectoryItemEntity {
         return new ObjectMapper().convertValue(node, DlcDirectoryItemEntity.class);
     }
 
+    @NonNull
     public String getDlcId() {
         return dlcId;
     }

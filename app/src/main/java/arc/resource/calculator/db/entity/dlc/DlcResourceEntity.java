@@ -34,6 +34,7 @@ import arc.resource.calculator.db.entity.primary.ResourceEntity;
  */
 @Entity(tableName = DlcResourceDao.tableName)
 public class DlcResourceEntity extends ResourceEntity {
+    @NonNull
     private String dlcId;
 
     public DlcResourceEntity(@NonNull String uuid,
@@ -51,6 +52,7 @@ public class DlcResourceEntity extends ResourceEntity {
         return new ObjectMapper().convertValue(node, DlcResourceEntity.class);
     }
 
+    @NonNull
     public String getDlcId() {
         return dlcId;
     }

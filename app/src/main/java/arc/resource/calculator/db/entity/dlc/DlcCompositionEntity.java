@@ -29,6 +29,7 @@ import arc.resource.calculator.db.entity.primary.CompositionEntity;
 
 @Entity(tableName = DlcCompositionDao.tableName)
 public class DlcCompositionEntity extends CompositionEntity {
+    @NonNull
     private String dlcId;
 
     public DlcCompositionEntity(@NonNull String uuid,
@@ -44,6 +45,7 @@ public class DlcCompositionEntity extends CompositionEntity {
         return new ObjectMapper().convertValue(node, DlcCompositionEntity.class);
     }
 
+    @NonNull
     public String getDlcId() {
         return dlcId;
     }
