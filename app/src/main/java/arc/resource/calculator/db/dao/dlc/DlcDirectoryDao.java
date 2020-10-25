@@ -39,8 +39,8 @@ public interface DlcDirectoryDao {
     @Query("select * from dlc_directory " +
             "where parentId is :parentId and dlcId is :dlcId " +
             "order by viewType asc, name asc")
-    LiveData<List<DirectoryItemEntity>> getDirectoryItemList(String parentId, String dlcId);
+    LiveData<List<DlcDirectoryItemEntity>> getDirectoryItemList(String parentId, String dlcId);
 
     @Query("select * from dlc_directory where uuid is :uuid")
-    LiveData<DirectoryItemEntity> getDirectoryItem(String uuid);
+    LiveData<DlcDirectoryItemEntity> getDirectoryItem(String uuid);
 }

@@ -96,7 +96,7 @@ public class SplashScreenViewModel extends AndroidViewModel {
             String json = JSONUtil.readRawJsonFileToJsonString(getApplication(), "Primary/data.json");
             JSONObject jsonObject = new JSONObject(json);
             String newVersion = jsonObject.getString("version");
-            String oldVersion = PrefsUtil.getInstance(getApplication()).getLastUpdateFromUuid(null); // TODO: 5/30/2020 nullified version check for now, not using SplashScreen at this time
+//            String oldVersion = PrefsUtil.getInstance(getApplication()).getLastUpdateFromUuid(null); // TODO: 5/30/2020 nullified version check for now, not using SplashScreen at this time
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();

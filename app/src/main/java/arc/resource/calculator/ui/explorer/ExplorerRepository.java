@@ -40,8 +40,6 @@ public class ExplorerRepository {
 
     LiveData<List<DirectoryItemEntity>> fetchDirectory(@Nullable String parentId) {
         Log.d(TAG, "fetchDirectory: " + parentId);
-        if (parentId == null) parentId = "a2942aac-b904-468a-a887-78637c86aa1b";
-
         return mDirectoryDao.getDirectoryItemList(parentId);
     }
 }
