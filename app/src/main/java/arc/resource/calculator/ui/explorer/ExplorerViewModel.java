@@ -29,6 +29,7 @@ import androidx.lifecycle.Transformations;
 import java.util.List;
 import java.util.Stack;
 
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
@@ -47,15 +48,12 @@ public class ExplorerViewModel extends AndroidViewModel {
         super(application);
         Log.d(TAG, "ExplorerViewModel: constructor");
 
+        setIsLoading(true);
         mRepository = new ExplorerRepository(getApplication());
         mDirectorySnapshot = transformDirectoryListToSnapshot();
-
-        //  retainStack();
-
-        start();
     }
 
-    private void start() {
+    public void start() {
         fetchDirectory();
     }
 
@@ -124,7 +122,7 @@ public class ExplorerViewModel extends AndroidViewModel {
     private void fetchDirectory() {
         setIsLoading(true);
         ExplorerItem explorerItem = peekAtStack();
-        String parentId = explorerItem == null ? null : explorerItem.getUuid();
+        String parentId = explorerItem == null ? "" : explorerItem.getUuid();
 
         Log.d(TAG, "fetchDirectory: " + parentId);
         mParentId.setValue(parentId);
@@ -133,6 +131,7 @@ public class ExplorerViewModel extends AndroidViewModel {
     private void viewDetails(ExplorerItem explorerItem) {
         //  request detail pop up
         setSnackBarMessage(explorerItem.getTitle());
+        Log.d(TAG, explorerItem.toString());
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {

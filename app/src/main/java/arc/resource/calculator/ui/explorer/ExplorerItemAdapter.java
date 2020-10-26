@@ -33,19 +33,21 @@ import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
-    private final LayoutInflater mInflater;
-    private final FragmentActivity mActivity;
-    private List<ExplorerItem> mItems;
+    private final LayoutInflater layoutInflater;
+    private final FragmentActivity fragmentActivity;
+    private final String filePath;
+    private List<ExplorerItem> explorerItemList;
 
-    ExplorerItemAdapter(ExplorerFragment fragment) {
+    ExplorerItemAdapter(ExplorerFragment fragment, String filePath) {
         super();
-        mInflater = LayoutInflater.from(fragment.getContext());
-        mActivity = fragment.requireActivity();
-        mItems = new ArrayList<>();
+        this.layoutInflater = LayoutInflater.from(fragment.getContext());
+        this.fragmentActivity = fragment.requireActivity();
+        this.explorerItemList = new ArrayList<>();
+        this.filePath = filePath;
     }
 
     private void setItems(List<ExplorerItem> items) {
-        mItems = items;
+        explorerItemList = items;
         notifyDataSetChanged();
     }
 
@@ -55,26 +57,26 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
         View itemView;
 
         if (viewType == 2) {
-            itemView = mInflater.inflate(R.layout.explorer_item_engram, parent, false);
-            return new EngramExplorerItemViewHolder(itemView);
+            itemView = layoutInflater.inflate(R.layout.explorer_item_engram, parent, false);
+            return new EngramExplorerItemViewHolder(itemView, filePath);
         } else if (viewType == 1) {
-            itemView = mInflater.inflate(R.layout.explorer_item_folder, parent, false);
+            itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
         } else if (viewType == 0) {
-            itemView = mInflater.inflate(R.layout.explorer_item_station, parent, false);
+            itemView = layoutInflater.inflate(R.layout.explorer_item_station, parent, false);
         } else {
-            itemView = mInflater.inflate(R.layout.explorer_item_folder, parent, false);
+            itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
         }
 
-        return new ExplorerItemViewHolder(itemView);
+        return new ExplorerItemViewHolder(itemView, filePath);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExplorerItemViewHolder holder, int position) {
-        holder.bind(mActivity, mItems.get(position));
+        holder.bind(fragmentActivity, explorerItemList.get(position));
     }
 
     private ExplorerItem getItem(int position) {
-        return mItems.get(position);
+        return explorerItemList.get(position);
     }
 
     @Override
@@ -84,7 +86,7 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return explorerItemList.size();
     }
 
     void mapDirectorySnapshot(DirectorySnapshot directorySnapshot) {

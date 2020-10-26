@@ -25,6 +25,8 @@ import arc.resource.calculator.db.dao.GameDao;
 import arc.resource.calculator.db.entity.GameEntity;
 
 public class MainRepository {
+    public static final String gameId = "783cdb00-dbef-4731-9b42-c2f3539d9a9c";
+
     private final GameDao mDao;
 
     MainRepository(Context context) {
@@ -33,6 +35,6 @@ public class MainRepository {
     }
 
     LiveData<GameEntity> getGameEntity() {
-        return mDao.getGame("704d5a67-87fe-4d3c-8f9c-e0c66698a0eb");
+        return mDao.getGame(gameId);
     }
 }

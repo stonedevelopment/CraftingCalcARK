@@ -29,8 +29,8 @@ import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 class EngramExplorerItemViewHolder extends ExplorerItemViewHolder {
     private final MaterialTextView mQuantity;
 
-    EngramExplorerItemViewHolder(@NonNull View itemView) {
-        super(itemView);
+    EngramExplorerItemViewHolder(@NonNull View itemView, String filePath) {
+        super(itemView, filePath);
         mQuantity = itemView.findViewById(R.id.title);
     }
 

@@ -32,9 +32,9 @@ import arc.resource.calculator.model.SingleLiveEvent;
  */
 public class MainViewModel extends AndroidViewModel {
     private final MainRepository mRepository;
+    private final LiveData<GameEntity> gameEntityEvent;
     private MutableLiveData<Intent> mStartActivityForResultTrigger = new MutableLiveData<>();
     private SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
-    private LiveData<GameEntity> mGameEntityEvent;
     private SingleLiveEvent<Boolean> mIsLoadingEvent = new SingleLiveEvent<>();
     private int mNavigationPosition;
 
@@ -43,7 +43,7 @@ public class MainViewModel extends AndroidViewModel {
 
         mRepository = new MainRepository(application);
         setIsLoading(true);
-        mGameEntityEvent = mRepository.getGameEntity();
+        gameEntityEvent = mRepository.getGameEntity();
     }
 
     MutableLiveData<Intent> getStartActivityForResultTrigger() {
@@ -78,7 +78,7 @@ public class MainViewModel extends AndroidViewModel {
         mIsLoadingEvent.setValue(isLoading);
     }
 
-    LiveData<GameEntity> getGameEntityEvent() {
-        return mGameEntityEvent;
+    public LiveData<GameEntity> getGameEntityEvent() {
+        return gameEntityEvent;
     }
 }

@@ -36,20 +36,23 @@ import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
     public static final String TAG = ExplorerItemViewHolder.class.getSimpleName();
 
-    private final MaterialCardView mCardView;
-    private final AppCompatImageView mThumbnail;
-    private final MaterialTextView mTitle;
+    private final String filePath;
 
-    ExplorerItemViewHolder(@NonNull View itemView) {
+    private final MaterialCardView cardView;
+    private final AppCompatImageView imageView;
+    private final MaterialTextView textView;
+
+    ExplorerItemViewHolder(@NonNull View itemView, String filePath) {
         super(itemView);
 
-        mCardView = itemView.findViewById(R.id.cardView);
-        mThumbnail = itemView.findViewById(R.id.thumbnail);
-        mTitle = itemView.findViewById(R.id.title);
+        this.filePath = filePath;
+        this.cardView = itemView.findViewById(R.id.cardView);
+        this.imageView = itemView.findViewById(R.id.thumbnail);
+        this.textView = itemView.findViewById(R.id.title);
     }
 
     void bind(FragmentActivity activity, ExplorerItem explorerItem) {
-        final String imagePath = "file:///android_asset/" + explorerItem.getImageFile();
+        final String imagePath = "file:///android_asset/" + filePath + explorerItem.getImageFile();
 
         Context context = activity.getApplicationContext();
 
@@ -57,11 +60,11 @@ class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
                 .load(imagePath)
                 .error(R.drawable.placeholder_empty)
                 .placeholder(R.drawable.placeholder_empty)
-                .into(mThumbnail);
+                .into(imageView);
 
-        mTitle.setText(explorerItem.getTitle());
+        textView.setText(explorerItem.getTitle());
 
-        mCardView.setOnClickListener(v -> {
+        cardView.setOnClickListener(v -> {
             Log.d(TAG, "cardView onClickListener: " + explorerItem.getTitle());
             ExplorerViewModel viewModel = new ViewModelProvider(activity).get(ExplorerViewModel.class);
             viewModel.handleOnClickEvent(explorerItem);

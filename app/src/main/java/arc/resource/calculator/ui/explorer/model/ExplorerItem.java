@@ -16,8 +16,6 @@
 
 package arc.resource.calculator.ui.explorer.model;
 
-import androidx.annotation.Nullable;
-
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 
 public class ExplorerItem {
@@ -50,21 +48,6 @@ public class ExplorerItem {
         return new ExplorerItem(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof ExplorerItem)) return false;
-
-        ExplorerItem explorerItem = (ExplorerItem) obj;
-        return uuid.equals(explorerItem.getUuid()) &&
-                title.equals(explorerItem.getTitle()) &&
-                imageFile.equals(explorerItem.getImageFile()) &&
-                viewType == explorerItem.getViewType() &&
-                sourceId.equals(explorerItem.getSourceId()) &&
-                parentId.equals(explorerItem.getParentId()) &&
-                gameId.equals(explorerItem.getGameId());
-    }
-
     public String getUuid() {
         return uuid;
     }
@@ -91,5 +74,18 @@ public class ExplorerItem {
 
     public String getGameId() {
         return gameId;
+    }
+
+    @Override
+    public String toString() {
+        return "ExplorerItem{" +
+                "uuid='" + uuid + '\'' +
+                ", title='" + title + '\'' +
+                ", imageFile='" + imageFile + '\'' +
+                ", viewType=" + viewType +
+                ", sourceId='" + sourceId + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", gameId='" + gameId + '\'' +
+                '}';
     }
 }
