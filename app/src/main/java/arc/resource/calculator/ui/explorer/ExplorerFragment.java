@@ -54,7 +54,6 @@ import static arc.resource.calculator.DetailActivity.UPDATE;
 public class ExplorerFragment extends Fragment implements ExceptionObservable.Observer {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
-    private MainViewModel mainViewModel;
     private ExplorerViewModel viewModel;
     private ExplorerItemAdapter adapter;
 
@@ -69,7 +68,6 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.explorer_fragment, container, false);
 
-        Log.d(TAG, "onCreateView");
         setupViews(rootView);
 
         return rootView;
@@ -78,8 +76,6 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        Log.d(TAG, "onActivityCreated");
 
         setupViewModel();
     }
@@ -107,7 +103,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
             else showLoaded();
         });
 
-        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        MainViewModel mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         mainViewModel.getGameEntityEvent().observe(getViewLifecycleOwner(), gameEntity -> {
             Log.d(TAG, "gameEntity found: " + gameEntity.getName());
             setupAdapter(gameEntity);
