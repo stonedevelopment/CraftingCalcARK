@@ -20,10 +20,20 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
+
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cImageFile;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cParentId;
+import static arc.resource.calculator.util.Constants.cSourceId;
+import static arc.resource.calculator.util.Constants.cUuid;
+import static arc.resource.calculator.util.Constants.cViewType;
 
 @Entity(tableName = DirectoryDao.tableName)
 public class DirectoryItemEntity {
@@ -38,13 +48,14 @@ public class DirectoryItemEntity {
     @NonNull
     private String gameId;
 
-    public DirectoryItemEntity(@NonNull String uuid,
-                               @NonNull String name,
-                               @NonNull String imageFile,
-                               int viewType,
-                               @NonNull String parentId,
-                               @NonNull String sourceId,
-                               @NonNull String gameId) {
+    @JsonCreator
+    public DirectoryItemEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                               @JsonProperty(cName) @NonNull String name,
+                               @JsonProperty(cImageFile) @NonNull String imageFile,
+                               @JsonProperty(cViewType) int viewType,
+                               @JsonProperty(cParentId) @NonNull String parentId,
+                               @JsonProperty(cSourceId) @NonNull String sourceId,
+                               @JsonProperty(cGameId) @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;

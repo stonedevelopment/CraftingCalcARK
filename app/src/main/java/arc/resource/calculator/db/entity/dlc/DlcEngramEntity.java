@@ -19,6 +19,8 @@ package arc.resource.calculator.db.entity.dlc;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +28,19 @@ import java.util.Date;
 
 import arc.resource.calculator.db.dao.dlc.DlcEngramDao;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
+
+import static arc.resource.calculator.util.Constants.cCraftingTime;
+import static arc.resource.calculator.util.Constants.cDescription;
+import static arc.resource.calculator.util.Constants.cDlcId;
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cImageFile;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cLevel;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cPoints;
+import static arc.resource.calculator.util.Constants.cUuid;
+import static arc.resource.calculator.util.Constants.cXp;
+import static arc.resource.calculator.util.Constants.cYield;
 
 /**
  * Engram object for base game data (vanilla)
@@ -37,18 +52,19 @@ public class DlcEngramEntity extends EngramEntity {
     @NonNull
     private String dlcId;
 
-    public DlcEngramEntity(@NonNull String uuid,
-                           @NonNull String name,
-                           @NonNull String description,
-                           @NonNull String imageFile,
-                           int level,
-                           int yield,
-                           int points,
-                           int xp,
-                           int craftingTime,
-                           @NonNull Date lastUpdated,
-                           @NonNull String gameId,
-                           @NonNull String dlcId) {
+    @JsonCreator
+    public DlcEngramEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                           @JsonProperty(cName) @NonNull String name,
+                           @JsonProperty(cDescription) @NonNull String description,
+                           @JsonProperty(cImageFile) @NonNull String imageFile,
+                           @JsonProperty(cLevel) int level,
+                           @JsonProperty(cYield) int yield,
+                           @JsonProperty(cPoints) int points,
+                           @JsonProperty(cXp) int xp,
+                           @JsonProperty(cCraftingTime) int craftingTime,
+                           @JsonProperty(cLastUpdated) @NonNull Date lastUpdated,
+                           @JsonProperty(cGameId) @NonNull String gameId,
+                           @JsonProperty(cDlcId) @NonNull String dlcId) {
         super(uuid, name, description, imageFile, level, yield, points, xp, craftingTime, lastUpdated, gameId);
         this.dlcId = dlcId;
     }

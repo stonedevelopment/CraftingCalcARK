@@ -19,6 +19,8 @@ package arc.resource.calculator.db.entity.dlc;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,16 +29,23 @@ import java.util.Date;
 import arc.resource.calculator.db.dao.dlc.DlcCompositionDao;
 import arc.resource.calculator.db.entity.primary.CompositionEntity;
 
+import static arc.resource.calculator.util.Constants.cDlcId;
+import static arc.resource.calculator.util.Constants.cEngramId;
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cUuid;
+
 @Entity(tableName = DlcCompositionDao.tableName)
 public class DlcCompositionEntity extends CompositionEntity {
     @NonNull
     private String dlcId;
 
-    public DlcCompositionEntity(@NonNull String uuid,
-                                @NonNull String engramId,
-                                @NonNull Date lastUpdated,
-                                @NonNull String gameId,
-                                @NonNull String dlcId) {
+    @JsonCreator
+    public DlcCompositionEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                                @JsonProperty(cEngramId) @NonNull String engramId,
+                                @JsonProperty(cLastUpdated) @NonNull Date lastUpdated,
+                                @JsonProperty(cGameId) @NonNull String gameId,
+                                @JsonProperty(cDlcId) @NonNull String dlcId) {
         super(uuid, engramId, lastUpdated, gameId);
         this.dlcId = dlcId;
     }

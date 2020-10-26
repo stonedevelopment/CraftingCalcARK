@@ -19,6 +19,8 @@ package arc.resource.calculator.db.entity.dlc;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +28,14 @@ import java.util.Date;
 
 import arc.resource.calculator.db.dao.dlc.DlcResourceDao;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
+
+import static arc.resource.calculator.util.Constants.cDescription;
+import static arc.resource.calculator.util.Constants.cDlcId;
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cImageFile;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cUuid;
 
 /**
  * Resource object for Primary game data
@@ -37,13 +47,14 @@ public class DlcResourceEntity extends ResourceEntity {
     @NonNull
     private String dlcId;
 
-    public DlcResourceEntity(@NonNull String uuid,
-                             @NonNull String name,
-                             @NonNull String description,
-                             @NonNull String imageFile,
-                             @NonNull Date lastUpdated,
-                             @NonNull String gameId,
-                             @NonNull String dlcId) {
+    @JsonCreator
+    public DlcResourceEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                             @JsonProperty(cName) @NonNull String name,
+                             @JsonProperty(cDescription) @NonNull String description,
+                             @JsonProperty(cImageFile) @NonNull String imageFile,
+                             @JsonProperty(cLastUpdated) @NonNull Date lastUpdated,
+                             @JsonProperty(cGameId) @NonNull String gameId,
+                             @JsonProperty(cDlcId) @NonNull String dlcId) {
         super(uuid, name, description, imageFile, lastUpdated, gameId);
         this.dlcId = dlcId;
     }

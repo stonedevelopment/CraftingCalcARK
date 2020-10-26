@@ -19,11 +19,18 @@ package arc.resource.calculator.db.entity.dlc;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import arc.resource.calculator.db.dao.dlc.DlcFolderDao;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
+
+import static arc.resource.calculator.util.Constants.cDlcId;
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cUuid;
 
 /**
  * Folder object for base game data (vanilla)
@@ -35,10 +42,11 @@ public class DlcFolderEntity extends FolderEntity {
     @NonNull
     private String dlcId;
 
-    public DlcFolderEntity(@NonNull String uuid,
-                           @NonNull String name,
-                           @NonNull String gameId,
-                           @NonNull String dlcId) {
+    @JsonCreator
+    public DlcFolderEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                           @JsonProperty(cName) @NonNull String name,
+                           @JsonProperty(cGameId) @NonNull String gameId,
+                           @JsonProperty(cDlcId) @NonNull String dlcId) {
         super(uuid, name, gameId);
         this.dlcId = dlcId;
     }

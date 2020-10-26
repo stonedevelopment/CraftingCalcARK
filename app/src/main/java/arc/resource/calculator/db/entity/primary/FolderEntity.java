@@ -20,10 +20,16 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import arc.resource.calculator.db.dao.primary.FolderDao;
+
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cUuid;
 
 /**
  * Folder object for base game data (vanilla)
@@ -39,9 +45,10 @@ public class FolderEntity {
     @NonNull
     private String gameId;
 
-    public FolderEntity(@NonNull String uuid,
-                        @NonNull String name,
-                        @NonNull String gameId) {
+    @JsonCreator
+    public FolderEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                        @JsonProperty(cName) @NonNull String name,
+                        @JsonProperty(cGameId) @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.gameId = gameId;

@@ -43,7 +43,7 @@ import arc.resource.calculator.model.category.Category;
 import arc.resource.calculator.model.engram.Engram;
 import arc.resource.calculator.model.resource.CompositeResource;
 import arc.resource.calculator.model.resource.Resource;
-import arc.resource.calculator.util.JSONUtil;
+import arc.resource.calculator.util.JsonUtil;
 
 public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
     public static final String TAG = DbToJSONTask.class.getSimpleName();
@@ -139,7 +139,7 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
 
             try {
                 for (long dlcId = 1; dlcId <= 5; dlcId++) {
-                    String jsonString = JSONUtil.readRawJsonFileToJsonString(getContext(), R.raw.data_editable);
+                    String jsonString = JsonUtil.readRawJsonFileToJsonString(getContext(), R.raw.data_editable);
                     mJSONObject = new JSONObject(jsonString);
 
                     Uri uri = writeJSONObjectToFile(getNameByDlcId(dlcId), createJSONObjectForDLC(dlcId));

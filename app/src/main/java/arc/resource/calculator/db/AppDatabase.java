@@ -78,7 +78,7 @@ import arc.resource.calculator.db.entity.primary.StationEntity;
                 DlcCompositeEntity.class,
                 DlcDirectoryItemEntity.class
         },
-        version = 1,
+        version = 2,
         exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {

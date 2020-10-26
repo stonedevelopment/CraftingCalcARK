@@ -20,12 +20,23 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.GameDao;
+
+import static arc.resource.calculator.util.Constants.cBackFolderFile;
+import static arc.resource.calculator.util.Constants.cDescription;
+import static arc.resource.calculator.util.Constants.cFilePath;
+import static arc.resource.calculator.util.Constants.cFolderFile;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cLogoFile;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cUuid;
 
 @Entity(tableName = GameDao.tableName)
 public class GameEntity {
@@ -40,14 +51,15 @@ public class GameEntity {
     private String backFolderFile;
     private Date lastUpdated;
 
-    public GameEntity(@NonNull String uuid,
-                      @NonNull String name,
-                      @NonNull String description,
-                      @NonNull String filePath,
-                      @NonNull String logoFile,
-                      @NonNull String folderFile,
-                      @NonNull String backFolderFile,
-                      @NonNull Date lastUpdated) {
+    @JsonCreator
+    public GameEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                      @JsonProperty(cName) @NonNull String name,
+                      @JsonProperty(cDescription) @NonNull String description,
+                      @JsonProperty(cFilePath) @NonNull String filePath,
+                      @JsonProperty(cLogoFile) @NonNull String logoFile,
+                      @JsonProperty(cFolderFile) @NonNull String folderFile,
+                      @JsonProperty(cBackFolderFile) @NonNull String backFolderFile,
+                      @JsonProperty(cLastUpdated) @NonNull Date lastUpdated) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;

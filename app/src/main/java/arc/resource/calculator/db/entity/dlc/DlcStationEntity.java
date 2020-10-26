@@ -3,6 +3,8 @@ package arc.resource.calculator.db.entity.dlc;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,18 +13,27 @@ import java.util.Date;
 import arc.resource.calculator.db.dao.dlc.DlcStationDao;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 
+import static arc.resource.calculator.util.Constants.cDlcId;
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cImageFile;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cSourceId;
+import static arc.resource.calculator.util.Constants.cUuid;
+
 @Entity(tableName = DlcStationDao.tableName)
 public class DlcStationEntity extends StationEntity {
     @NonNull
     private String dlcId;
 
-    public DlcStationEntity(@NonNull String uuid,
-                            @NonNull String name,
-                            @NonNull String imageFile,
-                            @NonNull String sourceId,
-                            @NonNull Date lastUpdated,
-                            @NonNull String gameId,
-                            @NonNull String dlcId) {
+    @JsonCreator
+    public DlcStationEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                            @JsonProperty(cName) @NonNull String name,
+                            @JsonProperty(cImageFile) @NonNull String imageFile,
+                            @JsonProperty(cSourceId) @NonNull String sourceId,
+                            @JsonProperty(cLastUpdated) @NonNull Date lastUpdated,
+                            @JsonProperty(cGameId) @NonNull String gameId,
+                            @JsonProperty(cDlcId) @NonNull String dlcId) {
         super(uuid, name, imageFile, sourceId, lastUpdated, gameId);
         this.dlcId = dlcId;
     }

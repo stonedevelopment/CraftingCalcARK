@@ -20,12 +20,21 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.StationDao;
+
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cImageFile;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cSourceId;
+import static arc.resource.calculator.util.Constants.cUuid;
 
 /**
  * Station object for base game data (vanilla)
@@ -45,12 +54,13 @@ public class StationEntity {
     @NonNull
     private String gameId;
 
-    public StationEntity(@NonNull String uuid,
-                         @NonNull String name,
-                         @NonNull String imageFile,
-                         @NonNull String sourceId,
-                         @NonNull Date lastUpdated,
-                         @NonNull String gameId) {
+    @JsonCreator
+    public StationEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                         @JsonProperty(cName) @NonNull String name,
+                         @JsonProperty(cImageFile) @NonNull String imageFile,
+                         @JsonProperty(cSourceId) @NonNull String sourceId,
+                         @JsonProperty(cLastUpdated) @NonNull Date lastUpdated,
+                         @JsonProperty(cGameId) @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.imageFile = imageFile;

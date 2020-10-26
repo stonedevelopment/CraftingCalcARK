@@ -20,12 +20,26 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
 import arc.resource.calculator.db.dao.primary.EngramDao;
+
+import static arc.resource.calculator.util.Constants.cCraftingTime;
+import static arc.resource.calculator.util.Constants.cDescription;
+import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cImageFile;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cLevel;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cPoints;
+import static arc.resource.calculator.util.Constants.cUuid;
+import static arc.resource.calculator.util.Constants.cXp;
+import static arc.resource.calculator.util.Constants.cYield;
 
 /**
  * Engram object for base game data (vanilla)
@@ -49,17 +63,18 @@ public class EngramEntity {
     @NonNull
     private String gameId;
 
-    public EngramEntity(@NonNull String uuid,
-                        @NonNull String name,
-                        @NonNull String description,
-                        @NonNull String imageFile,
-                        int level,
-                        int yield,
-                        int points,
-                        int xp,
-                        int craftingTime,
-                        @NonNull Date lastUpdated,
-                        @NonNull String gameId) {
+    @JsonCreator
+    public EngramEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                        @JsonProperty(cName) @NonNull String name,
+                        @JsonProperty(cDescription) @NonNull String description,
+                        @JsonProperty(cImageFile) @NonNull String imageFile,
+                        @JsonProperty(cLevel) int level,
+                        @JsonProperty(cYield) int yield,
+                        @JsonProperty(cPoints) int points,
+                        @JsonProperty(cXp) int xp,
+                        @JsonProperty(cCraftingTime) int craftingTime,
+                        @JsonProperty(cLastUpdated) @NonNull Date lastUpdated,
+                        @JsonProperty(cGameId) @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;

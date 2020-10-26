@@ -30,8 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import arc.resource.calculator.model.SingleLiveEvent;
-import arc.resource.calculator.util.JSONUtil;
-import arc.resource.calculator.util.PrefsUtil;
+import arc.resource.calculator.util.JsonUtil;
 
 public class SplashScreenViewModel extends AndroidViewModel {
     private SingleLiveEvent<SplashScreenPhaseType> phaseEvent = new SingleLiveEvent<>();
@@ -93,7 +92,7 @@ public class SplashScreenViewModel extends AndroidViewModel {
 
     private void checkVersion() {
         try {
-            String json = JSONUtil.readRawJsonFileToJsonString(getApplication(), "Primary/data.json");
+            String json = JsonUtil.readRawJsonFileToJsonString(getApplication(), "Primary/data.json");
             JSONObject jsonObject = new JSONObject(json);
             String newVersion = jsonObject.getString("version");
 //            String oldVersion = PrefsUtil.getInstance(getApplication()).getLastUpdateFromUuid(null); // TODO: 5/30/2020 nullified version check for now, not using SplashScreen at this time

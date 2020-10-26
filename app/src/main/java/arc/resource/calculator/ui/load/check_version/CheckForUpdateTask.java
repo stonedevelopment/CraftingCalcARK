@@ -29,11 +29,11 @@ import java.util.List;
 import arc.resource.calculator.ui.load.check_version.versioning.DlcVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
-import arc.resource.calculator.util.JSONUtil;
+import arc.resource.calculator.util.JsonUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
-import static arc.resource.calculator.util.JSONUtil.cDLC;
-import static arc.resource.calculator.util.JSONUtil.cPrimary;
+import static arc.resource.calculator.util.JsonUtil.cDLC;
+import static arc.resource.calculator.util.JsonUtil.cPrimary;
 
 public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning>> {
     public static final String TAG = CheckForUpdateTask.class.getCanonicalName();
@@ -60,7 +60,7 @@ public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning
 
     private void setupUpdatificationNode(Context context) {
         try {
-            updatificationNode = JSONUtil.parseUpdatificationFile(context);
+            updatificationNode = JsonUtil.parseUpdatificationFile(context);
         } catch (IOException e) {
             listener.onError(e);
         }
@@ -82,7 +82,7 @@ public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning
         JsonNode primaryNode = updatificationNode.get(cPrimary);
 
         //  convert into Versioning object
-        PrimaryVersioning primaryVersioning = (PrimaryVersioning) Versioning.fromJSON(primaryNode);
+        PrimaryVersioning primaryVersioning = PrimaryVersioning.fromJson(primaryNode);
 
         //  test version against previous, add if test passes
         if (isNewVersion(primaryVersioning)) {
@@ -93,7 +93,7 @@ public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning
         JsonNode dlcArray = updatificationNode.get(cDLC);
         for (JsonNode dlcNode : dlcArray) {
             //  convert into Versioning object
-            DlcVersioning dlcVersioning = (DlcVersioning) Versioning.fromJSON(dlcNode);
+            DlcVersioning dlcVersioning = DlcVersioning.fromJson(dlcNode);
 
             //  test version against previous, add if test passes
             if (isNewVersion(dlcVersioning)) {

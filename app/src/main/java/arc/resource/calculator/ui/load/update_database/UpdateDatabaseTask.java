@@ -36,7 +36,7 @@ import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
 import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
-import arc.resource.calculator.util.JSONUtil;
+import arc.resource.calculator.util.JsonUtil;
 
 import static arc.resource.calculator.util.Constants.cComposites;
 import static arc.resource.calculator.util.Constants.cComposition;
@@ -125,7 +125,7 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     }
 
     private void updatePrimary(Versioning versioning) throws IOException {
-        JsonNode inNode = JSONUtil.parseUpdatifiedFile(getContext(), versioning);
+        JsonNode inNode = JsonUtil.parseUpdatifiedFile(getContext(), versioning);
 
         //  clear database for fresh data
         database.clearAllTables();

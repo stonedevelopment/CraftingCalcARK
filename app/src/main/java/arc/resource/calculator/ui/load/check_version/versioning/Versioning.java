@@ -16,10 +16,17 @@
 
 package arc.resource.calculator.ui.load.check_version.versioning;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
+
+import static arc.resource.calculator.util.Constants.cFilePath;
+import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cName;
+import static arc.resource.calculator.util.Constants.cUuid;
 
 public class Versioning {
     private final String uuid;
@@ -27,14 +34,18 @@ public class Versioning {
     private final String filePath;
     private final Date lastUpdated;
 
-    public Versioning(String uuid, String name, String filePath, Date lastUpdated) {
+    @JsonCreator
+    public Versioning(@JsonProperty(cUuid) String uuid,
+                      @JsonProperty(cName) String name,
+                      @JsonProperty(cFilePath) String filePath,
+                      @JsonProperty(cLastUpdated) Date lastUpdated) {
         this.uuid = uuid;
         this.name = name;
         this.filePath = filePath;
         this.lastUpdated = lastUpdated;
     }
 
-    public static Versioning fromJSON(JsonNode node) {
+    public static Versioning fromJson(JsonNode node) {
         return new ObjectMapper().convertValue(node, Versioning.class);
     }
 
