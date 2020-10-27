@@ -24,19 +24,19 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.material.textview.MaterialTextView;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+import arc.resource.calculator.ui.explorer.model.EngramExplorerItem;
 
 class EngramExplorerItemViewHolder extends ExplorerItemViewHolder {
-    private final MaterialTextView mQuantity;
+    private final MaterialTextView quantityView;
 
     EngramExplorerItemViewHolder(@NonNull View itemView, String filePath) {
         super(itemView, filePath);
-        mQuantity = itemView.findViewById(R.id.title);
+        quantityView = itemView.findViewById(R.id.quantity);
     }
 
-    void bind(FragmentActivity activity, ExplorerItem explorerItem) {
+    void bind(FragmentActivity activity, EngramExplorerItem explorerItem) {
         super.bind(activity, explorerItem);
 
-        mQuantity.setText(explorerItem.getTitle());
+        quantityView.setText(explorerItem.getQuantity());
     }
 }

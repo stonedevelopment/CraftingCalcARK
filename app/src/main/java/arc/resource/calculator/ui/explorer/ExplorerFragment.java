@@ -66,50 +66,46 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.explorer_fragment, container, false);
-
-        setupViews(rootView);
-
-        return rootView;
+        return setupViews(inflater.inflate(R.layout.explorer_fragment, container, false));
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         setupViewModel();
     }
 
-    private void setupAdapter(GameEntity gameEntity) {
-        adapter = new ExplorerItemAdapter(this, gameEntity.getFilePath());
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void setupViews(View rootView) {
+    private View setupViews(View rootView) {
         recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
         int numCols = 4;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
 
         textView = rootView.findViewById(R.id.explorerNavigationTextView);
         progressBar = rootView.findViewById(R.id.explorerProgressBar);
+
+        return rootView;
     }
 
     private void setupViewModel() {
         viewModel = new ViewModelProvider(requireActivity()).get(ExplorerViewModel.class);
 
         viewModel.getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
-        viewModel.getIsLoadingEvent().observe(getViewLifecycleOwner(), isLoading -> {
+        viewModel.getLoadingEvent().observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading) showLoading();
             else showLoaded();
         });
 
         MainViewModel mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        mainViewModel.getGameEntityEvent().observe(getViewLifecycleOwner(), gameEntity -> {
-            Log.d(TAG, "gameEntity found: " + gameEntity.getName());
-            setupAdapter(gameEntity);
-            viewModel.getDirectorySnapshot().observe(getViewLifecycleOwner(), snapshot -> adapter.mapDirectorySnapshot(snapshot));
-            viewModel.start();
-        });
+        mainViewModel.getGameEntityEvent().observe(getViewLifecycleOwner(), this::setupAdapter);
+    }
+
+    private void setupAdapter(GameEntity gameEntity) {
+        Log.d(TAG, "found gameEntity: " + gameEntity.getName());
+        adapter = new ExplorerItemAdapter(this, gameEntity.getFilePath());
+        recyclerView.setAdapter(adapter);
+
+        viewModel.getDirectorySnapshot().observe(getViewLifecycleOwner(), snapshot -> adapter.mapDirectorySnapshot(snapshot));
+        viewModel.fetch();
     }
 
     @Override
@@ -129,14 +125,14 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
                 switch (extraResultCode) {
                     case REMOVE:
-                        viewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_item_removed_success_format), name));
+                        viewModel.sendMessageToSnackBar(String.format(getString(R.string.snackbar_message_item_removed_success_format), name));
                         break;
                     case UPDATE:
-                        viewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_item_updated_success_format), name));
+                        viewModel.sendMessageToSnackBar(String.format(getString(R.string.snackbar_message_item_updated_success_format), name));
                         break;
 
                     case ADD:
-                        viewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_item_added_success_format), name));
+                        viewModel.sendMessageToSnackBar(String.format(getString(R.string.snackbar_message_item_added_success_format), name));
                         break;
                 }
             } else {
@@ -144,12 +140,12 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
                     Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
 
                     if (e != null) {
-                        viewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_error));
+                        viewModel.sendMessageToSnackBar(getString(R.string.snackbar_message_details_error));
 
                         ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
                     }
                 } else {
-                    viewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_no_change));
+                    viewModel.sendMessageToSnackBar(getString(R.string.snackbar_message_details_no_change));
                 }
             }
         }
@@ -178,12 +174,12 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     @Override
     public void onException(String tag, Exception e) {
         // TODO: 1/25/2020 handle exception
-//        mViewModel.showSnackBarMessage("An error occurred.");
+        showSnackBar("An error occurred.");
     }
 
     @Override
     public void onFatalException(String tag, Exception e) {
         // TODO: 1/25/2020 handle fatal exception
-//        mViewModel.showSnackBarMessage("A fatal error occurred.");
+        showSnackBar("A fatal error occurred.");
     }
 }

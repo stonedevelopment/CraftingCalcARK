@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer;
+package arc.resource.calculator.ui.search;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,32 +28,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
-import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
-import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+import arc.resource.calculator.db.entity.primary.EngramEntity;
+import arc.resource.calculator.ui.explorer.ExplorerFragment;
+import arc.resource.calculator.ui.search.model.SearchItem;
 
-public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
+public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemViewHolder> {
     private final LayoutInflater layoutInflater;
     private final FragmentActivity fragmentActivity;
     private String filePath;
-    private List<ExplorerItem> explorerItemList;
+    private List<SearchItem> itemlist;
 
-    ExplorerItemAdapter(ExplorerFragment fragment, String filePath) {
+    SearchItemAdapter(SearchFragment fragment, String filePath) {
         super();
         this.layoutInflater = LayoutInflater.from(fragment.getContext());
         this.fragmentActivity = fragment.requireActivity();
-        this.explorerItemList = new ArrayList<>();
+        this.itemlist = new ArrayList<>();
         this.filePath = filePath;
     }
 
     @NonNull
     @Override
-    public ExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SearchItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
 
         if (viewType == 2) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_engram, parent, false);
-            return new EngramExplorerItemViewHolder(itemView, filePath);
+            return new EngramSearchItemViewHolder(itemView, filePath);
         } else if (viewType == 1) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
         } else if (viewType == 0) {
@@ -62,12 +62,12 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
             itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
         }
 
-        return new ExplorerItemViewHolder(itemView, filePath);
+        return new SearchItemViewHolder(itemView, filePath);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExplorerItemViewHolder holder, int position) {
-        holder.bind(fragmentActivity, explorerItemList.get(position));
+    public void onBindViewHolder(@NonNull SearchItemViewHolder holder, int position) {
+        holder.bind(fragmentActivity, itemlist.get(position));
     }
 
     @Override
@@ -77,25 +77,22 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
 
     @Override
     public int getItemCount() {
-        return explorerItemList.size();
+        return itemlist.size();
     }
 
-    private ExplorerItem getItem(int position) {
-        return explorerItemList.get(position);
+    private SearchItem getItem(int position) {
+        return itemlist.get(position);
     }
 
-    private void setItems(List<ExplorerItem> items) {
-        explorerItemList = items;
+    private void setItems(List<SearchItem> itemList) {
+        this.itemlist = itemList;
         notifyDataSetChanged();
     }
 
-    void mapDirectorySnapshot(DirectorySnapshot directorySnapshot) {
-        List<ExplorerItem> items = new ArrayList<>();
-        if (directorySnapshot.hasParent()) {
-            items.add(BackFolderExplorerItem.fromExplorerItem(directorySnapshot.getParent()));
-        }
-        for (DirectoryItemEntity entity : directorySnapshot.getDirectory()) {
-            items.add(ExplorerItem.fromDirectoryEntity(entity));
+    void mapSearchResults(List<EngramEntity> engramEntityList) {
+        List<SearchItem> items = new ArrayList<>();
+        for (EngramEntity entity : engramEntityList) {
+            items.add(SearchItem.fromEngramEntity(entity));
         }
         setItems(items);
     }

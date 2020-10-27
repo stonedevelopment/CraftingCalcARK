@@ -32,8 +32,8 @@ import arc.resource.calculator.ui.load.check_version.versioning.Versioning;
 import arc.resource.calculator.util.JsonUtil;
 import arc.resource.calculator.util.PrefsUtil;
 
-import static arc.resource.calculator.util.JsonUtil.cDLC;
-import static arc.resource.calculator.util.JsonUtil.cPrimary;
+import static arc.resource.calculator.util.Constants.cDlc;
+import static arc.resource.calculator.util.Constants.cPrimary;
 
 public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning>> {
     public static final String TAG = CheckForUpdateTask.class.getCanonicalName();
@@ -90,7 +90,7 @@ public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning
         }
 
         //  get DLC array
-        JsonNode dlcArray = updatificationNode.get(cDLC);
+        JsonNode dlcArray = updatificationNode.get(cDlc);
         for (JsonNode dlcNode : dlcArray) {
             //  convert into Versioning object
             DlcVersioning dlcVersioning = DlcVersioning.fromJson(dlcNode);

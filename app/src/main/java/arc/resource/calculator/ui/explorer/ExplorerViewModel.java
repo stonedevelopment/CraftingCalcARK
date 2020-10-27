@@ -29,52 +29,35 @@ import androidx.lifecycle.Transformations;
 import java.util.List;
 import java.util.Stack;
 
-import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
+import arc.resource.calculator.model.InteractiveViewModel;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
-public class ExplorerViewModel extends AndroidViewModel {
-    // TODO: Maintain filters?
+public class ExplorerViewModel extends InteractiveViewModel {
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
-    private final SingleLiveEvent<String> mSnackBarMessageEvent = new SingleLiveEvent<>();
-    private final Stack<ExplorerItem> mHistoryStack = new Stack<>();
-    private final ExplorerRepository mRepository;
-    private final MutableLiveData<String> mParentId = new MutableLiveData<>();
-    private final LiveData<DirectorySnapshot> mDirectorySnapshot;
-    private final SingleLiveEvent<Boolean> mIsLoadingEvent = new SingleLiveEvent<>();
+
+    private final ExplorerRepository repository;
+    private final Stack<ExplorerItem> historyStack = new Stack<>();
+
+    private final LiveData<DirectorySnapshot> directorySnapshot;
+    private final MutableLiveData<String> parentId = new MutableLiveData<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
         Log.d(TAG, "ExplorerViewModel: constructor");
 
         setIsLoading(true);
-        mRepository = new ExplorerRepository(getApplication());
-        mDirectorySnapshot = transformDirectoryListToSnapshot();
+        repository = new ExplorerRepository(getApplication());
+        directorySnapshot = transformDirectoryListToSnapshot();
     }
 
-    public void start() {
+    public void fetch() {
         fetchDirectory();
     }
 
-    SingleLiveEvent<String> getSnackBarMessageEvent() {
-        return mSnackBarMessageEvent;
-    }
-
-    void setSnackBarMessage(String message) {
-        mSnackBarMessageEvent.setValue(message);
-    }
-
-    SingleLiveEvent<Boolean> getIsLoadingEvent() {
-        return mIsLoadingEvent;
-    }
-
-    private void setIsLoading(boolean isLoading) {
-        mIsLoadingEvent.setValue(isLoading);
-    }
-
     LiveData<DirectorySnapshot> getDirectorySnapshot() {
-        return mDirectorySnapshot;
+        return directorySnapshot;
     }
 
     @Nullable
@@ -83,16 +66,16 @@ public class ExplorerViewModel extends AndroidViewModel {
     }
 
     private void pushToStack(ExplorerItem explorerItem) {
-        mHistoryStack.push(explorerItem);
+        historyStack.push(explorerItem);
     }
 
     private ExplorerItem peekAtStack() {
-        if (mHistoryStack.isEmpty()) return null;
-        return mHistoryStack.peek();
+        if (historyStack.isEmpty()) return null;
+        return historyStack.peek();
     }
 
     private void popFromStack() {
-        mHistoryStack.pop();
+        historyStack.pop();
     }
 
     void handleOnClickEvent(ExplorerItem explorerItem) {
@@ -125,7 +108,7 @@ public class ExplorerViewModel extends AndroidViewModel {
         String parentId = explorerItem == null ? "" : explorerItem.getUuid();
 
         Log.d(TAG, "fetchDirectory: " + parentId);
-        mParentId.setValue(parentId);
+        this.parentId.setValue(parentId);
     }
 
     private void viewDetails(ExplorerItem explorerItem) {
@@ -135,9 +118,9 @@ public class ExplorerViewModel extends AndroidViewModel {
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {
-        return Transformations.switchMap(mParentId, parentId -> {
+        return Transformations.switchMap(parentId, parentId -> {
             Log.d(TAG, "ExplorerViewModel: transforming parentId: " + parentId);
-            return mRepository.fetchDirectory(parentId);
+            return repository.fetchDirectory(parentId);
         });
     }
 

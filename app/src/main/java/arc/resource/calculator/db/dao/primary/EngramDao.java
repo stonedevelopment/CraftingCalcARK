@@ -35,9 +35,12 @@ public interface EngramDao {
     @Query("delete from engrams")
     void deleteAll();
 
+    @Query("select * from engrams where uuid is :uuid")
+    LiveData<EngramEntity> getEngram(String uuid);
+
     @Query("select * from engrams where gameId is :gameId order by name asc")
     LiveData<List<EngramEntity>> getEngramList(String gameId);
 
-    @Query("select * from engrams where uuid is :uuid")
-    LiveData<EngramEntity> getEngram(String uuid);
+    @Query("select * from engrams where name like :searchName order by name asc")
+    LiveData<List<EngramEntity>> searchEngrams(String searchName);
 }
