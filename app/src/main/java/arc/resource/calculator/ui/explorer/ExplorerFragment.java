@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,7 +78,8 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private View setupViews(View rootView) {
         recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
-        int numCols = 4;
+
+        int numCols = 3;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
 
         textView = rootView.findViewById(R.id.explorerNavigationTextView);

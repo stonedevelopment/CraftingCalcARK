@@ -67,7 +67,9 @@ public class Constants {
     public static final String cType = "type";
 
     //  json values
+    public static final int cBackFolderViewType = -1;
     public static final int cStationViewType = 0;
     public static final int cFolderViewType = 1;
     public static final int cEngramViewType = 2;
+    public static final int cResourceViewType = 3;
 }

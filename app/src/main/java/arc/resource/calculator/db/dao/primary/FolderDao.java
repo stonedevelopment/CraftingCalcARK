@@ -40,4 +40,7 @@ public interface FolderDao {
 
     @Query("select * from folders where uuid is :uuid")
     LiveData<FolderEntity> getFolder(String uuid);
+
+    @Query("select * from folders where name like :searchName order by name asc")
+    LiveData<List<FolderEntity>> searchByName(String searchName);
 }

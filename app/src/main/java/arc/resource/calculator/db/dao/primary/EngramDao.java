@@ -42,5 +42,5 @@ public interface EngramDao {
     LiveData<List<EngramEntity>> getEngramList(String gameId);
 
     @Query("select * from engrams where name like :searchName order by name asc")
-    LiveData<List<EngramEntity>> searchEngrams(String searchName);
+    LiveData<List<EngramEntity>> searchByName(String searchName);
 }

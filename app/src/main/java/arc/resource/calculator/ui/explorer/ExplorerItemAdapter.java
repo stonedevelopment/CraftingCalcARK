@@ -32,6 +32,10 @@ import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
+import static arc.resource.calculator.util.Constants.cEngramViewType;
+import static arc.resource.calculator.util.Constants.cFolderViewType;
+import static arc.resource.calculator.util.Constants.cStationViewType;
+
 public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
     private final LayoutInflater layoutInflater;
     private final FragmentActivity fragmentActivity;
@@ -51,15 +55,15 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
     public ExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
 
-        if (viewType == 2) {
+        if (viewType == cEngramViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_engram, parent, false);
             return new EngramExplorerItemViewHolder(itemView, filePath);
-        } else if (viewType == 1) {
+        } else if (viewType == cFolderViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
-        } else if (viewType == 0) {
+        } else if (viewType == cStationViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_station, parent, false);
         } else {
-            itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
+            itemView = layoutInflater.inflate(R.layout.explorer_item_error, parent, false);
         }
 
         return new ExplorerItemViewHolder(itemView, filePath);

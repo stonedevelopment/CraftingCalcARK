@@ -25,11 +25,15 @@ public class InteractiveViewModel extends AndroidViewModel {
         setSnackBarMessage(message);
     }
 
+    public boolean isLoading() {
+        return isLoadingEvent.getValue() == null ? false : isLoadingEvent.getValue();
+    }
+
     public SingleLiveEvent<Boolean> getLoadingEvent() {
         return isLoadingEvent;
     }
 
-    protected void setIsLoading(boolean isLoading) {
+    public void setIsLoading(boolean isLoading) {
         isLoadingEvent.setValue(isLoading);
     }
 }

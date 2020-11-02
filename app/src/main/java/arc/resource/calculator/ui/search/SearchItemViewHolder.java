@@ -33,6 +33,11 @@ import com.squareup.picasso.Picasso;
 import arc.resource.calculator.R;
 import arc.resource.calculator.ui.search.model.SearchItem;
 
+import static arc.resource.calculator.util.Constants.cEngramViewType;
+import static arc.resource.calculator.util.Constants.cFolderViewType;
+import static arc.resource.calculator.util.Constants.cResourceViewType;
+import static arc.resource.calculator.util.Constants.cStationViewType;
+
 class SearchItemViewHolder extends RecyclerView.ViewHolder {
     public static final String TAG = SearchItemViewHolder.class.getSimpleName();
 
@@ -40,7 +45,9 @@ class SearchItemViewHolder extends RecyclerView.ViewHolder {
 
     private final MaterialCardView cardView;
     private final AppCompatImageView imageView;
-    private final MaterialTextView textView;
+    private final MaterialTextView viewTypeView;
+    private final MaterialTextView titleView;
+    private final MaterialTextView descriptionView;
 
     SearchItemViewHolder(@NonNull View itemView, String filePath) {
         super(itemView);
@@ -48,7 +55,9 @@ class SearchItemViewHolder extends RecyclerView.ViewHolder {
         this.filePath = filePath;
         this.cardView = itemView.findViewById(R.id.cardView);
         this.imageView = itemView.findViewById(R.id.thumbnail);
-        this.textView = itemView.findViewById(R.id.title);
+        this.viewTypeView = itemView.findViewById(R.id.viewType);
+        this.titleView = itemView.findViewById(R.id.title);
+        this.descriptionView = itemView.findViewById(R.id.description);
     }
 
     void bind(FragmentActivity activity, SearchItem searchItem) {
@@ -62,12 +71,37 @@ class SearchItemViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.placeholder_empty)
                 .into(imageView);
 
-        textView.setText(searchItem.getTitle());
+        viewTypeView.setText(getViewTypeText(context, searchItem.getViewType()));
+        titleView.setText(searchItem.getTitle());
+        descriptionView.setText(searchItem.getDescription());
 
         cardView.setOnClickListener(v -> {
             Log.d(TAG, "cardView onClickListener: " + searchItem.getTitle());
             SearchViewModel viewModel = new ViewModelProvider(activity).get(SearchViewModel.class);
             viewModel.handleOnClickEvent(searchItem);
         });
+    }
+
+    public MaterialTextView getViewTypeView() {
+        return viewTypeView;
+    }
+
+    public MaterialTextView getDescriptionView() {
+        return descriptionView;
+    }
+
+    private String getViewTypeText(Context context, int viewType) {
+        switch (viewType) {
+            case cStationViewType:
+                return context.getString(R.string.search_item_view_type_text_station);
+            case cEngramViewType:
+                return context.getString(R.string.search_item_view_type_text_engram);
+            case cFolderViewType:
+                return context.getString(R.string.search_item_view_type_text_folder);
+            case cResourceViewType:
+                return context.getString(R.string.search_item_view_type_text_resource);
+            default:
+                return context.getString(R.string.search_item_view_type_text_error);
+        }
     }
 }

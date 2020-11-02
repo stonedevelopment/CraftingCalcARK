@@ -27,7 +27,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -46,31 +47,37 @@ public class SearchFragment extends Fragment {
     private SearchViewModel viewModel;
     private SearchItemAdapter adapter;
 
-    private GameEntity gameEntity;
-
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MaterialTextView textView;
+    private MaterialTextView searchResultsTextView;
     private ContentLoadingProgressBar progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return setViews(inflater.inflate(R.layout.search_fragment, container, false));
+        return initViews(inflater.inflate(R.layout.search_fragment, container, false));
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupViewModel();
+        initViewModel();
         setupViews();
+
+        MainViewModel mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        mainViewModel.getGameEntityEvent().observe(getViewLifecycleOwner(), this::handleGameEntityEvent);
     }
 
-    private View setViews(View rootView) {
+    private void handleGameEntityEvent(GameEntity gameEntity) {
+        initAdapter(gameEntity);
+        setupViewModel(gameEntity);
+    }
+
+    private View initViews(View rootView) {
         searchView = rootView.findViewById(R.id.searchView);
         recyclerView = rootView.findViewById(R.id.searchRecyclerView);
-        textView = rootView.findViewById(R.id.searchResultsTextView);
-        progressBar = rootView.findViewById(R.id.progressBar);
+        searchResultsTextView = rootView.findViewById(R.id.searchResultsTextView);
+        progressBar = rootView.findViewById(R.id.searchProgressBar);
 
         return rootView;
     }
@@ -90,31 +97,42 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        int numCols = 4;
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                layoutManager.getOrientation());
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
-    private void setupViewModel() {
+    private void initViewModel() {
         viewModel = new ViewModelProvider(requireActivity()).get(SearchViewModel.class);
+    }
+
+    private void setupViewModel(GameEntity gameEntity) {
+        viewModel.setGameEntity(gameEntity);
 
         viewModel.getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
+
         viewModel.getLoadingEvent().observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading) showLoading();
             else showLoaded();
         });
 
-        MainViewModel mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        mainViewModel.getGameEntityEvent().observe(getViewLifecycleOwner(), this::setupAdapter);
+        viewModel.getFilterTextEvent().observe(getViewLifecycleOwner(), searchText -> {
+            viewModel.beginSearch(searchText);
+        });
+
+        viewModel.getSearchLiveData().observe(getViewLifecycleOwner(), searchResults -> {
+            adapter.setItems(searchResults);
+            searchResultsTextView.setText(String.format(Locale.ENGLISH, "%d result(s) found", searchResults.size()));
+            viewModel.endSearch();
+        });
     }
 
-    private void setupAdapter(GameEntity gameEntity) {
-        adapter = new SearchItemAdapter(this, gameEntity.getFilePath());
+    private void initAdapter(GameEntity gameEntity) {
+        adapter = new SearchItemAdapter(this, gameEntity);
         recyclerView.setAdapter(adapter);
-
-        viewModel.getEngramSearchResults().observe(getViewLifecycleOwner(), engramEntityList -> {
-            adapter.mapSearchResults(engramEntityList);
-            textView.setText(String.format(Locale.ENGLISH, "%d results found", engramEntityList.size()));
-        });
     }
 
     private void showLoading() {

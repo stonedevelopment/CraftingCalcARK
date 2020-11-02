@@ -1,4 +1,8 @@
 <resources xmlns:x="urn:oasis:names:tc:xliff:document:1.2" xmlns:xliff="http://schemas.android.com/tools">
+    <!-- Default app/activity details. Also used with ActionBar titles. -->
+    <string name="app_name">A:RC</string>
+    <string name="app_name_full">ARK:Resource Calculator</string>
+
     <!-- LoadActivity -->
     <string name="load_activity_image_description">load screen image</string>
 
@@ -47,10 +51,6 @@
 
     <!-- LoadActivity: Events: Purchases -->
 
-    <!-- Default app/activity details. Also used with ActionBar titles. -->
-    <string name="app_name">A:RC</string>
-    <string name="app_name_full">ARK:Resource Calculator</string>
-
     <string name="title_activity_detail">Engram Details</string>
     <string name="title_activity_resources">Calculated Resources</string>
     <string name="title_activity_settings">Settings</string>
@@ -95,6 +95,13 @@
     <string name="content_detail_mock_text_description">A brick-and-mortar wall that insulates the inside from the outside and separates rooms.</string>
     <string name="content_detail_mock_text_station_and_level">Stone Wall can be crafted without a station, and can be crafted at any level.</string>
     <string name="content_detail_image_description">thumbnail image of engram</string>
+
+    <!-- SearchFragment -->
+    <string name="search_item_view_type_text_engram">Engram</string>
+    <string name="search_item_view_type_text_folder">Folder</string>
+    <string name="search_item_view_type_text_station">Station</string>
+    <string name="search_item_view_type_text_resource">Resource</string>
+    <string name="search_item_view_type_text_error">Error</string>
 
     <!-- AlertDialog -->
 

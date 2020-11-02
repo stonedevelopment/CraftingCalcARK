@@ -21,7 +21,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -31,8 +30,11 @@ import java.util.Stack;
 
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.model.InteractiveViewModel;
-import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+
+import static arc.resource.calculator.util.Constants.cBackFolderViewType;
+import static arc.resource.calculator.util.Constants.cFolderViewType;
+import static arc.resource.calculator.util.Constants.cStationViewType;
 
 public class ExplorerViewModel extends InteractiveViewModel {
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
@@ -80,10 +82,10 @@ public class ExplorerViewModel extends InteractiveViewModel {
 
     void handleOnClickEvent(ExplorerItem explorerItem) {
         Log.d(TAG, "handleOnClickEvent: " + explorerItem.getTitle());
-        if (explorerItem.getViewType() == -1) {
+        if (explorerItem.getViewType() == cBackFolderViewType) {
             goBack();
-        } else if (explorerItem.getViewType() == 0 ||
-                explorerItem.getViewType() == 1) {
+        } else if (explorerItem.getViewType() == cStationViewType ||
+                explorerItem.getViewType() == cFolderViewType) {
             goForward(explorerItem);
         } else {
             viewDetails(explorerItem);

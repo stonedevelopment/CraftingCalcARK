@@ -23,6 +23,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 
 @Dao
@@ -40,4 +41,7 @@ public interface StationDao {
 
     @Query("select * from stations where uuid is :uuid")
     LiveData<StationEntity> getStation(String uuid);
+
+    @Query("select * from stations where name like :searchName order by name asc")
+    LiveData<List<StationEntity>> searchByName(String searchName);
 }

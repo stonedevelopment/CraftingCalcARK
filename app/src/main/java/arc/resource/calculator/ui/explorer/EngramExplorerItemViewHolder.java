@@ -27,16 +27,16 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.ui.explorer.model.EngramExplorerItem;
 
 class EngramExplorerItemViewHolder extends ExplorerItemViewHolder {
-    private final MaterialTextView quantityView;
+//    private final MaterialTextView quantityView;
 
     EngramExplorerItemViewHolder(@NonNull View itemView, String filePath) {
         super(itemView, filePath);
-        quantityView = itemView.findViewById(R.id.quantity);
+//        quantityView = itemView.findViewById(R.id.quantity);
     }
 
     void bind(FragmentActivity activity, EngramExplorerItem explorerItem) {
         super.bind(activity, explorerItem);
 
-        quantityView.setText(explorerItem.getQuantity());
+//        quantityView.setText(explorerItem.getQuantity());
     }
 }

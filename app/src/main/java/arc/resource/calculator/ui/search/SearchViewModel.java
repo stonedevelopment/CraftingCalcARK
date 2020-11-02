@@ -21,34 +21,61 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
+import arc.resource.calculator.db.entity.primary.FolderEntity;
+import arc.resource.calculator.db.entity.primary.ResourceEntity;
+import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.InteractiveViewModel;
+import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.search.model.SearchItem;
 
 public class SearchViewModel extends InteractiveViewModel {
     public static final String TAG = SearchViewModel.class.getCanonicalName();
+    private static final int SOURCE_TOTAL = 3;
 
     private final SearchRepository repository;
-
-    private String filterText = "";
-    private MutableLiveData<String> filterTextEvent = new MutableLiveData<>();
-    private LiveData<List<EngramEntity>> engramSearchResults;
+    private final MediatorLiveData<List<SearchItem>> searchLiveData = new MediatorLiveData<>();
+    private final SingleLiveEvent<String> filterTextEvent = new SingleLiveEvent<>();
+    private List<SearchItem> searchItemList = new ArrayList<>();
+    private int remainingSources = 0;
+    private GameEntity gameEntity;
+    private LiveData<List<EngramEntity>> engramLiveData;
+    private LiveData<List<ResourceEntity>> resourceLiveData;
+    private LiveData<List<StationEntity>> stationLiveData;
+    private LiveData<List<FolderEntity>> folderLiveData;
 
     public SearchViewModel(@NonNull Application application) {
         super(application);
         repository = new SearchRepository(application);
-        engramSearchResults = Transformations.switchMap(filterTextEvent, input -> {
-            filterText = input;
-            return repository.searchEngrams(input);
-        });
     }
 
-    // TODO: 10/26/2020 this removes and resets search, consider adding to previous search results?
+    String getFilterText() {
+        return filterTextEvent.getValue();
+    }
+
+    MutableLiveData<String> getFilterTextEvent() {
+        return filterTextEvent;
+    }
+
+    MediatorLiveData<List<SearchItem>> getSearchLiveData() {
+        return searchLiveData;
+    }
+
+    GameEntity getGameEntity() {
+        return gameEntity;
+    }
+
+    void setGameEntity(GameEntity gameEntity) {
+        this.gameEntity = gameEntity;
+    }
+
     void handleEditTextEvent(String text) {
         filterTextEvent.setValue(text);
     }
@@ -57,11 +84,59 @@ public class SearchViewModel extends InteractiveViewModel {
         Log.d(TAG, "handleOnClickEvent: " + searchItem.getTitle());
     }
 
-    public String getFilterText() {
-        return filterText;
+    void beginSearch(String searchText) {
+        setIsLoading(true);
+        searchItemList.clear();
+
+        remainingSources = SOURCE_TOTAL;
+
+        engramLiveData = repository.searchEngrams(searchText);
+        resourceLiveData = repository.searchResources(searchText);
+        stationLiveData = repository.searchStations(searchText);
+        folderLiveData = repository.searchFolders(searchText);
+
+        searchLiveData.addSource(engramLiveData, entities -> {
+            for (EngramEntity entity : entities) {
+                searchItemList.add(SearchItem.fromEngramEntity(entity));
+            }
+
+            searchLiveData.removeSource(engramLiveData);
+            if (--remainingSources == 0)
+                searchLiveData.setValue(searchItemList);
+        });
+
+        searchLiveData.addSource(resourceLiveData, entities -> {
+            for (ResourceEntity entity : entities) {
+                searchItemList.add(SearchItem.fromResourceEntity(entity));
+            }
+
+            searchLiveData.removeSource(resourceLiveData);
+            if (--remainingSources == 0)
+                searchLiveData.setValue(searchItemList);
+        });
+
+        searchLiveData.addSource(stationLiveData, entities -> {
+            for (StationEntity entity : entities) {
+                searchItemList.add(SearchItem.fromStationEntity(entity));
+            }
+
+            searchLiveData.removeSource(stationLiveData);
+            if (--remainingSources == 0)
+                searchLiveData.setValue(searchItemList);
+        });
+//
+//        searchLiveData.addSource(folderLiveData, entities -> {
+//            for (FolderEntity entity : entities) {
+//                searchItemList.add(SearchItem.fromFolderEntity(entity, gameEntity.getFolderFile()));
+//            }
+//
+//            searchLiveData.removeSource(folderLiveData);
+//            if (--remainingSources == 0)
+//                searchLiveData.setValue(searchItemList);
+//        });
     }
 
-    public LiveData<List<EngramEntity>> getEngramSearchResults() {
-        return engramSearchResults;
+    void endSearch() {
+        setIsLoading(false);
     }
 }
