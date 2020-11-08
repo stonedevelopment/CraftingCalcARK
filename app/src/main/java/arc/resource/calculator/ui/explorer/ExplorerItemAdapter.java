@@ -32,22 +32,32 @@ import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
+import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 import static arc.resource.calculator.util.Constants.cEngramViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
 import static arc.resource.calculator.util.Constants.cStationViewType;
 
 public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
+    private final ExplorerViewModel viewModel;
     private final LayoutInflater layoutInflater;
     private final FragmentActivity fragmentActivity;
+    private final List<ExplorerItem> itemList = new ArrayList<>();
     private String filePath;
-    private List<ExplorerItem> explorerItemList;
 
-    ExplorerItemAdapter(ExplorerFragment fragment, String filePath) {
+    ExplorerItemAdapter(ExplorerFragment fragment, ExplorerViewModel viewModel) {
         super();
         this.layoutInflater = LayoutInflater.from(fragment.getContext());
         this.fragmentActivity = fragment.requireActivity();
-        this.explorerItemList = new ArrayList<>();
-        this.filePath = filePath;
+        this.viewModel = viewModel;
+
+        setupViewModel();
+    }
+
+    private void setupViewModel() {
+        viewModel.getGameEntityLiveData().observe(fragmentActivity,
+                gameEntity -> filePath = gameEntity.getFilePath());
+        viewModel.getDirectorySnapshot().observe(fragmentActivity,
+                this::mapDirectorySnapshot);
     }
 
     @NonNull
@@ -57,8 +67,8 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
 
         if (viewType == cEngramViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_engram, parent, false);
-            return new EngramExplorerItemViewHolder(itemView, filePath);
-        } else if (viewType == cFolderViewType) {
+            return new EngramExplorerItemViewHolder(itemView);
+        } else if (viewType == cFolderViewType || viewType == cBackFolderViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
         } else if (viewType == cStationViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_station, parent, false);
@@ -66,12 +76,12 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
             itemView = layoutInflater.inflate(R.layout.explorer_item_error, parent, false);
         }
 
-        return new ExplorerItemViewHolder(itemView, filePath);
+        return new ExplorerItemViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExplorerItemViewHolder holder, int position) {
-        holder.bind(fragmentActivity, explorerItemList.get(position));
+        holder.bind(fragmentActivity, itemList.get(position), viewModel);
     }
 
     @Override
@@ -81,26 +91,21 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
 
     @Override
     public int getItemCount() {
-        return explorerItemList.size();
+        return itemList.size();
     }
 
     private ExplorerItem getItem(int position) {
-        return explorerItemList.get(position);
+        return itemList.get(position);
     }
 
-    private void setItems(List<ExplorerItem> items) {
-        explorerItemList = items;
-        notifyDataSetChanged();
-    }
-
-    void mapDirectorySnapshot(DirectorySnapshot directorySnapshot) {
-        List<ExplorerItem> items = new ArrayList<>();
+    private void mapDirectorySnapshot(DirectorySnapshot directorySnapshot) {
+        itemList.clear();
         if (directorySnapshot.hasParent()) {
-            items.add(BackFolderExplorerItem.fromExplorerItem(directorySnapshot.getParent()));
+            itemList.add(BackFolderExplorerItem.fromExplorerItem(directorySnapshot.getParent()));
         }
         for (DirectoryItemEntity entity : directorySnapshot.getDirectory()) {
-            items.add(ExplorerItem.fromDirectoryEntity(entity));
+            itemList.add(ExplorerItem.fromDirectoryEntity(entity));
         }
-        setItems(items);
+        notifyDataSetChanged();
     }
 }

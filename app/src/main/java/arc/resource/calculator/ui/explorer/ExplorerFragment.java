@@ -18,7 +18,6 @@ package arc.resource.calculator.ui.explorer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -39,7 +37,6 @@ import java.util.Objects;
 
 import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.ui.detail.DetailFragment;
 import arc.resource.calculator.ui.main.MainViewModel;
@@ -58,8 +55,6 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     private ExplorerViewModel viewModel;
     private ExplorerItemAdapter adapter;
 
-    private GameEntity gameEntity;
-
     private RecyclerView recyclerView;
     private MaterialTextView textView;
     private ContentLoadingProgressBar progressBar;
@@ -67,47 +62,37 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return setupViews(inflater.inflate(R.layout.explorer_fragment, container, false));
+        return setViews(inflater.inflate(R.layout.explorer_fragment, container, false));
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupViewModel();
+        setupViews();
     }
 
-    private View setupViews(View rootView) {
+    private View setViews(View rootView) {
         recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
-
-        int numCols = 3;
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numCols));
-
         textView = rootView.findViewById(R.id.explorerNavigationTextView);
         progressBar = rootView.findViewById(R.id.explorerProgressBar);
-
         return rootView;
+    }
+
+    private void setupViews() {
+        adapter = new ExplorerItemAdapter(this, viewModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new ExplorerLayoutManager(this, viewModel));
     }
 
     private void setupViewModel() {
         viewModel = new ViewModelProvider(requireActivity()).get(ExplorerViewModel.class);
-
+        viewModel.injectMainViewModel(this, new ViewModelProvider(this).get(MainViewModel.class));
         viewModel.getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
         viewModel.getLoadingEvent().observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading) showLoading();
             else showLoaded();
         });
-
-        MainViewModel mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        mainViewModel.getGameEntityEvent().observe(getViewLifecycleOwner(), this::setupAdapter);
-    }
-
-    private void setupAdapter(GameEntity gameEntity) {
-        Log.d(TAG, "found gameEntity: " + gameEntity.getName());
-        adapter = new ExplorerItemAdapter(this, gameEntity.getFilePath());
-        recyclerView.setAdapter(adapter);
-
-        viewModel.getDirectorySnapshot().observe(getViewLifecycleOwner(), snapshot -> adapter.mapDirectorySnapshot(snapshot));
-        viewModel.fetch();
     }
 
     @Override

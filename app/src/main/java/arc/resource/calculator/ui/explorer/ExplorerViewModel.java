@@ -22,15 +22,17 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import java.util.List;
 import java.util.Stack;
 
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.model.InteractiveViewModel;
+import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+import arc.resource.calculator.ui.main.MainViewModel;
 
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
@@ -41,21 +43,20 @@ public class ExplorerViewModel extends InteractiveViewModel {
 
     private final ExplorerRepository repository;
     private final Stack<ExplorerItem> historyStack = new Stack<>();
-
     private final LiveData<DirectorySnapshot> directorySnapshot;
-    private final MutableLiveData<String> parentId = new MutableLiveData<>();
+
+    private LiveData<GameEntity> gameEntityLiveData;
+    private SingleLiveEvent<String> parentIdSingleLiveEvent = new SingleLiveEvent<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
-        Log.d(TAG, "ExplorerViewModel: constructor");
-
-        setIsLoading(true);
         repository = new ExplorerRepository(getApplication());
         directorySnapshot = transformDirectoryListToSnapshot();
     }
 
-    public void fetch() {
-        fetchDirectory();
+    void injectMainViewModel(ExplorerFragment fragment, MainViewModel mainViewModel) {
+        gameEntityLiveData = mainViewModel.getGameEntityEvent();
+        gameEntityLiveData.observe(fragment, gameEntity -> fetchDirectory());
     }
 
     LiveData<DirectorySnapshot> getDirectorySnapshot() {
@@ -65,6 +66,14 @@ public class ExplorerViewModel extends InteractiveViewModel {
     @Nullable
     private ExplorerItem getCurrentExplorerItem() {
         return peekAtStack();
+    }
+
+    LiveData<GameEntity> getGameEntityLiveData() {
+        return gameEntityLiveData;
+    }
+
+    void updateParentId(String parentId) {
+        parentIdSingleLiveEvent.setValue(parentId);
     }
 
     private void pushToStack(ExplorerItem explorerItem) {
@@ -110,20 +119,11 @@ public class ExplorerViewModel extends InteractiveViewModel {
         String parentId = explorerItem == null ? "" : explorerItem.getUuid();
 
         Log.d(TAG, "fetchDirectory: " + parentId);
-        this.parentId.setValue(parentId);
-    }
-
-    private void viewDetails(ExplorerItem explorerItem) {
-        //  request detail pop up
-        setSnackBarMessage(explorerItem.getTitle());
-        Log.d(TAG, explorerItem.toString());
+        updateParentId(parentId);
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {
-        return Transformations.switchMap(parentId, parentId -> {
-            Log.d(TAG, "ExplorerViewModel: transforming parentId: " + parentId);
-            return repository.fetchDirectory(parentId);
-        });
+        return Transformations.switchMap(parentIdSingleLiveEvent, repository::fetchDirectory);
     }
 
     private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {
@@ -133,5 +133,11 @@ public class ExplorerViewModel extends InteractiveViewModel {
             ExplorerItem current = getCurrentExplorerItem();
             return new DirectorySnapshot(current, directory);
         });
+    }
+
+    private void viewDetails(ExplorerItem explorerItem) {
+        //  request detail pop up
+        setSnackBarMessage(explorerItem.getTitle());
+        Log.d(TAG, explorerItem.toString());
     }
 }

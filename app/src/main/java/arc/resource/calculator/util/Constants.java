@@ -2,7 +2,7 @@ package arc.resource.calculator.util;
 
 public class Constants {
     //  json file names
-    public static final String cAssetsFilePath = "src/assets/";
+    public static final String cAssetsFilePath = "file:///android_asset/";
     public static final String cArkAssetsFilePath = cAssetsFilePath.concat("ARK/");
     public static final String cArkDataEditableFileName = "data_editable.json";
     public static final String cGamesFileName = "games.json";

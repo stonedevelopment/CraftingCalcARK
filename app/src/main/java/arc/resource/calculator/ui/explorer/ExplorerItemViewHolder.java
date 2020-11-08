@@ -17,7 +17,6 @@
 package arc.resource.calculator.ui.explorer;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -33,26 +32,25 @@ import com.squareup.picasso.Picasso;
 import arc.resource.calculator.R;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
+import static arc.resource.calculator.util.Constants.cAssetsFilePath;
+
 class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
     public static final String TAG = ExplorerItemViewHolder.class.getSimpleName();
-
-    private final String filePath;
 
     private final MaterialCardView cardView;
     private final AppCompatImageView imageView;
     private final MaterialTextView textView;
 
-    ExplorerItemViewHolder(@NonNull View itemView, String filePath) {
+    ExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        this.filePath = filePath;
         this.cardView = itemView.findViewById(R.id.cardView);
         this.imageView = itemView.findViewById(R.id.thumbnail);
         this.textView = itemView.findViewById(R.id.title);
     }
 
-    void bind(FragmentActivity activity, ExplorerItem explorerItem) {
-        final String imagePath = "file:///android_asset/" + filePath + explorerItem.getImageFile();
+    void bind(FragmentActivity activity, ExplorerItem explorerItem, ExplorerViewModel explorerViewModel) {
+        final String imagePath = cAssetsFilePath + explorerViewModel + explorerItem.getImageFile();
 
         Context context = activity.getApplicationContext();
 
@@ -65,9 +63,7 @@ class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
         textView.setText(explorerItem.getTitle());
 
         cardView.setOnClickListener(v -> {
-            Log.d(TAG, "cardView onClickListener: " + explorerItem.getTitle());
-            ExplorerViewModel viewModel = new ViewModelProvider(activity).get(ExplorerViewModel.class);
-            viewModel.handleOnClickEvent(explorerItem);
+            explorerViewModel.handleOnClickEvent(explorerItem);
         });
     }
 }
