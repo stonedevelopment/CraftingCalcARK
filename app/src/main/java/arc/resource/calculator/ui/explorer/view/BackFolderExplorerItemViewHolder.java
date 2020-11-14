@@ -33,13 +33,32 @@ public class BackFolderExplorerItemViewHolder extends DescriptiveExplorerItemVie
 
     @Override
     protected void setupViewModel(FragmentActivity activity) {
-        // do nothing
+        String parentTitle = "";
+        String parentOfParentTitle = "";
+        String descriptionText = "";
+
+        if (getExplorerViewModel().hasParentExplorerItem()) {
+            parentTitle = getExplorerViewModel().getParentExplorerItem().getTitle();
+
+            if (getExplorerViewModel().hasParentOfParentExplorerItem()) {
+                parentOfParentTitle = getExplorerViewModel().getParentOfParentExplorerItem().getTitle();
+                descriptionText = activity.getString(R.string.explorer_item_back_folder_back_to_2_string_format,
+                        parentOfParentTitle, parentTitle);
+            } else {
+                descriptionText = activity.getString(R.string.explorer_item_back_folder_back_to_1_string_format,
+                        parentTitle);
+            }
+
+        } else {
+            // does not have parent
+            descriptionText = activity.getString(R.string.explorer_item_back_folder_back_to_crafting_stations);
+        }
+
+        setDescriptionText(descriptionText);
     }
 
     @Override
     public void bind(FragmentActivity activity, ExplorerItem explorerItem) {
         super.bind(activity, explorerItem);
-        getTitleTextView().setText(activity.getString(R.string.explorer_item_back_folder_title));
-        setDescriptionText(activity.getString(R.string.explorer_item_back_folder_description_format, explorerItem.getTitle()));
     }
 }

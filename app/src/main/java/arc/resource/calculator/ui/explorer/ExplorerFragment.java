@@ -27,10 +27,10 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Objects;
 
@@ -54,7 +54,6 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
     private ExplorerItemAdapter adapter;
 
     private RecyclerView recyclerView;
-    private MaterialTextView textView;
     private ContentLoadingProgressBar progressBar;
 
     @Override
@@ -72,7 +71,6 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private View setViews(View rootView) {
         recyclerView = rootView.findViewById(R.id.explorerRecyclerView);
-        textView = rootView.findViewById(R.id.explorerNavigationTextView);
         progressBar = rootView.findViewById(R.id.explorerProgressBar);
         return rootView;
     }
@@ -81,6 +79,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
         adapter = new ExplorerItemAdapter(this, viewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new ExplorerLayoutManager(this, viewModel));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     }
 
     private void setupViewModel() {

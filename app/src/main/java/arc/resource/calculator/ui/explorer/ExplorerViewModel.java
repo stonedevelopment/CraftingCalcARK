@@ -68,8 +68,28 @@ public class ExplorerViewModel extends InteractiveViewModel {
     }
 
     @Nullable
-    private ExplorerItem getCurrentExplorerItem() {
+    public ExplorerItem getCurrentExplorerItem() {
         return peekAtStack();
+    }
+
+    public boolean hasParentExplorerItem() {
+        return historyStack.size() > 1;
+    }
+
+    public boolean hasParentOfParentExplorerItem() {
+        return historyStack.size() > 2;
+    }
+
+    @Nullable
+    public ExplorerItem getParentExplorerItem() {
+        int size = historyStack.size();
+        return historyStack.get(size - 2);
+    }
+
+    @Nullable
+    public ExplorerItem getParentOfParentExplorerItem() {
+        int size = historyStack.size();
+        return historyStack.get(size - 3);
     }
 
     public LiveData<GameEntity> getGameEntityLiveData() {

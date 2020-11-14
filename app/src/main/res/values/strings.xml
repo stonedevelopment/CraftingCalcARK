@@ -98,7 +98,11 @@
 
     <!-- ExplorerFragment -->
     <string name="explorer_item_back_folder_title">..</string>
-    <string name="explorer_item_back_folder_description_format">Back to <x:g name="parent_title">%1$s</x:g></string>
+    <string name="explorer_item_back_folder_back_to_2_string_format">Back to
+        <x:g name="parent_of_parent_title">%1$s</x:g>/<x:g name="parent_title">%2$s</x:g></string>
+    <string name="explorer_item_back_folder_back_to_1_string_format">Back to
+        <x:g name="parent_title">%1$s</x:g></string>
+    <string name="explorer_item_back_folder_back_to_crafting_stations">Back to Crafting Stations</string>
 
     <!-- SearchFragment -->
     <string name="search_item_view_type_text_engram">Engram</string>
