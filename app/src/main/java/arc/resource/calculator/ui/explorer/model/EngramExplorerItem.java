@@ -17,9 +17,17 @@
 package arc.resource.calculator.ui.explorer.model;
 
 public class EngramExplorerItem extends ExplorerItem {
+    private boolean isFavorite;
     private int quantity;
 
-    EngramExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId, int quantity) {
+    EngramExplorerItem(String uuid,
+                       String title,
+                       String imageFile,
+                       int viewType,
+                       String sourceId,
+                       String parentId,
+                       String gameId,
+                       int quantity) {
         super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
         setQuantity(quantity);
     }
@@ -30,5 +38,13 @@ public class EngramExplorerItem extends ExplorerItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void isFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }

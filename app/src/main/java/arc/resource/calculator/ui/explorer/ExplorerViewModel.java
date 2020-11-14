@@ -21,14 +21,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 import java.util.Stack;
 
 import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
+import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.model.InteractiveViewModel;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
@@ -54,7 +57,8 @@ public class ExplorerViewModel extends InteractiveViewModel {
         directorySnapshot = transformDirectoryListToSnapshot();
     }
 
-    void injectMainViewModel(ExplorerFragment fragment, MainViewModel mainViewModel) {
+    void injectViewModels(FragmentActivity fragment) {
+        MainViewModel mainViewModel = new ViewModelProvider(fragment).get(MainViewModel.class);
         gameEntityLiveData = mainViewModel.getGameEntityEvent();
         gameEntityLiveData.observe(fragment, gameEntity -> fetchDirectory());
     }
@@ -68,7 +72,7 @@ public class ExplorerViewModel extends InteractiveViewModel {
         return peekAtStack();
     }
 
-    LiveData<GameEntity> getGameEntityLiveData() {
+    public LiveData<GameEntity> getGameEntityLiveData() {
         return gameEntityLiveData;
     }
 
@@ -89,7 +93,7 @@ public class ExplorerViewModel extends InteractiveViewModel {
         historyStack.pop();
     }
 
-    void handleOnClickEvent(ExplorerItem explorerItem) {
+    public void handleOnClickEvent(ExplorerItem explorerItem) {
         Log.d(TAG, "handleOnClickEvent: " + explorerItem.getTitle());
         if (explorerItem.getViewType() == cBackFolderViewType) {
             goBack();
@@ -120,6 +124,10 @@ public class ExplorerViewModel extends InteractiveViewModel {
 
         Log.d(TAG, "fetchDirectory: " + parentId);
         updateParentId(parentId);
+    }
+
+    public LiveData<EngramEntity> fetchEngram(@NonNull String uuid) {
+        return repository.fetchEngram(uuid);
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {

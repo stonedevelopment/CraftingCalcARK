@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer;
+package arc.resource.calculator.ui.explorer.view;
 
 import android.view.View;
 
@@ -23,24 +23,32 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.FragmentActivity;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.ui.explorer.model.EngramExplorerItem;
 
-class EngramExplorerItemViewHolder extends ExplorerItemViewHolder {
+public class EngramExplorerItemViewHolder extends DescriptiveExplorerItemViewHolder {
     private final AppCompatImageButton favoriteButton;
 
-    EngramExplorerItemViewHolder(@NonNull View itemView) {
+    public EngramExplorerItemViewHolder(@NonNull View itemView) {
         super(itemView);
         favoriteButton = itemView.findViewById(R.id.favoriteButton);
     }
 
-    void bind(FragmentActivity activity, EngramExplorerItem explorerItem, ExplorerViewModel explorerViewModel) {
-        super.bind(activity, explorerItem, explorerViewModel);
+    @Override
+    protected void setupViewModel(FragmentActivity activity) {
+        super.setupViewModel(activity);
 
-        explorerViewModel.getGameEntityLiveData().observe(activity, gameEntity -> {
+        getExplorerViewModel().getGameEntityLiveData().observe(activity, gameEntity -> {
             if (gameEntity.getFolderFile() == null)
                 favoriteButton.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
             else
                 favoriteButton.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_favorite_border_24));
+        });
+
+        getExplorerViewModel().fetchEngram(getExplorerItem().getSourceId()).observe(activity, engramEntity -> {
+            if (engramEntity != null) {
+                setDescriptionText(engramEntity.getDescription());
+            } else {
+                setDescriptionText("EngramEntity is null: " + getExplorerItem().getSourceId());
+            }
         });
     }
 }

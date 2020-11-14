@@ -32,11 +32,7 @@ import arc.resource.calculator.R;
 
 public class FavoritesFragment extends Fragment {
 
-    private FavoritesViewModel mViewModel;
-
-    public static FavoritesFragment newInstance() {
-        return new FavoritesFragment();
-    }
+    private FavoritesViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -47,7 +43,7 @@ public class FavoritesFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         // TODO: Use the ViewModel
     }
 

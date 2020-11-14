@@ -15,13 +15,14 @@ public class ExplorerLayoutManager extends GridLayoutManager {
         setupViewModel(fragment.getActivity());
     }
 
+    // TODO: 11/14/2020 Listen for changes from Grid to List per User
     private void setupViewModel(FragmentActivity activity) {
-        viewModel.getDirectorySnapshot().observe(activity, directorySnapshot -> {
-            if (directorySnapshot.hasParent()) {
-                setSpanCount(SPAN_COUNT_CHILD);
-            } else {
-                setSpanCount(SPAN_COUNT_ROOT);
-            }
-        });
+//        viewModel.getDirectorySnapshot().observe(activity, directorySnapshot -> {
+//            if (directorySnapshot.hasParent()) {
+//                setSpanCount(SPAN_COUNT_CHILD);
+//            } else {
+//                setSpanCount(SPAN_COUNT_ROOT);
+//            }
+//        });
     }
 }

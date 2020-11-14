@@ -16,16 +16,16 @@
 
 package arc.resource.calculator.ui.explorer.model;
 
+import static arc.resource.calculator.util.Constants.cBackFolderViewType;
+
 public class BackFolderExplorerItem extends ExplorerItem {
     private BackFolderExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
         super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
     }
 
     public static BackFolderExplorerItem fromExplorerItem(ExplorerItem explorerItem) {
-        String imageFile = "back_folder.webp";  // TODO: 5/30/2020 pull folder image data from GameDetails object
-        int viewType = -1;  // TODO: 5/30/2020 establish constants for viewTypes
         return new BackFolderExplorerItem(explorerItem.getUuid(), explorerItem.getTitle(),
-                imageFile, viewType, explorerItem.getSourceId(), explorerItem.getParentId(),
+                null, cBackFolderViewType, explorerItem.getSourceId(), explorerItem.getParentId(),
                 explorerItem.getGameId());
     }
 }

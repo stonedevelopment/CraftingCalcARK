@@ -31,6 +31,10 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+import arc.resource.calculator.ui.explorer.view.BackFolderExplorerItemViewHolder;
+import arc.resource.calculator.ui.explorer.view.EngramExplorerItemViewHolder;
+import arc.resource.calculator.ui.explorer.view.ExplorerItemViewHolder;
+import arc.resource.calculator.ui.explorer.view.FolderExplorerItemViewHolder;
 
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 import static arc.resource.calculator.util.Constants.cEngramViewType;
@@ -42,7 +46,6 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
     private final LayoutInflater layoutInflater;
     private final FragmentActivity fragmentActivity;
     private final List<ExplorerItem> itemList = new ArrayList<>();
-    private String filePath;
 
     ExplorerItemAdapter(ExplorerFragment fragment, ExplorerViewModel viewModel) {
         super();
@@ -54,8 +57,6 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
     }
 
     private void setupViewModel() {
-        viewModel.getGameEntityLiveData().observe(fragmentActivity,
-                gameEntity -> filePath = gameEntity.getFilePath());
         viewModel.getDirectorySnapshot().observe(fragmentActivity,
                 this::mapDirectorySnapshot);
     }
@@ -68,8 +69,12 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
         if (viewType == cEngramViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_engram, parent, false);
             return new EngramExplorerItemViewHolder(itemView);
-        } else if (viewType == cFolderViewType || viewType == cBackFolderViewType) {
+        } else if (viewType == cBackFolderViewType) {
+            itemView = layoutInflater.inflate(R.layout.explorer_item_back_folder, parent, false);
+            return new BackFolderExplorerItemViewHolder(itemView);
+        } else if (viewType == cFolderViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
+            return new FolderExplorerItemViewHolder(itemView);
         } else if (viewType == cStationViewType) {
             itemView = layoutInflater.inflate(R.layout.explorer_item_station, parent, false);
         } else {
@@ -81,7 +86,7 @@ public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ExplorerItemViewHolder holder, int position) {
-        holder.bind(fragmentActivity, itemList.get(position), viewModel);
+        holder.bind(fragmentActivity, itemList.get(position));
     }
 
     @Override

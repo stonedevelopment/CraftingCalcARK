@@ -27,7 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -39,7 +38,6 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.listeners.ExceptionObservable;
 import arc.resource.calculator.ui.detail.DetailFragment;
-import arc.resource.calculator.ui.main.MainViewModel;
 
 import static android.app.Activity.RESULT_OK;
 import static arc.resource.calculator.DetailActivity.ADD;
@@ -87,7 +85,7 @@ public class ExplorerFragment extends Fragment implements ExceptionObservable.Ob
 
     private void setupViewModel() {
         viewModel = new ViewModelProvider(requireActivity()).get(ExplorerViewModel.class);
-        viewModel.injectMainViewModel(this, new ViewModelProvider(this).get(MainViewModel.class));
+        viewModel.injectViewModels(requireActivity());
         viewModel.getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
         viewModel.getLoadingEvent().observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading) showLoading();
