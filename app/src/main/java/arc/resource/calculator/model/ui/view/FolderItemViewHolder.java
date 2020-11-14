@@ -14,20 +14,19 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.view;
+package arc.resource.calculator.model.ui.view;
 
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
-public class FolderExplorerItemViewHolder extends ExplorerItemViewHolder {
-    public FolderExplorerItemViewHolder(@NonNull View itemView) {
+public class FolderItemViewHolder extends InteractiveItemViewHolder {
+    public FolderItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
     @Override
-    protected void setupViewModel(FragmentActivity activity) {
-        // do nothing
+    protected void loadImage(String imagePath) {
+        //  do nothing
     }
 }

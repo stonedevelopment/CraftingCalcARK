@@ -40,7 +40,7 @@ public class DirectorySnapshot {
         return directory;
     }
 
-    boolean hasParent() {
+    public boolean hasParent() {
         return parent != null;
     }
 }

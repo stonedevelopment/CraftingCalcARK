@@ -16,100 +16,80 @@
 
 package arc.resource.calculator.ui.explorer;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
+import arc.resource.calculator.model.ui.InteractiveAdapter;
+import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
-import arc.resource.calculator.ui.explorer.view.BackFolderExplorerItemViewHolder;
-import arc.resource.calculator.ui.explorer.view.EngramExplorerItemViewHolder;
-import arc.resource.calculator.ui.explorer.view.ExplorerItemViewHolder;
-import arc.resource.calculator.ui.explorer.view.FolderExplorerItemViewHolder;
+import arc.resource.calculator.ui.explorer.view.ExplorerBackFolderItemViewHolder;
+import arc.resource.calculator.ui.explorer.view.ExplorerEngramItemViewHolder;
+import arc.resource.calculator.ui.explorer.view.ExplorerFolderItemViewHolder;
+import arc.resource.calculator.ui.explorer.view.ExplorerStationItemViewHolder;
 
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
-import static arc.resource.calculator.util.Constants.cEngramViewType;
-import static arc.resource.calculator.util.Constants.cFolderViewType;
-import static arc.resource.calculator.util.Constants.cStationViewType;
 
-public class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemViewHolder> {
-    private final ExplorerViewModel viewModel;
-    private final LayoutInflater layoutInflater;
-    private final FragmentActivity fragmentActivity;
-    private final List<ExplorerItem> itemList = new ArrayList<>();
-
-    ExplorerItemAdapter(ExplorerFragment fragment, ExplorerViewModel viewModel) {
-        super();
-        this.layoutInflater = LayoutInflater.from(fragment.getContext());
-        this.fragmentActivity = fragment.requireActivity();
-        this.viewModel = viewModel;
-
-        setupViewModel();
-    }
-
-    private void setupViewModel() {
-        viewModel.getDirectorySnapshot().observe(fragmentActivity,
-                this::mapDirectorySnapshot);
+public class ExplorerItemAdapter extends InteractiveAdapter {
+    protected ExplorerItemAdapter(ExplorerFragment fragment, ExplorerViewModel viewModel) {
+        super(fragment, viewModel);
     }
 
     @NonNull
     @Override
-    public ExplorerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
+    public InteractiveItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (viewType == cEngramViewType) {
-            itemView = layoutInflater.inflate(R.layout.explorer_item_engram, parent, false);
-            return new EngramExplorerItemViewHolder(itemView);
-        } else if (viewType == cBackFolderViewType) {
-            itemView = layoutInflater.inflate(R.layout.explorer_item_back_folder, parent, false);
-            return new BackFolderExplorerItemViewHolder(itemView);
-        } else if (viewType == cFolderViewType) {
-            itemView = layoutInflater.inflate(R.layout.explorer_item_folder, parent, false);
-            return new FolderExplorerItemViewHolder(itemView);
-        } else if (viewType == cStationViewType) {
-            itemView = layoutInflater.inflate(R.layout.explorer_item_station, parent, false);
-        } else {
-            itemView = layoutInflater.inflate(R.layout.explorer_item_error, parent, false);
+        View itemView;
+        if (viewType == cBackFolderViewType) {
+            itemView = getLayoutInflater().inflate(R.layout.columnized_item_back_folder, parent, false);
+            return new ExplorerBackFolderItemViewHolder(itemView);
         }
 
-        return new ExplorerItemViewHolder(itemView);
+        return super.onCreateViewHolder(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExplorerItemViewHolder holder, int position) {
-        holder.bind(fragmentActivity, itemList.get(position));
+    protected ExplorerEngramItemViewHolder createEngramItemViewHolder(View itemView) {
+        return new ExplorerEngramItemViewHolder(itemView);
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return getItem(position).getViewType();
+    protected ExplorerFolderItemViewHolder createFolderItemViewHolder(View itemView) {
+        return new ExplorerFolderItemViewHolder(itemView);
     }
 
     @Override
-    public int getItemCount() {
-        return itemList.size();
+    protected ExplorerStationItemViewHolder createStationItemViewHolder(View itemView) {
+        return new ExplorerStationItemViewHolder(itemView);
     }
 
-    private ExplorerItem getItem(int position) {
-        return itemList.get(position);
+    @Override
+    public ExplorerViewModel getViewModel() {
+        return (ExplorerViewModel) super.getViewModel();
+    }
+
+    @Override
+    protected void setupViewModel() {
+        super.setupViewModel();
+        getViewModel().getDirectorySnapshot().observe(getActivity(), this::mapDirectorySnapshot);
+    }
+
+    @Override
+    protected ExplorerItem getItem(int position) {
+        return (ExplorerItem) getItemList().get(position);
     }
 
     private void mapDirectorySnapshot(DirectorySnapshot directorySnapshot) {
-        itemList.clear();
+        clearItemList();
         if (directorySnapshot.hasParent()) {
-            itemList.add(BackFolderExplorerItem.fromExplorerItem(directorySnapshot.getParent()));
+            addToItemList(BackFolderExplorerItem.fromExplorerItem(directorySnapshot.getParent()));
         }
         for (DirectoryItemEntity entity : directorySnapshot.getDirectory()) {
-            itemList.add(ExplorerItem.fromDirectoryEntity(entity));
+            addToItemList(ExplorerItem.fromDirectoryEntity(entity));
         }
         notifyDataSetChanged();
     }

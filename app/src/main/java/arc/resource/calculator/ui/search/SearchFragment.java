@@ -75,9 +75,9 @@ public class SearchFragment extends Fragment {
 
     private View initViews(View rootView) {
         searchView = rootView.findViewById(R.id.searchView);
-        recyclerView = rootView.findViewById(R.id.searchRecyclerView);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
         searchResultsTextView = rootView.findViewById(R.id.searchResultsTextView);
-        progressBar = rootView.findViewById(R.id.searchProgressBar);
+        progressBar = rootView.findViewById(R.id.progressBar);
 
         return rootView;
     }
@@ -144,6 +144,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void showSnackBar(String message) {
-        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.searchCoordinatorLayout), message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(R.id.coordinatorLayout), message, Snackbar.LENGTH_SHORT).show();
     }
 }

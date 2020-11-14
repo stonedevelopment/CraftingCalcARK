@@ -17,24 +17,11 @@
 package arc.resource.calculator.ui.explorer.model;
 
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
+import arc.resource.calculator.model.ui.InteractiveItem;
 
-public class ExplorerItem {
-    private final String uuid;
-    private final String title;
-    private final String imageFile;
-    private final int viewType;
-    private final String sourceId;
-    private final String parentId;
-    private final String gameId;
-
+public class ExplorerItem extends InteractiveItem {
     ExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
-        this.uuid = uuid;
-        this.title = title;
-        this.imageFile = imageFile;
-        this.viewType = viewType;
-        this.sourceId = sourceId;
-        this.parentId = parentId;
-        this.gameId = gameId;
+        super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
     }
 
     public static ExplorerItem fromDirectoryEntity(DirectoryItemEntity entity) {
@@ -46,46 +33,5 @@ public class ExplorerItem {
         String parentId = entity.getParentId();
         String gameId = entity.getGameId();
         return new ExplorerItem(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getImageFile() {
-        return imageFile;
-    }
-
-    public String getSourceId() {
-        return sourceId;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public int getViewType() {
-        return viewType;
-    }
-
-    public String getGameId() {
-        return gameId;
-    }
-
-    @Override
-    public String toString() {
-        return "ExplorerItem{" +
-                "uuid='" + uuid + '\'' +
-                ", title='" + title + '\'' +
-                ", imageFile='" + imageFile + '\'' +
-                ", viewType=" + viewType +
-                ", sourceId='" + sourceId + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", gameId='" + gameId + '\'' +
-                '}';
     }
 }

@@ -21,21 +21,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 import java.util.Stack;
 
-import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
-import arc.resource.calculator.model.InteractiveViewModel;
 import arc.resource.calculator.model.SingleLiveEvent;
+import arc.resource.calculator.model.ui.InteractiveViewModel;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
-import arc.resource.calculator.ui.main.MainViewModel;
 
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
@@ -48,7 +44,6 @@ public class ExplorerViewModel extends InteractiveViewModel {
     private final Stack<ExplorerItem> historyStack = new Stack<>();
     private final LiveData<DirectorySnapshot> directorySnapshot;
 
-    private LiveData<GameEntity> gameEntityLiveData;
     private SingleLiveEvent<String> parentIdSingleLiveEvent = new SingleLiveEvent<>();
 
     public ExplorerViewModel(@NonNull Application application) {
@@ -57,10 +52,9 @@ public class ExplorerViewModel extends InteractiveViewModel {
         directorySnapshot = transformDirectoryListToSnapshot();
     }
 
-    void injectViewModels(FragmentActivity fragment) {
-        MainViewModel mainViewModel = new ViewModelProvider(fragment).get(MainViewModel.class);
-        gameEntityLiveData = mainViewModel.getGameEntityEvent();
-        gameEntityLiveData.observe(fragment, gameEntity -> fetchDirectory());
+    @Override
+    public void handleGameEntityLiveData() {
+        fetchDirectory();
     }
 
     LiveData<DirectorySnapshot> getDirectorySnapshot() {
@@ -92,11 +86,7 @@ public class ExplorerViewModel extends InteractiveViewModel {
         return historyStack.get(size - 3);
     }
 
-    public LiveData<GameEntity> getGameEntityLiveData() {
-        return gameEntityLiveData;
-    }
-
-    void updateParentId(String parentId) {
+    private void updateParentId(String parentId) {
         parentIdSingleLiveEvent.setValue(parentId);
     }
 

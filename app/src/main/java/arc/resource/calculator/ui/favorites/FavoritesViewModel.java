@@ -16,8 +16,19 @@
 
 package arc.resource.calculator.ui.favorites;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class FavoritesViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+import androidx.annotation.NonNull;
+
+import arc.resource.calculator.model.ui.InteractiveViewModel;
+
+public class FavoritesViewModel extends InteractiveViewModel {
+    public FavoritesViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    @Override
+    public void handleGameEntityLiveData() {
+        super.handleGameEntityLiveData();
+    }
 }

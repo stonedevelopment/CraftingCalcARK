@@ -32,7 +32,7 @@ import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
-import arc.resource.calculator.model.InteractiveViewModel;
+import arc.resource.calculator.model.ui.InteractiveViewModel;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.ui.search.model.SearchItem;
 

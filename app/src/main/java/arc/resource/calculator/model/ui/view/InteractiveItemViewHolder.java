@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer.view;
+package arc.resource.calculator.model.ui.view;
 
 import android.content.Context;
 import android.view.View;
@@ -22,7 +22,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -30,8 +29,9 @@ import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.ui.explorer.ExplorerViewModel;
-import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+import arc.resource.calculator.db.entity.GameEntity;
+import arc.resource.calculator.model.ui.InteractiveItem;
+import arc.resource.calculator.model.ui.InteractiveViewModel;
 
 import static arc.resource.calculator.util.Constants.cAssetsFilePath;
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
@@ -39,8 +39,8 @@ import static arc.resource.calculator.util.Constants.cEngramViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
 import static arc.resource.calculator.util.Constants.cStationViewType;
 
-public class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
-    public static final String TAG = ExplorerItemViewHolder.class.getSimpleName();
+public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
+    public static final String TAG = InteractiveItemViewHolder.class.getSimpleName();
 
     private final Picasso picasso;
     private final MaterialCardView cardView;
@@ -48,10 +48,10 @@ public class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
     private final MaterialTextView viewTypeTextView;
     private final MaterialTextView titleTextView;
 
-    private ExplorerViewModel explorerViewModel;
-    private ExplorerItem explorerItem;
+    private InteractiveViewModel viewModel;
+    private InteractiveItem item;
 
-    public ExplorerItemViewHolder(@NonNull View itemView) {
+    public InteractiveItemViewHolder(@NonNull View itemView) {
         super(itemView);
         picasso = Picasso.with(itemView.getContext());
         cardView = itemView.findViewById(R.id.cardView);
@@ -60,20 +60,20 @@ public class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
         viewTypeTextView = itemView.findViewById(R.id.viewType);
     }
 
-    public ExplorerItem getExplorerItem() {
-        return explorerItem;
+    public InteractiveViewModel getViewModel() {
+        return viewModel;
     }
 
-    protected void setExplorerItem(ExplorerItem explorerItem) {
-        this.explorerItem = explorerItem;
+    protected void setViewModel(InteractiveViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
-    public ExplorerViewModel getExplorerViewModel() {
-        return explorerViewModel;
+    public InteractiveItem getItem() {
+        return item;
     }
 
-    protected void setExplorerViewModel(ExplorerViewModel explorerViewModel) {
-        this.explorerViewModel = explorerViewModel;
+    public void setItem(InteractiveItem item) {
+        this.item = item;
     }
 
     public Picasso getPicasso() {
@@ -84,13 +84,17 @@ public class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
         return thumbnailImageView;
     }
 
+    public MaterialTextView getViewTypeTextView() {
+        return viewTypeTextView;
+    }
+
     public MaterialTextView getTitleTextView() {
         return titleTextView;
     }
 
-    public void bind(FragmentActivity activity, ExplorerItem explorerItem) {
-        setExplorerItem(explorerItem);
-        setExplorerViewModel(new ViewModelProvider(activity).get(ExplorerViewModel.class));
+    public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
+        setItem(item);
+        setViewModel(viewModel);
         setupViewModel(activity);
 
         setupViewTypeTextView(activity);
@@ -99,25 +103,33 @@ public class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     protected void setupViewModel(FragmentActivity activity) {
-        getExplorerViewModel().getGameEntityLiveData().observe(activity, gameEntity -> {
-            String filePath = gameEntity.getFilePath();
-            String imagePath = cAssetsFilePath + filePath + getExplorerItem().getImageFile();
-            picasso.load(imagePath).into(thumbnailImageView);
-        });
+        getViewModel().getGameEntityLiveData().observe(activity, this::handleGameEntityLiveData);
+    }
+
+    private void handleGameEntityLiveData(GameEntity gameEntity) {
+        String filePath = gameEntity.getFilePath();
+        String imagePath = cAssetsFilePath + filePath + getItem().getImageFile();
+        loadImage(imagePath);
+    }
+
+    protected void loadImage(String imagePath) {
+        getPicasso().load(imagePath).into(getThumbnailImageView());
     }
 
     protected void setupViewTypeTextView(Context context) {
-        viewTypeTextView.setText(getViewTypeText(context, getExplorerItem().getViewType()));
+        getViewTypeTextView().setText(getViewTypeText(context, getItem().getViewType()));
     }
 
     protected void setupTitleTextView() {
-        titleTextView.setText(getExplorerItem().getTitle());
+        getTitleTextView().setText(getItem().getTitle());
     }
 
     protected void setupCardView() {
-        cardView.setOnClickListener(v -> {
-            getExplorerViewModel().handleOnClickEvent(getExplorerItem());
-        });
+        cardView.setOnClickListener(v -> handleOnClickEvent());
+    }
+
+    protected void handleOnClickEvent() {
+        //  do nothing
     }
 
     protected String getViewTypeText(Context context, int viewType) {
@@ -134,4 +146,5 @@ public class ExplorerItemViewHolder extends RecyclerView.ViewHolder {
                 return context.getString(R.string.search_item_view_type_text_error);
         }
     }
+
 }

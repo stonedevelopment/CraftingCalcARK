@@ -21,14 +21,26 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
-import arc.resource.calculator.R;
-import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+import java.util.Objects;
 
-public class BackFolderExplorerItemViewHolder extends DescriptiveExplorerItemViewHolder {
-    public BackFolderExplorerItemViewHolder(@NonNull View itemView) {
+import arc.resource.calculator.R;
+import arc.resource.calculator.model.ui.view.DescriptiveInteractiveItemViewHolder;
+import arc.resource.calculator.ui.explorer.ExplorerViewModel;
+import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
+
+public class ExplorerBackFolderItemViewHolder extends DescriptiveInteractiveItemViewHolder {
+    public ExplorerBackFolderItemViewHolder(@NonNull View itemView) {
         super(itemView);
-//        int imagePath = R.drawable.ic_baseline_reply_256;
-//        getPicasso().load(imagePath).into(getThumbnailImageView());
+    }
+
+    @Override
+    public BackFolderExplorerItem getItem() {
+        return (BackFolderExplorerItem) super.getItem();
+    }
+
+    @Override
+    public ExplorerViewModel getViewModel() {
+        return (ExplorerViewModel) super.getViewModel();
     }
 
     @Override
@@ -37,11 +49,11 @@ public class BackFolderExplorerItemViewHolder extends DescriptiveExplorerItemVie
         String parentOfParentTitle = "";
         String descriptionText = "";
 
-        if (getExplorerViewModel().hasParentExplorerItem()) {
-            parentTitle = getExplorerViewModel().getParentExplorerItem().getTitle();
+        if (getViewModel().hasParentExplorerItem()) {
+            parentTitle = Objects.requireNonNull(getViewModel().getParentExplorerItem()).getTitle();
 
-            if (getExplorerViewModel().hasParentOfParentExplorerItem()) {
-                parentOfParentTitle = getExplorerViewModel().getParentOfParentExplorerItem().getTitle();
+            if (getViewModel().hasParentOfParentExplorerItem()) {
+                parentOfParentTitle = Objects.requireNonNull(getViewModel().getParentOfParentExplorerItem()).getTitle();
                 descriptionText = activity.getString(R.string.explorer_item_back_folder_back_to_2_string_format,
                         parentOfParentTitle, parentTitle);
             } else {
@@ -58,7 +70,12 @@ public class BackFolderExplorerItemViewHolder extends DescriptiveExplorerItemVie
     }
 
     @Override
-    public void bind(FragmentActivity activity, ExplorerItem explorerItem) {
-        super.bind(activity, explorerItem);
+    protected void loadImage(String imagePath) {
+        //  do nothing
+    }
+
+    @Override
+    protected void handleOnClickEvent() {
+        getViewModel().handleOnClickEvent(getItem());
     }
 }
