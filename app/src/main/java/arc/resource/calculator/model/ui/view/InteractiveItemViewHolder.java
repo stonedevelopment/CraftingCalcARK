@@ -16,7 +16,6 @@
 
 package arc.resource.calculator.model.ui.view;
 
-import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -34,10 +33,6 @@ import arc.resource.calculator.model.ui.InteractiveItem;
 import arc.resource.calculator.model.ui.InteractiveViewModel;
 
 import static arc.resource.calculator.util.Constants.cAssetsFilePath;
-import static arc.resource.calculator.util.Constants.cBackFolderViewType;
-import static arc.resource.calculator.util.Constants.cEngramViewType;
-import static arc.resource.calculator.util.Constants.cFolderViewType;
-import static arc.resource.calculator.util.Constants.cStationViewType;
 
 public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
     public static final String TAG = InteractiveItemViewHolder.class.getSimpleName();
@@ -45,7 +40,6 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
     private final Picasso picasso;
     private final MaterialCardView cardView;
     private final AppCompatImageView thumbnailImageView;
-    private final MaterialTextView viewTypeTextView;
     private final MaterialTextView titleTextView;
 
     private InteractiveViewModel viewModel;
@@ -57,7 +51,6 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
         cardView = itemView.findViewById(R.id.cardView);
         thumbnailImageView = itemView.findViewById(R.id.thumbnail);
         titleTextView = itemView.findViewById(R.id.title);
-        viewTypeTextView = itemView.findViewById(R.id.viewType);
     }
 
     public InteractiveViewModel getViewModel() {
@@ -84,10 +77,6 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
         return thumbnailImageView;
     }
 
-    public MaterialTextView getViewTypeTextView() {
-        return viewTypeTextView;
-    }
-
     public MaterialTextView getTitleTextView() {
         return titleTextView;
     }
@@ -97,7 +86,6 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
         setViewModel(viewModel);
         setupViewModel(activity);
 
-        setupViewTypeTextView(activity);
         setupTitleTextView();
         setupCardView();
     }
@@ -116,10 +104,6 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
         getPicasso().load(imagePath).into(getThumbnailImageView());
     }
 
-    protected void setupViewTypeTextView(Context context) {
-        getViewTypeTextView().setText(getViewTypeText(context, getItem().getViewType()));
-    }
-
     protected void setupTitleTextView() {
         getTitleTextView().setText(getItem().getTitle());
     }
@@ -131,20 +115,4 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
     protected void handleOnClickEvent() {
         //  do nothing
     }
-
-    protected String getViewTypeText(Context context, int viewType) {
-        switch (viewType) {
-            case cEngramViewType:
-                return context.getString(R.string.search_item_view_type_text_engram);
-            case cFolderViewType:
-                return context.getString(R.string.search_item_view_type_text_folder);
-            case cBackFolderViewType:
-                return "";
-            case cStationViewType:
-                return context.getString(R.string.search_item_view_type_text_station);
-            default:
-                return context.getString(R.string.search_item_view_type_text_error);
-        }
-    }
-
 }

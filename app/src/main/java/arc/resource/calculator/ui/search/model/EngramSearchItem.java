@@ -12,7 +12,6 @@ public class EngramSearchItem extends SearchItem {
         this.quantity = quantity;
     }
 
-
     public static EngramSearchItem fromEntity(EngramEntity entity) {
         String uuid = entity.getUuid();
         String title = entity.getName();

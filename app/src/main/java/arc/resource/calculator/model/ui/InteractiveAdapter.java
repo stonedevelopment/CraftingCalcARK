@@ -16,6 +16,7 @@
 
 package arc.resource.calculator.model.ui;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ import static arc.resource.calculator.util.Constants.cFolderViewType;
 import static arc.resource.calculator.util.Constants.cStationViewType;
 
 public class InteractiveAdapter extends RecyclerView.Adapter<InteractiveItemViewHolder> {
+    public static final String TAG = InteractiveAdapter.class.getCanonicalName();
+
     private final InteractiveViewModel viewModel;
     private final LayoutInflater layoutInflater;
     private final FragmentActivity fragmentActivity;
@@ -60,8 +63,9 @@ public class InteractiveAdapter extends RecyclerView.Adapter<InteractiveItemView
     @NonNull
     @Override
     public InteractiveItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
+        Log.d(TAG, "onCreateViewHolder: " + viewType);
 
+        View itemView;
         if (viewType == cEngramViewType) {
             itemView = layoutInflater.inflate(R.layout.columnized_item_engram, parent, false);
             return createEngramItemViewHolder(itemView);
@@ -119,6 +123,10 @@ public class InteractiveAdapter extends RecyclerView.Adapter<InteractiveItemView
 
     protected void addToItemList(InteractiveItem item) {
         itemList.add(item);
+    }
+
+    protected void addToItemList(List<InteractiveItem> itemList) {
+        this.itemList.addAll(itemList);
     }
 
     protected InteractiveViewModel getViewModel() {

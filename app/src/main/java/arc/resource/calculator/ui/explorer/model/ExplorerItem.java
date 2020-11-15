@@ -20,8 +20,13 @@ import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.model.ui.InteractiveItem;
 
 public class ExplorerItem extends InteractiveItem {
+    private final String parentId;
+    private final String sourceId;
+
     ExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
-        super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
+        super(uuid, title, imageFile, viewType, gameId);
+        this.parentId = parentId;
+        this.sourceId = sourceId;
     }
 
     public static ExplorerItem fromDirectoryEntity(DirectoryItemEntity entity) {
@@ -33,5 +38,13 @@ public class ExplorerItem extends InteractiveItem {
         String parentId = entity.getParentId();
         String gameId = entity.getGameId();
         return new ExplorerItem(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public String getSourceId() {
+        return sourceId;
     }
 }

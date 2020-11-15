@@ -16,92 +16,24 @@
 
 package arc.resource.calculator.ui.search;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textview.MaterialTextView;
-import com.squareup.picasso.Picasso;
+import arc.resource.calculator.model.ui.InteractiveItem;
+import arc.resource.calculator.model.ui.InteractiveViewModel;
+import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
 
-import arc.resource.calculator.R;
-import arc.resource.calculator.ui.search.model.SearchItem;
-
-import static arc.resource.calculator.util.Constants.cEngramViewType;
-import static arc.resource.calculator.util.Constants.cFolderViewType;
-import static arc.resource.calculator.util.Constants.cResourceViewType;
-import static arc.resource.calculator.util.Constants.cStationViewType;
-
-class SearchItemViewHolder extends RecyclerView.ViewHolder {
+class SearchItemViewHolder extends InteractiveItemViewHolder {
     public static final String TAG = SearchItemViewHolder.class.getSimpleName();
 
-    private final String filePath;
-
-    private final MaterialCardView cardView;
-    private final AppCompatImageView imageView;
-    private final MaterialTextView viewTypeView;
-    private final MaterialTextView titleView;
-    private final MaterialTextView descriptionView;
-
-    SearchItemViewHolder(@NonNull View itemView, String filePath) {
+    SearchItemViewHolder(@NonNull View itemView) {
         super(itemView);
-
-        this.filePath = filePath;
-        this.cardView = itemView.findViewById(R.id.cardView);
-        this.imageView = itemView.findViewById(R.id.thumbnail);
-        this.viewTypeView = itemView.findViewById(R.id.viewType);
-        this.titleView = itemView.findViewById(R.id.title);
-        this.descriptionView = itemView.findViewById(R.id.description);
     }
 
-    void bind(FragmentActivity activity, SearchItem searchItem) {
-        final String imagePath = "file:///android_asset/" + filePath + searchItem.getImageFile();
-
-        Context context = activity.getApplicationContext();
-
-        Picasso.with(context)
-                .load(imagePath)
-                .error(R.drawable.placeholder_empty)
-                .placeholder(R.drawable.placeholder_empty)
-                .into(imageView);
-
-        viewTypeView.setText(getViewTypeText(context, searchItem.getViewType()));
-        titleView.setText(searchItem.getTitle());
-        descriptionView.setText(searchItem.getDescription());
-
-        cardView.setOnClickListener(v -> {
-            Log.d(TAG, "cardView onClickListener: " + searchItem.getTitle());
-            SearchViewModel viewModel = new ViewModelProvider(activity).get(SearchViewModel.class);
-            viewModel.handleOnClickEvent(searchItem);
-        });
-    }
-
-    public MaterialTextView getViewTypeView() {
-        return viewTypeView;
-    }
-
-    public MaterialTextView getDescriptionView() {
-        return descriptionView;
-    }
-
-    private String getViewTypeText(Context context, int viewType) {
-        switch (viewType) {
-            case cStationViewType:
-                return context.getString(R.string.search_item_view_type_text_station);
-            case cEngramViewType:
-                return context.getString(R.string.search_item_view_type_text_engram);
-            case cFolderViewType:
-                return context.getString(R.string.search_item_view_type_text_folder);
-            case cResourceViewType:
-                return context.getString(R.string.search_item_view_type_text_resource);
-            default:
-                return context.getString(R.string.search_item_view_type_text_error);
-        }
+    @Override
+    public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
+        super.bind(activity, item, viewModel);
     }
 }

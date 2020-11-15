@@ -27,13 +27,12 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
 
-import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
 import arc.resource.calculator.model.SingleLiveEvent;
+import arc.resource.calculator.model.ui.InteractiveViewModel;
 import arc.resource.calculator.ui.search.model.SearchItem;
 
 public class SearchViewModel extends InteractiveViewModel {
@@ -45,7 +44,6 @@ public class SearchViewModel extends InteractiveViewModel {
     private final SingleLiveEvent<String> filterTextEvent = new SingleLiveEvent<>();
     private List<SearchItem> searchItemList = new ArrayList<>();
     private int remainingSources = 0;
-    private GameEntity gameEntity;
     private LiveData<List<EngramEntity>> engramLiveData;
     private LiveData<List<ResourceEntity>> resourceLiveData;
     private LiveData<List<StationEntity>> stationLiveData;
@@ -66,14 +64,6 @@ public class SearchViewModel extends InteractiveViewModel {
 
     MediatorLiveData<List<SearchItem>> getSearchLiveData() {
         return searchLiveData;
-    }
-
-    GameEntity getGameEntity() {
-        return gameEntity;
-    }
-
-    void setGameEntity(GameEntity gameEntity) {
-        this.gameEntity = gameEntity;
     }
 
     void handleEditTextEvent(String text) {
@@ -101,8 +91,7 @@ public class SearchViewModel extends InteractiveViewModel {
             }
 
             searchLiveData.removeSource(engramLiveData);
-            if (--remainingSources == 0)
-                searchLiveData.setValue(searchItemList);
+            if (--remainingSources == 0) endSearch();
         });
 
         searchLiveData.addSource(resourceLiveData, entities -> {
@@ -111,8 +100,7 @@ public class SearchViewModel extends InteractiveViewModel {
             }
 
             searchLiveData.removeSource(resourceLiveData);
-            if (--remainingSources == 0)
-                searchLiveData.setValue(searchItemList);
+            if (--remainingSources == 0) endSearch();
         });
 
         searchLiveData.addSource(stationLiveData, entities -> {
@@ -121,8 +109,7 @@ public class SearchViewModel extends InteractiveViewModel {
             }
 
             searchLiveData.removeSource(stationLiveData);
-            if (--remainingSources == 0)
-                searchLiveData.setValue(searchItemList);
+            if (--remainingSources == 0) endSearch();
         });
 //
 //        searchLiveData.addSource(folderLiveData, entities -> {
@@ -137,6 +124,7 @@ public class SearchViewModel extends InteractiveViewModel {
     }
 
     void endSearch() {
+        searchLiveData.setValue(searchItemList);
         setIsLoading(false);
     }
 }

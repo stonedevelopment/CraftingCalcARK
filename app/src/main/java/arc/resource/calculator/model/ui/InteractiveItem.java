@@ -21,17 +21,13 @@ public class InteractiveItem {
     private final String title;
     private final String imageFile;
     private final int viewType;
-    private final String sourceId;
-    private final String parentId;
     private final String gameId;
 
-    protected InteractiveItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
+    protected InteractiveItem(String uuid, String title, String imageFile, int viewType, String gameId) {
         this.uuid = uuid;
         this.title = title;
         this.imageFile = imageFile;
         this.viewType = viewType;
-        this.sourceId = sourceId;
-        this.parentId = parentId;
         this.gameId = gameId;
     }
 
@@ -45,14 +41,6 @@ public class InteractiveItem {
 
     public String getImageFile() {
         return imageFile;
-    }
-
-    public String getSourceId() {
-        return sourceId;
-    }
-
-    public String getParentId() {
-        return parentId;
     }
 
     public int getViewType() {
@@ -70,8 +58,6 @@ public class InteractiveItem {
                 ", title='" + title + '\'' +
                 ", imageFile='" + imageFile + '\'' +
                 ", viewType=" + viewType +
-                ", sourceId='" + sourceId + '\'' +
-                ", parentId='" + parentId + '\'' +
                 ", gameId='" + gameId + '\'' +
                 '}';
     }

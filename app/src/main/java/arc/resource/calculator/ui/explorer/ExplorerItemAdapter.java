@@ -35,6 +35,7 @@ import arc.resource.calculator.ui.explorer.view.ExplorerStationItemViewHolder;
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 
 public class ExplorerItemAdapter extends InteractiveAdapter {
+
     protected ExplorerItemAdapter(ExplorerFragment fragment, ExplorerViewModel viewModel) {
         super(fragment, viewModel);
     }
