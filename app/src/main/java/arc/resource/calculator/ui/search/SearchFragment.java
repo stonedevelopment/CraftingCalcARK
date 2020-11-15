@@ -90,15 +90,13 @@ public class SearchFragment extends InteractiveFragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
-                getViewModel().handleEditTextEvent(queryText);
+//                getViewModel().handleEditTextEvent(queryText);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String queryText) {
-                if (queryText.length() >= 3) {
-                    getViewModel().handleEditTextEvent(queryText);
-                }
+                getViewModel().handleEditTextEvent(queryText);
                 return false;
             }
         });

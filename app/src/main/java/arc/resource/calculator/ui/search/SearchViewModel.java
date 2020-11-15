@@ -67,11 +67,20 @@ public class SearchViewModel extends InteractiveViewModel {
     }
 
     void handleEditTextEvent(String text) {
-        filterTextEvent.setValue(text);
+        if (text.length() >= 1) {
+            filterTextEvent.setValue(text);
+        } else {
+            clearSearch();
+        }
     }
 
     void handleOnClickEvent(SearchItem searchItem) {
         Log.d(TAG, "handleOnClickEvent: " + searchItem.getTitle());
+    }
+
+    void clearSearch() {
+        searchItemList.clear();
+        endSearch();
     }
 
     void beginSearch(String searchText) {
