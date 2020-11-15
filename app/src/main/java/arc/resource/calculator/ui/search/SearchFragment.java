@@ -28,8 +28,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textview.MaterialTextView;
 
-import java.util.Locale;
-
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.model.ui.InteractiveAdapter;
@@ -71,14 +69,18 @@ public class SearchFragment extends InteractiveFragment {
             getViewModel().beginSearch(searchText);
         });
 
-        getViewModel().getSearchLiveData().observe(getViewLifecycleOwner(), searchResults -> {
-            if (searchResults.size() == 0) {
-                noResultsTextView.setVisibility(View.VISIBLE);
-            } else {
+        getViewModel().getClearSearchEvent().observe(getViewLifecycleOwner(), didClearSearch -> {
+            if (didClearSearch) {
                 noResultsTextView.setVisibility(View.INVISIBLE);
+                searchResultsTextView.setVisibility(View.INVISIBLE);
             }
+        });
 
-            searchResultsTextView.setText(String.format(Locale.ENGLISH, "%d result(s) found", searchResults.size()));
+        getViewModel().getTotalMatchesEvent().observe(getViewLifecycleOwner(), totalMatches -> {
+            noResultsTextView.setVisibility(totalMatches == 0 ? View.VISIBLE : View.INVISIBLE);
+
+            searchResultsTextView.setVisibility(View.VISIBLE);
+            searchResultsTextView.setText(getResources().getQuantityString(R.plurals.search_results_found, totalMatches, totalMatches));
         });
 
         super.setupViewModel();

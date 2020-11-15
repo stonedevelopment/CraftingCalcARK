@@ -65,12 +65,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            android:text="@string/search_no_matches"
             android:textAlignment="center"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
-            tools:text="No matches found" />
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progressBar"

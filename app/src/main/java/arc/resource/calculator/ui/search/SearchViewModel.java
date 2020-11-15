@@ -42,6 +42,8 @@ public class SearchViewModel extends InteractiveViewModel {
     private final SearchRepository repository;
     private final MediatorLiveData<List<SearchItem>> searchLiveData = new MediatorLiveData<>();
     private final SingleLiveEvent<String> filterTextEvent = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Integer> totalMatchesEvent = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Boolean> clearSearchEvent = new SingleLiveEvent<>();
     private List<SearchItem> searchItemList = new ArrayList<>();
     private int remainingSources = 0;
     private LiveData<List<EngramEntity>> engramLiveData;
@@ -66,6 +68,14 @@ public class SearchViewModel extends InteractiveViewModel {
         return searchLiveData;
     }
 
+    public SingleLiveEvent<Boolean> getClearSearchEvent() {
+        return clearSearchEvent;
+    }
+
+    public SingleLiveEvent<Integer> getTotalMatchesEvent() {
+        return totalMatchesEvent;
+    }
+
     void handleEditTextEvent(String text) {
         if (text.length() >= 1) {
             filterTextEvent.setValue(text);
@@ -81,6 +91,7 @@ public class SearchViewModel extends InteractiveViewModel {
     void clearSearch() {
         searchItemList.clear();
         endSearch();
+        clearSearchEvent.setValue(true);
     }
 
     void beginSearch(String searchText) {
@@ -133,7 +144,8 @@ public class SearchViewModel extends InteractiveViewModel {
     }
 
     void endSearch() {
-        searchLiveData.setValue(searchItemList);
+        getSearchLiveData().setValue(searchItemList);
+        getTotalMatchesEvent().setValue(searchItemList.size());
         setIsLoading(false);
     }
 }
