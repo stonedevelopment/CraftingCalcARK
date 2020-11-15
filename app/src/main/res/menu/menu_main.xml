@@ -1,56 +1,51 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  tools:context=".ui.main.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.main.MainActivity">
 
-  <group
-    android:id="@+id/group_settings">
-    <item
-      android:id="@+id/action_settings"
-      android:title="@string/action_title_settings"
-      app:showAsAction="never"/>
-  </group>
+    <group android:id="@+id/group_settings">
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_title_settings"
+            app:showAsAction="never" />
+    </group>
 
-  <group
-    android:id="@+id/group_show_dialogs">
-    <item
-      android:id="@+id/action_show_tutorial"
-      android:title="@string/action_title_help"
-      app:showAsAction="never"/>
+    <group android:id="@+id/group_show_dialogs">
+        <item
+            android:id="@+id/action_show_tutorial"
+            android:title="@string/action_title_help"
+            app:showAsAction="never" />
 
-    <item
-      android:id="@+id/action_show_changelog"
-      android:title="@string/action_title_changelog"
-      app:showAsAction="never"/>
-  </group>
+        <item
+            android:id="@+id/action_show_changelog"
+            android:title="@string/action_title_changelog"
+            app:showAsAction="never" />
+    </group>
 
-  <group
-    android:id="@+id/group_feedback">
-    <item
-      android:id="@+id/action_feedback_bug_report"
-      android:title="@string/action_title_feedback_bug_report"
-      app:showAsAction="never"/>
+    <group android:id="@+id/group_feedback">
+        <item
+            android:id="@+id/action_feedback_bug_report"
+            android:title="@string/action_title_feedback_bug_report"
+            app:showAsAction="never" />
 
-    <item
-      android:id="@+id/action_feedback"
-      android:title="@string/action_title_feedback"
-      app:showAsAction="never"/>
-  </group>
+        <item
+            android:id="@+id/action_feedback"
+            android:title="@string/action_title_feedback"
+            app:showAsAction="never" />
+    </group>
 
-  <group
-    android:id="@+id/group_about">
-    <item
-      android:id="@+id/action_about"
-      android:title="@string/action_title_about"
-      app:showAsAction="never"/>
-  </group>
+    <group android:id="@+id/group_about">
+        <item
+            android:id="@+id/action_about"
+            android:title="@string/action_title_about"
+            app:showAsAction="never" />
+    </group>
 
-  <group
-    android:id="@+id/group_purchase">
-    <item
-      android:id="@+id/action_remove_ads"
-      android:title="@string/action_title_remove_ads"
-      app:showAsAction="never"/>
-  </group>
+    <group android:id="@+id/group_purchase">
+        <item
+            android:id="@+id/action_remove_ads"
+            android:title="@string/action_title_remove_ads"
+            app:showAsAction="never" />
+    </group>
 
 </menu>
