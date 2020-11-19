@@ -25,11 +25,13 @@ import java.util.List;
 
 import arc.resource.calculator.db.entity.GameEntity;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface GameDao {
     String tableName = "games";
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(GameEntity entity);
 
     @Query("delete from games")

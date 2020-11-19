@@ -25,11 +25,13 @@ import java.util.List;
 
 import arc.resource.calculator.db.entity.primary.CompositionEntity;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface CompositionDao {
     String tableName = "compositions";
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(CompositionEntity entity);
 
     @Query("delete from compositions")

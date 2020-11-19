@@ -25,11 +25,13 @@ import java.util.List;
 
 import arc.resource.calculator.db.entity.dlc.DlcFolderEntity;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface DlcFolderDao {
     String tableName = "dlc_folders";
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(DlcFolderEntity entity);
 
     @Query("delete from dlc_folders")

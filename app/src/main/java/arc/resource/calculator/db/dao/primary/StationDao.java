@@ -26,11 +26,13 @@ import java.util.List;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface StationDao {
     String tableName = "stations";
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(StationEntity entity);
 
     @Query("delete from stations")

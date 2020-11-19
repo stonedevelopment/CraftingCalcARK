@@ -92,7 +92,6 @@ public class SearchFragment extends InteractiveFragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
-//                getViewModel().handleEditTextEvent(queryText);
                 return false;
             }
 
@@ -111,8 +110,5 @@ public class SearchFragment extends InteractiveFragment {
     @Override
     protected void setupViews(InteractiveAdapter adapter, InteractiveLayoutManager layoutManager) {
         super.setupViews(adapter, layoutManager);
-    }
-
-    private void setupViewModel(GameEntity gameEntity) {
     }
 }

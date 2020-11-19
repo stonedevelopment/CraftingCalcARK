@@ -25,11 +25,13 @@ import java.util.List;
 
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface DirectoryDao {
     String tableName = "directory";
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(DirectoryItemEntity entity);
 
     @Query("delete from directory")

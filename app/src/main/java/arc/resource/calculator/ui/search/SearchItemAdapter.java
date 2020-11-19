@@ -75,7 +75,6 @@ public class SearchItemAdapter extends InteractiveAdapter {
     protected void setupViewModel() {
         super.setupViewModel();
         getViewModel().getSearchLiveData().observe(getActivity(), this::handleSearchResults);
-        // TODO: 11/15/2020 add in observers from view model here
     }
 
     @Override

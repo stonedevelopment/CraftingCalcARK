@@ -26,12 +26,13 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
+import arc.resource.calculator.db.entity.DlcEntity;
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.CompositeEntity;
 import arc.resource.calculator.db.entity.primary.CompositionEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
-import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.ui.load.check_version.versioning.PrimaryVersioning;
@@ -111,7 +112,7 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
                 if (isPrimary(versioning)) {
                     updatePrimary(versioning);
                 } else {
-                    //  updateDlc(versioning);
+                    updateDlc(versioning);
                 }
             }
         } catch (IOException e) {
@@ -128,10 +129,69 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
         JsonNode inNode = JsonUtil.parseUpdatifiedFile(getContext(), versioning);
 
         //  clear database for fresh data
-        database.clearAllTables();
+        database.gameDao().deleteAll();
+        database.resourceDao().deleteAll();
+        database.stationDao().deleteAll();
+        database.folderDao().deleteAll();
+        database.engramDao().deleteAll();
+        database.compositionDao().deleteAll();
+        database.compositeDao().deleteAll();
+        database.directoryDao().deleteAll();
 
-        //  insert game object
+        //  insert game objects
         database.gameDao().insert(GameEntity.fromJson(inNode.get(cDetails)));
+
+        JsonNode resources = inNode.get(cResources);
+        for (JsonNode node : resources) {
+            database.resourceDao().insert(ResourceEntity.fromJson(node));
+        }
+
+        JsonNode stations = inNode.get(cStations);
+        for (JsonNode node : stations) {
+            database.stationDao().insert(StationEntity.fromJson(node));
+        }
+
+        JsonNode folders = inNode.get(cFolders);
+        for (JsonNode node : folders) {
+            database.folderDao().insert(FolderEntity.fromJson(node));
+        }
+
+        JsonNode engrams = inNode.get(cEngrams);
+        for (JsonNode node : engrams) {
+            database.engramDao().insert(EngramEntity.fromJson(node));
+        }
+
+        JsonNode compositions = inNode.get(cComposition);
+        for (JsonNode node : compositions) {
+            database.compositionDao().insert(CompositionEntity.fromJson(node));
+        }
+
+        JsonNode composites = inNode.get(cComposites);
+        for (JsonNode node : composites) {
+            database.compositeDao().insert(CompositeEntity.fromJson(node));
+        }
+
+        JsonNode directory = inNode.get(cDirectory);
+        for (JsonNode node : directory) {
+            database.directoryDao().insert(DirectoryItemEntity.fromJson(node));
+        }
+    }
+
+    private void updateDlc(Versioning versioning) throws IOException {
+        JsonNode inNode = JsonUtil.parseUpdatifiedFile(getContext(), versioning);
+
+        //  clear database for fresh data
+        database.dlcDao().deleteAll();
+        database.dlcResourceDao().deleteAll();
+        database.dlcStationDao().deleteAll();
+        database.dlcFolderDao().deleteAll();
+        database.dlcEngramDao().deleteAll();
+        database.dlcCompositionDao().deleteAll();
+        database.dlcCompositeDao().deleteAll();
+        database.dlcDirectoryDao().deleteAll();
+
+        //  insert dlc objects
+        database.dlcDao().insert(DlcEntity.fromJson(inNode.get(cDetails)));
 
         JsonNode resources = inNode.get(cResources);
         for (JsonNode node : resources) {
