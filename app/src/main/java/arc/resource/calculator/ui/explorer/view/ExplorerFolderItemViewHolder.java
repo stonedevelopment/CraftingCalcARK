@@ -42,20 +42,6 @@ public class ExplorerFolderItemViewHolder extends FolderItemViewHolder {
     }
 
     @Override
-    protected void setupViewModel(FragmentActivity activity) {
-        super.setupViewModel(activity);
-
-        getViewModel().fetchFolder(getItem().getSourceId()).observe(activity, folderEntity -> {
-            if (folderEntity != null) {
-                setTitleText(folderEntity.getName());
-            } else {
-                setTitleText("null: " + getItem().getSourceId());
-            }
-        });
-
-    }
-
-    @Override
     protected void handleOnClickEvent() {
         getViewModel().handleOnClickEvent(getItem());
     }

@@ -21,7 +21,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/frame_craftable_container">
 
-    <arc.resource.calculator.ui.explorer.ExplorerNavigationTextView
+    <arc.resource.calculator.ui.explorer.view.ExplorerNavigationTextView
         android:id="@+id/explorerNavigationTextView"
         style="@style/AppTheme.Text.DisplayCase.Hierarchy"
         android:layout_width="match_parent"

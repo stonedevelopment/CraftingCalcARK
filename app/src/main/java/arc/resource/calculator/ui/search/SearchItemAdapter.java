@@ -16,7 +16,6 @@
 
 package arc.resource.calculator.ui.search;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,6 +27,9 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.InteractiveAdapter;
 import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.search.model.SearchItem;
+import arc.resource.calculator.ui.search.view.EngramSearchItemViewHolder;
+import arc.resource.calculator.ui.search.view.SearchItemViewHolder;
+import arc.resource.calculator.ui.search.view.StationSearchItemViewHolder;
 
 import static arc.resource.calculator.util.Constants.cEngramViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
@@ -44,7 +46,6 @@ public class SearchItemAdapter extends InteractiveAdapter {
     @NonNull
     @Override
     public InteractiveItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder: " + viewType);
         View itemView;
         switch (viewType) {
             case cResourceViewType:
@@ -58,7 +59,7 @@ public class SearchItemAdapter extends InteractiveAdapter {
                 break;
             case cStationViewType:
                 itemView = getLayoutInflater().inflate(R.layout.search_item_station, parent, false);
-                break;
+                return new StationSearchItemViewHolder(itemView);
             default:
                 itemView = getLayoutInflater().inflate(R.layout.search_item_error, parent, false);
         }

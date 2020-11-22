@@ -72,40 +72,21 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
         this.item = item;
     }
 
-    protected String getImagePath() {
-        return imagePath;
-    }
-
     private void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
-    protected Picasso getPicasso() {
-        return picasso;
-    }
-
-    protected AppCompatImageView getThumbnailImageView() {
-        return thumbnailImageView;
-    }
-
     protected void loadImage(String imageFile) {
-        getPicasso().load(imagePath.concat(imageFile)).into(getThumbnailImageView());
-    }
-
-    protected MaterialTextView getTitleTextView() {
-        return titleTextView;
+        picasso.load(imagePath.concat(imageFile))
+                .into(thumbnailImageView);
     }
 
     public void setTitleText(String title) {
-        getTitleTextView().setText(title);
-    }
-
-    protected MaterialTextView getDescriptionTextView() {
-        return descriptionTextView;
+        titleTextView.setText(title);
     }
 
     protected void setDescriptionText(String description) {
-        getDescriptionTextView().setText(description);
+        descriptionTextView.setText(description);
     }
 
     public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
@@ -118,7 +99,7 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     protected void setupViewModel(FragmentActivity activity) {
-        getViewModel().getGameEntityLiveData().observe(activity, this::handleGameEntityLiveData);
+        viewModel.getGameEntityLiveData().observe(activity, this::handleGameEntityLiveData);
     }
 
     protected void setupTitleTextView() {

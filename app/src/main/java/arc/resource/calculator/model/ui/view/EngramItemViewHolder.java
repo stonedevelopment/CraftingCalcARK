@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class EngramItemViewHolder extends InteractiveItemViewHolder {
     private final AppCompatImageButton favoriteButton;

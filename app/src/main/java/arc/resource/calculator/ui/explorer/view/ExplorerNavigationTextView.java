@@ -14,12 +14,10 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.explorer;
+package arc.resource.calculator.ui.explorer.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.textview.MaterialTextView;
 

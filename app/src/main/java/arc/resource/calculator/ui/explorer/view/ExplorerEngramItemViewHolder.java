@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import arc.resource.calculator.model.ui.view.EngramItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
-import arc.resource.calculator.ui.explorer.model.EngramExplorerItem;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
 
@@ -32,8 +32,8 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
     }
 
     @Override
-    public EngramExplorerItem getItem() {
-        return (EngramExplorerItem) super.getItem();
+    public ExplorerItem getItem() {
+        return (ExplorerItem) super.getItem();
     }
 
     @Override

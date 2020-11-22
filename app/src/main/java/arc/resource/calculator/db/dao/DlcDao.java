@@ -26,11 +26,13 @@ import java.util.List;
 import arc.resource.calculator.db.entity.DlcEntity;
 import arc.resource.calculator.db.entity.GameEntity;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface DlcDao {
     String tableName = "dlc";
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(DlcEntity entity);
 
     @Query("delete from dlc")

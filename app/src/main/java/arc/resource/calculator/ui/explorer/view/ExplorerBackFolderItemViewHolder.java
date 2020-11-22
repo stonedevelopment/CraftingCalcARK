@@ -27,6 +27,7 @@ import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerBackFolderItemViewHolder extends InteractiveItemViewHolder {
     public ExplorerBackFolderItemViewHolder(@NonNull View itemView) {
@@ -34,8 +35,8 @@ public class ExplorerBackFolderItemViewHolder extends InteractiveItemViewHolder 
     }
 
     @Override
-    public BackFolderExplorerItem getItem() {
-        return (BackFolderExplorerItem) super.getItem();
+    public ExplorerItem getItem() {
+        return (ExplorerItem) super.getItem();
     }
 
     @Override
@@ -67,5 +68,10 @@ public class ExplorerBackFolderItemViewHolder extends InteractiveItemViewHolder 
         }
 
         setDescriptionText(descriptionText);
+    }
+
+    @Override
+    protected void handleOnClickEvent() {
+        getViewModel().handleOnClickEvent(getItem());
     }
 }

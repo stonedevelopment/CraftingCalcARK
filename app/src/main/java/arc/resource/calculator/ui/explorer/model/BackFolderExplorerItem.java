@@ -19,8 +19,8 @@ package arc.resource.calculator.ui.explorer.model;
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 
 public class BackFolderExplorerItem extends ExplorerItem {
-    private BackFolderExplorerItem(String uuid, String title, String description, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
-        super(uuid, title, description, imageFile, viewType, sourceId, parentId, gameId);
+    private BackFolderExplorerItem(String uuid, String title, int viewType, String sourceId, String parentId, String gameId) {
+        super(uuid, title, viewType, sourceId, parentId, gameId);
     }
 
     public static BackFolderExplorerItem fromExplorerItem(ExplorerItem explorerItem) {
@@ -29,7 +29,6 @@ public class BackFolderExplorerItem extends ExplorerItem {
         String sourceId = explorerItem.getSourceId();
         String parentId = explorerItem.getParentId();
         String gameId = explorerItem.getGameId();
-        return new BackFolderExplorerItem(uuid, title, null, null,
-                cBackFolderViewType, sourceId, parentId, gameId);
+        return new BackFolderExplorerItem(uuid, title, cBackFolderViewType, sourceId, parentId, gameId);
     }
 }

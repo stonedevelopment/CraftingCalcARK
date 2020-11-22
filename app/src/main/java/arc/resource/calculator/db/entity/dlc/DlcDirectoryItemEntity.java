@@ -13,6 +13,7 @@ import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 
 import static arc.resource.calculator.util.Constants.cDlcId;
 import static arc.resource.calculator.util.Constants.cGameId;
+import static arc.resource.calculator.util.Constants.cName;
 import static arc.resource.calculator.util.Constants.cParentId;
 import static arc.resource.calculator.util.Constants.cSourceId;
 import static arc.resource.calculator.util.Constants.cUuid;
@@ -25,12 +26,13 @@ public class DlcDirectoryItemEntity extends DirectoryItemEntity {
 
     @JsonCreator
     public DlcDirectoryItemEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                                  @JsonProperty(cName) @NonNull String name,
                                   @JsonProperty(cViewType) int viewType,
                                   @JsonProperty(cParentId) @NonNull String parentId,
                                   @JsonProperty(cSourceId) @NonNull String sourceId,
                                   @JsonProperty(cGameId) @NonNull String gameId,
                                   @JsonProperty(cDlcId) @NonNull String dlcId) {
-        super(uuid, viewType, parentId, sourceId, gameId);
+        super(uuid, name, viewType, parentId, sourceId, gameId);
         this.dlcId = dlcId;
     }
 

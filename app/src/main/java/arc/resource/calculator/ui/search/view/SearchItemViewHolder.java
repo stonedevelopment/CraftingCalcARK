@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.search;
+package arc.resource.calculator.ui.search.view;
 
 import android.view.View;
 
@@ -23,24 +23,17 @@ import androidx.fragment.app.FragmentActivity;
 
 import arc.resource.calculator.model.ui.InteractiveItem;
 import arc.resource.calculator.model.ui.InteractiveViewModel;
-import arc.resource.calculator.model.ui.view.DescriptiveInteractiveItemViewHolder;
-import arc.resource.calculator.ui.search.model.EngramSearchItem;
+import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
 
-class EngramSearchItemViewHolder extends DescriptiveInteractiveItemViewHolder {
-    public static final String TAG = EngramSearchItemViewHolder.class.getSimpleName();
+public class SearchItemViewHolder extends InteractiveItemViewHolder {
+    public static final String TAG = SearchItemViewHolder.class.getSimpleName();
 
-    public EngramSearchItemViewHolder(@NonNull View itemView) {
+    public SearchItemViewHolder(@NonNull View itemView) {
         super(itemView);
-    }
-
-    @Override
-    public EngramSearchItem getItem() {
-        return (EngramSearchItem) super.getItem();
     }
 
     @Override
     public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
         super.bind(activity, item, viewModel);
-        setDescriptionText(getItem().getDescription());
     }
 }

@@ -20,13 +20,10 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
+
 public class FolderItemViewHolder extends InteractiveItemViewHolder {
     public FolderItemViewHolder(@NonNull View itemView) {
         super(itemView);
-    }
-
-    @Override
-    protected void loadImage(String imagePath) {
-        //  do nothing
     }
 }
