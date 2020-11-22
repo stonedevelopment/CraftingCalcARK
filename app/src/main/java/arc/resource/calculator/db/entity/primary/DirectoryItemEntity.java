@@ -28,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
 
 import static arc.resource.calculator.util.Constants.cGameId;
-import static arc.resource.calculator.util.Constants.cImageFile;
 import static arc.resource.calculator.util.Constants.cName;
 import static arc.resource.calculator.util.Constants.cParentId;
 import static arc.resource.calculator.util.Constants.cSourceId;
@@ -41,7 +40,6 @@ public class DirectoryItemEntity {
     @PrimaryKey
     private String uuid;
     private String name;
-    private String imageFile;
     private int viewType;
     private String parentId;
     private String sourceId;
@@ -51,14 +49,12 @@ public class DirectoryItemEntity {
     @JsonCreator
     public DirectoryItemEntity(@JsonProperty(cUuid) @NonNull String uuid,
                                @JsonProperty(cName) @NonNull String name,
-                               @JsonProperty(cImageFile) @NonNull String imageFile,
                                @JsonProperty(cViewType) int viewType,
                                @JsonProperty(cParentId) @NonNull String parentId,
                                @JsonProperty(cSourceId) @NonNull String sourceId,
                                @JsonProperty(cGameId) @NonNull String gameId) {
         this.uuid = uuid;
         this.name = name;
-        this.imageFile = imageFile;
         this.viewType = viewType;
         this.parentId = parentId;
         this.sourceId = sourceId;
@@ -82,16 +78,8 @@ public class DirectoryItemEntity {
         return name;
     }
 
-    public void setName(@NonNull String name) {
+    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(@NonNull String imageFile) {
-        this.imageFile = imageFile;
     }
 
     public int getViewType() {

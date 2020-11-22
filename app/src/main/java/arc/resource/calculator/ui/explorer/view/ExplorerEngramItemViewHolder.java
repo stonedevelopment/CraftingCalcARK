@@ -24,7 +24,6 @@ import androidx.fragment.app.FragmentActivity;
 import arc.resource.calculator.model.ui.view.EngramItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 import arc.resource.calculator.ui.explorer.model.EngramExplorerItem;
-import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
 
@@ -33,8 +32,8 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
     }
 
     @Override
-    public ExplorerItem getItem() {
-        return (ExplorerItem) super.getItem();
+    public EngramExplorerItem getItem() {
+        return (EngramExplorerItem) super.getItem();
     }
 
     @Override
@@ -46,12 +45,12 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
     protected void setupViewModel(FragmentActivity activity) {
         super.setupViewModel(activity);
 
-        getViewModel().fetchEngram(getItem().getSourceId()).observe(activity, engramEntity -> {
-            if (engramEntity != null) {
-                setDescriptionText(engramEntity.getDescription());
-            } else {
-                setDescriptionText("EngramEntity is null: " + getItem().getSourceId());
-            }
+        getViewModel().fetchEngram(getItem().getSourceId()).observe(activity, entity -> {
+            String imageFile = entity.getImageFile();
+            loadImage(imageFile);
+
+            String description = entity.getDescription();
+            setDescriptionText(description);
         });
     }
 

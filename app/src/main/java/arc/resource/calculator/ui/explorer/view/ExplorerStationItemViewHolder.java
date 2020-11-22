@@ -19,10 +19,10 @@ package arc.resource.calculator.ui.explorer.view;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import arc.resource.calculator.model.ui.view.StationItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
-import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 import arc.resource.calculator.ui.explorer.model.StationExplorerItem;
 
 public class ExplorerStationItemViewHolder extends StationItemViewHolder {
@@ -31,8 +31,8 @@ public class ExplorerStationItemViewHolder extends StationItemViewHolder {
     }
 
     @Override
-    public ExplorerItem getItem() {
-        return (ExplorerItem) super.getItem();
+    public StationExplorerItem getItem() {
+        return (StationExplorerItem) super.getItem();
     }
 
     @Override
@@ -41,7 +41,12 @@ public class ExplorerStationItemViewHolder extends StationItemViewHolder {
     }
 
     @Override
-    protected void handleOnClickEvent() {
-        getViewModel().handleOnClickEvent(getItem());
+    protected void setupViewModel(FragmentActivity activity) {
+        super.setupViewModel(activity);
+
+        getViewModel().fetchStation(getItem().getUuid()).observe(activity, entity -> {
+            String imageFile = entity.getImageFile();
+            loadImage(imageFile);
+        });
     }
 }

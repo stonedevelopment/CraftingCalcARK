@@ -29,6 +29,8 @@ import java.util.Stack;
 
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
+import arc.resource.calculator.db.entity.primary.FolderEntity;
+import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.model.ui.InteractiveViewModel;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
@@ -41,7 +43,7 @@ public class ExplorerViewModel extends InteractiveViewModel {
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
 
     private final ExplorerRepository repository;
-    private final Stack<ExplorerItem> historyStack = new Stack<>();
+    private final Stack<ExplorerItem> historyStack = new Stack<>(); // TODO: 11/22/2020 What happens when app starts at bookmarked location?
     private final LiveData<DirectorySnapshot> directorySnapshot;
 
     private SingleLiveEvent<String> parentIdSingleLiveEvent = new SingleLiveEvent<>();
@@ -138,6 +140,14 @@ public class ExplorerViewModel extends InteractiveViewModel {
 
     public LiveData<EngramEntity> fetchEngram(@NonNull String uuid) {
         return repository.fetchEngram(uuid);
+    }
+
+    public LiveData<FolderEntity> fetchFolder(@NonNull String uuid) {
+        return repository.fetchFolder(uuid);
+    }
+
+    public LiveData<StationEntity> fetchStation(@NonNull String uuid) {
+        return repository.fetchStation(uuid);
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {

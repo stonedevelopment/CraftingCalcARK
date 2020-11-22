@@ -23,11 +23,8 @@ import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.ui.InteractiveItem;
 
 public class SearchItem extends InteractiveItem {
-    private final String description;
-
     protected SearchItem(String uuid, String title, String description, String imageFile, int viewType, String gameId) {
-        super(uuid, title, imageFile, viewType, gameId);
-        this.description = description;
+        super(uuid, title, description, imageFile, viewType, gameId);
     }
 
     public static EngramSearchItem fromEngramEntity(EngramEntity entity) {
@@ -44,9 +41,5 @@ public class SearchItem extends InteractiveItem {
 
     public static FolderSearchItem fromFolderEntity(FolderEntity entity, String imageFile) {
         return FolderSearchItem.fromEntity(entity, imageFile);
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

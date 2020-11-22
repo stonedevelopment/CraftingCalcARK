@@ -19,14 +19,12 @@ package arc.resource.calculator.model.ui;
 public class InteractiveItem {
     private final String uuid;
     private final String title;
-    private final String imageFile;
     private final int viewType;
     private final String gameId;
 
-    protected InteractiveItem(String uuid, String title, String imageFile, int viewType, String gameId) {
+    protected InteractiveItem(String uuid, String title, int viewType, String gameId) {
         this.uuid = uuid;
         this.title = title;
-        this.imageFile = imageFile;
         this.viewType = viewType;
         this.gameId = gameId;
     }
@@ -37,10 +35,6 @@ public class InteractiveItem {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getImageFile() {
-        return imageFile;
     }
 
     public int getViewType() {
@@ -56,7 +50,6 @@ public class InteractiveItem {
         return "InteractiveItem{" +
                 "uuid='" + uuid + '\'' +
                 ", title='" + title + '\'' +
-                ", imageFile='" + imageFile + '\'' +
                 ", viewType=" + viewType +
                 ", gameId='" + gameId + '\'' +
                 '}';

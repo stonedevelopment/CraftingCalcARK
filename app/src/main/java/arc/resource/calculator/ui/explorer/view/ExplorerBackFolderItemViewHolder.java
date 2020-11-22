@@ -24,11 +24,11 @@ import androidx.fragment.app.FragmentActivity;
 import java.util.Objects;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.view.DescriptiveInteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 
-public class ExplorerBackFolderItemViewHolder extends DescriptiveInteractiveItemViewHolder {
+public class ExplorerBackFolderItemViewHolder extends InteractiveItemViewHolder {
     public ExplorerBackFolderItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
@@ -67,15 +67,5 @@ public class ExplorerBackFolderItemViewHolder extends DescriptiveInteractiveItem
         }
 
         setDescriptionText(descriptionText);
-    }
-
-    @Override
-    protected void loadImage(String imagePath) {
-        //  do nothing
-    }
-
-    @Override
-    protected void handleOnClickEvent() {
-        getViewModel().handleOnClickEvent(getItem());
     }
 }

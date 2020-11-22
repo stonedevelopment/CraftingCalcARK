@@ -15,9 +15,9 @@ public class EngramSearchItem extends SearchItem {
     public static EngramSearchItem fromEntity(EngramEntity entity) {
         String uuid = entity.getUuid();
         String title = entity.getName();
+        String description = entity.getDescription();
         String imageFile = entity.getImageFile();
         String gameId = entity.getGameId();
-        String description = entity.getDescription();
         return new EngramSearchItem(uuid, title, description, imageFile, cEngramViewType, gameId, 0);
     }
 

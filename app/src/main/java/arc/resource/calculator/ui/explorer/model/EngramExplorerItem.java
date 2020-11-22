@@ -22,14 +22,15 @@ public class EngramExplorerItem extends ExplorerItem {
 
     EngramExplorerItem(String uuid,
                        String title,
-                       String imageFile,
                        int viewType,
                        String sourceId,
                        String parentId,
                        String gameId,
-                       int quantity) {
-        super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
-        setQuantity(quantity);
+                       int quantity,
+                       boolean isFavorite) {
+        super(uuid, title, viewType, sourceId, parentId, gameId);
+        this.quantity = quantity;
+        this.isFavorite = isFavorite;
     }
 
     public int getQuantity() {

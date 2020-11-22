@@ -19,6 +19,7 @@ package arc.resource.calculator.ui.explorer.view;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import arc.resource.calculator.model.ui.view.FolderItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
@@ -38,6 +39,20 @@ public class ExplorerFolderItemViewHolder extends FolderItemViewHolder {
     @Override
     public ExplorerViewModel getViewModel() {
         return (ExplorerViewModel) super.getViewModel();
+    }
+
+    @Override
+    protected void setupViewModel(FragmentActivity activity) {
+        super.setupViewModel(activity);
+
+        getViewModel().fetchFolder(getItem().getSourceId()).observe(activity, folderEntity -> {
+            if (folderEntity != null) {
+                setTitleText(folderEntity.getName());
+            } else {
+                setTitleText("null: " + getItem().getSourceId());
+            }
+        });
+
     }
 
     @Override

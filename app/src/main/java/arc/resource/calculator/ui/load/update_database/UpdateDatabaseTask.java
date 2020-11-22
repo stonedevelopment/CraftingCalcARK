@@ -28,6 +28,13 @@ import java.util.List;
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.entity.DlcEntity;
 import arc.resource.calculator.db.entity.GameEntity;
+import arc.resource.calculator.db.entity.dlc.DlcCompositeEntity;
+import arc.resource.calculator.db.entity.dlc.DlcCompositionEntity;
+import arc.resource.calculator.db.entity.dlc.DlcDirectoryItemEntity;
+import arc.resource.calculator.db.entity.dlc.DlcEngramEntity;
+import arc.resource.calculator.db.entity.dlc.DlcFolderEntity;
+import arc.resource.calculator.db.entity.dlc.DlcResourceEntity;
+import arc.resource.calculator.db.entity.dlc.DlcStationEntity;
 import arc.resource.calculator.db.entity.primary.CompositeEntity;
 import arc.resource.calculator.db.entity.primary.CompositionEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
@@ -128,16 +135,6 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     private void updatePrimary(Versioning versioning) throws IOException {
         JsonNode inNode = JsonUtil.parseUpdatifiedFile(getContext(), versioning);
 
-        //  clear database for fresh data
-        database.gameDao().deleteAll();
-        database.resourceDao().deleteAll();
-        database.stationDao().deleteAll();
-        database.folderDao().deleteAll();
-        database.engramDao().deleteAll();
-        database.compositionDao().deleteAll();
-        database.compositeDao().deleteAll();
-        database.directoryDao().deleteAll();
-
         //  insert game objects
         database.gameDao().insert(GameEntity.fromJson(inNode.get(cDetails)));
 
@@ -180,52 +177,42 @@ public class UpdateDatabaseTask extends AsyncTask<Void, Integer, Void> {
     private void updateDlc(Versioning versioning) throws IOException {
         JsonNode inNode = JsonUtil.parseUpdatifiedFile(getContext(), versioning);
 
-        //  clear database for fresh data
-        database.dlcDao().deleteAll();
-        database.dlcResourceDao().deleteAll();
-        database.dlcStationDao().deleteAll();
-        database.dlcFolderDao().deleteAll();
-        database.dlcEngramDao().deleteAll();
-        database.dlcCompositionDao().deleteAll();
-        database.dlcCompositeDao().deleteAll();
-        database.dlcDirectoryDao().deleteAll();
-
         //  insert dlc objects
         database.dlcDao().insert(DlcEntity.fromJson(inNode.get(cDetails)));
 
         JsonNode resources = inNode.get(cResources);
         for (JsonNode node : resources) {
-            database.resourceDao().insert(ResourceEntity.fromJson(node));
+            database.dlcResourceDao().insert(DlcResourceEntity.fromJson(node));
         }
 
         JsonNode stations = inNode.get(cStations);
         for (JsonNode node : stations) {
-            database.stationDao().insert(StationEntity.fromJson(node));
+            database.dlcStationDao().insert(DlcStationEntity.fromJson(node));
         }
 
         JsonNode folders = inNode.get(cFolders);
         for (JsonNode node : folders) {
-            database.folderDao().insert(FolderEntity.fromJson(node));
+            database.dlcFolderDao().insert(DlcFolderEntity.fromJson(node));
         }
 
         JsonNode engrams = inNode.get(cEngrams);
         for (JsonNode node : engrams) {
-            database.engramDao().insert(EngramEntity.fromJson(node));
+            database.dlcEngramDao().insert(DlcEngramEntity.fromJson(node));
         }
 
         JsonNode compositions = inNode.get(cComposition);
         for (JsonNode node : compositions) {
-            database.compositionDao().insert(CompositionEntity.fromJson(node));
+            database.dlcCompositionDao().insert(DlcCompositionEntity.fromJson(node));
         }
 
         JsonNode composites = inNode.get(cComposites);
         for (JsonNode node : composites) {
-            database.compositeDao().insert(CompositeEntity.fromJson(node));
+            database.dlcCompositeDao().insert(DlcCompositeEntity.fromJson(node));
         }
 
         JsonNode directory = inNode.get(cDirectory);
         for (JsonNode node : directory) {
-            database.directoryDao().insert(DirectoryItemEntity.fromJson(node));
+            database.dlcDirectoryDao().insert(DlcDirectoryItemEntity.fromJson(node));
         }
     }
 

@@ -17,7 +17,7 @@
 package arc.resource.calculator.ui.explorer.model;
 
 public class StationExplorerItem extends ExplorerItem {
-    public StationExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
-        super(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
+    public StationExplorerItem(String uuid, String title, int viewType, String sourceId, String parentId, String gameId) {
+        super(uuid, title, viewType, sourceId, parentId, gameId);
     }
 }

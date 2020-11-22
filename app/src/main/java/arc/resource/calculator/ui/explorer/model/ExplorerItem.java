@@ -23,8 +23,8 @@ public class ExplorerItem extends InteractiveItem {
     private final String parentId;
     private final String sourceId;
 
-    ExplorerItem(String uuid, String title, String imageFile, int viewType, String sourceId, String parentId, String gameId) {
-        super(uuid, title, imageFile, viewType, gameId);
+    ExplorerItem(String uuid, String title, int viewType, String sourceId, String parentId, String gameId) {
+        super(uuid, title, viewType, gameId);
         this.parentId = parentId;
         this.sourceId = sourceId;
     }
@@ -32,12 +32,11 @@ public class ExplorerItem extends InteractiveItem {
     public static ExplorerItem fromDirectoryEntity(DirectoryItemEntity entity) {
         String uuid = entity.getUuid();
         String title = entity.getName();
-        String imageFile = entity.getImageFile();
         int viewType = entity.getViewType();
         String sourceId = entity.getSourceId();
         String parentId = entity.getParentId();
         String gameId = entity.getGameId();
-        return new ExplorerItem(uuid, title, imageFile, viewType, sourceId, parentId, gameId);
+        return new ExplorerItem(uuid, title, viewType, sourceId, parentId, gameId);
     }
 
     public String getParentId() {

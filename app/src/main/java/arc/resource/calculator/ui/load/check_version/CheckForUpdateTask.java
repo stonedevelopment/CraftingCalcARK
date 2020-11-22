@@ -119,7 +119,8 @@ public class CheckForUpdateTask extends AsyncTask<Void, Integer, List<Versioning
         Date oldDate = new Date(prefsUtil.getLastUpdateFromUuid(versioning.getUuid()));
         Date newDate = versioning.getLastUpdated();
 
-        return hasUpdate(oldDate, newDate);
+        return true;
+//        return hasUpdate(oldDate, newDate);
     }
 
     /**
