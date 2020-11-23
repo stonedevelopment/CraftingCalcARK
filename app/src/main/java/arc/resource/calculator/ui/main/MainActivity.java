@@ -24,6 +24,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.ContentLoadingProgressBar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,35 +32,25 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textview.MaterialTextView;
 
 import arc.resource.calculator.ChangeLog;
 import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.FirstUseActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.SettingsActivity;
-import arc.resource.calculator.listeners.ExceptionObservable;
-import arc.resource.calculator.listeners.PrefsObserver;
+import arc.resource.calculator.ui.filter.FilterSettingsFragment;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.FeedbackUtil;
 
-import static arc.resource.calculator.DetailActivity.ADD;
-import static arc.resource.calculator.DetailActivity.ERROR;
-import static arc.resource.calculator.DetailActivity.REMOVE;
-import static arc.resource.calculator.DetailActivity.RESULT_CODE;
-import static arc.resource.calculator.DetailActivity.RESULT_EXTRA_NAME;
-import static arc.resource.calculator.DetailActivity.UPDATE;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private MainViewModel mViewModel;
-    private AdUtil mAdUtil;
+    private MainViewModel viewModel;
+    private AdUtil adUtil;
 
     //  loading views
-    private ContentLoadingProgressBar mProgressBar;
-    private MaterialTextView mTextView;
+    private ContentLoadingProgressBar progressBar;
 
     //  content views
     private BottomNavigationView mBottomNav;
@@ -87,27 +78,26 @@ public class MainActivity extends AppCompatActivity {
     private void setupViews() {
         mBottomNav = findViewById(R.id.bottomNavigationView);
         mFragment = findViewById(R.id.navHostContainer);
-        mProgressBar = findViewById(R.id.loadingProgressBar);
-        mTextView = findViewById(R.id.loadingTextView);
+        progressBar = findViewById(R.id.loadingProgressBar);
     }
 
     private void setupViewModel() {
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.getGameEntityEvent().observe(this, gameEntity -> {
-            mViewModel.setIsLoading(false);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel.getGameEntityEvent().observe(this, gameEntity -> {
+            viewModel.setIsLoading(false);
         });
-        mViewModel.getLoadingEvent().observe(this, isLoading -> {
+        viewModel.getLoadingEvent().observe(this, isLoading -> {
             if (isLoading) {
                 hideViews();
             } else {
                 showViews();
             }
         });
-        mViewModel.getStartActivityForResultTrigger().observe(this, intent -> {
+        viewModel.getStartActivityForResultTrigger().observe(this, intent -> {
             int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
             startActivityForResult(intent, requestCode);
         });
-        mViewModel.getSnackBarMessageEvent().observe(this, this::showSnackBar);
+        viewModel.getSnackBarMessageEvent().observe(this, this::showSnackBar);
     }
 
     // TODO: 6/13/2020 How to change navigation panes on demand, save position from preiouvs use
@@ -117,12 +107,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupAds() {
-        mAdUtil = new AdUtil(this, R.id.content_main);
+        adUtil = new AdUtil(this, R.id.content_main);
     }
 
     private void showViews() {
-        mProgressBar.hide();
-        mTextView.setVisibility(View.GONE);
+        progressBar.hide();
 
         mFragment.setVisibility(View.VISIBLE);
         mBottomNav.setVisibility(View.VISIBLE);
@@ -131,8 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hideViews() {
-        mProgressBar.show();
-        mTextView.setVisibility(View.VISIBLE);
+        progressBar.show();
 
         mFragment.setVisibility(View.GONE);
         mBottomNav.setVisibility(View.GONE);
@@ -141,18 +129,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mAdUtil.resume();
+        adUtil.resume();
     }
 
     @Override
     protected void onPause() {
-        mAdUtil.pause();
+        adUtil.pause();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        mAdUtil.destroy();
+        adUtil.destroy();
         super.onDestroy();
     }
 
@@ -167,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         final boolean show = super.onPrepareOptionsMenu(menu);
 
         // set up menu to enable/disable remove ads button (toggled)
-        menu.findItem(R.id.action_remove_ads).setEnabled(!mAdUtil.isRemovingAds());
+        menu.findItem(R.id.action_remove_ads).setEnabled(!adUtil.isRemovingAds());
 
         return show;
     }
@@ -175,6 +163,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_filter:
+                // TODO: 11/23/2020 show filter popup
+                FilterSettingsFragment fragment = new FilterSettingsFragment();
+                fragment.show(getSupportFragmentManager(), FilterSettingsFragment.TAG);
+                break;
+
             case R.id.action_settings:
                 startActivityForResult(new Intent(this, SettingsActivity.class),
                         SettingsActivity.REQUEST_CODE);
@@ -202,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_remove_ads:
-                mAdUtil.beginPurchase();
+                adUtil.beginPurchase();
                 break;
 
             default:
@@ -216,84 +210,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (!mAdUtil.onActivityResult(requestCode, resultCode, data)) {
-            if (data != null) {
-                Bundle extras = data.getExtras();
-
-                switch (requestCode) {
-                    case DetailActivity.REQUEST_CODE:
-                        assert extras != null;
-                        int extraResultCode = extras.getInt(RESULT_CODE);
-
-                        if (resultCode == RESULT_OK) {
-                            String name = extras.getString(RESULT_EXTRA_NAME);
-//                            long id = extras.getLong( RESULT_EXTRA_ID );
-//                            int quantity = extras.getInt( RESULT_EXTRA_QUANTITY );
-
-                            switch (extraResultCode) {
-                                case REMOVE:
-//                                    QueueRepository.getInstance().delete( id );
-
-                                    mViewModel.setSnackBarMessage(
-                                            String.format(getString(R.string.snackbar_message_details_removed_format), name));
-                                    break;
-
-                                case UPDATE:
-//                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
-
-                                    mViewModel.setSnackBarMessage(
-                                            String.format(getString(R.string.snackbar_message_details_updated_format), name));
-                                    break;
-
-                                case ADD:
-//                                    QueueRepository.getInstance().setQuantity( this, id, quantity );
-
-                                    mViewModel.setSnackBarMessage(String.format(getString(R.string.snackbar_message_details_added_format), name));
-                                    break;
-                            }
-                        } else {
-                            if (extraResultCode == ERROR) {
-                                Exception e = (Exception) extras.get(RESULT_EXTRA_NAME);
-
-                                if (e != null) {
-                                    mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_error));
-
-                                    ExceptionObservable.getInstance().notifyExceptionCaught(TAG, e);
-                                }
-                            } else {
-                                mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_details_no_change));
-                            }
-                        }
-                        break;
-
-                    case SettingsActivity.REQUEST_CODE:
-                        if (resultCode == RESULT_OK) {
-                            assert extras != null;
-                            boolean dlcValueChange = extras.getBoolean(getString(R.string.pref_dlc_key));
-                            boolean categoryPrefChange = extras
-                                    .getBoolean(getString(R.string.pref_filter_category_key));
-                            boolean stationPrefChange = extras
-                                    .getBoolean(getString(R.string.pref_filter_station_key));
-                            boolean levelPrefChange = extras
-                                    .getBoolean(getString(R.string.pref_filter_level_key));
-                            boolean levelValueChange = extras
-                                    .getBoolean(getString(R.string.pref_edit_text_level_key));
-                            boolean refinedPrefChange = extras
-                                    .getBoolean(getString(R.string.pref_filter_refined_key));
-
-                            mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_settings_success));
-
-                            PrefsObserver.getInstance().notifyPreferencesChanged(
-                                    dlcValueChange, categoryPrefChange, stationPrefChange, levelPrefChange,
-                                    levelValueChange, refinedPrefChange);
-                        } else {
-                            mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_settings_fail));
-                        }
-                        break;
-                }
-            } else {
-                mViewModel.setSnackBarMessage(getString(R.string.snackbar_message_settings_fail));
-            }
+        if (!adUtil.onActivityResult(requestCode, resultCode, data)) {
         }
     }
 

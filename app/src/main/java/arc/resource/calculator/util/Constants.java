@@ -12,7 +12,7 @@ public class Constants {
     public static final String cUpdatifiedFileName = "updatified.json";
     public static final String cIlluminationFileName = "illumination.json";
     public static final String cIlluminatedFileNameFormat = "illuminated_%s.json";
-    public static final String cLogoFileName = "logo.webp";
+    public static final String cLogoFileName = "dlc_logo.webp";
     public static final String cFolderFileName = "folder.webp";
     public static final String cBackFolderFileName = "backFolder.webp";
 

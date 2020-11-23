@@ -70,7 +70,7 @@ public class DbToJSONTask extends AsyncTask<Void, String, Boolean> {
     private final String ENGRAMS = "engrams";
     private final String FOLDERS = "folders";
     private final String LOGO_IMAGE_FILE = "logo_image_file";
-    private final String LOGO_IMAGE_NAME = "logo.webp";
+    private final String LOGO_IMAGE_NAME = "dlc_logo.webp";
     private final String FOLDER_IMAGE_FILE = "folder_image_file";
     private final String FOLDER_IMAGE_NAME = "folder.webp";
     private final String BACK_FOLDER_IMAGE_FILE = "back_folder_image_file";

@@ -40,7 +40,7 @@ public class InteractiveViewModel extends AndroidViewModel {
         return snackBarMessageEvent;
     }
 
-    protected void setSnackBarMessage(String message) {
+    public void setSnackBarMessage(String message) {
         snackBarMessageEvent.setValue(message);
     }
 

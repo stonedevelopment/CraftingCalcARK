@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainActivity">
 
-    <group android:id="@+id/group_settings">
-        <item
-            android:id="@+id/action_settings"
-            android:title="@string/action_title_settings"
-            app:showAsAction="never" />
-    </group>
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:title="@string/action_title_filter"
+        app:showAsAction="ifRoom" />
 
-    <group android:id="@+id/group_show_dialogs">
+    <group
+        android:id="@+id/group_show_dialogs"
+        android:menuCategory="container">
         <item
             android:id="@+id/action_show_tutorial"
             android:title="@string/action_title_help"
@@ -22,7 +23,9 @@
             app:showAsAction="never" />
     </group>
 
-    <group android:id="@+id/group_feedback">
+    <group
+        android:id="@+id/group_feedback"
+        android:menuCategory="alternative">
         <item
             android:id="@+id/action_feedback_bug_report"
             android:title="@string/action_title_feedback_bug_report"
@@ -34,18 +37,30 @@
             app:showAsAction="never" />
     </group>
 
-    <group android:id="@+id/group_about">
+    <group
+        android:id="@+id/group_about"
+        android:menuCategory="secondary">
         <item
             android:id="@+id/action_about"
             android:title="@string/action_title_about"
             app:showAsAction="never" />
     </group>
 
-    <group android:id="@+id/group_purchase">
+    <group
+        android:id="@+id/group_purchase"
+        android:menuCategory="container">
         <item
             android:id="@+id/action_remove_ads"
             android:title="@string/action_title_remove_ads"
             app:showAsAction="never" />
     </group>
 
+    <group
+        android:id="@+id/group_settings"
+        android:menuCategory="system">
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_title_settings"
+            app:showAsAction="never" />
+    </group>
 </menu>
