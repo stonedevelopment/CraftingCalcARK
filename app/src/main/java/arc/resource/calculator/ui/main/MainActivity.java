@@ -24,8 +24,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.ContentLoadingProgressBar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -167,11 +165,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_filter:
                 // TODO: 11/23/2020 show filter popup
                 FilterSettingsFragment fragment = new FilterSettingsFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .add(fragment, FilterSettingsFragment.TAG)
-                        .commit();
+                fragment.show(getSupportFragmentManager(), FilterSettingsFragment.TAG);
                 break;
 
             case R.id.action_settings:
