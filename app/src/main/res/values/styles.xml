@@ -26,6 +26,10 @@
         <item name="android:textColorSecondary">@color/bnvInactiveMenuItemColor</item>
     </style>
 
+    <style name="AppTheme.FullScreenDialog">
+        <item name="actionMenuTextColor">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowNoTitle">true</item>
     </style>
