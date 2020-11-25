@@ -37,7 +37,7 @@ import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.FirstUseActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.SettingsActivity;
-import arc.resource.calculator.ui.filter.FilterSettingsFragment;
+import arc.resource.calculator.ui.filter.FilterDialog;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.FeedbackUtil;
@@ -164,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_filter:
                 // TODO: 11/23/2020 show filter popup
-                FilterSettingsFragment fragment = new FilterSettingsFragment();
-                fragment.show(getSupportFragmentManager(), FilterSettingsFragment.TAG);
+                FilterDialog fragment = new FilterDialog();
+                fragment.show(getSupportFragmentManager(), FilterDialog.TAG);
                 break;
 
             case R.id.action_settings:
