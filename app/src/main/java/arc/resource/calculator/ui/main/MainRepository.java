@@ -23,11 +23,10 @@ import androidx.lifecycle.LiveData;
 import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.DlcDao;
 import arc.resource.calculator.db.dao.GameDao;
+import arc.resource.calculator.db.entity.DlcEntity;
 import arc.resource.calculator.db.entity.GameEntity;
 
 public class MainRepository {
-    public static final String gameId = "783cdb00-dbef-4731-9b42-c2f3539d9a9c";
-
     private final GameDao gameDao;
     private final DlcDao dlcDao;
 
@@ -37,7 +36,11 @@ public class MainRepository {
         dlcDao = db.dlcDao();
     }
 
-    LiveData<GameEntity> getGameEntity() {
-        return gameDao.getGame(gameId);
+    LiveData<GameEntity> getGameEntity(String uuid) {
+        return gameDao.getGame(uuid);
+    }
+
+    LiveData<DlcEntity> getDlcEntity(String uuid) {
+        return dlcDao.getDlc(uuid);
     }
 }

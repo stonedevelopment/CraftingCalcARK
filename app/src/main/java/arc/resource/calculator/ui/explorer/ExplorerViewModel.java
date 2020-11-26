@@ -55,7 +55,7 @@ public class ExplorerViewModel extends InteractiveViewModel {
     }
 
     @Override
-    public void handleGameEntityLiveData() {
+    public void start() {
         fetchDirectory();
     }
 
@@ -151,7 +151,8 @@ public class ExplorerViewModel extends InteractiveViewModel {
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {
-        return Transformations.switchMap(parentIdSingleLiveEvent, repository::fetchDirectory);
+        return Transformations.switchMap(parentIdSingleLiveEvent,
+                parentId -> repository.fetchDirectory(getGameEntity().getUuid(), parentId));
     }
 
     private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {

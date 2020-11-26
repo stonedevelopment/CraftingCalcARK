@@ -17,6 +17,7 @@
 package arc.resource.calculator.ui.main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private ContentLoadingProgressBar progressBar;
 
     //  content views
-    private BottomNavigationView mBottomNav;
-    private View mFragment;
+    private BottomNavigationView bottomNavigationView;
+    private View fragment;
 
     // Purchase flow -> disable menu option to disable ads
     // CreateOptionsMenu -> disable menu option to disable ads if purchased
@@ -65,26 +66,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupViews();
+        setViews();
+        setViewModel();
 
         setupViewModel();
-
         setupAds();
 
         showChangeLog();
     }
 
-    private void setupViews() {
-        mBottomNav = findViewById(R.id.bottomNavigationView);
-        mFragment = findViewById(R.id.navHostContainer);
+    private void setViews() {
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        fragment = findViewById(R.id.navHostContainer);
         progressBar = findViewById(R.id.loadingProgressBar);
     }
 
-    private void setupViewModel() {
+    private void setViewModel() {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        viewModel.getGameEntityEvent().observe(this, gameEntity -> {
-            viewModel.setIsLoading(false);
-        });
+        viewModel.injectDependencies(this);
+    }
+
+    private void setupViewModel() {
         viewModel.getLoadingEvent().observe(this, isLoading -> {
             if (isLoading) {
                 hideViews();
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO: 6/13/2020 How to change navigation panes on demand, save position from preiouvs use
     private void setupNavigation() {
         NavController navController = Navigation.findNavController(this, R.id.navHostContainer);
-        NavigationUI.setupWithNavController(mBottomNav, navController);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 
     private void setupAds() {
@@ -112,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
     private void showViews() {
         progressBar.hide();
 
-        mFragment.setVisibility(View.VISIBLE);
-        mBottomNav.setVisibility(View.VISIBLE);
+        fragment.setVisibility(View.VISIBLE);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         setupNavigation();
     }
@@ -121,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
     private void hideViews() {
         progressBar.show();
 
-        mFragment.setVisibility(View.GONE);
-        mBottomNav.setVisibility(View.GONE);
+        fragment.setVisibility(View.GONE);
+        bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override

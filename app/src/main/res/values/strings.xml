@@ -362,6 +362,10 @@
     <!-- Default value for Refined Filter preference in SharedPreferences -->
     <string name="pref_filter_refined_value_default">false</string>
 
+    <string name="pref_filter_game_id_key">game_id</string>
+    <string name="pref_filter_game_id_default_value">783cdb00–dbef–4731–9b42-c2f3539d9a9c</string>
+    <string name="pref_filter_dlc_id_key">dlc_id</string>
+
     <!-- Key name for the View size of QueueSwitcher -->
     <string name="pref_craftable_view_size_key">craftable_image_size</string>
 

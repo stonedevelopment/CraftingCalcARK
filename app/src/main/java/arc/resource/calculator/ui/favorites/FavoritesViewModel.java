@@ -28,7 +28,7 @@ public class FavoritesViewModel extends InteractiveViewModel {
     }
 
     @Override
-    public void handleGameEntityLiveData() {
-        super.handleGameEntityLiveData();
+    public void handleDataLoadedEvent() {
+        super.handleDataLoadedEvent();
     }
 }

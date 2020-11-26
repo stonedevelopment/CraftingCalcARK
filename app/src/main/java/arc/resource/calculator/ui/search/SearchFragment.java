@@ -29,7 +29,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.textview.MaterialTextView;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.model.ui.InteractiveAdapter;
 import arc.resource.calculator.model.ui.InteractiveFragment;
 import arc.resource.calculator.model.ui.InteractiveLayoutManager;
@@ -63,7 +62,7 @@ public class SearchFragment extends InteractiveFragment {
     @Override
     protected void setupViewModel() {
         setViewModel(new ViewModelProvider(requireActivity()).get(SearchViewModel.class));
-        getViewModel().injectViewModels(requireActivity());
+        getViewModel().injectDependencies(requireActivity());
 
         getViewModel().getFilterTextEvent().observe(getViewLifecycleOwner(), searchText -> {
             getViewModel().beginSearch(searchText);

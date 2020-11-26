@@ -20,12 +20,12 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
 import arc.resource.calculator.db.AppDatabase;
+import arc.resource.calculator.db.dao.dlc.DlcDirectoryDao;
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
 import arc.resource.calculator.db.dao.primary.EngramDao;
 import arc.resource.calculator.db.dao.primary.FolderDao;
@@ -39,6 +39,7 @@ public class ExplorerRepository {
     public static final String TAG = ExplorerRepository.class.getSimpleName();
 
     private final DirectoryDao directoryDao;
+    private final DlcDirectoryDao dlcDirectoryDao;
     private final EngramDao engramDao;
     private final FolderDao folderDao;
     private final StationDao stationDao;
@@ -46,14 +47,20 @@ public class ExplorerRepository {
     ExplorerRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         directoryDao = db.directoryDao();
+        dlcDirectoryDao = db.dlcDirectoryDao();
         engramDao = db.engramDao();
         folderDao = db.folderDao();
         stationDao = db.stationDao();
     }
 
-    LiveData<List<DirectoryItemEntity>> fetchDirectory(@Nullable String parentId) {
+    LiveData<List<DirectoryItemEntity>> fetchDirectory(String gameId, String parentId) {
         Log.d(TAG, "fetchDirectory: " + parentId);
-        return directoryDao.getDirectoryItemList(parentId);
+        return directoryDao.getDirectoryItemList(gameId, parentId);
+    }
+
+    LiveData<List<DirectoryItemEntity>> fetchDirectory(String gameId, String dlcId, String parentId) {
+        Log.d(TAG, "fetchDirectory: " + parentId);
+        return dlcDirectoryDao.getDirectoryItemList(gameId, dlcId, parentId);
     }
 
     LiveData<EngramEntity> fetchEngram(@NonNull String uuid) {

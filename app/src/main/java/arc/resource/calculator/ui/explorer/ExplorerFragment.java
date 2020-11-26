@@ -47,7 +47,7 @@ public class ExplorerFragment extends InteractiveFragment {
     @Override
     protected void setupViewModel() {
         setViewModel(new ViewModelProvider(requireActivity()).get(ExplorerViewModel.class));
-        getViewModel().injectViewModels(requireActivity());
+        getViewModel().injectDependencies(requireActivity());
         super.setupViewModel();
     }
 

@@ -47,7 +47,7 @@ public class FavoritesFragment extends InteractiveFragment {
     @Override
     protected void setupViewModel() {
         setViewModel(new ViewModelProvider(requireActivity()).get(FavoritesViewModel.class));
-        getViewModel().injectViewModels(requireActivity());
+        getViewModel().injectDependencies(requireActivity());
         super.setupViewModel();
     }
 

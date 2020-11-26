@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.radiobutton.MaterialRadioButton;
@@ -22,6 +23,8 @@ import arc.resource.calculator.R;
 public class FilterDialog extends DialogFragment {
     public static final String TAG = FilterDialog.class.getCanonicalName();
 
+    private final FilterDialogViewModel viewModel;
+
     private MaterialToolbar toolbar;
     private MaterialRadioButton contentPreferencePrimaryRadioButton;
     private MaterialRadioButton contentPreferenceDlcMapRadioButton;
@@ -29,14 +32,26 @@ public class FilterDialog extends DialogFragment {
     private MaterialRadioButton contentPreferenceDlcTotalConversionRadioButton;
     private AppCompatSpinner contentPreferenceDlcTotalConversionSpinner;
 
+    public FilterDialog() {
+        viewModel = new ViewModelProvider(requireActivity()).get(FilterDialogViewModel.class);
+        viewModel.injectDependencies(requireActivity());
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        builder.setView(setViews(inflater.inflate(R.layout.filter_settings_fragment, null)));
-        setupViews();
+        View rootView = setViews(inflater.inflate(R.layout.filter_settings_fragment, null));
+        builder.setView(rootView);
         return builder.create();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setupViewModel();
+        setupViews();
     }
 
     private View setViews(View rootView) {
@@ -49,6 +64,14 @@ public class FilterDialog extends DialogFragment {
         return rootView;
     }
 
+    private void setupViewModel() {
+        viewModel.getLoadingEvent().observe(requireActivity(), isLoaded -> {
+            if (isLoaded) {
+                // TODO: 11/26/2020 create loading events for data load
+            }
+        });
+    }
+
     private void setupViews() {
         toolbar.setNavigationOnClickListener(listener -> dismiss());
         toolbar.setOnMenuItemClickListener(item -> {
@@ -57,7 +80,7 @@ public class FilterDialog extends DialogFragment {
         });
         contentPreferencePrimaryRadioButton.setOnClickListener(v -> onContentPreferenceChange(v.getId()));
         contentPreferenceDlcMapRadioButton.setOnClickListener(v -> onContentPreferenceChange(v.getId()));
-        contentPreferenceDlcMapSpinner.setAdapter(new FilterContentPreferenceItemAdapter(requireActivity(), R.layout.item_title_layout));
+        contentPreferenceDlcMapSpinner.setAdapter(new FilterContentPreferenceItemAdapter(requireActivity(), viewModel));
         contentPreferenceDlcMapSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

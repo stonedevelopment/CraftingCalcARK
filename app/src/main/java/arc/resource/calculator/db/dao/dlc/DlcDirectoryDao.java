@@ -39,10 +39,11 @@ public interface DlcDirectoryDao {
     void deleteAll();
 
     @Query("select * from dlc_directory " +
-            "where parentId is :parentId and dlcId is :dlcId " +
+            "where parentId is :parentId and gameId is :gameId and dlcId is :dlcId " +
             "order by viewType asc, name asc")
-    LiveData<List<DlcDirectoryItemEntity>> getDirectoryItemList(String parentId, String dlcId);
+    LiveData<List<DirectoryItemEntity>> getDirectoryItemList(String gameId, String dlcId, String parentId);
 
     @Query("select * from dlc_directory where uuid is :uuid")
     LiveData<DlcDirectoryItemEntity> getDirectoryItem(String uuid);
+
 }
