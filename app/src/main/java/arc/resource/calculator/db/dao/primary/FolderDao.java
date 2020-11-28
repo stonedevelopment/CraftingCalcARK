@@ -37,12 +37,17 @@ public interface FolderDao {
     @Query("delete from folders")
     void deleteAll();
 
-    @Query("select * from folders where gameId is :gameId order by name asc")
-    LiveData<List<FolderEntity>> getFolderList(String gameId);
-
-    @Query("select * from folders where uuid is :uuid")
+    @Query("select * from folders " +
+            "where uuid is :uuid")
     LiveData<FolderEntity> getFolder(String uuid);
 
-    @Query("select * from folders where name like :searchName order by name asc")
-    LiveData<List<FolderEntity>> searchByName(String searchName);
+    @Query("select * from folders " +
+            "where gameId is :gameId " +
+            "order by name asc")
+    LiveData<List<FolderEntity>> getFolderList(String gameId);
+
+    @Query("select * from folders " +
+            "where name like :searchName and gameId is :gameId " +
+            "order by name asc")
+    LiveData<List<FolderEntity>> searchByName(String searchName, String gameId);
 }

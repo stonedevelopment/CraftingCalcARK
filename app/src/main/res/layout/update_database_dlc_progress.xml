@@ -34,7 +34,7 @@
         tools:text="Aberration" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/loadingProgressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

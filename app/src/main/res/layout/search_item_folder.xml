@@ -76,11 +76,12 @@
             android:layout_marginBottom="8dp"
             android:adjustViewBounds="false"
             android:scaleType="fitCenter"
+            android:tint="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/prefs_icons_folder" />
+            app:srcCompat="@drawable/ic_baseline_folder_256" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

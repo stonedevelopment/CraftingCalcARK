@@ -9,11 +9,11 @@ public class FolderSearchItem extends SearchItem {
         super(uuid, name, description, imageFile, viewType, gameId);
     }
 
-    public static FolderSearchItem fromEntity(FolderEntity entity, String imageFile) {
+    public static FolderSearchItem fromEntity(FolderEntity entity) {
         String uuid = entity.getUuid();
         String title = entity.getName();
         String gameId = entity.getGameId();
         String description = "";
-        return new FolderSearchItem(uuid, title, description, imageFile, cFolderViewType, gameId);
+        return new FolderSearchItem(uuid, title, description, null, cFolderViewType, gameId);
     }
 }

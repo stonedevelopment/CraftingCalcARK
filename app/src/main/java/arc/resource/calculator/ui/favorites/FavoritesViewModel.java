@@ -20,15 +20,11 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 
-import arc.resource.calculator.model.ui.InteractiveViewModel;
+import arc.resource.calculator.model.ui.InteractiveGameViewModel;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 
-public class FavoritesViewModel extends InteractiveViewModel {
+public class FavoritesViewModel extends InteractiveGameViewModel {
     public FavoritesViewModel(@NonNull Application application) {
         super(application);
-    }
-
-    @Override
-    public void handleDataLoadedEvent() {
-        super.handleDataLoadedEvent();
     }
 }

@@ -18,7 +18,6 @@ package arc.resource.calculator.util;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.InputType;
 import android.view.ContextThemeWrapper;
 import android.widget.EditText;
 
@@ -27,8 +26,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import arc.resource.calculator.BuildConfig;
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.engram.QueueEngram;
-import arc.resource.calculator.repository.queue.QueueRepository;
 
 public class DialogUtil {
     static AlertDialog Error(Context c, final Callback cb) {
@@ -46,45 +43,6 @@ public class DialogUtil {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         cb.onCancel(null);
-                    }
-                });
-
-        return builder.create();
-    }
-
-    public static AlertDialog EditQuantity(final Context context, long engramId, final Callback callback) {
-        final EditText editText = new EditText(context);
-        editText.setTextColor(context.getResources().getColor(R.color.colorWhite));
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        final QueueEngram engram = QueueRepository.getInstance().getEngram(engramId);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AlertDialogCustom));
-        builder.setTitle(engram.getName())
-                .setIcon(android.R.drawable.ic_menu_edit)
-                .setMessage(context.getString(R.string.dialog_edit_quantity_message))
-                .setView(editText)
-                .setNegativeButton(context.getString(R.string.dialog_edit_quantity_negative_button), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        callback.onCancel(engram);
-                    }
-                })
-                .setPositiveButton(context.getString(R.string.dialog_edit_quantity_positive_button), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String quantityText = editText.getText().toString();
-
-                        if (!quantityText.equals("") && quantityText.length() <= 6) {
-                            int quantity = Integer.parseInt(quantityText);
-
-                            if (quantity > 0)
-                                callback.onResult(engram);
-                            else
-                                callback.onCancel(engram);
-                        } else {
-                            callback.onCancel(engram);
-                        }
                     }
                 });
 

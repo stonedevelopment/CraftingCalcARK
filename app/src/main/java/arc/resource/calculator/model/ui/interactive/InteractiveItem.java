@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.model.ui;
+package arc.resource.calculator.model.ui.interactive;
 
 public class InteractiveItem {
     private final String uuid;

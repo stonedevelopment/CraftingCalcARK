@@ -29,12 +29,14 @@ public class FilterDialog extends DialogFragment {
     private MaterialRadioButton contentPreferencePrimaryRadioButton;
     private MaterialRadioButton contentPreferenceDlcMapRadioButton;
     private AppCompatSpinner contentPreferenceDlcMapSpinner;
+    private FilterContentPreferenceDlcItemAdapter contentPreferenceDlcMapAdapter;
     private MaterialRadioButton contentPreferenceDlcTotalConversionRadioButton;
     private AppCompatSpinner contentPreferenceDlcTotalConversionSpinner;
+    private FilterContentPreferenceDlcItemAdapter contentPreferenceDlcTotalConversionAdapter;
 
     public FilterDialog() {
         viewModel = new ViewModelProvider(requireActivity()).get(FilterDialogViewModel.class);
-        viewModel.injectDependencies(requireActivity());
+        viewModel.setup(requireActivity());
     }
 
     @NonNull
@@ -50,6 +52,7 @@ public class FilterDialog extends DialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setupAdapters();
         setupViewModel();
         setupViews();
     }
@@ -64,11 +67,20 @@ public class FilterDialog extends DialogFragment {
         return rootView;
     }
 
+    private void setupAdapters() {
+        contentPreferenceDlcMapAdapter = new FilterContentPreferenceDlcItemAdapter(requireActivity());
+        contentPreferenceDlcTotalConversionAdapter = new FilterContentPreferenceDlcItemAdapter(requireActivity());
+    }
+
     private void setupViewModel() {
         viewModel.getLoadingEvent().observe(requireActivity(), isLoaded -> {
-            if (isLoaded) {
-                // TODO: 11/26/2020 create loading events for data load
-            }
+            //
+        });
+        viewModel.getDlcListLiveData().observe(requireActivity(), dlcEntities -> {
+            contentPreferenceDlcMapAdapter.setItems(dlcEntities);
+        });
+        viewModel.getDlcTotalConversionListLiveData().observe(requireActivity(), dlcEntities -> {
+            contentPreferenceDlcTotalConversionAdapter.setItems(dlcEntities);
         });
     }
 
@@ -80,7 +92,7 @@ public class FilterDialog extends DialogFragment {
         });
         contentPreferencePrimaryRadioButton.setOnClickListener(v -> onContentPreferenceChange(v.getId()));
         contentPreferenceDlcMapRadioButton.setOnClickListener(v -> onContentPreferenceChange(v.getId()));
-        contentPreferenceDlcMapSpinner.setAdapter(new FilterContentPreferenceItemAdapter(requireActivity(), viewModel));
+        contentPreferenceDlcMapSpinner.setAdapter(contentPreferenceDlcMapAdapter);
         contentPreferenceDlcMapSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -94,6 +106,7 @@ public class FilterDialog extends DialogFragment {
             }
         });
         contentPreferenceDlcTotalConversionRadioButton.setOnClickListener(v -> onContentPreferenceChange(v.getId()));
+        contentPreferenceDlcTotalConversionSpinner.setAdapter(contentPreferenceDlcTotalConversionAdapter);
         contentPreferenceDlcTotalConversionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

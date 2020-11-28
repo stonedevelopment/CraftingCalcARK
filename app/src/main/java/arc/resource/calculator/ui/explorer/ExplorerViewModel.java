@@ -32,26 +32,24 @@ import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
+import arc.resource.calculator.model.ui.InteractiveGameViewModel;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
 import static arc.resource.calculator.util.Constants.cStationViewType;
 
-public class ExplorerViewModel extends InteractiveViewModel {
+public class ExplorerViewModel extends InteractiveGameViewModel {
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
 
     private final ExplorerRepository repository;
     private final Stack<ExplorerItem> historyStack = new Stack<>(); // TODO: 11/22/2020 What happens when app starts at bookmarked location?
-    private final LiveData<DirectorySnapshot> directorySnapshot;
 
-    private SingleLiveEvent<String> parentIdSingleLiveEvent = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> parentIdEvent = new SingleLiveEvent<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
-        repository = new ExplorerRepository(getApplication());
-        directorySnapshot = transformDirectoryListToSnapshot();
+        repository = new ExplorerRepository(application);
     }
 
     @Override
@@ -59,8 +57,8 @@ public class ExplorerViewModel extends InteractiveViewModel {
         fetchDirectory();
     }
 
-    LiveData<DirectorySnapshot> getDirectorySnapshot() {
-        return directorySnapshot;
+    public LiveData<DirectorySnapshot> getDirectorySnapshot() {
+        return transformDirectoryListToSnapshot();
     }
 
     @Nullable
@@ -89,7 +87,7 @@ public class ExplorerViewModel extends InteractiveViewModel {
     }
 
     private void updateParentId(String parentId) {
-        parentIdSingleLiveEvent.setValue(parentId);
+        parentIdEvent.setValue(parentId);
     }
 
     private void pushToStack(ExplorerItem explorerItem) {
@@ -106,7 +104,6 @@ public class ExplorerViewModel extends InteractiveViewModel {
     }
 
     public void handleOnClickEvent(ExplorerItem explorerItem) {
-        Log.d(TAG, "handleOnClickEvent: " + explorerItem.getTitle());
         if (explorerItem.getViewType() == cBackFolderViewType) {
             goBack();
         } else if (explorerItem.getViewType() == cStationViewType ||
@@ -118,23 +115,18 @@ public class ExplorerViewModel extends InteractiveViewModel {
     }
 
     private void goForward(ExplorerItem explorerItem) {
-        Log.d(TAG, "goForward: " + explorerItem.getTitle());
         pushToStack(explorerItem);
         fetchDirectory();
     }
 
     private void goBack() {
-        Log.d(TAG, "goBack: ");
         popFromStack();
         fetchDirectory();
     }
 
     private void fetchDirectory() {
-        setIsLoading(true);
         ExplorerItem explorerItem = peekAtStack();
         String parentId = explorerItem == null ? "" : explorerItem.getUuid();
-
-        Log.d(TAG, "fetchDirectory: " + parentId);
         updateParentId(parentId);
     }
 
@@ -151,16 +143,13 @@ public class ExplorerViewModel extends InteractiveViewModel {
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {
-        return Transformations.switchMap(parentIdSingleLiveEvent,
-                parentId -> repository.fetchDirectory(getGameEntity().getUuid(), parentId));
+        return Transformations.switchMap(parentIdEvent,
+                parentId -> repository.fetchDirectory(getGameEntityId(), parentId));
     }
 
     private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {
         return Transformations.map(transformParentIdToDirectoryList(), directory -> {
-            setIsLoading(false);
-            Log.d(TAG, "ExplorerViewModel: transforming directory entity list: " + directory.size());
-            ExplorerItem current = getCurrentExplorerItem();
-            return new DirectorySnapshot(current, directory);
+            return new DirectorySnapshot(getCurrentExplorerItem(), directory);
         });
     }
 

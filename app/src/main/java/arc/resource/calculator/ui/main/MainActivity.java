@@ -17,8 +17,8 @@
 package arc.resource.calculator.ui.main;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,12 +33,13 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 import arc.resource.calculator.ChangeLog;
-import arc.resource.calculator.DetailActivity;
 import arc.resource.calculator.FirstUseActivity;
 import arc.resource.calculator.R;
 import arc.resource.calculator.SettingsActivity;
-import arc.resource.calculator.ui.filter.FilterDialog;
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.util.AdUtil;
 import arc.resource.calculator.util.DialogUtil;
 import arc.resource.calculator.util.FeedbackUtil;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MainViewModel viewModel;
-    private AdUtil adUtil;
 
     //  loading views
     private ContentLoadingProgressBar progressBar;
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     //  content views
     private BottomNavigationView bottomNavigationView;
     private View fragment;
+
+    private AdUtil adUtil;
 
     // Purchase flow -> disable menu option to disable ads
     // CreateOptionsMenu -> disable menu option to disable ads if purchased
@@ -67,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setViews();
-        setViewModel();
 
         setupViewModel();
-        setupAds();
+        observeViewModel();
 
-        showChangeLog();
+        setupNavigation();
+        setupAds();
     }
 
     private void setViews() {
@@ -81,24 +83,17 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.loadingProgressBar);
     }
 
-    private void setViewModel() {
+    private void setupViewModel() {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        viewModel.injectDependencies(this);
+        viewModel.setup(this);
     }
 
-    private void setupViewModel() {
-        viewModel.getLoadingEvent().observe(this, isLoading -> {
-            if (isLoading) {
-                hideViews();
-            } else {
-                showViews();
-            }
-        });
-        viewModel.getStartActivityForResultTrigger().observe(this, intent -> {
-            int requestCode = intent.getIntExtra(DetailActivity.REQUEST_EXTRA_CODE, -1);
-            startActivityForResult(intent, requestCode);
-        });
+    private void observeViewModel() {
+        viewModel.getLoadingEvent().observe(this, this::handleLoadingEvent);
         viewModel.getSnackBarMessageEvent().observe(this, this::showSnackBar);
+
+        viewModel.getGameEntityListLiveData().observe(this, this::handleGameEntityListLiveData);
+        viewModel.getGameEntityLiveData().observe(this, this::handleGameEntityLiveData);
     }
 
     // TODO: 6/13/2020 How to change navigation panes on demand, save position from preiouvs use
@@ -109,22 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupAds() {
         adUtil = new AdUtil(this, R.id.content_main);
-    }
-
-    private void showViews() {
-        progressBar.hide();
-
-        fragment.setVisibility(View.VISIBLE);
-        bottomNavigationView.setVisibility(View.VISIBLE);
-
-        setupNavigation();
-    }
-
-    private void hideViews() {
-        progressBar.show();
-
-        fragment.setVisibility(View.GONE);
-        bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override
@@ -153,21 +132,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        final boolean show = super.onPrepareOptionsMenu(menu);
-
         // set up menu to enable/disable remove ads button (toggled)
         menu.findItem(R.id.action_remove_ads).setEnabled(!adUtil.isRemovingAds());
-
-        return show;
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_filter:
-                // TODO: 11/23/2020 show filter popup
-                FilterDialog fragment = new FilterDialog();
-                fragment.show(getSupportFragmentManager(), FilterDialog.TAG);
+//                // TODO: 11/23/2020 show filter popup
+//                FilterDialog fragment = new FilterDialog(this);
+//                fragment.show(getSupportFragmentManager(), FilterDialog.TAG);
                 break;
 
             case R.id.action_settings:
@@ -207,25 +183,36 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void handleGameEntityLiveData(GameEntity gameEntity) {
+        viewModel.setupComplete();
+    }
 
-        if (!adUtil.onActivityResult(requestCode, resultCode, data)) {
+    private void handleGameEntityListLiveData(List<GameEntity> gameEntityList) {
+        Log.d(TAG, "handleGameEntityListLiveData: " + gameEntityList.size());
+        if (gameEntityList.size() > 1) {
+            //  display alert dialog with game list
+        } else {
+            GameEntity gameEntity = gameEntityList.get(0);
+            Log.d(TAG, "handleGameEntityListLiveData: " + gameEntity.toString());
+            viewModel.saveGameEntity(gameEntity);
+            viewModel.fetchGameEntity(gameEntity.getUuid());
         }
     }
 
-    // TODO: 6/13/2020 Change changelog
-    private void showChangeLog() {
-//        try {
-//            ChangeLog changeLog = new ChangeLog(this);
-//
-//            if (changeLog.firstRun()) {
-//                changeLog.getLogDialog().show();
-//            }
-//        } catch (Exception e) {
-//            // do nothing
-//        }
+    private void handleLoadingEvent(boolean isLoading) {
+        if (isLoading) {
+            showLoading();
+        } else {
+            showLoaded();
+        }
+    }
+
+    private void showLoading() {
+        progressBar.show();
+    }
+
+    private void showLoaded() {
+        progressBar.hide();
     }
 
     private void showSnackBar(String text) {

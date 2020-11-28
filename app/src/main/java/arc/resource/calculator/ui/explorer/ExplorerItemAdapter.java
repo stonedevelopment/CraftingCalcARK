@@ -23,8 +23,8 @@ import androidx.annotation.NonNull;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
-import arc.resource.calculator.model.ui.InteractiveAdapter;
-import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 import arc.resource.calculator.ui.explorer.view.ExplorerBackFolderItemViewHolder;

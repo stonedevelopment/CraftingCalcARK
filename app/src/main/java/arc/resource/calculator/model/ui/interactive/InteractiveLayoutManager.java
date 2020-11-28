@@ -1,4 +1,4 @@
-package arc.resource.calculator.model.ui;
+package arc.resource.calculator.model.ui.interactive;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;

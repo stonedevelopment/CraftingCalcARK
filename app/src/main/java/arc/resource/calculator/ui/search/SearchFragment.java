@@ -29,11 +29,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.textview.MaterialTextView;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.InteractiveAdapter;
-import arc.resource.calculator.model.ui.InteractiveFragment;
-import arc.resource.calculator.model.ui.InteractiveLayoutManager;
+import arc.resource.calculator.model.ui.InteractiveGameFragment;
 
-public class SearchFragment extends InteractiveFragment {
+public class SearchFragment extends InteractiveGameFragment {
     public static final String TAG = SearchFragment.class.getCanonicalName();
 
     private SearchView searchView;
@@ -62,26 +60,6 @@ public class SearchFragment extends InteractiveFragment {
     @Override
     protected void setupViewModel() {
         setViewModel(new ViewModelProvider(requireActivity()).get(SearchViewModel.class));
-        getViewModel().injectDependencies(requireActivity());
-
-        getViewModel().getFilterTextEvent().observe(getViewLifecycleOwner(), searchText -> {
-            getViewModel().beginSearch(searchText);
-        });
-
-        getViewModel().getClearSearchEvent().observe(getViewLifecycleOwner(), didClearSearch -> {
-            if (didClearSearch) {
-                noResultsTextView.setVisibility(View.INVISIBLE);
-                searchResultsTextView.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        getViewModel().getTotalMatchesEvent().observe(getViewLifecycleOwner(), totalMatches -> {
-            noResultsTextView.setVisibility(totalMatches == 0 ? View.VISIBLE : View.INVISIBLE);
-
-            searchResultsTextView.setVisibility(View.VISIBLE);
-            searchResultsTextView.setText(getResources().getQuantityString(R.plurals.search_results_found, totalMatches, totalMatches));
-        });
-
         super.setupViewModel();
     }
 
@@ -107,7 +85,37 @@ public class SearchFragment extends InteractiveFragment {
     }
 
     @Override
-    protected void setupViews(InteractiveAdapter adapter, InteractiveLayoutManager layoutManager) {
-        super.setupViews(adapter, layoutManager);
+    protected void observeViewModel() {
+        super.observeViewModel();
+        getViewModel().getFilterTextEvent().observe(getViewLifecycleOwner(), searchText -> {
+            getViewModel().beginSearch(searchText);
+        });
+        getViewModel().getClearSearchEvent().observe(getViewLifecycleOwner(), didClearSearch -> {
+            if (didClearSearch) {
+                noResultsTextView.setVisibility(View.INVISIBLE);
+                searchResultsTextView.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        getViewModel().getTotalMatchesEvent().observe(getViewLifecycleOwner(), totalMatches -> {
+            noResultsTextView.setVisibility(totalMatches == 0 ? View.VISIBLE : View.INVISIBLE);
+
+            searchResultsTextView.setVisibility(View.VISIBLE);
+            searchResultsTextView.setText(getResources().getQuantityString(R.plurals.search_results_found, totalMatches, totalMatches));
+        });
+    }
+
+    @Override
+    protected void showLoading() {
+        super.showLoading();
+        noResultsTextView.setVisibility(View.INVISIBLE);
+        searchResultsTextView.setVisibility(View.INVISIBLE);
+        searchView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void showLoaded() {
+        super.showLoaded();
+        searchView.setVisibility(View.VISIBLE);
     }
 }

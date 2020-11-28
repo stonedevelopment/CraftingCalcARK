@@ -28,79 +28,89 @@ import arc.resource.calculator.listeners.PrefsObserver;
 
 // TODO: 5/16/2017 Why continue to use string resources instead of static constants?
 public class PrefsUtil {
+    public static final String TAG = PrefsUtil.class.getSimpleName();
     public static final String cVersionPrimary = "versionPrimary";
     public static final String cVersionDLC = "versionDLC_";
     private static final String cDidUpdate = "didUpdate";
-    private static final String TAG = PrefsUtil.class.getSimpleName();
     public static String FirstUseKey = "first_use";
     public static boolean FirstUseDefaultValue = true;
     private static PrefsUtil sInstance;
     private static String JSONVersionKey;
-    private final SharedPreferences mSharedPreferences;
-    private String DLCIdKey;
-    private long DLCIdDefaultValue;
+
+    private final SharedPreferences prefs;
+
+    private String GameIdKey;
+    private String GameIdDefaultValue;
+
+    private String DlcFilterKey;
+    private boolean DlcFilterDefaultValue;
+
+    private String DlcIdKey;
+    private String DlcIdDefaultValue;
+
+    private String RequiredLevelFilterKey;
+    private boolean RequiredLevelFilterDefaultValue;
+    private String RequiredLevelKey;
+    private int RequiredLevelDefaultValue;
+
     private String RefinedFilterKey;
     private boolean RefinedFilterDefaultValue;
     private String CategoryFilterKey;
     private boolean CategoryFilterDefaultValue;
     private String StationFilterKey;
     private boolean StationFilterDefaultValue;
-    private String RequiredLevelFilterKey;
-    private boolean RequiredLevelFilterDefaultValue;
-    private String RequiredLevelKey;
-    private int RequiredLevelDefaultValue;
     private String LastCategoryLevelKey;
     private String LastCategoryParentKey;
     private long LastCategoryLevelDefaultValue;
     private String LastStationIdKey;
     private long LastStationIdDefaultValue;
     private String CraftingQueueKey;
-    private String CraftableViewSizeKey;
-    private String MainSwitcherScreenIdKey;
     private String SearchQueryKey;
     private String PurchasableRemoveAdsKey;
     private boolean PurchasableRemoveAdsDefaultValue;
 
-    private PrefsUtil(Context context) {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    private PrefsUtil(Context c) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
-        DLCIdKey = context.getString(R.string.pref_dlc_key);
-        DLCIdDefaultValue = Long.parseLong(context.getString(R.string.pref_dlc_value_default));
+        GameIdKey = c.getString(R.string.pref_game_id_key);
+        GameIdDefaultValue = null;
 
-        RefinedFilterKey = context.getString(R.string.pref_filter_refined_key);
-        RefinedFilterDefaultValue = Boolean.parseBoolean(context.getString(R.string.pref_filter_refined_value_default));
+        DlcFilterKey = c.getString(R.string.pref_dlc_filter_key);
+        DlcFilterDefaultValue = Boolean.parseBoolean(c.getString(R.string.pref_dlc_filter_default_value));
 
-        CategoryFilterKey = context.getString(R.string.pref_filter_category_key);
-        CategoryFilterDefaultValue = Boolean.parseBoolean(context.getString(R.string.pref_filter_category_value_default));
+        DlcIdKey = c.getString(R.string.pref_dlc_id_key);
+        DlcIdDefaultValue = null;
 
-        StationFilterKey = context.getString(R.string.pref_filter_station_key);
-        StationFilterDefaultValue = Boolean.parseBoolean(context.getString(R.string.pref_filter_station_value_default));
+        RefinedFilterKey = c.getString(R.string.pref_filter_refined_key);
+        RefinedFilterDefaultValue = Boolean.parseBoolean(c.getString(R.string.pref_filter_refined_value_default));
 
-        RequiredLevelFilterKey = context.getString(R.string.pref_filter_level_key);
-        RequiredLevelFilterDefaultValue = Boolean.parseBoolean(context.getString(R.string.pref_filter_level_value_default));
+        CategoryFilterKey = c.getString(R.string.pref_filter_category_key);
+        CategoryFilterDefaultValue = Boolean.parseBoolean(c.getString(R.string.pref_filter_category_value_default));
 
-        JSONVersionKey = context.getString(R.string.pref_json_version_key);
+        StationFilterKey = c.getString(R.string.pref_filter_station_key);
+        StationFilterDefaultValue = Boolean.parseBoolean(c.getString(R.string.pref_filter_station_value_default));
 
-        LastCategoryLevelKey = context.getString(R.string.pref_category_level_key);
-        LastCategoryParentKey = context.getString(R.string.pref_category_parent_key);
-        LastCategoryLevelDefaultValue = Long.parseLong(context.getString(R.string.pref_category_default_value));
+        RequiredLevelFilterKey = c.getString(R.string.pref_filter_level_key);
+        RequiredLevelFilterDefaultValue = Boolean.parseBoolean(c.getString(R.string.pref_filter_level_value_default));
 
-        LastStationIdKey = context.getString(R.string.pref_station_id_key);
-        LastStationIdDefaultValue = Long.parseLong(context.getString(R.string.pref_station_id_default_value));
+        JSONVersionKey = c.getString(R.string.pref_json_version_key);
 
-        RequiredLevelKey = context.getString(R.string.pref_edit_text_level_key);
-        RequiredLevelDefaultValue = Integer.parseInt(context.getString(R.string.pref_edit_text_level_value_default));
+        LastCategoryLevelKey = c.getString(R.string.pref_category_level_key);
+        LastCategoryParentKey = c.getString(R.string.pref_category_parent_key);
+        LastCategoryLevelDefaultValue = Long.parseLong(c.getString(R.string.pref_category_default_value));
 
-        CraftingQueueKey = context.getString(R.string.pref_crafting_queue_key);
+        LastStationIdKey = c.getString(R.string.pref_station_id_key);
+        LastStationIdDefaultValue = Long.parseLong(c.getString(R.string.pref_station_id_default_value));
 
-        CraftableViewSizeKey = context.getString(R.string.pref_craftable_view_size_key);
+        RequiredLevelKey = c.getString(R.string.pref_edit_text_level_key);
+        RequiredLevelDefaultValue = Integer.parseInt(c.getString(R.string.pref_edit_text_level_value_default));
 
-        MainSwitcherScreenIdKey = context.getString(R.string.pref_switcher_main_screen_id_key);
+        CraftingQueueKey = c.getString(R.string.pref_crafting_queue_key);
 
-        SearchQueryKey = context.getString(R.string.pref_search_query_key);
+        SearchQueryKey = c.getString(R.string.pref_search_query_key);
 
-        PurchasableRemoveAdsKey = context.getString(R.string.pref_purchasable_remove_ads_key);
-        PurchasableRemoveAdsDefaultValue = Boolean.parseBoolean(context.getString(R.string.pref_purchasable_remove_ads_value_default));
+        PurchasableRemoveAdsKey = c.getString(R.string.pref_purchasable_remove_ads_key);
+        PurchasableRemoveAdsDefaultValue = Boolean.parseBoolean(c.getString(R.string.pref_purchasable_remove_ads_value_default));
     }
 
     public static PrefsUtil getInstance(Context context) {
@@ -111,7 +121,7 @@ public class PrefsUtil {
     }
 
     private String getPreference(String key, String defaultValue) {
-        return mSharedPreferences.getString(key, defaultValue);
+        return prefs.getString(key, defaultValue);
     }
 
     private long getPreference(String key, long defaultValue) {
@@ -124,10 +134,10 @@ public class PrefsUtil {
 
     private boolean getPreference(String key, boolean defaultValue) {
         try {
-            return mSharedPreferences.getBoolean(key, defaultValue);
+            return prefs.getBoolean(key, defaultValue);
         } catch (ClassCastException e) {
-            Log.e(TAG, "getPreference: ClassCastException: " + defaultValue + " for " + mSharedPreferences.getString(key, String.valueOf(defaultValue)), e);
-            return Boolean.parseBoolean(mSharedPreferences.getString(key, String.valueOf(defaultValue)));
+            Log.e(TAG, "getPreference: ClassCastException: " + defaultValue + " for " + prefs.getString(key, String.valueOf(defaultValue)), e);
+            return Boolean.parseBoolean(prefs.getString(key, String.valueOf(defaultValue)));
         }
     }
 
@@ -136,7 +146,7 @@ public class PrefsUtil {
     }
 
     private void editPreference(String key, String value) {
-        mSharedPreferences.edit().putString(key, value).apply();
+        prefs.edit().putString(key, value).apply();
     }
 
     private void editPreference(String key, long value) {
@@ -148,7 +158,7 @@ public class PrefsUtil {
     }
 
     private void editPreference(String key, boolean value) {
-        mSharedPreferences.edit().putBoolean(key, value).apply();
+        prefs.edit().putBoolean(key, value).apply();
     }
 
     private void editPreference(String key, float value) {
@@ -160,11 +170,23 @@ public class PrefsUtil {
     }
 
     private void removePreference(String key) {
-        mSharedPreferences.edit().remove(key).commit();
+        prefs.edit().remove(key).apply();
     }
 
-    public long getDLCPreference() {
-        return getPreference(DLCIdKey, DLCIdDefaultValue);
+    public String getGameIdPreference() {
+        return getPreference(GameIdKey, GameIdDefaultValue);
+    }
+
+    public void saveGameIdPreference(String gameId) {
+        editPreference(GameIdKey, gameId);
+    }
+
+    public String getDlcPreference() {
+        return getPreference(DlcIdKey, DlcIdDefaultValue);
+    }
+
+    public boolean getDlcFilterPreference() {
+        return getPreference(DlcFilterKey, DlcFilterDefaultValue);
     }
 
     public boolean getRefinedFilterPreference() {
@@ -229,20 +251,12 @@ public class PrefsUtil {
         return getPreference(RequiredLevelKey, RequiredLevelDefaultValue);
     }
 
-    public int getCraftableViewSize() {
-        return getPreference(CraftableViewSizeKey, Util.NO_SIZE);
-    }
-
     public String getSearchQuery() {
         return getPreference(SearchQueryKey, null);
     }
 
     public boolean getPurchasableRemoveAds() {
         return getPreference(PurchasableRemoveAdsKey, PurchasableRemoveAdsDefaultValue);
-    }
-
-    public void saveCraftableViewSize(int size) {
-        editPreference(CraftableViewSizeKey, size);
     }
 
     public void saveCategoryLevels(long level, long parent) {
@@ -258,8 +272,8 @@ public class PrefsUtil {
         editPreference(LastStationIdKey, station_id);
     }
 
-    private void saveDLCId(long dlc_id) {
-        editPreference(DLCIdKey, dlc_id);
+    private void saveDlcId(String dlcId) {
+        editPreference(DlcIdKey, dlcId);
     }
 
     public void saveRefinedFilterPreference(boolean isRefined) {
@@ -276,7 +290,7 @@ public class PrefsUtil {
     void saveToDefaultFullReset() {
         resetFiltersBackToDefault();
 
-        removePreference(DLCIdKey);
+        removePreference(DlcIdKey);
         saveDLCIdBackToDefault();
 
         removePreference(LastStationIdKey);
@@ -293,7 +307,7 @@ public class PrefsUtil {
     }
 
     private void saveDLCIdBackToDefault() {
-        saveDLCId(DLCIdDefaultValue);
+        saveDlcId(DlcIdDefaultValue);
     }
 
     private void resetFiltersBackToDefault() {
@@ -323,10 +337,6 @@ public class PrefsUtil {
 
     private void saveRequiredLevelBackToDefault() {
         saveRequiredLevel(RequiredLevelDefaultValue);
-    }
-
-    public void saveMainSwitcherScreenId(int id) {
-        editPreference(MainSwitcherScreenIdKey, id);
     }
 
     public void saveSearchQuery(String query) {

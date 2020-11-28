@@ -21,6 +21,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import arc.resource.calculator.model.ui.interactive.InteractiveItem;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 import arc.resource.calculator.model.ui.view.EngramItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
@@ -44,7 +46,6 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
     @Override
     protected void setupViewModel(FragmentActivity activity) {
         super.setupViewModel(activity);
-
         getViewModel().fetchEngram(getItem().getSourceId()).observe(activity, entity -> {
             String imageFile = entity.getImageFile();
             loadImage(imageFile);
@@ -52,6 +53,12 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
             String description = entity.getDescription();
             setDescriptionText(description);
         });
+    }
+
+    @Override
+    public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
+        super.bind(activity, item, viewModel);
+        setImagePath(getViewModel().getGameEntity().getFilePath());
     }
 
     @Override

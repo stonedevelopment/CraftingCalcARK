@@ -138,4 +138,18 @@ public class GameEntity {
     public void setLastUpdated(@NonNull Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+
+    @Override
+    public String toString() {
+        return "GameEntity{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", logoFile='" + logoFile + '\'' +
+                ", folderFile='" + folderFile + '\'' +
+                ", backFolderFile='" + backFolderFile + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                '}';
+    }
 }

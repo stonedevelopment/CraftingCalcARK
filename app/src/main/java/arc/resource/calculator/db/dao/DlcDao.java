@@ -24,7 +24,6 @@ import androidx.room.Query;
 import java.util.List;
 
 import arc.resource.calculator.db.entity.DlcEntity;
-import arc.resource.calculator.db.entity.GameEntity;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
@@ -38,8 +37,8 @@ public interface DlcDao {
     @Query("delete from dlc")
     void deleteAll();
 
-    @Query("select * from dlc where gameId is :gameId order by name asc")
-    LiveData<List<DlcEntity>> getDlcList(String gameId);
+    @Query("select * from dlc where gameId is :gameId and totalConversion is :totalConversion order by name asc")
+    LiveData<List<DlcEntity>> getDlcList(String gameId, boolean totalConversion);
 
     @Query("select * from dlc where uuid is :uuid")
     LiveData<DlcEntity> getDlc(String uuid);

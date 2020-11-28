@@ -13,7 +13,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.splash.SplashScreenActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -50,22 +49,10 @@
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:windowSoftInputMode="adjustPan"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name_full"
-            android:largeHeap="true" />
-
-        <activity
-            android:name=".DetailActivity"
-            android:label="@string/title_activity_detail"
-            android:parentActivityName=".ui.main.MainActivity"
-            android:windowSoftInputMode="stateHidden">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.main.MainActivity" />
-        </activity>
+            android:largeHeap="true"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".SettingsActivity"
@@ -78,12 +65,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
         </activity>
-
-        <provider
-            android:name=".db.DatabaseProvider"
-            android:authorities="${applicationId}.provider"
-            android:enabled="true"
-            android:exported="false" />
     </application>
 
 </manifest>

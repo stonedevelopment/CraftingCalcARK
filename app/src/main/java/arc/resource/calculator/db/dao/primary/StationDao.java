@@ -23,7 +23,6 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
@@ -38,12 +37,17 @@ public interface StationDao {
     @Query("delete from stations")
     void deleteAll();
 
-    @Query("select * from stations where gameId is :gameId order by name asc")
-    LiveData<List<StationEntity>> getStationList(String gameId);
-
-    @Query("select * from stations where uuid is :uuid")
+    @Query("select * from stations " +
+            "where uuid is :uuid")
     LiveData<StationEntity> getStation(String uuid);
 
-    @Query("select * from stations where name like :searchName order by name asc")
-    LiveData<List<StationEntity>> searchByName(String searchName);
+    @Query("select * from stations " +
+            "where gameId is :gameId " +
+            "order by name asc")
+    LiveData<List<StationEntity>> getStationList(String gameId);
+
+    @Query("select * from stations " +
+            "where name like :searchName and gameId is :gameId " +
+            "order by name asc")
+    LiveData<List<StationEntity>> searchByName(String searchName, String gameId);
 }

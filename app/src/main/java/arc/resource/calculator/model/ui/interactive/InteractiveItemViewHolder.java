@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.model.ui.view;
+package arc.resource.calculator.model.ui.interactive;
 
 import android.view.View;
 
@@ -28,9 +28,6 @@ import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.GameEntity;
-import arc.resource.calculator.model.ui.InteractiveItem;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
 
 import static arc.resource.calculator.util.Constants.cAssetsFilePath;
 
@@ -72,8 +69,8 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
         this.item = item;
     }
 
-    private void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    protected void setImagePath(String imagePath) {
+        this.imagePath = cAssetsFilePath.concat(imagePath);
     }
 
     protected void loadImage(String imageFile) {
@@ -99,7 +96,7 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     protected void setupViewModel(FragmentActivity activity) {
-        viewModel.getGameEntityLiveData().observe(activity, this::handleGameEntityLiveData);
+        //  do nothing
     }
 
     protected void setupTitleTextView() {
@@ -108,10 +105,6 @@ public class InteractiveItemViewHolder extends RecyclerView.ViewHolder {
 
     protected void setupCardView() {
         cardView.setOnClickListener(v -> handleOnClickEvent());
-    }
-
-    protected void handleGameEntityLiveData(GameEntity gameEntity) {
-        setImagePath(cAssetsFilePath.concat(gameEntity.getFilePath()));
     }
 
     protected void handleOnClickEvent() {

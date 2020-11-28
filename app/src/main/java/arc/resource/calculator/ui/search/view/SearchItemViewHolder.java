@@ -21,9 +21,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
-import arc.resource.calculator.model.ui.InteractiveItem;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
-import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveItem;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
+import arc.resource.calculator.ui.search.SearchViewModel;
 
 public class SearchItemViewHolder extends InteractiveItemViewHolder {
     public static final String TAG = SearchItemViewHolder.class.getSimpleName();
@@ -33,7 +34,13 @@ public class SearchItemViewHolder extends InteractiveItemViewHolder {
     }
 
     @Override
+    public SearchViewModel getViewModel() {
+        return (SearchViewModel) super.getViewModel();
+    }
+
+    @Override
     public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
         super.bind(activity, item, viewModel);
+        setImagePath(getViewModel().getGameEntity().getFilePath());
     }
 }

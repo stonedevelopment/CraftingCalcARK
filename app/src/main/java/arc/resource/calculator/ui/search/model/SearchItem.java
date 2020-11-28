@@ -20,7 +20,7 @@ import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
-import arc.resource.calculator.model.ui.InteractiveItem;
+import arc.resource.calculator.model.ui.interactive.InteractiveItem;
 
 public class SearchItem extends InteractiveItem {
     private final String description;
@@ -44,8 +44,8 @@ public class SearchItem extends InteractiveItem {
         return StationSearchItem.fromEntity(entity);
     }
 
-    public static FolderSearchItem fromFolderEntity(FolderEntity entity, String imageFile) {
-        return FolderSearchItem.fromEntity(entity, imageFile);
+    public static FolderSearchItem fromFolderEntity(FolderEntity entity) {
+        return FolderSearchItem.fromEntity(entity);
     }
 
     public String getDescription() {

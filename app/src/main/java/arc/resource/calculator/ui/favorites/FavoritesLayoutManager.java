@@ -1,8 +1,7 @@
 package arc.resource.calculator.ui.favorites;
 
-import arc.resource.calculator.model.ui.InteractiveLayoutManager;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
-import arc.resource.calculator.ui.explorer.ExplorerFragment;
+import arc.resource.calculator.model.ui.interactive.InteractiveLayoutManager;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 
 public class FavoritesLayoutManager extends InteractiveLayoutManager {
     public FavoritesLayoutManager(FavoritesFragment fragment, InteractiveViewModel viewModel) {

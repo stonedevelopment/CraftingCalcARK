@@ -26,11 +26,9 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.InteractiveAdapter;
-import arc.resource.calculator.model.ui.InteractiveFragment;
-import arc.resource.calculator.model.ui.InteractiveLayoutManager;
+import arc.resource.calculator.model.ui.InteractiveGameFragment;
 
-public class ExplorerFragment extends InteractiveFragment {
+public class ExplorerFragment extends InteractiveGameFragment {
     public static final String TAG = ExplorerFragment.class.getSimpleName();
 
     @Override
@@ -47,7 +45,6 @@ public class ExplorerFragment extends InteractiveFragment {
     @Override
     protected void setupViewModel() {
         setViewModel(new ViewModelProvider(requireActivity()).get(ExplorerViewModel.class));
-        getViewModel().injectDependencies(requireActivity());
         super.setupViewModel();
     }
 
@@ -56,10 +53,5 @@ public class ExplorerFragment extends InteractiveFragment {
         ExplorerItemAdapter adapter = new ExplorerItemAdapter(this, getViewModel());
         ExplorerLayoutManager layoutManager = new ExplorerLayoutManager(this, getViewModel());
         setupViews(adapter, layoutManager);
-    }
-
-    @Override
-    protected void setupViews(InteractiveAdapter adapter, InteractiveLayoutManager layoutManager) {
-        super.setupViews(adapter, layoutManager);
     }
 }

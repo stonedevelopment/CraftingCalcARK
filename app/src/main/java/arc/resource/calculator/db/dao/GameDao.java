@@ -37,9 +37,11 @@ public interface GameDao {
     @Query("delete from games")
     void deleteAll();
 
-    @Query("select * from games order by name asc")
-    LiveData<List<GameEntity>> getGameList();
+    @Query("select * from games " +
+            "order by name asc")
+    LiveData<List<GameEntity>> getGameEntityList();
 
-    @Query("select * from games where uuid is :uuid")
+    @Query("select * from games " +
+            "where uuid is :uuid")
     LiveData<GameEntity> getGame(String uuid);
 }

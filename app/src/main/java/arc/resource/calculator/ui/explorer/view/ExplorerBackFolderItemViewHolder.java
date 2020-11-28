@@ -24,9 +24,8 @@ import androidx.fragment.app.FragmentActivity;
 import java.util.Objects;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
-import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerBackFolderItemViewHolder extends InteractiveItemViewHolder {

@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.model.ui;
+package arc.resource.calculator.model.ui.interactive;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +32,6 @@ import java.util.List;
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.view.EngramItemViewHolder;
 import arc.resource.calculator.model.ui.view.FolderItemViewHolder;
-import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
 import arc.resource.calculator.model.ui.view.StationItemViewHolder;
 
 import static arc.resource.calculator.util.Constants.cEngramViewType;
@@ -109,6 +108,18 @@ public class InteractiveAdapter extends RecyclerView.Adapter<InteractiveItemView
         return itemList.size();
     }
 
+    protected InteractiveViewModel getViewModel() {
+        return viewModel;
+    }
+
+    protected FragmentActivity getActivity() {
+        return fragmentActivity;
+    }
+
+    protected LayoutInflater getLayoutInflater() {
+        return layoutInflater;
+    }
+
     protected InteractiveItem getItem(int position) {
         return itemList.get(position);
     }
@@ -127,17 +138,5 @@ public class InteractiveAdapter extends RecyclerView.Adapter<InteractiveItemView
 
     protected void addToItemList(List<InteractiveItem> itemList) {
         this.itemList.addAll(itemList);
-    }
-
-    protected InteractiveViewModel getViewModel() {
-        return viewModel;
-    }
-
-    protected FragmentActivity getActivity() {
-        return fragmentActivity;
-    }
-
-    protected LayoutInflater getLayoutInflater() {
-        return layoutInflater;
     }
 }

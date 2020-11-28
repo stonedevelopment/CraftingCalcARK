@@ -1,7 +1,7 @@
 package arc.resource.calculator.ui.favorites;
 
-import arc.resource.calculator.model.ui.InteractiveAdapter;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
+import arc.resource.calculator.model.ui.interactive.InteractiveAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 
 public class FavoritesItemAdapter extends InteractiveAdapter {
     protected FavoritesItemAdapter(FavoritesFragment fragment, InteractiveViewModel viewModel) {

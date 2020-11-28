@@ -32,12 +32,12 @@ import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
+import arc.resource.calculator.model.ui.InteractiveGameViewModel;
 import arc.resource.calculator.ui.search.model.SearchItem;
 
-public class SearchViewModel extends InteractiveViewModel {
+public class SearchViewModel extends InteractiveGameViewModel {
     public static final String TAG = SearchViewModel.class.getCanonicalName();
-    private static final int SOURCE_TOTAL = 3;
+    private static final int SOURCE_TOTAL = 4;
 
     private final SearchRepository repository;
     private final MediatorLiveData<List<SearchItem>> searchLiveData = new MediatorLiveData<>();
@@ -100,10 +100,14 @@ public class SearchViewModel extends InteractiveViewModel {
 
         remainingSources = SOURCE_TOTAL;
 
-        engramLiveData = repository.searchEngrams(searchText);
-        resourceLiveData = repository.searchResources(searchText);
-        stationLiveData = repository.searchStations(searchText);
-        folderLiveData = repository.searchFolders(searchText);
+        String gameId = getGameEntityId();
+        String dlcId = null;
+//        String dlcId = getDlcEntityId();
+
+        engramLiveData = repository.searchEngrams(searchText, gameId, dlcId);
+        resourceLiveData = repository.searchResources(searchText, gameId, dlcId);
+        stationLiveData = repository.searchStations(searchText, gameId, dlcId);
+        folderLiveData = repository.searchFolders(searchText, gameId, dlcId);
 
         searchLiveData.addSource(engramLiveData, entities -> {
             for (EngramEntity entity : entities) {
@@ -131,16 +135,16 @@ public class SearchViewModel extends InteractiveViewModel {
             searchLiveData.removeSource(stationLiveData);
             if (--remainingSources == 0) endSearch();
         });
-//
-//        searchLiveData.addSource(folderLiveData, entities -> {
-//            for (FolderEntity entity : entities) {
-//                searchItemList.add(SearchItem.fromFolderEntity(entity, gameEntity.getFolderFile()));
-//            }
-//
-//            searchLiveData.removeSource(folderLiveData);
-//            if (--remainingSources == 0)
-//                searchLiveData.setValue(searchItemList);
-//        });
+
+        searchLiveData.addSource(folderLiveData, entities -> {
+            for (FolderEntity entity : entities) {
+                searchItemList.add(SearchItem.fromFolderEntity(entity));
+            }
+
+            searchLiveData.removeSource(folderLiveData);
+            if (--remainingSources == 0)
+                searchLiveData.setValue(searchItemList);
+        });
     }
 
     void endSearch() {

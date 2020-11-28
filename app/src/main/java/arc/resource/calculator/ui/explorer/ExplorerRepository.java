@@ -30,6 +30,7 @@ import arc.resource.calculator.db.dao.primary.DirectoryDao;
 import arc.resource.calculator.db.dao.primary.EngramDao;
 import arc.resource.calculator.db.dao.primary.FolderDao;
 import arc.resource.calculator.db.dao.primary.StationDao;
+import arc.resource.calculator.db.entity.dlc.DlcDirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
@@ -58,7 +59,7 @@ public class ExplorerRepository {
         return directoryDao.getDirectoryItemList(gameId, parentId);
     }
 
-    LiveData<List<DirectoryItemEntity>> fetchDirectory(String gameId, String dlcId, String parentId) {
+    LiveData<List<DlcDirectoryItemEntity>> fetchDirectory(String gameId, String dlcId, String parentId) {
         Log.d(TAG, "fetchDirectory: " + parentId);
         return dlcDirectoryDao.getDirectoryItemList(gameId, dlcId, parentId);
     }

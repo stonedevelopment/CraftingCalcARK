@@ -23,25 +23,23 @@ import androidx.fragment.app.FragmentActivity;
 
 import arc.resource.calculator.model.ui.interactive.InteractiveItem;
 import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
-import arc.resource.calculator.model.ui.view.StationItemViewHolder;
-import arc.resource.calculator.ui.search.model.EngramSearchItem;
+import arc.resource.calculator.ui.search.model.ResourceSearchItem;
 
-public class EngramSearchItemViewHolder extends SearchItemViewHolder {
-    public static final String TAG = EngramSearchItemViewHolder.class.getSimpleName();
+public class ResourceSearchItemViewHolder extends SearchItemViewHolder {
+    public static final String TAG = ResourceSearchItemViewHolder.class.getSimpleName();
 
-    public EngramSearchItemViewHolder(@NonNull View itemView) {
+    public ResourceSearchItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
     @Override
-    public EngramSearchItem getItem() {
-        return (EngramSearchItem) super.getItem();
+    public ResourceSearchItem getItem() {
+        return (ResourceSearchItem) super.getItem();
     }
 
     @Override
     public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
         super.bind(activity, item, viewModel);
         loadImage(getItem().getImageFile());
-        setDescriptionText(getItem().getDescription());
     }
 }

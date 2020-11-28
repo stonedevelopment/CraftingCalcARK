@@ -1,7 +1,7 @@
 package arc.resource.calculator.ui.explorer;
 
-import arc.resource.calculator.model.ui.InteractiveLayoutManager;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
+import arc.resource.calculator.model.ui.interactive.InteractiveLayoutManager;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 
 public class ExplorerLayoutManager extends InteractiveLayoutManager {
     public ExplorerLayoutManager(ExplorerFragment fragment, InteractiveViewModel viewModel) {

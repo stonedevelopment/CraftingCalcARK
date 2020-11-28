@@ -17,123 +17,55 @@
 package arc.resource.calculator.ui.main;
 
 import android.app.Application;
-import android.content.Intent;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
-import arc.resource.calculator.R;
-import arc.resource.calculator.db.entity.DlcEntity;
+import java.util.List;
+
 import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
-import arc.resource.calculator.model.ui.LoadingViewModel;
-import arc.resource.calculator.model.ui.SnackBarViewModel;
-
-import static android.content.Context.MODE_PRIVATE;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 
 /**
  * ViewModel for MainActivity
  */
-public class MainViewModel extends AndroidViewModel implements LoadingViewModel, SnackBarViewModel {
+public class MainViewModel extends InteractiveViewModel {
+    public static final String TAG = MainViewModel.class.getCanonicalName();
+
     private final MainRepository repository;
-    private final SingleLiveEvent<Boolean> dataLoadedEvent = new SingleLiveEvent<>();
-
-    private GameEntity gameEntity;
-    private boolean gameEntityLoaded;
-    private DlcEntity dlcEntity;
-    private boolean dlcEntityLoaded;
-
-    private MutableLiveData<Intent> mStartActivityForResultTrigger = new MutableLiveData<>();
+    private final SingleLiveEvent<String> gameEntityUuidEvent = new SingleLiveEvent<>();
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-
         repository = new MainRepository(application);
     }
 
-    public void injectDependencies(FragmentActivity fragmentActivity) {
-        loadData(fragmentActivity);
-    }
-
-    MutableLiveData<Intent> getStartActivityForResultTrigger() {
-        return mStartActivityForResultTrigger;
-    }
-
-    public void startActivityForResult(Intent intent) {
-        mStartActivityForResultTrigger.setValue(intent);
-    }
-
-    public SingleLiveEvent<Boolean> getDataLoadedEvent() {
-        return dataLoadedEvent;
-    }
-
-    private void setDataLoaded(boolean dataLoaded) {
-        getDataLoadedEvent().setValue(dataLoaded);
-    }
-
-    public GameEntity getGameEntity() {
-        return gameEntity;
-    }
-
-    private void setGameEntity(GameEntity gameEntity) {
-        this.gameEntity = gameEntity;
-    }
-
-    private void setGameEntityLoaded(boolean gameEntityLoaded) {
-        this.gameEntityLoaded = gameEntityLoaded;
-    }
-
-    private void handleGameEntity(GameEntity gameEntity) {
-        setGameEntity(gameEntity);
-        setGameEntityLoaded(true);
-        checkDataLoaded();
-    }
-
-    public DlcEntity getDlcEntity() {
-        return dlcEntity;
-    }
-
-    private void setDlcEntity(DlcEntity dlcEntity) {
-        this.dlcEntity = dlcEntity;
-    }
-
-    private void setDlcEntityLoaded(boolean dlcEntityLoaded) {
-        this.dlcEntityLoaded = dlcEntityLoaded;
-    }
-
-    private void handleDlcEntity(DlcEntity dlcEntity) {
-        setDlcEntity(dlcEntity);
-        setDlcEntityLoaded(true);
-        checkDataLoaded();
-    }
-
-    private void loadData(FragmentActivity context) {
+    @Override
+    public void setup(FragmentActivity activity) {
+        super.setup(activity);
         setIsLoading(true);
-        SharedPreferences prefs = context.getPreferences(MODE_PRIVATE);
-        fetchGameEntity(prefs.getString(context.getString(R.string.pref_filter_game_id_key),
-                context.getString(R.string.pref_filter_game_id_default_value)))
-                .observe(context, this::handleGameEntity);
-        fetchDlcEntity(prefs.getString(context.getString(R.string.pref_filter_dlc_id_key), null))
-                .observe(context, this::handleDlcEntity);
     }
 
-    private void checkDataLoaded() {
-        if (gameEntityLoaded && dlcEntityLoaded) {
-            setIsLoading(false);
-        }
+    protected void setupComplete() {
+        setIsLoading(false);
     }
 
-    private LiveData<GameEntity> fetchGameEntity(String uuid) {
-        setGameEntityLoaded(false);
-        return repository.getGameEntity(uuid);
+    public LiveData<GameEntity> getGameEntityLiveData() {
+        return Transformations.switchMap(gameEntityUuidEvent, repository::getGameEntity);
     }
 
-    private LiveData<DlcEntity> fetchDlcEntity(String uuid) {
-        setDlcEntityLoaded(false);
-        return repository.getDlcEntity(uuid);
+    public LiveData<List<GameEntity>> getGameEntityListLiveData() {
+        return repository.getGameEntityList();
+    }
+
+    public void fetchGameEntity(String gameId) {
+        gameEntityUuidEvent.setValue(gameId);
+    }
+
+    public void saveGameEntity(GameEntity gameEntity) {
+        getPrefs().saveGameIdPreference(gameEntity.getUuid());
     }
 }

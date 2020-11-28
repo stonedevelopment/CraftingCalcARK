@@ -21,12 +21,11 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
-import arc.resource.calculator.model.ui.InteractiveItem;
-import arc.resource.calculator.model.ui.InteractiveViewModel;
-import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveItem;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 import arc.resource.calculator.ui.search.model.StationSearchItem;
 
-public class StationSearchItemViewHolder extends InteractiveItemViewHolder {
+public class StationSearchItemViewHolder extends SearchItemViewHolder {
     public static final String TAG = StationSearchItemViewHolder.class.getSimpleName();
 
     public StationSearchItemViewHolder(@NonNull View itemView) {

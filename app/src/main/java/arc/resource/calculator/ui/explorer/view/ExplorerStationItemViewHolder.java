@@ -21,6 +21,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import arc.resource.calculator.model.ui.interactive.InteractiveItem;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 import arc.resource.calculator.model.ui.view.StationItemViewHolder;
 import arc.resource.calculator.ui.explorer.ExplorerViewModel;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
@@ -43,11 +45,16 @@ public class ExplorerStationItemViewHolder extends StationItemViewHolder {
     @Override
     protected void setupViewModel(FragmentActivity activity) {
         super.setupViewModel(activity);
-
         getViewModel().fetchStation(getItem().getSourceId()).observe(activity, entity -> {
             String imageFile = entity.getImageFile();
             loadImage(imageFile);
         });
+    }
+
+    @Override
+    public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
+        super.bind(activity, item, viewModel);
+        setImagePath(getViewModel().getGameEntity().getFilePath());
     }
 
     @Override

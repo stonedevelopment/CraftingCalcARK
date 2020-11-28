@@ -26,9 +26,9 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.InteractiveAdapter;
-import arc.resource.calculator.model.ui.InteractiveFragment;
-import arc.resource.calculator.model.ui.InteractiveLayoutManager;
+import arc.resource.calculator.model.ui.interactive.InteractiveAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveFragment;
+import arc.resource.calculator.model.ui.interactive.InteractiveLayoutManager;
 
 public class FavoritesFragment extends InteractiveFragment {
     public static final String TAG = FavoritesFragment.class.getCanonicalName();
@@ -47,7 +47,7 @@ public class FavoritesFragment extends InteractiveFragment {
     @Override
     protected void setupViewModel() {
         setViewModel(new ViewModelProvider(requireActivity()).get(FavoritesViewModel.class));
-        getViewModel().injectDependencies(requireActivity());
+        getViewModel().setup(requireActivity());
         super.setupViewModel();
     }
 

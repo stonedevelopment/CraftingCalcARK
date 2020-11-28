@@ -24,10 +24,12 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.InteractiveAdapter;
-import arc.resource.calculator.model.ui.view.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.search.model.SearchItem;
 import arc.resource.calculator.ui.search.view.EngramSearchItemViewHolder;
+import arc.resource.calculator.ui.search.view.FolderSearchItemViewHolder;
+import arc.resource.calculator.ui.search.view.ResourceSearchItemViewHolder;
 import arc.resource.calculator.ui.search.view.SearchItemViewHolder;
 import arc.resource.calculator.ui.search.view.StationSearchItemViewHolder;
 
@@ -50,13 +52,13 @@ public class SearchItemAdapter extends InteractiveAdapter {
         switch (viewType) {
             case cResourceViewType:
                 itemView = getLayoutInflater().inflate(R.layout.search_item_resource, parent, false);
-                break;
+                return new ResourceSearchItemViewHolder(itemView);
             case cEngramViewType:
                 itemView = getLayoutInflater().inflate(R.layout.search_item_engram, parent, false);
                 return new EngramSearchItemViewHolder(itemView);
             case cFolderViewType:
                 itemView = getLayoutInflater().inflate(R.layout.search_item_folder, parent, false);
-                break;
+                return new FolderSearchItemViewHolder(itemView);
             case cStationViewType:
                 itemView = getLayoutInflater().inflate(R.layout.search_item_station, parent, false);
                 return new StationSearchItemViewHolder(itemView);

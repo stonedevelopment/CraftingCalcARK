@@ -42,7 +42,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         phaseText = findViewById(R.id.phaseText);
         statusText = findViewById(R.id.statusText);
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.loadingProgressBar);
 
         setupViewModel();
     }

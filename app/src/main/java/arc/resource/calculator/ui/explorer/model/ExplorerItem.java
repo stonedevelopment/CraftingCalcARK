@@ -17,7 +17,7 @@
 package arc.resource.calculator.ui.explorer.model;
 
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
-import arc.resource.calculator.model.ui.InteractiveItem;
+import arc.resource.calculator.model.ui.interactive.InteractiveItem;
 
 public class ExplorerItem extends InteractiveItem {
     private final String parentId;
