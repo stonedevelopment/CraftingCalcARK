@@ -84,10 +84,6 @@ public class SearchViewModel extends InteractiveGameViewModel {
         }
     }
 
-    void handleOnClickEvent(SearchItem searchItem) {
-        Log.d(TAG, "handleOnClickEvent: " + searchItem.getTitle());
-    }
-
     void clearSearch() {
         searchItemList.clear();
         endSearch();
@@ -95,7 +91,6 @@ public class SearchViewModel extends InteractiveGameViewModel {
     }
 
     void beginSearch(String searchText) {
-        setIsLoading(true);
         searchItemList.clear();
 
         remainingSources = SOURCE_TOTAL;
@@ -142,14 +137,12 @@ public class SearchViewModel extends InteractiveGameViewModel {
             }
 
             searchLiveData.removeSource(folderLiveData);
-            if (--remainingSources == 0)
-                searchLiveData.setValue(searchItemList);
+            if (--remainingSources == 0) endSearch();
         });
     }
 
     void endSearch() {
         getSearchLiveData().setValue(searchItemList);
         getTotalMatchesEvent().setValue(searchItemList.size());
-        setIsLoading(false);
     }
 }

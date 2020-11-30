@@ -1,7 +1,6 @@
 package arc.resource.calculator.model.ui.interactive;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -87,7 +86,7 @@ public class InteractiveFragment extends Fragment implements ExceptionObservable
         getViewModel().getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
         getViewModel().getLoadingEvent().observe(getViewLifecycleOwner(), this::handleLoadingEvent);
         getMainViewModel().getLoadingEvent().observe(getViewLifecycleOwner(),
-                isLoading -> getViewModel().setIsLoading(isLoading));
+                isLoading -> getViewModel().setLoadState(isLoading));
     }
 
     protected void startViewModel() {
@@ -95,7 +94,6 @@ public class InteractiveFragment extends Fragment implements ExceptionObservable
     }
 
     protected void handleLoadingEvent(boolean isLoading) {
-        Log.d(TAG, "handleLoadingEvent: " + isLoading);
         if (isLoading) {
             showLoading();
         } else {

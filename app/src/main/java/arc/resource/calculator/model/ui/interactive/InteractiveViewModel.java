@@ -13,7 +13,7 @@ import arc.resource.calculator.util.PrefsUtil;
 public class InteractiveViewModel extends AndroidViewModel {
     public static final String TAG = InteractiveViewModel.class.getCanonicalName();
 
-    private final MutableLiveData<Boolean> isLoadingEvent = new MutableLiveData<>();
+    private final MutableLiveData<InteractiveLoadState> isLoadingEvent = new MutableLiveData<>();
     private final SingleLiveEvent<String> snackBarMessageEvent = new SingleLiveEvent<>();
 
     private PrefsUtil prefs;
@@ -43,12 +43,12 @@ public class InteractiveViewModel extends AndroidViewModel {
         return prefs;
     }
 
-    public MutableLiveData<Boolean> getLoadingEvent() {
+    public MutableLiveData<InteractiveLoadState> getLoadingEvent() {
         return isLoadingEvent;
     }
 
-    public void setIsLoading(boolean isLoading) {
-        isLoadingEvent.setValue(isLoading);
+    protected void setLoadState(InteractiveLoadState loadState) {
+        isLoadingEvent.setValue(loadState);
     }
 
     public SingleLiveEvent<String> getSnackBarMessageEvent() {

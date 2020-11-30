@@ -96,7 +96,6 @@ public class SearchFragment extends InteractiveGameFragment {
                 searchResultsTextView.setVisibility(View.INVISIBLE);
             }
         });
-
         getViewModel().getTotalMatchesEvent().observe(getViewLifecycleOwner(), totalMatches -> {
             noResultsTextView.setVisibility(totalMatches == 0 ? View.VISIBLE : View.INVISIBLE);
 
