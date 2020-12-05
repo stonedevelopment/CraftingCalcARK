@@ -12,16 +12,12 @@ import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 public class InteractiveGameViewModel extends InteractiveViewModel {
     public static final String TAG = InteractiveGameViewModel.class.getCanonicalName();
 
-    private final SingleLiveEvent<Boolean> gameLoadingEvent = new SingleLiveEvent<>();
-
     private GameEntity gameEntity;
     private DlcEntity dlcEntity;
 
     public InteractiveGameViewModel(@NonNull Application application) {
         super(application);
     }
-
-
 
     public GameEntity getGameEntity() {
         return gameEntity;

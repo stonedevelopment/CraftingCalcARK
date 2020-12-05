@@ -33,8 +33,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.List;
-
 import arc.resource.calculator.ChangeLog;
 import arc.resource.calculator.FirstUseActivity;
 import arc.resource.calculator.R;
@@ -93,9 +91,8 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getLoadingEvent().observe(this, this::handleLoadingEvent);
         viewModel.getSnackBarMessageEvent().observe(this, this::showSnackBar);
 
-        viewModel.getGameEntityListLiveData().observe(this, this::handleGameEntityListLiveData);
         viewModel.getGameEntityLiveData().observe(this, this::handleGameEntityLiveData);
-        viewModel.getGameListDialogTrigger().observe(this, this::showGameListDialog);
+//        viewModel.getGameListDialogTrigger().observe(this, this::showGameListDialog);
     }
 
     // TODO: 6/13/2020 How to change navigation panes on demand, save position from preiouvs use
@@ -189,16 +186,6 @@ public class MainActivity extends AppCompatActivity {
         viewModel.start();
     }
 
-    private void handleGameEntityListLiveData(List<GameEntity> gameEntityList) {
-        if (gameEntityList.size() > 1) {
-            //  display alert dialog with game list
-        } else {
-            GameEntity gameEntity = gameEntityList.get(0);
-            viewModel.saveGameEntity(gameEntity);
-            viewModel.fetchGameEntity(gameEntity.getUuid());
-        }
-    }
-
     private void handleLoadingEvent(InteractiveLoadState loadState) {
         switch (loadState) {
             case Loading:
@@ -215,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showGameListDialog() {
-
+// TODO: 11/30/2020 determine if we need to show dialog...?
     }
 
     private void showLoading() {

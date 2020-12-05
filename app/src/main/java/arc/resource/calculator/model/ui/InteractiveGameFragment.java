@@ -17,6 +17,7 @@
 package arc.resource.calculator.model.ui;
 
 import arc.resource.calculator.model.ui.interactive.InteractiveFragment;
+import arc.resource.calculator.model.ui.interactive.InteractiveLoadState;
 
 public class InteractiveGameFragment extends InteractiveFragment {
     public static final String TAG = InteractiveGameFragment.class.getSimpleName();
@@ -40,9 +41,9 @@ public class InteractiveGameFragment extends InteractiveFragment {
     }
 
     @Override
-    protected void handleLoadingEvent(boolean isLoading) {
-        super.handleLoadingEvent(isLoading);
-        if (!isLoading) {
+    protected void handleLoadingEvent(InteractiveLoadState loadState) {
+        super.handleLoadingEvent(loadState);
+        if (loadState == InteractiveLoadState.Loaded) {
             startViewModel();
         }
     }

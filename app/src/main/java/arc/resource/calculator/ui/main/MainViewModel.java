@@ -21,7 +21,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -40,19 +40,42 @@ public class MainViewModel extends InteractiveViewModel {
 
     private final MainRepository repository;
 
-    private final SingleLiveEvent<String> gameEntityUuidEvent = new SingleLiveEvent<>();
     private final SingleLiveEvent<Boolean> gameListDialogTrigger = new SingleLiveEvent<>();
+
+    private final LiveData<List<GameEntity>> gameListLiveData;
+    private final MutableLiveData<GameEntity> gameEntityLiveData = new MutableLiveData<>();
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         repository = new MainRepository(application);
+        gameListLiveData = repository.getGameEntityList();
     }
 
     @Override
     public void setup(FragmentActivity activity) {
         super.setup(activity);
         setLoadState(Loading);
-        loadData();
+        observe(activity);
+    }
+
+    private void observe(FragmentActivity activity) {
+        String gameId = getPrefs().getGameIdPreference();
+        if (gameId == null) {
+            //  trigger game list observations
+            gameListLiveData.observe(activity, gameEntityList -> {
+                if (gameEntityList.size() > 1) {
+                    //  show dialog for user to choose
+                } else {
+                    //  default to only game
+                    GameEntity gameEntity = gameEntityList.get(0);
+                    saveGameEntity(gameEntity);
+                    setGameEntityLiveData(gameEntity);
+                }
+            });
+        } else {
+            //  trigger game load event observations
+            fetchGameEntity(gameId).observe(activity, this::setGameEntityLiveData);
+        }
     }
 
     @Override
@@ -61,15 +84,12 @@ public class MainViewModel extends InteractiveViewModel {
         setLoadState(Loaded);
     }
 
-    public LiveData<GameEntity> getGameEntityLiveData() {
-        return Transformations.switchMap(gameEntityUuidEvent, gameId -> {
-            if (gameId == null) {
-                //  show game list
-                return null;
-            } else {
-                return repository.getGameEntity(gameId);
-            }
-        });
+    public MutableLiveData<GameEntity> getGameEntityLiveData() {
+        return gameEntityLiveData;
+    }
+
+    private void setGameEntityLiveData(GameEntity gameEntity) {
+        gameEntityLiveData.setValue(gameEntity);
     }
 
     public LiveData<List<GameEntity>> getGameEntityListLiveData() {
@@ -80,19 +100,8 @@ public class MainViewModel extends InteractiveViewModel {
         return gameListDialogTrigger;
     }
 
-    private void loadData() {
-        String gameId = getPrefs().getGameIdPreference();
-        if (gameId == null) {
-            //  trigger game list event
-            showGameListDialog();
-        } else {
-            //  trigger game load event
-            fetchGameEntity(gameId);
-        }
-    }
-
-    public void fetchGameEntity(String gameId) {
-        gameEntityUuidEvent.setValue(gameId);
+    private LiveData<GameEntity> fetchGameEntity(String gameId) {
+        return repository.getGameEntity(gameId);
     }
 
     public void saveGameEntity(GameEntity gameEntity) {

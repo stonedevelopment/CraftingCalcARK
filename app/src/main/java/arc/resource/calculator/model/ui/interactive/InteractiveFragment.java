@@ -1,6 +1,7 @@
 package arc.resource.calculator.model.ui.interactive;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -93,11 +94,18 @@ public class InteractiveFragment extends Fragment implements ExceptionObservable
         getViewModel().start();
     }
 
-    protected void handleLoadingEvent(boolean isLoading) {
-        if (isLoading) {
-            showLoading();
-        } else {
-            showLoaded();
+    protected void handleLoadingEvent(InteractiveLoadState loadState) {
+        switch (loadState) {
+            case Loading:
+                showLoading();
+                break;
+            case Loaded:
+                showLoaded();
+                break;
+            case Error:
+                // TODO: 11/29/2020 handle load state error
+                Log.d(TAG, "handleLoadingEvent: Error");
+                break;
         }
     }
 
