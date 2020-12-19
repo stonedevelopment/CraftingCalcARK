@@ -50,12 +50,8 @@ public class MainViewModel extends InteractiveViewModel {
     }
 
     @Override
-    public void setup(FragmentActivity activity) {
-        super.setup(activity);
-        observe(activity);
-    }
-
-    private void observe(FragmentActivity activity) {
+    public void observe(FragmentActivity activity) {
+        super.observe(activity);
         String gameId = getPrefs().getGameIdPreference();
         if (gameId == null) {
             Log.d(TAG, "observe: gameId is null.");

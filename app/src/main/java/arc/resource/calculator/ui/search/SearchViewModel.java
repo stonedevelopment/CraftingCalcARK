@@ -17,7 +17,6 @@
 package arc.resource.calculator.ui.search;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -39,7 +38,6 @@ public class SearchViewModel extends InteractiveGameViewModel {
     public static final String TAG = SearchViewModel.class.getCanonicalName();
     private static final int SOURCE_TOTAL = 4;
 
-    private final SearchRepository repository;
     private final MediatorLiveData<List<SearchItem>> searchLiveData = new MediatorLiveData<>();
     private final SingleLiveEvent<String> filterTextEvent = new SingleLiveEvent<>();
     private final SingleLiveEvent<Integer> totalMatchesEvent = new SingleLiveEvent<>();
@@ -53,7 +51,16 @@ public class SearchViewModel extends InteractiveGameViewModel {
 
     public SearchViewModel(@NonNull Application application) {
         super(application);
-        repository = new SearchRepository(application);
+    }
+
+    @Override
+    protected void setupRepository(Application application) {
+        setRepository(new SearchRepository(application));
+    }
+
+    @Override
+    protected SearchRepository getRepository() {
+        return (SearchRepository) super.getRepository();
     }
 
     String getFilterText() {
@@ -99,10 +106,10 @@ public class SearchViewModel extends InteractiveGameViewModel {
         String dlcId = null;
 //        String dlcId = getDlcEntityId();
 
-        engramLiveData = repository.searchEngrams(searchText, gameId, dlcId);
-        resourceLiveData = repository.searchResources(searchText, gameId, dlcId);
-        stationLiveData = repository.searchStations(searchText, gameId, dlcId);
-        folderLiveData = repository.searchFolders(searchText, gameId, dlcId);
+        engramLiveData = getRepository().searchEngrams(searchText, gameId, dlcId);
+        resourceLiveData = getRepository().searchResources(searchText, gameId, dlcId);
+        stationLiveData = getRepository().searchStations(searchText, gameId, dlcId);
+        folderLiveData = getRepository().searchFolders(searchText, gameId, dlcId);
 
         searchLiveData.addSource(engramLiveData, entities -> {
             for (EngramEntity entity : entities) {

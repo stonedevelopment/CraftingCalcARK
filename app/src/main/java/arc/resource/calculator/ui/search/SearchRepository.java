@@ -18,64 +18,36 @@ package arc.resource.calculator.ui.search;
 
 import android.app.Application;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import arc.resource.calculator.db.AppDatabase;
-import arc.resource.calculator.db.dao.dlc.DlcEngramDao;
-import arc.resource.calculator.db.dao.dlc.DlcFolderDao;
-import arc.resource.calculator.db.dao.dlc.DlcResourceDao;
-import arc.resource.calculator.db.dao.dlc.DlcStationDao;
-import arc.resource.calculator.db.dao.primary.EngramDao;
-import arc.resource.calculator.db.dao.primary.FolderDao;
-import arc.resource.calculator.db.dao.primary.ResourceDao;
-import arc.resource.calculator.db.dao.primary.StationDao;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.ResourceEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
+import arc.resource.calculator.model.ui.interactive.InteractiveRepository;
 
-public class SearchRepository {
+public class SearchRepository extends InteractiveRepository {
     public static final String TAG = SearchRepository.class.getSimpleName();
 
-    private final EngramDao engramDao;
-    private final ResourceDao resourceDao;
-    private final StationDao stationDao;
-    private final FolderDao folderDao;
-
-    private final DlcEngramDao dlcEngramDao;
-    private final DlcResourceDao dlcResourceDao;
-    private final DlcStationDao dlcStationDao;
-    private final DlcFolderDao dlcFolderDao;
-
     SearchRepository(Application application) {
-        AppDatabase db = AppDatabase.getInstance(application);
-        engramDao = db.engramDao();
-        resourceDao = db.resourceDao();
-        stationDao = db.stationDao();
-        folderDao = db.folderDao();
-
-        dlcEngramDao = db.dlcEngramDao();
-        dlcResourceDao = db.dlcResourceDao();
-        dlcStationDao = db.dlcStationDao();
-        dlcFolderDao = db.dlcFolderDao();
+        super(application);
     }
 
     LiveData<List<EngramEntity>> searchEngrams(String searchText, String gameId, String dlcId) {
-        return engramDao.searchByName("%" + searchText + "%", gameId);
+        return getEngramDao().searchByName("%" + searchText + "%", gameId);
     }
 
     LiveData<List<ResourceEntity>> searchResources(String searchText, String gameId, String dlcId) {
-        return resourceDao.searchByName("%" + searchText + "%", gameId);
+        return getResourceDao().searchByName("%" + searchText + "%", gameId);
     }
 
     LiveData<List<StationEntity>> searchStations(String searchText, String gameId, String dlcId) {
-        return stationDao.searchByName("%" + searchText + "%", gameId);
+        return getStationDao().searchByName("%" + searchText + "%", gameId);
     }
 
     LiveData<List<FolderEntity>> searchFolders(String searchText, String gameId, String dlcId) {
-        return folderDao.searchByName("%" + searchText + "%", gameId);
+        return getFolderDao().searchByName("%" + searchText + "%", gameId);
     }
 }

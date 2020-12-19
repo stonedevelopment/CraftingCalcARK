@@ -42,20 +42,28 @@ import static arc.resource.calculator.util.Constants.cStationViewType;
 public class ExplorerViewModel extends InteractiveGameViewModel {
     public static final String TAG = ExplorerViewModel.class.getSimpleName();
 
-    private final ExplorerRepository repository;
     private final Stack<ExplorerItem> historyStack = new Stack<>(); // TODO: 11/22/2020 What happens when app starts at bookmarked location?
 
     private final SingleLiveEvent<String> parentIdEvent = new SingleLiveEvent<>();
 
     public ExplorerViewModel(@NonNull Application application) {
         super(application);
-        repository = new ExplorerRepository(application);
+    }
+
+    @Override
+    protected void setupRepository(Application application) {
+        setRepository(new ExplorerRepository(application));
     }
 
     @Override
     public void start() {
         super.start();
         fetchDirectory();
+    }
+
+    @Override
+    protected ExplorerRepository getRepository() {
+        return (ExplorerRepository) super.getRepository();
     }
 
     public LiveData<DirectorySnapshot> getDirectorySnapshot() {
@@ -132,20 +140,20 @@ public class ExplorerViewModel extends InteractiveGameViewModel {
     }
 
     public LiveData<EngramEntity> fetchEngram(@NonNull String uuid) {
-        return repository.fetchEngram(uuid);
+        return getRepository().fetchEngram(uuid);
     }
 
     public LiveData<FolderEntity> fetchFolder(@NonNull String uuid) {
-        return repository.fetchFolder(uuid);
+        return getRepository().fetchFolder(uuid);
     }
 
     public LiveData<StationEntity> fetchStation(@NonNull String uuid) {
-        return repository.fetchStation(uuid);
+        return getRepository().fetchStation(uuid);
     }
 
     private LiveData<List<DirectoryItemEntity>> transformParentIdToDirectoryList() {
         return Transformations.switchMap(parentIdEvent,
-                parentId -> repository.fetchDirectory(getGameEntityId(), parentId));
+                parentId -> getRepository().fetchDirectory(getGameEntityId(), parentId));
     }
 
     private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {

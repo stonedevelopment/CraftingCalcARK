@@ -181,8 +181,12 @@ public class PrefsUtil {
         editPreference(GameIdKey, gameId);
     }
 
-    public String getDlcPreference() {
+    public String getDlcIdPreference() {
         return getPreference(DlcIdKey, DlcIdDefaultValue);
+    }
+
+    public void saveDlcIdPreference(String dlcId) {
+        editPreference(DlcIdKey, dlcId);
     }
 
     public boolean getDlcFilterPreference() {

@@ -28,8 +28,13 @@ public class InteractiveViewModel extends AndroidViewModel {
     }
 
     public void setup(FragmentActivity activity) {
-        setupPrefs(activity);
         setLoadState(Loading);
+        setupPrefs(activity);
+        observe(activity);
+    }
+
+    public void observe(FragmentActivity activity) {
+        //  I do nothing.
     }
 
     public void start() {

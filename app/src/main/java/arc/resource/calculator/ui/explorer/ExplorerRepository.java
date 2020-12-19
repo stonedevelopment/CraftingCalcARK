@@ -24,34 +24,25 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import arc.resource.calculator.db.AppDatabase;
 import arc.resource.calculator.db.dao.dlc.DlcDirectoryDao;
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
-import arc.resource.calculator.db.dao.primary.EngramDao;
-import arc.resource.calculator.db.dao.primary.FolderDao;
-import arc.resource.calculator.db.dao.primary.StationDao;
 import arc.resource.calculator.db.entity.dlc.DlcDirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
+import arc.resource.calculator.model.ui.interactive.InteractiveRepository;
 
-public class ExplorerRepository {
+public class ExplorerRepository extends InteractiveRepository {
     public static final String TAG = ExplorerRepository.class.getSimpleName();
 
     private final DirectoryDao directoryDao;
     private final DlcDirectoryDao dlcDirectoryDao;
-    private final EngramDao engramDao;
-    private final FolderDao folderDao;
-    private final StationDao stationDao;
 
     ExplorerRepository(Application application) {
-        AppDatabase db = AppDatabase.getInstance(application);
-        directoryDao = db.directoryDao();
-        dlcDirectoryDao = db.dlcDirectoryDao();
-        engramDao = db.engramDao();
-        folderDao = db.folderDao();
-        stationDao = db.stationDao();
+        super(application);
+        directoryDao = getAppDatabase().directoryDao();
+        dlcDirectoryDao = getAppDatabase().dlcDirectoryDao();
     }
 
     LiveData<List<DirectoryItemEntity>> fetchDirectory(String gameId, String parentId) {
@@ -65,14 +56,14 @@ public class ExplorerRepository {
     }
 
     LiveData<EngramEntity> fetchEngram(@NonNull String uuid) {
-        return engramDao.getEngram(uuid);
+        return getEngramDao().getEngram(uuid);
     }
 
     LiveData<FolderEntity> fetchFolder(@NonNull String uuid) {
-        return folderDao.getFolder(uuid);
+        return getFolderDao().getFolder(uuid);
     }
 
     LiveData<StationEntity> fetchStation(@NonNull String uuid) {
-        return stationDao.getStation(uuid);
+        return getStationDao().getStation(uuid);
     }
 }
