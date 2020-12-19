@@ -86,8 +86,6 @@ public class InteractiveFragment extends Fragment implements ExceptionObservable
     protected void observeViewModel() {
         getViewModel().getSnackBarMessageEvent().observe(getViewLifecycleOwner(), this::showSnackBar);
         getViewModel().getLoadingEvent().observe(getViewLifecycleOwner(), this::handleLoadingEvent);
-        getMainViewModel().getLoadingEvent().observe(getViewLifecycleOwner(),
-                isLoading -> getViewModel().setLoadState(isLoading));
     }
 
     protected void startViewModel() {
@@ -103,8 +101,7 @@ public class InteractiveFragment extends Fragment implements ExceptionObservable
                 showLoaded();
                 break;
             case Error:
-                // TODO: 11/29/2020 handle load state error
-                Log.d(TAG, "handleLoadingEvent: Error");
+                showError();
                 break;
         }
     }
@@ -117,6 +114,11 @@ public class InteractiveFragment extends Fragment implements ExceptionObservable
     protected void showLoaded() {
         loadingProgressBar.hide();
         loadingTextView.setVisibility(View.INVISIBLE);
+    }
+
+    protected void showError() {
+        // TODO: 11/29/2020 handle load state error
+        Log.d(TAG, "handleLoadingEvent: Error");
     }
 
     protected void showSnackBar(String message) {

@@ -54,6 +54,7 @@ public class ExplorerViewModel extends InteractiveGameViewModel {
 
     @Override
     public void start() {
+        super.start();
         fetchDirectory();
     }
 
@@ -148,9 +149,11 @@ public class ExplorerViewModel extends InteractiveGameViewModel {
     }
 
     private LiveData<DirectorySnapshot> transformDirectoryListToSnapshot() {
-        return Transformations.map(transformParentIdToDirectoryList(), directory -> {
-            return new DirectorySnapshot(getCurrentExplorerItem(), directory);
-        });
+        return Transformations.map(transformParentIdToDirectoryList(), this::createDirectorySnapshot);
+    }
+
+    private DirectorySnapshot createDirectorySnapshot(List<DirectoryItemEntity> directory) {
+        return new DirectorySnapshot(getCurrentExplorerItem(), directory);
     }
 
     private void viewDetails(ExplorerItem explorerItem) {

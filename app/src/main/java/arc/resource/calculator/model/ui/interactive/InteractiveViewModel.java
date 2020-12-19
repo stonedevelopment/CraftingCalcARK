@@ -1,6 +1,7 @@
 package arc.resource.calculator.model.ui.interactive;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -9,6 +10,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.util.PrefsUtil;
+
+import static arc.resource.calculator.model.ui.interactive.InteractiveLoadState.Error;
+import static arc.resource.calculator.model.ui.interactive.InteractiveLoadState.Loaded;
+import static arc.resource.calculator.model.ui.interactive.InteractiveLoadState.Loading;
 
 public class InteractiveViewModel extends AndroidViewModel {
     public static final String TAG = InteractiveViewModel.class.getCanonicalName();
@@ -24,15 +29,16 @@ public class InteractiveViewModel extends AndroidViewModel {
 
     public void setup(FragmentActivity activity) {
         setupPrefs(activity);
-        setupEvents();
+        setLoadState(Loading);
     }
 
-    protected void setupEvents() {
-        //  I do nothing.
+    public void start() {
+        setLoadState(Loaded);
     }
 
-    protected void start() {
-        //  I do nothing.
+    public void error(String tag, String message) {
+        setLoadState(Error);
+        Log.e(tag, message);
     }
 
     private void setupPrefs(FragmentActivity activity) {
@@ -47,7 +53,7 @@ public class InteractiveViewModel extends AndroidViewModel {
         return isLoadingEvent;
     }
 
-    protected void setLoadState(InteractiveLoadState loadState) {
+    private void setLoadState(InteractiveLoadState loadState) {
         isLoadingEvent.setValue(loadState);
     }
 

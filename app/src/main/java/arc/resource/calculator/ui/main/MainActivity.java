@@ -183,7 +183,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleGameEntityLiveData(GameEntity gameEntity) {
-        viewModel.start();
+        if (gameEntity != null) {
+            viewModel.start();
+        } else {
+            viewModel.error(TAG, "GameEntity returned null.");
+        }
     }
 
     private void handleLoadingEvent(InteractiveLoadState loadState) {
@@ -195,8 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 showLoaded();
                 break;
             case Error:
-                // TODO: 11/29/2020 handle load state error
-                Log.d(TAG, "handleLoadingEvent: Error");
+                showError();
                 break;
         }
     }
@@ -211,6 +214,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void showLoaded() {
         progressBar.hide();
+    }
+
+    private void showError() {
+        // TODO: 11/29/2020 handle load state error
+        Log.d(TAG, "handleLoadingEvent: Error");
     }
 
     private void showSnackBar(String text) {

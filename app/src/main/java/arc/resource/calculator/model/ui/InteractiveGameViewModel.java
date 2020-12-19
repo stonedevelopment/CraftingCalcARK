@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 
 import arc.resource.calculator.db.entity.DlcEntity;
 import arc.resource.calculator.db.entity.GameEntity;
-import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 
 public class InteractiveGameViewModel extends InteractiveViewModel {

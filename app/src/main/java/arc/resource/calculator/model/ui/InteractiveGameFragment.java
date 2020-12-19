@@ -16,8 +16,8 @@
 
 package arc.resource.calculator.model.ui;
 
+import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.model.ui.interactive.InteractiveFragment;
-import arc.resource.calculator.model.ui.interactive.InteractiveLoadState;
 
 public class InteractiveGameFragment extends InteractiveFragment {
     public static final String TAG = InteractiveGameFragment.class.getSimpleName();
@@ -36,15 +36,11 @@ public class InteractiveGameFragment extends InteractiveFragment {
     @Override
     protected void observeViewModel() {
         super.observeViewModel();
-        getMainViewModel().getGameEntityLiveData().observe(getViewLifecycleOwner(),
-                gameEntity -> getViewModel().setGameEntity(gameEntity));
+        getMainViewModel().getGameEntityLiveData().observe(getViewLifecycleOwner(), this::handleGameEntityEvent);
     }
 
-    @Override
-    protected void handleLoadingEvent(InteractiveLoadState loadState) {
-        super.handleLoadingEvent(loadState);
-        if (loadState == InteractiveLoadState.Loaded) {
-            startViewModel();
-        }
+    protected void handleGameEntityEvent(GameEntity gameEntity) {
+        getViewModel().setGameEntity(gameEntity);
+        startViewModel();
     }
 }

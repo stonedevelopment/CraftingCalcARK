@@ -17,6 +17,7 @@
 package arc.resource.calculator.ui.main;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -28,9 +29,6 @@ import java.util.List;
 import arc.resource.calculator.db.entity.GameEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
-
-import static arc.resource.calculator.model.ui.interactive.InteractiveLoadState.Loaded;
-import static arc.resource.calculator.model.ui.interactive.InteractiveLoadState.Loading;
 
 /**
  * ViewModel for MainActivity
@@ -54,13 +52,13 @@ public class MainViewModel extends InteractiveViewModel {
     @Override
     public void setup(FragmentActivity activity) {
         super.setup(activity);
-        setLoadState(Loading);
         observe(activity);
     }
 
     private void observe(FragmentActivity activity) {
         String gameId = getPrefs().getGameIdPreference();
         if (gameId == null) {
+            Log.d(TAG, "observe: gameId is null.");
             //  trigger game list observations
             gameListLiveData.observe(activity, gameEntityList -> {
                 if (gameEntityList.size() > 1) {
@@ -73,15 +71,10 @@ public class MainViewModel extends InteractiveViewModel {
                 }
             });
         } else {
+            Log.d(TAG, "observe: gameId is saved! " + gameId);
             //  trigger game load event observations
             fetchGameEntity(gameId).observe(activity, this::setGameEntityLiveData);
         }
-    }
-
-    @Override
-    protected void start() {
-        super.start();
-        setLoadState(Loaded);
     }
 
     public MutableLiveData<GameEntity> getGameEntityLiveData() {
