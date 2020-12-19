@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
-import arc.resource.calculator.model.ui.interactive.InteractiveAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemAdapter;
 import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.explorer.model.BackFolderExplorerItem;
 import arc.resource.calculator.ui.explorer.model.ExplorerItem;
@@ -34,7 +34,7 @@ import arc.resource.calculator.ui.explorer.view.ExplorerStationItemViewHolder;
 
 import static arc.resource.calculator.util.Constants.cBackFolderViewType;
 
-public class ExplorerItemAdapter extends InteractiveAdapter {
+public class ExplorerItemAdapter extends InteractiveItemAdapter {
 
     protected ExplorerItemAdapter(ExplorerFragment fragment, ExplorerViewModel viewModel) {
         super(fragment, viewModel);

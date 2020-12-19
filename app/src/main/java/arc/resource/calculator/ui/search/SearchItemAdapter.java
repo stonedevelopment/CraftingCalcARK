@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.interactive.InteractiveAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemAdapter;
 import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
 import arc.resource.calculator.ui.search.model.SearchItem;
 import arc.resource.calculator.ui.search.view.EngramSearchItemViewHolder;
@@ -33,12 +33,16 @@ import arc.resource.calculator.ui.search.view.ResourceSearchItemViewHolder;
 import arc.resource.calculator.ui.search.view.SearchItemViewHolder;
 import arc.resource.calculator.ui.search.view.StationSearchItemViewHolder;
 
+import static arc.resource.calculator.util.Constants.cEngramHeaderViewType;
 import static arc.resource.calculator.util.Constants.cEngramViewType;
+import static arc.resource.calculator.util.Constants.cFolderHeaderViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
+import static arc.resource.calculator.util.Constants.cResourceHeaderViewType;
 import static arc.resource.calculator.util.Constants.cResourceViewType;
+import static arc.resource.calculator.util.Constants.cStationHeaderViewType;
 import static arc.resource.calculator.util.Constants.cStationViewType;
 
-public class SearchItemAdapter extends InteractiveAdapter {
+public class SearchItemAdapter extends InteractiveItemAdapter {
     public static final String TAG = SearchItemAdapter.class.getCanonicalName();
 
     SearchItemAdapter(SearchFragment fragment, SearchViewModel viewModel) {
@@ -50,20 +54,18 @@ public class SearchItemAdapter extends InteractiveAdapter {
     public InteractiveItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
         switch (viewType) {
-            case cResourceViewType:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_resource, parent, false);
-                return new ResourceSearchItemViewHolder(itemView);
-            case cEngramViewType:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_engram, parent, false);
-                return new EngramSearchItemViewHolder(itemView);
-            case cFolderViewType:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_folder, parent, false);
-                return new FolderSearchItemViewHolder(itemView);
             case cStationViewType:
                 itemView = getLayoutInflater().inflate(R.layout.search_item_station, parent, false);
                 return new StationSearchItemViewHolder(itemView);
-            default:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_error, parent, false);
+            case cFolderViewType:
+                itemView = getLayoutInflater().inflate(R.layout.search_item_folder, parent, false);
+                return new FolderSearchItemViewHolder(itemView);
+            case cEngramViewType:
+                itemView = getLayoutInflater().inflate(R.layout.search_item_engram, parent, false);
+                return new EngramSearchItemViewHolder(itemView);
+            case cResourceViewType:
+                itemView = getLayoutInflater().inflate(R.layout.search_item_resource, parent, false);
+                return new ResourceSearchItemViewHolder(itemView);
         }
 
         return new SearchItemViewHolder(itemView);

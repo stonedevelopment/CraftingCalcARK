@@ -72,7 +72,7 @@ public class InteractiveFragment extends Fragment implements ExceptionObservable
         //  do nothing
     }
 
-    protected void setupViews(InteractiveAdapter adapter, InteractiveLayoutManager layoutManager) {
+    protected void setupViews(InteractiveItemAdapter adapter, InteractiveLayoutManager layoutManager) {
         getRecyclerView().setAdapter(adapter);
         getRecyclerView().setLayoutManager(layoutManager);
         getRecyclerView().addItemDecoration(new DividerItemDecoration(

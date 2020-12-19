@@ -26,7 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.interactive.InteractiveAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemAdapter;
 import arc.resource.calculator.model.ui.interactive.InteractiveFragment;
 import arc.resource.calculator.model.ui.interactive.InteractiveLayoutManager;
 
@@ -59,7 +59,7 @@ public class FavoritesFragment extends InteractiveFragment {
     }
 
     @Override
-    protected void setupViews(InteractiveAdapter adapter, InteractiveLayoutManager layoutManager) {
+    protected void setupViews(InteractiveItemAdapter adapter, InteractiveLayoutManager layoutManager) {
         super.setupViews(adapter, layoutManager);
     }
 }

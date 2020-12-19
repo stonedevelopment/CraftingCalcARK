@@ -113,12 +113,19 @@
     </plurals>
     <string name="search_no_matches">No matches found.</string>
 
-    <!-- ViewHolder Strings -->
+    <!-- Item ViewHolder Strings -->
     <string name="item_view_type_text_engram">Engram</string>
     <string name="item_view_type_text_folder">Folder</string>
     <string name="item_view_type_text_station">Station</string>
     <string name="item_view_type_text_resource">Resource</string>
     <string name="item_view_type_text_error">Error</string>
+
+    <!-- Header ViewHolder Strings -->
+    <string name="header_view_type_text_engram">Engrams</string>
+    <string name="header_view_type_text_folder">Folders</string>
+    <string name="header_view_type_text_station">Stations</string>
+    <string name="header_view_type_text_resource">Resources</string>
+    <string name="header_view_type_text_error">Error</string>
 
     <!-- AlertDialog -->
 

@@ -72,4 +72,10 @@ public class Constants {
     public static final int cFolderViewType = 1;
     public static final int cEngramViewType = 2;
     public static final int cResourceViewType = 3;
+
+    //  SearchFragment values
+    public static final int cStationHeaderViewType = 200;
+    public static final int cFolderHeaderViewType = 201;
+    public static final int cEngramHeaderViewType = 202;
+    public static final int cResourceHeaderViewType = 203;
 }

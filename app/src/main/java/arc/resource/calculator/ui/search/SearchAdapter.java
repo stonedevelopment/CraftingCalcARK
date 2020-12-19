@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.model.ui.interactive;
+package arc.resource.calculator.ui.search;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.R;
+import arc.resource.calculator.model.ui.interactive.InteractiveItem;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 import arc.resource.calculator.model.ui.view.EngramItemViewHolder;
 import arc.resource.calculator.model.ui.view.FolderItemViewHolder;
 import arc.resource.calculator.model.ui.view.StationItemViewHolder;
@@ -38,15 +41,15 @@ import static arc.resource.calculator.util.Constants.cEngramViewType;
 import static arc.resource.calculator.util.Constants.cFolderViewType;
 import static arc.resource.calculator.util.Constants.cStationViewType;
 
-public class InteractiveAdapter extends RecyclerView.Adapter<InteractiveItemViewHolder> {
-    public static final String TAG = InteractiveAdapter.class.getCanonicalName();
+public class SearchAdapter extends RecyclerView.Adapter<InteractiveItemViewHolder> {
+    public static final String TAG = SearchAdapter.class.getCanonicalName();
 
     private final InteractiveViewModel viewModel;
     private final LayoutInflater layoutInflater;
     private final FragmentActivity fragmentActivity;
     private final List<InteractiveItem> itemList = new ArrayList<>();
 
-    protected InteractiveAdapter(Fragment fragment, InteractiveViewModel viewModel) {
+    protected SearchAdapter(Fragment fragment, InteractiveViewModel viewModel) {
         super();
         this.layoutInflater = LayoutInflater.from(fragment.getContext());
         this.fragmentActivity = fragment.requireActivity();
