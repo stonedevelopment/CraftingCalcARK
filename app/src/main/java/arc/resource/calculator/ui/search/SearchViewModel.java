@@ -20,34 +20,23 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import arc.resource.calculator.db.entity.primary.EngramEntity;
-import arc.resource.calculator.db.entity.primary.FolderEntity;
-import arc.resource.calculator.db.entity.primary.ResourceEntity;
-import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
 import arc.resource.calculator.model.ui.InteractiveGameViewModel;
 import arc.resource.calculator.ui.search.model.SearchItem;
 
 public class SearchViewModel extends InteractiveGameViewModel {
     public static final String TAG = SearchViewModel.class.getCanonicalName();
-    private static final int SOURCE_TOTAL = 4;
 
-    private final MediatorLiveData<List<SearchItem>> searchLiveData = new MediatorLiveData<>();
+    private static final int cMinimumSearchLength = 1;
+
     private final SingleLiveEvent<String> filterTextEvent = new SingleLiveEvent<>();
-    private final SingleLiveEvent<Integer> totalMatchesEvent = new SingleLiveEvent<>();
-    private final SingleLiveEvent<Boolean> clearSearchEvent = new SingleLiveEvent<>();
-    private List<SearchItem> searchItemList = new ArrayList<>();
-    private int remainingSources = 0;
-    private LiveData<List<EngramEntity>> engramLiveData;
-    private LiveData<List<ResourceEntity>> resourceLiveData;
-    private LiveData<List<StationEntity>> stationLiveData;
-    private LiveData<List<FolderEntity>> folderLiveData;
+    private LiveData<List<SearchItem>> searchResultsLiveData;
 
     public SearchViewModel(@NonNull Application application) {
         super(application);
@@ -67,89 +56,42 @@ public class SearchViewModel extends InteractiveGameViewModel {
         return filterTextEvent.getValue();
     }
 
-    MutableLiveData<String> getFilterTextEvent() {
-        return filterTextEvent;
-    }
-
-    MediatorLiveData<List<SearchItem>> getSearchLiveData() {
-        return searchLiveData;
-    }
-
-    public SingleLiveEvent<Boolean> getClearSearchEvent() {
-        return clearSearchEvent;
-    }
-
-    public SingleLiveEvent<Integer> getTotalMatchesEvent() {
-        return totalMatchesEvent;
+    LiveData<List<SearchItem>> getSearchLiveData() {
+        return transformResults();
     }
 
     void handleEditTextEvent(String text) {
-        if (text.length() >= 1) {
-            filterTextEvent.setValue(text);
+        if (text.length() >= cMinimumSearchLength) {
+            startSearch(text);
         } else {
             clearSearch();
         }
     }
 
     void clearSearch() {
-        searchItemList.clear();
-        endSearch();
-        clearSearchEvent.setValue(true);
+        filterTextEvent.setValue("");
     }
 
-    void beginSearch(String searchText) {
-        searchItemList.clear();
+    void startSearch(String filterText) {
+        filterTextEvent.setValue(filterText);
+    }
 
-        remainingSources = SOURCE_TOTAL;
-
-        String gameId = getGameEntityId();
-        String dlcId = null;
-//        String dlcId = getDlcEntityId();
-
-        engramLiveData = getRepository().searchEngrams(searchText, gameId, dlcId);
-        resourceLiveData = getRepository().searchResources(searchText, gameId, dlcId);
-        stationLiveData = getRepository().searchStations(searchText, gameId, dlcId);
-        folderLiveData = getRepository().searchFolders(searchText, gameId, dlcId);
-
-        searchLiveData.addSource(engramLiveData, entities -> {
-            for (EngramEntity entity : entities) {
-                searchItemList.add(SearchItem.fromEngramEntity(entity));
-            }
-
-            searchLiveData.removeSource(engramLiveData);
-            if (--remainingSources == 0) endSearch();
-        });
-
-        searchLiveData.addSource(resourceLiveData, entities -> {
-            for (ResourceEntity entity : entities) {
-                searchItemList.add(SearchItem.fromResourceEntity(entity));
-            }
-
-            searchLiveData.removeSource(resourceLiveData);
-            if (--remainingSources == 0) endSearch();
-        });
-
-        searchLiveData.addSource(stationLiveData, entities -> {
-            for (StationEntity entity : entities) {
-                searchItemList.add(SearchItem.fromStationEntity(entity));
-            }
-
-            searchLiveData.removeSource(stationLiveData);
-            if (--remainingSources == 0) endSearch();
-        });
-
-        searchLiveData.addSource(folderLiveData, entities -> {
-            for (FolderEntity entity : entities) {
-                searchItemList.add(SearchItem.fromFolderEntity(entity));
-            }
-
-            searchLiveData.removeSource(folderLiveData);
-            if (--remainingSources == 0) endSearch();
+    protected LiveData<List<EngramEntity>> transformFilterText() {
+        return Transformations.switchMap(filterTextEvent, filterText -> {
+            String gameId = getGameEntityId();
+            String dlcId = null;
+//          String dlcId = getDlcEntityId();
+            return getRepository().searchEngrams(filterText, gameId, dlcId);
         });
     }
 
-    void endSearch() {
-        getSearchLiveData().setValue(searchItemList);
-        getTotalMatchesEvent().setValue(searchItemList.size());
+    protected LiveData<List<SearchItem>> transformResults() {
+        return Transformations.map(transformFilterText(), engramEntityList -> {
+            List<SearchItem> outList = new ArrayList<>();
+            for (EngramEntity engramEntity : engramEntityList) {
+                outList.add(SearchItem.fromEngramEntity(engramEntity));
+            }
+            return outList;
+        });
     }
 }

@@ -1,74 +1,33 @@
-/*
- * Copyright (c) 2020 Jared Stone
- *
- * This work is licensed under the Creative Commons
- * Attribution-NonCommercial-NoDerivatives 4.0 International
- * License. To view a copy of this license, visit
- *
- * http://creativecommons.org/licenses/by-nc-nd/4.0/
- *
- * or send a letter to
- *
- *  Creative Commons,
- *  PO Box 1866,
- *  Mountain View, CA 94042, USA.
- */
-
 package arc.resource.calculator.ui.search;
 
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.interactive.InteractiveItemAdapter;
 import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
+import arc.resource.calculator.model.ui.interactive.InteractiveViewModel;
 import arc.resource.calculator.ui.search.model.SearchItem;
 import arc.resource.calculator.ui.search.view.EngramSearchItemViewHolder;
-import arc.resource.calculator.ui.search.view.FolderSearchItemViewHolder;
-import arc.resource.calculator.ui.search.view.ResourceSearchItemViewHolder;
-import arc.resource.calculator.ui.search.view.SearchItemViewHolder;
-import arc.resource.calculator.ui.search.view.StationSearchItemViewHolder;
 
-import static arc.resource.calculator.util.Constants.cEngramHeaderViewType;
-import static arc.resource.calculator.util.Constants.cEngramViewType;
-import static arc.resource.calculator.util.Constants.cFolderHeaderViewType;
-import static arc.resource.calculator.util.Constants.cFolderViewType;
-import static arc.resource.calculator.util.Constants.cResourceHeaderViewType;
-import static arc.resource.calculator.util.Constants.cResourceViewType;
-import static arc.resource.calculator.util.Constants.cStationHeaderViewType;
-import static arc.resource.calculator.util.Constants.cStationViewType;
-
+/**
+ * Base class for SearchItem types that get fed from SearchItemHeader
+ */
 public class SearchItemAdapter extends InteractiveItemAdapter {
-    public static final String TAG = SearchItemAdapter.class.getCanonicalName();
-
-    SearchItemAdapter(SearchFragment fragment, SearchViewModel viewModel) {
+    protected SearchItemAdapter(Fragment fragment, InteractiveViewModel viewModel) {
         super(fragment, viewModel);
     }
 
     @NonNull
     @Override
     public InteractiveItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
-        switch (viewType) {
-            case cStationViewType:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_station, parent, false);
-                return new StationSearchItemViewHolder(itemView);
-            case cFolderViewType:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_folder, parent, false);
-                return new FolderSearchItemViewHolder(itemView);
-            case cEngramViewType:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_engram, parent, false);
-                return new EngramSearchItemViewHolder(itemView);
-            case cResourceViewType:
-                itemView = getLayoutInflater().inflate(R.layout.search_item_resource, parent, false);
-                return new ResourceSearchItemViewHolder(itemView);
-        }
-
-        return new SearchItemViewHolder(itemView);
+        View itemView = getLayoutInflater().inflate(R.layout.search_item_engram, parent, false);
+        return new EngramSearchItemViewHolder(itemView);
     }
 
     @Override

@@ -26,8 +26,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.textview.MaterialTextView;
-
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.InteractiveGameFragment;
 
@@ -35,8 +33,6 @@ public class SearchFragment extends InteractiveGameFragment {
     public static final String TAG = SearchFragment.class.getCanonicalName();
 
     private SearchView searchView;
-    private MaterialTextView searchResultsTextView;
-    private MaterialTextView noResultsTextView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -47,8 +43,6 @@ public class SearchFragment extends InteractiveGameFragment {
     @Override
     protected View setViews(View rootView) {
         searchView = rootView.findViewById(R.id.searchView);
-        searchResultsTextView = rootView.findViewById(R.id.searchResultsTextView);
-        noResultsTextView = rootView.findViewById(R.id.noResultsTextView);
         return super.setViews(rootView);
     }
 
@@ -85,30 +79,8 @@ public class SearchFragment extends InteractiveGameFragment {
     }
 
     @Override
-    protected void observeViewModel() {
-        super.observeViewModel();
-        getViewModel().getFilterTextEvent().observe(getViewLifecycleOwner(), searchText -> {
-            getViewModel().beginSearch(searchText);
-        });
-        getViewModel().getClearSearchEvent().observe(getViewLifecycleOwner(), didClearSearch -> {
-            if (didClearSearch) {
-                noResultsTextView.setVisibility(View.INVISIBLE);
-                searchResultsTextView.setVisibility(View.INVISIBLE);
-            }
-        });
-        getViewModel().getTotalMatchesEvent().observe(getViewLifecycleOwner(), totalMatches -> {
-            noResultsTextView.setVisibility(totalMatches == 0 ? View.VISIBLE : View.INVISIBLE);
-
-            searchResultsTextView.setVisibility(View.VISIBLE);
-            searchResultsTextView.setText(getResources().getQuantityString(R.plurals.search_results_found, totalMatches, totalMatches));
-        });
-    }
-
-    @Override
     protected void showLoading() {
         super.showLoading();
-        noResultsTextView.setVisibility(View.INVISIBLE);
-        searchResultsTextView.setVisibility(View.INVISIBLE);
         searchView.setVisibility(View.INVISIBLE);
     }
 

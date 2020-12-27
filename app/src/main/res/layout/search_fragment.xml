@@ -43,31 +43,11 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/searchResultsTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/searchResultsTextView"
-            style="@style/TextAppearance.MaterialComponents.Caption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="0 results found" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/noResultsTextView"
-            style="@style/TextAppearance.MaterialComponents.Caption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/search_no_matches"
-            android:textAlignment="center"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchView" />

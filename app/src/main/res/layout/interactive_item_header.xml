@@ -26,7 +26,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/title"
+            android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -36,13 +36,12 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Engrams" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/quantity"
+            android:id="@+id/headerQuantity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -52,9 +51,8 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/loadingProgressBar"
-            app:layout_constraintStart_toEndOf="@+id/title"
+            app:layout_constraintStart_toEndOf="@+id/headerTitle"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="(123)" />
 
@@ -66,26 +64,37 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/headerTitle"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toStartOf="@+id/expandButton"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/headerTitle"
             tools:srcCompat="@drawable/smithy" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/expandButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/frame_transparent"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@+id/headerTitle"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/headerTitle"
+            app:srcCompat="@drawable/ic_baseline_expand_more_24" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/expandableRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/frame_transparent"
-            android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_expand_more_24" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
