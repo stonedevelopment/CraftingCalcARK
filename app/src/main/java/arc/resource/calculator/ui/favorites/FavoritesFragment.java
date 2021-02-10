@@ -17,6 +17,7 @@
 package arc.resource.calculator.ui.favorites;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +26,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import arc.resource.calculator.R;
-import arc.resource.calculator.model.ui.interactive.InteractiveItemAdapter;
-import arc.resource.calculator.model.ui.interactive.InteractiveFragment;
-import arc.resource.calculator.model.ui.interactive.InteractiveLayoutManager;
+import com.google.android.material.textview.MaterialTextView;
 
-public class FavoritesFragment extends InteractiveFragment {
+import java.util.List;
+
+import arc.resource.calculator.R;
+import arc.resource.calculator.model.ui.InteractiveGameFragment;
+import arc.resource.calculator.model.ui.interactive.InteractiveFragment;
+import arc.resource.calculator.model.ui.interactive.InteractiveItemAdapter;
+import arc.resource.calculator.model.ui.interactive.InteractiveLayoutManager;
+import arc.resource.calculator.ui.favorites.model.FavoritesItem;
+
+public class FavoritesFragment extends InteractiveGameFragment {
     public static final String TAG = FavoritesFragment.class.getCanonicalName();
+
+    private MaterialTextView noFavorites;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return setViews(inflater.inflate(R.layout.favorites_fragment, container, false));
+    }
+
+    @Override
+    protected View setViews(View rootView) {
+        noFavorites = rootView.findViewById(R.id.noResultsTextView);
+        return super.setViews(rootView);
     }
 
     @Override
@@ -47,7 +62,6 @@ public class FavoritesFragment extends InteractiveFragment {
     @Override
     protected void setupViewModel() {
         setViewModel(new ViewModelProvider(requireActivity()).get(FavoritesViewModel.class));
-        getViewModel().setup(requireActivity());
         super.setupViewModel();
     }
 
@@ -59,7 +73,24 @@ public class FavoritesFragment extends InteractiveFragment {
     }
 
     @Override
-    protected void setupViews(InteractiveItemAdapter adapter, InteractiveLayoutManager layoutManager) {
-        super.setupViews(adapter, layoutManager);
+    protected void observeViewModel() {
+        super.observeViewModel();
+        getViewModel().getFavoritesList().observe(getViewLifecycleOwner(), this::handleFavoritesList);
+    }
+
+    // TODO: 2/10/2021 handleFavoritesList should observe an isEmpty boolean instead of a full list of data
+    private void handleFavoritesList(List<FavoritesItem> favoritesItemList) {
+        Log.d(TAG, "handleFavoritesList: " + favoritesItemList.size());
+        if (favoritesItemList.size() == 0) {
+            noFavorites.setVisibility(View.VISIBLE);
+        } else {
+            noFavorites.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    protected void showLoading() {
+        super.showLoading();
+        noFavorites.setVisibility(View.INVISIBLE);
     }
 }

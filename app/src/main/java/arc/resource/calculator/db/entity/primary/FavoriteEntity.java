@@ -29,6 +29,7 @@ import arc.resource.calculator.db.dao.primary.FavoriteDao;
 
 import static arc.resource.calculator.util.Constants.cGameId;
 import static arc.resource.calculator.util.Constants.cLastUpdated;
+import static arc.resource.calculator.util.Constants.cName;
 import static arc.resource.calculator.util.Constants.cSourceId;
 import static arc.resource.calculator.util.Constants.cUuid;
 import static arc.resource.calculator.util.Constants.cViewType;
@@ -41,6 +42,7 @@ public class FavoriteEntity {
     @NonNull
     @PrimaryKey
     private String uuid;
+    private String name;
     private int viewType;
     @NonNull
     private String sourceId;
@@ -50,11 +52,13 @@ public class FavoriteEntity {
 
     @JsonCreator
     public FavoriteEntity(@JsonProperty(cUuid) @NonNull String uuid,
+                          @JsonProperty(cName) @NonNull String name,
                           @JsonProperty(cViewType) int viewType,
                           @JsonProperty(cSourceId) @NonNull String sourceId,
                           @JsonProperty(cLastUpdated) @NonNull Date lastUpdated,
                           @JsonProperty(cGameId) @NonNull String gameId) {
         this.uuid = uuid;
+        this.name = name;
         this.viewType = viewType;
         this.sourceId = sourceId;
         this.lastUpdated = lastUpdated;
@@ -68,6 +72,14 @@ public class FavoriteEntity {
 
     public void setUuid(@NonNull String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
     }
 
     public int getViewType() {

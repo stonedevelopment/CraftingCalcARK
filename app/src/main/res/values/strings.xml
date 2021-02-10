@@ -98,6 +98,9 @@
     <string name="content_detail_mock_text_station_and_level">Stone Wall can be crafted without a station, and can be crafted at any level.</string>
     <string name="content_detail_image_description">thumbnail image of engram</string>
 
+    <!-- InteractiveFragment -->
+    <string name="interactive_fragment_waiting">Waiting for game data..</string>
+
     <!-- ExplorerFragment -->
     <string name="explorer_item_back_folder_title">..</string>
     <string name="explorer_item_back_folder_back_to_2_string_format">Back to
@@ -112,6 +115,9 @@
         <item quantity="other">%d results found.</item>
     </plurals>
     <string name="search_no_matches">No matches found.</string>
+
+    <!-- FavoritesFragment -->
+    <string name="favorites_no_matches">No favorites found.</string>
 
     <!-- Item ViewHolder Strings -->
     <string name="item_view_type_text_engram">Engram</string>

@@ -66,6 +66,7 @@ public class InteractiveGameViewModel extends InteractiveViewModel {
     }
 
     public void setGameEntity(GameEntity gameEntity) {
+        Log.d(TAG, "setGameEntity: " + gameEntity.getName());
         this.gameEntity = gameEntity;
     }
 

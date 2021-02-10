@@ -26,13 +26,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.textview.MaterialTextView;
+
+import java.util.List;
+
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.InteractiveGameFragment;
+import arc.resource.calculator.ui.search.model.SearchItem;
 
 public class SearchFragment extends InteractiveGameFragment {
     public static final String TAG = SearchFragment.class.getCanonicalName();
 
     private SearchView searchView;
+    private MaterialTextView noMatchesText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -43,6 +49,7 @@ public class SearchFragment extends InteractiveGameFragment {
     @Override
     protected View setViews(View rootView) {
         searchView = rootView.findViewById(R.id.searchView);
+        noMatchesText = rootView.findViewById(R.id.noResultsTextView);
         return super.setViews(rootView);
     }
 
@@ -79,9 +86,24 @@ public class SearchFragment extends InteractiveGameFragment {
     }
 
     @Override
+    protected void observeViewModel() {
+        super.observeViewModel();
+        getViewModel().getSearchLiveData().observe(getViewLifecycleOwner(), this::handleSearchResults);
+    }
+
+    private void handleSearchResults(List<SearchItem> searchItems) {
+        if (searchItems.size() == 0) {
+            noMatchesText.setVisibility(View.VISIBLE);
+        } else {
+            noMatchesText.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
     protected void showLoading() {
         super.showLoading();
         searchView.setVisibility(View.INVISIBLE);
+        noMatchesText.setVisibility(View.INVISIBLE);
     }
 
     @Override

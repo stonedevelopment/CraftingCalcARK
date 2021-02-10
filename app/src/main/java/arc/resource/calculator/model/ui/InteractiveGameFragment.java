@@ -40,7 +40,11 @@ public class InteractiveGameFragment extends InteractiveFragment {
     }
 
     protected void handleGameEntityEvent(GameEntity gameEntity) {
-        getViewModel().setGameEntity(gameEntity);
-        startViewModel();
+        if (gameEntity == null) {
+            showError();
+        } else {
+            getViewModel().setGameEntity(gameEntity);
+            startViewModel();
+        }
     }
 }

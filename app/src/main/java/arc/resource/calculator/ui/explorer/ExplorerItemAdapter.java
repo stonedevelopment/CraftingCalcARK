@@ -43,11 +43,9 @@ public class ExplorerItemAdapter extends InteractiveItemAdapter {
     @NonNull
     @Override
     public InteractiveItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View itemView;
         if (viewType == cBackFolderViewType) {
-            itemView = getLayoutInflater().inflate(R.layout.columnized_item_back_folder, parent, false);
-            return new ExplorerBackFolderItemViewHolder(itemView);
+            return createBackFolderItemViewHolder(getLayoutInflater()
+                    .inflate(R.layout.columnized_item_back_folder, parent, false));
         }
 
         return super.onCreateViewHolder(parent, viewType);
@@ -66,6 +64,10 @@ public class ExplorerItemAdapter extends InteractiveItemAdapter {
     @Override
     protected ExplorerStationItemViewHolder createStationItemViewHolder(View itemView) {
         return new ExplorerStationItemViewHolder(itemView);
+    }
+
+    protected ExplorerBackFolderItemViewHolder createBackFolderItemViewHolder(View itemView) {
+        return new ExplorerBackFolderItemViewHolder(itemView);
     }
 
     @Override

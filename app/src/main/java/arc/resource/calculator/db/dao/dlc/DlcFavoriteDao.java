@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.db.dao.primary;
+package arc.resource.calculator.db.dao.dlc;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -23,24 +23,23 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import arc.resource.calculator.db.entity.primary.FavoriteEntity;
-import arc.resource.calculator.db.entity.primary.FolderEntity;
+import arc.resource.calculator.db.entity.dlc.DlcFavoriteEntity;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
 @Dao
-public interface FavoriteDao {
-    String tableName = "favorites";
+public interface DlcFavoriteDao {
+    String tableName = "dlc_favorites";
 
     @Insert(onConflict = REPLACE)
-    void insert(FavoriteEntity entity);
+    void insert(DlcFavoriteEntity entity);
 
-    @Query("delete from favorites")
+    @Query("delete from dlc_favorites")
     void deleteAll();
 
-    @Query("select * from favorites where gameId is :gameId")
-    LiveData<List<FavoriteEntity>> getFavoriteList(String gameId);
+    @Query("select * from dlc_favorites where gameId is :gameId and dlcId is :dlcId")
+    LiveData<List<DlcFavoriteEntity>> getFavoriteList(String gameId, String dlcId);
 
-    @Query("select * from favorites where uuid is :uuid")
-    LiveData<FavoriteEntity> getFavorite(String uuid);
+    @Query("select * from dlc_favorites where uuid is :uuid")
+    LiveData<DlcFavoriteEntity> getFavorite(String uuid);
 }
