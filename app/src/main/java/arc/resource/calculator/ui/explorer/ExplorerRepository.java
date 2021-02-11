@@ -25,24 +25,31 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import arc.resource.calculator.db.dao.dlc.DlcDirectoryDao;
+import arc.resource.calculator.db.dao.dlc.DlcFavoriteDao;
 import arc.resource.calculator.db.dao.primary.DirectoryDao;
+import arc.resource.calculator.db.dao.primary.FavoriteDao;
 import arc.resource.calculator.db.entity.dlc.DlcDirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.ui.interactive.InteractiveRepository;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 public class ExplorerRepository extends InteractiveRepository {
     public static final String TAG = ExplorerRepository.class.getSimpleName();
 
     private final DirectoryDao directoryDao;
     private final DlcDirectoryDao dlcDirectoryDao;
+    private final FavoriteDao favoriteDao;
+    private final DlcFavoriteDao dlcFavoriteDao;
 
     ExplorerRepository(Application application) {
         super(application);
         directoryDao = getAppDatabase().directoryDao();
         dlcDirectoryDao = getAppDatabase().dlcDirectoryDao();
+        favoriteDao = getAppDatabase().favoriteDao();
+        dlcFavoriteDao = getAppDatabase().dlcFavoriteDao();
     }
 
     LiveData<List<DirectoryItemEntity>> fetchDirectory(String gameId, String parentId) {
@@ -65,5 +72,9 @@ public class ExplorerRepository extends InteractiveRepository {
 
     LiveData<StationEntity> fetchStation(@NonNull String uuid) {
         return getStationDao().getStation(uuid);
+    }
+
+    void addFavorite(ExplorerItem explorerItem) {
+
     }
 }

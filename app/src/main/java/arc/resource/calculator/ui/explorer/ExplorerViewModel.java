@@ -123,6 +123,10 @@ public class ExplorerViewModel extends InteractiveGameViewModel {
         }
     }
 
+    public void handleFavoriteButtonClick(ExplorerItem explorerItem) {
+        // TODO: 2/11/2021 left off
+    }
+
     private void goForward(ExplorerItem explorerItem) {
         pushToStack(explorerItem);
         fetchDirectory();

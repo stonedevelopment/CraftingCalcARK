@@ -20,6 +20,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.FragmentActivity;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.interactive.InteractiveItemViewHolder;
@@ -30,5 +31,18 @@ public class EngramItemViewHolder extends InteractiveItemViewHolder {
     public EngramItemViewHolder(@NonNull View itemView) {
         super(itemView);
         favoriteButton = itemView.findViewById(R.id.favoriteButton);
+    }
+
+    @Override
+    protected void setupViewModel(FragmentActivity activity) {
+        super.setupViewModel(activity);
+    }
+
+    protected AppCompatImageButton getFavoriteButton() {
+        return favoriteButton;
+    }
+
+    protected void setupFavoriteButton() {
+        //  I do nothing, for now.
     }
 }

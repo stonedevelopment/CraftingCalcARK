@@ -56,6 +56,14 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
     }
 
     @Override
+    protected void setupFavoriteButton() {
+        super.setupFavoriteButton();
+        getFavoriteButton().setOnClickListener(v -> {
+            getViewModel().handleFavoriteButtonClick(getItem());
+        });
+    }
+
+    @Override
     public void bind(FragmentActivity activity, InteractiveItem item, InteractiveViewModel viewModel) {
         super.bind(activity, item, viewModel);
         setImagePath(getViewModel().getGameEntity().getFilePath());
