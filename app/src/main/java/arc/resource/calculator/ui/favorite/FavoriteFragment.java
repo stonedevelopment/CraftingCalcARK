@@ -14,7 +14,7 @@
  *  Mountain View, CA 94042, USA.
  */
 
-package arc.resource.calculator.ui.favorites;
+package arc.resource.calculator.ui.favorite;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,13 +32,10 @@ import java.util.List;
 
 import arc.resource.calculator.R;
 import arc.resource.calculator.model.ui.InteractiveGameFragment;
-import arc.resource.calculator.model.ui.interactive.InteractiveFragment;
-import arc.resource.calculator.model.ui.interactive.InteractiveItemAdapter;
-import arc.resource.calculator.model.ui.interactive.InteractiveLayoutManager;
-import arc.resource.calculator.ui.favorites.model.FavoritesItem;
+import arc.resource.calculator.ui.favorite.model.FavoriteItem;
 
-public class FavoritesFragment extends InteractiveGameFragment {
-    public static final String TAG = FavoritesFragment.class.getCanonicalName();
+public class FavoriteFragment extends InteractiveGameFragment {
+    public static final String TAG = FavoriteFragment.class.getCanonicalName();
 
     private MaterialTextView noFavorites;
 
@@ -55,33 +52,33 @@ public class FavoritesFragment extends InteractiveGameFragment {
     }
 
     @Override
-    public FavoritesViewModel getViewModel() {
-        return (FavoritesViewModel) super.getViewModel();
+    public FavoriteViewModel getViewModel() {
+        return (FavoriteViewModel) super.getViewModel();
     }
 
     @Override
     protected void setupViewModel() {
-        setViewModel(new ViewModelProvider(requireActivity()).get(FavoritesViewModel.class));
+        setViewModel(new ViewModelProvider(requireActivity()).get(FavoriteViewModel.class));
         super.setupViewModel();
     }
 
     @Override
     protected void setupViews() {
-        FavoritesItemAdapter adapter = new FavoritesItemAdapter(this, getViewModel());
-        FavoritesLayoutManager layoutManager = new FavoritesLayoutManager(this, getViewModel());
+        FavoriteItemAdapter adapter = new FavoriteItemAdapter(this, getViewModel());
+        FavoriteLayoutManager layoutManager = new FavoriteLayoutManager(this, getViewModel());
         setupViews(adapter, layoutManager);
     }
 
     @Override
     protected void observeViewModel() {
         super.observeViewModel();
-        getViewModel().getFavoritesList().observe(getViewLifecycleOwner(), this::handleFavoritesList);
+        getViewModel().getFavoritesListLiveData().observe(getViewLifecycleOwner(), this::handleFavoritesList);
     }
 
     // TODO: 2/10/2021 handleFavoritesList should observe an isEmpty boolean instead of a full list of data
-    private void handleFavoritesList(List<FavoritesItem> favoritesItemList) {
-        Log.d(TAG, "handleFavoritesList: " + favoritesItemList.size());
-        if (favoritesItemList.size() == 0) {
+    private void handleFavoritesList(List<FavoriteItem> favoriteItemList) {
+        Log.d(TAG, "handleFavoritesList: " + favoriteItemList.size());
+        if (favoriteItemList.size() == 0) {
             noFavorites.setVisibility(View.VISIBLE);
         } else {
             noFavorites.setVisibility(View.INVISIBLE);

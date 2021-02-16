@@ -24,8 +24,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
+import java.util.UUID;
 
 import arc.resource.calculator.db.dao.primary.FavoriteDao;
+import arc.resource.calculator.ui.explorer.model.ExplorerItem;
 
 import static arc.resource.calculator.util.Constants.cGameId;
 import static arc.resource.calculator.util.Constants.cLastUpdated;
@@ -63,6 +65,16 @@ public class FavoriteEntity {
         this.sourceId = sourceId;
         this.lastUpdated = lastUpdated;
         this.gameId = gameId;
+    }
+
+    public static FavoriteEntity fromExplorerItem(ExplorerItem explorerItem) {
+        return new FavoriteEntity(
+                UUID.randomUUID().toString(),
+                explorerItem.getTitle(),
+                explorerItem.getViewType(),
+                explorerItem.getSourceId(),
+                new Date(),
+                explorerItem.getGameId());
     }
 
     @NonNull

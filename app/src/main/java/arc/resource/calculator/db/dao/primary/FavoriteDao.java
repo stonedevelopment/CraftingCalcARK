@@ -18,13 +18,13 @@ package arc.resource.calculator.db.dao.primary;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
 
 import arc.resource.calculator.db.entity.primary.FavoriteEntity;
-import arc.resource.calculator.db.entity.primary.FolderEntity;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
@@ -35,6 +35,9 @@ public interface FavoriteDao {
     @Insert(onConflict = REPLACE)
     void insert(FavoriteEntity entity);
 
+    @Delete
+    void delete(FavoriteEntity entity);
+
     @Query("delete from favorites")
     void deleteAll();
 
@@ -43,4 +46,7 @@ public interface FavoriteDao {
 
     @Query("select * from favorites where uuid is :uuid")
     LiveData<FavoriteEntity> getFavorite(String uuid);
+
+    @Query("select 1 from favorites where sourceId is :sourceId")
+    LiveData<FavoriteEntity> getFavoriteBySourceId(String sourceId);
 }

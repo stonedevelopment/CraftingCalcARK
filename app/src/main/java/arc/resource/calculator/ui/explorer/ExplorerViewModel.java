@@ -29,6 +29,7 @@ import java.util.Stack;
 
 import arc.resource.calculator.db.entity.primary.DirectoryItemEntity;
 import arc.resource.calculator.db.entity.primary.EngramEntity;
+import arc.resource.calculator.db.entity.primary.FavoriteEntity;
 import arc.resource.calculator.db.entity.primary.FolderEntity;
 import arc.resource.calculator.db.entity.primary.StationEntity;
 import arc.resource.calculator.model.SingleLiveEvent;
@@ -121,10 +122,6 @@ public class ExplorerViewModel extends InteractiveGameViewModel {
         } else {
             viewDetails(explorerItem);
         }
-    }
-
-    public void handleFavoriteButtonClick(ExplorerItem explorerItem) {
-        // TODO: 2/11/2021 left off
     }
 
     private void goForward(ExplorerItem explorerItem) {

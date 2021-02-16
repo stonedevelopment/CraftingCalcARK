@@ -31,7 +31,7 @@
         tools:layout="@layout/search_fragment" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="arc.resource.calculator.ui.favorites.FavoritesFragment"
+        android:name="arc.resource.calculator.ui.favorite.FavoriteFragment"
         android:label="favorites_fragment"
         tools:layout="@layout/favorites_fragment" />
 </navigation>

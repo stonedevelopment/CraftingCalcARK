@@ -53,14 +53,15 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
             String description = entity.getDescription();
             setDescriptionText(description);
         });
+        getFavoriteViewModel().checkIfFavorite(
+                getItem().getSourceId()).observe(activity, this::updateFavoriteButton);
     }
 
     @Override
     protected void setupFavoriteButton() {
         super.setupFavoriteButton();
-        getFavoriteButton().setOnClickListener(v -> {
-            getViewModel().handleFavoriteButtonClick(getItem());
-        });
+        getFavoriteButton().setOnClickListener(v ->
+                handleFavoriteButtonClick());
     }
 
     @Override
@@ -72,5 +73,11 @@ public class ExplorerEngramItemViewHolder extends EngramItemViewHolder {
     @Override
     protected void handleOnClickEvent() {
         getViewModel().handleOnClickEvent(getItem());
+    }
+
+    @Override
+    protected void handleFavoriteButtonClick() {
+        super.handleFavoriteButtonClick();
+        getFavoriteViewModel().handleFavoriteButtonClick(getItem());
     }
 }
